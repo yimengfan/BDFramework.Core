@@ -1,0 +1,20 @@
+{
+  "name": "talos-e2e-playwright",
+  "version": "0.1.0",
+  "description": "Talos E2E 测试 Playwright 编排层。负责构建包体、安装启动、连接 Unity Player 并调度 E2E 测试执行。",
+  "scripts": {
+    "test": "playwright test",
+    "test:android": "./tools/test-android.sh --apk $APK_PATH",
+    "test:pc": "./tools/test-pc.sh --exe $EXE_PATH",
+    "test:batchmode": "./tools/test-batchmode.sh",
+    "test:unity": "./tools/test-unityplayer.sh",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.40.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.0"
+  }
+}
