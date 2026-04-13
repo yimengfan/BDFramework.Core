@@ -7,7 +7,7 @@
     "test:android": "./tools/test-android.sh --apk $APK_PATH",
     "test:pc": "./tools/test-pc.sh --exe $EXE_PATH",
     "test:batchmode": "./tools/test-batchmode.sh",
-    "test:unity": "./tools/test-unityplayer.sh",
+    "test:unity": "./tools/test-editorplayer.sh",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "report": "playwright show-report"

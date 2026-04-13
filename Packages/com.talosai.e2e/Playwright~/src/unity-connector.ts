@@ -124,6 +124,7 @@ export class UnityConnector {
   private buffer: Buffer = Buffer.alloc(0);
   private pendingMessages: PendingMessage[] = [];
   private globalMessageHandler: ((type: string, data: any) => void) | null = null;
+  private isIntentionalDisconnect: boolean = false;
 
   /** 是否已连接 */
   get connected(): boolean {
@@ -158,6 +159,10 @@ export class UnityConnector {
       });
       socket.on('close', () => {
         this.socket = null;
+        if (this.isIntentionalDisconnect) {
+          this.isIntentionalDisconnect = false;
+          return;
+        }
         this.rejectAllPending(new Error('连接已关闭'));
       });
 
@@ -170,6 +175,7 @@ export class UnityConnector {
    */
   disconnect(): void {
     if (this.socket) {
+      this.isIntentionalDisconnect = true;
       this.socket.destroy();
       this.socket = null;
     }
@@ -312,10 +318,12 @@ export class UnityConnector {
   /**
    * 执行编辑器命令——发送 editor_command 指令并等待 Unity 端返回结果。
    *
-   * 此方法是 UnityEditorOps 底层通道，封装了 editor_command 协议的请求-响应模式。
+    * 此方法是 UnityEditorOps 底层通道，封装了 editor_command 协议的请求-响应模式。
+    * 在当前设计下，command 通常是 reflect_invoke_static 或 reflect_get_static，
+    * 由 Playwright 侧组合 Unity 官方 API、框架 API 和项目 API 调用链。
    * Playwright 端发出的每个命令都会打印完整的请求和响应日志。
    *
-   * @param command 命令名称，如 'open_scene'、'enter_playmode'
+    * @param command 命令名称，如 'reflect_invoke_static'、'reflect_get_static'
    * @param params 命令参数
    * @param timeoutMs 超时毫秒，默认 30 秒
    * @returns 命令执行结果

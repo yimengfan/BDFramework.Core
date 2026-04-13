@@ -12,7 +12,7 @@
 #   - 支持 EditorOps 的场景操作、PlayMode 控制、万能反射等能力
 #
 # 使用方式：
-#   UNITY_PATH=/path/to/Unity ./tools/test-unityplayer.sh
+#   UNITY_PATH=/path/to/Unity ./tools/test-editorplayer.sh
 #
 # 环境变量：
 #   UNITY_PATH      — Unity 可执行文件路径（必须）
@@ -159,7 +159,7 @@ fi
 
 # ======== 运行 Playwright 测试 ========
 echo ""
-echo ">>> 运行 Playwright 测试（graph-e2e.spec.ts）..."
+echo ">>> 运行 Playwright EditorPlayer 测试..."
 echo ""
 
 cd "${PLAYWRIGHT_DIR}"

@@ -13,10 +13,11 @@ applyTo: "Packages/com.popo.bdframework/**"
 ## Reading Order
 
 1. Read `.github/copilot-instructions.md`.
-2. Read this file (BDFramework module instructions).
-3. Read `Packages/com.popo.bdframework/.talos/AGENTS.md`.
-4. Read `Packages/com.popo.bdframework/Documentation~/README.md`.
-5. Read the specific local documentation or test assembly files related to the target feature.
+2. Read `AI_RULES_INDEX.md`.
+3. Read this file (BDFramework module instructions).
+4. Read `Packages/com.popo.bdframework/AGENTS.md`.
+5. Read the specific local documentation, README, or test assembly files related to the target feature.
+6. If the change touches shared mandatory rules, also read `Packages/com.popo.bdframework/.talos/AGENTS.md` and keep it aligned with `.github/copilot-instructions.md`.
 
 ## Rules
 

@@ -145,10 +145,11 @@ if ${IS_MACOS}; then
     PROJECT="macos"
 fi
 
-PLATFORM=pc \
+PLATFORM="${PROJECT}" \
 UNITY_HOST="${UNITY_HOST}" \
 UNITY_PORT="${UNITY_PORT}" \
 npx playwright test --project="${PROJECT}" \
+
     --output="${PLAYWRIGHT_DIR}/test-results/artifacts" \
     --reporter=list,html="${PLAYWRIGHT_DIR}/test-results/html",junit="${PLAYWRIGHT_DIR}/test-results/junit.xml" \
     2>&1 | tee "${PLAYWRIGHT_DIR}/test-results/test-output.log"

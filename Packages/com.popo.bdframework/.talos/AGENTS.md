@@ -6,7 +6,7 @@
 - Canonical sync peer: `.github/copilot-instructions.md`
 - Maintenance rule: any rule added, removed, or reworded here must be mirrored in `.github/copilot-instructions.md` in the same change.
 - Sync registry: `AI_RULES_INDEX.md`
-- Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`
+- Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`, `.github/instructions/e2e.instructions.md`
 
 ## Baseline Code Standards
 
@@ -29,5 +29,5 @@
 ## Scope Guardrails
 
 - Do not modify third-party packages or vendored plugin code, especially `Packages/com.code-philosophy.*`.
-- Package-scoped code changes are allowed only under `Packages/com.popo.bdframework`.
-- If third-party behavior must change, solve it from `Packages/com.popo.bdframework` or project-level files such as `ProjectSettings/`, not by patching the upstream package.
+- Package-scoped code changes are allowed only under first-party embedded packages, currently `Packages/com.popo.bdframework` and `Packages/com.talosai.e2e`.
+- If third-party behavior must change, solve it from `Packages/com.popo.bdframework`, `Packages/com.talosai.e2e`, or project-level files such as `ProjectSettings/`, not by patching the upstream package.

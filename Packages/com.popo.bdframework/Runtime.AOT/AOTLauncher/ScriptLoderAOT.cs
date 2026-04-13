@@ -40,11 +40,11 @@ namespace BDFramework
         {
             if (Application.isEditor)
             {
-                Debug.Log( "【AOT.load】Editor模式，DLL 加载已经加载!");
+                Debug.Log( "【AOT.load】Editor模式，DLL加载已经 默认加载!");
             }
             else
             {
-                Debug.Log("【AOT.load】热更模式!");
+                Debug.Log("【AOT.load】真机热更模式，开始加载!");
                 LoadHotfixDLL(clientVersion);
             }
         }

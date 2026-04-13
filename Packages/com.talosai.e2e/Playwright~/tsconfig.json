@@ -3,6 +3,8 @@
     "target": "ES2022",
     "module": "commonjs",
     "lib": ["ES2022"],
+    // Playwright 根配置文件使用 Node 全局对象，需要显式启用 Node 类型。
+    "types": ["node"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -13,6 +15,7 @@
     "sourceMap": true,
     "outDir": "./dist"
   },
-  "include": ["src/**/*", "tests/**/*"],
+  // 将根目录 Playwright 配置纳入同一套类型检查，避免配置文件脱离编译上下文。
+  "include": ["src/**/*", "tests/**/*", "playwright.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

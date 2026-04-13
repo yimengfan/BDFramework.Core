@@ -7,7 +7,7 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Copilot mandatory rules file: `.github/copilot-instructions.md`
 - Talos mirror file: `Packages/com.popo.bdframework/.talos/AGENTS.md`
 - Sync registry: `AI_RULES_INDEX.md`
-- Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`
+- Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`, `.github/instructions/e2e.instructions.md`
 - Maintenance rule: when either file changes, update the peer file in the same change so the two rule sets stay semantically aligned.
 
 ## Baseline Code Standards
@@ -28,8 +28,9 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Unity3D business-layer code must not use reflection.
 - Reflection is allowed only lightly in framework or infrastructure code when needed for compatibility, platform isolation, or controlled extension points, and the reason must be documented in code comments.
 
+
 ## Scope Guardrails
 
 - Do not modify third-party packages or vendored plugin code, especially `Packages/com.code-philosophy.*`.
-- Package-scoped code changes are allowed only under `Packages/com.popo.bdframework`.
-- If third-party behavior must change, solve it from `Packages/com.popo.bdframework` or project-level files such as `ProjectSettings/`, not by patching the upstream package.
+- Package-scoped code changes are allowed only under first-party embedded packages, currently `Packages/com.popo.bdframework` and `Packages/com.talosai.e2e`.
+- If third-party behavior must change, solve it from `Packages/com.popo.bdframework`, `Packages/com.talosai.e2e`, or project-level files such as `ProjectSettings/`, not by patching the upstream package.

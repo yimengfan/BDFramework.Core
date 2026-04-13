@@ -34,8 +34,8 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.talos.ai.e2etest": {
-      "version": "file:com.talos.ai.e2etest",
+    "com.talosai.e2e": {
+      "version": "file:com.talosai.e2e",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

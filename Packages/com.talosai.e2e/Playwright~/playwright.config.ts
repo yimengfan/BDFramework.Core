@@ -1,6 +1,12 @@
 import { defineConfig } from '@playwright/test';
 
 /**
+ * 无平台后缀的测试文件按设计可在所有平台项目复用。
+ * 显式平台后缀只会分发到对应项目。
+ */
+const crossPlatformTestMatch = /^(?!.*-(EditorPlayer|Android|Windows|MacOS)-e2e\.spec\.ts$).*-e2e\.spec\.ts$/;
+
+/**
  * Playwright 配置文件。
  * 
  * Talos E2E 测试不使用 Playwright 的浏览器能力，
@@ -11,14 +17,16 @@ import { defineConfig } from '@playwright/test';
  * - timeout: 单个测试超时（5分钟，Unity 端测试可能较慢）
  * - retries: 失败重试次数
  * - reporter: 生成 HTML 报告和 JUnit XML
+ * - 平台注入: 由启动脚本通过 PLATFORM 环境变量传入，project 只负责测试文件分发
  * 
  * 项目说明：
- * - batchmode: Unity batchmode（无界面）模式，运行 framework-e2e.spec.ts
- * - unityplayer: Unity headed GUI 模式，运行 graph-e2e.spec.ts（含 Editor 操作）
- * - android / windows / macos: 真机或独立构建测试
+ * - batchmode: Unity batchmode（无界面）模式，运行无平台后缀的跨平台用例
+ * - unityplayer: Unity headed GUI 模式，运行跨平台用例与 `*-EditorPlayer-e2e.spec.ts` 用例
+ * - android / windows / macos: 运行跨平台用例与各自平台后缀用例
  */
 export default defineConfig({
   testDir: './tests',
+  workers: 1,               // 单目标串行，避免多个 worker 同时争用同一个 Unity 实例
   fullyParallel: false,        // 串行执行，避免多个测试同时操作 Unity
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -41,35 +49,23 @@ export default defineConfig({
   projects: [
     {
       name: 'batchmode',
-      testMatch: /framework-e2e\.spec\.ts/,
-      use: {
-        platform: 'unityplayer',
-      },
+      testMatch: crossPlatformTestMatch,
     },
     {
       name: 'unityplayer',
-      testMatch: /graph-e2e\.spec\.ts/,
-      use: {
-        platform: 'unityplayer',
-      },
+      testMatch: [crossPlatformTestMatch, /-EditorPlayer-e2e\.spec\.ts$/],
     },
     {
       name: 'android',
-      use: {
-        platform: 'android',
-      },
+      testMatch: [crossPlatformTestMatch, /-Android-e2e\.spec\.ts$/],
     },
     {
       name: 'windows',
-      use: {
-        platform: 'windows',
-      },
+      testMatch: [crossPlatformTestMatch, /-Windows-e2e\.spec\.ts$/],
     },
     {
       name: 'macos',
-      use: {
-        platform: 'macos',
-      },
+      testMatch: [crossPlatformTestMatch, /-MacOS-e2e\.spec\.ts$/],
     },
   ],
 });

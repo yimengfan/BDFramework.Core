@@ -100,7 +100,7 @@ namespace BDFramework
             object instance = null;
             // if (value_type is ILRuntime.Reflection.ILRuntimeType ilrType)
             // {
-            //     instance = ilrType.ILType.Instantiate();
+            //     instance = ilrType.ILType.I334nstantiate();
             // }
             // else if (value_type is ILRuntime.Reflection.ILRuntimeWrapperType ilrWrapperType)
             // {

@@ -22,7 +22,7 @@
 # 注意：
 #   - 脚本自动设置 UNITY_DISABLE_HUB=1 防止 Unity Hub 弹出 "reopen" 提示
 #   - 脚本启动前会清理残留的 UnityLockfile
-#   - 如需带 GUI 的 Unity Editor 测试，请使用 test-unityplayer.sh
+#   - 如需带 GUI 的 Unity Editor 测试，请使用 test-editorplayer.sh
 # ============================================================================
 
 set -euo pipefail
@@ -208,7 +208,7 @@ else
         if ! kill -0 ${UNITY_PID} 2>/dev/null; then
             echo ""
             echo "❌ Unity 进程已退出（可能是许可证问题）"
-            echo "    尝试使用同步模式: TALOS_MODE=sync ./tools/test-unityplayer.sh"
+            echo "    尝试使用带 GUI 的 EditorPlayer 模式: ./tools/test-editorplayer.sh"
             echo ""
             echo "--- 日志最后 30 行 ---"
             tail -30 "${UNITY_LOG}" 2>/dev/null || true

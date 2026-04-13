@@ -1,11 +1,18 @@
-# com.popo.bdframework 团队执行手册
+
+# BDFramework 包级规则
 
 作用域：`Packages/com.popo.bdframework/` 整个子树。
 
-继承仓库根规则：
-- 不修改第三方包或 vendored 插件，尤其是 `Packages/com.code-philosophy.*`
-- 包级改动仅允许发生在 `Packages/com.popo.bdframework`
-- 需要改变第三方行为时，在本包内做兼容层、桥接层或项目级配置，不直接 patch 上游包
+阅读顺序：
+1. `.github/copilot-instructions.md`
+2. `AI_RULES_INDEX.md`
+3. `.github/instructions/bdframework.instructions.md`
+4. 本文件
+5. 当前功能附近的文档、测试与实现文件
+
+说明：
+- 仓库级强制规范以 `.github/copilot-instructions.md` 与 `Packages/com.popo.bdframework/.talos/AGENTS.md` 为准。
+- 本文件只补充 BDFramework 包内实现、测试与 BatchMode 约束，不再承载仓库级镜像内容，也不再承载 Talos E2E 包规则。
 
 ---
 
