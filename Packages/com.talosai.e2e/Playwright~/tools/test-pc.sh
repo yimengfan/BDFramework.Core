@@ -17,12 +17,15 @@
 #   EXE_PATH    — 可执行文件路径（或通过 --exe 参数）
 #   UNITY_HOST  — 应用 IP 地址，默认 127.0.0.1
 #   UNITY_PORT  — TCP 端口，默认 10002
+#   NODE_BIN / NPM_BIN / TALOS_NODEJS_HOME — 可选：显式指定 Node/npm 安装位置
 # ============================================================================
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PLAYWRIGHT_DIR="$(dirname "${SCRIPT_DIR}")"
+# shellcheck source=./node-tools.sh
+source "${SCRIPT_DIR}/node-tools.sh"
 
 # ======== 默认参数 ========
 EXE_PATH="${EXE_PATH:-}"
@@ -86,10 +89,8 @@ fi
 # ======== 安装 Playwright 依赖 ========
 echo ""
 echo ">>> 检查 Playwright 依赖..."
+ensure_talos_playwright_dependencies "${PLAYWRIGHT_DIR}"
 cd "${PLAYWRIGHT_DIR}"
-if [[ ! -d "node_modules" ]]; then
-    npm install
-fi
 
 # ======== 启动应用 ========
 echo ""
@@ -151,7 +152,7 @@ if ${IS_MACOS}; then
     PROJECT="macos"
 fi
 
-PLAYWRIGHT_COMMAND=(npx playwright test)
+PLAYWRIGHT_COMMAND=("${TALOS_NODE_BIN}" "${PLAYWRIGHT_DIR}/node_modules/@playwright/test/cli.js" test)
 if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
     PLAYWRIGHT_COMMAND+=("${PLAYWRIGHT_TEST_FILE}")
 fi

@@ -29,6 +29,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PLAYWRIGHT_DIR="$(dirname "${SCRIPT_DIR}")"
+# shellcheck source=./node-tools.sh
+source "${SCRIPT_DIR}/node-tools.sh"
 
 # ======== 参数 ========
 UNITY_PATH="${UNITY_PATH:-}"
@@ -240,16 +242,12 @@ else
     echo ""
 
     cd "${PLAYWRIGHT_DIR}"
-
-    if [[ ! -d "node_modules" ]]; then
-        echo ">>> 安装 Playwright 依赖..."
-        npm install
-    fi
+    ensure_talos_playwright_dependencies "${PLAYWRIGHT_DIR}"
 
     PLATFORM=unityplayer \
     UNITY_HOST=127.0.0.1 \
     UNITY_PORT="${UNITY_PORT}" \
-    node "${PLAYWRIGHT_DIR}/node_modules/@playwright/test/cli.js" test \
+    "${TALOS_NODE_BIN}" "${PLAYWRIGHT_DIR}/node_modules/@playwright/test/cli.js" test \
         --project=batchmode \
         --reporter=list \
         2>&1

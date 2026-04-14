@@ -25,6 +25,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PLAYWRIGHT_DIR="$(dirname "${SCRIPT_DIR}")"
+# shellcheck source=./node-tools.sh
+source "${SCRIPT_DIR}/node-tools.sh"
 
 # ======== 默认参数 ========
 APK_PATH="${APK_PATH:-}"
@@ -105,10 +107,8 @@ echo "    ✅ 设备已连接 ($(${ADB} devices | grep "device$" | head -1))"
 # ======== 安装 Playwright 依赖 ========
 echo ""
 echo ">>> 检查 Playwright 依赖..."
+ensure_talos_playwright_dependencies "${PLAYWRIGHT_DIR}"
 cd "${PLAYWRIGHT_DIR}"
-if [[ ! -d "node_modules" ]]; then
-    npm install
-fi
 
 # ======== 安装 APK ========
 echo ""
@@ -163,7 +163,7 @@ echo ""
 echo ">>> 运行 Playwright 测试..."
 echo ""
 
-PLAYWRIGHT_COMMAND=(npx playwright test)
+PLAYWRIGHT_COMMAND=("${TALOS_NODE_BIN}" "${PLAYWRIGHT_DIR}/node_modules/@playwright/test/cli.js" test)
 if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
     PLAYWRIGHT_COMMAND+=("${PLAYWRIGHT_TEST_FILE}")
 fi
