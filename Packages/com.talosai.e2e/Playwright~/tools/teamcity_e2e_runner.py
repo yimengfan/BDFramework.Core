@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import io
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -52,10 +53,13 @@ DEFAULT_POLL_INTERVAL_SECONDS = 10
 DEFAULT_DOWNLOAD_TIMEOUT_SECONDS = 600
 DEFAULT_GET_RETRY_ATTEMPTS = 5
 DEFAULT_GET_RETRY_MAX_DELAY_SECONDS = 5
+DEFAULT_NODE_VERSION = "20.18.0"
+DEFAULT_NODE_DOWNLOAD_TIMEOUT_SECONDS = 300
 WINDOWS_SKIPPED_PACKAGE_MARKERS = (
     "_BurstDebugInformation_DoNotShip",
     "不要发布",
 )
+NODE_TOOLCACHE_DIR = PLAYWRIGHT_DIR / ".toolcache" / "node"
 
 
 class TalosTeamCityE2EError(RuntimeError):
@@ -113,6 +117,15 @@ class RemotePackageEntry:
     file_name: str
 
 
+@dataclass(frozen=True)
+class NodeTooling:
+    """保存 Playwright 工具脚本执行所需的 Node/npm 路径。"""
+
+    node_home: Path
+    node_bin: Path
+    npm_bin: Path
+
+
 PLATFORM_PROFILE_BY_KEY = {
     "windows": PlatformProfile(
         platform_key="windows",
@@ -142,6 +155,110 @@ PLATFORM_PROFILE_BY_KEY = {
         package_arg_name="--exe",
     ),
 }
+
+
+def normalize_shell_path(path: Path) -> str:
+    """把本机路径归一化成 shell 子进程可直接消费的统一文本格式。"""
+    return str(path.resolve()).replace("\\", "/")
+
+
+def resolve_node_tooling_from_home(home: Path) -> NodeTooling | None:
+    """从一个候选 Node 安装目录里解析 node 与 npm 可执行文件。"""
+    resolved_home = home.expanduser()
+    node_bin = next((candidate.resolve() for candidate in (resolved_home / "node.exe", resolved_home / "node") if candidate.is_file()), None)
+    npm_bin = next((candidate.resolve() for candidate in (resolved_home / "npm.cmd", resolved_home / "npm") if candidate.is_file()), None)
+    if node_bin is None or npm_bin is None:
+        return None
+    return NodeTooling(node_home=resolved_home.resolve(), node_bin=node_bin, npm_bin=npm_bin)
+
+
+def resolve_existing_node_tooling() -> NodeTooling | None:
+    """优先从显式环境变量、本机 PATH 或标准安装目录解析现成的 Node 工具链。"""
+    explicit_node_bin = normalize_optional_value(os.getenv("NODE_BIN"))
+    explicit_npm_bin = normalize_optional_value(os.getenv("NPM_BIN"))
+    if explicit_node_bin and explicit_npm_bin:
+        node_path = Path(explicit_node_bin).expanduser()
+        npm_path = Path(explicit_npm_bin).expanduser()
+        if node_path.is_file() and npm_path.is_file():
+            return NodeTooling(node_home=node_path.parent.resolve(), node_bin=node_path.resolve(), npm_bin=npm_path.resolve())
+
+    for home_var_name in ("TALOS_NODEJS_HOME", "NODEJS_HOME"):
+        home_value = normalize_optional_value(os.getenv(home_var_name))
+        if not home_value:
+            continue
+        tooling = resolve_node_tooling_from_home(Path(home_value))
+        if tooling is not None:
+            return tooling
+
+    system_node = shutil.which("node")
+    system_npm = shutil.which("npm") or shutil.which("npm.cmd")
+    if system_node and system_npm:
+        node_path = Path(system_node)
+        npm_path = Path(system_npm)
+        return NodeTooling(node_home=node_path.parent.resolve(), node_bin=node_path.resolve(), npm_bin=npm_path.resolve())
+
+    for home in (Path("C:/Program Files/nodejs"), Path("C:/Program Files (x86)/nodejs")):
+        tooling = resolve_node_tooling_from_home(home)
+        if tooling is not None:
+            return tooling
+
+    node_version = normalize_optional_value(os.getenv("TALOS_NODE_VERSION")) or DEFAULT_NODE_VERSION
+    cached_home = NODE_TOOLCACHE_DIR / f"node-v{node_version}-win-x64"
+    return resolve_node_tooling_from_home(cached_home)
+
+
+def ensure_windows_portable_node_tooling(node_version: str | None = None) -> NodeTooling:
+    """当 Windows agent 未预装 Node 时，下载并缓存一份 portable Node 工具链。"""
+    resolved_version = normalize_optional_value(node_version) or normalize_optional_value(os.getenv("TALOS_NODE_VERSION")) or DEFAULT_NODE_VERSION
+    install_home = NODE_TOOLCACHE_DIR / f"node-v{resolved_version}-win-x64"
+    cached_tooling = resolve_node_tooling_from_home(install_home)
+    if cached_tooling is not None:
+        return cached_tooling
+
+    NODE_TOOLCACHE_DIR.mkdir(parents=True, exist_ok=True)
+    archive_url = f"https://nodejs.org/dist/v{resolved_version}/node-v{resolved_version}-win-x64.zip"
+    print(f"{LOG_PREFIX} nodeBootstrap=download")
+    print(f"{LOG_PREFIX} nodeArchiveUrl={archive_url}")
+    request = urllib.request.Request(archive_url, headers={"User-Agent": "TalosTeamCityE2E/1.0"})
+    try:
+        with urllib.request.urlopen(request, timeout=DEFAULT_NODE_DOWNLOAD_TIMEOUT_SECONDS) as response:
+            archive_bytes = response.read()
+    except (urllib.error.HTTPError, urllib.error.URLError) as exc:
+        raise TalosTeamCityE2EError(f"Failed to download Windows Node.js runtime: {exc}") from exc
+
+    if install_home.exists():
+        shutil.rmtree(install_home)
+
+    with zipfile.ZipFile(io.BytesIO(archive_bytes)) as archive:
+        archive.extractall(NODE_TOOLCACHE_DIR)
+
+    installed_tooling = resolve_node_tooling_from_home(install_home)
+    if installed_tooling is None:
+        raise TalosTeamCityE2EError(f"Downloaded Node.js archive did not produce expected tools under: {install_home}")
+    return installed_tooling
+
+
+def ensure_node_tooling() -> NodeTooling:
+    """确保 Playwright 工具脚本执行前已经拿到可用的 Node/npm。"""
+    existing_tooling = resolve_existing_node_tooling()
+    if existing_tooling is not None:
+        return existing_tooling
+
+    if os.name == "nt":
+        return ensure_windows_portable_node_tooling()
+
+    raise TalosTeamCityE2EError(
+        "Node.js tooling is missing. Install Node.js or configure NODE_BIN / NPM_BIN / TALOS_NODEJS_HOME before running Talos Playwright tools."
+    )
+
+
+def build_test_tool_environment(node_tooling: NodeTooling) -> dict[str, str]:
+    """为平台工具脚本补齐 Node/npm 环境变量，避免远端 agent 依赖 PATH。"""
+    environment = os.environ.copy()
+    environment["TALOS_NODEJS_HOME"] = normalize_shell_path(node_tooling.node_home)
+    environment["NODE_BIN"] = normalize_shell_path(node_tooling.node_bin)
+    environment["NPM_BIN"] = normalize_shell_path(node_tooling.npm_bin)
+    return environment
 
 
 def parse_args() -> argparse.Namespace:
@@ -729,8 +846,12 @@ def resolve_or_queue_package_build(args: argparse.Namespace, profile: PlatformPr
 def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.Namespace) -> int:
     """执行平台对应的 Playwright 工具脚本。"""
     command = build_test_command(profile, package_path, args)
+    node_tooling = ensure_node_tooling()
+    print(f"{LOG_PREFIX} nodeHome={normalize_shell_path(node_tooling.node_home)}")
+    print(f"{LOG_PREFIX} nodeBin={normalize_shell_path(node_tooling.node_bin)}")
+    print(f"{LOG_PREFIX} npmBin={normalize_shell_path(node_tooling.npm_bin)}")
     print(f"{LOG_PREFIX} testCommand={' '.join(command)}")
-    completed = subprocess.run(command, cwd=REPO_ROOT, check=False)
+    completed = subprocess.run(command, cwd=REPO_ROOT, check=False, env=build_test_tool_environment(node_tooling))
     return int(completed.returncode)
 
 

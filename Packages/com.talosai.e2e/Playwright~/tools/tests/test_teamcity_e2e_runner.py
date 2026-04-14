@@ -46,6 +46,26 @@ class FakeTextStream:
             raise LookupError(f"unsupported encoding: {encoding}")
 
 
+class FakeBinaryResponse:
+    """模拟 urllib 返回的二进制响应，供 Node zip 下载测试复用。"""
+
+    def __init__(self, payload: bytes) -> None:
+        """保存预构造的 zip 二进制内容。"""
+        self.payload = payload
+
+    def __enter__(self) -> "FakeBinaryResponse":
+        """让测试桩兼容 with urllib.request.urlopen(...) 的调用方式。"""
+        return self
+
+    def __exit__(self, exc_type, exc, exc_tb) -> None:
+        """保持与真实响应对象一致的上下文管理接口。"""
+        return None
+
+    def read(self) -> bytes:
+        """返回完整的 zip 载荷，模拟网络下载结果。"""
+        return self.payload
+
+
 def test_resolve_platform_profile_returns_windows_defaults() -> None:
     """验证 Windows 平台会映射到默认母包构建任务与 PC 工具脚本。"""
     profile = runner.resolve_platform_profile("windows")
@@ -162,3 +182,82 @@ def test_configure_console_streams_falls_back_to_utf8(monkeypatch: pytest.Monkey
         {"encoding": "x-unknown", "errors": "backslashreplace"},
         {"encoding": "utf-8", "errors": "backslashreplace"},
     ]
+
+
+def test_resolve_existing_node_tooling_prefers_explicit_home(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 runner 会优先接受显式提供的 Node 安装目录，而不是依赖当前 PATH。"""
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
+    node_bin = node_home / "node.exe"
+    npm_bin = node_home / "npm.cmd"
+    node_bin.write_text("stub", encoding="utf-8")
+    npm_bin.write_text("stub", encoding="utf-8")
+
+    monkeypatch.setenv("TALOS_NODEJS_HOME", str(node_home))
+    monkeypatch.delenv("NODEJS_HOME", raising=False)
+    monkeypatch.delenv("NODE_BIN", raising=False)
+    monkeypatch.delenv("NPM_BIN", raising=False)
+    monkeypatch.setattr(runner.shutil, "which", lambda _name: None)
+
+    tooling = runner.resolve_existing_node_tooling()
+
+    assert tooling is not None
+    assert tooling.node_home == node_home.resolve()
+    assert tooling.node_bin == node_bin.resolve()
+    assert tooling.npm_bin == npm_bin.resolve()
+
+
+def test_ensure_windows_portable_node_tooling_extracts_downloaded_zip(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 Windows agent 缺少 Node 时，runner 会下载 zip 并解析出 node/npm。"""
+    archive_path = tmp_path / "node.zip"
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        archive.writestr("node-v20.18.0-win-x64/node.exe", "stub")
+        archive.writestr("node-v20.18.0-win-x64/npm.cmd", "stub")
+
+    monkeypatch.setattr(runner, "NODE_TOOLCACHE_DIR", tmp_path / "toolcache")
+    monkeypatch.setattr(runner.urllib.request, "urlopen", lambda request, timeout=0: FakeBinaryResponse(archive_path.read_bytes()))
+
+    tooling = runner.ensure_windows_portable_node_tooling("20.18.0")
+
+    assert tooling.node_bin.is_file()
+    assert tooling.npm_bin.is_file()
+    assert tooling.node_bin.name == "node.exe"
+    assert tooling.npm_bin.name == "npm.cmd"
+
+
+def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """验证平台工具脚本执行前，runner 会把 Node/npm 环境变量显式注入子进程。"""
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+    captured: dict[str, object] = {}
+
+    class FakeCompletedProcess:
+        """模拟 subprocess.run 的最小返回值，只暴露 returncode。"""
+
+        def __init__(self, returncode: int) -> None:
+            """保存测试期望的退出码。"""
+            self.returncode = returncode
+
+    def fake_run(command, cwd, check, env):
+        """记录 runner 传给 subprocess 的参数，供断言环境变量是否已注入。"""
+        captured["command"] = command
+        captured["cwd"] = cwd
+        captured["check"] = check
+        captured["env"] = env
+        return FakeCompletedProcess(returncode=0)
+
+    monkeypatch.setattr(runner, "ensure_node_tooling", lambda: tooling)
+    monkeypatch.setattr(runner, "build_test_command", lambda profile, package_path, args: ["bash", "tool.sh"])
+    monkeypatch.setattr(runner.subprocess, "run", fake_run)
+
+    exit_code = runner.run_test_tool(runner.resolve_platform_profile("windows"), tmp_path / "Launcher.exe", object())
+
+    assert exit_code == 0
+    assert captured["cwd"] == runner.REPO_ROOT
+    assert captured["check"] is False
+    assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_shell_path(tooling.node_home)
+    assert captured["env"]["NODE_BIN"] == runner.normalize_shell_path(tooling.node_bin)
+    assert captured["env"]["NPM_BIN"] == runner.normalize_shell_path(tooling.npm_bin)
