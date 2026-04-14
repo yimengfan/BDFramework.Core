@@ -225,6 +225,52 @@ def test_ensure_windows_portable_node_tooling_extracts_downloaded_zip(tmp_path: 
     assert tooling.npm_bin.name == "npm.cmd"
 
 
+def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """验证 runner 会把 bash 脚本与包体路径归一化为 shell 友好格式，并避免把测试文件直接放进命令行。"""
+
+    class FakeArgs:
+        """提供 build_test_command 所需的最小参数集合。"""
+
+        test_file = "tests/基础启动流程-e2e.spec.ts"
+        unity_port = 10002
+        unity_host = "127.0.0.1"
+        adb_serial = ""
+
+    monkeypatch.setattr(runner, "resolve_bash_command", lambda: "bash")
+    profile = runner.resolve_platform_profile("windows")
+    package_path = tmp_path / "Build" / "Launcher.exe"
+
+    command = runner.build_test_command(profile, package_path, FakeArgs())
+
+    assert command == [
+        "bash",
+        runner.normalize_shell_path(runner.TOOL_DIR / "test-pc.sh"),
+        "--exe",
+        runner.normalize_shell_path(package_path),
+        "--port",
+        "10002",
+        "--host",
+        "127.0.0.1",
+    ]
+    assert "--test-file" not in command
+
+
+def test_build_test_tool_environment_includes_playwright_test_file(tmp_path: Path) -> None:
+    """验证 runner 会通过环境变量传递测试文件，避免 Windows bash 命令行编码干扰。"""
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+
+    environment = runner.build_test_tool_environment(
+        tooling,
+        test_file="tests/基础启动流程-e2e.spec.ts",
+    )
+
+    assert environment["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
+
+
 def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     """验证平台工具脚本执行前，runner 会把 Node/npm 环境变量显式注入子进程。"""
     tooling = runner.NodeTooling(
@@ -253,7 +299,12 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     monkeypatch.setattr(runner, "build_test_command", lambda profile, package_path, args: ["bash", "tool.sh"])
     monkeypatch.setattr(runner.subprocess, "run", fake_run)
 
-    exit_code = runner.run_test_tool(runner.resolve_platform_profile("windows"), tmp_path / "Launcher.exe", object())
+    class FakeArgs:
+        """提供 run_test_tool 透传测试文件所需的最小参数集合。"""
+
+        test_file = "tests/基础启动流程-e2e.spec.ts"
+
+    exit_code = runner.run_test_tool(runner.resolve_platform_profile("windows"), tmp_path / "Launcher.exe", FakeArgs())
 
     assert exit_code == 0
     assert captured["cwd"] == runner.REPO_ROOT
@@ -261,6 +312,7 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_shell_path(tooling.node_home)
     assert captured["env"]["NODE_BIN"] == runner.normalize_shell_path(tooling.node_bin)
     assert captured["env"]["NPM_BIN"] == runner.normalize_shell_path(tooling.npm_bin)
+    assert captured["env"]["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
 
 
 def test_resolve_current_teamcity_build_context_reads_properties_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -288,6 +340,50 @@ def test_resolve_current_teamcity_build_context_reads_properties_file(tmp_path: 
     assert context.build_id == "901"
     assert context.build_type_id == "BDFrameworkCore_TalosAIStep01BaseFlowTest"
     assert context.build_url is None
+
+
+def test_parse_build_id_from_url_reads_numeric_tail() -> None:
+    """验证 runner 能从 TeamCity 构建详情页 URL 里回推出当前构建 id。"""
+    assert runner.parse_build_id_from_url("http://teamcity.local/build/699") == "699"
+    assert runner.parse_build_id_from_url("http://teamcity.local/buildConfiguration/Type/699") == "699"
+    assert runner.parse_build_id_from_url("http://teamcity.local/buildConfiguration/Type/latest") is None
+
+
+def test_complete_current_teamcity_build_context_backfills_missing_build_type(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证当前构建缺失 buildTypeId 时，runner 会用当前 buildId 回查并补全 artifact 链接上下文。"""
+    context = runner.TeamCityCurrentBuildContext(
+        base_url=None,
+        build_id=None,
+        build_type_id=None,
+        build_url="http://teamcity.local/build/699",
+    )
+    runtime_config = runner.TeamCityRuntimeConfig(
+        base_url="http://teamcity.local",
+        token="token",
+        username=None,
+        password=None,
+        config_path=None,
+    )
+    build_handle = runner.BuildHandle(
+        build_id=699,
+        build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+        number="14",
+        state="finished",
+        status="SUCCESS",
+        status_text="Success",
+        branch_name="v4/v-4.0.0",
+        web_url="http://teamcity.local/build/699",
+    )
+
+    monkeypatch.setattr(runner, "resolve_teamcity_runtime_config", lambda _config_path: runtime_config)
+    monkeypatch.setattr(runner, "get_build", lambda _config, build_id: build_handle if build_id == 699 else None)
+
+    completed = runner.complete_current_teamcity_build_context(context, config_path=None)
+
+    assert completed.base_url == "http://teamcity.local"
+    assert completed.build_id == "699"
+    assert completed.build_type_id == "BDFrameworkCore_TalosAIStep01BaseFlowTest"
+    assert completed.build_url == "http://teamcity.local/build/699"
 
 
 def test_build_teamcity_artifact_url_returns_repository_download_link() -> None:

@@ -136,6 +136,23 @@ class TeamCityCurrentBuildContext:
     build_url: str | None
 
 
+def parse_build_id_from_url(build_url: str | None) -> str | None:
+    """从 TeamCity 当前构建 URL 中回推出构建 id，避免部分 agent 丢失 BUILD_ID 环境变量。"""
+    normalized_url = normalize_optional_value(build_url)
+    if not normalized_url:
+        return None
+
+    parsed = urllib.parse.urlparse(normalized_url)
+    path_parts = [part for part in parsed.path.split("/") if part]
+    if not path_parts:
+        return None
+
+    candidate = path_parts[-1]
+    if candidate.isdigit():
+        return candidate
+    return None
+
+
 PLATFORM_PROFILE_BY_KEY = {
     "windows": PlatformProfile(
         platform_key="windows",
@@ -262,12 +279,15 @@ def ensure_node_tooling() -> NodeTooling:
     )
 
 
-def build_test_tool_environment(node_tooling: NodeTooling) -> dict[str, str]:
-    """为平台工具脚本补齐 Node/npm 环境变量，避免远端 agent 依赖 PATH。"""
+def build_test_tool_environment(node_tooling: NodeTooling, *, test_file: str | None = None) -> dict[str, str]:
+    """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
     environment["TALOS_NODEJS_HOME"] = normalize_shell_path(node_tooling.node_home)
     environment["NODE_BIN"] = normalize_shell_path(node_tooling.node_bin)
     environment["NPM_BIN"] = normalize_shell_path(node_tooling.npm_bin)
+    normalized_test_file = normalize_optional_value(test_file)
+    if normalized_test_file:
+        environment["PLAYWRIGHT_TEST_FILE"] = normalized_test_file
     return environment
 
 
@@ -658,6 +678,46 @@ def resolve_current_teamcity_build_context() -> TeamCityCurrentBuildContext:
     )
 
 
+def complete_current_teamcity_build_context(
+    context: TeamCityCurrentBuildContext,
+    *,
+    config_path: str | None = None,
+) -> TeamCityCurrentBuildContext:
+    """补全当前 TeamCity 构建上下文，尽量回填 buildId 与 buildTypeId 以生成 artifact 直链。"""
+    normalized_build_id = context.build_id or parse_build_id_from_url(context.build_url)
+    normalized_context = TeamCityCurrentBuildContext(
+        base_url=context.base_url,
+        build_id=normalized_build_id,
+        build_type_id=context.build_type_id,
+        build_url=context.build_url,
+    )
+    if normalized_context.base_url and normalized_context.build_id and normalized_context.build_type_id:
+        return normalized_context
+
+    try:
+        runtime_config = resolve_teamcity_runtime_config(config_path)
+    except TalosTeamCityE2EError:
+        return normalized_context
+
+    build_url = normalized_context.build_url
+    build_type_id = normalized_context.build_type_id
+    if normalized_context.build_id and not build_type_id:
+        try:
+            current_build = get_build(runtime_config, int(normalized_context.build_id))
+            build_type_id = current_build.build_type_id
+            if not build_url:
+                build_url = current_build.web_url
+        except (TalosTeamCityE2EError, ValueError):
+            pass
+
+    return TeamCityCurrentBuildContext(
+        base_url=normalized_context.base_url or runtime_config.base_url,
+        build_id=normalized_context.build_id,
+        build_type_id=build_type_id,
+        build_url=build_url,
+    )
+
+
 def build_teamcity_artifact_url(context: TeamCityCurrentBuildContext, artifact_path: str) -> str | None:
     """根据当前构建上下文拼出 TeamCity artifact 的可点击下载链接。"""
     if not context.base_url or not context.build_id or not context.build_type_id:
@@ -672,11 +732,14 @@ def build_teamcity_artifact_url(context: TeamCityCurrentBuildContext, artifact_p
     )
 
 
-def emit_playwright_report_metadata() -> None:
+def emit_playwright_report_metadata(*, config_path: str | None = None) -> None:
     """在 TeamCity 收尾阶段输出标准 Playwright 报告路径与可点击 artifact 链接。"""
     html_artifact_path = "talos-e2e-test-results/html/index.html"
     junit_artifact_path = "talos-e2e-test-results/junit.xml"
-    context = resolve_current_teamcity_build_context()
+    context = complete_current_teamcity_build_context(
+        resolve_current_teamcity_build_context(),
+        config_path=config_path,
+    )
 
     print(f"{LOG_PREFIX} playwrightHtmlArtifactPath={html_artifact_path}")
     print(f"{LOG_PREFIX} playwrightJUnitArtifactPath={junit_artifact_path}")
@@ -816,9 +879,12 @@ def resolve_bash_command() -> str:
 def build_test_command(profile: PlatformProfile, package_path: Path, args: argparse.Namespace) -> list[str]:
     """根据平台拼装最终的 Playwright 工具脚本调用命令。"""
     script_path = TOOL_DIR / profile.tool_script_name
-    command = [resolve_bash_command(), str(script_path), profile.package_arg_name, str(package_path)]
-    if args.test_file:
-        command.extend(["--test-file", normalize_required_value(args.test_file, field_name="testFile")])
+    command = [
+        resolve_bash_command(),
+        normalize_shell_path(script_path),
+        profile.package_arg_name,
+        normalize_shell_path(package_path),
+    ]
     command.extend(["--port", str(args.unity_port)])
 
     if profile.platform_key == "windows":
@@ -942,7 +1008,12 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     print(f"{LOG_PREFIX} nodeBin={normalize_shell_path(node_tooling.node_bin)}")
     print(f"{LOG_PREFIX} npmBin={normalize_shell_path(node_tooling.npm_bin)}")
     print(f"{LOG_PREFIX} testCommand={' '.join(command)}")
-    completed = subprocess.run(command, cwd=REPO_ROOT, check=False, env=build_test_tool_environment(node_tooling))
+    completed = subprocess.run(
+        command,
+        cwd=REPO_ROOT,
+        check=False,
+        env=build_test_tool_environment(node_tooling, test_file=args.test_file),
+    )
     return int(completed.returncode)
 
 
@@ -987,7 +1058,7 @@ def main() -> int:
     print(f"{LOG_PREFIX} ===== Phase 5/5: finish =====")
     print(f"{LOG_PREFIX} playwrightHtmlReport={PLAYWRIGHT_DIR / 'test-results' / 'html' / 'index.html'}")
     print(f"{LOG_PREFIX} playwrightJUnitReport={PLAYWRIGHT_DIR / 'test-results' / 'junit.xml'}")
-    emit_playwright_report_metadata()
+    emit_playwright_report_metadata(config_path=args.config)
     if exit_code != 0:
         raise TalosTeamCityE2EError(f"Talos E2E tool failed with exit code {exit_code}")
     print(f"{LOG_PREFIX} status=success")
