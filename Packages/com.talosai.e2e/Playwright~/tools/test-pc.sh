@@ -101,24 +101,17 @@ cd "${PLAYWRIGHT_DIR}"
 echo ""
 echo ">>> 启动应用..."
 APP_PID=""
-PLAYER_STDOUT_LOG=""
-PLAYER_STDERR_LOG=""
-# Windows/Linux 调试阶段把 Unity Player 日志直接回流到当前控制台，便于 TeamCity 直接观察 TCP 启动链路。
+PLAYER_LOG_FILE=""
+# 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
 PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
 
 print_windows_player_logs() {
-    # Windows PowerShell 分支会把 Unity Player stdout/stderr 重定向到文件，这里在失败路径回吐日志，避免 TeamCity 只看到 TCP 超时。
-    if [[ -n "${PLAYER_STDOUT_LOG}" && -f "${PLAYER_STDOUT_LOG}" ]]; then
+    # Windows PowerShell 分支改用 Unity 自身的 -logFile，避免 Start-Process 重定向卡住 GUI 进程启动。
+    if [[ -n "${PLAYER_LOG_FILE}" && -f "${PLAYER_LOG_FILE}" ]]; then
         echo ""
-        echo ">>> Unity Player stdout (tail 200)"
-        tail -n 200 "${PLAYER_STDOUT_LOG}" || true
-    fi
-
-    if [[ -n "${PLAYER_STDERR_LOG}" && -f "${PLAYER_STDERR_LOG}" ]]; then
-        echo ""
-        echo ">>> Unity Player stderr (tail 200)"
-        tail -n 200 "${PLAYER_STDERR_LOG}" || true
+        echo ">>> Unity Player log (tail 200)"
+        tail -n 200 "${PLAYER_LOG_FILE}" || true
     fi
 }
 
@@ -130,21 +123,23 @@ else
     # Windows/Linux: 直接运行可执行文件
     if ${IS_WINDOWS_GIT_BASH} && command -v powershell.exe >/dev/null 2>&1 && command -v cygpath >/dev/null 2>&1; then
         # Git Bash 直接拉起 Windows exe 时会把当前目录丢成空字符串，这里改用 PowerShell 显式指定 WorkingDirectory。
-        # 同时把 stdout/stderr 落盘，超时后回吐到 TeamCity，避免看不到 Unity 业务日志。
+        # 同时让 Unity 自己写日志文件，避免 Start-Process 重定向卡住 GUI 进程返回 PID。
         EXE_PATH_WIN="$(cygpath -w "${EXE_PATH}")"
         EXE_DIR_WIN="$(cygpath -w "$(dirname "${EXE_PATH}")")"
-        PLAYER_STDOUT_LOG="${PLAYWRIGHT_DIR}/test-results/unity-player-stdout.log"
-        PLAYER_STDERR_LOG="${PLAYWRIGHT_DIR}/test-results/unity-player-stderr.log"
-        : > "${PLAYER_STDOUT_LOG}"
-        : > "${PLAYER_STDERR_LOG}"
-        PLAYER_STDOUT_LOG_WIN="$(cygpath -w "${PLAYER_STDOUT_LOG}")"
-        PLAYER_STDERR_LOG_WIN="$(cygpath -w "${PLAYER_STDERR_LOG}")"
+        PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player.log"
+        : > "${PLAYER_LOG_FILE}"
+        PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
         APP_PID="$({
             powershell.exe -NoProfile -Command "\
-                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-logFile','-') -RedirectStandardOutput '${PLAYER_STDOUT_LOG_WIN}' -RedirectStandardError '${PLAYER_STDERR_LOG_WIN}' -PassThru; \
+                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru; \
                 [Console]::Out.Write(\$proc.Id)\
             "
         } | tr -d '\r')"
+        if [[ -z "${APP_PID}" ]]; then
+            echo "    ❌ 未能获取应用 PID"
+            print_windows_player_logs
+            exit 1
+        fi
         echo "    ✅ 应用已启动 (PID: ${APP_PID}, cwd: ${EXE_DIR_WIN})"
     else
         EXE_DIR="$(dirname "${EXE_PATH}")"

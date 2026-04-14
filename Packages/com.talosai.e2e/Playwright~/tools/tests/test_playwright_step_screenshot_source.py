@@ -35,8 +35,8 @@ def test_playwright_step_screenshot_contract_is_wired() -> None:
     assert "await talosStep(" in baseflow_content
 
 
-def test_pc_tool_keeps_force_e2e_and_player_log_streaming() -> None:
-    """验证 PC 工具脚本会保留强制 E2E 参数，并把 Unity Player 日志直接回流到 TeamCity 控制台。"""
+def test_pc_tool_keeps_force_e2e_and_windows_player_log_capture() -> None:
+    """验证 PC 工具脚本会保留强制 E2E 参数，并让 Windows 分支把 Unity 日志写入文件后在失败路径回吐。"""
     tool_content = PC_TOOL_PATH.read_text(encoding="utf-8")
 
     assert '"-talosForceE2E"' in tool_content
@@ -45,8 +45,8 @@ def test_pc_tool_keeps_force_e2e_and_player_log_streaming() -> None:
     assert 'IS_WINDOWS_GIT_BASH=false' in tool_content
     assert 'Start-Process -FilePath' in tool_content
     assert '-WorkingDirectory' in tool_content
-    assert '-RedirectStandardOutput' in tool_content
-    assert '-RedirectStandardError' in tool_content
-    assert 'unity-player-stdout.log' in tool_content
+    assert '-RedirectStandardOutput' not in tool_content
+    assert '-RedirectStandardError' not in tool_content
+    assert 'unity-player.log' in tool_content
     assert 'print_windows_player_logs' in tool_content
     assert 'taskkill.exe //PID ${APP_PID}' in tool_content
