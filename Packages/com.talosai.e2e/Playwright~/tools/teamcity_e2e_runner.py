@@ -861,13 +861,26 @@ def find_windows_launcher(extract_root: Path) -> Path:
     raise TalosTeamCityE2EError(f"Windows launcher not found under extracted package: {extract_root}")
 
 
-def prepare_local_package(profile: PlatformProfile, downloaded_path: Path, *, package_build_number: str | None = None) -> Path:
-    """把下载后的包体整理成工具脚本可以直接消费的本地路径。"""
+def prepare_local_package(
+    profile: PlatformProfile,
+    downloaded_path: Path,
+    *,
+    package_build_number: str | None = None,
+    current_build_id: str | None = None,
+) -> Path:
+    """把下载后的包体整理成工具脚本可以直接消费的本地路径，并为重复验证隔离解压目录。"""
     if profile.platform_key == "windows":
-        extract_folder_name = downloaded_path.stem
+        extract_folder_name_parts = [downloaded_path.stem]
         if normalize_optional_value(package_build_number):
-            extract_folder_name = f"{downloaded_path.stem}-{normalize_required_value(package_build_number, field_name='packageBuildNumber')}"
+            extract_folder_name_parts.append(
+                normalize_required_value(package_build_number, field_name="packageBuildNumber")
+            )
+        if normalize_optional_value(current_build_id):
+            extract_folder_name_parts.append(
+                f"run-{normalize_required_value(current_build_id, field_name='currentBuildId')}"
+            )
 
+        extract_folder_name = "-".join(extract_folder_name_parts)
         extract_root = PLAYWRIGHT_DIR / "test-results" / "packages" / "windows" / extract_folder_name
         if extract_root.exists():
             shutil.rmtree(extract_root)
@@ -1055,6 +1068,7 @@ def main() -> int:
     args = parse_args()
     profile = resolve_platform_profile(args.platform)
     args.build_debug = normalize_bool_flag(args.build_debug)
+    current_build_id = normalize_optional_value(resolve_current_teamcity_build_context().build_id)
 
     print(f"{LOG_PREFIX} 测试目的=验证 Talos 远端母包构建、包体下载与 Playwright E2E 工具链闭环")
     print(f"{LOG_PREFIX} 实现手段=复用或排队 TeamCity 母包构建 -> 下载文件服务器包体 -> 调用 tools/{profile.tool_script_name}")
@@ -1063,6 +1077,8 @@ def main() -> int:
     print(f"{LOG_PREFIX} clientVersion={normalize_required_value(args.client_version, field_name='clientVersion')}")
     print(f"{LOG_PREFIX} buildDebug={args.build_debug}")
     print(f"{LOG_PREFIX} packageBuildId={normalize_optional_value(args.package_build_id) or '<auto>'}")
+    if current_build_id:
+        print(f"{LOG_PREFIX} currentBuildId={current_build_id}")
     print(f"{LOG_PREFIX} testFile={normalize_optional_value(args.test_file) or '<all>'}")
 
     print(f"{LOG_PREFIX} ===== Phase 2/5: resolve package source =====")
@@ -1076,7 +1092,12 @@ def main() -> int:
         print(f"{LOG_PREFIX} packageSource=teamcity+file-server")
         _, package_build_number = resolve_or_queue_package_build(args, profile)
         downloaded_path = download_package_from_build(profile=profile, build_number=package_build_number, args=args)
-        package_path = prepare_local_package(profile, downloaded_path, package_build_number=package_build_number)
+        package_path = prepare_local_package(
+            profile,
+            downloaded_path,
+            package_build_number=package_build_number,
+            current_build_id=current_build_id,
+        )
         print(f"{LOG_PREFIX} localRunnablePath={package_path}")
 
     print(f"{LOG_PREFIX} ===== Phase 3/5: ensure report directories =====")

@@ -151,18 +151,23 @@ def test_find_windows_launcher_prefers_launcher_name(tmp_path: Path) -> None:
 
 
 def test_prepare_local_package_extracts_windows_zip(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """验证 Windows 包体 zip 会被解压，并返回其中的 Launcher.exe 路径。"""
+    """验证 Windows 包体 zip 会按 package build 与当前 E2E run 隔离解压，并返回 Launcher.exe。"""
     profile = runner.resolve_platform_profile("windows")
     archive_path = tmp_path / "GameRuntime.zip"
     with zipfile.ZipFile(archive_path, "w") as archive:
         archive.writestr("GameRuntime/Launcher.exe", "stub")
 
     monkeypatch.setattr(runner, "PLAYWRIGHT_DIR", tmp_path / "PlaywrightRoot")
-    launcher_path = runner.prepare_local_package(profile, archive_path, package_build_number="35")
+    launcher_path = runner.prepare_local_package(
+        profile,
+        archive_path,
+        package_build_number="35",
+        current_build_id="724",
+    )
 
     assert launcher_path.name == "Launcher.exe"
     assert launcher_path.is_file()
-    assert "GameRuntime-35" in str(launcher_path)
+    assert "GameRuntime-35-run-724" in str(launcher_path)
 
 
 def test_normalize_bool_flag_rejects_invalid_value() -> None:
