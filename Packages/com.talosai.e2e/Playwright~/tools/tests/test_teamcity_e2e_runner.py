@@ -37,11 +37,18 @@ class FakeTextStream:
         """保存当前编码，并按需声明哪些编码在重配置时应当失败。"""
         self.encoding = encoding
         self.fail_encodings = fail_encodings or set()
-        self.calls: list[dict[str, str]] = []
+        self.calls: list[dict[str, object]] = []
 
-    def reconfigure(self, *, encoding: str, errors: str) -> None:
+    def reconfigure(self, *, encoding: str, errors: str, line_buffering: bool, write_through: bool) -> None:
         """记录重配置调用，并按测试场景模拟编码不可用。"""
-        self.calls.append({"encoding": encoding, "errors": errors})
+        self.calls.append(
+            {
+                "encoding": encoding,
+                "errors": errors,
+                "line_buffering": line_buffering,
+                "write_through": write_through,
+            }
+        )
         if encoding in self.fail_encodings:
             raise LookupError(f"unsupported encoding: {encoding}")
 
@@ -165,7 +172,7 @@ def test_normalize_bool_flag_rejects_invalid_value() -> None:
 
 
 def test_configure_console_streams_enables_backslashreplace(monkeypatch: pytest.MonkeyPatch) -> None:
-    """验证标准输出流会启用 backslashreplace，避免不可编码字符中断远端日志。"""
+    """验证标准输出流会启用 backslashreplace 和行缓冲，避免远端日志长时间静默。"""
     stdout = FakeTextStream("gbk")
     stderr = FakeTextStream("gbk")
 
@@ -174,12 +181,26 @@ def test_configure_console_streams_enables_backslashreplace(monkeypatch: pytest.
 
     runner.configure_console_streams()
 
-    assert stdout.calls == [{"encoding": "gbk", "errors": "backslashreplace"}]
-    assert stderr.calls == [{"encoding": "gbk", "errors": "backslashreplace"}]
+    assert stdout.calls == [
+        {
+            "encoding": "gbk",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        }
+    ]
+    assert stderr.calls == [
+        {
+            "encoding": "gbk",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        }
+    ]
 
 
 def test_configure_console_streams_falls_back_to_utf8(monkeypatch: pytest.MonkeyPatch) -> None:
-    """验证当前编码不可用时，会回退到 utf-8 并继续保留 backslashreplace。"""
+    """验证当前编码不可用时，会回退到 utf-8 并继续保留行缓冲与 backslashreplace。"""
     stdout = FakeTextStream("x-unknown", fail_encodings={"x-unknown"})
     stderr = FakeTextStream("x-unknown", fail_encodings={"x-unknown"})
 
@@ -189,12 +210,32 @@ def test_configure_console_streams_falls_back_to_utf8(monkeypatch: pytest.Monkey
     runner.configure_console_streams()
 
     assert stdout.calls == [
-        {"encoding": "x-unknown", "errors": "backslashreplace"},
-        {"encoding": "utf-8", "errors": "backslashreplace"},
+        {
+            "encoding": "x-unknown",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        },
+        {
+            "encoding": "utf-8",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        },
     ]
     assert stderr.calls == [
-        {"encoding": "x-unknown", "errors": "backslashreplace"},
-        {"encoding": "utf-8", "errors": "backslashreplace"},
+        {
+            "encoding": "x-unknown",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        },
+        {
+            "encoding": "utf-8",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        },
     ]
 
 

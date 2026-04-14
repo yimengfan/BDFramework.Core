@@ -342,7 +342,7 @@ def normalize_optional_value(raw_value: object | None) -> str:
 
 
 def configure_console_streams() -> None:
-    """为标准输出流增加编码兜底，避免 Windows agent 因不可编码字符直接中断。"""
+    """为标准输出流增加编码与行缓冲兜底，避免 Windows agent 日志延迟或因编码失败中断。"""
     for stream in (sys.stdout, sys.stderr):
         reconfigure = getattr(stream, "reconfigure", None)
         if not callable(reconfigure):
@@ -355,7 +355,12 @@ def configure_console_streams() -> None:
 
         for candidate_encoding in candidate_encodings:
             try:
-                reconfigure(encoding=candidate_encoding, errors="backslashreplace")
+                reconfigure(
+                    encoding=candidate_encoding,
+                    errors="backslashreplace",
+                    line_buffering=True,
+                    write_through=True,
+                )
                 break
             except (LookupError, OSError, ValueError):
                 continue
