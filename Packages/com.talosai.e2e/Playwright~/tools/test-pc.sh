@@ -96,15 +96,17 @@ cd "${PLAYWRIGHT_DIR}"
 echo ""
 echo ">>> 启动应用..."
 APP_PID=""
+PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E")
+echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
 
 if ${IS_MACOS}; then
     # macOS: 使用 open 命令启动 .app
-    open "${EXE_PATH}"
+    open "${EXE_PATH}" --args "${PLAYER_LAUNCH_ARGS[@]}"
     echo "    ✅ 应用已通过 open 启动"
 else
     # Windows/Linux: 直接运行可执行文件
     # 后台运行
-    "${EXE_PATH}" &
+    "${EXE_PATH}" "${PLAYER_LAUNCH_ARGS[@]}" &
     APP_PID=$!
     echo "    ✅ 应用已启动 (PID: ${APP_PID})"
 fi
