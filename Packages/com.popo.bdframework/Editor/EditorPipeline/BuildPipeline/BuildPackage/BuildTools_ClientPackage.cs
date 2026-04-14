@@ -126,35 +126,59 @@ namespace BDFramework.Editor.BuildPipeline
             }
         }
 
+        /// <summary>
+        /// 判断当前母包构建是否必须先执行 HybridCLR 预处理。
+        /// 只要项目启用了本地 HybridCLR 且未使用 global il2cpp，就必须在真正 BuildPlayer 前完成准备，
+        /// 避免当前仍处于 Editor/Mono 配置时被误判为无需预处理，最终在构建前置检查阶段失败。
+        /// </summary>
+        public static bool ShouldPrepareHybridClrForPackageBuild(
+            bool hybridClrEnabled,
+            bool useGlobalIl2cpp,
+            ScriptingImplementation scriptingBackend,
+            AssetLoadPathType? codeRoot,
+            HotfixCodeRunMode? codeRunMode,
+            out string reason)
+        {
+            var codeRootText = codeRoot.HasValue ? codeRoot.Value.ToString() : "<null>";
+            var codeRunModeText = codeRunMode.HasValue ? codeRunMode.Value.ToString() : "<null>";
+
+            if (!hybridClrEnabled)
+            {
+                reason = $"skip CodeRoot={codeRootText} CodeRunMode={codeRunModeText} scriptingBackend={scriptingBackend} hybridClrEnabled=False useGlobalIl2cpp={useGlobalIl2cpp}";
+                return false;
+            }
+
+            if (useGlobalIl2cpp)
+            {
+                reason = $"skip CodeRoot={codeRootText} CodeRunMode={codeRunModeText} scriptingBackend={scriptingBackend} hybridClrEnabled=True useGlobalIl2cpp=True";
+                return false;
+            }
+
+            if (codeRoot.HasValue && codeRunMode.HasValue && codeRoot.Value != AssetLoadPathType.Editor && codeRunMode.Value == HotfixCodeRunMode.HyCLR)
+            {
+                reason = $"gameConfig CodeRoot={codeRootText} CodeRunMode={codeRunModeText}";
+                return true;
+            }
+
+            reason = $"hybridClrPackage enabled for package build CodeRoot={codeRootText} CodeRunMode={codeRunModeText} scriptingBackend={scriptingBackend}";
+            return true;
+        }
+
+        /// <summary>
+        /// 根据当前工程配置判断母包构建前是否需要执行 HybridCLR 预处理。
+        /// </summary>
         static bool ShouldPrepareHybridClrForBuild(BuildTargetGroup buildTargetGroup, out string reason)
         {
             var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             var scriptingBackend = PlayerSettings.GetScriptingBackend(buildTargetGroup);
             var hybridClrSettings = HybridCLRSettings.Instance;
-
-            var matchesGameConfig = baseConfig != null
-                                    && baseConfig.CodeRoot != AssetLoadPathType.Editor
-                                    && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR;
-            if (matchesGameConfig)
-            {
-                reason = $"gameConfig CodeRoot={baseConfig.CodeRoot} CodeRunMode={baseConfig.CodeRunMode}";
-                return true;
-            }
-
-            var packageRequiresPreparedHybridClr = hybridClrSettings != null
-                                                   && hybridClrSettings.enable
-                                                   && !hybridClrSettings.useGlobalIl2cpp
-                                                   && scriptingBackend == ScriptingImplementation.IL2CPP;
-            if (packageRequiresPreparedHybridClr)
-            {
-                var codeRoot = baseConfig != null ? baseConfig.CodeRoot.ToString() : "<null>";
-                var codeRunMode = baseConfig != null ? baseConfig.CodeRunMode.ToString() : "<null>";
-                reason = $"hybridClrPackage enabled for IL2CPP build CodeRoot={codeRoot} CodeRunMode={codeRunMode}";
-                return true;
-            }
-
-            reason = $"skip CodeRoot={(baseConfig != null ? baseConfig.CodeRoot.ToString() : "<null>")} CodeRunMode={(baseConfig != null ? baseConfig.CodeRunMode.ToString() : "<null>")} scriptingBackend={scriptingBackend} hybridClrEnabled={(hybridClrSettings != null ? hybridClrSettings.enable.ToString() : "<null>")} useGlobalIl2cpp={(hybridClrSettings != null ? hybridClrSettings.useGlobalIl2cpp.ToString() : "<null>")}";
-            return false;
+            return ShouldPrepareHybridClrForPackageBuild(
+                hybridClrSettings != null && hybridClrSettings.enable,
+                hybridClrSettings != null && hybridClrSettings.useGlobalIl2cpp,
+                scriptingBackend,
+                baseConfig != null ? (AssetLoadPathType?)baseConfig.CodeRoot : null,
+                baseConfig != null ? (HotfixCodeRunMode?)baseConfig.CodeRunMode : null,
+                out reason);
         }
 
         static BuildTargetGroup ResolveBuildTargetGroup(BuildTarget buildTarget)

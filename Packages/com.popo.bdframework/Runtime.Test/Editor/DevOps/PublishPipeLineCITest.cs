@@ -71,6 +71,10 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.PublishPipeLineCI_IsDebugBuildRequested_ResolvesSharedFlag),
                 (nameof(PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
                     testInstance.PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
+                (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
+                    testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
+                (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
+                    testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
                     testInstance.AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout),
@@ -242,6 +246,54 @@ namespace BDFramework.EditorTest.DevOps
             Assert.That(
                 PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-clientVersion", "0.1.1" }),
                 Is.EqualTo(BuildTools_ClientPackage.BuildMode.Release));
+        }
+
+        /// <summary>
+        /// 验证只要启用了本地 HybridCLR 打包模式，即使当前仍是 Editor + Mono 配置，也必须先执行预处理。
+        /// 这覆盖 Windows Debug 母包在 TeamCity 上若跳过 PreBuild 就会被 HybridCLR 前置检查拦截的回归场景。
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares()
+        {
+            var shouldPrepare = BuildTools_ClientPackage.ShouldPrepareHybridClrForPackageBuild(
+                hybridClrEnabled: true,
+                useGlobalIl2cpp: false,
+                scriptingBackend: ScriptingImplementation.Mono2x,
+                codeRoot: AssetLoadPathType.Editor,
+                codeRunMode: HotfixCodeRunMode.HyCLR,
+                out var reason);
+
+            Assert.That(shouldPrepare, Is.True);
+            Assert.That(reason, Does.Contain("hybridClrPackage enabled for package build"));
+        }
+
+        /// <summary>
+        /// 验证当 HybridCLR 未启用或明确走 global il2cpp 时，母包构建不会触发额外 HybridCLR 预处理。
+        /// 这保证新的放宽规则只覆盖真正需要本地 HybridCLR 产物的包体构建场景。
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips()
+        {
+            var shouldPrepareWhenDisabled = BuildTools_ClientPackage.ShouldPrepareHybridClrForPackageBuild(
+                hybridClrEnabled: false,
+                useGlobalIl2cpp: false,
+                scriptingBackend: ScriptingImplementation.IL2CPP,
+                codeRoot: AssetLoadPathType.Hotfix,
+                codeRunMode: HotfixCodeRunMode.HyCLR,
+                out var disabledReason);
+
+            var shouldPrepareWhenGlobalIl2cpp = BuildTools_ClientPackage.ShouldPrepareHybridClrForPackageBuild(
+                hybridClrEnabled: true,
+                useGlobalIl2cpp: true,
+                scriptingBackend: ScriptingImplementation.IL2CPP,
+                codeRoot: AssetLoadPathType.Hotfix,
+                codeRunMode: HotfixCodeRunMode.HyCLR,
+                out var globalReason);
+
+            Assert.That(shouldPrepareWhenDisabled, Is.False);
+            Assert.That(disabledReason, Does.Contain("hybridClrEnabled=False"));
+            Assert.That(shouldPrepareWhenGlobalIl2cpp, Is.False);
+            Assert.That(globalReason, Does.Contain("useGlobalIl2cpp=True"));
         }
 
         /// <summary>
