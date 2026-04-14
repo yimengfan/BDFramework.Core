@@ -784,9 +784,9 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG
-    Standalone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG
-    iPhone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG
+    Android: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
+    Standalone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
+    iPhone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
