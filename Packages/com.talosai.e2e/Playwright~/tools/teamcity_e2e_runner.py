@@ -13,6 +13,7 @@ import argparse
 import base64
 import io
 import json
+import ntpath
 import os
 from pathlib import Path, PurePosixPath
 import shutil
@@ -189,6 +190,19 @@ def normalize_shell_path(path: Path) -> str:
     return str(path.resolve()).replace("\\", "/")
 
 
+def normalize_bash_path(path: Path) -> str:
+    """把路径转换成 Git Bash 可直接消费的形式，Windows 盘符路径会被转成 /d/...。"""
+    normalized_path = normalize_shell_path(path)
+    drive, tail = ntpath.splitdrive(normalized_path)
+    if not drive:
+        return normalized_path
+
+    normalized_tail = tail.replace("\\", "/")
+    if not normalized_tail.startswith("/"):
+        normalized_tail = "/" + normalized_tail
+    return f"/{drive[0].lower()}{normalized_tail}"
+
+
 def resolve_node_tooling_from_home(home: Path) -> NodeTooling | None:
     """从一个候选 Node 安装目录里解析 node 与 npm 可执行文件。"""
     resolved_home = home.expanduser()
@@ -282,9 +296,9 @@ def ensure_node_tooling() -> NodeTooling:
 def build_test_tool_environment(node_tooling: NodeTooling, *, test_file: str | None = None) -> dict[str, str]:
     """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
-    environment["TALOS_NODEJS_HOME"] = normalize_shell_path(node_tooling.node_home)
-    environment["NODE_BIN"] = normalize_shell_path(node_tooling.node_bin)
-    environment["NPM_BIN"] = normalize_shell_path(node_tooling.npm_bin)
+    environment["TALOS_NODEJS_HOME"] = normalize_bash_path(node_tooling.node_home)
+    environment["NODE_BIN"] = normalize_bash_path(node_tooling.node_bin)
+    environment["NPM_BIN"] = normalize_bash_path(node_tooling.npm_bin)
     normalized_test_file = normalize_optional_value(test_file)
     if normalized_test_file:
         environment["PLAYWRIGHT_TEST_FILE"] = normalized_test_file
@@ -881,9 +895,9 @@ def build_test_command(profile: PlatformProfile, package_path: Path, args: argpa
     script_path = TOOL_DIR / profile.tool_script_name
     command = [
         resolve_bash_command(),
-        normalize_shell_path(script_path),
+        normalize_bash_path(script_path),
         profile.package_arg_name,
-        normalize_shell_path(package_path),
+        normalize_bash_path(package_path),
     ]
     command.extend(["--port", str(args.unity_port)])
 
@@ -1004,9 +1018,9 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     """执行平台对应的 Playwright 工具脚本。"""
     command = build_test_command(profile, package_path, args)
     node_tooling = ensure_node_tooling()
-    print(f"{LOG_PREFIX} nodeHome={normalize_shell_path(node_tooling.node_home)}")
-    print(f"{LOG_PREFIX} nodeBin={normalize_shell_path(node_tooling.node_bin)}")
-    print(f"{LOG_PREFIX} npmBin={normalize_shell_path(node_tooling.npm_bin)}")
+    print(f"{LOG_PREFIX} nodeHome={normalize_bash_path(node_tooling.node_home)}")
+    print(f"{LOG_PREFIX} nodeBin={normalize_bash_path(node_tooling.node_bin)}")
+    print(f"{LOG_PREFIX} npmBin={normalize_bash_path(node_tooling.npm_bin)}")
     print(f"{LOG_PREFIX} testCommand={' '.join(command)}")
     completed = subprocess.run(
         command,

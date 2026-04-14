@@ -225,6 +225,15 @@ def test_ensure_windows_portable_node_tooling_extracts_downloaded_zip(tmp_path: 
     assert tooling.npm_bin.name == "npm.cmd"
 
 
+def test_normalize_bash_path_converts_windows_drive_prefix(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 Windows 盘符路径会被转换成 Git Bash 可直接消费的 /d/... 形式。"""
+    monkeypatch.setattr(runner, "normalize_shell_path", lambda _path: "D:/TeamcityBuildAgent/work/test-pc.sh")
+
+    normalized = runner.normalize_bash_path(Path("ignored"))
+
+    assert normalized == "/d/TeamcityBuildAgent/work/test-pc.sh"
+
+
 def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     """验证 runner 会把 bash 脚本与包体路径归一化为 shell 友好格式，并避免把测试文件直接放进命令行。"""
 
@@ -244,9 +253,9 @@ def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch:
 
     assert command == [
         "bash",
-        runner.normalize_shell_path(runner.TOOL_DIR / "test-pc.sh"),
+        runner.normalize_bash_path(runner.TOOL_DIR / "test-pc.sh"),
         "--exe",
-        runner.normalize_shell_path(package_path),
+        runner.normalize_bash_path(package_path),
         "--port",
         "10002",
         "--host",
@@ -268,6 +277,9 @@ def test_build_test_tool_environment_includes_playwright_test_file(tmp_path: Pat
         test_file="tests/基础启动流程-e2e.spec.ts",
     )
 
+    assert environment["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
+    assert environment["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
+    assert environment["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)
     assert environment["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
 
 
@@ -309,9 +321,9 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     assert exit_code == 0
     assert captured["cwd"] == runner.REPO_ROOT
     assert captured["check"] is False
-    assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_shell_path(tooling.node_home)
-    assert captured["env"]["NODE_BIN"] == runner.normalize_shell_path(tooling.node_bin)
-    assert captured["env"]["NPM_BIN"] == runner.normalize_shell_path(tooling.npm_bin)
+    assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
+    assert captured["env"]["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
+    assert captured["env"]["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)
     assert captured["env"]["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
 
 
