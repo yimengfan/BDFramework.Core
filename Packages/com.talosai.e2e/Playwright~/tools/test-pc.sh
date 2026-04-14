@@ -106,10 +106,14 @@ if ${IS_MACOS}; then
     echo "    ✅ 应用已通过 open 启动"
 else
     # Windows/Linux: 直接运行可执行文件
-    # 后台运行
-    "${EXE_PATH}" "${PLAYER_LAUNCH_ARGS[@]}" &
+    # 先切到可执行文件所在目录，避免 Git Bash 启动 Windows exe 时把当前目录置空。
+    EXE_DIR="$(dirname "${EXE_PATH}")"
+    EXE_NAME="$(basename "${EXE_PATH}")"
+    pushd "${EXE_DIR}" >/dev/null
+    "./${EXE_NAME}" "${PLAYER_LAUNCH_ARGS[@]}" &
     APP_PID=$!
-    echo "    ✅ 应用已启动 (PID: ${APP_PID})"
+    popd >/dev/null
+    echo "    ✅ 应用已启动 (PID: ${APP_PID}, cwd: ${EXE_DIR})"
 fi
 
 # ======== 等待 TCP 服务就绪 ========
