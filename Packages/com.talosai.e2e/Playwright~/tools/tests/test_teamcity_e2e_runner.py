@@ -295,17 +295,23 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     class FakeCompletedProcess:
         """模拟 subprocess.run 的最小返回值，只暴露 returncode。"""
 
-        def __init__(self, returncode: int) -> None:
+        def __init__(self, returncode: int, stdout: str) -> None:
             """保存测试期望的退出码。"""
             self.returncode = returncode
+            self.stdout = stdout
 
-    def fake_run(command, cwd, check, env):
+    def fake_run(command, cwd, check, env, stdout, stderr, text, encoding, errors):
         """记录 runner 传给 subprocess 的参数，供断言环境变量是否已注入。"""
         captured["command"] = command
         captured["cwd"] = cwd
         captured["check"] = check
         captured["env"] = env
-        return FakeCompletedProcess(returncode=0)
+        captured["stdout"] = stdout
+        captured["stderr"] = stderr
+        captured["text"] = text
+        captured["encoding"] = encoding
+        captured["errors"] = errors
+        return FakeCompletedProcess(returncode=0, stdout="tool output\n")
 
     monkeypatch.setattr(runner, "ensure_node_tooling", lambda: tooling)
     monkeypatch.setattr(runner, "build_test_command", lambda profile, package_path, args: ["bash", "tool.sh"])
@@ -321,6 +327,11 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     assert exit_code == 0
     assert captured["cwd"] == runner.REPO_ROOT
     assert captured["check"] is False
+    assert captured["stdout"] is runner.subprocess.PIPE
+    assert captured["stderr"] is runner.subprocess.STDOUT
+    assert captured["text"] is True
+    assert captured["encoding"] == "utf-8"
+    assert captured["errors"] == "replace"
     assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
     assert captured["env"]["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
     assert captured["env"]["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)

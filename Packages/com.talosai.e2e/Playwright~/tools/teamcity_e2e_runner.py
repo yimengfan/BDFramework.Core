@@ -1027,7 +1027,14 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
         cwd=REPO_ROOT,
         check=False,
         env=build_test_tool_environment(node_tooling, test_file=args.test_file),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
     )
+    if completed.stdout:
+        print(completed.stdout, end="" if completed.stdout.endswith("\n") else "\n")
     return int(completed.returncode)
 
 
