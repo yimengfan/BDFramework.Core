@@ -180,6 +180,26 @@ def normalize_optional_value(raw_value: object | None) -> str:
     return str(raw_value or "").strip()
 
 
+def configure_console_streams() -> None:
+    """为标准输出流增加编码兜底，避免 Windows agent 因不可编码字符直接中断。"""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if not callable(reconfigure):
+            continue
+
+        current_encoding = normalize_optional_value(getattr(stream, "encoding", "")) or "utf-8"
+        candidate_encodings = [current_encoding]
+        if current_encoding.lower() != "utf-8":
+            candidate_encodings.append("utf-8")
+
+        for candidate_encoding in candidate_encodings:
+            try:
+                reconfigure(encoding=candidate_encoding, errors="backslashreplace")
+                break
+            except (LookupError, OSError, ValueError):
+                continue
+
+
 def normalize_required_value(raw_value: object | None, *, field_name: str) -> str:
     """把必填文本统一规整为去空白字符串，并在缺失时抛错。"""
     normalized = normalize_optional_value(raw_value)
@@ -716,6 +736,7 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
 
 def main() -> int:
     """执行 Talos TeamCity E2E 的完整编排流程。"""
+    configure_console_streams()
     args = parse_args()
     profile = resolve_platform_profile(args.platform)
     args.build_debug = normalize_bool_flag(args.build_debug)

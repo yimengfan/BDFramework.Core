@@ -30,6 +30,22 @@ sys.modules[MODULE_NAME] = runner
 MODULE_SPEC.loader.exec_module(runner)
 
 
+class FakeTextStream:
+    """模拟可重配编码的文本流，用于验证 Windows 控制台日志兜底策略。"""
+
+    def __init__(self, encoding: str | None, *, fail_encodings: set[str] | None = None) -> None:
+        """保存当前编码，并按需声明哪些编码在重配置时应当失败。"""
+        self.encoding = encoding
+        self.fail_encodings = fail_encodings or set()
+        self.calls: list[dict[str, str]] = []
+
+    def reconfigure(self, *, encoding: str, errors: str) -> None:
+        """记录重配置调用，并按测试场景模拟编码不可用。"""
+        self.calls.append({"encoding": encoding, "errors": errors})
+        if encoding in self.fail_encodings:
+            raise LookupError(f"unsupported encoding: {encoding}")
+
+
 def test_resolve_platform_profile_returns_windows_defaults() -> None:
     """验证 Windows 平台会映射到默认母包构建任务与 PC 工具脚本。"""
     profile = runner.resolve_platform_profile("windows")
@@ -112,3 +128,37 @@ def test_normalize_bool_flag_rejects_invalid_value() -> None:
     """验证非法的 debug 开关值会被立即拒绝。"""
     with pytest.raises(runner.TalosTeamCityE2EError, match="unsupported value"):
         runner.normalize_bool_flag("maybe")
+
+
+def test_configure_console_streams_enables_backslashreplace(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证标准输出流会启用 backslashreplace，避免不可编码字符中断远端日志。"""
+    stdout = FakeTextStream("gbk")
+    stderr = FakeTextStream("gbk")
+
+    monkeypatch.setattr(runner.sys, "stdout", stdout)
+    monkeypatch.setattr(runner.sys, "stderr", stderr)
+
+    runner.configure_console_streams()
+
+    assert stdout.calls == [{"encoding": "gbk", "errors": "backslashreplace"}]
+    assert stderr.calls == [{"encoding": "gbk", "errors": "backslashreplace"}]
+
+
+def test_configure_console_streams_falls_back_to_utf8(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证当前编码不可用时，会回退到 utf-8 并继续保留 backslashreplace。"""
+    stdout = FakeTextStream("x-unknown", fail_encodings={"x-unknown"})
+    stderr = FakeTextStream("x-unknown", fail_encodings={"x-unknown"})
+
+    monkeypatch.setattr(runner.sys, "stdout", stdout)
+    monkeypatch.setattr(runner.sys, "stderr", stderr)
+
+    runner.configure_console_streams()
+
+    assert stdout.calls == [
+        {"encoding": "x-unknown", "errors": "backslashreplace"},
+        {"encoding": "utf-8", "errors": "backslashreplace"},
+    ]
+    assert stderr.calls == [
+        {"encoding": "x-unknown", "errors": "backslashreplace"},
+        {"encoding": "utf-8", "errors": "backslashreplace"},
+    ]
