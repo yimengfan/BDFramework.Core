@@ -42,5 +42,7 @@ def test_pc_tool_keeps_force_e2e_and_player_log_streaming() -> None:
     assert '"-talosForceE2E"' in tool_content
     assert '"-logFile"' in tool_content
     assert '"-"' in tool_content
-    assert 'EXE_DIR="$(dirname "${EXE_PATH}")"' in tool_content
-    assert 'pushd "${EXE_DIR}" >/dev/null' in tool_content
+    assert 'IS_WINDOWS_GIT_BASH=false' in tool_content
+    assert 'Start-Process -FilePath' in tool_content
+    assert '-WorkingDirectory' in tool_content
+    assert 'taskkill.exe //PID ${APP_PID}' in tool_content

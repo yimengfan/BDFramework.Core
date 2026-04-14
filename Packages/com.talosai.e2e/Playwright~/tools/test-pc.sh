@@ -33,6 +33,7 @@ UNITY_HOST="${UNITY_HOST:-127.0.0.1}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 IS_MACOS=false
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
+IS_WINDOWS_GIT_BASH=false
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -61,6 +62,10 @@ done
 if [[ "$(uname -s)" == "Darwin" && "${EXE_PATH}" == *.app ]]; then
     IS_MACOS=true
 fi
+
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*) IS_WINDOWS_GIT_BASH=true ;;
+esac
 
 echo "============================================"
 echo "  Talos E2E — PC 模式测试"
@@ -106,14 +111,26 @@ if ${IS_MACOS}; then
     echo "    ✅ 应用已通过 open 启动"
 else
     # Windows/Linux: 直接运行可执行文件
-    # 先切到可执行文件所在目录，避免 Git Bash 启动 Windows exe 时把当前目录置空。
-    EXE_DIR="$(dirname "${EXE_PATH}")"
-    EXE_NAME="$(basename "${EXE_PATH}")"
-    pushd "${EXE_DIR}" >/dev/null
-    "./${EXE_NAME}" "${PLAYER_LAUNCH_ARGS[@]}" &
-    APP_PID=$!
-    popd >/dev/null
-    echo "    ✅ 应用已启动 (PID: ${APP_PID}, cwd: ${EXE_DIR})"
+    if ${IS_WINDOWS_GIT_BASH} && command -v powershell.exe >/dev/null 2>&1 && command -v cygpath >/dev/null 2>&1; then
+        # Git Bash 直接拉起 Windows exe 时会把当前目录丢成空字符串，这里改用 PowerShell 显式指定 WorkingDirectory。
+        EXE_PATH_WIN="$(cygpath -w "${EXE_PATH}")"
+        EXE_DIR_WIN="$(cygpath -w "$(dirname "${EXE_PATH}")")"
+        APP_PID="$({
+            powershell.exe -NoProfile -Command "\
+                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-logFile','-') -PassThru; \
+                [Console]::Out.Write(\$proc.Id)\
+            "
+        } | tr -d '\r')"
+        echo "    ✅ 应用已启动 (PID: ${APP_PID}, cwd: ${EXE_DIR_WIN})"
+    else
+        EXE_DIR="$(dirname "${EXE_PATH}")"
+        EXE_NAME="$(basename "${EXE_PATH}")"
+        pushd "${EXE_DIR}" >/dev/null
+        "./${EXE_NAME}" "${PLAYER_LAUNCH_ARGS[@]}" &
+        APP_PID=$!
+        popd >/dev/null
+        echo "    ✅ 应用已启动 (PID: ${APP_PID}, cwd: ${EXE_DIR})"
+    fi
 fi
 
 # ======== 等待 TCP 服务就绪 ========
@@ -124,10 +141,18 @@ WAITED=0
 
 while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
     # 检查进程（如果知道 PID）
-    if [[ -n "${APP_PID}" ]] && ! kill -0 ${APP_PID} 2>/dev/null; then
-        echo ""
-        echo "❌ 应用进程已退出"
-        exit 1
+    if [[ -n "${APP_PID}" ]]; then
+        if ${IS_WINDOWS_GIT_BASH} && command -v powershell.exe >/dev/null 2>&1; then
+            if ! powershell.exe -NoProfile -Command "exit [int](-not (Get-Process -Id ${APP_PID} -ErrorAction SilentlyContinue))" >/dev/null 2>&1; then
+                echo ""
+                echo "❌ 应用进程已退出"
+                exit 1
+            fi
+        elif ! kill -0 ${APP_PID} 2>/dev/null; then
+            echo ""
+            echo "❌ 应用进程已退出"
+            exit 1
+        fi
     fi
 
     if probe_talos_tcp_port "${UNITY_HOST}" "${UNITY_PORT}"; then
@@ -142,7 +167,13 @@ done
 if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo ""
     echo "❌ 等待 TCP 服务超时 (${MAX_WAIT}s)"
-    [[ -n "${APP_PID}" ]] && kill ${APP_PID} 2>/dev/null || true
+    if [[ -n "${APP_PID}" ]]; then
+        if ${IS_WINDOWS_GIT_BASH} && command -v taskkill.exe >/dev/null 2>&1; then
+            taskkill.exe //PID ${APP_PID} //T >/dev/null 2>&1 || true
+        else
+            kill ${APP_PID} 2>/dev/null || true
+        fi
+    fi
     exit 1
 fi
 
@@ -178,12 +209,17 @@ TEST_EXIT_CODE=${PIPESTATUS[0]}
 echo ""
 echo ">>> 关闭应用..."
 if [[ -n "${APP_PID}" ]]; then
-    kill ${APP_PID} 2>/dev/null || true
-    for _ in {1..10}; do
-        kill -0 ${APP_PID} 2>/dev/null || break
-        sleep 1
-    done
-    kill -9 ${APP_PID} 2>/dev/null || true
+    if ${IS_WINDOWS_GIT_BASH} && command -v taskkill.exe >/dev/null 2>&1; then
+        taskkill.exe //PID ${APP_PID} >/dev/null 2>&1 || true
+        taskkill.exe //F //PID ${APP_PID} //T >/dev/null 2>&1 || true
+    else
+        kill ${APP_PID} 2>/dev/null || true
+        for _ in {1..10}; do
+            kill -0 ${APP_PID} 2>/dev/null || break
+            sleep 1
+        done
+        kill -9 ${APP_PID} 2>/dev/null || true
+    fi
 fi
 
 # ======== 结果 ========
