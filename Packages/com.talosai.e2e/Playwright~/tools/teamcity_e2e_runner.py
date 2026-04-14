@@ -1026,20 +1026,22 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     print(f"{LOG_PREFIX} nodeBin={normalize_bash_path(node_tooling.node_bin)}")
     print(f"{LOG_PREFIX} npmBin={normalize_bash_path(node_tooling.npm_bin)}")
     print(f"{LOG_PREFIX} testCommand={' '.join(command)}")
-    completed = subprocess.run(
+    completed = subprocess.Popen(
         command,
         cwd=REPO_ROOT,
-        check=False,
         env=build_test_tool_environment(node_tooling, test_file=args.test_file),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
         encoding="utf-8",
         errors="replace",
+        bufsize=1,
     )
     if completed.stdout:
-        print(completed.stdout, end="" if completed.stdout.endswith("\n") else "\n")
-    return int(completed.returncode)
+        # 逐行转发平台工具输出，避免 TeamCity 在长步骤中长时间看不到当前阶段。
+        for output_line in completed.stdout:
+            print(output_line, end="" if output_line.endswith("\n") else "\n")
+    return int(completed.wait())
 
 
 def main() -> int:

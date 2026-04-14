@@ -66,6 +66,19 @@ class FakeBinaryResponse:
         return self.payload
 
 
+class FakePopenProcess:
+    """模拟逐行输出的平台工具进程，用于验证 TeamCity runner 的实时日志转发。"""
+
+    def __init__(self, lines: list[str], return_code: int) -> None:
+        """保存预设输出行和返回码，模拟 Popen 接口。"""
+        self.stdout = lines
+        self.return_code = return_code
+
+    def wait(self) -> int:
+        """返回预设退出码，模拟子进程结束。"""
+        return self.return_code
+
+
 def test_resolve_platform_profile_returns_windows_defaults() -> None:
     """验证 Windows 平台会映射到默认母包构建任务与 PC 工具脚本。"""
     profile = runner.resolve_platform_profile("windows")
@@ -284,6 +297,42 @@ def test_build_test_tool_environment_includes_playwright_test_file(tmp_path: Pat
     assert environment["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
 
 
+def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """验证 TeamCity runner 会逐行转发平台工具输出，避免长时间等待时主日志空白。"""
+
+    class FakeArgs:
+        """提供 run_test_tool 所需的最小参数集合。"""
+
+        test_file = "tests/基础启动流程-e2e.spec.ts"
+        unity_port = 10002
+        unity_host = "127.0.0.1"
+        adb_serial = ""
+
+    fake_tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+    fake_tooling.node_home.mkdir(parents=True, exist_ok=True)
+    for tooling_path in (fake_tooling.node_bin, fake_tooling.npm_bin):
+        tooling_path.write_text("stub", encoding="utf-8")
+
+    monkeypatch.setattr(runner, "ensure_node_tooling", lambda: fake_tooling)
+    monkeypatch.setattr(runner, "build_test_command", lambda *_args, **_kwargs: ["bash", "tools/test-pc.sh"])
+    monkeypatch.setattr(
+        runner.subprocess,
+        "Popen",
+        lambda *args, **kwargs: FakePopenProcess([">>> first line\n", ">>> second line\n"], 0),
+    )
+
+    exit_code = runner.run_test_tool(runner.resolve_platform_profile("windows"), tmp_path / "Launcher.exe", FakeArgs())
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert ">>> first line" in captured.out
+    assert ">>> second line" in captured.out
+
+
 def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     """验证平台工具脚本执行前，runner 会把 Node/npm 环境变量显式注入子进程。"""
     tooling = runner.NodeTooling(
@@ -293,30 +342,22 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     )
     captured: dict[str, object] = {}
 
-    class FakeCompletedProcess:
-        """模拟 subprocess.run 的最小返回值，只暴露 returncode。"""
-
-        def __init__(self, returncode: int, stdout: str) -> None:
-            """保存测试期望的退出码。"""
-            self.returncode = returncode
-            self.stdout = stdout
-
-    def fake_run(command, cwd, check, env, stdout, stderr, text, encoding, errors):
+    def fake_popen(command, cwd, env, stdout, stderr, text, encoding, errors, bufsize):
         """记录 runner 传给 subprocess 的参数，供断言环境变量是否已注入。"""
         captured["command"] = command
         captured["cwd"] = cwd
-        captured["check"] = check
         captured["env"] = env
         captured["stdout"] = stdout
         captured["stderr"] = stderr
         captured["text"] = text
         captured["encoding"] = encoding
         captured["errors"] = errors
-        return FakeCompletedProcess(returncode=0, stdout="tool output\n")
+        captured["bufsize"] = bufsize
+        return FakePopenProcess(["tool output\n"], 0)
 
     monkeypatch.setattr(runner, "ensure_node_tooling", lambda: tooling)
     monkeypatch.setattr(runner, "build_test_command", lambda profile, package_path, args: ["bash", "tool.sh"])
-    monkeypatch.setattr(runner.subprocess, "run", fake_run)
+    monkeypatch.setattr(runner.subprocess, "Popen", fake_popen)
 
     class FakeArgs:
         """提供 run_test_tool 透传测试文件所需的最小参数集合。"""
@@ -327,12 +368,12 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
 
     assert exit_code == 0
     assert captured["cwd"] == runner.REPO_ROOT
-    assert captured["check"] is False
     assert captured["stdout"] is runner.subprocess.PIPE
     assert captured["stderr"] is runner.subprocess.STDOUT
     assert captured["text"] is True
     assert captured["encoding"] == "utf-8"
     assert captured["errors"] == "replace"
+    assert captured["bufsize"] == 1
     assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
     assert captured["env"]["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
     assert captured["env"]["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)
