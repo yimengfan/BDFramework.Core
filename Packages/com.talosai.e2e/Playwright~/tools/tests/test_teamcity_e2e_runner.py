@@ -138,10 +138,11 @@ def test_prepare_local_package_extracts_windows_zip(tmp_path: Path, monkeypatch:
         archive.writestr("GameRuntime/Launcher.exe", "stub")
 
     monkeypatch.setattr(runner, "PLAYWRIGHT_DIR", tmp_path / "PlaywrightRoot")
-    launcher_path = runner.prepare_local_package(profile, archive_path)
+    launcher_path = runner.prepare_local_package(profile, archive_path, package_build_number="35")
 
     assert launcher_path.name == "Launcher.exe"
     assert launcher_path.is_file()
+    assert "GameRuntime-35" in str(launcher_path)
 
 
 def test_normalize_bool_flag_rejects_invalid_value() -> None:
