@@ -156,6 +156,15 @@ namespace BDFramework.Editor.DevOps
         }
 
         /// <summary>
+        /// 判断 Talos 调试母包构建是否需要同时注入 DEBUG 宏。
+        /// 对 Player 包体必须保留该宏，否则运行时桥接层上的 Conditional("DEBUG") E2E 启动入口会在编译期被裁掉。
+        /// </summary>
+        static public bool ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode buildMode)
+        {
+            return buildMode == BuildTools_ClientPackage.BuildMode.Debug;
+        }
+
+        /// <summary>
         /// 执行指定平台的母包 BatchMode 构建。
         /// 当显式开启 Debug 时，沿用现有母包 Debug 模式，并额外补齐 Talos E2E 编译宏。
         /// </summary>
@@ -163,11 +172,12 @@ namespace BDFramework.Editor.DevOps
         {
             var buildMode = ResolveClientPackageBuildModeForBatchMode();
             var enableTalosDebug = buildMode == BuildTools_ClientPackage.BuildMode.Debug;
-            Debug.Log($"【CI】BuildClientPackage Target:{buildTarget} BuildMode:{buildMode} TalosDebug:{enableTalosDebug}");
+            var includeDebugSymbol = ShouldIncludeDebugSymbolForTalosClientPackageBuild(buildMode);
+            Debug.Log($"【CI】BuildClientPackage Target:{buildTarget} BuildMode:{buildMode} TalosDebug:{enableTalosDebug} IncludeDebugSymbol:{includeDebugSymbol}");
 
             if (enableTalosDebug)
             {
-                using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: false))
+                using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: includeDebugSymbol))
                 {
                     BuildTools_ClientPackage.BuildClientPackageForBatchMode(buildTarget, buildMode);
                 }

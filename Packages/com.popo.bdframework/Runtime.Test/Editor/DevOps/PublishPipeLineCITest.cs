@@ -71,6 +71,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.PublishPipeLineCI_IsDebugBuildRequested_ResolvesSharedFlag),
                 (nameof(PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
                     testInstance.PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
+                (nameof(PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugOnly),
+                    testInstance.PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugOnly),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
@@ -246,6 +248,21 @@ namespace BDFramework.EditorTest.DevOps
             Assert.That(
                 PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-clientVersion", "0.1.1" }),
                 Is.EqualTo(BuildTools_ClientPackage.BuildMode.Release));
+        }
+
+        /// <summary>
+        /// 验证 Talos 调试母包会同时注入 DEBUG 宏，避免运行时桥接层的 Conditional("DEBUG") 入口被编译期裁掉。
+        /// Release 包则必须保持现状，避免把 E2E 启动入口带进非调试包体。
+        /// </summary>
+        [Test]
+        public void PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugOnly()
+        {
+            Assert.That(
+                PublishPipeLineCI.ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode.Debug),
+                Is.True);
+            Assert.That(
+                PublishPipeLineCI.ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode.Release),
+                Is.False);
         }
 
         /// <summary>
