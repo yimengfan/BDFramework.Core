@@ -64,61 +64,12 @@ namespace BDFramework
             SqliteLoder.Init(Config.SQLRoot, firstLoadDir, secondLoadDir);
             ScriptLoder.Start();
 
-            // Phase 5: 尝试通过反射启动 E2E 测试系统。
-            // 使用反射避免直接依赖 Talos.E2E 程序集，
-            // 与 QuitFramework() 中的反射模式保持一致。
-            // 当 Talos.E2E 包不存在或非 Debug 构建时，此调用安全无副作用。
-            TryStartE2EFramework();
+
         }
 
         #endregion
 
-        #region E2E 测试自动集成
-
-        /// <summary>
-        /// 通过反射尝试调用 Talos.E2E.E2EAutoInit.CheckAndLaunch()。
-        /// 在热更 DLL 加载 + 框架初始化完成后调用，确保 E2E 测试可以正确发现热更类型。
-        /// 如果 Talos.E2E 包不存在，或非 Debug 构建且无 -talosForceE2E 参数，则静默跳过。
-        /// 只有 debug 模式生效，避免发布版本带上该功能！！！！
-        /// Editor 和真机统一走此入口：
-        /// - 真机：E2EAutoInit → LaunchE2E（MonoBehaviour 模式）
-        /// - Editor PlayMode：E2EAutoInit → LaunchE2EStatic（静态模式，由 DidReloadScripts 管理）
-        /// - Editor 非进 PlayMode：由 LaunchE2EEditorOnly 直接启动静态 TCP，不经此路径
-        /// </summary>
-        [Conditional("DEBUG")]
-        static private void TryStartE2EFramework()
-        {
-            try
-            {
-                // 查找 Talos.E2E 程序集中的 E2EAutoInit 类型
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    var type = assembly.GetType("Talos.E2E.E2EAutoInit");
-                    if (type == null) continue;
-
-                    var method = type.GetMethod("CheckAndLaunch",
-                        BindingFlags.Public | BindingFlags.Static);
-                    if (method == null)
-                    {
-                        UnityEngine.Debug.LogWarning("[BDLauncherBridge] 找到 E2EAutoInit 但无 CheckAndLaunch 方法");
-                        return;
-                    }
-
-                    method.Invoke(null, new object[] { 10002 });
-                    UnityEngine.Debug.Log("[BDLauncherBridge] E2E 测试自动检测已触发");
-                    return;
-                }
-
-                // Talos.E2E 包未安装，正常跳过
-            }
-            catch (System.Exception ex)
-            {
-                // E2E 自动检测失败不影响框架正常启动
-                UnityEngine.Debug.LogWarning($"[BDLauncherBridge] E2E 自动检测失败（不影响启动）: {ex.Message}");
-            }
-        }
-
-        #endregion
+    
 
         #region 生命周期
 
