@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
+using UnityDebug = UnityEngine.Debug;
 
 namespace Runtime.Test.Editor
 {
@@ -18,7 +19,7 @@ namespace Runtime.Test.Editor
         [SetUp]
         public void SetUp()
         {
-            Debug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证启动器能够定位静态的 ScriptLoder.Init。 实现手段=按运行时相同的程序集扫描规则查找方法信息，但不实际执行热更初始化。 ");
+            UnityDebug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证启动器能够定位静态的 ScriptLoder.Init。 实现手段=按运行时相同的程序集扫描规则查找方法信息，但不实际执行热更初始化。 ");
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Runtime.Test.Editor
         [Test]
         public void TryStartE2EFramework_ShouldNotDependOnConditionalDebugAttribute()
         {
-            Debug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证 ScriptLoder 的 E2E 自动检测不会再被编译期 DEBUG 条件直接裁掉。 实现手段=反射读取私有静态方法上的 ConditionalAttribute。 ");
+            UnityDebug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证 ScriptLoder 的 E2E 自动检测不会再被编译期 DEBUG 条件直接裁掉。 实现手段=反射读取私有静态方法上的 ConditionalAttribute。 ");
 
             var type = typeof(BDFramework.ScriptLoder);
             var method = type.GetMethod("TryStartE2EFramework", BindingFlags.NonPublic | BindingFlags.Static);
