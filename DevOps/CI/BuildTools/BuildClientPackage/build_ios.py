@@ -22,6 +22,7 @@ from unity3d_batchmode import (
     ensure_platform_allowed,
     get_execute_method,
     get_log_path,
+    insert_command_argument,
     read_log_tail,
     resolve_build_metadata,
     resolve_unity_executable,
@@ -67,6 +68,12 @@ def parse_args() -> argparse.Namespace:
         help="Optional Unity project directory. If omitted, infer the default project root from config/script location.",
     )
     parser.add_argument(
+        "--debug-build",
+        default="false",
+        choices=["true", "false"],
+        help="Whether to request debug-capable Unity build flow and Talos E2E compilation symbols.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Only print the final Unity command, do not execute Unity.",
@@ -99,6 +106,7 @@ def main() -> int:
         args.build_number,
     )
     client_version = compose_client_version(client_version_prefix, build_number)
+    debug_build = str(getattr(args, "debug_build", "false")).strip().lower()
 
     print(f"{LOG_PREFIX} ===== Step 2/7: validate host =====")
     host_os = detect_host_os()
@@ -106,6 +114,7 @@ def main() -> int:
     print(f"{LOG_PREFIX} host_os={host_os}")
     print(f"{LOG_PREFIX} clientVersionPrefix={client_version_prefix}")
     print(f"{LOG_PREFIX} clientVersion={client_version}")
+    print(f"{LOG_PREFIX} debugBuild={debug_build}")
     if build_name:
         print(f"{LOG_PREFIX} buildName={build_name}")
     if build_number:
@@ -146,6 +155,7 @@ def main() -> int:
         client_version=client_version,
         log_path=log_path,
     )
+    command = insert_command_argument(command, flag="-buildDebug", value=debug_build)
 
     print(f"{LOG_PREFIX} ===== Step 6/7: execute =====")
     return_code = run_batchmode(command, dry_run=args.dry_run)

@@ -52,6 +52,7 @@ def install_flow_fakes(
     module,
     *,
     dry_run: bool,
+    debug_build: str = "false",
     return_code: int = 0,
 ):
     """安装共享的 mock 协作者并返回捕获的流程上下文。
@@ -74,7 +75,13 @@ def install_flow_fakes(
     )
     log_path = Path(f"/tmp/TCLog/Nightly_Build/238/{module.PLATFORM_KEY}_0.1.238.log")
     execute_method = f"CI.BuildClientPackage.{module.PLATFORM_KEY}"
-    command = [str(unity_path), "-batchmode", "-projectPath", str(resolved_project_dir)]
+    command = [
+        str(unity_path),
+        "-batchmode",
+        "-projectPath",
+        str(resolved_project_dir),
+        "-quit",
+    ]
     publish_output_dir = (
         resolved_project_dir / "DevOps" / "PublishPackages" / module.PLATFORM_KEY
     )
@@ -87,6 +94,7 @@ def install_flow_fakes(
         build_number=" 238 ",
         unity_version="2022.3.74f1",
         project_dir=str(resolved_project_dir),
+        debug_build=debug_build,
         dry_run=dry_run,
     )
 
@@ -180,7 +188,15 @@ def install_flow_fakes(
 
     def fake_run_batchmode(command_value, *, dry_run: bool) -> int:
         events.append("run_batchmode")
-        assert command_value == command
+        assert command_value == [
+            str(unity_path),
+            "-batchmode",
+            "-projectPath",
+            str(resolved_project_dir),
+            "-buildDebug",
+            debug_build,
+            "-quit",
+        ]
         assert dry_run is args.dry_run
         return return_code
 
@@ -233,6 +249,7 @@ def test_main_dry_run_executes_main_flow_without_side_effects(
     assert f"{log_prefix} ===== Step 1/7: parse args =====" in output
     assert f"{log_prefix} host_os=mac" in output
     assert f"{log_prefix} clientVersion=0.1.238" in output
+    assert f"{log_prefix} debugBuild=false" in output
     assert f"{log_prefix} ===== Step 4/7: reset output dir =====" in output
     assert f"{log_prefix} dry-run enabled, skip clearing publish output directory" in output
     assert f"{log_prefix} ===== Step 7/7: upload client package =====" in output
@@ -266,6 +283,7 @@ def test_main_non_dry_run_clears_output_and_uploads_artifact(
 
     output = capsys.readouterr().out
     assert f"{log_prefix} publishOutputDir={context['publish_output_dir']}" in output
+    assert f"{log_prefix} debugBuild=false" in output
     assert context["events"] == [
         "configure_live_console_output",
         "resolve_build_metadata",
@@ -296,6 +314,7 @@ def test_main_reads_log_tail_and_raises_on_batchmode_failure(
 
     output = capsys.readouterr().out
     assert context["tail_output"] in output
+    assert f"{module.LOG_PREFIX} debugBuild=false" in output
     assert context["events"] == [
         "configure_live_console_output",
         "resolve_build_metadata",
@@ -309,5 +328,33 @@ def test_main_reads_log_tail_and_raises_on_batchmode_failure(
         "build_batchmode_command",
         "run_batchmode",
         "read_log_tail",
+    ]
+    assert platform_key == module.PLATFORM_KEY
+
+
+def test_main_threads_debug_build_flag_to_unity_command(
+    build_script_module,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证 debug 母包任务会把共享开关透传给 Unity BatchMode 命令。"""
+    module, platform_key, log_prefix = build_script_module
+    context = install_flow_fakes(monkeypatch, module, dry_run=True, debug_build="true")
+
+    assert module.main() == 0
+
+    output = capsys.readouterr().out
+    assert f"{log_prefix} debugBuild=true" in output
+    assert context["events"] == [
+        "configure_live_console_output",
+        "resolve_build_metadata",
+        "detect_host_os",
+        "ensure_platform_allowed",
+        "resolve_unity_executable",
+        "resolve_project_dir",
+        "get_execute_method",
+        "get_log_path",
+        "build_batchmode_command",
+        "run_batchmode",
     ]
     assert platform_key == module.PLATFORM_KEY

@@ -196,6 +196,12 @@ def parse_platform_args(description: str) -> argparse.Namespace:
         help="Optional Unity project directory. If omitted, infer the current repo root.",
     )
     parser.add_argument(
+        "--debug-build",
+        default="false",
+        choices=["true", "false"],
+        help="Whether to request debug-capable Unity build flow and Talos E2E compilation symbols.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Only print the final Unity command, do not execute Unity or upload files.",
@@ -321,6 +327,14 @@ def validate_required_batch_value(raw_value: str, *, field_name: str) -> str:
 def validate_client_version(client_version: str) -> str:
     """校验并规范化 clientVersion。"""
     return validate_required_batch_value(client_version, field_name="clientVersion")
+
+
+def normalize_debug_build_flag(raw_value: str) -> str:
+    """规范化共享的 debug 构建开关，统一输出 true 或 false。"""
+    normalized = str(raw_value or "false").strip().lower()
+    if normalized not in {"true", "false"}:
+        raise UnityBatchModeError(f"debugBuild contains unsupported value: {raw_value!r}")
+    return normalized
 
 
 def resolve_table_client_version_label(client_version: str | None) -> str:
@@ -476,6 +490,7 @@ def run_platform_resource_build(
     client_version_prefix = validate_client_version(args.client_version)
     build_name, build_number = resolve_build_metadata(args.build_name, args.build_number)
     client_version = compose_client_version(client_version_prefix, build_number)
+    debug_build = normalize_debug_build_flag(getattr(args, "debug_build", "false"))
 
     print(f"{log_prefix} ===== Step 2/8: validate host =====")
     host_os = detect_host_os()
@@ -488,6 +503,7 @@ def run_platform_resource_build(
     print(f"{log_prefix} unityBuildTarget={unity_build_target}")
     print(f"{log_prefix} clientVersionPrefix={client_version_prefix}")
     print(f"{log_prefix} clientVersion={client_version}")
+    print(f"{log_prefix} debugBuild={debug_build}")
     if build_name:
         print(f"{log_prefix} buildName={build_name}")
     if build_number:
@@ -548,12 +564,16 @@ def run_platform_resource_build(
     print(f"{log_prefix} ===== Step 6/8: build Unity command =====")
     command = insert_command_argument(
         insert_command_argument(
-            build_batchmode_command(
-                unity_path=unity_path,
-                project_dir=project_dir,
-                execute_method=execute_method,
-                client_version=client_version,
-                log_path=log_path,
+            insert_command_argument(
+                build_batchmode_command(
+                    unity_path=unity_path,
+                    project_dir=project_dir,
+                    execute_method=execute_method,
+                    client_version=client_version,
+                    log_path=log_path,
+                ),
+                flag="-buildDebug",
+                value=debug_build,
             ),
             flag="-buildTarget",
             value=unity_build_target,

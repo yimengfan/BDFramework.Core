@@ -108,6 +108,7 @@ def test_run_platform_resource_build_executes_expected_flow(
         build_number=" 238 ",
         unity_version="2022.3.74f1",
         project_dir="/tmp/BDFramework.Core",
+        debug_build="true",
         dry_run=False,
     )
     base_project_dir = Path("/tmp/BDFramework.Core")
@@ -148,7 +149,9 @@ def test_run_platform_resource_build_executes_expected_flow(
 
     def fake_run_batchmode(command, *, dry_run: bool):
         events.append("run_batchmode")
-        assert command[-5:] == [
+        assert command[-7:] == [
+            "-buildDebug",
+            "true",
             "-buildTarget",
             "Android",
             "-ciOutputRoot",
@@ -207,6 +210,7 @@ def test_run_platform_resource_build_executes_expected_flow(
 
     assert "ciOutputRoot=/tmp/android/BDFramework.Core/Library/CIOutputs" in output
     assert "unityBuildTarget=Android" in output
+    assert "debugBuild=true" in output
     assert "baseProjectDir=/tmp/BDFramework.Core" in output
     assert f"projectDir={expected_project_dir}" in output
     assert "build finished successfully" in output
@@ -224,6 +228,7 @@ def test_run_platform_resource_build_dry_run_skips_upload(
         build_number=None,
         unity_version=None,
         project_dir="/tmp/BDFramework.Core",
+        debug_build="false",
         dry_run=True,
     )
     monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
@@ -247,7 +252,15 @@ def test_run_platform_resource_build_dry_run_skips_upload(
     monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
 
     def fake_run_batchmode(command, *, dry_run):
-        assert command[-5:] == ["-buildTarget", "Android", "-ciOutputRoot", "/tmp/output", "-quit"]
+        assert command[-7:] == [
+            "-buildDebug",
+            "false",
+            "-buildTarget",
+            "Android",
+            "-ciOutputRoot",
+            "/tmp/output",
+            "-quit",
+        ]
         return 0
 
     monkeypatch.setattr(resource_flow, "run_batchmode", fake_run_batchmode)
@@ -273,6 +286,7 @@ def test_run_platform_resource_build_dry_run_skips_upload(
     )
 
     output = capsys.readouterr().out
+    assert "debugBuild=false" in output
     assert "dry-run enabled, skip artifact upload" in output
     assert uploaded is False
 

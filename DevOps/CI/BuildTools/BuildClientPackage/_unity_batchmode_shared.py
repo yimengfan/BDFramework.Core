@@ -256,6 +256,17 @@ def get_execute_method(platform_key: str) -> str:
     return get_platform_settings(platform_key)["method"]
 
 
+def insert_command_argument(command: Sequence[str], *, flag: str, value: str) -> list[str]:
+    """把额外命令参数插到 -quit 之前，避免 Unity 参数顺序混乱。"""
+    resolved_command = list(command)
+    if resolved_command and resolved_command[-1] == "-quit":
+        resolved_command[-1:-1] = [flag, value]
+        return resolved_command
+
+    resolved_command.extend([flag, value])
+    return resolved_command
+
+
 def build_batchmode_command(
     *,
     unity_path: Path,

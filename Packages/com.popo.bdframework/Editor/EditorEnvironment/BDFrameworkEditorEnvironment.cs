@@ -279,6 +279,15 @@ namespace BDFramework.Editor.Environment
         }
 
         /// <summary>
+        /// 从当前 Unity 进程命令行中读取布尔参数。
+        /// 约定：当参数缺失、值为空或值无法识别时，统一回退到调用方提供的默认值。
+        /// </summary>
+        static public bool GetBoolArg(string argName, bool defaultValue = false)
+        {
+            return GetBoolArg(System.Environment.GetCommandLineArgs(), argName, defaultValue);
+        }
+
+        /// <summary>
         /// 从显式参数列表中读取指定参数值。
         /// 该重载主要服务于测试或局部复用，避免调用方自己重复遍历参数数组。
         /// </summary>
@@ -298,6 +307,35 @@ namespace BDFramework.Editor.Environment
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 从显式参数列表中读取布尔参数。
+        /// 支持 true/false、1/0、yes/no、on/off，并忽略大小写与首尾空白。
+        /// </summary>
+        static internal bool GetBoolArg(IReadOnlyList<string> args, string argName, bool defaultValue = false)
+        {
+            var rawValue = GetArg(args, argName);
+            if (string.IsNullOrWhiteSpace(rawValue))
+            {
+                return defaultValue;
+            }
+
+            switch (rawValue.Trim().ToLowerInvariant())
+            {
+                case "true":
+                case "1":
+                case "yes":
+                case "on":
+                    return true;
+                case "false":
+                case "0":
+                case "no":
+                case "off":
+                    return false;
+                default:
+                    return defaultValue;
+            }
         }
     }
 

@@ -22,13 +22,14 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PLAYWRIGHT_DIR="${SCRIPT_DIR}"
+PLAYWRIGHT_DIR="$(dirname "${SCRIPT_DIR}")"
 
 # ======== 默认参数 ========
 EXE_PATH="${EXE_PATH:-}"
 UNITY_HOST="${UNITY_HOST:-127.0.0.1}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 IS_MACOS=false
+PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -37,6 +38,7 @@ while [[ $# -gt 0 ]]; do
         --host)      UNITY_HOST="$2";  shift 2 ;;
         --port)      UNITY_PORT="$2";  shift 2 ;;
         --macos)     IS_MACOS=true;    shift ;;
+        --test-file) PLAYWRIGHT_TEST_FILE="$2"; shift 2 ;;
         --help)
             echo "用法: $0 --exe <path/to/executable> [--macos]"
             echo ""
@@ -45,6 +47,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --host    应用 IP 地址 (默认 127.0.0.1)"
             echo "  --port    TCP 端口 (默认 10002)"
             echo "  --macos   标记为 macOS 应用（使用 open 命令启动）"
+            echo "  --test-file Playwright 测试文件路径（相对 Playwright~ 根目录）"
             exit 0
             ;;
         *) echo "未知参数: $1"; exit 1 ;;
@@ -62,6 +65,9 @@ echo "============================================"
 echo "  可执行:  ${EXE_PATH}"
 echo "  地址:    ${UNITY_HOST}:${UNITY_PORT}"
 echo "  平台:    $(${IS_MACOS} && echo 'macOS' || echo 'Windows/Linux')"
+if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+    echo "  测试文件: ${PLAYWRIGHT_TEST_FILE}"
+fi
 echo "============================================"
 
 # ======== 前置检查 ========
@@ -145,14 +151,20 @@ if ${IS_MACOS}; then
     PROJECT="macos"
 fi
 
+PLAYWRIGHT_COMMAND=(npx playwright test)
+if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+    PLAYWRIGHT_COMMAND+=("${PLAYWRIGHT_TEST_FILE}")
+fi
+PLAYWRIGHT_COMMAND+=(
+    "--project=${PROJECT}"
+    "--output=${PLAYWRIGHT_DIR}/test-results/artifacts"
+    "--reporter=list,html=${PLAYWRIGHT_DIR}/test-results/html,junit=${PLAYWRIGHT_DIR}/test-results/junit.xml"
+)
+
 PLATFORM="${PROJECT}" \
 UNITY_HOST="${UNITY_HOST}" \
 UNITY_PORT="${UNITY_PORT}" \
-npx playwright test --project="${PROJECT}" \
-
-    --output="${PLAYWRIGHT_DIR}/test-results/artifacts" \
-    --reporter=list,html="${PLAYWRIGHT_DIR}/test-results/html",junit="${PLAYWRIGHT_DIR}/test-results/junit.xml" \
-    2>&1 | tee "${PLAYWRIGHT_DIR}/test-results/test-output.log"
+"${PLAYWRIGHT_COMMAND[@]}" 2>&1 | tee "${PLAYWRIGHT_DIR}/test-results/test-output.log"
 
 TEST_EXIT_CODE=${PIPESTATUS[0]}
 

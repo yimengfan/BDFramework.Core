@@ -1,4 +1,6 @@
-﻿using BDFramework.Core.Tools;
+﻿using System;
+using System.Collections.Generic;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
@@ -20,6 +22,87 @@ namespace BDFramework.Editor.DevOps
     /// </example>
     static public class PublishPipeLineCI
     {
+        const string BuildDebugBatchArgName = "-buildDebug";
+        const string EnableE2ETestSymbol = "ENABLE_E2ETEST";
+
+        /// <summary>
+        /// Talos E2E 调试宏作用域。
+        /// 只在当前目标平台临时补齐脚本宏，结束后恢复到进入前的状态，避免污染后续非 E2E 构建。
+        /// </summary>
+        sealed class TalosDebugDefineScope : IDisposable
+        {
+            readonly BuildTargetGroup buildTargetGroup;
+            readonly bool addedDebugSymbol;
+            readonly bool addedEnableE2ETestSymbol;
+
+            /// <summary>
+            /// 为指定平台创建 Talos 调试宏作用域。
+            /// </summary>
+            public TalosDebugDefineScope(BuildTarget buildTarget, bool includeDebugSymbol)
+            {
+                this.buildTargetGroup = UnityEditor.BuildPipeline.GetBuildTargetGroup(buildTarget);
+                if (this.buildTargetGroup == BuildTargetGroup.Unknown)
+                {
+                    throw new Exception($"未知的构建目标组: {buildTarget}");
+                }
+
+                this.addedDebugSymbol = includeDebugSymbol && TryAddSymbol("DEBUG");
+                this.addedEnableE2ETestSymbol = TryAddSymbol(EnableE2ETestSymbol);
+                Debug.Log(
+                    $"【CI】Talos 调试宏作用域已启用 Target:{buildTarget} IncludeDebug:{includeDebugSymbol} AddedDebug:{this.addedDebugSymbol} AddedE2E:{this.addedEnableE2ETestSymbol}");
+            }
+
+            /// <summary>
+            /// 仅在当前目标平台缺失指定宏时追加，避免重复拼接造成宏串污染。
+            /// </summary>
+            bool TryAddSymbol(string symbol)
+            {
+                var symbols = new List<string>(
+                    PlayerSettings.GetScriptingDefineSymbolsForGroup(this.buildTargetGroup)
+                        .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+                if (symbols.Contains(symbol))
+                {
+                    return false;
+                }
+
+                symbols.Add(symbol);
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(this.buildTargetGroup, string.Join(";", symbols));
+                return true;
+            }
+
+            /// <summary>
+            /// 作用域结束时仅移除本次临时追加的宏，不影响进入作用域前已有配置。
+            /// </summary>
+            void RemoveSymbol(string symbol)
+            {
+                var symbols = new List<string>(
+                    PlayerSettings.GetScriptingDefineSymbolsForGroup(this.buildTargetGroup)
+                        .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+                if (!symbols.Remove(symbol))
+                {
+                    return;
+                }
+
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(this.buildTargetGroup, string.Join(";", symbols));
+            }
+
+            /// <summary>
+            /// 释放 Talos 调试宏作用域，并恢复当前平台在进入作用域前的宏状态。
+            /// </summary>
+            public void Dispose()
+            {
+                if (this.addedDebugSymbol)
+                {
+                    RemoveSymbol("DEBUG");
+                }
+
+                if (this.addedEnableE2ETestSymbol)
+                {
+                    RemoveSymbol(EnableE2ETestSymbol);
+                }
+            }
+        }
+
         // 在 BatchMode 入口第一次触达时补齐编辑器环境，确保后续 owner 可以直接复用既有管线。
         static PublishPipeLineCI()
         {
@@ -33,6 +116,91 @@ namespace BDFramework.Editor.DevOps
 
 
 
+
+        /// <summary>
+        /// 判断当前 BatchMode 调用是否显式请求 Debug 构建。
+        /// 统一复用 <c>-buildDebug</c> 参数，避免 TeamCity、Python wrapper 和 owner 层各自维护一套布尔解析逻辑。
+        /// </summary>
+        static public bool IsDebugBuildRequested()
+        {
+            return IsDebugBuildRequested(System.Environment.GetCommandLineArgs());
+        }
+
+        /// <summary>
+        /// 判断给定参数列表中是否显式请求 Debug 构建。
+        /// 该重载主要供测试和局部复用使用。
+        /// </summary>
+        static public bool IsDebugBuildRequested(IReadOnlyList<string> args)
+        {
+            return BatchModeCommandLine.GetBoolArg(args, BuildDebugBatchArgName, false);
+        }
+
+        /// <summary>
+        /// 根据 BatchMode 参数解析母包构建模式。
+        /// 未显式开启 Debug 时统一回退到 Release，保持现有 CI 任务兼容。
+        /// </summary>
+        static public BuildTools_ClientPackage.BuildMode ResolveClientPackageBuildModeForBatchMode()
+        {
+            return ResolveClientPackageBuildModeForBatchMode(System.Environment.GetCommandLineArgs());
+        }
+
+        /// <summary>
+        /// 根据显式参数列表解析母包构建模式。
+        /// 该重载主要供测试验证参数路由使用。
+        /// </summary>
+        static public BuildTools_ClientPackage.BuildMode ResolveClientPackageBuildModeForBatchMode(IReadOnlyList<string> args)
+        {
+            return IsDebugBuildRequested(args)
+                ? BuildTools_ClientPackage.BuildMode.Debug
+                : BuildTools_ClientPackage.BuildMode.Release;
+        }
+
+        /// <summary>
+        /// 执行指定平台的母包 BatchMode 构建。
+        /// 当显式开启 Debug 时，沿用现有母包 Debug 模式，并额外补齐 Talos E2E 编译宏。
+        /// </summary>
+        static private void BuildClientPackageForBatchMode(BuildTarget buildTarget)
+        {
+            var buildMode = ResolveClientPackageBuildModeForBatchMode();
+            var enableTalosDebug = buildMode == BuildTools_ClientPackage.BuildMode.Debug;
+            Debug.Log($"【CI】BuildClientPackage Target:{buildTarget} BuildMode:{buildMode} TalosDebug:{enableTalosDebug}");
+
+            if (enableTalosDebug)
+            {
+                using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: false))
+                {
+                    BuildTools_ClientPackage.BuildClientPackageForBatchMode(buildTarget, buildMode);
+                }
+
+                return;
+            }
+
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(buildTarget, buildMode);
+        }
+
+        /// <summary>
+        /// 执行指定平台的热更代码 BatchMode 构建。
+        /// Debug 模式下会临时注入 DEBUG 与 ENABLE_E2ETEST，确保 Talos E2E 注册代码参与编译。
+        /// </summary>
+        static private void BuildClientResHotfixCodeForBatchMode(BuildTarget buildTarget)
+        {
+            var enableDebugBuild = IsDebugBuildRequested();
+            Debug.Log($"【CI】BuildClientResHotfixCode Target:{buildTarget} TalosDebug:{enableDebugBuild}");
+
+            if (enableDebugBuild)
+            {
+                using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: true))
+                {
+                    BuildTools_Assets.BuildClientResForBatchMode(buildTarget,
+                        BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+                }
+
+                return;
+            }
+
+            BuildTools_Assets.BuildClientResForBatchMode(buildTarget,
+                BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+        }
 
         #region 代码打包检查
 
@@ -120,8 +288,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "BatchMode构建母包Android-Release")]
         static public void BuildClientPackageAndroid()
         {
-            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.Android,
-                BuildTools_ClientPackage.BuildMode.Release);
+            BuildClientPackageForBatchMode(BuildTarget.Android);
         }
 
         /// <summary>
@@ -130,8 +297,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "BatchMode构建母包iOS-Release")]
         static public void BuildClientPackageIOS()
         {
-            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.iOS,
-                BuildTools_ClientPackage.BuildMode.Release);
+            BuildClientPackageForBatchMode(BuildTarget.iOS);
         }
 
         /// <summary>
@@ -140,8 +306,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "BatchMode构建母包Windows-Release")]
         static public void BuildClientPackageWindows()
         {
-            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.StandaloneWindows64,
-                BuildTools_ClientPackage.BuildMode.Release);
+            BuildClientPackageForBatchMode(BuildTarget.StandaloneWindows64);
         }
 
         /// <summary>
@@ -165,8 +330,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "BatchMode构建热更代码Android")]
         static public void BuildCodeAndroid()
         {
-            BuildTools_Assets.BuildClientResForBatchMode(BuildTarget.Android,
-                BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+            BuildClientResHotfixCodeForBatchMode(BuildTarget.Android);
         }
 
         /// <summary>
@@ -175,8 +339,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "BatchMode构建热更代码iOS")]
         static public void BuildCodeIOS()
         {
-            BuildTools_Assets.BuildClientResForBatchMode(BuildTarget.iOS,
-                BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+            BuildClientResHotfixCodeForBatchMode(BuildTarget.iOS);
         }
 
         /// <summary>
@@ -185,8 +348,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "BatchMode构建热更代码Windows")]
         static public void BuildCodeWindows()
         {
-            BuildTools_Assets.BuildClientResForBatchMode(BuildTarget.StandaloneWindows64,
-                BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+            BuildClientResHotfixCodeForBatchMode(BuildTarget.StandaloneWindows64);
         }
 
         /// <summary>

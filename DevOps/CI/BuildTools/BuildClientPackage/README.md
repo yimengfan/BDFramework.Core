@@ -94,9 +94,12 @@ TeamCity 页面中，这四个母包相关任务统一位于 `ClientPackage` 子
 
 - `--build-name`
 - `--build-number`
+- `--debug-build`
 - `--unity-version`
 - `--project-dir`
 - `--dry-run`
+
+`--debug-build true` now forwards `-buildDebug true` into Unity BatchMode, so `PublishPipeLineCI` can switch the package build to the debug path and inject Talos E2E compilation symbols.
 
 TeamCity 侧通过 `%build.extra.args%` 透传这些可选参数，例如：
 
@@ -126,6 +129,7 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-versio
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2022.3.74f1
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --project-dir /path/to/UnityProject
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --dry-run
+python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --debug-build true --dry-run
 ```
 
 ## iOS Xcode 后置脚本

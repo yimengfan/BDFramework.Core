@@ -8,7 +8,7 @@
 2. 三个平台脚本只保留最薄的一层入口，通用参数、日志、Unity 命令和上传逻辑统一复用 `Common/client_resource_flow.py` 与 `Common/client_resource_artifacts.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_code/<build_name>/<build_number>/<platform>/`。
 4. 上传前只整理热更代码当前需要的文件，不直接整目录上传 Unity 输出根。
-5. BatchMode 的 Code CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；Code 任务本身不携带 Assetbundle 那类跨平台缓存污染约束，所以共享 flow 默认直接使用传入的 `--project-dir` 或仓库根目录，不额外创建平台 worktree；CI 日志和注释规范与 `BuildClientPackage` 保持一致。
+5. BatchMode 的 Code CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台；when `--debug-build true` is provided, the shared flow also forwards `-buildDebug true` so `PublishPipeLineCI.BuildCode*` can compile the hotfix payload with Talos E2E symbols. Code 任务本身不携带 Assetbundle 那类跨平台缓存污染约束，所以共享 flow 默认直接使用传入的 `--project-dir` 或仓库根目录，不额外创建平台 worktree；CI 日志和注释规范与 `BuildClientPackage` 保持一致。
 
 ## 文件说明
 
@@ -75,6 +75,7 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 
 - `--build-name`
 - `--build-number`
+- `--debug-build`
 - `--unity-version`
 - `--project-dir`
 - `--dry-run`
@@ -95,4 +96,5 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 python3 DevOps/CI/BuildTools/BuildClientResCode/build_android.py --client-version 0.1 --build-name local_code_android --build-number 123 --dry-run
 python3 DevOps/CI/BuildTools/BuildClientResCode/build_ios.py --client-version 0.1 --build-name local_code_ios --build-number 123 --dry-run
 python3 DevOps/CI/BuildTools/BuildClientResCode/build_windows.py --client-version 0.1 --build-name local_code_windows --build-number 123 --dry-run
+python3 DevOps/CI/BuildTools/BuildClientResCode/build_windows.py --client-version 0.1 --build-name local_code_windows --build-number 123 --debug-build true --dry-run
 ```

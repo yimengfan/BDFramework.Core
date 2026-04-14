@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
+using BDFramework.Editor.BuildPipeline;
+using BDFramework.Editor.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.ResourceMgr;
 using NUnit.Framework;
@@ -61,6 +63,14 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BatchModeCommandLine_GetArg_ReturnsValueForCaseInsensitiveArgName),
                 (nameof(BatchModeCommandLine_GetArg_ReturnsNullWhenValueMissingOrArgAbsent),
                     testInstance.BatchModeCommandLine_GetArg_ReturnsNullWhenValueMissingOrArgAbsent),
+                (nameof(BatchModeCommandLine_GetBoolArg_RecognizesSupportedBooleanValues),
+                    testInstance.BatchModeCommandLine_GetBoolArg_RecognizesSupportedBooleanValues),
+                (nameof(BatchModeCommandLine_GetBoolArg_ReturnsDefaultWhenValueMissingOrInvalid),
+                    testInstance.BatchModeCommandLine_GetBoolArg_ReturnsDefaultWhenValueMissingOrInvalid),
+                (nameof(PublishPipeLineCI_IsDebugBuildRequested_ResolvesSharedFlag),
+                    testInstance.PublishPipeLineCI_IsDebugBuildRequested_ResolvesSharedFlag),
+                (nameof(PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
+                    testInstance.PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
                     testInstance.AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout),
@@ -176,6 +186,62 @@ namespace BDFramework.EditorTest.DevOps
             Assert.That(BatchModeCommandLine.GetArg((string[])null, "-ciOutputRoot"), Is.Null);
             Assert.That(BatchModeCommandLine.GetArg(new[] { "-ciOutputRoot" }, "-ciOutputRoot"), Is.Null);
             Assert.That(BatchModeCommandLine.GetArg(new[] { "-clientVersion", "1.2.3" }, "-ciOutputRoot"), Is.Null);
+        }
+
+        /// <summary>
+        /// 验证 BatchMode 布尔参数会识别常见真假字面量，避免不同脚本层重复做值归一化。
+        /// </summary>
+        [Test]
+        public void BatchModeCommandLine_GetBoolArg_RecognizesSupportedBooleanValues()
+        {
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug", "true" }, "-buildDebug"), Is.True);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug", "1" }, "-buildDebug"), Is.True);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug", "YES" }, "-buildDebug"), Is.True);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug", "off" }, "-buildDebug", true), Is.False);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug", "0" }, "-buildDebug", true), Is.False);
+        }
+
+        /// <summary>
+        /// 验证当 BatchMode 布尔参数缺失、无值或值非法时，会稳定回退到默认值。
+        /// 这样上层 owner 可以只声明默认策略，而不用处理额外异常分支。
+        /// </summary>
+        [Test]
+        public void BatchModeCommandLine_GetBoolArg_ReturnsDefaultWhenValueMissingOrInvalid()
+        {
+            Assert.That(BatchModeCommandLine.GetBoolArg((string[])null, "-buildDebug", true), Is.True);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug" }, "-buildDebug", true), Is.True);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-buildDebug", "maybe" }, "-buildDebug"), Is.False);
+            Assert.That(BatchModeCommandLine.GetBoolArg(new[] { "-clientVersion", "1.2.3" }, "-buildDebug", true), Is.True);
+        }
+
+        /// <summary>
+        /// 验证 PublishPipeLineCI 会统一复用共享的 <c>-buildDebug</c> 参数约定。
+        /// 这样 TeamCity、Python wrapper 与 owner 层可以围绕同一布尔开关协作。
+        /// </summary>
+        [Test]
+        public void PublishPipeLineCI_IsDebugBuildRequested_ResolvesSharedFlag()
+        {
+            Assert.That(PublishPipeLineCI.IsDebugBuildRequested(new[] { "-buildDebug", "true" }), Is.True);
+            Assert.That(PublishPipeLineCI.IsDebugBuildRequested(new[] { "-buildDebug", "off" }), Is.False);
+            Assert.That(PublishPipeLineCI.IsDebugBuildRequested(new[] { "-clientVersion", "0.1.1" }), Is.False);
+        }
+
+        /// <summary>
+        /// 验证母包 BatchMode 构建模式会根据共享布尔参数稳定映射到 Debug 或 Release。
+        /// 这确保新增的可选 debug 参数不会破坏现有默认 Release 行为。
+        /// </summary>
+        [Test]
+        public void PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode()
+        {
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildDebug", "true" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.Debug));
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildDebug", "false" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.Release));
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-clientVersion", "0.1.1" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.Release));
         }
 
         /// <summary>

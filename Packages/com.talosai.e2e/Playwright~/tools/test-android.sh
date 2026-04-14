@@ -24,7 +24,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PLAYWRIGHT_DIR="${SCRIPT_DIR}"
+PLAYWRIGHT_DIR="$(dirname "${SCRIPT_DIR}")"
 
 # ======== 默认参数 ========
 APK_PATH="${APK_PATH:-}"
@@ -32,6 +32,7 @@ ADB_SERIAL="${ADB_SERIAL:-}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-com.popo.bdframework}"
 ACTIVITY="${ACTIVITY:-com.popo.bdframework/com.unity3d.player.UnityPlayerActivity}"
+PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -40,6 +41,7 @@ while [[ $# -gt 0 ]]; do
         --serial)    ADB_SERIAL="$2";  shift 2 ;;
         --port)      UNITY_PORT="$2";  shift 2 ;;
         --package)   PACKAGE="$2";     shift 2 ;;
+        --test-file) PLAYWRIGHT_TEST_FILE="$2"; shift 2 ;;
         --help)
             echo "用法: $0 --apk <path/to/app.apk>"
             echo ""
@@ -48,6 +50,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --serial    ADB 设备序列号"
             echo "  --port      TCP 端口 (默认 10002)"
             echo "  --package   Android 包名 (默认 com.popo.bdframework)"
+            echo "  --test-file Playwright 测试文件路径（相对 Playwright~ 根目录）"
             exit 0
             ;;
         *) echo "未知参数: $1"; exit 1 ;;
@@ -66,6 +69,9 @@ echo "============================================"
 echo "  APK:      ${APK_PATH}"
 echo "  包名:     ${PACKAGE}"
 echo "  端口:     ${UNITY_PORT}"
+if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+    echo "  测试文件: ${PLAYWRIGHT_TEST_FILE}"
+fi
 echo "============================================"
 
 # ======== 前置检查 ========
@@ -157,13 +163,20 @@ echo ""
 echo ">>> 运行 Playwright 测试..."
 echo ""
 
+PLAYWRIGHT_COMMAND=(npx playwright test)
+if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+    PLAYWRIGHT_COMMAND+=("${PLAYWRIGHT_TEST_FILE}")
+fi
+PLAYWRIGHT_COMMAND+=(
+    "--project=android"
+    "--output=${PLAYWRIGHT_DIR}/test-results/artifacts"
+    "--reporter=list,html=${PLAYWRIGHT_DIR}/test-results/html,junit=${PLAYWRIGHT_DIR}/test-results/junit.xml"
+)
+
 PLATFORM=android \
 UNITY_HOST=127.0.0.1 \
 UNITY_PORT="${UNITY_PORT}" \
-npx playwright test --project=android \
-    --output="${PLAYWRIGHT_DIR}/test-results/artifacts" \
-    --reporter=list,html="${PLAYWRIGHT_DIR}/test-results/html",junit="${PLAYWRIGHT_DIR}/test-results/junit.xml" \
-    2>&1 | tee "${PLAYWRIGHT_DIR}/test-results/test-output.log"
+"${PLAYWRIGHT_COMMAND[@]}" 2>&1 | tee "${PLAYWRIGHT_DIR}/test-results/test-output.log"
 
 TEST_EXIT_CODE=${PIPESTATUS[0]}
 
