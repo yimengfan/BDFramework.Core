@@ -53,6 +53,20 @@ namespace Runtime.Test.Editor
         }
 
         /// <summary>
+        /// 验证启动器声明了极小的默认执行顺序，确保场景生命周期尽量先于普通脚本触发。
+        /// </summary>
+        [Test]
+        public void BDLauncher_ShouldDeclareMinimumDefaultExecutionOrder()
+        {
+            UnityDebug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证 BDLauncher 通过 DefaultExecutionOrder 把 Awake 和 Start 提前到场景脚本最前批次。 实现手段=反射读取类型上的 DefaultExecutionOrder 并断言顺序值。 ");
+
+            var attribute = (DefaultExecutionOrder)Attribute.GetCustomAttribute(typeof(BDFramework.BDLauncher), typeof(DefaultExecutionOrder));
+
+            Assert.That(attribute, Is.Not.Null, "BDLauncher 应声明 DefaultExecutionOrder，避免启动顺序依赖场景对象创建偶然性。");
+            Assert.That(attribute.order, Is.EqualTo(int.MinValue), "BDLauncher 应使用 int.MinValue 作为默认执行顺序，尽量早于其他普通脚本。");
+        }
+
+        /// <summary>
         /// 验证 AOT 阶段的 E2E 自动检测入口不再依赖编译期 DEBUG 条件裁剪。
         /// 这样远端调试母包即使依赖运行时参数，也能在 WindowPreconfig 出现前完成自动检测。
         /// </summary>
@@ -73,6 +87,3 @@ namespace Runtime.Test.Editor
         }
     }
 }
-
-
-

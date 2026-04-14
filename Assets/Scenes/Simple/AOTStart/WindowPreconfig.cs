@@ -29,7 +29,7 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     void Start()
     {
-        UniTask.Delay(2000).GetAwaiter().GetResult();
+    
         //节点发现
         inputField = this.transform.Find("InputField").GetComponent<InputField>();
         text_DownloadProcess = this.transform.Find("text_DownloadProcess").GetComponent<Text>();

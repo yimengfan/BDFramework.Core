@@ -11,11 +11,14 @@ namespace BDFramework
     /// <summary>
     /// 启动场景里的第一阶段运行时入口。
     /// 该组件负责建立启动器单例、保存构建阶段写回的母包版本与配置文本，并在首场景启动后装载 AOT 元数据和热更程序集。
+    /// 同时通过默认执行顺序把自身放到场景脚本的最前批次，尽量降低被其他普通脚本抢先访问未初始化启动器的风险。
     /// </summary>
     /// <remarks>
     /// 业务真正进入框架主体前，还需要在合适时机显式调用 <c>BDLauncherBridge.Launch()</c> 或 <c>BDLauncherHotfix.Launch()</c>。
     /// 典型时序是：启动场景挂载 <c>BDLauncher</c>，更新页完成资源校验后再调用 Bridge 或 Facade 入口。
+    /// 这里的执行顺序只覆盖常规 MonoBehaviour 生命周期；如果其他脚本使用更小的执行顺序或 <c>RuntimeInitializeOnLoadMethod</c>，它们仍可能更早执行。
     /// </remarks>
+    [DefaultExecutionOrder(int.MinValue)]
     public partial class BDLauncher : MonoBehaviour
     {
         private static readonly string Tag = "Launch";
@@ -75,12 +78,19 @@ namespace BDFramework
                 Debug.LogError("GameConfig配置为null,请检查!");
             }
 
-
             // Phase 2: 启动场景完成后保持启动器常驻，后续更新页和业务场景都复用同一个入口。
             if (Application.isPlaying)
             {
                 DontDestroyOnLoad(this);
             }
+
+
+            // Phase 3: 记录装载完成；真正的业务启动仍等待 BDLauncherBridge.Launch()。
+            Debug.Log("------------------AOT Start-----------------------");
+            ScriptLoderAOT.Load(ClientVersion);
+            Debug.Log("<color=yellow>执行反射：ScriptLoder.Init()，装载热更代码 </color>");
+            InitHotfixScriptLoder();
+            Debug.Log("------------------AOT Complete！ -----------------------");
         }
 
         /// <summary>
@@ -88,17 +98,7 @@ namespace BDFramework
         /// </summary>
         private void Start()
         {
-            // Phase 1: 打印启动日志，便于区分“程序集装载阶段”和“框架主体启动阶段”。
-            Debug.Log("------------------AOT Start-----------------------");
 
-            // Phase 2: 只负责把 AOT 与热更代码装进当前进程，不在这里直接启动资源和管理器系统。
-
-            ScriptLoderAOT.Load(ClientVersion);
-
-            Debug.Log("<color=yellow>执行反射：ScriptLoder.Init()，装载热更代码 </color>");
-            InitHotfixScriptLoder();
-            // Phase 3: 记录装载完成；真正的业务启动仍等待 BDLauncherBridge.Launch()。
-            Debug.Log("------------------AOT Complete！ -----------------------");
         }
 
 
