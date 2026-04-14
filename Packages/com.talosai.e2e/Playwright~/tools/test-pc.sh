@@ -96,7 +96,8 @@ cd "${PLAYWRIGHT_DIR}"
 echo ""
 echo ">>> 启动应用..."
 APP_PID=""
-PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E")
+# Windows/Linux 调试阶段把 Unity Player 日志直接回流到当前控制台，便于 TeamCity 直接观察 TCP 启动链路。
+PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
 
 if ${IS_MACOS}; then
