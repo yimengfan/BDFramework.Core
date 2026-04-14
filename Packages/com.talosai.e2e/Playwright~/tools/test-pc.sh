@@ -101,9 +101,26 @@ cd "${PLAYWRIGHT_DIR}"
 echo ""
 echo ">>> 启动应用..."
 APP_PID=""
+PLAYER_STDOUT_LOG=""
+PLAYER_STDERR_LOG=""
 # Windows/Linux 调试阶段把 Unity Player 日志直接回流到当前控制台，便于 TeamCity 直接观察 TCP 启动链路。
 PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
+
+print_windows_player_logs() {
+    # Windows PowerShell 分支会把 Unity Player stdout/stderr 重定向到文件，这里在失败路径回吐日志，避免 TeamCity 只看到 TCP 超时。
+    if [[ -n "${PLAYER_STDOUT_LOG}" && -f "${PLAYER_STDOUT_LOG}" ]]; then
+        echo ""
+        echo ">>> Unity Player stdout (tail 200)"
+        tail -n 200 "${PLAYER_STDOUT_LOG}" || true
+    fi
+
+    if [[ -n "${PLAYER_STDERR_LOG}" && -f "${PLAYER_STDERR_LOG}" ]]; then
+        echo ""
+        echo ">>> Unity Player stderr (tail 200)"
+        tail -n 200 "${PLAYER_STDERR_LOG}" || true
+    fi
+}
 
 if ${IS_MACOS}; then
     # macOS: 使用 open 命令启动 .app
@@ -113,11 +130,18 @@ else
     # Windows/Linux: 直接运行可执行文件
     if ${IS_WINDOWS_GIT_BASH} && command -v powershell.exe >/dev/null 2>&1 && command -v cygpath >/dev/null 2>&1; then
         # Git Bash 直接拉起 Windows exe 时会把当前目录丢成空字符串，这里改用 PowerShell 显式指定 WorkingDirectory。
+        # 同时把 stdout/stderr 落盘，超时后回吐到 TeamCity，避免看不到 Unity 业务日志。
         EXE_PATH_WIN="$(cygpath -w "${EXE_PATH}")"
         EXE_DIR_WIN="$(cygpath -w "$(dirname "${EXE_PATH}")")"
+        PLAYER_STDOUT_LOG="${PLAYWRIGHT_DIR}/test-results/unity-player-stdout.log"
+        PLAYER_STDERR_LOG="${PLAYWRIGHT_DIR}/test-results/unity-player-stderr.log"
+        : > "${PLAYER_STDOUT_LOG}"
+        : > "${PLAYER_STDERR_LOG}"
+        PLAYER_STDOUT_LOG_WIN="$(cygpath -w "${PLAYER_STDOUT_LOG}")"
+        PLAYER_STDERR_LOG_WIN="$(cygpath -w "${PLAYER_STDERR_LOG}")"
         APP_PID="$({
             powershell.exe -NoProfile -Command "\
-                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-logFile','-') -PassThru; \
+                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-logFile','-') -RedirectStandardOutput '${PLAYER_STDOUT_LOG_WIN}' -RedirectStandardError '${PLAYER_STDERR_LOG_WIN}' -PassThru; \
                 [Console]::Out.Write(\$proc.Id)\
             "
         } | tr -d '\r')"
@@ -146,6 +170,7 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
             if ! powershell.exe -NoProfile -Command "exit [int](-not (Get-Process -Id ${APP_PID} -ErrorAction SilentlyContinue))" >/dev/null 2>&1; then
                 echo ""
                 echo "❌ 应用进程已退出"
+                print_windows_player_logs
                 exit 1
             fi
         elif ! kill -0 ${APP_PID} 2>/dev/null; then
@@ -167,6 +192,7 @@ done
 if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo ""
     echo "❌ 等待 TCP 服务超时 (${MAX_WAIT}s)"
+    print_windows_player_logs
     if [[ -n "${APP_PID}" ]]; then
         if ${IS_WINDOWS_GIT_BASH} && command -v taskkill.exe >/dev/null 2>&1; then
             taskkill.exe //PID ${APP_PID} //T >/dev/null 2>&1 || true
