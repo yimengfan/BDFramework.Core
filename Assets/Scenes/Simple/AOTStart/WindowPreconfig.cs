@@ -56,6 +56,26 @@ public class WindowPreconfig : MonoBehaviour
             inputField.text = this.serverConfig .FileServerUrl;
         }
         Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
+
+        if (ShouldAutoLaunchForTalosE2E(System.Environment.GetCommandLineArgs()))
+        {
+            Debug.Log("[TalosE2E] 检测到 -talosForceE2E，跳过预配置界面并直接进入框架启动");
+            Onclick_PassAndLaunch();
+        }
+    }
+
+    /// <summary>
+    /// 判断当前是否处于 Talos E2E 强制启动模式。
+    /// 当命令行包含 -talosForceE2E 时，预配置界面应直接进入框架启动，避免远端 E2E 在 UI 点击前就被启动门槛阻塞。
+    /// </summary>
+    public static bool ShouldAutoLaunchForTalosE2E(string[] args)
+    {
+        if (args == null || args.Length == 0)
+        {
+            return false;
+        }
+
+        return args.Any(arg => string.Equals(arg, "-talosForceE2E", System.StringComparison.OrdinalIgnoreCase));
     }
 
 
