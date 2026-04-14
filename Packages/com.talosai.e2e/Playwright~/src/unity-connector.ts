@@ -96,6 +96,13 @@ export interface ActionResult {
   error?: string;
 }
 
+/** Unity 步骤截图结果 */
+export interface ScreenshotResult {
+  fileName?: string;
+  path?: string;
+  contentBase64?: string;
+}
+
 /** 编辑器命令执行结果 */
 export interface EditorCommandResult {
   /** 是否执行成功 */
@@ -312,6 +319,23 @@ export class UnityConnector {
       success: response.success,
       data: response.data,
       error: response.error,
+    };
+  }
+
+  /**
+   * 触发 Unity 端截取当前画面，并把 PNG 结果回传给 Playwright。
+   * 该能力主要用于在每个关键测试步骤结束后把当前 Player 画面附加到标准 Playwright 报告中。
+   */
+  async captureScreenshot(name: string, timeoutMs: number = 30000): Promise<ScreenshotResult> {
+    const result = await this.executeAction(ActionType.SCREENSHOT, { name }, timeoutMs);
+    if (!result.success) {
+      throw new Error(`[TalosE2E] Unity 截图失败: ${result.error || 'unknown error'}`);
+    }
+
+    return {
+      fileName: result.data?.fileName,
+      path: result.data?.path,
+      contentBase64: result.data?.contentBase64,
     };
   }
 

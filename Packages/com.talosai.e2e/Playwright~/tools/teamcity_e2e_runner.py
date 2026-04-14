@@ -126,6 +126,16 @@ class NodeTooling:
     npm_bin: Path
 
 
+@dataclass(frozen=True)
+class TeamCityCurrentBuildContext:
+    """保存当前 TeamCity 构建自身的上下文，便于生成可点击的 artifact 链接。"""
+
+    base_url: str | None
+    build_id: str | None
+    build_type_id: str | None
+    build_url: str | None
+
+
 PLATFORM_PROFILE_BY_KEY = {
     "windows": PlatformProfile(
         platform_key="windows",
@@ -602,6 +612,87 @@ def emit_teamcity_parameter(name: str, value: str) -> None:
     )
 
 
+def load_teamcity_build_properties() -> dict[str, str]:
+    """读取 TeamCity 当前构建的 properties 文件，提取生成 artifact 链接所需字段。"""
+    properties_path = normalize_optional_value(os.environ.get("TEAMCITY_BUILD_PROPERTIES_FILE"))
+    if not properties_path:
+        return {}
+
+    path = Path(properties_path).expanduser()
+    if not path.is_file():
+        return {}
+
+    properties: dict[str, str] = {}
+    for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        name, value = line.split("=", 1)
+        properties[name.strip()] = value.strip()
+    return properties
+
+
+def resolve_current_teamcity_build_context() -> TeamCityCurrentBuildContext:
+    """解析当前 TeamCity 构建自己的地址与构建标识，用于输出标准 Playwright 报告链接。"""
+    properties = load_teamcity_build_properties()
+    return TeamCityCurrentBuildContext(
+        base_url=normalize_optional_value(
+            os.environ.get("TEAMCITY_BASE_URL")
+            or os.environ.get("TEAMCITY_SERVER_URL")
+            or properties.get("teamcity.serverUrl")
+        ) or None,
+        build_id=normalize_optional_value(
+            os.environ.get("TEAMCITY_BUILD_ID")
+            or os.environ.get("BUILD_ID")
+            or properties.get("teamcity.build.id")
+        ) or None,
+        build_type_id=normalize_optional_value(
+            os.environ.get("TEAMCITY_BUILD_TYPE_ID")
+            or os.environ.get("TEAMCITY_BUILDCONF_ID")
+            or properties.get("teamcity.buildType.id")
+        ) or None,
+        build_url=normalize_optional_value(
+            os.environ.get("BUILD_URL")
+            or properties.get("teamcity.build.url")
+        ) or None,
+    )
+
+
+def build_teamcity_artifact_url(context: TeamCityCurrentBuildContext, artifact_path: str) -> str | None:
+    """根据当前构建上下文拼出 TeamCity artifact 的可点击下载链接。"""
+    if not context.base_url or not context.build_id or not context.build_type_id:
+        return None
+
+    normalized_artifact_path = normalize_required_value(artifact_path, field_name="artifactPath").lstrip("/")
+    encoded_artifact_path = urllib.parse.quote(normalized_artifact_path, safe="/")
+    encoded_build_type_id = urllib.parse.quote(context.build_type_id, safe="")
+    return (
+        f"{context.base_url.rstrip('/')}"
+        f"/repository/download/{encoded_build_type_id}/{context.build_id}:id/{encoded_artifact_path}"
+    )
+
+
+def emit_playwright_report_metadata() -> None:
+    """在 TeamCity 收尾阶段输出标准 Playwright 报告路径与可点击 artifact 链接。"""
+    html_artifact_path = "talos-e2e-test-results/html/index.html"
+    junit_artifact_path = "talos-e2e-test-results/junit.xml"
+    context = resolve_current_teamcity_build_context()
+
+    print(f"{LOG_PREFIX} playwrightHtmlArtifactPath={html_artifact_path}")
+    print(f"{LOG_PREFIX} playwrightJUnitArtifactPath={junit_artifact_path}")
+    if context.build_url:
+        print(f"{LOG_PREFIX} currentBuildWebUrl={context.build_url}")
+
+    html_report_url = build_teamcity_artifact_url(context, html_artifact_path)
+    junit_report_url = build_teamcity_artifact_url(context, junit_artifact_path)
+    if html_report_url:
+        print(f"{LOG_PREFIX} playwrightHtmlReportUrl={html_report_url}")
+        emit_teamcity_parameter("talos.e2e.playwright.html.report.url", html_report_url)
+    if junit_report_url:
+        print(f"{LOG_PREFIX} playwrightJUnitReportUrl={junit_report_url}")
+        emit_teamcity_parameter("talos.e2e.playwright.junit.report.url", junit_report_url)
+
+
 def build_remote_root(remote_root_prefix: str, build_number: str) -> str:
     """根据平台远端根和构建号拼出文件服务器目录。"""
     return str(PurePosixPath(remote_root_prefix) / normalize_required_value(build_number, field_name="buildNumber"))
@@ -896,6 +987,7 @@ def main() -> int:
     print(f"{LOG_PREFIX} ===== Phase 5/5: finish =====")
     print(f"{LOG_PREFIX} playwrightHtmlReport={PLAYWRIGHT_DIR / 'test-results' / 'html' / 'index.html'}")
     print(f"{LOG_PREFIX} playwrightJUnitReport={PLAYWRIGHT_DIR / 'test-results' / 'junit.xml'}")
+    emit_playwright_report_metadata()
     if exit_code != 0:
         raise TalosTeamCityE2EError(f"Talos E2E tool failed with exit code {exit_code}")
     print(f"{LOG_PREFIX} status=success")

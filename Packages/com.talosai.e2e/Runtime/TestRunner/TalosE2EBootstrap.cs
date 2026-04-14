@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using LitJson;
@@ -322,10 +323,92 @@ namespace Talos.E2E
             // TODO: 根据业务需要扩展更多动作
             switch (action)
             {
+                case "screenshot":
+                {
+                    var screenshotName = TryGetString(msg, "name", "talos-step");
+                    StartCoroutine(CaptureScreenshotAndRespond(action, screenshotName));
+                    break;
+                }
                 default:
                     SendResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"未实现的动作: {action}" });
                     break;
             }
+        }
+
+        /// <summary>
+        /// 在 MonoBehaviour 运行态截取当前 Game 画面，并把 PNG 内容回传给 Playwright。
+        /// 这里统一等待一帧结束，避免在渲染未完成时拿到空白或未定义截图。
+        /// </summary>
+        private IEnumerator CaptureScreenshotAndRespond(string action, string screenshotName)
+        {
+            yield return new WaitForEndOfFrame();
+
+            Texture2D texture = null;
+            try
+            {
+                texture = ScreenCapture.CaptureScreenshotAsTexture();
+                if (texture == null)
+                {
+                    SendResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "截图失败：未获取到有效的屏幕纹理" });
+                    yield break;
+                }
+
+                var bytes = texture.EncodeToPNG();
+                if (bytes == null || bytes.Length == 0)
+                {
+                    SendResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "截图失败：PNG 编码结果为空" });
+                    yield break;
+                }
+
+                var screenshotDir = Path.Combine(Application.persistentDataPath, "talos-e2e", "screenshots");
+                Directory.CreateDirectory(screenshotDir);
+
+                var fileName = BuildScreenshotFileName(screenshotName);
+                var screenshotPath = Path.Combine(screenshotDir, fileName);
+                File.WriteAllBytes(screenshotPath, bytes);
+
+                Debug.Log($"[TalosE2E] 步骤截图已保存: {screenshotPath}");
+                SendResponse(new
+                {
+                    type = Protocol.MsgActionResult,
+                    action,
+                    success = true,
+                    data = new
+                    {
+                        fileName,
+                        path = screenshotPath,
+                        contentBase64 = Convert.ToBase64String(bytes),
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[TalosE2E] 步骤截图失败: {ex}");
+                SendResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"截图失败: {ex.Message}" });
+            }
+            finally
+            {
+                if (texture != null)
+                {
+                    Destroy(texture);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 生成稳定且可落盘的截图文件名，避免步骤标题中的路径分隔符污染文件系统。
+        /// </summary>
+        private static string BuildScreenshotFileName(string rawName)
+        {
+            var normalized = string.IsNullOrWhiteSpace(rawName) ? "talos-step" : rawName.Trim();
+            var safeChars = normalized.Select(ch => char.IsLetterOrDigit(ch) ? ch : '_').ToArray();
+            var safeName = new string(safeChars).Trim('_');
+            if (string.IsNullOrEmpty(safeName))
+            {
+                safeName = "talos-step";
+            }
+
+            return $"{DateTime.UtcNow:yyyyMMdd-HHmmssfff}-{safeName}.png";
         }
 
         /// <summary>
@@ -550,7 +633,14 @@ namespace Talos.E2E
                     case Protocol.MsgAction:
                         var action = (string)msg["action"];
                         Debug.Log($"[TalosE2E] 执行动作（主线程）: {action}");
-                        BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"未实现的动作: {action}" });
+                        if (string.Equals(action, "screenshot", StringComparison.OrdinalIgnoreCase))
+                        {
+                            BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "静态模式暂不支持步骤截图，请在 Player 或 PlayMode 运行态执行该动作" });
+                        }
+                        else
+                        {
+                            BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"未实现的动作: {action}" });
+                        }
                         break;
 
                     case Protocol.MsgEditorCommand:

@@ -261,3 +261,47 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_shell_path(tooling.node_home)
     assert captured["env"]["NODE_BIN"] == runner.normalize_shell_path(tooling.node_bin)
     assert captured["env"]["NPM_BIN"] == runner.normalize_shell_path(tooling.npm_bin)
+
+
+def test_resolve_current_teamcity_build_context_reads_properties_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 runner 会从 TeamCity properties 文件里解析当前构建上下文。"""
+    properties_file = tmp_path / "teamcity.properties"
+    properties_file.write_text(
+        "teamcity.serverUrl=http://teamcity.local\n"
+        "teamcity.build.id=901\n"
+        "teamcity.buildType.id=BDFrameworkCore_TalosAIStep01BaseFlowTest\n",
+        encoding="utf-8",
+    )
+
+    monkeypatch.setenv("TEAMCITY_BUILD_PROPERTIES_FILE", str(properties_file))
+    monkeypatch.delenv("TEAMCITY_BASE_URL", raising=False)
+    monkeypatch.delenv("TEAMCITY_SERVER_URL", raising=False)
+    monkeypatch.delenv("TEAMCITY_BUILD_ID", raising=False)
+    monkeypatch.delenv("BUILD_ID", raising=False)
+    monkeypatch.delenv("TEAMCITY_BUILD_TYPE_ID", raising=False)
+    monkeypatch.delenv("TEAMCITY_BUILDCONF_ID", raising=False)
+    monkeypatch.delenv("BUILD_URL", raising=False)
+
+    context = runner.resolve_current_teamcity_build_context()
+
+    assert context.base_url == "http://teamcity.local"
+    assert context.build_id == "901"
+    assert context.build_type_id == "BDFrameworkCore_TalosAIStep01BaseFlowTest"
+    assert context.build_url is None
+
+
+def test_build_teamcity_artifact_url_returns_repository_download_link() -> None:
+    """验证标准 Playwright 报告链接会被拼成 TeamCity artifact 下载地址。"""
+    context = runner.TeamCityCurrentBuildContext(
+        base_url="http://teamcity.local",
+        build_id="901",
+        build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+        build_url=None,
+    )
+
+    artifact_url = runner.build_teamcity_artifact_url(context, "talos-e2e-test-results/html/index.html")
+
+    assert artifact_url == (
+        "http://teamcity.local/repository/download/"
+        "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/html/index.html"
+    )
