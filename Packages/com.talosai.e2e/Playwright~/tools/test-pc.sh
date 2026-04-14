@@ -123,11 +123,9 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
         exit 1
     fi
 
-    if command -v nc &>/dev/null; then
-        if nc -z "${UNITY_HOST}" "${UNITY_PORT}" 2>/dev/null; then
-            echo "    ✅ TCP 服务已就绪 (${WAITED}s)"
-            break
-        fi
+    if probe_talos_tcp_port "${UNITY_HOST}" "${UNITY_PORT}"; then
+        echo "    ✅ TCP 服务已就绪 (${WAITED}s)"
+        break
     fi
     sleep 2
     WAITED=$((WAITED + 2))

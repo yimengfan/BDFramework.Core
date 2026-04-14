@@ -36,7 +36,7 @@ def run_node_tools(script_body: str, env: dict[str, str]) -> subprocess.Complete
     merged_env = os.environ.copy()
     merged_env.update(env)
     return subprocess.run(
-        ["bash", "-lc", shell_script],
+        ["/bin/bash", "-c", shell_script],
         capture_output=True,
         text=True,
         env=merged_env,
@@ -108,3 +108,22 @@ def test_ensure_talos_playwright_dependencies_uses_resolved_npm_install(tmp_path
     assert result.returncode == 0, result.stderr
     assert cli_path.is_file()
     assert npm_log_path.read_text(encoding="utf-8").strip() == "install"
+
+
+def test_probe_talos_tcp_port_falls_back_to_node_when_nc_missing(tmp_path: Path) -> None:
+    """验证缺少 nc 时，会回退到解析出的 Node 可执行文件完成 TCP 探测。"""
+    node_home = tmp_path / "nodejs"
+    node_home.mkdir()
+    node_bin = node_home / "node.exe"
+    write_executable(node_bin, "#!/bin/bash\nexit 0\n")
+
+    result = run_node_tools(
+        'probe_talos_tcp_port 127.0.0.1 10002',
+        {
+            "PATH": str(tmp_path / "missing-bin"),
+            "NODE_BIN": str(node_bin),
+            "TALOS_NODEJS_HOME": str(node_home),
+        },
+    )
+
+    assert result.returncode == 0, result.stderr

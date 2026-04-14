@@ -189,3 +189,22 @@ ensure_talos_playwright_dependencies() {
         return 1
     fi
 }
+
+probe_talos_tcp_port() {
+    local host="${1:-}"
+    local port="${2:-}"
+    if [[ -z "${host}" || -z "${port}" ]]; then
+        return 1
+    fi
+
+    if command -v nc >/dev/null 2>&1; then
+        nc -z "${host}" "${port}" >/dev/null 2>&1
+        return $?
+    fi
+
+    if [[ -z "${TALOS_NODE_BIN:-}" ]] && ! TALOS_NODE_BIN="$(resolve_talos_node_bin)"; then
+        return 1
+    fi
+
+    "${TALOS_NODE_BIN}" -e "const net=require('net'); const host=process.argv[1]; const port=Number(process.argv[2]); const socket=net.createConnection({host, port}); socket.setTimeout(1000); socket.on('connect', () => { socket.end(); process.exit(0); }); socket.on('timeout', () => { socket.destroy(); process.exit(1); }); socket.on('error', () => process.exit(1));" "${host}" "${port}" >/dev/null 2>&1
+}

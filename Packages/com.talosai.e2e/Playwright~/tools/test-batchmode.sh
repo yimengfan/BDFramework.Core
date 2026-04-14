@@ -217,12 +217,10 @@ else
             exit 1
         fi
 
-        if command -v nc &>/dev/null; then
-            if nc -z 127.0.0.1 "${UNITY_PORT}" 2>/dev/null; then
-                echo " ✅"
-                echo "    TCP 服务已就绪 (${WAITED}s)"
-                break
-            fi
+        if probe_talos_tcp_port 127.0.0.1 "${UNITY_PORT}"; then
+            echo " ✅"
+            echo "    TCP 服务已就绪 (${WAITED}s)"
+            break
         fi
         sleep 2
         WAITED=$((WAITED + 2))
