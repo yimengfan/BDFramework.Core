@@ -161,6 +161,7 @@ namespace BDFramework
 
         /// <summary>
         /// 通过反射尝试调用 Talos.E2E.E2EAutoInit.CheckAndLaunch()。
+        /// 这个只能在 debug 模式下使用！！！！！！
         /// 在热更 DLL 加载 + 框架初始化完成后调用，确保 E2E 测试可以正确发现热更类型。
         /// 如果 Talos.E2E 包不存在，则静默跳过。
         /// 是否真正启动 E2E 由 Talos.E2E.E2EAutoInit 在运行时继续根据 DEBUG 标记文件或 -talosForceE2E 参数判定。
@@ -169,6 +170,7 @@ namespace BDFramework
         /// - Editor PlayMode：E2EAutoInit → LaunchE2EStatic（静态模式，由 DidReloadScripts 管理）
         /// - Editor 非进 PlayMode：由 LaunchE2EEditorOnly 直接启动静态 TCP，不经此路径
         /// </summary>
+          [Conditional("DEBUG")]
         static private void TryStartE2EFramework()
         {
             try
