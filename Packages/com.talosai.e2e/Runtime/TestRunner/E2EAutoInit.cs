@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 using BDFramework;
 using BDFramework.Core.Tools;
 
@@ -33,6 +34,7 @@ namespace Talos.E2E
     /// }
     /// </code>
     /// </summary>
+    [Preserve]
     static public class E2EAutoInit
     {
         /// <summary>
@@ -45,6 +47,7 @@ namespace Talos.E2E
         /// 此方法可安全地被多次调用，只会执行一次。
         /// </summary>
         /// <param name="port">TCP 服务监听端口，默认 10002。可通过命令行参数 -talosPort 覆盖。</param>
+        [Preserve]
         static public void CheckAndLaunch(int port = Transport.Protocol.DefaultPort)
         {
             if (hasChecked) return;
