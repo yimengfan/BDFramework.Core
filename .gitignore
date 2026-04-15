@@ -84,3 +84,5 @@ Packages/com.talosai.e2e/Documentation~/
 # Talos E2E 与 Unity 运行产物
 talos_e2e_results.json
 mono_crash.*.json
+
+UserSettings
