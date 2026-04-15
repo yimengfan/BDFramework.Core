@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using BDFramework.Assets.VersionContrller;
+using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
 using Cysharp.Threading.Tasks;
 using LitJson;

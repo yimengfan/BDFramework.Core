@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Utils.mslibEx
+namespace BDFramework.Utils.mslibEx
 {
     static public class TypeEx
     {

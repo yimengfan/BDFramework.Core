@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using BDFramework.Asset;
-using BDFramework.Assets.VersionContrller;
+using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;

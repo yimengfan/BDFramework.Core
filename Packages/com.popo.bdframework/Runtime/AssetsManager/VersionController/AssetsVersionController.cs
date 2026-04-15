@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BDFramework.Asset;
-using BDFramework.Assets.VersionContrller;
+using BDFramework.ResourceMgr;
 
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;

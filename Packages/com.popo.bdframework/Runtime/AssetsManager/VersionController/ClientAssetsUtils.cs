@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
-using BDFramework.Assets.VersionContrller;
+using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using Cysharp.Text;

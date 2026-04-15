@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Asset;
-using BDFramework.Assets.VersionContrller;
+using BDFramework.ResourceMgr;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.Table;

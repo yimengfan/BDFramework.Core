@@ -41,7 +41,7 @@ using BDFramework;
 using BDFramework.Core.Tools;
 using LitJson;
 using UnityEngine;
-using Utils.mslibEx;
+using BDFramework.Utils.mslibEx;
 using Debug = System.Diagnostics.Debug;
 using Random = System.Random;
 

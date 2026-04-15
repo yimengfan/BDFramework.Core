@@ -1,5 +1,5 @@
 ﻿using System;
-using BDFramework.Assets.VersionContrller;
+using BDFramework.ResourceMgr;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.PublishPipeline;
 using UnityEngine;

@@ -1,4 +1,4 @@
-namespace  BDFramework.Assets.VersionContrller
+namespace BDFramework.ResourceMgr
 {
     /// <summary>
     /// 版本号帮助
