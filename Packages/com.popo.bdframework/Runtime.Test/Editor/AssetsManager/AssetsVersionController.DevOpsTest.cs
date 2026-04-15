@@ -722,9 +722,9 @@ namespace BDFramework.EditorTest.AssetsManager
                     "第二个补下载 AssetBundle 本地路径不匹配。");
                 EnsureEqual("shared-hash", downloadItems[1].AssetItem.HashName,
                     "第二个补下载 AssetBundle Hash 不匹配。");
-                EnsureTrue(downloadItems[0].RemoteUrl.EndsWith("/files/ClientRes_Assetbundle_android/45/hero-hash"),
+                EnsureTrue(downloadItems[0].RemoteUrl.EndsWith("/ClientRes_Assetbundle_android/45/hero-hash"),
                     "第一个补下载 AssetBundle 远端路径不匹配。");
-                EnsureTrue(downloadItems[1].RemoteUrl.EndsWith("/files/ClientRes_Assetbundle_android/45/shared-hash"),
+                EnsureTrue(downloadItems[1].RemoteUrl.EndsWith("/ClientRes_Assetbundle_android/45/shared-hash"),
                     "第二个补下载 AssetBundle 远端路径不匹配。");
                 EnsureTrue(downloadItems[0].FinalLocalPath.Replace("\\", "/").EndsWith("/art_assets/hero.bundle"),
                     "第一个补下载 AssetBundle 本地落盘路径不匹配。");
@@ -1173,7 +1173,9 @@ namespace BDFramework.EditorTest.AssetsManager
             Directory.CreateDirectory(tempDir);
             var dbPath = Path.Combine(tempDir, "local.db");
             var oldPassword = SqliteLoder.password;
+            var oldPasswordFallback = SqliteLoder.PasswordFallback;
             SqliteLoder.Password = string.Empty;
+            SqliteLoder.PasswordFallback = null;
 
             try
             {
@@ -1189,6 +1191,7 @@ namespace BDFramework.EditorTest.AssetsManager
             {
                 SqliteLoder.Close("local");
                 SqliteLoder.Password = oldPassword;
+                SqliteLoder.PasswordFallback = oldPasswordFallback;
                 if (Directory.Exists(tempDir))
                 {
                     Directory.Delete(tempDir, true);

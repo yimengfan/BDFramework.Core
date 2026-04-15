@@ -11,7 +11,7 @@ using BDFramework.Editor.HotfixPipeline;
 using BDFramework.Editor.Table;
 using BDFramework.Editor.Task;
 using BDFramework.Editor.Tools.EditorHttpServer;
-using BDFramework.Hotfix.Reflection;
+using BDFramework.Reflection;
 using BDFramework.ScreenView;
 using ServiceStack;
 using UnityEditor;

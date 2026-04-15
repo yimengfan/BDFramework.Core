@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Tools;
-using BDFramework.Hotfix.Reflection;
+using BDFramework.Reflection;
 using DotNetExtension;
 using LitJson;
 using UnityEngine;

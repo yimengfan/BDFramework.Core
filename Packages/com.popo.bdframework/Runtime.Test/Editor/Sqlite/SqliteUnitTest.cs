@@ -2,24 +2,45 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using BDFramework.Sql;
 using LitJson;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
+using UnityEditor;
 using UnityEngine;
 
 
 namespace BDFramework.EditorTest.SQLite
 {
     /// <summary>
-    /// Sqlite单元测试
+    /// 覆盖 SQLite 读写、查询与密码回退契约的编辑器单元测试集合。
+    /// 常规情况下通过 Unity Test Runner 执行；当项目初始化会干扰 -runTests 时，可改走 BatchMode 显式验证入口。
     /// </summary>
     public class SqliteUnitTest
     {
         /// <summary>
+        /// 提供给 batchmode 的显式验证入口。
+        /// 当项目级初始化会干扰 Unity 原生 -runTests 流程时，可以通过 -executeMethod 直接调用这组受影响用例。
+        /// </summary>
+        public static void RunBatchVerification()
+        {
+            SqliteUnitTestBatchVerification.RunBatchVerification();
+        }
+
+        /// <summary>
         /// 单元测试的数据库
         /// </summary>
         private static string dbname = "Unitest_LiteDB";
+
+        /// <summary>
+        /// 在每个测试入口打印统一日志，方便本地与 CI 直接看到测试目的和实现手段。
+        /// </summary>
+        [SetUp]
+        public void LogCurrentTestPurpose()
+        {
+            Debug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证 SQLite 相关能力在当前用例下符合预期。 实现手段=执行 NUnit 测试并断言数据库操作结果、密码回退和查询结果。");
+        }
 
         /// <summary>
         /// 配置单元测试
@@ -57,6 +78,52 @@ namespace BDFramework.EditorTest.SQLite
 
 
             Assert.That(true);
+        }
+
+        /// <summary>
+        /// 验证当未显式设置密码时，SqliteLoder 会使用 PasswordFallback 返回配置层注入的默认密码。
+        /// </summary>
+        [Test]
+        public void PasswordFallback_ReturnsFallbackWhenExplicitPasswordIsEmpty()
+        {
+            var oldPassword = SqliteLoder.password;
+            var oldPasswordFallback = SqliteLoder.PasswordFallback;
+            SqliteLoder.password = string.Empty;
+            SqliteLoder.PasswordFallback = () => "fallback-password";
+
+            try
+            {
+                Assert.AreEqual("fallback-password", SqliteLoder.Password,
+                    "未显式设置密码时，应返回 PasswordFallback 提供的默认密码。");
+            }
+            finally
+            {
+                SqliteLoder.password = oldPassword;
+                SqliteLoder.PasswordFallback = oldPasswordFallback;
+            }
+        }
+
+        /// <summary>
+        /// 验证当显式密码已设置时，SqliteLoder 会优先使用显式值而不是 PasswordFallback。
+        /// </summary>
+        [Test]
+        public void PasswordFallback_PrefersExplicitPasswordOverFallback()
+        {
+            var oldPassword = SqliteLoder.password;
+            var oldPasswordFallback = SqliteLoder.PasswordFallback;
+            SqliteLoder.password = "explicit-password";
+            SqliteLoder.PasswordFallback = () => "fallback-password";
+
+            try
+            {
+                Assert.AreEqual("explicit-password", SqliteLoder.Password,
+                    "显式密码存在时，应优先返回显式密码而不是回退密码。");
+            }
+            finally
+            {
+                SqliteLoder.password = oldPassword;
+                SqliteLoder.PasswordFallback = oldPasswordFallback;
+            }
         }
         
         
@@ -355,6 +422,7 @@ namespace BDFramework.EditorTest.SQLite
         static public void Close()
         {
             SqliteLoder.Close(dbname);
+            SqliteLoder.PasswordFallback = null;
             var dbpath = IPath.Combine(Application.persistentDataPath, dbname);
             if (File.Exists(dbpath))
             {
@@ -362,6 +430,96 @@ namespace BDFramework.EditorTest.SQLite
             }
 
             Debug.Log("关闭数据库:" + dbname);
+        }
+    }
+
+    /// <summary>
+    /// SQLite 受影响用例的 BatchMode 显式验证入口。
+    /// 用于在 Unity Test Runner 被项目初始化流程干扰时，仍能稳定验证密码回退与基础可读性契约。
+    /// </summary>
+    public static class SqliteUnitTestBatchVerification
+    {
+        /// <summary>
+        /// 顺序执行受影响 SQLite 用例，写出批验证报告，并用退出码反馈结果。
+        /// </summary>
+        public static void RunBatchVerification()
+        {
+            Debug.Log("[测试开始] name=SqliteUnitTestBatchVerification 测试目的=验证 SQLite 密码回退与基础读写契约在 BatchMode 下保持稳定。 实现手段=直接调用 SqliteUnitTest 的初始化、受影响用例与清理入口，并写出批验证报告。");
+            var reportBuilder = new StringBuilder();
+            var failedCount = 0;
+            var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "Library",
+                "SqliteUnitTestBatchVerification.txt");
+            var test = new SqliteUnitTest();
+            var checks = new (string Name, Action Action)[]
+            {
+                (nameof(SqliteUnitTest.SqlItemDeSerializeTest), SqliteUnitTest.SqlItemDeSerializeTest),
+                (nameof(SqliteUnitTest.PasswordFallback_ReturnsFallbackWhenExplicitPasswordIsEmpty),
+                    test.PasswordFallback_ReturnsFallbackWhenExplicitPasswordIsEmpty),
+                (nameof(SqliteUnitTest.PasswordFallback_PrefersExplicitPasswordOverFallback),
+                    test.PasswordFallback_PrefersExplicitPasswordOverFallback),
+            };
+
+            try
+            {
+                // Phase 1: 先完成测试数据库初始化，再顺序执行受影响用例。
+                test.Setup();
+                for (var index = 0; index < checks.Length; index++)
+                {
+                    var check = checks[index];
+                    RunCheck(index + 1, checks.Length, check.Name, check.Action, reportBuilder, ref failedCount);
+                }
+            }
+            catch (Exception exception)
+            {
+                failedCount++;
+                reportBuilder.AppendLine($"FAIL SetupOrSuite {exception}");
+            }
+            finally
+            {
+                // Phase 2: 无论成功失败都清理测试数据库，避免污染后续本地与 CI 验证。
+                try
+                {
+                    SqliteUnitTest.Close();
+                }
+                catch (Exception exception)
+                {
+                    failedCount++;
+                    reportBuilder.AppendLine($"FAIL TearDown {exception}");
+                }
+            }
+
+            // Phase 3: 持久化报告并通过显式退出码反馈整体结果。
+            reportBuilder.Insert(0,
+                $"Summary: total={checks.Length} passed={checks.Length - failedCount} failed={failedCount}{Environment.NewLine}");
+            File.WriteAllText(outputPath, reportBuilder.ToString(), Encoding.UTF8);
+            if (failedCount > 0)
+            {
+                Debug.LogError($"Sqlite batch verification failed. Report: {outputPath}");
+                EditorApplication.Exit(1);
+                return;
+            }
+
+            Debug.Log($"Sqlite batch verification passed. Report: {outputPath}");
+            EditorApplication.Exit(0);
+        }
+
+        /// <summary>
+        /// 执行单个 SQLite 验证步骤并把结果写入批验证报告。
+        /// </summary>
+        private static void RunCheck(int currentIndex, int totalCount, string checkName, Action checkAction,
+            StringBuilder reportBuilder, ref int failedCount)
+        {
+            Debug.Log($"[测试进度] suite=SqliteUnitTestBatchVerification current={currentIndex}/{totalCount} name={checkName} 测试目的=验证 {checkName} 对应的 SQLite 行为契约。 实现手段=直接调用受影响测试入口并断言返回结果。");
+            try
+            {
+                checkAction();
+                reportBuilder.AppendLine($"PASS {checkName}");
+            }
+            catch (Exception exception)
+            {
+                failedCount++;
+                reportBuilder.AppendLine($"FAIL {checkName} {exception}");
+            }
         }
     }
 }

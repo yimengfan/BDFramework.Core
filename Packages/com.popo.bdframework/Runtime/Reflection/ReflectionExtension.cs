@@ -2,10 +2,12 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-namespace BDFramework.Hotfix.Reflection
+namespace BDFramework.Reflection
 {
     /// <summary>
-    /// 反射扩展
+    /// 反射扩展工具。
+    /// 提供 HybridCLR 热更环境下的类型查找与 Attribute 获取能力，
+    /// 不再使用 Hotfix 前缀，因为整个 BDFramework.Core 程序集即为热更层。
     /// </summary>
     static public class ReflectionExtension
     {
