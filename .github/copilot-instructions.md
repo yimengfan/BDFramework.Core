@@ -60,7 +60,11 @@ Every task must pass all items below before being considered complete:
 
 - [ ] Local tests pass (lint / unit test / smoke test)
 - [ ] Changes are committed and pushed to remote
-- [ ] Remote CI passes
+- [ ] Remote CI passes — **must actively trigger and wait, not assume auto-run**:
+  1. **Judge affected BuildTypes**: based on changed files, determine which TeamCity build configurations are affected (code compilation, E2E, AssetBundle, etc.).
+  2. **Trigger builds**: use the TeamCity skill (`run-build` or `run-build-group`) to trigger all affected BuildTypes on the pushed branch, with descriptive comment and tags.
+  3. **Wait and verify**: use `--wait` to block until each build finishes; if any build fails, read its log tail and report the failure — do NOT mark the task as complete.
+  4. **Report results**: summarize build IDs, statuses, and URLs in the completion message.
 - [ ] No Chinese file names or directory names (comments and logs may use Chinese)
 - [ ] C# identifiers and Attribute default parameter values use English
 - [ ] Generic packages contain no business-party-specific tests or hardcoded logic
