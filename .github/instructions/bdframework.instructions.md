@@ -20,15 +20,15 @@ applyTo: "Packages/com.popo.bdframework/**"
 
 ## Rules
 
-- **All comments and docstrings must be written in Chinese (中文).** This applies to XML summaries, inline comments, process comments, test docstrings, and configuration file comments. English-only docstrings do not satisfy this requirement.
-- All touched C# classes must keep XML comments current in Chinese. Key business, protocol, pipeline, and orchestration classes must describe design role and include an example or usage note.
-- All touched methods must keep XML comments current in Chinese. Key workflow methods must include phase comments so the process can be read top-down.
-- New C# protocol or pipeline files must include XML summaries on key classes and key entry/helper methods in Chinese. For non-trivial flows, add concise process comments and at least one usage example in comments or documentation.
-- Unity test files are NOT exempt: every test class and test method must have a Chinese comment explaining its purpose and the scenario it validates.
+- **All comments and docstrings must be written in paired Chinese and English.** This applies to XML summaries, inline comments, process comments, test docstrings, and configuration file comments. Put Chinese first and follow with the English version in the same comment block. Chinese-only or English-only comments do not satisfy this requirement.
+- All touched C# classes must keep XML comments current in bilingual Chinese and English form. Key business, protocol, pipeline, and orchestration classes must describe design role and include an example or usage note.
+- All touched methods must keep XML comments current in bilingual Chinese and English form. Key workflow methods must include phase comments so the process can be read top-down.
+- New C# protocol or pipeline files must include XML summaries on key classes and key entry/helper methods in bilingual Chinese and English form. For non-trivial flows, add concise process comments and at least one usage example in comments or documentation.
+- Unity test files are NOT exempt: every test class and test method must have a bilingual comment explaining its purpose and the scenario it validates.
 - Runtime partials that extend resource version control must use business-oriented names such as `file server`, `version server`, or `resource server`. `DevOps` may appear only as an explicit mode name or public API suffix. Do not introduce new runtime abstractions named `BuildTools`.
 - When extending `AssetsVersionController`, keep edits in `AssetsVersionController.cs` minimal. Prefer outer entry bridges or new partial helpers over inserting hooks into multiple existing private methods.
 - When introducing an alternative resource-update protocol, expose it through an explicit public API. Do not make legacy public entrypoints implicitly route into the new protocol unless the requirement explicitly asks for that behavior.
-- Resource-update protocol config files and cache files must include comments or documentation in Chinese that explain the file purpose, who writes it, and who consumes it.
+- Resource-update protocol config files and cache files must include bilingual comments or documentation that explain the file purpose, who writes it, and who consumes it.
 - Keep major workflows concentrated in explicit entry or coordinator methods, then bridge to helpers. Do not spread the main process across unrelated files without a clear flow anchor.
 - New or changed package code must add or update Unity automated tests. The affected tests must pass before the task is considered complete.
 - Unity tests, batch verification entries, and package-scoped CI validation entrypoints must print Chinese start logs with explicit `测试目的=` and `实现手段=` markers, and multi-step checks must emit key progress logs so long-running verification can be followed directly from Unity or TeamCity output.

@@ -20,6 +20,7 @@ applyTo: "Packages/com.talosai.e2e/**"
 
 ## Rules
 
+- All comments and docstrings under this package must be written in paired Chinese and English form. Put Chinese first and follow with the English version in the same comment block. Chinese-only or English-only comments do not satisfy this requirement.
 - Keep Unity-side orchestration minimal and centered around generic transport, test-runner, or editor-bridge entrypoints. Avoid scattering control flow across thin single-purpose commands.
 - Editor-control changes must preserve the rule that Playwright is the primary orchestrator. Prefer the cached reflection gateway and Unity official APIs before adding Unity-side wrapper commands.
 - If TCP protocol fields, message types, or reconnect semantics change, update both Unity and Playwright implementations together, then rerun the affected verification entrypoints.

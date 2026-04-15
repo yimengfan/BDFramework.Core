@@ -11,8 +11,10 @@ using UnityEngine;
 namespace BDFramework.Configure
 {
     /// <summary>
-    /// 配置属性
-    /// 按Tag排序
+    /// 配置处理器排序属性。
+    /// Ordering attribute for configuration processors.
+    /// 该属性延续 ManagerAttribute 的排序机制，让配置处理器按显式 tag 顺序依次执行。
+    /// This attribute extends the ManagerAttribute ordering mechanism so configuration processors run in explicit tag order.
     /// </summary>
     public class GameConfigAttribute : ManagerAttribute
     {
@@ -29,7 +31,12 @@ namespace BDFramework.Configure
     }
 
     /// <summary>
-    /// 游戏配置中心
+    /// 游戏配置中心。
+    /// Game configuration center.
+    /// 该管理器负责解析框架配置文本、实例化配置处理器并缓存运行期配置对象，
+    /// 是运行时启动与编辑器初始化共同依赖的配置装载入口。
+    /// This manager parses framework configuration text, instantiates configuration processors, and caches runtime configuration objects,
+    /// serving as the shared configuration-loading entry for both runtime startup and editor initialization.
     /// </summary>
     public class GameConfigManager : ManagerBase<GameConfigManager, GameConfigAttribute>
     {
@@ -68,37 +75,57 @@ namespace BDFramework.Configure
         }
 
         /// <summary>
-        /// 获取配置Text
+        /// 获取框架配置文本。
+        /// Get the framework configuration text.
+        /// 配置来源回退顺序固定为：运行时 launcher 文本、场景 launcher 文本、编辑器默认 bytes 文件。
+        /// The fallback order is fixed as runtime launcher text, scene launcher text, and finally the editor default bytes file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>本次命中的配置文本；如果所有来源都不可用，则返回空字符串。</returns>
         private string GetConfigText()
         {
             string text = "";
-            if (Application.isPlaying &&  BDLauncher.Inst)
+            var runtimeLauncher = Application.isPlaying ? BDLauncher.Inst : null;
+            BDLauncher sceneLauncher = null;
+            if (!(Application.isPlaying && runtimeLauncher && runtimeLauncher.ConfigText))
             {
-                text = BDLauncher.Inst.ConfigText?.text;
+                sceneLauncher = GameObject.FindObjectOfType<BDLauncher>();
             }
-            else
-            {
-                var launcher = GameObject.FindObjectOfType<BDLauncher>();
-                if (launcher && launcher.ConfigText)
-                {
-                    text = launcher.ConfigText.text;
-                    if(BApplication.IsPlaying)
-                    BDebug.Log("GameConfig加载配置:" + launcher.ConfigText.name, Color.yellow);
-                }
-                else
-                {
+
+            var defaultEditorConfigPath = ConfigEditorUtil.DefaultEditorConfig;
+            var defaultEditorConfigExists = false;
 #if UNITY_EDITOR
-                    //读取默认bytes
-                    var filepath = ConfigEditorUtil.DefaultEditorConfig;
-                    if (File.Exists(filepath))
-                    {
-                        text = File.ReadAllText(filepath);
-                        BDebug.Log("GameConfig加载配置:" + filepath, Color.yellow);
-                    }
+            defaultEditorConfigExists = File.Exists(defaultEditorConfigPath);
 #endif
-                }
+
+            var configSourcePlan = GameConfigStartupPureLogic.ResolveFrameworkConfigTextSource(
+                Application.isPlaying,
+                runtimeLauncher && runtimeLauncher.ConfigText,
+                runtimeLauncher && runtimeLauncher.ConfigText ? runtimeLauncher.ConfigText.name : string.Empty,
+                sceneLauncher && sceneLauncher.ConfigText,
+                sceneLauncher && sceneLauncher.ConfigText ? sceneLauncher.ConfigText.name : string.Empty,
+                Application.isEditor,
+                defaultEditorConfigExists,
+                defaultEditorConfigPath);
+
+            switch (configSourcePlan.SourceKind)
+            {
+                case GameConfigStartupPureLogic.FrameworkConfigTextSourceKind.RuntimeLauncherTextAsset:
+                    text = runtimeLauncher.ConfigText.text;
+                    break;
+                case GameConfigStartupPureLogic.FrameworkConfigTextSourceKind.SceneLauncherTextAsset:
+                    text = sceneLauncher.ConfigText.text;
+                    break;
+                case GameConfigStartupPureLogic.FrameworkConfigTextSourceKind.EditorDefaultFile:
+#if UNITY_EDITOR
+                    text = File.ReadAllText(configSourcePlan.SourceIdentifier);
+#endif
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(text) && configSourcePlan.ShouldLogSource)
+            {
+                BDebug.Log(GameConfigStartupPureLogic.FormatFrameworkConfigSourceLogMessage(
+                    configSourcePlan.SourceIdentifier), Color.yellow);
             }
 
             return text;

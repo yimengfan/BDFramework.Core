@@ -20,11 +20,11 @@ applyTo: "DevOps/CI/**"
 
 ## Rules
 
-- **All comments and docstrings must be written in Chinese (中文).** This applies to Python modules, classes, functions, test files, fixtures, inline comments, and configuration file comments. English-only docstrings do not satisfy this requirement.
-- All touched Python modules must keep module docstrings current in Chinese.
-- All touched Python classes and non-trivial functions must keep docstrings current in Chinese and explain role, contract, fallback, or side effects.
-- New or changed Python modules under `DevOps/CI/BuildTools` must include a module docstring in Chinese, keep non-trivial class and function docstrings current, and explain role, contract, fallback, or side effects.
-- Test files (pytest, etc.) are NOT exempt: every test module, test class, test function, fixture, and test helper must have a Chinese docstring explaining its purpose and the scenario it validates.
+- **All comments and docstrings must be written in paired Chinese and English.** This applies to Python modules, classes, functions, test files, fixtures, inline comments, and configuration file comments. Put Chinese first and follow with the English version in the same comment block. Chinese-only or English-only comments do not satisfy this requirement.
+- All touched Python modules must keep module docstrings current in bilingual Chinese and English form.
+- All touched Python classes and non-trivial functions must keep docstrings current in bilingual Chinese and English form and explain role, contract, fallback, or side effects.
+- New or changed Python modules under `DevOps/CI/BuildTools` must include a bilingual module docstring, keep non-trivial class and function docstrings current, and explain role, contract, fallback, or side effects.
+- Test files (pytest, etc.) are NOT exempt: every test module, test class, test function, fixture, and test helper must have a bilingual docstring explaining its purpose and the scenario it validates.
 - Keep the main CI process concentrated in explicit coordinator functions or entry scripts, with phase comments and matching stage logs.
 - **CRITICAL**: Business-independent external config such as file servers, CI servers, signing or certificate metadata, and remote test settings must live in `DevOps/CI/BuildTools/buildtools.toml` and be read through shared config interfaces under `DevOps/CI/BuildTools/Common/`, not parsed ad hoc in individual scripts. This rule is enforced by `buildtools_config_guard.py` in CI regression tests; violations will cause pytest to fail. Do not introduce `import tomllib`/`tomli`/`toml.load()`, custom `load_toml`/`parse_simple_value` helpers, or direct `config[section_key]` reads outside `Common/buildtools_config.py`.
 - Any change to build parameters, output layout, upload protocol, CI logging, or TeamCity contract must update code, README text, and pytest assertions together.

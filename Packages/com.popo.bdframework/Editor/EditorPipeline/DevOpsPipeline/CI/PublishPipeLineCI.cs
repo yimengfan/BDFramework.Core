@@ -14,13 +14,16 @@ namespace BDFramework.Editor.DevOps
 {
     /// <summary>
     /// BDFramework Editor 侧的 BatchMode 发布入口封装。
+    /// BatchMode publishing entry wrapper on the BDFramework Editor side.
     /// 该类只保留 TeamCity 或命令行通过 <c>-executeMethod</c> 调用的稳定入口，不再承载具体构建、参数解析或 Android 环境探测实现。
+    /// This class keeps only the stable entrypoints invoked by TeamCity or command line via <c>-executeMethod</c> and avoids owning concrete build, argument parsing, or Android environment probing details.
     /// 具体实现分别下沉到母包、ClientRes、表格和文件服务器验证各自的 owner 模块中，避免 CI 包装层继续膨胀。
+    /// Concrete behavior is delegated to the owner modules for client package, ClientRes, table generation, and file-server verification so the CI wrapper does not keep growing.
     /// </summary>
     /// <example>
     /// Unity -batchmode -projectPath &lt;project&gt; -executeMethod BDFramework.Editor.DevOps.PublishPipeLineCI.BuildCodeAndroid
     /// </example>
-    static public class PublishPipeLineCI
+    static public partial class PublishPipeLineCI
     {
         const string BuildDebugBatchArgName = "-buildDebug";
         const string EnableE2ETestSymbol = "ENABLE_E2ETEST";
@@ -321,17 +324,19 @@ namespace BDFramework.Editor.DevOps
 
         /// <summary>
         /// 执行指定平台的文件服务器 BatchMode 验证。
+        /// Execute file-server BatchMode verification for the specified platform.
         /// 该协调器只负责收敛命令行参数、补齐 Android External Tools、调用显式运行时验证入口，并把结果写成稳定日志与异常。
+        /// This coordinator only gathers command-line arguments, ensures Android external tools when needed, calls the explicit runtime verification entry, and keeps a stable logging and exception contract.
         /// </summary>
         static private void VerifyClientRes(BuildTarget buildTarget)
         {
-            var platform = BApplication.GetRuntimePlatform(buildTarget);
             if (buildTarget == BuildTarget.Android)
             {
                 AndroidExternalToolsBatchResolver.EnsureAndroidExternalToolsForBatchMode();
             }
 
-            AssetsVersionController.VerifyFileServerAssetsForBatchModeFromCommandLine(platform);
+            var request = CreateVerifyClientResRequestForBatchMode(buildTarget, System.Environment.GetCommandLineArgs());
+            AssetsVersionController.VerifyFileServerAssetsForBatchModeWithRequest(request);
         }
 
         /// <summary>

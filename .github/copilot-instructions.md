@@ -10,13 +10,13 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 
 ## Baseline Code Standards
 
-- **All comments and docstrings must be written in Chinese (中文).** This applies to module docstrings, class docstrings, function docstrings, process comments, fixture descriptions, test docstrings, inline comments, and configuration file comments. English-only docstrings do not satisfy this requirement.
-- Every touched class must have a class-level comment or docstring in Chinese. It must explain the design role of the type, why it exists, and include an example or usage note for key business, protocol, pipeline, or orchestration classes.
-- Every touched function or method must have a comment or docstring in Chinese that explains purpose and behavior. For non-trivial helpers, document inputs, outputs, side effects, fallback rules, or failure contract rather than repeating parameter names.
-- Test files (pytest, Unity tests, etc.) are NOT exempt: every test module, test class, test function, fixture, and test helper must have a Chinese docstring explaining its purpose and the scenario it validates.
+- **All comments and docstrings must be written in paired Chinese and English.** This applies to module docstrings, class docstrings, function docstrings, process comments, fixture descriptions, test docstrings, inline comments, and configuration file comments. Put Chinese first and follow with the English version in the same comment block. Chinese-only or English-only comments do not satisfy this requirement.
+- Every touched class must have a class-level bilingual comment or docstring. It must explain the design role of the type, why it exists, and include an example or usage note for key business, protocol, pipeline, or orchestration classes.
+- Every touched function or method must have a bilingual comment or docstring that explains purpose and behavior. For non-trivial helpers, document inputs, outputs, side effects, fallback rules, or failure contract rather than repeating parameter names.
+- Test files (pytest, Unity tests, etc.) are NOT exempt: every test module, test class, test function, fixture, and test helper must have a bilingual docstring explaining its purpose and the scenario it validates.
 - Major workflows must stay concentrated around an explicit entry or coordinator method so the end-to-end path can be read in one place. Do not scatter the primary process across distant files or tiny helpers without a clear bridge.
-- Major workflows and critical branches must include process comments in Chinese. Use phase-oriented comments so readers can follow the flow from top to bottom without reconstructing it from logs alone.
-- Critical configuration files must be documented in code comments or docstrings in Chinese where they are declared, loaded, generated, or written. The comment must explain the file purpose and who produces and consumes it.
+- Major workflows and critical branches must include bilingual process comments. Use phase-oriented comments so readers can follow the flow from top to bottom without reconstructing it from logs alone.
+- Critical configuration files must be documented in bilingual code comments or docstrings where they are declared, loaded, generated, or written. The comment must explain the file purpose and who produces and consumes it.
 - Every new or changed code path must add or update automated tests. Prefer unit tests first; if a flow cannot be covered purely with unit tests, add the closest automated verification and explain the gap. Relevant tests must pass before the task is considered complete.
 
 ## Markdown Documentation Standards
@@ -39,8 +39,8 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - **C# identifiers** — class names, method names, property names, parameter names, enum values — must use English.
 - **Attribute parameter default values** that serve as code-level conventions must use English (e.g. `suite: "default"`, not `"默认"`).
 - **Runtime log text** may use Chinese, since it is developer-facing readable output.
-- **Code comments and docstrings** must use Chinese per Baseline Code Standards.
-- Mnemonic: **Names in English, comments in Chinese, logs may be Chinese.**
+- **Code comments and docstrings** must follow the bilingual Chinese-first convention from the Baseline Code Standards.
+- Mnemonic: **Names in English, comments in Chinese+English, logs may be Chinese.**
 
 ## Package Independence Constraint
 

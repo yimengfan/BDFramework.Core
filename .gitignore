@@ -86,3 +86,4 @@ talos_e2e_results.json
 mono_crash.*.json
 
 UserSettings
+*.lscache
