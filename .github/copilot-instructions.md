@@ -2,13 +2,11 @@
 
 This file is the mandatory workspace instruction set for GitHub Copilot in this repository.
 
-## Mirror Index
+## Module Index
 
 - Copilot mandatory rules file: `.github/copilot-instructions.md`
-- Talos mirror file: `Packages/com.popo.bdframework/.talos/AGENTS.md`
 - Sync registry: `AI_RULES_INDEX.md`
 - Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`, `.github/instructions/e2e.instructions.md`
-- Maintenance rule: when either file changes, update the peer file in the same change so the two rule sets stay semantically aligned.
 
 ## Baseline Code Standards
 
@@ -35,8 +33,34 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Reflection is allowed only lightly in framework or infrastructure code when needed for compatibility, platform isolation, or controlled extension points, and the reason must be documented in code comments.
 
 
+## Naming vs Comment Language Boundary
+
+- **File names and directory names** must use ASCII English only. No Chinese, Japanese, or other non-Latin characters.
+- **C# identifiers** — class names, method names, property names, parameter names, enum values — must use English.
+- **Attribute parameter default values** that serve as code-level conventions must use English (e.g. `suite: "default"`, not `"默认"`).
+- **Runtime log text** may use Chinese, since it is developer-facing readable output.
+- **Code comments and docstrings** must use Chinese per Baseline Code Standards.
+- Mnemonic: **Names in English, comments in Chinese, logs may be Chinese.**
+
+## Package Independence Constraint
+
+- Packages marked as generic (e.g. `com.talosai.e2e`) must not contain any specific business-party test cases, configurations, or hardcoded logic.
+- Business-party test code must live in the business party's own package or project directory, referencing the generic package to use its capabilities.
+- Test: if removing a piece of code leaves the generic package still usable by other projects, that code does not belong in the package.
+
 ## Scope Guardrails
 
 - Do not modify third-party packages or vendored plugin code, especially `Packages/com.code-philosophy.*`.
 - Package-scoped code changes are allowed only under first-party embedded packages, currently `Packages/com.popo.bdframework` and `Packages/com.talosai.e2e`.
 - If third-party behavior must change, solve it from `Packages/com.popo.bdframework`, `Packages/com.talosai.e2e`, or project-level files such as `ProjectSettings/`, not by patching the upstream package.
+
+## Completion Checklist
+
+Every task must pass all items below before being considered complete:
+
+- [ ] Local tests pass (lint / unit test / smoke test)
+- [ ] Changes are committed and pushed to remote
+- [ ] Remote CI passes
+- [ ] No Chinese file names or directory names (comments and logs may use Chinese)
+- [ ] C# identifiers and Attribute default parameter values use English
+- [ ] Generic packages contain no business-party-specific tests or hardcoded logic

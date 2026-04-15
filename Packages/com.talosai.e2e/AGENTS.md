@@ -21,7 +21,7 @@
 
 - `Runtime/Transport/`: TCP protocol and client/server transport.
 - `Runtime/TestRunner/`: bootstrap, discovery, execution, and result export.
-- `Runtime/Tests/`: Unity-side unit and integration coverage for framework modules.
+- `Runtime/Tests/`: Unity-side infrastructure-level test coverage only (generic, reusable examples). Business-party tests belong in their own package.
 - `Editor/`: editor bridge entrypoints and editor-only helpers.
 - `Playwright~/`: orchestration, fixtures, scripts, and platform runners.
 - `Documentation~/`: local Unity API mirror for lookup only.
@@ -33,6 +33,7 @@
 - Update both Unity and Playwright when TCP message shapes, reconnect behavior, or command contracts change.
 - Prefer Unity official APIs plus the cached reflection gateway before adding new Unity-side editor commands.
 - Add or update the closest automated verification for every behavior change.
+- This package is generic infrastructure. Do not add business-party-specific test cases, configurations, or hardcoded logic here. Business-party test code belongs in the business party's own package directory, referencing this package for its capabilities.
 
 ## Test Naming
 

@@ -14,7 +14,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[5]
 FIXTURES_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tests" / "fixtures.ts"
 CONNECTOR_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "src" / "unity-connector.ts"
-BASEFLOW_SPEC_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tests" / "基础启动流程-e2e.spec.ts"
+BASEFLOW_SPEC_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tests" / "testBaseFlow-e2e.spec.ts"
 PC_TOOL_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tools" / "test-pc.sh"
 
 
@@ -40,6 +40,7 @@ def test_pc_tool_keeps_force_e2e_and_windows_player_log_capture() -> None:
     tool_content = PC_TOOL_PATH.read_text(encoding="utf-8")
 
     assert '"-talosForceE2E"' in tool_content
+    assert '"-screen-fullscreen"' in tool_content
     assert '"-logFile"' in tool_content
     assert '"-"' in tool_content
     assert 'IS_WINDOWS_GIT_BASH=false' in tool_content

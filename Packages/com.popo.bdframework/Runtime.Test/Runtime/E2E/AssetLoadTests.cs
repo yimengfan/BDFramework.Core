@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
+using Talos.E2E;
 
-namespace Talos.E2E.Tests
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// 资源加载 E2E 测试套件。
@@ -27,7 +28,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证 BResources 已初始化且可用。
         /// </summary>
-        [E2ETest(suite: "资源加载", order: 1, des: "验证 BResources 已初始化")]
+        [E2ETest(suite: "asset-load", order: 1, des: "验证 BResources 已初始化")]
         static public void BResourcesInitialized()
         {
             // BResources 在 BDLauncherBridge.Launch 中初始化
@@ -39,7 +40,7 @@ namespace Talos.E2E.Tests
         /// 验证资源组接口可用。
         /// 测试 GetAssetsPathByGroup 接口的基本可用性。
         /// </summary>
-        [E2ETest(suite: "资源加载", order: 2, des: "验证资源组接口可用")]
+        [E2ETest(suite: "asset-load", order: 2, des: "验证资源组接口可用")]
         static public void AssetGroupApiWorks()
         {
             // 查询空资源组不应抛异常
@@ -50,7 +51,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证 Shader 查找接口可用。
         /// </summary>
-        [E2ETest(suite: "资源加载", order: 3, des: "验证 Shader 查找接口")]
+        [E2ETest(suite: "asset-load", order: 3, des: "验证 Shader 查找接口")]
         static public void FindShaderApiWorks()
         {
             // 查找一个不存在的 shader 不应抛异常
@@ -61,7 +62,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证资源卸载不会抛异常。
         /// </summary>
-        [E2ETest(suite: "资源加载", order: 999, des: "验证资源卸载")]
+        [E2ETest(suite: "asset-load", order: 999, des: "验证资源卸载")]
         static public void UnloadAssets()
         {
             BResources.UnloadAll();

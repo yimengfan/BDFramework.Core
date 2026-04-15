@@ -23,7 +23,7 @@ applyTo: "Packages/com.talosai.e2e/**"
 - Keep Unity-side orchestration minimal and centered around generic transport, test-runner, or editor-bridge entrypoints. Avoid scattering control flow across thin single-purpose commands.
 - Editor-control changes must preserve the rule that Playwright is the primary orchestrator. Prefer the cached reflection gateway and Unity official APIs before adding Unity-side wrapper commands.
 - If TCP protocol fields, message types, or reconnect semantics change, update both Unity and Playwright implementations together, then rerun the affected verification entrypoints.
-- Playwright test naming must follow `测试描述-e2e.spec.ts` for cross-platform cases or `测试描述-平台-e2e.spec.ts` for platform-specific cases. Supported explicit platform suffixes are `EditorPlayer`, `Android`, `Windows`, and `MacOS`.
+- Playwright test naming must use ASCII English only: `description-e2e.spec.ts` for cross-platform cases or `description-platform-e2e.spec.ts` for platform-specific cases. Supported explicit platform suffixes are `EditorPlayer`, `Android`, `Windows`, and `MacOS`.
 - Keep package documentation, scripts, and test names synchronized when execution entrypoints change.
 - New or changed package behavior must add or update the closest automated verification. Prefer package tests first, then the matching Playwright or batchmode entrypoint.
 

@@ -4,8 +4,9 @@ using UnityEngine;
 using BDFramework;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using Talos.E2E;
 
-namespace Talos.E2E.Tests
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// 资产遍历加载 E2E 测试套件。
@@ -23,7 +24,7 @@ namespace Talos.E2E.Tests
         /// 验证资源加载接口可用。
         /// 尝试加载一个不存在的资产，确保不抛异常。
         /// </summary>
-        [E2ETest(suite: "资产遍历", order: 1, des: "资源加载接口可用")]
+        [E2ETest(suite: "asset-traversal", order: 1, des: "资源加载接口可用")]
         static public void LoadApiWorks()
         {
             // 加载一个不存在的资产应返回 null 而非抛异常
@@ -34,7 +35,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证批量加载接口可用。
         /// </summary>
-        [E2ETest(suite: "资产遍历", order: 2, des: "批量加载接口可用")]
+        [E2ETest(suite: "asset-traversal", order: 2, des: "批量加载接口可用")]
         static public void LoadAllApiWorks()
         {
             // 加载不存在的路径应返回空数组
@@ -56,7 +57,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证资源组路径获取接口可用。
         /// </summary>
-        [E2ETest(suite: "资产遍历", order: 3, des: "资源组路径接口可用")]
+        [E2ETest(suite: "asset-traversal", order: 3, des: "资源组路径接口可用")]
         static public void GroupPathApiWorks()
         {
             var paths = BResources.GetAssetsPathByGroup("__talos_e2e_test__");

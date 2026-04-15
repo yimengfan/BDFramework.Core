@@ -182,7 +182,7 @@ def parse_args() -> argparse.Namespace:
         dest="tags",
         action="append",
         default=[],
-        help="Optional TeamCity build tag. Repeat this option or use comma-separated values. Default tags `teamcityskill` and the buildTypeId are always included.",
+        help="Optional TeamCity build tag. Repeat this option or use comma-separated values. Only add essential metadata tags such as platform (e.g. 'win64', 'android'). Test targets and branch info belong in --comment, not in tags. Default tag 'teamcityskill' is always included.",
     )
     parser.add_argument(
         "--property",
@@ -812,9 +812,15 @@ def build_queue_tags(
     build_type_id: str,
     tags: list[str],
 ) -> list[str]:
+    """合并默认 tag 与用户自定义 tag。
+
+    默认始终包含 'teamcityskill' 作为技能来源标记。
+    build_type_id 不再自动加入 tag——测试目标等语义信息统一放在 comment 中。
+    用户通过 --tag 传入的 tag 仅限平台等关键元信息。
+    """
     merged_tags: list[str] = []
     seen_tags: set[str] = set()
-    for tag in ["teamcityskill", build_type_id, *tags]:
+    for tag in ["teamcityskill", *tags]:
         normalized = tag.strip()
         if normalized and normalized not in seen_tags:
             merged_tags.append(normalized)

@@ -137,7 +137,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 说明：
 
 - `--comment` 会保留用户前缀，并自动追加 `测试目标: <buildTypeId>`。
-- `--tag` 可重复传入或使用逗号分隔，脚本会和默认 tags 合并去重。
+- `--tag` 可重复传入或使用逗号分隔，仅限平台等关键元信息（如 `win64`、`android`）。脚本会与默认 tag `teamcityskill` 合并去重。测试目标等日志信息请放在 `--comment` 中。
 - 失败时脚本会自动打印末尾构建日志，便于直接定位问题。
 
 ### 批量触发多个构建并自动决定并发或串行

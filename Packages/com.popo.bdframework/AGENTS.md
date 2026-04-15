@@ -11,7 +11,7 @@
 5. 当前功能附近的文档、测试与实现文件
 
 说明：
-- 仓库级强制规范以 `.github/copilot-instructions.md` 与 `Packages/com.popo.bdframework/.talos/AGENTS.md` 为准。
+- 仓库级强制规范以 `.github/copilot-instructions.md` 为准。
 - 本文件只补充 BDFramework 包内实现、测试与 BatchMode 约束，不再承载仓库级镜像内容，也不再承载 Talos E2E 包规则。
 
 ---

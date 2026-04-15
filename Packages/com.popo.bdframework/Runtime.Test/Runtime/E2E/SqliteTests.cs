@@ -6,8 +6,9 @@ using SQLite4Unity3d;
 using BDFramework;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
+using Talos.E2E;
 
-namespace Talos.E2E.Tests
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// SQLite 数据库 E2E 测试套件。
@@ -54,7 +55,7 @@ namespace Talos.E2E.Tests
         /// 验证 SQLite 数据库可被创建和打开。
         /// 直接创建 SQLiteConnection，不经过框架连接池，避免名称冲突。
         /// </summary>
-        [E2ETest(suite: "数据库", order: 1, des: "创建并打开测试数据库")]
+        [E2ETest(suite: "sqlite", order: 1, des: "创建并打开测试数据库")]
         static public void CreateAndOpenDatabase()
         {
             var dbPath = GetTestDbPath();
@@ -74,7 +75,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证表创建和批量插入。
         /// </summary>
-        [E2ETest(suite: "数据库", order: 2, des: "创建表并插入数据")]
+        [E2ETest(suite: "sqlite", order: 2, des: "创建表并插入数据")]
         static public void CreateTableAndInsert()
         {
             if (TestConnection == null)
@@ -109,7 +110,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证条件查询功能。
         /// </summary>
-        [E2ETest(suite: "数据库", order: 3, des: "条件查询数据")]
+        [E2ETest(suite: "sqlite", order: 3, des: "条件查询数据")]
         static public void QueryWithCondition()
         {
             if (TestConnection == null)
@@ -142,7 +143,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证全表查询功能。
         /// </summary>
-        [E2ETest(suite: "数据库", order: 4, des: "全表查询数据")]
+        [E2ETest(suite: "sqlite", order: 4, des: "全表查询数据")]
         static public void QueryAll()
         {
             if (TestConnection == null)
@@ -168,7 +169,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 清理测试数据库。
         /// </summary>
-        [E2ETest(suite: "数据库", order: 999, des: "清理测试数据库")]
+        [E2ETest(suite: "sqlite", order: 999, des: "清理测试数据库")]
         static public void CleanupDatabase()
         {
             // 关闭连接

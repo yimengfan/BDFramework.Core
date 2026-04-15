@@ -6,8 +6,9 @@ using BDFramework.Asset;
 using BDFramework.Configure;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
+using Talos.E2E;
 
-namespace Talos.E2E.Tests
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// 下载与热更新 E2E 测试套件。
@@ -28,7 +29,7 @@ namespace Talos.E2E.Tests
         /// 验证客户端版本号可被读取。
         /// 版本号应从配置中正确解析。
         /// </summary>
-        [E2ETest(suite: "下载与热更", order: 1, des: "验证客户端版本号可读")]
+        [E2ETest(suite: "download-update", order: 1, des: "验证客户端版本号可读")]
         static public void ClientVersionReadable()
         {
             var config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
@@ -43,7 +44,7 @@ namespace Talos.E2E.Tests
         /// 验证资产路径解析。
         /// 检查 ClientAssetsUtils 能正确解析主路径和备用路径。
         /// </summary>
-        [E2ETest(suite: "下载与热更", order: 2, des: "验证资产路径解析")]
+        [E2ETest(suite: "download-update", order: 2, des: "验证资产路径解析")]
         static public void AssetPathsResolved()
         {
             var config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
@@ -63,7 +64,7 @@ namespace Talos.E2E.Tests
         /// 验证 StreamingAssets 母包资源存在性。
         /// 确保母包中至少有基本资源文件。
         /// </summary>
-        [E2ETest(suite: "下载与热更", order: 3, des: "验证母包基础资源存在")]
+        [E2ETest(suite: "download-update", order: 3, des: "验证母包基础资源存在")]
         static public void StreamingAssetsExist()
         {
             var platform = BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform);

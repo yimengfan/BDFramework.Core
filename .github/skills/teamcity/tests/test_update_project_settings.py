@@ -93,12 +93,13 @@ def test_build_queue_comment_always_includes_target_and_branch() -> None:
 
 
 def test_build_queue_tags_include_defaults_and_user_tags() -> None:
+    """验证 build_queue_tags 只包含 teamcityskill 默认 tag 和用户自定义 tag，不自动注入 buildTypeId。"""
     assert build_queue_tags(
         build_type_id="BDFrameworkCore_BuildClientPackageAndroid",
-        tags=["manual-check", "teamcityskill"],
+        tags=["win64", "manual-check"],
     ) == [
         "teamcityskill",
-        "BDFrameworkCore_BuildClientPackageAndroid",
+        "win64",
         "manual-check",
     ]
 
@@ -124,7 +125,6 @@ def test_build_queue_payload_includes_comment_and_tags() -> None:
         "tags": {
             "tag": [
                 {"name": "teamcityskill"},
-                {"name": "BDFrameworkCore_BuildClientPackageAndroid"},
                 {"name": "manual-check"},
             ]
         },

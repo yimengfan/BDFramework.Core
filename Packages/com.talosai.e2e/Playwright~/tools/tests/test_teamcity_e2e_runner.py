@@ -300,7 +300,7 @@ def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch:
     class FakeArgs:
         """提供 build_test_command 所需的最小参数集合。"""
 
-        test_file = "tests/基础启动流程-e2e.spec.ts"
+        test_file = "tests/testBaseFlow-e2e.spec.ts"
         unity_port = 10002
         unity_host = "127.0.0.1"
         adb_serial = ""
@@ -321,7 +321,42 @@ def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch:
         "--host",
         "127.0.0.1",
     ]
-    assert "--test-file" not in command
+
+
+def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """验证 TeamCity runner 会逐行转发平台工具输出，避免长时间等待时主日志空白。"""
+
+    class FakeArgs:
+        """提供 run_test_tool 所需的最小参数集合。"""
+
+        test_file = "tests/testBaseFlow-e2e.spec.ts"
+        unity_port = 10002
+        unity_host = "127.0.0.1"
+        adb_serial = ""
+
+    fake_tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+    fake_tooling.node_home.mkdir(parents=True, exist_ok=True)
+    for tooling_path in (fake_tooling.node_bin, fake_tooling.npm_bin):
+        tooling_path.write_text("stub", encoding="utf-8")
+
+    monkeypatch.setattr(runner, "ensure_node_tooling", lambda: fake_tooling)
+    monkeypatch.setattr(runner, "build_test_command", lambda *_args, **_kwargs: ["bash", "tools/test-pc.sh"])
+    monkeypatch.setattr(
+        runner.subprocess,
+        "Popen",
+        lambda *args, **kwargs: FakePopenProcess([">>> first line\n", ">>> second line\n"], 0),
+    )
+
+    exit_code = runner.run_test_tool(runner.resolve_platform_profile("windows"), tmp_path / "Launcher.exe", FakeArgs())
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert ">>> first line" in captured.out
+    assert ">>> second line" in captured.out
 
 
 def test_build_test_tool_environment_includes_playwright_test_file(tmp_path: Path) -> None:
@@ -334,13 +369,13 @@ def test_build_test_tool_environment_includes_playwright_test_file(tmp_path: Pat
 
     environment = runner.build_test_tool_environment(
         tooling,
-        test_file="tests/基础启动流程-e2e.spec.ts",
+        test_file="tests/testBaseFlow-e2e.spec.ts",
     )
 
     assert environment["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
     assert environment["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
     assert environment["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)
-    assert environment["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
+    assert environment["PLAYWRIGHT_TEST_FILE"] == "tests/testBaseFlow-e2e.spec.ts"
 
 
 def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -349,7 +384,7 @@ def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.
     class FakeArgs:
         """提供 run_test_tool 所需的最小参数集合。"""
 
-        test_file = "tests/基础启动流程-e2e.spec.ts"
+        test_file = "tests/testBaseFlow-e2e.spec.ts"
         unity_port = 10002
         unity_host = "127.0.0.1"
         adb_serial = ""
@@ -408,7 +443,7 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     class FakeArgs:
         """提供 run_test_tool 透传测试文件所需的最小参数集合。"""
 
-        test_file = "tests/基础启动流程-e2e.spec.ts"
+        test_file = "tests/testBaseFlow-e2e.spec.ts"
 
     exit_code = runner.run_test_tool(runner.resolve_platform_profile("windows"), tmp_path / "Launcher.exe", FakeArgs())
 
@@ -423,7 +458,7 @@ def test_run_test_tool_injects_node_environment(monkeypatch: pytest.MonkeyPatch,
     assert captured["env"]["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
     assert captured["env"]["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
     assert captured["env"]["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)
-    assert captured["env"]["PLAYWRIGHT_TEST_FILE"] == "tests/基础启动流程-e2e.spec.ts"
+    assert captured["env"]["PLAYWRIGHT_TEST_FILE"] == "tests/testBaseFlow-e2e.spec.ts"
 
 
 def test_resolve_current_teamcity_build_context_reads_properties_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

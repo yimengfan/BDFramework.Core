@@ -121,7 +121,7 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
             "--host",
             "127.0.0.1",
             "--test-file",
-            "tests/基础启动流程-e2e.spec.ts",
+            "tests/testBaseFlow-e2e.spec.ts",
         ],
         capture_output=True,
         text=True,
@@ -142,5 +142,5 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
     ]
     node_args = node_args_path.read_text(encoding="utf-8").splitlines()
     assert str(playwright_cli_path) in node_args
-    assert "tests/基础启动流程-e2e.spec.ts" in node_args
+    assert "tests/testBaseFlow-e2e.spec.ts" in node_args
     assert npm_args_path.read_text(encoding="utf-8").strip() == "install"

@@ -5,8 +5,9 @@ using UnityEngine;
 using BDFramework;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
+using Talos.E2E;
 
-namespace Talos.E2E.Tests
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// 框架启动流程 E2E 测试套件。
@@ -31,7 +32,7 @@ namespace Talos.E2E.Tests
         /// Player 构建模式：HotfixAssembliesHelper.IsRunning 必须为 true。
         /// Editor batchmode 模式：热更代码已由 Editor 直接编译，跳过此检查。
         /// </summary>
-        [E2ETest(suite: "启动流程", order: 1, des: "验证热更 DLL 加载完成")]
+        [E2ETest(suite: "launch", order: 1, des: "验证热更 DLL 加载完成")]
         static public void HotfixDllLoaded()
         {
             if (Application.isEditor)
@@ -56,7 +57,7 @@ namespace Talos.E2E.Tests
         /// Player 构建模式：GetHotfixTypes() 应返回非空列表。
         /// Editor batchmode 模式：跳过此检查，热更类型已包含在 Editor 编译中。
         /// </summary>
-        [E2ETest(suite: "启动流程", order: 2, des: "验证热更类型可被枚举")]
+        [E2ETest(suite: "launch", order: 2, des: "验证热更类型可被枚举")]
         static public void HotfixTypesDiscovered()
         {
             if (Application.isEditor)
@@ -79,7 +80,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证 BApplication 运行时标记已设置。
         /// </summary>
-        [E2ETest(suite: "启动流程", order: 3, des: "验证运行时标记已设置")]
+        [E2ETest(suite: "launch", order: 3, des: "验证运行时标记已设置")]
         static public void BApplicationIsPlaying()
         {
             if (!BApplication.IsPlaying)
@@ -92,7 +93,7 @@ namespace Talos.E2E.Tests
         /// <summary>
         /// 验证框架版本号可被读取。
         /// </summary>
-        [E2ETest(suite: "启动流程", order: 4, des: "验证框架版本号可读")]
+        [E2ETest(suite: "launch", order: 4, des: "验证框架版本号可读")]
         static public void FrameworkVersionReadable()
         {
             var version = BDLauncher.FrameworkVersion;

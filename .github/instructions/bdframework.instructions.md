@@ -17,7 +17,6 @@ applyTo: "Packages/com.popo.bdframework/**"
 3. Read this file (BDFramework module instructions).
 4. Read `Packages/com.popo.bdframework/AGENTS.md`.
 5. Read the specific local documentation, README, or test assembly files related to the target feature.
-6. If the change touches shared mandatory rules, also read `Packages/com.popo.bdframework/.talos/AGENTS.md` and keep it aligned with `.github/copilot-instructions.md`.
 
 ## Rules
 

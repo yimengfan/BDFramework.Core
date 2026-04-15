@@ -13,7 +13,7 @@ namespace Talos.E2E
     /// 
     /// 使用示例：
     /// <code>
-    /// [E2ETest(suite: "启动流程", order: 1, des: "验证框架初始化", timeout: 30000)]
+    /// [E2ETest(suite: "launch", order: 1, des: "验证框架初始化", timeout: 30000)]
     /// static public void TestFrameworkInit() { ... }
     /// </code>
     /// </summary>
@@ -41,7 +41,7 @@ namespace Talos.E2E
         /// </summary>
         public int Timeout { get; private set; }
 
-        public E2ETestAttribute(string suite = "默认", int order = 0, string des = "", int timeout = 60000)
+        public E2ETestAttribute(string suite = "default", int order = 0, string des = "", int timeout = 60000)
         {
             Suite = suite;
             Order = order;
