@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using BDFramework;
+using BDFramework.Utils;
 using UnityEngine;
-using BDFramework.ResourceMgr;
 
 public class EventBus : MonoBehaviour
 {

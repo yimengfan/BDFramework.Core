@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using SQLite4Unity3d;
 using UnityEngine;

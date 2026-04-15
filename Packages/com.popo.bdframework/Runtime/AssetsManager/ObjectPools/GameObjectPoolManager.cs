@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using BDFramework.Utils;
 using UnityEngine;
 
 namespace BDFramework.ResourceMgr
 {
+    /// <summary>
+    /// GameObject 特化对象池管理器，基于通用 <see cref="ObjectPool{T}"/> 实现 Unity GameObject 的池化复用。
+    /// </summary>
     public class GameObjectPoolManager : Singleton<GameObjectPoolManager>
     {
         public bool logStatus;

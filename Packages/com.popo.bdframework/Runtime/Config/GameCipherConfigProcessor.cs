@@ -5,7 +5,9 @@ using Sirenix.OdinInspector;
 namespace BDFramework.Configure
 {
     /// <summary>
-    /// 游戏加密处理器
+    /// 游戏加密处理器。
+    /// 负责将加密配置（SQLite 密码、DLL 公私钥）注入到运行时对应模块，
+    /// 并通过 <see cref="SqliteLoder.PasswordFallback"/> 解除 Config→Sql 的双向依赖。
     /// </summary>
     [GameConfig(2,"加密")]
     public class GameCipherConfigProcessor : IConfigProcessor
@@ -34,12 +36,15 @@ namespace BDFramework.Configure
 
 
         /// <summary>
-        /// 当加载成功
+        /// 当加载成功时，将加密配置注入到 SQLite 加载器和脚本系统。
+        /// 同时注册 <see cref="SqliteLoder.PasswordFallback"/>，确保未显式设置密码时也能通过配置获取默认值。
         /// </summary>
-        /// <param name="config"></param>
+        /// <param name="config">加密配置数据</param>
         public  void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
+            //注入密码回退回调，解除 Config→Sql 直接依赖
+            SqliteLoder.PasswordFallback = () => con.SqlitePassword;
             //Sqlite秘钥
             SqliteLoder.Password = con.SqlitePassword;
 

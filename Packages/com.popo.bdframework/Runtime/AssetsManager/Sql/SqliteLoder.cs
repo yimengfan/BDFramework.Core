@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using SQLite4Unity3d;
 #if UNITY_EDITOR
@@ -11,16 +10,24 @@ using UnityEngine;
 namespace BDFramework.Sql
 {
     /// <summary>
-    /// Sqlite 加载器
+    /// Sqlite 加载器。
+    /// 密码获取已解耦：当显式值未设置时，通过 <see cref="PasswordFallback"/> 回调获取默认密码，
+    /// 由配置层（GameCipherConfigProcessor）在启动阶段注入，避免 Sql → Configure 的双向依赖。
     /// </summary>
     static public partial class SqliteLoder
     {
         static readonly string Tag = "SQLite";
 
+        /// <summary>
+        /// 密码后备回调，由配置层注入。当 <see cref="password"/> 为空时调用。
+        /// </summary>
+        public static Func<string> PasswordFallback { get; set; }
+
         public static string password;
 
         /// <summary>
-        /// Password
+        /// 获取或设置 SQLite 数据库加密密码。
+        /// getter 优先返回显式设置的值，为空时调用 <see cref="PasswordFallback"/> 回调。
         /// </summary>
         public static string Password
         {
@@ -30,10 +37,9 @@ namespace BDFramework.Sql
                 {
                     return password;
                 }
-                else //配置未初始化的情况
+                else //配置未初始化的情况，通过回调获取默认密码
                 {
-                    var conf = GameConfigManager.Inst.GetConfig<GameCipherConfigProcessor.Config>();
-                    return conf.SqlitePassword;
+                    return PasswordFallback?.Invoke() ?? string.Empty;
                 }
             }
             set { password = value; }

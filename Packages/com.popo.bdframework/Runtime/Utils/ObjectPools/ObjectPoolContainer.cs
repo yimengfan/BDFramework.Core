@@ -1,7 +1,7 @@
-namespace BDFramework.ResourceMgr
+namespace BDFramework.Utils
 {
 	/// <summary>
-	/// Pool容器
+	/// 对象池容器，包装单个池化对象的使用状态。
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public class ObjectPoolContainer<T>

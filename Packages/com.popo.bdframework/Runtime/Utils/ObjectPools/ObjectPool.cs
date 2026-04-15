@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BDFramework.ResourceMgr
+namespace BDFramework.Utils
 {
     /// <summary>
-    /// 对象池基类
+    /// 通用对象池基类，提供泛型对象的获取、释放和预热能力。
+    /// 与 GameObject 特化池（<see cref="BDFramework.ResourceMgr.GameObjectPoolManager"/>）不同，
+    /// 本类不依赖 Unity 资源体系，可被任意业务层复用。
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ObjectPool<T>
