@@ -35,6 +35,20 @@ UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
+ANDROID_LOGCAT_FILE="${PLAYWRIGHT_DIR}/test-results/android-logcat.txt"
+
+# 在启动前清空并在关键失败点导出 logcat，保证 TeamCity artifact 能带回同一次 Android 启动期日志。
+# Clear logcat before launch and export it on key failure paths so the TeamCity artifact contains the same Android startup session logs.
+capture_android_logcat() {
+    if "${ADB_CMD[@]}" logcat -d -v threadtime > "${ANDROID_LOGCAT_FILE}" 2>/dev/null; then
+        echo ""
+        echo ">>> Android logcat (tail 200)"
+        tail -n 200 "${ANDROID_LOGCAT_FILE}" || true
+    else
+        echo ""
+        echo ">>> Android logcat 导出失败"
+    fi
+}
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -134,6 +148,7 @@ echo ">>> 准备端口转发..."
 "${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
 "${ADB_CMD[@]}" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
 "${ADB_CMD[@]}" forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}"
+"${ADB_CMD[@]}" logcat -c 2>/dev/null || true
 echo "    ✅ 端口转发: localhost:${UNITY_PORT} -> device:${UNITY_PORT}"
 
 # ======== 启动应用 ========
@@ -161,6 +176,7 @@ done
 if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo ""
     echo "❌ 等待 TCP 服务超时 (${MAX_WAIT}s)"
+    capture_android_logcat
     "${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
     exit 1
 fi
@@ -193,6 +209,7 @@ UNITY_PORT="${UNITY_PORT}" \
 "${PLAYWRIGHT_COMMAND[@]}" 2>&1 | tee "${PLAYWRIGHT_DIR}/test-results/test-output.log"
 
 TEST_EXIT_CODE=${PIPESTATUS[0]}
+capture_android_logcat
 
 # ======== 清理 ========
 echo ""
