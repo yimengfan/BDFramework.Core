@@ -139,7 +139,7 @@ echo "    ✅ 端口转发: localhost:${UNITY_PORT} -> device:${UNITY_PORT}"
 # ======== 启动应用 ========
 echo ""
 echo ">>> 启动应用..."
-"${ADB_CMD[@]}" shell am start -n "${ACTIVITY}" -e unity "-talosPort ${UNITY_PORT} -talosForceE2E"
+"${ADB_CMD[@]}" shell "am start -n ${ACTIVITY} -e unity '-talosPort ${UNITY_PORT} -talosForceE2E'"
 echo "    ✅ 应用已启动"
 
 # ======== 等待 TCP 服务就绪 ========

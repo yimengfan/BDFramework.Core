@@ -160,7 +160,7 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
     assert any(line == f"-s emulator-5554 install -r -t {fake_apk}" for line in adb_log_lines)
     assert any(line == "-s emulator-5554 forward tcp:12345 tcp:12345" for line in adb_log_lines)
     assert any(
-        line == "-s emulator-5554 shell am start -n com.talos.BuildTest.debug/com.unity3d.player.UnityPlayerActivity -e unity -talosPort 12345 -talosForceE2E"
+        line == "-s emulator-5554 shell am start -n com.talos.BuildTest.debug/com.unity3d.player.UnityPlayerActivity -e unity '-talosPort 12345 -talosForceE2E'"
         for line in adb_log_lines
     )
     assert any(line == "-s emulator-5554 shell am force-stop com.talos.BuildTest.debug" for line in adb_log_lines)
