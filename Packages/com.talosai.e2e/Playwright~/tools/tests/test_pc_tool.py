@@ -156,6 +156,7 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
         "1280",
         "-screen-height",
         "720",
+        "-popupwindow",
         "-logFile",
         "-",
     ]

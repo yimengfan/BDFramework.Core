@@ -55,6 +55,7 @@ def test_pc_tool_keeps_force_e2e_and_windows_player_log_capture() -> None:
     assert '"-screen-fullscreen"' in tool_content
     assert '"-screen-width"' in tool_content
     assert '"-screen-height"' in tool_content
+    assert '"-popupwindow"' in tool_content
     assert '"-logFile"' in tool_content
     assert '"-"' in tool_content
     assert 'IS_WINDOWS_GIT_BASH=false' in tool_content
