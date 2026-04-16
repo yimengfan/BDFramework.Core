@@ -56,7 +56,7 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
     copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
     copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
 
-    fake_apk = tmp_path / "app.apk"
+    fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
     fake_apk.write_text("stub apk", encoding="utf-8")
 
     adb_log_path = tmp_path / "adb-args.txt"
@@ -157,10 +157,10 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
     assert any(line == f"-s emulator-5554 install -r -t {fake_apk}" for line in adb_log_lines)
     assert any(line == "-s emulator-5554 forward tcp:12345 tcp:12345" for line in adb_log_lines)
     assert any(
-        line == "-s emulator-5554 shell am start -n com.popo.bdframework/com.unity3d.player.UnityPlayerActivity"
+        line == "-s emulator-5554 shell am start -n com.talos.BuildTest.debug/com.unity3d.player.UnityPlayerActivity"
         for line in adb_log_lines
     )
-    assert any(line == "-s emulator-5554 shell am force-stop com.popo.bdframework" for line in adb_log_lines)
+    assert any(line == "-s emulator-5554 shell am force-stop com.talos.BuildTest.debug" for line in adb_log_lines)
     assert f"adb={platform_tools_dir / 'adb.exe'}" in result.stdout
 
     node_args = node_args_path.read_text(encoding="utf-8").splitlines()

@@ -32,8 +32,8 @@ source "${SCRIPT_DIR}/node-tools.sh"
 APK_PATH="${APK_PATH:-}"
 ADB_SERIAL="${ADB_SERIAL:-}"
 UNITY_PORT="${UNITY_PORT:-10002}"
-PACKAGE="${PACKAGE:-com.popo.bdframework}"
-ACTIVITY="${ACTIVITY:-com.popo.bdframework/com.unity3d.player.UnityPlayerActivity}"
+PACKAGE="${PACKAGE:-}"
+ACTIVITY="${ACTIVITY:-}"
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 
 # ======== 参数解析 ========
@@ -58,6 +58,17 @@ while [[ $# -gt 0 ]]; do
         *) echo "未知参数: $1"; exit 1 ;;
     esac
 done
+
+if [[ -z "${PACKAGE}" ]] && [[ -n "${APK_PATH}" ]]; then
+    APK_BASENAME="$(basename "${APK_PATH}")"
+    APK_STEM="${APK_BASENAME%.apk}"
+    if [[ "${APK_STEM}" == *.* ]]; then
+        PACKAGE="${APK_STEM}"
+    fi
+fi
+
+PACKAGE="${PACKAGE:-com.popo.bdframework}"
+ACTIVITY="${ACTIVITY:-${PACKAGE}/com.unity3d.player.UnityPlayerActivity}"
 
 # 解析 ADB 命令前缀，兼容 TeamCity service 未把 Android SDK 注入 PATH 的场景。
 # Resolve the ADB command prefix so TeamCity services can still find Android SDK installs when PATH is incomplete.
