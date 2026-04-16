@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,10 @@ using UnityEngine.Scripting;
 namespace BDFramework
 {
     /// <summary>
-    /// 脚本加载器
+    /// 框架脚本加载器。
+    /// Framework script loader.
+    /// 负责收集托管类型、注册管理器、加载框架配置，并在初始化末尾桥接可选的 Talos E2E 自动发现入口。
+    /// It collects hosted types, registers managers, loads framework configuration, and bridges the optional Talos E2E auto-discovery entry at the end of initialization.
     /// </summary>
     static public class ScriptLoder
     {
@@ -34,7 +38,12 @@ namespace BDFramework
 
 
         /// <summary>
-        /// 初始化整个热更代码
+        /// 初始化框架脚本与管理器入口。
+        /// Initialize the framework script and manager entrypoints.
+        /// 该入口会先收集托管类型并完成管理器与配置初始化，随后桥接 Talos E2E 自动检测，
+        /// 以保证运行时与真机环境都能发现可用的测试入口而不依赖编译期 DEBUG 裁剪。
+        /// This entry first collects hosted types and completes manager and configuration initialization, then bridges Talos E2E auto-detection,
+        /// so runtime and packaged-player environments can discover available test entrypoints without relying on compile-time DEBUG stripping.
         /// </summary>
         [Preserve]
         public static void Init()
@@ -121,7 +130,7 @@ namespace BDFramework
                 }
             }
 
-            Debug.Log($"框架托管DLL:{string.Join("\n", typeList.Select(t => t.FullName))}");
+            UnityEngine.Debug.Log($"框架托管DLL:{string.Join("\n", typeList.Select(t => t.FullName))}");
 
 #if UNITY_EDITOR
             typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));
@@ -159,18 +168,17 @@ namespace BDFramework
 
          #region E2E 测试自动集成
 
-         /// <summary>        /// /// 
-         /// 
-         /// 这个只能在 debug 模式下使用！！！！！！
-        /// 在热更 DLL 加载 + 框架初始化完成后调用，确保 E2E 测试可以正确发现热更类型。
-        /// 如果 Talos.E2E 包不存在，则静默跳过。
-        /// 是否真正启动 E2E 由 Talos.E2E.E2EAutoInit 在运行时继续根据 DEBUG 标记文件或 -talosForceE2E 参数判定。
-        /// Editor 和真机统一走此入口：
-        /// - 真机：E2EAutoInit → LaunchE2E（MonoBehaviour 模式）
-        /// - Editor PlayMode：E2EAutoInit → LaunchE2EStatic（静态模式，由 DidReloadScripts 管理）
-        /// - Editor 非进 PlayMode：由 LaunchE2EEditorOnly 直接启动静态 TCP，不经此路径
-        /// </summary>
-        [System.Diagnostics.Conditional("DEBUG")]
+         /// <summary>
+         /// 尝试桥接 Talos E2E 自动检测入口。
+         /// Try to bridge the Talos E2E auto-detection entrypoint.
+         /// 该入口必须保留在运行时调用链上，不能再使用 Conditional(DEBUG) 做编译期裁剪；
+         /// 是否真正启动 E2E 由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
+         /// This entry must stay on the runtime call chain and must not be stripped by Conditional(DEBUG) at compile time;
+         /// whether E2E actually starts is decided later at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
+         /// 如果 Talos.E2E 包不存在，则静默跳过。
+         /// If the Talos.E2E package is not present, the method exits quietly.
+         /// </summary>
+         [Conditional("UNITY_EDITOR")]
         static private void TryStartE2EFramework()
         {
             try
