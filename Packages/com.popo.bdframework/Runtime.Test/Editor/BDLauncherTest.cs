@@ -84,15 +84,15 @@ namespace Runtime.Test.Editor
         }
 
         /// <summary>
-        /// 验证 AOT 阶段的 E2E 自动检测入口不再依赖编译期 DEBUG 条件裁剪。
-        /// Verify that the AOT-stage E2E auto-detection entry no longer depends on compile-time DEBUG conditional stripping.
-        /// 这样远端调试母包即使依赖运行时参数，也能在 WindowPreconfig 出现前完成自动检测。
-        /// This keeps remote-debug mother-package detection available before WindowPreconfig appears even when the flow depends on runtime arguments.
+        /// 验证 AOT 阶段的 E2E 自动检测入口显式依赖编译期 DEBUG 条件裁剪。
+        /// Verify that the AOT-stage E2E auto-detection entry explicitly depends on compile-time DEBUG conditional stripping.
+        /// 这样 Release 非调试环境不会把 E2E 自动检测入口一起发布，而 Debug 链路仍可继续验证自动发现行为。
+        /// This keeps the E2E auto-detection entry out of Release non-debug builds while preserving automatic-discovery validation on Debug paths.
         /// </summary>
         [Test]
-        public void TryStartE2EFramework_ShouldNotDependOnConditionalDebugAttribute()
+        public void TryStartE2EFramework_ShouldUseConditionalDebugAttribute()
         {
-            FrameworkContractAssertions.VerifyTryStartE2EFrameworkDoesNotUseConditionalDebugAttribute();
+            FrameworkContractAssertions.VerifyTryStartE2EFrameworkUsesConditionalDebugAttribute();
         }
     }
 
@@ -131,8 +131,8 @@ namespace Runtime.Test.Editor
                     () => ExecuteWithSetUp(testInstance.SetUp, testInstance.BDLauncher_ShouldDeclareMinimumDefaultExecutionOrder)
                 ),
                 (
-                    nameof(BdLauncherTest.TryStartE2EFramework_ShouldNotDependOnConditionalDebugAttribute),
-                    () => ExecuteWithSetUp(testInstance.SetUp, testInstance.TryStartE2EFramework_ShouldNotDependOnConditionalDebugAttribute)
+                    nameof(BdLauncherTest.TryStartE2EFramework_ShouldUseConditionalDebugAttribute),
+                    () => ExecuteWithSetUp(testInstance.SetUp, testInstance.TryStartE2EFramework_ShouldUseConditionalDebugAttribute)
                 ),
             };
 

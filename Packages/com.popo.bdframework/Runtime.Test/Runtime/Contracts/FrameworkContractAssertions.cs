@@ -78,10 +78,10 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
-        /// 验证 E2E 自动检测入口不再依赖编译期 DEBUG 条件裁剪。
-        /// Verify that the E2E auto-detection entry no longer depends on compile-time DEBUG conditional stripping.
+        /// 验证 E2E 自动检测入口显式依赖编译期 DEBUG 条件裁剪。
+        /// Verify that the E2E auto-detection entry explicitly depends on compile-time DEBUG conditional stripping.
         /// </summary>
-        public static void VerifyTryStartE2EFrameworkDoesNotUseConditionalDebugAttribute()
+        public static void VerifyTryStartE2EFrameworkUsesConditionalDebugAttribute()
         {
             var method = typeof(BDFramework.ScriptLoder).GetMethod(
                 "TryStartE2EFramework",
@@ -89,8 +89,8 @@ namespace BDFramework.RuntimeTests.Contracts
 
             EnsureTrue(method != null, "应该能够找到 ScriptLoder.TryStartE2EFramework 私有静态方法。");
             EnsureTrue(
-                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Length == 0,
-                "TryStartE2EFramework 不应再使用 Conditional(DEBUG)，否则 AOT 阶段的自动检测调用会被编译期裁掉。");
+                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Length > 0,
+                "TryStartE2EFramework 必须使用 Conditional(DEBUG)，避免 Release 非调试环境把 E2E 自动检测入口发布出去。");
         }
 
         /// <summary>

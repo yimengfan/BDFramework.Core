@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -48,14 +47,16 @@ namespace BDFramework
         [Preserve]
         public static void Init()
         {
-            //list
+            // 收集当前应用域内由框架托管的类型集合。
+            // Collect the set of hosted types managed by the framework in the current AppDomain.
             var types = ScriptLoder.GetAppDomainHostingTypes();
-            //加载主工程的管理器
+            // 加载主工程管理器并在其后完成框架配置初始化。
+            // Load the main-project managers and then complete framework-configuration initialization.
             ManagerInstHelper.LoadManager(types);
             GameConfigLoder.LoadFrameworkConfig();
 
-            //启动E2E
-            // 当 Talos.E2E 包不存在或非 Debug 构建时，此调用安全无副作用。
+            // 桥接 E2E 自动检测入口；如果 Talos.E2E 包不存在，则该调用会在方法内部静默退出。
+            // Bridge the E2E auto-detection entry; if the Talos.E2E package is absent, the method exits quietly from inside.
             TryStartE2EFramework();
         }
 
@@ -171,14 +172,14 @@ namespace BDFramework
          /// <summary>
          /// 尝试桥接 Talos E2E 自动检测入口。
          /// Try to bridge the Talos E2E auto-detection entrypoint.
-         /// 该入口必须保留在运行时调用链上，不能再使用 Conditional(DEBUG) 做编译期裁剪；
-         /// 是否真正启动 E2E 由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
-         /// This entry must stay on the runtime call chain and must not be stripped by Conditional(DEBUG) at compile time;
-         /// whether E2E actually starts is decided later at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
+         /// 该入口必须使用 Conditional(DEBUG) 做编译期裁剪，避免 Release 非调试环境把 E2E 自动检测入口一起发布出去；
+         /// 当 DEBUG 生效时，是否真正启动 E2E 仍由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
+         /// This entry must use Conditional(DEBUG) for compile-time stripping so Release non-debug environments do not ship the E2E auto-detection entry;
+         /// when DEBUG is active, whether E2E actually starts is still decided later at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
          /// 如果 Talos.E2E 包不存在，则静默跳过。
          /// If the Talos.E2E package is not present, the method exits quietly.
          /// </summary>
-         [Conditional("UNITY_EDITOR")]
+        [System.Diagnostics.Conditional("DEBUG")]
         static private void TryStartE2EFramework()
         {
             try
