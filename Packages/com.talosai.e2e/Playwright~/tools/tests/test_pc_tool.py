@@ -152,6 +152,10 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
         "-talosForceE2E",
         "-screen-fullscreen",
         "0",
+        "-screen-width",
+        "1280",
+        "-screen-height",
+        "720",
         "-logFile",
         "-",
     ]
