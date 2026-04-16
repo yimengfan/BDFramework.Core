@@ -1,8 +1,13 @@
 """Talos PC 启动脚本测试。
+Talos PC launcher script tests.
 
 覆盖范围：
-1. Windows/macOS 共用桌面脚本会为 player 注入 -talosForceE2E 与 -talosPort。
+1. Windows/macOS 共用桌面脚本会为 player 注入 Talos E2E 与窗口模式参数。
 2. 启动脚本会复用解析后的 Node CLI 执行 Playwright，而不是依赖外部 npx。
+
+Coverage:
+1. The shared desktop launcher script injects Talos E2E and window-mode arguments for player startup.
+2. The launcher script reuses the resolved Node CLI to run Playwright instead of relying on external npx.
 """
 
 from __future__ import annotations
@@ -20,19 +25,25 @@ SOURCE_NODE_TOOLS = TOOLS_ROOT / "node-tools.sh"
 
 
 def write_executable(path: Path, content: str) -> None:
-    """写入可执行测试桩，模拟 launcher、node、npm 与 nc 的最小行为。"""
+    """写入可执行测试桩，模拟 launcher、node、npm 与 nc 的最小行为。
+    Write an executable test stub that simulates the minimal launcher, node, npm, and nc behavior.
+    """
     path.write_text(content, encoding="utf-8")
     path.chmod(path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 
 def copy_tool_script(source_path: Path, target_path: Path) -> None:
-    """复制待测脚本到临时 Playwright 根目录，并保留可执行权限。"""
+    """复制待测脚本到临时 Playwright 根目录，并保留可执行权限。
+    Copy the script under test into the temporary Playwright root while preserving executable permissions.
+    """
     shutil.copy2(source_path, target_path)
     target_path.chmod(target_path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 
 def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
-    """验证桌面包启动时会强制附带 Talos E2E 启动参数，并走解析后的 Node CLI。"""
+    """验证桌面包启动时会强制附带 Talos E2E 与窗口模式参数，并走解析后的 Node CLI。
+    Verify that desktop package startup forces Talos E2E and window-mode arguments and uses the resolved Node CLI.
+    """
     playwright_root = tmp_path / "PlaywrightRoot"
     tools_dir = playwright_root / "tools"
     tools_dir.mkdir(parents=True)
@@ -139,6 +150,10 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
         "-talosPort",
         "12345",
         "-talosForceE2E",
+        "-screen-fullscreen",
+        "0",
+        "-logFile",
+        "-",
     ]
     node_args = node_args_path.read_text(encoding="utf-8").splitlines()
     assert str(playwright_cli_path) in node_args

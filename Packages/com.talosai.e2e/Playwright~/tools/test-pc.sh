@@ -103,7 +103,7 @@ echo ">>> 启动应用..."
 APP_PID=""
 PLAYER_LOG_FILE=""
 # 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
-PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-logFile" "-")
+PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-screen-fullscreen" "0" "-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
 
 print_windows_player_logs() {
@@ -131,7 +131,7 @@ else
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
         APP_PID="$({
             powershell.exe -NoProfile -Command "\
-                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru; \
+                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru; \
                 [Console]::Out.Write(\$proc.Id)\
             "
         } | tr -d '\r')"
