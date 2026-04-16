@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using HybridCLR;
@@ -111,12 +112,14 @@ namespace BDFramework
 
             if (hotfixDlls != null && hotfixDlls.Length > 0)
             {
-                foreach (var hotfixDll in hotfixDlls)
-                {
-                    var dllBytes = File.ReadAllBytes(hotfixDll);
-                    Debug.Log($"加载:{hotfixDll}");
-                    Assembly.Load(dllBytes);
-                }
+                LoadHotfixAssemblies(
+                    hotfixDlls,
+                    File.ReadAllBytes,
+                    (hotfixDll, dllBytes) =>
+                    {
+                        Debug.Log($"加载:{hotfixDll}");
+                        Assembly.Load(dllBytes);
+                    });
             }
             else
             {
@@ -138,19 +141,98 @@ namespace BDFramework
                 }
 
                 //
-                foreach (var hotfixDll in hotfixDlls)
-                {
-                    byte[] dllBytes;
+                LoadHotfixAssemblies(
+                    hotfixDlls,
+                    hotfixDll =>
+                    {
 #if UNITY_ANDROID
-                     dllBytes = BetterStreamingAssets.ReadAllBytes(hotfixDll);
+                        return BetterStreamingAssets.ReadAllBytes(hotfixDll);
 #else
-                    dllBytes = File.ReadAllBytes(hotfixDll);
+                        return File.ReadAllBytes(hotfixDll);
 #endif
+                    },
+                    (hotfixDll, dllBytes) =>
+                    {
+                        Debug.Log($"【AOT.Load】StreamingAsset :{hotfixDll}");
+                        Assembly.Load(dllBytes);
+                    });
+            }
+        }
 
-                    Debug.Log($"【AOT.Load】StreamingAsset :{hotfixDll}");
-                    Assembly.Load(dllBytes);
+        /// <summary>
+        /// 在热更程序集存在依赖关系时，按“可成功装载即移除”的方式重试整个队列。
+        /// Retry the whole hotfix-assembly queue by removing assemblies as soon as they load successfully.
+        /// 这样可以兼容文件系统枚举顺序与程序集依赖顺序不一致的场景，例如 <c>Assembly-CSharp</c> 先被枚举到、
+        /// 但它实际依赖稍后才会装载的 <c>BDFramework.Core</c> 时，会在下一轮自动重试而不是直接终止启动。
+        /// This keeps startup resilient when file-system enumeration order differs from assembly dependency order, for example when <c>Assembly-CSharp</c>
+        /// is discovered first but actually depends on <c>BDFramework.Core</c> being loaded later, in which case the next round retries automatically instead of aborting startup immediately.
+        /// </summary>
+        /// <param name="hotfixDlls">待装载的热更程序集路径列表。</param>
+        /// <param name="hotfixDlls">Paths of the hotfix assemblies that still need to be loaded.</param>
+        /// <param name="readDllBytes">读取程序集字节的委托。</param>
+        /// <param name="readDllBytes">Delegate used to read assembly bytes.</param>
+        /// <param name="loadHotfixAssembly">真正执行程序集装载的委托。</param>
+        /// <param name="loadHotfixAssembly">Delegate that performs the actual assembly load.</param>
+        static private void LoadHotfixAssemblies(
+            string[] hotfixDlls,
+            Func<string, byte[]> readDllBytes,
+            Action<string, byte[]> loadHotfixAssembly)
+        {
+            var pendingHotfixDlls = new List<string>(hotfixDlls ?? Array.Empty<string>());
+            var hotfixDllBytesMap = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
+            foreach (var hotfixDll in pendingHotfixDlls)
+            {
+                if (!hotfixDllBytesMap.ContainsKey(hotfixDll))
+                {
+                    hotfixDllBytesMap.Add(hotfixDll, readDllBytes(hotfixDll));
                 }
             }
+
+            Exception lastDeferredException = null;
+            while (pendingHotfixDlls.Count > 0)
+            {
+                var hasLoadedAssemblyInCurrentPass = false;
+                for (var index = 0; index < pendingHotfixDlls.Count;)
+                {
+                    var hotfixDll = pendingHotfixDlls[index];
+                    try
+                    {
+                        loadHotfixAssembly(hotfixDll, hotfixDllBytesMap[hotfixDll]);
+                        pendingHotfixDlls.RemoveAt(index);
+                        hasLoadedAssemblyInCurrentPass = true;
+                        lastDeferredException = null;
+                    }
+                    catch (Exception exception) when (IsDeferredHotfixLoadException(exception))
+                    {
+                        Debug.LogWarning($"【AOT.Load】热更程序集依赖未就绪，稍后重试:{hotfixDll} err={exception.Message}");
+                        lastDeferredException = exception;
+                        index++;
+                    }
+                }
+
+                if (!hasLoadedAssemblyInCurrentPass)
+                {
+                    throw new Exception(
+                        $"【AOT.Load】存在无法解析依赖的热更程序集:{string.Join(",", pendingHotfixDlls)}",
+                        lastDeferredException);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断异常是否属于“依赖尚未装载，可在后续轮次重试”的热更装载失败。
+        /// Determine whether an exception represents a dependency-not-ready hotfix-load failure that can be retried in a later pass.
+        /// </summary>
+        /// <param name="exception">当前装载失败抛出的异常。</param>
+        /// <param name="exception">Exception thrown by the current load attempt.</param>
+        /// <returns>若属于可延后重试的依赖异常则返回 true。</returns>
+        /// <returns>Returns true when the exception is a dependency-related failure that should be retried later.</returns>
+        static private bool IsDeferredHotfixLoadException(Exception exception)
+        {
+            return exception is TypeLoadException
+                   || exception is FileNotFoundException
+                   || exception is FileLoadException
+                   || exception is ReflectionTypeLoadException;
         }
 
         /// <summary>

@@ -180,6 +180,80 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证 AOT 启动阶段装载热更程序集时，会在依赖尚未就绪时延后重试，而不是因为文件枚举顺序直接终止。
+        /// Verify that AOT startup defers and retries hotfix-assembly loads when dependencies are not ready instead of aborting immediately because of file-enumeration order.
+        /// </summary>
+        public static void VerifyScriptLoderAOTHotfixAssemblyRetryContract()
+        {
+            var helperMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
+                "LoadHotfixAssemblies",
+                BindingFlags.NonPublic | BindingFlags.Static,
+                null,
+                new[]
+                {
+                    typeof(string[]),
+                    typeof(Func<string, byte[]>),
+                    typeof(Action<string, byte[]>)
+                },
+                null);
+
+            EnsureTrue(helperMethod != null, "应该能够找到 ScriptLoderAOT 的热更程序集装载辅助方法。");
+
+            var attemptOrder = new List<string>();
+            var successfulLoadOrder = new List<string>();
+            var assemblyCSharpAttemptCount = 0;
+            helperMethod.Invoke(
+                null,
+                new object[]
+                {
+                    new[]
+                    {
+                        "android/script/hotfix/Assembly-CSharp.zlua.bytes",
+                        "android/script/hotfix/BDFramework.Core.zlua.bytes",
+                        "android/script/hotfix/Assembly-CSharp-firstpass.zlua.bytes"
+                    },
+                    (Func<string, byte[]>)(_ => new byte[] { 1 }),
+                    (Action<string, byte[]>)((path, _) =>
+                    {
+                        var fileName = Path.GetFileName(path);
+                        var assemblyName = fileName.Replace(".zlua.bytes", string.Empty, StringComparison.OrdinalIgnoreCase);
+                        attemptOrder.Add(fileName);
+
+                        if (string.Equals(assemblyName, "Assembly-CSharp", StringComparison.OrdinalIgnoreCase))
+                        {
+                            assemblyCSharpAttemptCount++;
+                            if (!successfulLoadOrder.Contains("BDFramework.Core"))
+                            {
+                                throw new TypeLoadException("Could not load type 'BDFramework.UFlux.AWindow' from assembly 'BDFramework.Core'.");
+                            }
+                        }
+
+                        successfulLoadOrder.Add(assemblyName);
+                    })
+                });
+
+            EnsureTrue(
+                attemptOrder.Count >= 4,
+                "当依赖尚未就绪时，热更程序集装载应至少经历一轮失败重试。");
+            EnsureTrue(
+                string.Equals(attemptOrder[0], "Assembly-CSharp.zlua.bytes", StringComparison.Ordinal),
+                "测试应先模拟先枚举到 Assembly-CSharp 的不利顺序。");
+            EnsureTrue(
+                string.Equals(attemptOrder[attemptOrder.Count - 1], "Assembly-CSharp.zlua.bytes", StringComparison.Ordinal),
+                "依赖装载完成后，应再次重试 Assembly-CSharp。"
+            );
+            EnsureTrue(
+                assemblyCSharpAttemptCount == 2,
+                "Assembly-CSharp 在依赖未就绪时应先失败一次，并在依赖装载后重试成功。"
+            );
+            EnsureSequenceEqual(
+                new[] { "BDFramework.Core", "Assembly-CSharp-firstpass", "Assembly-CSharp" },
+                successfulLoadOrder,
+                "热更程序集最终应在依赖满足后全部装载成功。"
+            );
+        }
+
+        /// <summary>
         /// 验证运行态 launcher 文本优先级最高。
         /// Verify that runtime launcher text keeps the highest priority.
         /// </summary>
