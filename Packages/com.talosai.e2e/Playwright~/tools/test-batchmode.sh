@@ -113,7 +113,7 @@ if [[ "${TALOS_MODE}" == "sync" ]]; then
         -nographics \
         -quit \
         -projectPath "${PROJECT_PATH}" \
-        -executeMethod Talos.E2E.Editor.E2EEditorTools.RunE2EAndExport \
+        -executeMethod BDFramework.Editor.Environment.TalosE2EBatchBridge.RunTalosE2EAndExport \
         -talosPort "${UNITY_PORT}" \
         -talosForceE2E \
         -talosOutput "${RESULT_FILE}" \
@@ -193,7 +193,7 @@ else
         -batchmode \
         -nographics \
         -projectPath "${PROJECT_PATH}" \
-        -executeMethod Talos.E2E.Editor.E2EEditorTools.LaunchE2EEditorOnly \
+        -executeMethod BDFramework.Editor.Environment.TalosE2EBatchBridge.LaunchTalosE2EEditorOnly \
         -talosPort "${UNITY_PORT}" \
         -talosForceE2E \
         -logFile "${UNITY_LOG}" &

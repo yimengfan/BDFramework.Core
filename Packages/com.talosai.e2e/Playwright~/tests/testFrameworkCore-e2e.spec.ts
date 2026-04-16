@@ -1,12 +1,19 @@
 /**
  * 框架核心 E2E 测试——通过 Playwright 编排，在 Unity Player 中执行全部测试。
+ * Framework-core E2E tests orchestrated by Playwright and executed against the Unity side.
  * 
  * 测试流程：
+ * Flow:
  * 1. 通过 fixture 连接到 Unity Player 的 TCP 测试服务。
+ * 1. Connect to the Unity TCP test service through the fixture.
  * 2. 获取测试列表，确认发现测试用例。
+ * 2. Fetch the test list and confirm discovery works.
  * 3. 执行所有测试用例。
+ * 3. Execute all test cases.
  * 4. 验证所有测试通过。
+ * 4. Verify that all tests pass.
  * 5. 输出详细测试报告。
+ * 5. Print the detailed execution report.
  */
 
 import { test, expect } from './fixtures';
@@ -14,6 +21,8 @@ import { test, expect } from './fixtures';
 /**
  * 测试套件：连接验证。
  * 确保与 Unity Player 的 TCP 通信通道正常。
+ * Suite: connection verification.
+ * Ensure the TCP communication channel to Unity is healthy.
  */
 test.describe('Unity 连接验证', () => {
   test('应能成功连接到 Unity Player', async ({ connector }) => {
@@ -29,6 +38,8 @@ test.describe('Unity 连接验证', () => {
 /**
  * 测试套件：测试发现。
  * 验证 Unity 端能正确发现所有 E2E 测试用例。
+ * Suite: discovery.
+ * Verify that the Unity side can discover all E2E test cases.
  */
 test.describe('测试发现', () => {
   test('应能列出所有测试用例', async ({ connector }) => {
@@ -51,15 +62,15 @@ test.describe('测试发现', () => {
     }
   });
 
-  test('应包含启动流程测试套件', async ({ connector }) => {
+  test('应包含 launch 测试套件', async ({ connector }) => {
     const tests = await connector.listTests();
-    const launchTests = tests.filter((t) => t.suite === '启动流程');
+    const launchTests = tests.filter((t) => t.suite === 'launch');
     expect(launchTests.length).toBeGreaterThan(0);
   });
 
-  test('应包含资源加载测试套件', async ({ connector }) => {
+  test('应包含 asset-load 测试套件', async ({ connector }) => {
     const tests = await connector.listTests();
-    const assetTests = tests.filter((t) => t.suite === '资源加载');
+    const assetTests = tests.filter((t) => t.suite === 'asset-load');
     expect(assetTests.length).toBeGreaterThan(0);
   });
 });
@@ -67,6 +78,8 @@ test.describe('测试发现', () => {
 /**
  * 测试套件：执行全部框架测试。
  * 按顺序执行 Unity 端所有 E2E 测试用例，验证全部通过。
+ * Suite: execute the full framework test set.
+ * Run all Unity-side E2E cases in order and require all of them to pass.
  */
 test.describe('框架核心 E2E 测试执行', () => {
   test('执行所有 E2E 测试用例并全部通过', async ({ connector }) => {
@@ -99,14 +112,16 @@ test.describe('框架核心 E2E 测试执行', () => {
 /**
  * 测试套件：按套件执行。
  * 验证可以按套件名称单独执行测试。
+ * Suite: run by suite.
+ * Verify that a suite can be executed in isolation by its suite name.
  */
 test.describe('按套件执行测试', () => {
-  test('单独执行启动流程套件', async ({ connector }) => {
-    const { results, summary } = await connector.runSuite('启动流程');
+  test('单独执行 launch 套件', async ({ connector }) => {
+    const { results, summary } = await connector.runSuite('launch');
 
     expect(results.length).toBeGreaterThan(0);
     expect(summary.failed).toBe(0);
 
-    console.log(`\n[启动流程套件] 总计=${summary.total}, 通过=${summary.passed}, 失败=${summary.failed}`);
+    console.log(`\n[launch 套件] 总计=${summary.total}, 通过=${summary.passed}, 失败=${summary.failed}`);
   });
 });

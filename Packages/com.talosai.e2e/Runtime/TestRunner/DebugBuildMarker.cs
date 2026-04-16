@@ -1,47 +1,39 @@
 using System.IO;
 using UnityEngine;
-using BDFramework.Configure;
-using BDFramework.Core.Tools;
 
 namespace Talos.E2E
 {
     /// <summary>
-    /// DEBUG 构建标记系统——检测和验证当前是否为 Debug 构建包体。
-    /// 
-    /// 设计角色：
-    /// - 在 CI 构建 Debug 包时，在热更资源目录下创建 DEBUG 标记文件。
-    /// - 运行时检测该标记，自动启用 E2E 测试能力。
-    /// - 防止 Debug 构建被意外发布为 Release。
-    /// 
-    /// 标记文件位置：
-    /// - {persistentDataPath}/{clientVersion}/{platform}/script/hotfix/DEBUG
-    /// - 或 StreamingAssets/{platform}/script/hotfix/DEBUG
-    /// 
-    /// 使用示例：
-    /// <code>
-    /// if (DebugBuildMarker.IsDebugBuild())
-    /// {
-    ///     TalosE2EBootstrap.LaunchE2E();
-    /// }
-    /// </code>
+    /// DEBUG 构建标记检测器。
+    /// DEBUG build marker detector.
+    /// 该类型只负责解析 Talos E2E 自身的标记文件位置，并允许宿主注册额外目录；
+    /// 它不直接依赖任何业务框架的路径 API 或配置系统。
+    /// This type only resolves Talos E2E marker locations and allows hosts to register additional directories;
+    /// it does not directly depend on any game-framework path APIs or configuration systems.
     /// </summary>
     static public class DebugBuildMarker
     {
         /// <summary>
         /// 标记文件名。
+        /// Marker file name.
         /// </summary>
         public const string MARKER_FILENAME = "DEBUG";
 
         /// <summary>
         /// 缓存是否为 Debug 构建的结果，避免重复检测文件系统。
+        /// Cached DEBUG-build result to avoid repeated filesystem probing.
         /// </summary>
         private static bool? _isDebugBuild;
 
         /// <summary>
-        /// 检测当前是否为 Debug 构建。
-        /// 通过在热更脚本目录中查找 DEBUG 标记文件判断。
+        /// 检测当前是否为 DEBUG 构建。
+        /// Detect whether the current build is a DEBUG build.
+        /// 该方法只检查编译宏和 Talos E2E 自身约定的 StreamingAssets 标记位置，
+        /// 不解释任何宿主框架的配置、持久化目录或第三方初始化状态。
+        /// This method checks only compile-time symbols and the StreamingAssets marker location defined by Talos E2E itself,
+        /// and does not interpret any host-framework configuration, persistent-data directories, or third-party initialization state.
         /// </summary>
-        /// <returns>如果是 Debug 构建返回 true，否则返回 false。</returns>
+        /// <returns>如果是 DEBUG 构建返回 true，否则返回 false。 Returns true when the current build is a DEBUG build; otherwise false.</returns>
         static public bool IsDebugBuild()
         {
             if (_isDebugBuild.HasValue)
@@ -62,31 +54,12 @@ namespace Talos.E2E
             return true;
 #endif
 
-            // 检查 StreamingAssets 中的标记文件
-            var platform = BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform);
-            var streamingPath = Path.Combine(Application.streamingAssetsPath, platform, "script", "hotfix", MARKER_FILENAME);
-            if (File.Exists(streamingPath))
+            var markerPath = Path.Combine(GetStreamingMarkerDirectory(), MARKER_FILENAME);
+            if (File.Exists(markerPath))
             {
                 _isDebugBuild = true;
-                Debug.Log($"[TalosE2E] 检测到 StreamingAssets 中的 DEBUG 标记: {streamingPath}");
+                Debug.Log($"[TalosE2E] 检测到 DEBUG 标记: {markerPath}");
                 return true;
-            }
-
-            // 检查 persistentDataPath 中的标记文件
-            var config = BDFramework.Configure.GameConfigManager.Inst?.GetConfig<GameBaseConfigProcessor.Config>();
-            if (config != null)
-            {
-                var persistentPath = Path.Combine(
-                    Application.persistentDataPath,
-                    config.ClientVersionNum,
-                    platform,
-                    "script", "hotfix", MARKER_FILENAME);
-                if (File.Exists(persistentPath))
-                {
-                    _isDebugBuild = true;
-                    Debug.Log($"[TalosE2E] 检测到 persistentDataPath 中的 DEBUG 标记: {persistentPath}");
-                    return true;
-                }
             }
 
             _isDebugBuild = false;
@@ -95,7 +68,40 @@ namespace Talos.E2E
         }
 
         /// <summary>
+        /// 获取默认 StreamingAssets 标记目录。
+        /// Get the default StreamingAssets marker directory.
+        /// </summary>
+        public static string GetStreamingMarkerDirectory()
+        {
+            return Path.Combine(Application.streamingAssetsPath, GetPlatformDirectory(Application.platform), "script", "hotfix");
+        }
+
+        /// <summary>
+        /// 将 Unity 运行平台映射为 Talos E2E 约定的目录名。
+        /// Map a Unity runtime platform to the directory name used by Talos E2E.
+        /// </summary>
+        public static string GetPlatformDirectory(RuntimePlatform platform)
+        {
+            switch (platform)
+            {
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+                    return "windows";
+                case RuntimePlatform.Android:
+                    return "android";
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                    return "osx";
+                case RuntimePlatform.IPhonePlayer:
+                    return "ios";
+                default:
+                    return platform.ToString().Replace("Editor", string.Empty).ToLowerInvariant();
+            }
+        }
+
+        /// <summary>
         /// 重置缓存，强制下次重新检测。
+        /// Reset the cached result so the next probe recomputes it.
         /// </summary>
         static public void ResetCache()
         {

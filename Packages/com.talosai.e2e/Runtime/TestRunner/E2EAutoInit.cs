@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Scripting;
-using BDFramework;
-using BDFramework.Core.Tools;
 
 namespace Talos.E2E
 {

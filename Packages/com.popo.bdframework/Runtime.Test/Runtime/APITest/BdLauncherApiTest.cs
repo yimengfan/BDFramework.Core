@@ -78,5 +78,6 @@ namespace BDFramework.RuntimeTests.ApiTest
         {
             FrameworkContractAssertions.VerifyTryStartE2EFrameworkUsesConditionalDebugAttribute();
         }
+
     }
 }

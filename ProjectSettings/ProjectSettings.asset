@@ -8,7 +8,7 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -58,9 +58,9 @@ PlayerSettings:
   iosUseCustomAppBackgroundBehavior: 0
   iosAllowHTTPDownload: 1
   allowedAutorotateToPortrait: 1
-  allowedAutorotateToPortraitUpsideDown: 1
-  allowedAutorotateToLandscapeRight: 1
-  allowedAutorotateToLandscapeLeft: 1
+  allowedAutorotateToPortraitUpsideDown: 0
+  allowedAutorotateToLandscapeRight: 0
+  allowedAutorotateToLandscapeLeft: 0
   useOSAutorotation: 1
   use32BitDisplayBuffer: 1
   preserveFramebufferAlpha: 0
@@ -70,11 +70,11 @@ PlayerSettings:
   androidUseSwappy: 0
   androidBlitType: 0
   androidResizableWindow: 0
-  androidDefaultWindowWidth: 1920
-  androidDefaultWindowHeight: 1080
+  androidDefaultWindowWidth: 1080
+  androidDefaultWindowHeight: 1920
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
-  androidFullscreenMode: 1
+  androidFullscreenMode: 3
   androidAutoRotationBehavior: 1
   androidPredictiveBackSupport: 1
   defaultIsNativeResolution: 1
@@ -786,7 +786,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
     Standalone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
-    iPhone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
+    iPhone: ENABLE_IL2CPP;ENABLE_HYCLR
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

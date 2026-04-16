@@ -5,6 +5,9 @@
 - Playwright owns the main orchestration flow. It decides when to launch the app, wait for status checks, open scenes, drive UI actions such as `page.click`, and trigger Unity-side unit or integration tests.
 - Unity owns test execution and result delivery. Unity code should implement the interfaces that Playwright needs, run core module unit and integration tests, produce outputs, and return results back to Playwright. Capabilities such as screenshots belong to this interface layer.
 - When Unity API behavior or Editor API details are needed, use the local reference under `Documentation~/` before adding wrappers or custom abstractions.
+- Talos E2E is a capability package, not a host workflow package. Do not compose host-owned startup, initialization, scene sequencing, executeMethod wrappers, or fallback recovery workflows inside this package.
+- If a scenario requires project-specific scenes, framework bootstrap, resource or database preparation, manager warm-up, or business launch order, define that flow in the host or business package and let Talos consume it through generic connectors or explicit host-owned entrypoints.
+- Do not add business-party multi-step scenario scripts, launch recipes, or one-off recovery logic under `Playwright~/`, `Editor/`, or `Runtime/` just to make a single project pass. Business parties should reuse Talos fixtures, connectors, and transport primitives from their own package code.
 
 ## Scope
 
@@ -32,6 +35,7 @@
 - Treat `Documentation~/` as a local reference mirror. Do not rely on it as tracked product content.
 - Update both Unity and Playwright when TCP message shapes, reconnect behavior, or command contracts change.
 - Prefer Unity official APIs plus the cached reflection gateway before adding new Unity-side editor commands.
+- Keep package-owned Playwright orchestration generic. Package scripts and tests may validate reusable editor-control or runtime lanes, but they must not encode host-only acceptance flows or business-party scenario choreography.
 - Add or update the closest automated verification for every behavior change.
 - This package is generic infrastructure. Do not add business-party-specific test cases, configurations, or hardcoded logic here. Business-party test code belongs in the business party's own package directory, referencing this package for its capabilities.
 
@@ -43,9 +47,17 @@
 ## Validation Entry Points
 
 - Use `Playwright~/tools/test-batchmode.sh` for batchmode validation.
-- Use `Playwright~/tools/test-editorplayer.sh` for editor-control validation.
+- Use `Playwright~/tools/test-editorplayer.sh` for editor-control validation only.
 - Use `Playwright~/tools/test-android.sh` for Android validation.
 - Use `Playwright~/tools/test-pc.sh` for Windows or macOS player validation.
+
+## Runtime Matrix
+
+- `test-batchmode.sh` in `TALOS_MODE=sync` is the fallback runtime-complete gate when TCP orchestration is unavailable or unnecessary.
+- `test-batchmode.sh` in default TCP mode is the main runtime-complete gate for cross-platform suites without a platform suffix.
+- `test-editorplayer.sh` is not the runtime-complete gate. It validates editor-command, scene, and PlayMode-control flows through `*-EditorPlayer-e2e.spec.ts` only.
+- Do not assume `unityplayer` can stand in for the runtime launch gate. Host runtime suites such as `launch`, `framework-contract`, and `framework-integration` belong to batchmode or device/player runtime projects.
+- Static editor-only runs can emit step-screenshot warnings. Treat them as capability limits of the static mode unless the test explicitly requires screenshot success.
 
 ## Reading Order
 

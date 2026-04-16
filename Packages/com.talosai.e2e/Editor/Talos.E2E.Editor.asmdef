@@ -2,9 +2,7 @@
     "name": "Talos.E2E.Editor",
     "rootNamespace": "Talos.E2E.Editor",
     "references": [
-        "GUID:90a5d688c87639542bc27aac9d4173c1",
         "GUID:38782fc8e87cac14f9cb740af8b2232a",
-        "GUID:722bc14663f336f4a91c0b369e2a4f15",
         "Talos.E2E.Runtime"
     ],
     "includePlatforms": [

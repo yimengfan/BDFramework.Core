@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using LitJson;
 using UnityEngine;
-using BDFramework;
 
 namespace Talos.E2E
 {
@@ -140,60 +139,31 @@ namespace Talos.E2E
         }
 
         /// <summary>
-        /// 扫描热更程序集中的 E2E 测试用例。
-        /// 
-        /// 真机上 ScriptLoderAOT 通过 Assembly.Load 直接加载热更 DLL，
-        /// 不经过 HotfixAssembliesHelper，因此需要多策略扫描：
-        /// 
-        /// 策略 1：通过 HotfixAssembliesHelper.GetHotfixTypes()（如果已注册）
-        /// 策略 2：通过 AppDomain 全扫描，过滤非系统程序集
+        /// 扫描当前 AppDomain 中宿主程序集里的 E2E 测试用例。
+        /// Scan host assemblies in the current AppDomain for E2E tests.
+        /// 该扫描只排除系统与基础设施程序集，不再假定具体宿主框架的程序集名称，
+        /// 以保证 Talos E2E 能够被不同宿主复用而不产生反向依赖。
+        /// The scan excludes only system and infrastructure assemblies instead of assuming a concrete host-framework assembly list,
+        /// so Talos E2E can be reused by different hosts without creating reverse dependencies.
         /// </summary>
         static private void ScanHotfixAssemblies()
         {
-            var scannedAssemblies = new HashSet<string>();
             int beforeCount = DiscoveredTests.Count;
 
-            // 策略 1: 通过 HotfixAssembliesHelper 扫描（旧版热更加载器）
-            var hotfixTypes = ScriptLoder.GetAppDomainHostingTypes();
-            if (hotfixTypes != null && hotfixTypes.Count() > 0)
-            {
-                foreach (var type in hotfixTypes)
-                {
-                    ScanType(type);
-                    if (type.Assembly != null)
-                    {
-                        scannedAssemblies.Add(type.Assembly.FullName);
-                    }
-                }
-                UnityEngine.Debug.Log($"[TalosE2E] HotfixAssembliesHelper 扫描: 新增 {DiscoveredTests.Count - beforeCount} 个热更测试用例");
-            }
-
-            // 策略 2: AppDomain 全扫描兜底——覆盖 ScriptLoderAOT 直接 Assembly.Load 的场景
-            // 真机上热更 DLL 通过 ScriptLoderAOT.LoadHotfixDLL() 用 Assembly.Load 加载，
-            // 但不注册到 HotfixAssembliesHelper，所以需要通过 AppDomain 发现。
-            int beforeAppDomain = DiscoveredTests.Count;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                // 跳过已扫描的程序集
-                if (scannedAssemblies.Contains(assembly.FullName)) continue;
-
                 var name = assembly.GetName().Name;
 
-                // 只扫描可能是业务热更的程序集：
-                // - 排除系统程序集（mscorlib、System.*、Unity.*、Mono.* 等）
-                // - 排除当前 AOT 程序集（已扫描）
-                // - 包含热更特征名称（Assembly-CSharp、Game.*、hotfix 等）
-                if (IsSystemAssembly(name)) continue;
-                if (name == selfAssemblyName) continue;
+                if (ShouldSkipAssemblyScan(name)) continue;
+                if (string.Equals(name, selfAssemblyName, StringComparison.Ordinal)) continue;
 
                 ScanAssembly(assembly);
-                scannedAssemblies.Add(assembly.FullName);
             }
-            UnityEngine.Debug.Log($"[TalosE2E] AppDomain 全扫描: 新增 {DiscoveredTests.Count - beforeAppDomain} 个热更测试用例");
+            UnityEngine.Debug.Log($"[TalosE2E] AppDomain 宿主程序集扫描完成: 新增 {DiscoveredTests.Count - beforeCount} 个测试用例");
 
             if (DiscoveredTests.Count == beforeCount)
             {
-                UnityEngine.Debug.Log("[TalosE2E] 无热更测试用例");
+                UnityEngine.Debug.Log("[TalosE2E] 未发现宿主侧 E2E 测试用例");
             }
         }
 
@@ -203,11 +173,14 @@ namespace Talos.E2E
         static private readonly string selfAssemblyName = typeof(E2ETestRunner).Assembly.GetName().Name;
 
         /// <summary>
-        /// 判断程序集名称是否为系统程序集，避免扫描 Unity 引擎和 .NET 运行时。
+        /// 判断程序集是否应跳过扫描。
+        /// Decide whether an assembly should be skipped during scanning.
+        /// 该过滤器只跳过系统运行时与已知基础设施程序集，不编码任何具体宿主框架名称。
+        /// This filter skips only system runtimes and known infrastructure assemblies and does not encode any concrete host-framework names.
         /// </summary>
         /// <param name="assemblyName">程序集短名称。</param>
-        /// <returns>如果是系统程序集返回 true。</returns>
-        static private bool IsSystemAssembly(string assemblyName)
+        /// <returns>如果该程序集应跳过扫描则返回 true。 Returns true when the assembly should be skipped.</returns>
+        static private bool ShouldSkipAssemblyScan(string assemblyName)
         {
             if (string.IsNullOrEmpty(assemblyName)) return true;
 
@@ -223,17 +196,11 @@ namespace Talos.E2E
             if (assemblyName.StartsWith("MessagePack", StringComparison.OrdinalIgnoreCase)) return true;
             if (assemblyName.StartsWith("Newtonsoft", StringComparison.OrdinalIgnoreCase)) return true;
 
-            // 已知的框架/第三方程序集（非业务热更）
+            // 已知的基础设施/第三方程序集。
+            // Known infrastructure and third-party assemblies.
             var knownNonHotfix = new HashSet<string>()
             {
                 "LitJson",
-                "BDFramework.Runtime",
-                "BDFramework.Editor",
-                "BDFramework.Core",
-                "BDFramework.AOT",
-                "BDFramework.EditorTest",
-                "BDFramework.Test",
-                "BDFramework.core.test",
                 "HybridCLR.Runtime",
                 "HybridCLR.Editor",
                 "UniTask",
@@ -257,8 +224,6 @@ namespace Talos.E2E
                 "Talos.E2E.Runtime",
                 "Talos.E2E.Editor",
                 "EditorSetting",
-                "GameClaw.Unity3d",
-                "GameLogic", // 非热更的 AOT GameLogic
             };
             if (knownNonHotfix.Contains(assemblyName)) return true;
 

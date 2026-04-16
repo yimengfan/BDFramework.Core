@@ -1,19 +1,25 @@
 /**
  * 基础启动流程 E2E 测试。
+ * Base-flow E2E verification.
  *
  * 测试目的：
+ * Goals:
  * - 为 TeamCity 的 Talos BaseFlow 任务提供一个稳定、最小的跨平台回归入口。
+ * - Provide a stable minimal cross-platform regression entry for the TeamCity Talos BaseFlow job.
  * - 仅验证 Unity Player 已经完成启动流程套件，不把更重的资源或业务断言耦合进第一步。
+ * - Verify only that Unity has completed the launch suite and avoid coupling heavier resource or business assertions into the first gate.
  */
 
 import { test, expect } from './fixtures';
 
 /**
  * 测试套件：基础启动流程。
+ * Suite: base launch flow.
  */
 test.describe('基础启动流程', () => {
   /**
-   * 用例：执行 Unity 端“启动流程”测试套件并要求全部通过。
+   * 用例：执行 Unity 端 `launch` 测试套件并要求全部通过。
+   * Case: run the Unity-side `launch` suite and require all cases to pass.
    */
   test('执行启动流程套件并全部通过', async ({ connector, device, talosStep }) => {
     const projectName = await talosStep('记录当前平台项目', async () => {
@@ -22,7 +28,7 @@ test.describe('基础启动流程', () => {
       return currentProjectName;
     });
 
-    const execution = await talosStep('执行 Unity 启动流程套件', async () => connector.runSuite('启动流程'));
+    const execution = await talosStep('执行 Unity 启动流程套件', async () => connector.runSuite('launch'));
 
     await talosStep('输出并校验启动流程结果', async () => {
       const { results, summary } = execution;

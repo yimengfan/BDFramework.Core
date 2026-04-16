@@ -56,7 +56,9 @@ collect_talos_node_homes() {
     homes+=("/c/Program Files/nodejs")
     homes+=("/c/Program Files (x86)/nodejs")
 
-    printf '%s\n' "${homes[@]}"
+    if ((${#homes[@]} > 0)); then
+        printf '%s\n' "${homes[@]}"
+    fi
 }
 
 collect_talos_explicit_node_homes() {
@@ -68,7 +70,9 @@ collect_talos_explicit_node_homes() {
         homes+=("${NODEJS_HOME}")
     fi
 
-    printf '%s\n' "${homes[@]}"
+    if ((${#homes[@]} > 0)); then
+        printf '%s\n' "${homes[@]}"
+    fi
 }
 
 collect_talos_default_node_homes() {
