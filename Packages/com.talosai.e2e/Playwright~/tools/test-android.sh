@@ -166,9 +166,12 @@ fi
 PLAYWRIGHT_COMMAND+=(
     "--project=android"
     "--output=${PLAYWRIGHT_DIR}/test-results/artifacts"
-    "--reporter=list,html=${PLAYWRIGHT_DIR}/test-results/html,junit=${PLAYWRIGHT_DIR}/test-results/junit.xml"
+    "--reporter=list,html,junit"
 )
 
+PLAYWRIGHT_HTML_OUTPUT_DIR="${PLAYWRIGHT_DIR}/test-results/html" \
+PLAYWRIGHT_HTML_OPEN=never \
+PLAYWRIGHT_JUNIT_OUTPUT_FILE="${PLAYWRIGHT_DIR}/test-results/junit.xml" \
 PLATFORM=android \
 UNITY_HOST=127.0.0.1 \
 UNITY_PORT="${UNITY_PORT}" \

@@ -220,9 +220,12 @@ fi
 PLAYWRIGHT_COMMAND+=(
     "--project=${PROJECT}"
     "--output=${PLAYWRIGHT_DIR}/test-results/artifacts"
-    "--reporter=list,html=${PLAYWRIGHT_DIR}/test-results/html,junit=${PLAYWRIGHT_DIR}/test-results/junit.xml"
+    "--reporter=list,html,junit"
 )
 
+PLAYWRIGHT_HTML_OUTPUT_DIR="${PLAYWRIGHT_DIR}/test-results/html" \
+PLAYWRIGHT_HTML_OPEN=never \
+PLAYWRIGHT_JUNIT_OUTPUT_FILE="${PLAYWRIGHT_DIR}/test-results/junit.xml" \
 PLATFORM="${PROJECT}" \
 UNITY_HOST="${UNITY_HOST}" \
 UNITY_PORT="${UNITY_PORT}" \

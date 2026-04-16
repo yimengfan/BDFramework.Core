@@ -56,6 +56,7 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
 
     launcher_args_path = tmp_path / "launcher-args.txt"
     node_args_path = tmp_path / "node-args.txt"
+    node_env_path = tmp_path / "node-env.txt"
     npm_args_path = tmp_path / "npm-args.txt"
     ready_marker_path = tmp_path / "unity-ready.marker"
 
@@ -100,6 +101,7 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
                 "#!/bin/bash",
                 "set -euo pipefail",
                 f"printf '%s\\n' \"$@\" > {node_args_path}",
+                f"printf '%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
                 "exit 0",
             ]
         )
@@ -163,4 +165,10 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
     node_args = node_args_path.read_text(encoding="utf-8").splitlines()
     assert str(playwright_cli_path) in node_args
     assert "tests/testBaseFlow-e2e.spec.ts" in node_args
+    assert "--reporter=list,html,junit" in node_args
+    assert node_env_path.read_text(encoding="utf-8").splitlines() == [
+        str(playwright_root / "test-results" / "html"),
+        "never",
+        str(playwright_root / "test-results" / "junit.xml"),
+    ]
     assert npm_args_path.read_text(encoding="utf-8").strip() == "install"
