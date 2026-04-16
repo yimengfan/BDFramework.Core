@@ -79,6 +79,8 @@ collect_talos_default_node_homes() {
 # Collect explicitly configured Android SDK roots, prioritizing CI-injected environment variables.
 collect_talos_explicit_android_sdk_homes() {
     local homes=()
+    local unity_path="${UNITY_PATH:-}"
+    local unity_shell_path=""
     if [[ -n "${ANDROID_SDK_ROOT:-}" ]]; then
         homes+=("${ANDROID_SDK_ROOT}")
     fi
@@ -87,6 +89,17 @@ collect_talos_explicit_android_sdk_homes() {
     fi
     if [[ -n "${LOCALAPPDATA:-}" ]]; then
         homes+=("${LOCALAPPDATA}/Android/Sdk")
+    fi
+    if [[ -n "${unity_path}" ]]; then
+        unity_shell_path="${unity_path}"
+        if command -v cygpath >/dev/null 2>&1; then
+            unity_shell_path="$(cygpath -u "${unity_path}" 2>/dev/null || printf '%s' "${unity_path}")"
+        fi
+        if [[ "${unity_shell_path}" == */Unity.exe ]]; then
+            homes+=("${unity_shell_path%/Unity.exe}/Data/PlaybackEngines/AndroidPlayer/SDK")
+        elif [[ "${unity_shell_path}" == */Unity ]]; then
+            homes+=("${unity_shell_path%/Unity}/Data/PlaybackEngines/AndroidPlayer/SDK")
+        fi
     fi
 
     printf '%s\n' "${homes[@]}"

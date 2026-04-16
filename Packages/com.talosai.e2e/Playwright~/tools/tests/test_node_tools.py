@@ -127,3 +127,37 @@ def test_probe_talos_tcp_port_falls_back_to_node_when_nc_missing(tmp_path: Path)
     )
 
     assert result.returncode == 0, result.stderr
+
+
+def test_ensure_talos_adb_tooling_derives_sdk_from_unity_path(tmp_path: Path) -> None:
+    """验证当 PATH 缺少 adb 时，脚本会从 UNITY_PATH 推导出 Unity Android SDK 下的 adb。
+    Verify that when PATH lacks adb, the script derives adb from the Unity Android SDK located by UNITY_PATH.
+    """
+    unity_editor_dir = tmp_path / "UnityEditor" / "Editor"
+    unity_editor_dir.mkdir(parents=True)
+    unity_executable = unity_editor_dir / "Unity.exe"
+    unity_executable.write_text("stub unity", encoding="utf-8")
+
+    adb_path = (
+        unity_editor_dir
+        / "Data"
+        / "PlaybackEngines"
+        / "AndroidPlayer"
+        / "SDK"
+        / "platform-tools"
+        / "adb.exe"
+    )
+    adb_path.parent.mkdir(parents=True)
+    write_executable(adb_path, "#!/usr/bin/env bash\nexit 0\n")
+
+    result = run_node_tools(
+        'ensure_talos_adb_tooling\nprintf "%s\\n" "$TALOS_ADB_BIN"',
+        {
+            "PATH": "/usr/bin:/bin",
+            "UNITY_PATH": str(unity_executable),
+        },
+    )
+
+    assert result.returncode == 0, result.stderr
+    output_lines = [line for line in result.stdout.splitlines() if line]
+    assert output_lines[-1] == str(adb_path)
