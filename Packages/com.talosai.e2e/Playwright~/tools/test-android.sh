@@ -59,10 +59,13 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# ADB 命令前缀
-ADB="adb"
+# 解析 ADB 命令前缀，兼容 TeamCity service 未把 Android SDK 注入 PATH 的场景。
+# Resolve the ADB command prefix so TeamCity services can still find Android SDK installs when PATH is incomplete.
+ensure_talos_adb_tooling || exit 1
+
+ADB_CMD=("${TALOS_ADB_BIN}")
 if [[ -n "${ADB_SERIAL}" ]]; then
-    ADB="adb -s ${ADB_SERIAL}"
+    ADB_CMD+=("-s" "${ADB_SERIAL}")
 fi
 
 echo "============================================"
@@ -88,21 +91,16 @@ if [[ ! -f "${APK_PATH}" ]]; then
     exit 1
 fi
 
-if ! command -v adb &>/dev/null; then
-    echo "❌ 错误: adb 命令未找到，请安装 Android SDK Platform Tools"
-    exit 1
-fi
-
 # 检查设备连接
 echo ""
 echo ">>> 检查设备连接..."
-DEVICE_COUNT=$(${ADB} devices | grep -c "device$" || true)
+DEVICE_COUNT=$("${ADB_CMD[@]}" devices | grep -c "device$" || true)
 if [[ ${DEVICE_COUNT} -eq 0 ]]; then
     echo "❌ 错误: 未检测到已连接的 Android 设备"
-    ${ADB} devices
+    "${ADB_CMD[@]}" devices
     exit 1
 fi
-echo "    ✅ 设备已连接 ($(${ADB} devices | grep "device$" | head -1))"
+echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices | grep "device$" | head -1))"
 
 # ======== 安装 Playwright 依赖 ========
 echo ""
@@ -113,7 +111,7 @@ cd "${PLAYWRIGHT_DIR}"
 # ======== 安装 APK ========
 echo ""
 echo ">>> 安装 APK..."
-${ADB} install -r -t "${APK_PATH}" || {
+"${ADB_CMD[@]}" install -r -t "${APK_PATH}" || {
     echo "❌ APK 安装失败"
     exit 1
 }
@@ -122,15 +120,15 @@ echo "    ✅ APK 安装完成"
 # ======== 停止旧实例 + 设置端口转发 ========
 echo ""
 echo ">>> 准备端口转发..."
-${ADB} shell am force-stop "${PACKAGE}" 2>/dev/null || true
-${ADB} forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
-${ADB} forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}"
+"${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
+"${ADB_CMD[@]}" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
+"${ADB_CMD[@]}" forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}"
 echo "    ✅ 端口转发: localhost:${UNITY_PORT} -> device:${UNITY_PORT}"
 
 # ======== 启动应用 ========
 echo ""
 echo ">>> 启动应用..."
-${ADB} shell am start -n "${ACTIVITY}"
+"${ADB_CMD[@]}" shell am start -n "${ACTIVITY}"
 echo "    ✅ 应用已启动"
 
 # ======== 等待 TCP 服务就绪 ========
@@ -152,7 +150,7 @@ done
 if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo ""
     echo "❌ 等待 TCP 服务超时 (${MAX_WAIT}s)"
-    ${ADB} shell am force-stop "${PACKAGE}" 2>/dev/null || true
+    "${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
     exit 1
 fi
 
@@ -181,8 +179,8 @@ TEST_EXIT_CODE=${PIPESTATUS[0]}
 # ======== 清理 ========
 echo ""
 echo ">>> 清理..."
-${ADB} shell am force-stop "${PACKAGE}" 2>/dev/null || true
-${ADB} forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
+"${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
+"${ADB_CMD[@]}" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
 
 # ======== 结果 ========
 echo ""

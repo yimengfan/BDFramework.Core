@@ -1,24 +1,39 @@
 #!/usr/bin/env bash
 # ==========================================================================
-# Talos E2E Playwright Node 工具解析公共函数。
+# Talos E2E Playwright Node/Android 工具解析公共函数。
+# Talos E2E Playwright shared Node/Android tool resolution helpers.
 #
-# 目标：
-#   1. 在本机 PATH 正常时直接复用 node/npm。
-#   2. 在 Windows TeamCity service 缺少 PATH 时，回退到标准 Node 安装目录。
-#   3. 允许通过 NODE_BIN / NPM_BIN / TALOS_NODEJS_HOME 显式覆盖，方便 CI 与测试注入。
+# 目标 / Goals:
+#   1. 在本机 PATH 正常时直接复用 node/npm/adb。
+#      Reuse node/npm/adb directly when PATH is already configured.
+#   2. 在 Windows TeamCity service 缺少 PATH 时，回退到标准安装目录。
+#      Fall back to common install roots when a Windows TeamCity service has an incomplete PATH.
+#   3. 允许通过显式环境变量覆盖，方便 CI 与测试注入。
+#      Allow explicit environment overrides for CI and automated tests.
 # ==========================================================================
 
+# 解析通用工具候选路径，兼容 PATH、显式绝对路径和 Windows 风格路径。
+# Resolve a generic tool candidate from PATH, explicit paths, and Windows-style paths.
 resolve_talos_tool_candidate() {
     local candidate="${1:-}"
+    local normalized=""
     if [[ -z "${candidate}" ]]; then
         return 1
     fi
 
-    if [[ "${candidate}" == */* || "${candidate}" == *\\* ]]; then
+    if [[ "${candidate}" == */* || "${candidate}" == *\\* || "${candidate}" =~ ^[A-Za-z]:[\\/].* ]]; then
         if [[ -f "${candidate}" || -x "${candidate}" ]]; then
             printf '%s\n' "${candidate}"
             return 0
         fi
+
+        if command -v cygpath >/dev/null 2>&1; then
+            if normalized="$(cygpath -u "${candidate}" 2>/dev/null)" && [[ -n "${normalized}" ]] && [[ "${normalized}" != "${candidate}" ]] && [[ -f "${normalized}" || -x "${normalized}" ]]; then
+                printf '%s\n' "${normalized}"
+                return 0
+            fi
+        fi
+
         return 1
     fi
 
@@ -58,6 +73,116 @@ collect_talos_explicit_node_homes() {
 
 collect_talos_default_node_homes() {
     printf '%s\n' "/c/Program Files/nodejs" "/c/Program Files (x86)/nodejs"
+}
+
+# 收集显式配置的 Android SDK 根目录，优先信任 CI 注入的环境变量。
+# Collect explicitly configured Android SDK roots, prioritizing CI-injected environment variables.
+collect_talos_explicit_android_sdk_homes() {
+    local homes=()
+    if [[ -n "${ANDROID_SDK_ROOT:-}" ]]; then
+        homes+=("${ANDROID_SDK_ROOT}")
+    fi
+    if [[ -n "${ANDROID_HOME:-}" ]] && [[ "${ANDROID_HOME}" != "${ANDROID_SDK_ROOT:-}" ]]; then
+        homes+=("${ANDROID_HOME}")
+    fi
+    if [[ -n "${LOCALAPPDATA:-}" ]]; then
+        homes+=("${LOCALAPPDATA}/Android/Sdk")
+    fi
+
+    printf '%s\n' "${homes[@]}"
+}
+
+# 收集 TeamCity Windows service 常见的 Android SDK 默认安装目录。
+# Collect common Android SDK default install roots for TeamCity Windows service agents.
+collect_talos_default_android_sdk_homes() {
+    local homes=()
+    local nullglob_enabled=0
+    if shopt -q nullglob; then
+        nullglob_enabled=1
+    else
+        shopt -s nullglob
+    fi
+
+    if [[ -n "${USERNAME:-}" ]]; then
+        homes+=("/c/Users/${USERNAME}/AppData/Local/Android/Sdk")
+    fi
+    if [[ -n "${USER:-}" ]] && [[ "${USER}" != "${USERNAME:-}" ]]; then
+        homes+=("/c/Users/${USER}/AppData/Local/Android/Sdk")
+    fi
+    homes+=("/c/Android/Sdk")
+    homes+=("/c/Program Files/Android/Android Studio/sdk")
+    homes+=("/c/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/SDK")
+    homes+=("/c/Program Files/Unity/Hub/Editor"/*/Editor/Data/PlaybackEngines/AndroidPlayer/SDK)
+
+    if [[ ${nullglob_enabled} -eq 0 ]]; then
+        shopt -u nullglob
+    fi
+
+    printf '%s\n' "${homes[@]}"
+}
+
+# 解析 ADB 可执行文件，兼容 TeamCity service 未把 Android SDK 注入 PATH 的场景。
+# Resolve the ADB executable when a TeamCity service has Android SDK installed but PATH is incomplete.
+resolve_talos_adb_bin() {
+    local candidate=""
+    local sdk_home=""
+
+    if candidate="$(resolve_talos_tool_candidate "${ADB_BIN:-}")"; then
+        printf '%s\n' "${candidate}"
+        return 0
+    fi
+
+    while IFS= read -r sdk_home; do
+        [[ -z "${sdk_home}" ]] && continue
+        if candidate="$(resolve_talos_tool_candidate "${sdk_home}/platform-tools/adb.exe")"; then
+            printf '%s\n' "${candidate}"
+            return 0
+        fi
+        if candidate="$(resolve_talos_tool_candidate "${sdk_home}/platform-tools/adb")"; then
+            printf '%s\n' "${candidate}"
+            return 0
+        fi
+    done < <(collect_talos_explicit_android_sdk_homes)
+
+    if candidate="$(resolve_talos_tool_candidate adb)"; then
+        printf '%s\n' "${candidate}"
+        return 0
+    fi
+
+    if candidate="$(resolve_talos_tool_candidate adb.exe)"; then
+        printf '%s\n' "${candidate}"
+        return 0
+    fi
+
+    while IFS= read -r sdk_home; do
+        [[ -z "${sdk_home}" ]] && continue
+        if candidate="$(resolve_talos_tool_candidate "${sdk_home}/platform-tools/adb.exe")"; then
+            printf '%s\n' "${candidate}"
+            return 0
+        fi
+        if candidate="$(resolve_talos_tool_candidate "${sdk_home}/platform-tools/adb")"; then
+            printf '%s\n' "${candidate}"
+            return 0
+        fi
+    done < <(collect_talos_default_android_sdk_homes)
+
+    return 1
+}
+
+# 确保 ADB 工具已经解析完成，并输出最终使用的可执行文件路径。
+# Ensure the ADB tool is resolved and expose the final executable path for callers.
+ensure_talos_adb_tooling() {
+    if [[ -n "${TALOS_ADB_BIN:-}" ]]; then
+        return 0
+    fi
+
+    if ! TALOS_ADB_BIN="$(resolve_talos_adb_bin)"; then
+        echo "❌ 错误: 未找到 adb 可执行文件，请配置 ADB_BIN、ANDROID_SDK_ROOT 或 ANDROID_HOME"
+        return 1
+    fi
+
+    export TALOS_ADB_BIN
+    echo ">>> Android 工具: adb=${TALOS_ADB_BIN}"
 }
 
 resolve_talos_node_bin() {
