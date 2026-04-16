@@ -346,3 +346,63 @@ probe_talos_tcp_port() {
 
     "${TALOS_NODE_BIN}" -e "const net=require('net'); const host=process.argv[1]; const port=Number(process.argv[2]); const socket=net.createConnection({host, port}); socket.setTimeout(1000); socket.on('connect', () => { socket.end(); process.exit(0); }); socket.on('timeout', () => { socket.destroy(); process.exit(1); }); socket.on('error', () => process.exit(1));" "${host}" "${port}" >/dev/null 2>&1
 }
+
+probe_talos_unity_ready() {
+        local host="${1:-}"
+        local port="${2:-}"
+        local timeout_ms="${3:-1000}"
+        if [[ -z "${host}" || -z "${port}" ]]; then
+                return 1
+        fi
+
+        if [[ -z "${TALOS_NODE_BIN:-}" ]] && ! TALOS_NODE_BIN="$(resolve_talos_node_bin)"; then
+                return 1
+        fi
+
+        "${TALOS_NODE_BIN}" -e '
+const net = require("net");
+const host = process.argv[1];
+const port = Number(process.argv[2]);
+const timeoutMs = Number(process.argv[3]);
+const socket = net.createConnection({ host, port });
+let buffer = Buffer.alloc(0);
+let ready = false;
+
+function fail() {
+    socket.destroy();
+}
+
+socket.setTimeout(timeoutMs);
+socket.on("connect", () => {
+    const body = Buffer.from(JSON.stringify({ type: "hello", data: {} }), "utf8");
+    const header = Buffer.alloc(4);
+    header.writeUInt32BE(body.length, 0);
+    socket.write(Buffer.concat([header, body]));
+});
+socket.on("data", chunk => {
+    buffer = Buffer.concat([buffer, chunk]);
+    while (buffer.length >= 4) {
+        const length = buffer.readUInt32BE(0);
+        if (buffer.length < 4 + length) {
+            return;
+        }
+        const payload = buffer.subarray(4, 4 + length).toString("utf8");
+        buffer = buffer.subarray(4 + length);
+        try {
+            const message = JSON.parse(payload);
+            if (message && message.type === "hello_ack") {
+                ready = true;
+                socket.end();
+                return;
+            }
+        } catch (error) {
+            fail();
+            return;
+        }
+    }
+});
+socket.on("timeout", fail);
+socket.on("error", () => process.exit(1));
+socket.on("close", () => process.exit(ready ? 0 : 1));
+' "${host}" "${port}" "${timeout_ms}" >/dev/null 2>&1
+}

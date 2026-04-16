@@ -7,11 +7,15 @@
 
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 import shlex
+import shutil
+import socket
 import stat
 import subprocess
+import threading
 
 
 TOOLS_ROOT = Path(__file__).resolve().parents[1]
@@ -127,6 +131,38 @@ def test_probe_talos_tcp_port_falls_back_to_node_when_nc_missing(tmp_path: Path)
     )
 
     assert result.returncode == 0, result.stderr
+
+
+def test_probe_talos_unity_ready_rejects_socket_that_closes_without_hello_ack(tmp_path: Path) -> None:
+    """验证 Unity 就绪探测不会把“能连上但立即断开”的端口误判成 ready。
+    Verify that the Unity readiness probe does not treat a port that accepts and closes immediately as ready.
+    """
+    node_bin = shutil.which("node")
+    assert node_bin, "node executable is required for readiness probe tests"
+
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(("127.0.0.1", 0))
+    server.listen(1)
+    port = server.getsockname()[1]
+
+    def close_on_accept() -> None:
+        connection, _ = server.accept()
+        connection.close()
+        server.close()
+
+    thread = threading.Thread(target=close_on_accept, daemon=True)
+    thread.start()
+
+    result = run_node_tools(
+        f'probe_talos_unity_ready 127.0.0.1 {port} 1000',
+        {
+            "PATH": str(tmp_path / "missing-bin"),
+            "NODE_BIN": node_bin,
+        },
+    )
+
+    thread.join(timeout=5)
+    assert result.returncode != 0
 
 
 def test_ensure_talos_adb_tooling_derives_sdk_from_unity_path(tmp_path: Path) -> None:

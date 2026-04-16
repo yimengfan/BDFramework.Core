@@ -103,6 +103,9 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
             [
                 "#!/bin/bash",
                 "set -euo pipefail",
+                "if [[ \"${1:-}\" == \"-e\" ]]; then",
+                "  exit 0",
+                "fi",
                 f"printf '%s\\n' \"$@\" > {node_args_path}",
                 f"printf '%s\\n%s\\n%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_REPORT:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PW_TEST_HTML_REPORT_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
                 "exit 0",

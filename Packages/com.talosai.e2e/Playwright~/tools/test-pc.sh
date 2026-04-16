@@ -179,7 +179,7 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
         fi
     fi
 
-    if probe_talos_tcp_port "${UNITY_HOST}" "${UNITY_PORT}"; then
+    if probe_talos_unity_ready "${UNITY_HOST}" "${UNITY_PORT}" 1000; then
         echo "    ✅ TCP 服务已就绪 (${WAITED}s)"
         break
     fi
