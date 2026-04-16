@@ -180,10 +180,10 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
-        /// 验证 AOT 启动阶段装载热更程序集时，会在依赖尚未就绪时延后重试，而不是因为文件枚举顺序直接终止。
-        /// Verify that AOT startup defers and retries hotfix-assembly loads when dependencies are not ready instead of aborting immediately because of file-enumeration order.
+        /// 验证 AOT 启动阶段会先装载框架与 firstpass 热更程序集，再装载 Assembly-CSharp，避免由文件枚举顺序触发 placeholder assembly 重载异常。
+        /// Verify that AOT startup loads the framework and firstpass hotfix assemblies before Assembly-CSharp so file-enumeration order cannot trigger placeholder-assembly reload failures.
         /// </summary>
-        public static void VerifyScriptLoderAOTHotfixAssemblyRetryContract()
+        public static void VerifyScriptLoderAOTHotfixAssemblyLoadOrderContract()
         {
             var helperMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
                 "LoadHotfixAssemblies",
@@ -199,9 +199,7 @@ namespace BDFramework.RuntimeTests.Contracts
 
             EnsureTrue(helperMethod != null, "应该能够找到 ScriptLoderAOT 的热更程序集装载辅助方法。");
 
-            var attemptOrder = new List<string>();
-            var successfulLoadOrder = new List<string>();
-            var assemblyCSharpAttemptCount = 0;
+            var loadOrder = new List<string>();
             helperMethod.Invoke(
                 null,
                 new object[]
@@ -210,46 +208,21 @@ namespace BDFramework.RuntimeTests.Contracts
                     {
                         "android/script/hotfix/Assembly-CSharp.zlua.bytes",
                         "android/script/hotfix/BDFramework.Core.zlua.bytes",
-                        "android/script/hotfix/Assembly-CSharp-firstpass.zlua.bytes"
+                        "android/script/hotfix/Assembly-CSharp-firstpass.zlua.bytes",
+                        "android/script/hotfix/Game.Hotfix.zlua.bytes"
                     },
                     (Func<string, byte[]>)(_ => new byte[] { 1 }),
                     (Action<string, byte[]>)((path, _) =>
                     {
-                        var fileName = Path.GetFileName(path);
-                        var assemblyName = fileName.Replace(".zlua.bytes", string.Empty, StringComparison.OrdinalIgnoreCase);
-                        attemptOrder.Add(fileName);
-
-                        if (string.Equals(assemblyName, "Assembly-CSharp", StringComparison.OrdinalIgnoreCase))
-                        {
-                            assemblyCSharpAttemptCount++;
-                            if (!successfulLoadOrder.Contains("BDFramework.Core"))
-                            {
-                                throw new TypeLoadException("Could not load type 'BDFramework.UFlux.AWindow' from assembly 'BDFramework.Core'.");
-                            }
-                        }
-
-                        successfulLoadOrder.Add(assemblyName);
+                        loadOrder.Add(
+                            Path.GetFileName(path).Replace(".zlua.bytes", string.Empty, StringComparison.OrdinalIgnoreCase));
                     })
                 });
 
-            EnsureTrue(
-                attemptOrder.Count >= 4,
-                "当依赖尚未就绪时，热更程序集装载应至少经历一轮失败重试。");
-            EnsureTrue(
-                string.Equals(attemptOrder[0], "Assembly-CSharp.zlua.bytes", StringComparison.Ordinal),
-                "测试应先模拟先枚举到 Assembly-CSharp 的不利顺序。");
-            EnsureTrue(
-                string.Equals(attemptOrder[attemptOrder.Count - 1], "Assembly-CSharp.zlua.bytes", StringComparison.Ordinal),
-                "依赖装载完成后，应再次重试 Assembly-CSharp。"
-            );
-            EnsureTrue(
-                assemblyCSharpAttemptCount == 2,
-                "Assembly-CSharp 在依赖未就绪时应先失败一次，并在依赖装载后重试成功。"
-            );
             EnsureSequenceEqual(
-                new[] { "BDFramework.Core", "Assembly-CSharp-firstpass", "Assembly-CSharp" },
-                successfulLoadOrder,
-                "热更程序集最终应在依赖满足后全部装载成功。"
+                new[] { "BDFramework.Core", "Assembly-CSharp-firstpass", "Assembly-CSharp", "Game.Hotfix" },
+                loadOrder,
+                "热更程序集应按稳定依赖顺序装载，避免 Assembly-CSharp 早于其依赖被装载。"
             );
         }
 

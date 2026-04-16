@@ -160,12 +160,12 @@ namespace BDFramework
         }
 
         /// <summary>
-        /// 在热更程序集存在依赖关系时，按“可成功装载即移除”的方式重试整个队列。
-        /// Retry the whole hotfix-assembly queue by removing assemblies as soon as they load successfully.
-        /// 这样可以兼容文件系统枚举顺序与程序集依赖顺序不一致的场景，例如 <c>Assembly-CSharp</c> 先被枚举到、
-        /// 但它实际依赖稍后才会装载的 <c>BDFramework.Core</c> 时，会在下一轮自动重试而不是直接终止启动。
-        /// This keeps startup resilient when file-system enumeration order differs from assembly dependency order, for example when <c>Assembly-CSharp</c>
-        /// is discovered first but actually depends on <c>BDFramework.Core</c> being loaded later, in which case the next round retries automatically instead of aborting startup immediately.
+        /// 按稳定依赖顺序装载热更程序集，避免 Unity 在首次失败后留下 placeholder assembly，导致同名程序集无法再次装载。
+        /// Load hotfix assemblies in a stable dependency order so Unity does not leave a placeholder assembly after the first failure, which would prevent the same assembly from being loaded again.
+        /// 当前仓库在 HybridCLR 下会把 <c>BDFramework.Core</c>、<c>Assembly-CSharp-firstpass</c> 与 <c>Assembly-CSharp</c>
+        /// 一起作为热更程序集发布；其中主工程脚本常依赖前两个程序集，因此运行时必须先装载框架与 firstpass，再装载主工程程序集。
+        /// In this repository HybridCLR publishes <c>BDFramework.Core</c>, <c>Assembly-CSharp-firstpass</c>, and <c>Assembly-CSharp</c>
+        /// together as hotfix assemblies; the main project scripts commonly depend on the first two, so runtime must load the framework and firstpass assemblies before the main project assembly.
         /// </summary>
         /// <param name="hotfixDlls">待装载的热更程序集路径列表。</param>
         /// <param name="hotfixDlls">Paths of the hotfix assemblies that still need to be loaded.</param>
@@ -178,61 +178,63 @@ namespace BDFramework
             Func<string, byte[]> readDllBytes,
             Action<string, byte[]> loadHotfixAssembly)
         {
-            var pendingHotfixDlls = new List<string>(hotfixDlls ?? Array.Empty<string>());
-            var hotfixDllBytesMap = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
-            foreach (var hotfixDll in pendingHotfixDlls)
-            {
-                if (!hotfixDllBytesMap.ContainsKey(hotfixDll))
-                {
-                    hotfixDllBytesMap.Add(hotfixDll, readDllBytes(hotfixDll));
-                }
-            }
+            var orderedHotfixDlls = new List<string>(hotfixDlls ?? Array.Empty<string>());
+            orderedHotfixDlls.Sort(CompareHotfixDllLoadOrder);
 
-            Exception lastDeferredException = null;
-            while (pendingHotfixDlls.Count > 0)
+            foreach (var hotfixDll in orderedHotfixDlls)
             {
-                var hasLoadedAssemblyInCurrentPass = false;
-                for (var index = 0; index < pendingHotfixDlls.Count;)
-                {
-                    var hotfixDll = pendingHotfixDlls[index];
-                    try
-                    {
-                        loadHotfixAssembly(hotfixDll, hotfixDllBytesMap[hotfixDll]);
-                        pendingHotfixDlls.RemoveAt(index);
-                        hasLoadedAssemblyInCurrentPass = true;
-                        lastDeferredException = null;
-                    }
-                    catch (Exception exception) when (IsDeferredHotfixLoadException(exception))
-                    {
-                        Debug.LogWarning($"【AOT.Load】热更程序集依赖未就绪，稍后重试:{hotfixDll} err={exception.Message}");
-                        lastDeferredException = exception;
-                        index++;
-                    }
-                }
-
-                if (!hasLoadedAssemblyInCurrentPass)
-                {
-                    throw new Exception(
-                        $"【AOT.Load】存在无法解析依赖的热更程序集:{string.Join(",", pendingHotfixDlls)}",
-                        lastDeferredException);
-                }
+                loadHotfixAssembly(hotfixDll, readDllBytes(hotfixDll));
             }
         }
 
         /// <summary>
-        /// 判断异常是否属于“依赖尚未装载，可在后续轮次重试”的热更装载失败。
-        /// Determine whether an exception represents a dependency-not-ready hotfix-load failure that can be retried in a later pass.
+        /// 比较两个热更程序集路径的推荐装载顺序。
+        /// Compare the recommended load order for two hotfix-assembly paths.
         /// </summary>
-        /// <param name="exception">当前装载失败抛出的异常。</param>
-        /// <param name="exception">Exception thrown by the current load attempt.</param>
-        /// <returns>若属于可延后重试的依赖异常则返回 true。</returns>
-        /// <returns>Returns true when the exception is a dependency-related failure that should be retried later.</returns>
-        static private bool IsDeferredHotfixLoadException(Exception exception)
+        static private int CompareHotfixDllLoadOrder(string leftPath, string rightPath)
         {
-            return exception is TypeLoadException
-                   || exception is FileNotFoundException
-                   || exception is FileLoadException
-                   || exception is ReflectionTypeLoadException;
+            var leftRank = GetHotfixDllLoadRank(leftPath);
+            var rightRank = GetHotfixDllLoadRank(rightPath);
+            if (leftRank != rightRank)
+            {
+                return leftRank.CompareTo(rightRank);
+            }
+
+            return string.Compare(
+                Path.GetFileName(leftPath),
+                Path.GetFileName(rightPath),
+                StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// 计算热更程序集的装载优先级。
+        /// Compute the load priority for a hotfix assembly.
+        /// 这里显式把框架程序集与 Unity 默认程序集的依赖顺序固定下来，避免由文件系统枚举顺序决定启动结果。
+        /// This explicitly fixes the dependency order between the framework assembly and Unity default assemblies so startup no longer depends on file-system enumeration order.
+        /// </summary>
+        /// <param name="hotfixDllPath">热更程序集路径。</param>
+        /// <param name="hotfixDllPath">Hotfix assembly path.</param>
+        /// <returns>数值越小越先装载。</returns>
+        /// <returns>Smaller values load first.</returns>
+        static private int GetHotfixDllLoadRank(string hotfixDllPath)
+        {
+            var fileName = Path.GetFileName(hotfixDllPath) ?? string.Empty;
+            if (fileName.EndsWith($"bdframework.core{HOT_DLL_EXTENSION}", StringComparison.OrdinalIgnoreCase))
+            {
+                return 0;
+            }
+
+            if (fileName.EndsWith($"assembly-csharp-firstpass{HOT_DLL_EXTENSION}", StringComparison.OrdinalIgnoreCase))
+            {
+                return 1;
+            }
+
+            if (fileName.EndsWith($"assembly-csharp{HOT_DLL_EXTENSION}", StringComparison.OrdinalIgnoreCase))
+            {
+                return 2;
+            }
+
+            return 10;
         }
 
         /// <summary>

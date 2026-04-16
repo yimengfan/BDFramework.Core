@@ -64,15 +64,15 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
-        /// 验证 AOT 启动阶段的热更程序集依赖重试契约。
-        /// Verify the hotfix-assembly dependency retry contract during the AOT startup phase.
+        /// 验证 AOT 启动阶段的热更程序集装载顺序契约。
+        /// Verify the hotfix-assembly load-order contract during the AOT startup phase.
         /// </summary>
-        [E2ETest(suite: "framework-contract", order: 5, des: "aot-hotfix-retry-contract")]
-        public static void AOTHotfixRetryContract()
+        [E2ETest(suite: "framework-contract", order: 5, des: "aot-hotfix-load-order-contract")]
+        public static void AOTHotfixLoadOrderContract()
         {
             var test = new BdLauncherApiTest();
-            test.SetUp(nameof(AOTHotfixRetryContract));
-            test.LoadHotfixAssemblies_ShouldRetryWhenDependenciesBecomeAvailableLater();
+            test.SetUp(nameof(AOTHotfixLoadOrderContract));
+            test.LoadHotfixAssemblies_ShouldRespectKnownDependencyOrder();
         }
 
         /// <summary>
