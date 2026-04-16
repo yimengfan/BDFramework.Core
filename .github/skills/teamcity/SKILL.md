@@ -109,6 +109,10 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - `--poll-interval-seconds`：轮询间隔（默认 5 秒）
 - `--log-tail-lines`：失败时显示日志行数（默认 80 行）
 
+Operational note:
+- For builds that call TeamCity again from inside the build scripts, explicitly forward `--property env.TEAMCITY_TOKEN="$TEAMCITY_TOKEN"`.
+- Talos BaseFlow reruns should also override `--property talos.e2e.test.file=tests/testBaseFlow-e2e.spec.ts` when the Playwright spec naming has changed, instead of relying on server-side defaults.
+
 ### run-build-group — 批量触发构建
 
 ```bash
