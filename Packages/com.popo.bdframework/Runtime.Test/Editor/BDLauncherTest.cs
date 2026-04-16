@@ -11,9 +11,9 @@ namespace Runtime.Test.Editor
     /// 启动器 Runtime API 套件的编辑器 BatchMode 桥接器。
     /// Editor BatchMode bridge for the launcher runtime API suite.
     /// 该桥接器不再承载编辑器侧 NUnit 测试所有权；它只在本地验证脚本需要 <c>-executeMethod</c> 入口时，
-    /// 顺序调用 Runtime.Test/Runtime/APITest 下的启动器断言并写出稳定报告。
+    /// 顺序调用 Runtime.Test/Runtime/APITest 下的启动器与 AOT 启动断言并写出稳定报告。
     /// This bridge no longer owns editor-side NUnit tests; it only provides a stable <c>-executeMethod</c> entrypoint for local verification scripts,
-    /// sequentially invoking the launcher assertions under Runtime.Test/Runtime/APITest and writing a stable report.
+    /// sequentially invoking the launcher and AOT-startup assertions under Runtime.Test/Runtime/APITest and writing a stable report.
     /// </summary>
     public static class BdLauncherBatchBridge
     {
@@ -27,8 +27,8 @@ namespace Runtime.Test.Editor
         {
             ApiTestLog.LogTestPurposeAndMeans(
                 nameof(BdLauncherBatchBridge),
-                "验证启动器反射契约、默认执行顺序与 E2E 自动检测入口保持稳定。",
-                "顺序执行 Runtime APITest 启动器断言，写出批验证报告，并使用显式退出码反馈结果。"
+                "验证启动器反射契约、AOT 启动 StreamingAssets 读取规则、默认执行顺序与 E2E 自动检测入口保持稳定。",
+                "顺序执行 Runtime APITest 启动器与 AOT 启动断言，写出批验证报告，并使用显式退出码反馈结果。"
             );
             UnityDebug.Log("[测试进度] suite=BdLauncherBatchBridge stage=start");
 
@@ -43,6 +43,13 @@ namespace Runtime.Test.Editor
                         runtimeTest,
                         nameof(BdLauncherApiTest.FindScriptLoderInitMethod_ShouldResolveStaticMethod),
                         runtimeTest.FindScriptLoderInitMethod_ShouldResolveStaticMethod)
+                ),
+                (
+                    nameof(BdLauncherApiTest.GetStreamingAssetFiles_ShouldInitializeIndexAndSkipMissingOptionalDirectory),
+                    () => ExecuteWithSetUp(
+                        runtimeTest,
+                        nameof(BdLauncherApiTest.GetStreamingAssetFiles_ShouldInitializeIndexAndSkipMissingOptionalDirectory),
+                        runtimeTest.GetStreamingAssetFiles_ShouldInitializeIndexAndSkipMissingOptionalDirectory)
                 ),
                 (
                     nameof(BdLauncherApiTest.BDLauncher_ShouldDeclareMinimumDefaultExecutionOrder),

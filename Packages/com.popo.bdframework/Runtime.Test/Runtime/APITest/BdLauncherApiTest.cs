@@ -5,9 +5,9 @@ namespace BDFramework.RuntimeTests.ApiTest
     /// <summary>
     /// 启动器公开契约的 Runtime 测试主体。
     /// Runtime test body for the launcher public contracts.
-    /// 该类型把启动器反射入口、默认执行顺序与 E2E 自动检测裁剪规则固定在 Runtime.Test 的 APITest 层，
+    /// 该类型把启动器反射入口、AOT 启动 StreamingAssets 读取顺序、默认执行顺序与 E2E 自动检测裁剪规则固定在 Runtime.Test 的 APITest 层，
     /// 让 Editor 包装、BatchMode 与真机 Talos 套件共享同一套启动器契约断言。
-    /// This type fixes launcher reflection entry points, default execution order, and E2E auto-detection stripping rules inside the Runtime.Test APITest layer,
+    /// This type fixes launcher reflection entry points, AOT-startup StreamingAssets read order, default execution order, and E2E auto-detection stripping rules inside the Runtime.Test APITest layer,
     /// allowing editor wrappers, BatchMode, and packaged Talos suites to share the same launcher contract assertions.
     /// </summary>
     public sealed class BdLauncherApiTest
@@ -20,8 +20,8 @@ namespace BDFramework.RuntimeTests.ApiTest
         {
             ApiTestLog.LogTestPurposeAndMeans(
                 string.IsNullOrEmpty(testName) ? nameof(BdLauncherApiTest) : testName,
-                "验证启动器反射契约、默认执行顺序与 E2E 自动检测入口保持稳定。",
-                "通过直接调用 FrameworkContractAssertions 的启动器断言，并校验反射发现、执行顺序与条件裁剪规则。"
+                "验证启动器反射契约、AOT 启动 StreamingAssets 读取规则、默认执行顺序与 E2E 自动检测入口保持稳定。",
+                "通过直接调用 FrameworkContractAssertions 的启动器断言，并校验反射发现、StreamingAssets 初始化顺序、执行顺序与条件裁剪规则。"
             );
         }
 
@@ -32,6 +32,15 @@ namespace BDFramework.RuntimeTests.ApiTest
         public void FindScriptLoderInitMethod_ShouldResolveStaticMethod()
         {
             FrameworkContractAssertions.VerifyScriptLoaderInitMethodCanBeResolved();
+        }
+
+        /// <summary>
+        /// 验证 AOT 启动阶段读取 StreamingAssets DLL 列表时，会先初始化索引，并在可选目录缺失时返回空集合。
+        /// Verify that AOT startup initializes the index before reading StreamingAssets DLL lists and returns an empty set when an optional directory is missing.
+        /// </summary>
+        public void GetStreamingAssetFiles_ShouldInitializeIndexAndSkipMissingOptionalDirectory()
+        {
+            FrameworkContractAssertions.VerifyScriptLoderAOTStreamingAssetsReadContract();
         }
 
         /// <summary>

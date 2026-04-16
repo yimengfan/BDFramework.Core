@@ -52,6 +52,18 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
+        /// 验证 AOT 启动阶段的 StreamingAssets 读取契约。
+        /// Verify the StreamingAssets read contract during the AOT startup phase.
+        /// </summary>
+        [E2ETest(suite: "framework-contract", order: 4, des: "aot-streaming-assets-contract")]
+        public static void AOTStreamingAssetsContract()
+        {
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(AOTStreamingAssetsContract));
+            test.GetStreamingAssetFiles_ShouldInitializeIndexAndSkipMissingOptionalDirectory();
+        }
+
+        /// <summary>
         /// 验证运行态 launcher 配置文本优先级最高。
         /// Verify that runtime launcher config text keeps the highest priority.
         /// </summary>

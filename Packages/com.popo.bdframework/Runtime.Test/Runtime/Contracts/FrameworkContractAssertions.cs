@@ -94,6 +94,92 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证 AOT 启动阶段读取 StreamingAssets 时，会先初始化索引，并在可选目录缺失时回退为空集合。
+        /// Verify that AOT startup reads initialize the StreamingAssets index first and fall back to an empty set when an optional directory is missing.
+        /// </summary>
+        public static void VerifyScriptLoderAOTStreamingAssetsReadContract()
+        {
+            var helperMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
+                "GetStreamingAssetFiles",
+                BindingFlags.NonPublic | BindingFlags.Static,
+                null,
+                new[]
+                {
+                    typeof(string),
+                    typeof(string),
+                    typeof(Action),
+                    typeof(Func<string, bool>),
+                    typeof(Func<string, string, string[]>)
+                },
+                null);
+
+            EnsureTrue(helperMethod != null, "应该能够找到 ScriptLoderAOT 的 StreamingAssets 读取辅助方法。");
+
+            var missingDirectoryCallOrder = new List<string>();
+            var missingDirectoryResult = (string[])helperMethod.Invoke(
+                null,
+                new object[]
+                {
+                    "android/script/aot_patch",
+                    "*.zlua.bytes",
+                    (Action)(() => missingDirectoryCallOrder.Add("initialize")),
+                    (Func<string, bool>)(path =>
+                    {
+                        missingDirectoryCallOrder.Add($"directory:{path}");
+                        return false;
+                    }),
+                    (Func<string, string, string[]>)((path, pattern) =>
+                    {
+                        missingDirectoryCallOrder.Add($"files:{path}:{pattern}");
+                        return new[] { "unexpected" };
+                    })
+                });
+
+            EnsureSequenceEqual(
+                new[] { "initialize", "directory:android/script/aot_patch" },
+                missingDirectoryCallOrder,
+                "缺失可选 StreamingAssets 目录时，应先初始化索引，再只探测目录而不继续枚举文件。");
+            EnsureTrue(
+                missingDirectoryResult != null && missingDirectoryResult.Length == 0,
+                "缺失可选 StreamingAssets 目录时，应返回空集合而不是抛出异常或返回 null。");
+
+            var existingDirectoryCallOrder = new List<string>();
+            var expectedFiles = new[] { "android/script/hotfix/main.zlua.bytes" };
+            var existingDirectoryResult = (string[])helperMethod.Invoke(
+                null,
+                new object[]
+                {
+                    "android/script/hotfix",
+                    "*.zlua.bytes",
+                    (Action)(() => existingDirectoryCallOrder.Add("initialize")),
+                    (Func<string, bool>)(path =>
+                    {
+                        existingDirectoryCallOrder.Add($"directory:{path}");
+                        return true;
+                    }),
+                    (Func<string, string, string[]>)((path, pattern) =>
+                    {
+                        existingDirectoryCallOrder.Add($"files:{path}:{pattern}");
+                        return expectedFiles;
+                    })
+                });
+
+            EnsureSequenceEqual(
+                new[]
+                {
+                    "initialize",
+                    "directory:android/script/hotfix",
+                    "files:android/script/hotfix:*.zlua.bytes"
+                },
+                existingDirectoryCallOrder,
+                "存在 StreamingAssets 目录时，应先初始化索引，再探测目录，最后枚举文件。");
+            EnsureSequenceEqual(
+                expectedFiles,
+                existingDirectoryResult,
+                "存在 StreamingAssets 目录时，应返回底层文件枚举结果。");
+        }
+
+        /// <summary>
         /// 验证运行态 launcher 文本优先级最高。
         /// Verify that runtime launcher text keeps the highest priority.
         /// </summary>
