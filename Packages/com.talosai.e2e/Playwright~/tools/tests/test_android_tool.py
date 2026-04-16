@@ -104,7 +104,7 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
                 "#!/bin/bash",
                 "set -euo pipefail",
                 f"printf '%s\\n' \"$@\" > {node_args_path}",
-                f"printf '%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
+                f"printf '%s\\n%s\\n%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_REPORT:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PW_TEST_HTML_REPORT_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
                 "exit 0",
             ]
         )
@@ -169,6 +169,8 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
     assert "--reporter=list,html,junit" in node_args
     assert node_env_path.read_text(encoding="utf-8").splitlines() == [
         str(playwright_root / "test-results" / "html"),
+        str(playwright_root / "test-results" / "html"),
+        "never",
         "never",
         str(playwright_root / "test-results" / "junit.xml"),
     ]

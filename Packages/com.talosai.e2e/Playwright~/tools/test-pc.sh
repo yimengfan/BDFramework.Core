@@ -223,8 +223,12 @@ PLAYWRIGHT_COMMAND+=(
     "--reporter=list,html,junit"
 )
 
+# 兼容 Playwright 1.40.1 旧版 HTML reporter 环境变量，同时保留新版变量，避免 CI 因自动打开 report 而挂住。
+# Support the legacy Playwright 1.40.1 HTML reporter environment variables while keeping the newer names so CI does not hang by auto-opening the report server.
 PLAYWRIGHT_HTML_OUTPUT_DIR="${PLAYWRIGHT_DIR}/test-results/html" \
+PLAYWRIGHT_HTML_REPORT="${PLAYWRIGHT_DIR}/test-results/html" \
 PLAYWRIGHT_HTML_OPEN=never \
+PW_TEST_HTML_REPORT_OPEN=never \
 PLAYWRIGHT_JUNIT_OUTPUT_FILE="${PLAYWRIGHT_DIR}/test-results/junit.xml" \
 PLATFORM="${PROJECT}" \
 UNITY_HOST="${UNITY_HOST}" \
