@@ -76,6 +76,18 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
+        /// 验证基础配置处理器会补挂缺失的 BDebug 组件。
+        /// Verify that the base-config processor restores a missing BDebug component.
+        /// </summary>
+        [E2ETest(suite: "framework-contract", order: 6, des: "config-restore-bdebug-contract")]
+        public static void ConfigRestoreBDebugContract()
+        {
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(ConfigRestoreBDebugContract));
+            test.EnsureDebugComponent_ShouldRestoreMissingBDebug();
+        }
+
+        /// <summary>
         /// 验证运行态 launcher 配置文本优先级最高。
         /// Verify that runtime launcher config text keeps the highest priority.
         /// </summary>

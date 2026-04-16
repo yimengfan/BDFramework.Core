@@ -227,6 +227,30 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证基础配置处理器会在缺失时补挂 BDebug 组件，避免启动场景里的 placeholder 缺脚本把配置装载链直接打断。
+        /// Verify that the base-config processor restores the BDebug component when it is missing so placeholder startup-scene scripts do not break the configuration load chain.
+        /// </summary>
+        public static void VerifyGameBaseConfigProcessorRestoresMissingBDebugComponent()
+        {
+            var owner = new GameObject("BDebugOwner");
+            try
+            {
+                var createdComponent = GameBaseConfigProcessor.EnsureDebugComponent(owner);
+                EnsureTrue(createdComponent != null, "缺失 BDebug 组件时，应补挂一个新的运行时实例。");
+                EnsureTrue(owner.GetComponent<BDebug>() == createdComponent, "补挂后的 BDebug 组件应驻留在传入的启动器物体上。");
+
+                createdComponent.IsLog = false;
+                var reusedComponent = GameBaseConfigProcessor.EnsureDebugComponent(owner);
+                EnsureTrue(reusedComponent == createdComponent, "已有 BDebug 组件时，应直接复用现有实例而不是重复补挂。");
+                EnsureTrue(!reusedComponent.IsLog, "复用已有 BDebug 组件时，不应意外重置其运行时状态。");
+            }
+            finally
+            {
+                Object.DestroyImmediate(owner);
+            }
+        }
+
+        /// <summary>
         /// 验证运行态 launcher 文本优先级最高。
         /// Verify that runtime launcher text keeps the highest priority.
         /// </summary>

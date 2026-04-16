@@ -5,9 +5,9 @@ namespace BDFramework.RuntimeTests.ApiTest
     /// <summary>
     /// 启动器公开契约的 Runtime 测试主体。
     /// Runtime test body for the launcher public contracts.
-    /// 该类型把启动器反射入口、AOT 启动 StreamingAssets 读取顺序、热更程序集装载顺序、默认执行顺序与 E2E 自动检测裁剪规则固定在 Runtime.Test 的 APITest 层，
+    /// 该类型把启动器反射入口、AOT 启动 StreamingAssets 读取顺序、热更程序集装载顺序、缺失 BDebug 补挂策略、默认执行顺序与 E2E 自动检测裁剪规则固定在 Runtime.Test 的 APITest 层，
     /// 让 Editor 包装、BatchMode 与真机 Talos 套件共享同一套启动器契约断言。
-    /// This type fixes launcher reflection entry points, AOT-startup StreamingAssets read order, hotfix-assembly load order, default execution order, and E2E auto-detection stripping rules inside the Runtime.Test APITest layer,
+    /// This type fixes launcher reflection entry points, AOT-startup StreamingAssets read order, hotfix-assembly load order, missing-BDebug restoration, default execution order, and E2E auto-detection stripping rules inside the Runtime.Test APITest layer,
     /// allowing editor wrappers, BatchMode, and packaged Talos suites to share the same launcher contract assertions.
     /// </summary>
     public sealed class BdLauncherApiTest
@@ -20,8 +20,8 @@ namespace BDFramework.RuntimeTests.ApiTest
         {
             ApiTestLog.LogTestPurposeAndMeans(
                 string.IsNullOrEmpty(testName) ? nameof(BdLauncherApiTest) : testName,
-                "验证启动器反射契约、AOT 启动 StreamingAssets 读取与热更装载顺序规则、默认执行顺序与 E2E 自动检测入口保持稳定。",
-                "通过直接调用 FrameworkContractAssertions 的启动器断言，并校验反射发现、StreamingAssets 初始化顺序、热更程序集装载顺序、执行顺序与条件裁剪规则。"
+                "验证启动器反射契约、AOT 启动 StreamingAssets 读取与热更装载顺序规则、缺失 BDebug 补挂策略、默认执行顺序与 E2E 自动检测入口保持稳定。",
+                "通过直接调用 FrameworkContractAssertions 的启动器断言，并校验反射发现、StreamingAssets 初始化顺序、热更程序集装载顺序、缺失 BDebug 补挂、执行顺序与条件裁剪规则。"
             );
         }
 
@@ -50,6 +50,15 @@ namespace BDFramework.RuntimeTests.ApiTest
         public void LoadHotfixAssemblies_ShouldRespectKnownDependencyOrder()
         {
             FrameworkContractAssertions.VerifyScriptLoderAOTHotfixAssemblyLoadOrderContract();
+        }
+
+        /// <summary>
+        /// 验证基础配置处理器会在缺失时补挂 BDebug 组件。
+        /// Verify that the base-config processor restores the BDebug component when it is missing.
+        /// </summary>
+        public void EnsureDebugComponent_ShouldRestoreMissingBDebug()
+        {
+            FrameworkContractAssertions.VerifyGameBaseConfigProcessorRestoresMissingBDebugComponent();
         }
 
         /// <summary>

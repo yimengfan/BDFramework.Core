@@ -13,7 +13,12 @@ using UnityEditor;
 namespace BDFramework.Configure
 {
     /// <summary>
-    /// 游戏基本数据处理器
+    /// 框架基础配置处理器。
+    /// Framework base-configuration processor.
+    /// 该处理器负责把基础配置中的日志、资源与代码路径等全局选项同步到运行时环境，
+    /// 并在启动场景脚本因为 HybridCLR 占位反序列化而缺失时补齐关键调试组件，避免基础配置阶段直接中断启动链。
+    /// This processor synchronizes global options such as logging, resource paths, and code paths from the base configuration into the runtime environment,
+    /// and restores critical debug components when startup-scene scripts are missing because of HybridCLR placeholder deserialization so the startup chain does not stop during base-config loading.
     /// </summary>
     [GameConfig(-9999, "框架基础")]
     public class GameBaseConfigProcessor : IConfigProcessor
@@ -111,16 +116,59 @@ namespace BDFramework.Configure
             }
         }
 
-
+        /// <summary>
+        /// 在基础配置装载完成后同步日志组件开关。
+        /// Synchronize the debug-log component switch after the base configuration has been loaded.
+        /// </summary>
         public void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
+            if (con == null)
+            {
+                Debug.LogError("基础配置类型不匹配,无法同步日志开关!");
+                return;
+            }
+
             //log
             if (BDLauncher.Inst)
             {
                 Debug.Log("日志打印:" + con.IsDebugLog);
-                BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
+                var debugComponent = EnsureDebugComponent(BDLauncher.Inst.gameObject);
+                if (debugComponent != null)
+                {
+                    debugComponent.IsLog = con.IsDebugLog;
+                }
             }
+        }
+
+
+        /// <summary>
+        /// 确保启动器物体上始终存在 <c>BDebug</c> 组件。
+        /// Ensure that the launcher GameObject always has a <c>BDebug</c> component.
+        /// Android/HybridCLR 启动时，场景可能先反序列化出缺失脚本占位，再在后续阶段装载热更程序集；
+        /// 如果原有的 <c>BDebug</c> 组件在这个窗口期丢失，这里会补挂一个新的实例，避免基础配置同步因为空引用而打断启动流程。
+        /// During Android/HybridCLR startup the scene may deserialize missing-script placeholders first and load hotfix assemblies later;
+        /// if the original <c>BDebug</c> component is lost during that window, this method adds a fresh instance so base-configuration synchronization does not break the startup flow with a null reference.
+        /// </summary>
+        /// <param name="owner">持有调试组件的启动器物体。</param>
+        /// <param name="owner">Launcher GameObject that should own the debug component.</param>
+        /// <returns>现有或新补挂的 <c>BDebug</c> 组件。</returns>
+        /// <returns>The existing or newly restored <c>BDebug</c> component.</returns>
+        public static BDebug EnsureDebugComponent(GameObject owner)
+        {
+            if (!owner)
+            {
+                return null;
+            }
+
+            var debugComponent = owner.GetComponent<BDebug>();
+            if (!debugComponent)
+            {
+                Debug.LogWarning("BDebug组件缺失,运行时补挂以继续启动链");
+                debugComponent = owner.AddComponent<BDebug>();
+            }
+
+            return debugComponent;
         }
 
 
