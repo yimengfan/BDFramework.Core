@@ -1,88 +1,90 @@
-using System;
-using System.IO;
-using System.Reflection;
 using BDFramework.Logs;
+using BDFramework.RuntimeTests.ApiTest.Utils.Logs;
 using NUnit.Framework;
 
 namespace BDFramework.EditorTest.Logs
 {
+    /// <summary>
+    /// Runtime 日志持久化 API 测试的编辑器包装器。
+    /// Editor wrapper for the runtime log-persistence API tests.
+    /// 该类把 Runtime.Test/Runtime/APITest 下的日志持久化断言接入 NUnit，
+    /// 仅保留编辑器专属路径断言在 Editor 侧执行。
+    /// This class plugs the log-persistence assertions under Runtime.Test/Runtime/APITest into NUnit,
+    /// while keeping only the editor-specific path assertion on the editor side.
+    /// </summary>
     public class PersistenceAndBDebugTests
     {
-        private string tempDir;
+        private readonly PersistenceApiTest runtimeTest = new PersistenceApiTest();
 
+        /// <summary>
+        /// 在每个测试入口输出统一日志。
+        /// Emit a unified log at the start of each test.
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
-            tempDir = Path.Combine(Path.GetTempPath(), "BDebugPersistenceTests", Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(tempDir);
+            runtimeTest.SetUp(LogsApiTestLog.ResolveCurrentTestName(nameof(PersistenceAndBDebugTests)));
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            if (Directory.Exists(tempDir))
-            {
-                Directory.Delete(tempDir, true);
-            }
-        }
-
+        /// <summary>
+        /// 验证 Player 默认日志持久化设置保持开启且启用加密。
+        /// Verify that the default player log-persistence settings remain enabled and encrypted.
+        /// </summary>
         [Test]
         public void PersistenceSettings_DefaultPlayerSettings_AreEnabledAndEncrypted()
         {
-            var settings = PersistenceSettings.CreatePlayerDefault();
-
-            Assert.That(settings.EnablePersistence, Is.True);
-            Assert.That(settings.EnableEncryption, Is.True);
-            Assert.That(settings.DirectoryName, Is.EqualTo("playerlogs"));
-            Assert.That(settings.FlushIntervalMs, Is.GreaterThanOrEqualTo(PersistenceSettings.MIN_FLUSH_INTERVAL_MS));
-            Assert.That(settings.EncryptPassword, Is.Not.Empty);
+            runtimeTest.PersistenceSettings_DefaultPlayerSettings_AreEnabledAndEncrypted();
         }
 
+        /// <summary>
+        /// 验证规范化逻辑会补默认目录、最小刷新间隔和默认密码，并保留显式开关值。
+        /// Verify that normalization restores the default directory, minimum flush interval, and default password while preserving explicit toggle values.
+        /// </summary>
+        [Test]
+        public void PersistenceSettings_Normalize_UsesDefaultsAndMinimums()
+        {
+            runtimeTest.PersistenceSettings_Normalize_UsesDefaultsAndMinimums();
+        }
+
+        /// <summary>
+        /// 验证克隆规范化会返回独立副本，并保留规范化后的值不受原实例后续修改影响。
+        /// Verify that clone-normalization returns an independent copy whose normalized values are not affected by later changes to the original instance.
+        /// </summary>
+        [Test]
+        public void CloneNormalized_ReturnsIndependentNormalizedCopy()
+        {
+            runtimeTest.CloneNormalized_ReturnsIndependentNormalizedCopy();
+        }
+
+        /// <summary>
+        /// 验证序列化日志条目的本地时间换算保持正确。
+        /// Verify that the local-time conversion of serialized log entries remains correct.
+        /// </summary>
         [Test]
         public void SerializedLogEntry_LocalTime_ConvertsFromUtcTicks()
         {
-            var utcTime = new DateTime(2026, 4, 8, 12, 30, 15, DateTimeKind.Utc);
-            var entry = new SerializedLogEntry() { UtcTicks = utcTime.Ticks };
-
-            Assert.That(entry.LocalTime.Kind, Is.EqualTo(DateTimeKind.Local));
-            Assert.That(entry.LocalTime.ToUniversalTime(), Is.EqualTo(utcTime));
+            runtimeTest.SerializedLogEntry_LocalTime_ConvertsFromUtcTicks();
         }
 
+        /// <summary>
+        /// 验证日志清理策略会删除最旧文件并保留当前活跃文件。
+        /// Verify that the log cleanup policy deletes the oldest files while keeping the current active file.
+        /// </summary>
         [Test]
         public void CleanupOldLogFiles_DeletesOldestAndKeepsActiveFile()
         {
-            for (var i = 0; i < 22; i++)
-            {
-                var file = Path.Combine(tempDir, $"playerlog_{new DateTime(2026, 4, 1).AddMinutes(i):yyyy.MM.dd_HH.mm.ss}.bin");
-                File.WriteAllText(file, i.ToString());
-            }
-
-            var activeFile = Path.Combine(tempDir, "playerlog_2026.04.01_00.00.00.bin");
-            Assert.That(File.Exists(activeFile), Is.True);
-
-            InvokeCleanup(tempDir, activeFile);
-
-            var files = Directory.GetFiles(tempDir, "playerlog_*.bin", SearchOption.TopDirectoryOnly);
-            Array.Sort(files, StringComparer.OrdinalIgnoreCase);
-
-            Assert.That(files.Length, Is.EqualTo(20));
-            Assert.That(File.Exists(activeFile), Is.True);
-            Assert.That(File.Exists(Path.Combine(tempDir, "playerlog_2026.04.01_00.01.00.bin")), Is.False);
-            Assert.That(File.Exists(Path.Combine(tempDir, "playerlog_2026.04.01_00.21.00.bin")), Is.True);
+            runtimeTest.CleanupOldLogFiles_DeletesOldestAndKeepsActiveFile();
         }
 
+        /// <summary>
+        /// 验证编辑器环境不会错误暴露 Player 侧日志落盘路径。
+        /// Verify that the editor environment does not incorrectly expose player-side log output paths.
+        /// </summary>
         [Test]
         public void BDebug_PlayerLogPaths_AreEmptyInEditor()
         {
             Assert.That(BDebug.PlayerLogRootPath, Is.EqualTo(string.Empty));
             Assert.That(BDebug.CurrentPlayerLogFilePath, Is.EqualTo(string.Empty));
-        }
-
-        private static void InvokeCleanup(string rootDir, string activeFile)
-        {
-            var method = typeof(Persistence).GetMethod("CleanupOldLogFiles", BindingFlags.NonPublic | BindingFlags.Static);
-            Assert.That(method, Is.Not.Null, "CleanupOldLogFiles should exist for retention testing.");
-            method.Invoke(null, new object[] { rootDir, activeFile });
         }
     }
 }

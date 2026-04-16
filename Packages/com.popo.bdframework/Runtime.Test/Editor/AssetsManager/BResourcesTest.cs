@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using BDFramework.Core.Tools;
-using BDFramework.ResourceMgr;
+using BDFramework.RuntimeTests.ApiTest;
+using BDFramework.RuntimeTests.ApiTest.AssetsManager;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace BDFramework.EditorTest.AssetsManager
 {
@@ -21,7 +19,7 @@ namespace BDFramework.EditorTest.AssetsManager
     /// </summary>
     public class BResourcesTest
     {
-        private readonly List<string> trackedGroups = new List<string>();
+        private readonly BResourcesApiTest runtimeTest = new BResourcesApiTest();
 
         /// <summary>
         /// 提供给 batchmode 的显式验证入口。
@@ -41,36 +39,24 @@ namespace BDFramework.EditorTest.AssetsManager
         [SetUp]
         public void SetUp()
         {
-            string testName;
-            try
-            {
-                testName = TestContext.CurrentContext?.Test?.Name;
-            }
-            catch
-            {
-                testName = null;
-            }
-
-            LogTestPurposeAndMeans(
-                string.IsNullOrEmpty(testName) ? nameof(BResourcesTest) : testName,
-                "验证 BResources 的核心静态契约不会因为资源链路调整而回归。",
-                "直接调用 BResources 的路径与缓存辅助入口，并断言返回值、兼容分支和空列表保护结果。"
-            );
+            runtimeTest.SetUp(ResolveCurrentTestName(nameof(BResourcesTest)));
         }
 
         /// <summary>
-        /// 在每个测试结束后清理本次创建的资源组缓存，避免静态状态污染后续断言。
-        /// Clear the asset-group cache created by the current test after each run so static state does not leak into later assertions.
+        /// 获取当前测试名；当批验证路径没有有效 NUnit 上下文时回退到指定名称。
+        /// Resolve the current test name and fall back to the provided name when the batch path has no valid NUnit context.
         /// </summary>
-        [TearDown]
-        public void TearDown()
+        internal static string ResolveCurrentTestName(string fallbackName)
         {
-            foreach (var groupName in trackedGroups)
+            try
             {
-                BResources.ClearAssetGroup(groupName);
+                var testName = TestContext.CurrentContext?.Test?.Name;
+                return string.IsNullOrEmpty(testName) ? fallbackName : testName;
             }
-
-            trackedGroups.Clear();
+            catch
+            {
+                return fallbackName;
+            }
         }
 
         /// <summary>
@@ -79,7 +65,7 @@ namespace BDFramework.EditorTest.AssetsManager
         /// </summary>
         internal static void LogTestPurposeAndMeans(string testName, string purpose, string means)
         {
-            Debug.Log($"[测试开始] name={testName} 测试目的={purpose} 实现手段={means}");
+            ApiTestLog.LogTestPurposeAndMeans(testName, purpose, means);
         }
 
         /// <summary>
@@ -89,12 +75,7 @@ namespace BDFramework.EditorTest.AssetsManager
         [Test]
         public void GetServerAssetsVersionInfoPath_AppendsPlatformDirectoryAndFileName()
         {
-            var rootPath = Path.Combine("Root", "Server");
-            var expected = Path.Combine(rootPath, BApplication.GetPlatformLoadPath(RuntimePlatform.Android),
-                BResources.SERVER_ASSETS_VERSION_INFO_PATH);
-
-            Assert.That(BResources.GetServerAssetsVersionInfoPath(rootPath, RuntimePlatform.Android),
-                Is.EqualTo(expected));
+            runtimeTest.GetServerAssetsVersionInfoPath_AppendsPlatformDirectoryAndFileName();
         }
 
         /// <summary>
@@ -104,13 +85,7 @@ namespace BDFramework.EditorTest.AssetsManager
         [Test]
         public void GetAssetsInfoPath_OverloadsUseExpectedRules()
         {
-            var rootPath = Path.Combine("Root", "Client");
-
-            Assert.That(BResources.GetAssetsInfoPath(rootPath),
-                Is.EqualTo(Path.Combine(rootPath, BResources.ASSETS_INFO_PATH)));
-            Assert.That(BResources.GetAssetsInfoPath(rootPath, RuntimePlatform.WindowsPlayer),
-                Is.EqualTo(Path.Combine(rootPath, BApplication.GetPlatformLoadPath(RuntimePlatform.WindowsPlayer),
-                    BResources.ASSETS_INFO_PATH)));
+            runtimeTest.GetAssetsInfoPath_OverloadsUseExpectedRules();
         }
 
         /// <summary>
@@ -120,12 +95,7 @@ namespace BDFramework.EditorTest.AssetsManager
         [Test]
         public void GetAssetsSubPackageInfoPath_KeepsLegacyFileNameUnchanged()
         {
-            var rootPath = Path.Combine("Root", "Client");
-            const string legacyName = "ServerAssetsSubPackage_demo.info";
-            var expected = Path.Combine(rootPath, BApplication.GetPlatformLoadPath(RuntimePlatform.Android), legacyName);
-
-            Assert.That(BResources.GetAssetsSubPackageInfoPath(rootPath, RuntimePlatform.Android, legacyName),
-                Is.EqualTo(expected));
+            runtimeTest.GetAssetsSubPackageInfoPath_KeepsLegacyFileNameUnchanged();
         }
 
         /// <summary>
@@ -135,12 +105,7 @@ namespace BDFramework.EditorTest.AssetsManager
         [Test]
         public void GetAssetsSubPackageInfoPath_FormatsModernSubPackageName()
         {
-            var rootPath = Path.Combine("Root", "Client");
-            var expected = Path.Combine(rootPath, BApplication.GetPlatformLoadPath(RuntimePlatform.IPhonePlayer),
-                string.Format(BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, "demo"));
-
-            Assert.That(BResources.GetAssetsSubPackageInfoPath(rootPath, RuntimePlatform.IPhonePlayer, "demo"),
-                Is.EqualTo(expected));
+            runtimeTest.GetAssetsSubPackageInfoPath_FormatsModernSubPackageName();
         }
 
         /// <summary>
@@ -150,19 +115,7 @@ namespace BDFramework.EditorTest.AssetsManager
         [Test]
         public void AddAssetsPathToGroup_StoresOrderAndClearRemovesEntries()
         {
-            var groupName = $"BResourcesTestGroup_{Guid.NewGuid():N}";
-            trackedGroups.Add(groupName);
-
-            BResources.AddAssetsPathToGroup(groupName, "a.prefab", "b.mat");
-            BResources.AddAssetsPathToGroup(groupName, "c.png");
-
-            Assert.That(BResources.GetAssetsPathByGroup(groupName),
-                Is.EqualTo(new[] { "a.prefab", "b.mat", "c.png" }));
-
-            BResources.ClearAssetGroup(groupName);
-            trackedGroups.Remove(groupName);
-
-            Assert.That(BResources.GetAssetsPathByGroup(groupName), Is.Empty);
+            runtimeTest.AddAssetsPathToGroup_StoresOrderAndClearRemovesEntries();
         }
 
         /// <summary>
@@ -172,19 +125,7 @@ namespace BDFramework.EditorTest.AssetsManager
         [Test]
         public void AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader()
         {
-            IDictionary<string, Object> callbackResult = null;
-            var callbackInvoked = false;
-
-            var ids = BResources.AsyncLoad(new List<string>(), onLoadEnd: result =>
-            {
-                callbackInvoked = true;
-                callbackResult = result;
-            });
-
-            Assert.That(ids, Is.Empty);
-            Assert.That(callbackInvoked, Is.True);
-            Assert.That(callbackResult, Is.Not.Null);
-            Assert.That(callbackResult.Count, Is.EqualTo(0));
+            runtimeTest.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader();
         }
     }
 
@@ -218,45 +159,39 @@ namespace BDFramework.EditorTest.AssetsManager
             {
                 (
                     nameof(BResourcesTest.GetServerAssetsVersionInfoPath_AppendsPlatformDirectoryAndFileName),
-                    () => ExecuteWithFixture(
+                    () => ExecuteWithSetUp(
                         testInstance.SetUp,
-                        testInstance.GetServerAssetsVersionInfoPath_AppendsPlatformDirectoryAndFileName,
-                        testInstance.TearDown)
+                        testInstance.GetServerAssetsVersionInfoPath_AppendsPlatformDirectoryAndFileName)
                 ),
                 (
                     nameof(BResourcesTest.GetAssetsInfoPath_OverloadsUseExpectedRules),
-                    () => ExecuteWithFixture(
+                    () => ExecuteWithSetUp(
                         testInstance.SetUp,
-                        testInstance.GetAssetsInfoPath_OverloadsUseExpectedRules,
-                        testInstance.TearDown)
+                        testInstance.GetAssetsInfoPath_OverloadsUseExpectedRules)
                 ),
                 (
                     nameof(BResourcesTest.GetAssetsSubPackageInfoPath_KeepsLegacyFileNameUnchanged),
-                    () => ExecuteWithFixture(
+                    () => ExecuteWithSetUp(
                         testInstance.SetUp,
-                        testInstance.GetAssetsSubPackageInfoPath_KeepsLegacyFileNameUnchanged,
-                        testInstance.TearDown)
+                        testInstance.GetAssetsSubPackageInfoPath_KeepsLegacyFileNameUnchanged)
                 ),
                 (
                     nameof(BResourcesTest.GetAssetsSubPackageInfoPath_FormatsModernSubPackageName),
-                    () => ExecuteWithFixture(
+                    () => ExecuteWithSetUp(
                         testInstance.SetUp,
-                        testInstance.GetAssetsSubPackageInfoPath_FormatsModernSubPackageName,
-                        testInstance.TearDown)
+                        testInstance.GetAssetsSubPackageInfoPath_FormatsModernSubPackageName)
                 ),
                 (
                     nameof(BResourcesTest.AddAssetsPathToGroup_StoresOrderAndClearRemovesEntries),
-                    () => ExecuteWithFixture(
+                    () => ExecuteWithSetUp(
                         testInstance.SetUp,
-                        testInstance.AddAssetsPathToGroup_StoresOrderAndClearRemovesEntries,
-                        testInstance.TearDown)
+                        testInstance.AddAssetsPathToGroup_StoresOrderAndClearRemovesEntries)
                 ),
                 (
                     nameof(BResourcesTest.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader),
-                    () => ExecuteWithFixture(
+                    () => ExecuteWithSetUp(
                         testInstance.SetUp,
-                        testInstance.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader,
-                        testInstance.TearDown)
+                        testInstance.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader)
                 ),
             };
 
@@ -283,20 +218,13 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
-        /// 先执行测试夹具 SetUp，再执行断言，并确保 TearDown 一定会运行。
-        /// Run the fixture SetUp first, then the assertion, and ensure TearDown always runs.
+        /// 先执行测试级 SetUp，再执行实际断言。
+        /// Run the test-level SetUp first and then execute the actual assertion.
         /// </summary>
-        private static void ExecuteWithFixture(Action setUp, Action action, Action tearDown)
+        private static void ExecuteWithSetUp(Action setUp, Action action)
         {
             setUp();
-            try
-            {
-                action();
-            }
-            finally
-            {
-                tearDown();
-            }
+            action();
         }
 
         /// <summary>

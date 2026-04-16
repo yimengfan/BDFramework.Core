@@ -71,6 +71,7 @@
 - 优先补最贴近变更点的测试，不只做端到端冒烟
 - 测试命名要直接体现行为与预期
 - 涉及磁盘读写必须使用临时目录，并在测试结束后清理
+- Runtime-facing API and integration tests that are expected to run on packaged players or devices must live under `Runtime.Test/Runtime/`; keep `Runtime.Test/Editor/` limited to editor-only tooling tests or non-owning BatchMode bridges, and do not let editor-owned NUnit wrappers accumulate once a runtime home exists.
 
 ### 3.2 单元测试
 

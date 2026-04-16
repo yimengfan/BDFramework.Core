@@ -5,7 +5,9 @@ using BDFramework.Sql;
 using LitJson;
 using NUnit.Framework;
 using SQLite4Unity3d;
+#if UNITY_EDITOR
 using Unity.PerformanceTesting;
+#endif
 using UnityEngine;
 
 
@@ -59,7 +61,11 @@ namespace BDFramework.EditorTest
         /// <summary>
         /// sselect语句
         /// </summary>
-        [Test, Order(1),Performance]
+        [Test, Order(1)
+#if UNITY_EDITOR
+        ,Performance
+#endif
+        ]
         static public void Old_Search_1000()
         {
             //单条件查询

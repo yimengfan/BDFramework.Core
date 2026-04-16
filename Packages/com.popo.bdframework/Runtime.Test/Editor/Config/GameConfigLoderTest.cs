@@ -1,8 +1,5 @@
-using System;
-using BDFramework.Configure;
-using BDFramework.RuntimeTests.Contracts;
+using BDFramework.RuntimeTests.ApiTest.Config;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace BDFramework.EditorTest.Config
 {
@@ -14,6 +11,8 @@ namespace BDFramework.EditorTest.Config
     /// </summary>
     public class GameConfigLoderTest
     {
+        private readonly GameConfigLoderApiTest runtimeTest = new GameConfigLoderApiTest();
+
         /// <summary>
         /// 在每个 NUnit 测试开始时输出统一的测试目的与实现手段日志。
         /// Emit a unified purpose-and-means log at the start of each NUnit test.
@@ -21,20 +20,7 @@ namespace BDFramework.EditorTest.Config
         [SetUp]
         public void SetUp()
         {
-            string testName;
-            try
-            {
-                testName = TestContext.CurrentContext?.Test?.Name;
-            }
-            catch
-            {
-                testName = null;
-            }
-
-            GameConfigManagerTest.LogTestPurposeAndMeans(
-                string.IsNullOrEmpty(testName) ? nameof(GameConfigLoderTest) : testName,
-                "验证 GameConfigLoder 只会在配置管理器实例可用时触发正式启动。",
-                "直接执行纯逻辑 helper，并断言有无管理器实例时的布尔返回值。");
+            runtimeTest.SetUp(GameConfigManagerTest.ResolveCurrentTestName(nameof(GameConfigLoderTest)));
         }
 
         /// <summary>
@@ -44,16 +30,7 @@ namespace BDFramework.EditorTest.Config
         [Test]
         public void ShouldLoadFrameworkConfigManager_MatchesManagerPresence()
         {
-            VerifyShouldLoadFrameworkConfigManagerMatchesManagerPresence();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证配置管理器装载前置条件，供 batchmode 路径复用。
-        /// Verify the configuration-manager loading precondition through pure exception-based assertions for batchmode reuse.
-        /// </summary>
-        internal static void VerifyShouldLoadFrameworkConfigManagerMatchesManagerPresence()
-        {
-            FrameworkContractAssertions.VerifyShouldLoadFrameworkConfigManagerMatchesManagerPresence();
+            runtimeTest.ShouldLoadFrameworkConfigManager_MatchesManagerPresence();
         }
     }
 }

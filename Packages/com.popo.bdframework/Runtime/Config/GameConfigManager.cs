@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
-using BDFramework.Editor.Inspector.Config;
 using BDFramework.Mgr;
 using LitJson;
 using UnityEngine;
@@ -40,6 +39,16 @@ namespace BDFramework.Configure
     /// </summary>
     public class GameConfigManager : ManagerBase<GameConfigManager, GameConfigAttribute>
     {
+        /// <summary>
+        /// 编辑器默认配置文件路径常量。
+        /// Constant path for the editor default configuration file.
+        /// Runtime 程序集不能在玩家构建中直接依赖 Editor-only 的 ConfigEditorUtil，
+        /// 因此这里保留一份无 UnityEditor 依赖的固定路径常量供回退逻辑使用。
+        /// The runtime assembly cannot depend directly on the editor-only ConfigEditorUtil in player builds,
+        /// so this class keeps a UnityEditor-free constant copy of the fallback path.
+        /// </summary>
+        private static readonly string DefaultEditorConfigPath = IPath.Combine("Assets/Scenes/Config", "editor.bytes");
+
         /// <summary>
         /// config数据列表
         /// </summary>
@@ -91,7 +100,7 @@ namespace BDFramework.Configure
                 sceneLauncher = GameObject.FindObjectOfType<BDLauncher>();
             }
 
-            var defaultEditorConfigPath = ConfigEditorUtil.DefaultEditorConfig;
+            var defaultEditorConfigPath = DefaultEditorConfigPath;
             var defaultEditorConfigExists = false;
 #if UNITY_EDITOR
             defaultEditorConfigExists = File.Exists(defaultEditorConfigPath);

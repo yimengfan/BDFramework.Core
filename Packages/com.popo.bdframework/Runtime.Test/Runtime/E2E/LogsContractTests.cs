@@ -1,4 +1,4 @@
-using BDFramework.RuntimeTests.Contracts;
+using BDFramework.RuntimeTests.ApiTest.Utils.Logs;
 using Talos.E2E;
 
 namespace BDFramework.Test.E2E
@@ -14,37 +14,65 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "logs-contract", order: 1, des: "log-crypto-roundtrip")]
         public static void LogCryptoRoundTrip()
         {
-            LogContractAssertions.VerifyEncryptAndDecryptRoundTrip();
+            var test = new LogCryptoAndReaderApiTest();
+            test.SetUp(nameof(LogCryptoRoundTrip));
+            test.EncryptAndDecrypt_RoundTrip_Succeeds();
         }
 
         [E2ETest(suite: "logs-contract", order: 2, des: "log-crypto-wrong-password")]
         public static void LogCryptoWrongPassword()
         {
-            LogContractAssertions.VerifyDecryptWithWrongPasswordThrows();
+            var test = new LogCryptoAndReaderApiTest();
+            test.SetUp(nameof(LogCryptoWrongPassword));
+            test.Decrypt_WithWrongPassword_Throws();
         }
 
         [E2ETest(suite: "logs-contract", order: 3, des: "log-reader-export")]
         public static void LogReaderExport()
         {
-            LogContractAssertions.VerifyLogReaderReadAllAndExportWorksForPlainAndEncryptedRecords();
+            var test = new LogCryptoAndReaderApiTest();
+            test.SetUp(nameof(LogReaderExport));
+            test.LogReader_ReadAllAndExport_Works_ForPlainAndEncryptedRecords();
         }
 
         [E2ETest(suite: "logs-contract", order: 4, des: "log-default-settings")]
         public static void LogDefaultSettings()
         {
-            LogContractAssertions.VerifyDefaultPlayerSettingsAreEnabledAndEncrypted();
+            var test = new PersistenceApiTest();
+            test.SetUp(nameof(LogDefaultSettings));
+            test.PersistenceSettings_DefaultPlayerSettings_AreEnabledAndEncrypted();
         }
 
-        [E2ETest(suite: "logs-contract", order: 5, des: "log-local-time-conversion")]
+        [E2ETest(suite: "logs-contract", order: 5, des: "log-settings-normalize")]
+        public static void LogSettingsNormalize()
+        {
+            var test = new PersistenceApiTest();
+            test.SetUp(nameof(LogSettingsNormalize));
+            test.PersistenceSettings_Normalize_UsesDefaultsAndMinimums();
+        }
+
+        [E2ETest(suite: "logs-contract", order: 6, des: "log-clone-normalized")]
+        public static void LogCloneNormalized()
+        {
+            var test = new PersistenceApiTest();
+            test.SetUp(nameof(LogCloneNormalized));
+            test.CloneNormalized_ReturnsIndependentNormalizedCopy();
+        }
+
+        [E2ETest(suite: "logs-contract", order: 7, des: "log-local-time-conversion")]
         public static void LogLocalTimeConversion()
         {
-            LogContractAssertions.VerifySerializedLogEntryLocalTimeConvertsFromUtcTicks();
+            var test = new PersistenceApiTest();
+            test.SetUp(nameof(LogLocalTimeConversion));
+            test.SerializedLogEntry_LocalTime_ConvertsFromUtcTicks();
         }
 
-        [E2ETest(suite: "logs-contract", order: 6, des: "log-retention-policy")]
+        [E2ETest(suite: "logs-contract", order: 8, des: "log-retention-policy")]
         public static void LogRetentionPolicy()
         {
-            LogContractAssertions.VerifyCleanupOldLogFilesDeletesOldestAndKeepsActiveFile();
+            var test = new PersistenceApiTest();
+            test.SetUp(nameof(LogRetentionPolicy));
+            test.CleanupOldLogFiles_DeletesOldestAndKeepsActiveFile();
         }
     }
 }

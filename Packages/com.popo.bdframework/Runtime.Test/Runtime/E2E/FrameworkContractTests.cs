@@ -1,4 +1,6 @@
-using BDFramework.RuntimeTests.Contracts;
+using BDFramework.RuntimeTests.ApiTest;
+using BDFramework.RuntimeTests.ApiTest.AssetsManager;
+using BDFramework.RuntimeTests.ApiTest.Config;
 using Talos.E2E;
 
 namespace BDFramework.Test.E2E
@@ -20,7 +22,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 1, des: "script-loader-init-contract")]
         public static void ScriptLoaderInitContract()
         {
-            FrameworkContractAssertions.VerifyScriptLoaderInitMethodCanBeResolved();
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(ScriptLoaderInitContract));
+            test.FindScriptLoderInitMethod_ShouldResolveStaticMethod();
         }
 
         /// <summary>
@@ -30,7 +34,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 2, des: "launcher-order-contract")]
         public static void LauncherExecutionOrderContract()
         {
-            FrameworkContractAssertions.VerifyLauncherDefaultExecutionOrder();
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(LauncherExecutionOrderContract));
+            test.BDLauncher_ShouldDeclareMinimumDefaultExecutionOrder();
         }
 
         /// <summary>
@@ -40,7 +46,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 3, des: "launcher-e2e-contract")]
         public static void LauncherE2EEntryContract()
         {
-            FrameworkContractAssertions.VerifyTryStartE2EFrameworkUsesConditionalDebugAttribute();
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(LauncherE2EEntryContract));
+            test.TryStartE2EFramework_ShouldUseConditionalDebugAttribute();
         }
 
         /// <summary>
@@ -50,7 +58,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 10, des: "config-runtime-source-priority")]
         public static void ConfigRuntimeSourcePriority()
         {
-            FrameworkContractAssertions.VerifyRuntimeLauncherConfigTextPreferredWhenPlaying();
+            var test = new GameConfigManagerApiTest();
+            test.SetUp(nameof(ConfigRuntimeSourcePriority));
+            test.ResolveFrameworkConfigTextSource_PrefersRuntimeLauncherTextWhenPlaying();
         }
 
         /// <summary>
@@ -60,7 +70,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 11, des: "config-scene-fallback")]
         public static void ConfigSceneFallback()
         {
-            FrameworkContractAssertions.VerifySceneLauncherFallback();
+            var test = new GameConfigManagerApiTest();
+            test.SetUp(nameof(ConfigSceneFallback));
+            test.ResolveFrameworkConfigTextSource_FallsBackToSceneLauncherText();
         }
 
         /// <summary>
@@ -70,7 +82,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 12, des: "config-editor-default-fallback")]
         public static void ConfigEditorDefaultFallback()
         {
-            FrameworkContractAssertions.VerifyEditorDefaultFileFallback();
+            var test = new GameConfigManagerApiTest();
+            test.SetUp(nameof(ConfigEditorDefaultFallback));
+            test.ResolveFrameworkConfigTextSource_UsesEditorDefaultFileAfterLauncherFallbacks();
         }
 
         /// <summary>
@@ -80,7 +94,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 13, des: "config-none-fallback")]
         public static void ConfigNoneFallback()
         {
-            FrameworkContractAssertions.VerifyNoConfigSourceReturnsNone();
+            var test = new GameConfigManagerApiTest();
+            test.SetUp(nameof(ConfigNoneFallback));
+            test.ResolveFrameworkConfigTextSource_ReturnsNoneWhenNoSourceExists();
         }
 
         /// <summary>
@@ -90,7 +106,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 14, des: "config-log-format-contract")]
         public static void ConfigLogFormatContract()
         {
-            FrameworkContractAssertions.VerifyFormatFrameworkConfigSourceLogMessageFallback();
+            var test = new GameConfigManagerApiTest();
+            test.SetUp(nameof(ConfigLogFormatContract));
+            test.FormatFrameworkConfigSourceLogMessage_UsesFallbackMarkerForMissingSource();
         }
 
         /// <summary>
@@ -100,7 +118,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 15, des: "config-loader-precondition-contract")]
         public static void ConfigLoaderPreconditionContract()
         {
-            FrameworkContractAssertions.VerifyShouldLoadFrameworkConfigManagerMatchesManagerPresence();
+            var test = new GameConfigLoderApiTest();
+            test.SetUp(nameof(ConfigLoaderPreconditionContract));
+            test.ShouldLoadFrameworkConfigManager_MatchesManagerPresence();
         }
 
         /// <summary>
@@ -110,7 +130,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 20, des: "resource-server-version-path-contract")]
         public static void ResourceServerVersionPathContract()
         {
-            FrameworkContractAssertions.VerifyServerAssetsVersionInfoPathAppendsPlatformDirectoryAndFileName();
+            var test = new BResourcesApiTest();
+            test.SetUp(nameof(ResourceServerVersionPathContract));
+            test.GetServerAssetsVersionInfoPath_AppendsPlatformDirectoryAndFileName();
         }
 
         /// <summary>
@@ -120,7 +142,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 21, des: "resource-info-path-overload-contract")]
         public static void ResourceInfoPathOverloadContract()
         {
-            FrameworkContractAssertions.VerifyAssetsInfoPathOverloadsUseExpectedRules();
+            var test = new BResourcesApiTest();
+            test.SetUp(nameof(ResourceInfoPathOverloadContract));
+            test.GetAssetsInfoPath_OverloadsUseExpectedRules();
         }
 
         /// <summary>
@@ -130,7 +154,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 22, des: "resource-legacy-subpackage-contract")]
         public static void ResourceLegacySubPackageContract()
         {
-            FrameworkContractAssertions.VerifyLegacySubPackagePathPreserved();
+            var test = new BResourcesApiTest();
+            test.SetUp(nameof(ResourceLegacySubPackageContract));
+            test.GetAssetsSubPackageInfoPath_KeepsLegacyFileNameUnchanged();
         }
 
         /// <summary>
@@ -140,7 +166,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 23, des: "resource-modern-subpackage-contract")]
         public static void ResourceModernSubPackageContract()
         {
-            FrameworkContractAssertions.VerifyModernSubPackagePathFormatted();
+            var test = new BResourcesApiTest();
+            test.SetUp(nameof(ResourceModernSubPackageContract));
+            test.GetAssetsSubPackageInfoPath_FormatsModernSubPackageName();
         }
 
         /// <summary>
@@ -150,7 +178,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 24, des: "resource-group-cache-contract")]
         public static void ResourceGroupCacheContract()
         {
-            FrameworkContractAssertions.VerifyAssetGroupStoresOrderAndClearRemovesEntries();
+            var test = new BResourcesApiTest();
+            test.SetUp(nameof(ResourceGroupCacheContract));
+            test.AddAssetsPathToGroup_StoresOrderAndClearRemovesEntries();
         }
 
         /// <summary>
@@ -160,7 +190,9 @@ namespace BDFramework.Test.E2E
         [E2ETest(suite: "framework-contract", order: 25, des: "resource-empty-async-load-contract")]
         public static void ResourceEmptyAsyncLoadContract()
         {
-            FrameworkContractAssertions.VerifyAsyncLoadWithEmptyListReturnsEmptyAndInvokesCallbackWithoutLoader();
+            var test = new BResourcesApiTest();
+            test.SetUp(nameof(ResourceEmptyAsyncLoadContract));
+            test.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader();
         }
     }
 }

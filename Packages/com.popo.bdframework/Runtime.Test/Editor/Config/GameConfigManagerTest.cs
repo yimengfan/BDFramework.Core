@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
-using BDFramework.Configure;
-using BDFramework.RuntimeTests.Contracts;
+using BDFramework.RuntimeTests.ApiTest;
+using BDFramework.RuntimeTests.ApiTest.Config;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -17,6 +17,8 @@ namespace BDFramework.EditorTest.Config
     /// </summary>
     public class GameConfigManagerTest
     {
+        private readonly GameConfigManagerApiTest runtimeTest = new GameConfigManagerApiTest();
+
         /// <summary>
         /// 提供给 batchmode 的显式验证入口。
         /// Explicit verification entry exposed for batchmode.
@@ -35,20 +37,24 @@ namespace BDFramework.EditorTest.Config
         [SetUp]
         public void SetUp()
         {
-            string testName;
+            runtimeTest.SetUp(ResolveCurrentTestName(nameof(GameConfigManagerTest)));
+        }
+
+        /// <summary>
+        /// 获取当前测试名；当批验证路径没有有效 NUnit 上下文时回退到指定名称。
+        /// Resolve the current test name and fall back to the provided name when the batch path has no valid NUnit context.
+        /// </summary>
+        internal static string ResolveCurrentTestName(string fallbackName)
+        {
             try
             {
-                testName = TestContext.CurrentContext?.Test?.Name;
+                var testName = TestContext.CurrentContext?.Test?.Name;
+                return string.IsNullOrEmpty(testName) ? fallbackName : testName;
             }
             catch
             {
-                testName = null;
+                return fallbackName;
             }
-
-            LogTestPurposeAndMeans(
-                string.IsNullOrEmpty(testName) ? nameof(GameConfigManagerTest) : testName,
-                "验证启动链路中的配置来源回退顺序保持稳定。",
-                "直接执行纯逻辑 helper，断言来源选择、日志文本与空来源回退契约。");
         }
 
         /// <summary>
@@ -57,7 +63,7 @@ namespace BDFramework.EditorTest.Config
         /// </summary>
         internal static void LogTestPurposeAndMeans(string testName, string purpose, string means)
         {
-            FrameworkContractAssertions.LogTestPurposeAndMeans(testName, purpose, means);
+            ApiTestLog.LogTestPurposeAndMeans(testName, purpose, means);
         }
 
         /// <summary>
@@ -67,7 +73,7 @@ namespace BDFramework.EditorTest.Config
         [Test]
         public void ResolveFrameworkConfigTextSource_PrefersRuntimeLauncherTextWhenPlaying()
         {
-            FrameworkContractAssertions.VerifyRuntimeLauncherConfigTextPreferredWhenPlaying();
+            runtimeTest.ResolveFrameworkConfigTextSource_PrefersRuntimeLauncherTextWhenPlaying();
         }
 
         /// <summary>
@@ -77,7 +83,7 @@ namespace BDFramework.EditorTest.Config
         [Test]
         public void ResolveFrameworkConfigTextSource_FallsBackToSceneLauncherText()
         {
-            FrameworkContractAssertions.VerifySceneLauncherFallback();
+            runtimeTest.ResolveFrameworkConfigTextSource_FallsBackToSceneLauncherText();
         }
 
         /// <summary>
@@ -87,7 +93,7 @@ namespace BDFramework.EditorTest.Config
         [Test]
         public void ResolveFrameworkConfigTextSource_UsesEditorDefaultFileAfterLauncherFallbacks()
         {
-            FrameworkContractAssertions.VerifyEditorDefaultFileFallback();
+            runtimeTest.ResolveFrameworkConfigTextSource_UsesEditorDefaultFileAfterLauncherFallbacks();
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace BDFramework.EditorTest.Config
         [Test]
         public void ResolveFrameworkConfigTextSource_ReturnsNoneWhenNoSourceExists()
         {
-            FrameworkContractAssertions.VerifyNoConfigSourceReturnsNone();
+            runtimeTest.ResolveFrameworkConfigTextSource_ReturnsNoneWhenNoSourceExists();
         }
 
         /// <summary>
@@ -107,76 +113,7 @@ namespace BDFramework.EditorTest.Config
         [Test]
         public void FormatFrameworkConfigSourceLogMessage_UsesFallbackMarkerForMissingSource()
         {
-            FrameworkContractAssertions.VerifyFormatFrameworkConfigSourceLogMessageFallback();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证运行态 launcher 来源优先级，供 batchmode 路径复用。
-        /// Verify the runtime launcher source priority through pure exception-based assertions for batchmode reuse.
-        /// </summary>
-        internal static void VerifyResolveFrameworkConfigTextSourcePrefersRuntimeLauncherTextWhenPlaying()
-        {
-            FrameworkContractAssertions.VerifyRuntimeLauncherConfigTextPreferredWhenPlaying();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证场景 launcher 回退路径，供 batchmode 路径复用。
-        /// Verify the scene launcher fallback path through pure exception-based assertions for batchmode reuse.
-        /// </summary>
-        internal static void VerifyResolveFrameworkConfigTextSourceFallsBackToSceneLauncherText()
-        {
-            FrameworkContractAssertions.VerifySceneLauncherFallback();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证编辑器默认文件回退路径，供 batchmode 路径复用。
-        /// Verify the editor default-file fallback path through pure exception-based assertions for batchmode reuse.
-        /// </summary>
-        internal static void VerifyResolveFrameworkConfigTextSourceUsesEditorDefaultFileAfterLauncherFallbacks()
-        {
-            FrameworkContractAssertions.VerifyEditorDefaultFileFallback();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证空来源分支，供 batchmode 路径复用。
-        /// Verify the empty-source branch through pure exception-based assertions for batchmode reuse.
-        /// </summary>
-        internal static void VerifyResolveFrameworkConfigTextSourceReturnsNoneWhenNoSourceExists()
-        {
-            FrameworkContractAssertions.VerifyNoConfigSourceReturnsNone();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证配置来源日志格式，供 batchmode 路径复用。
-        /// Verify the configuration-source log format through pure exception-based assertions for batchmode reuse.
-        /// </summary>
-        internal static void VerifyFormatFrameworkConfigSourceLogMessageUsesFallbackMarkerForMissingSource()
-        {
-            FrameworkContractAssertions.VerifyFormatFrameworkConfigSourceLogMessageFallback();
-        }
-
-        /// <summary>
-        /// 统一的纯逻辑相等断言。
-        /// Shared equality assertion helper for pure logic verification.
-        /// </summary>
-        internal static void EnsureEqual<T>(T expected, T actual, string message)
-        {
-            if (!Equals(expected, actual))
-            {
-                throw new Exception($"{message} expected={expected} actual={actual}");
-            }
-        }
-
-        /// <summary>
-        /// 统一的纯逻辑布尔断言。
-        /// Shared boolean assertion helper for pure logic verification.
-        /// </summary>
-        internal static void EnsureTrue(bool condition, string message)
-        {
-            if (!condition)
-            {
-                throw new Exception(message);
-            }
+            runtimeTest.FormatFrameworkConfigSourceLogMessage_UsesFallbackMarkerForMissingSource();
         }
     }
 
@@ -200,22 +137,36 @@ namespace BDFramework.EditorTest.Config
                 "顺序执行纯逻辑断言、写出批验证报告，并用显式退出码反馈结果。");
             Debug.Log("[测试进度] suite=GameConfigStartupBatchVerification stage=start");
 
+            var managerTest = new GameConfigManagerTest();
+            var loderTest = new GameConfigLoderTest();
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
             var checks = new (string Name, Action Action)[]
             {
                 (nameof(GameConfigManagerTest.ResolveFrameworkConfigTextSource_PrefersRuntimeLauncherTextWhenPlaying),
-                    GameConfigManagerTest.VerifyResolveFrameworkConfigTextSourcePrefersRuntimeLauncherTextWhenPlaying),
+                    () => ExecuteWithSetUp(
+                        managerTest.SetUp,
+                        managerTest.ResolveFrameworkConfigTextSource_PrefersRuntimeLauncherTextWhenPlaying)),
                 (nameof(GameConfigManagerTest.ResolveFrameworkConfigTextSource_FallsBackToSceneLauncherText),
-                    GameConfigManagerTest.VerifyResolveFrameworkConfigTextSourceFallsBackToSceneLauncherText),
+                    () => ExecuteWithSetUp(
+                        managerTest.SetUp,
+                        managerTest.ResolveFrameworkConfigTextSource_FallsBackToSceneLauncherText)),
                 (nameof(GameConfigManagerTest.ResolveFrameworkConfigTextSource_UsesEditorDefaultFileAfterLauncherFallbacks),
-                    GameConfigManagerTest.VerifyResolveFrameworkConfigTextSourceUsesEditorDefaultFileAfterLauncherFallbacks),
+                    () => ExecuteWithSetUp(
+                        managerTest.SetUp,
+                        managerTest.ResolveFrameworkConfigTextSource_UsesEditorDefaultFileAfterLauncherFallbacks)),
                 (nameof(GameConfigManagerTest.ResolveFrameworkConfigTextSource_ReturnsNoneWhenNoSourceExists),
-                    GameConfigManagerTest.VerifyResolveFrameworkConfigTextSourceReturnsNoneWhenNoSourceExists),
+                    () => ExecuteWithSetUp(
+                        managerTest.SetUp,
+                        managerTest.ResolveFrameworkConfigTextSource_ReturnsNoneWhenNoSourceExists)),
                 (nameof(GameConfigManagerTest.FormatFrameworkConfigSourceLogMessage_UsesFallbackMarkerForMissingSource),
-                    GameConfigManagerTest.VerifyFormatFrameworkConfigSourceLogMessageUsesFallbackMarkerForMissingSource),
+                    () => ExecuteWithSetUp(
+                        managerTest.SetUp,
+                        managerTest.FormatFrameworkConfigSourceLogMessage_UsesFallbackMarkerForMissingSource)),
                 (nameof(GameConfigLoderTest.ShouldLoadFrameworkConfigManager_MatchesManagerPresence),
-                    GameConfigLoderTest.VerifyShouldLoadFrameworkConfigManagerMatchesManagerPresence),
+                    () => ExecuteWithSetUp(
+                        loderTest.SetUp,
+                        loderTest.ShouldLoadFrameworkConfigManager_MatchesManagerPresence)),
             };
 
             for (var index = 0; index < checks.Length; index++)
@@ -239,6 +190,16 @@ namespace BDFramework.EditorTest.Config
 
             Debug.Log($"GameConfig 启动批验证通过，报告: {outputPath}");
             EditorApplication.Exit(0);
+        }
+
+        /// <summary>
+        /// 先执行测试级 SetUp，再执行实际断言。
+        /// Run the test-level SetUp first and then execute the actual assertion.
+        /// </summary>
+        private static void ExecuteWithSetUp(Action setUp, Action action)
+        {
+            setUp();
+            action();
         }
 
         /// <summary>
