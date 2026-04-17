@@ -150,7 +150,7 @@ fi
 # MuMu 12 NX adbd 上线时，旧 ADB 连接不会自动刷新为 online，需要断开并重连才能识别为 device。
 # MuMu 12 NX: when adbd comes online, stale ADB connections stay "offline"; a fresh connect is needed.
 echo ""
-DEVICE_WAIT_MAX="${TALOS_ADB_DEVICE_ONLINE_TIMEOUT:-600}"
+DEVICE_WAIT_MAX="${TALOS_ADB_DEVICE_ONLINE_TIMEOUT:-900}"
 echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s，每 60s 自动重连）..."
 DEVICE_COUNT=0
 DEVICE_WAITED=0
