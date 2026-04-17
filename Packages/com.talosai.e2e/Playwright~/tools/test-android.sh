@@ -146,16 +146,34 @@ if [[ ! -f "${APK_PATH}" ]]; then
     exit 1
 fi
 
-# 检查设备连接
+# 检查设备连接（带 offline→online 等待循环）
+# MuMu 12 NX 的 adbd 需要更多时间完成 Android 启动后才会从 offline 变为 device。
+# MuMu 12 NX adbd may stay offline for ~1-2min while Android finishes booting.
 echo ""
-echo ">>> 检查设备连接..."
-DEVICE_COUNT=$("${ADB_CMD[@]}" devices | grep -c "device$" || true)
+DEVICE_WAIT_MAX="${TALOS_ADB_DEVICE_ONLINE_TIMEOUT:-180}"
+echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s）..."
+DEVICE_COUNT=0
+DEVICE_WAITED=0
+while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
+    DEVICE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c "device$" || true)
+    if [[ ${DEVICE_COUNT} -gt 0 ]]; then
+        break
+    fi
+    OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c "offline" || true)
+    if [[ ${OFFLINE_COUNT} -gt 0 ]]; then
+        echo "    设备 offline，等待 Android 启动... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
+    else
+        echo "    无设备，继续等待... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
+    fi
+    sleep 10
+    DEVICE_WAITED=$((DEVICE_WAITED + 10))
+done
 if [[ ${DEVICE_COUNT} -eq 0 ]]; then
-    echo "❌ 错误: 未检测到已连接的 Android 设备"
+    echo "❌ 错误: 未检测到已连接的 Android 设备 (已等待 ${DEVICE_WAITED}s)"
     "${ADB_CMD[@]}" devices
     exit 1
 fi
-echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices | grep "device$" | head -1))"
+echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | grep "device$" | head -1))"
 
 # ======== 安装 Playwright 依赖 ========
 echo ""
