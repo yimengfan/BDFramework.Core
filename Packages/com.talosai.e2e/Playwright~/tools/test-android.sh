@@ -155,11 +155,11 @@ echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s，每 60s 自动
 DEVICE_COUNT=0
 DEVICE_WAITED=0
 while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
-    DEVICE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c "device$" || true)
+    DEVICE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep -c '[[:space:]]device$' || true)
     if [[ ${DEVICE_COUNT} -gt 0 ]]; then
         break
     fi
-    OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c "offline" || true)
+    OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep -c 'offline' || true)
     if [[ ${OFFLINE_COUNT} -gt 0 ]]; then
         echo "    设备 offline，等待 Android adbd 就绪... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
     else
@@ -186,12 +186,12 @@ if [[ ${DEVICE_COUNT} -eq 0 ]]; then
     "${ADB_CMD[@]}" devices
     exit 1
 fi
-echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | grep "device$" | head -1))"
+echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep '[[:space:]]device$' | awk 'NR==1' || true))"
 
 # 未指定 ADB 序列号时，若有多台设备在线则自动选择第一台，避免 "more than one device" 错误。
 # If no ADB serial specified and multiple devices are online, auto-select the first one.
 if [[ -z "${ADB_SERIAL:-}" ]]; then
-    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep "device$" | awk 'NR==1{print $1}' | tr -d '\r') || true
+    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep '[[:space:]]device$' | awk 'NR==1{print $1}') || true
     if [[ -n "${_auto_serial}" ]]; then
         ADB_CMD+=("-s" "${_auto_serial}")
         echo "    自动选择设备序列号: ${_auto_serial}"
