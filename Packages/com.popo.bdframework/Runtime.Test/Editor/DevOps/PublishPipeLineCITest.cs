@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.DevOps;
@@ -12,8 +13,12 @@ using UnityEngine;
 namespace BDFramework.EditorTest.DevOps
 {
     /// <summary>
-    /// 对应文件服务器 BatchMode 验证请求 owner 的纯参数装配测试。
-    /// 这些断言只覆盖 AssetsVersionController 文件服务器验证请求的构造与参数校验，不依赖真实 Unity 下载或 TeamCity 环境。
+    /// PublishPipeLineCI 与相关纯参数、预处理契约测试集合。
+    /// Contract tests for PublishPipeLineCI and related pure parameter and prebuild behaviors.
+    /// 这些断言覆盖 AssetsVersionController 文件服务器验证请求装配、HybridCLR 预处理判定、Android external tools 探测，
+    /// 以及母包构建前 AOT patch 输出根目录的稳定性，不依赖真实 Unity 下载或 TeamCity 环境。
+    /// These assertions cover AssetsVersionController file-server request wiring, HybridCLR prebuild decisions, Android external-tool probing,
+    /// and the stability of AOT patch output roots before package builds without depending on real Unity downloads or a TeamCity environment.
     /// </summary>
     public class PublishPipeLineCITest
     {
@@ -39,7 +44,9 @@ namespace BDFramework.EditorTest.DevOps
 
         /// <summary>
         /// 提供给 batchmode 的显式验证入口。
-        /// 当本地或 CI 需要绕过 Unity Test Runner 时，可以直接执行这组纯参数装配断言。
+        /// Provide an explicit verification entry for batchmode.
+        /// 当本地或 CI 需要绕过 Unity Test Runner 时，可以直接执行这组纯参数装配与预处理契约断言。
+        /// When local runs or CI need to bypass the Unity Test Runner, this entry can execute the pure parameter-wiring and prebuild-contract assertions directly.
         /// </summary>
         public static void RunBatchVerification()
         {
@@ -77,6 +84,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
+                (nameof(HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
+                    testInstance.HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
                     testInstance.AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout),
@@ -311,6 +320,54 @@ namespace BDFramework.EditorTest.DevOps
             Assert.That(disabledReason, Does.Contain("hybridClrEnabled=False"));
             Assert.That(shouldPrepareWhenGlobalIl2cpp, Is.False);
             Assert.That(globalReason, Does.Contain("useGlobalIl2cpp=True"));
+        }
+
+        /// <summary>
+        /// 验证 AOT patch 输出根目录会同时包含 DevOpsPublishAssets 与 StreamingAssets，且保持去重与稳定顺序。
+        /// Verify that AOT patch output roots include both DevOpsPublishAssets and StreamingAssets while remaining deduplicated and stable in order.
+        /// 这覆盖 Android 母包构建先执行 HybridCLR PreBuild、再用 DevOpsPublishAssets 覆盖 StreamingAssets 的回归场景，
+        /// 确保 AOT patch 不会只写入临时 StreamingAssets 而在后续拷贝阶段丢失。
+        /// This covers the Android package-build regression where HybridCLR PreBuild runs before DevOpsPublishAssets overwrites StreamingAssets,
+        /// ensuring the AOT patch is not written only into temporary StreamingAssets and lost during the later copy stage.
+        /// </summary>
+        [Test]
+        public void HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets()
+        {
+            var helperMethod = typeof(BDFramework.Editor.HotfixScript.HyCLREditorTools).GetMethod(
+                "GetAotMetadataOutputRoots",
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var streamingAssetsPath = Path.Combine(tempRoot, "Assets", "StreamingAssets");
+                var devOpsPublishAssetsPath = Path.Combine(tempRoot, "DevOps", "PublishAssets");
+
+                var outputRoots = (string[])helperMethod.Invoke(
+                    null,
+                    new object[] { streamingAssetsPath, devOpsPublishAssetsPath });
+
+                Assert.That(outputRoots, Is.EqualTo(new[]
+                {
+                    BDFramework.Core.Tools.IPath.ReplaceBackSlash(Path.GetFullPath(devOpsPublishAssetsPath)),
+                    BDFramework.Core.Tools.IPath.ReplaceBackSlash(Path.GetFullPath(streamingAssetsPath))
+                }));
+
+                var deduplicatedRoots = (string[])helperMethod.Invoke(
+                    null,
+                    new object[] { streamingAssetsPath, streamingAssetsPath });
+
+                Assert.That(deduplicatedRoots, Is.EqualTo(new[]
+                {
+                    BDFramework.Core.Tools.IPath.ReplaceBackSlash(Path.GetFullPath(streamingAssetsPath))
+                }));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
         }
 
         /// <summary>

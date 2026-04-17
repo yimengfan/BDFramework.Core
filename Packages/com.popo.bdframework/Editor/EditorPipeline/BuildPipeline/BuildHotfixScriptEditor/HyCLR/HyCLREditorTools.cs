@@ -19,7 +19,10 @@ using Debug = UnityEngine.Debug;
 namespace BDFramework.Editor.HotfixScript
 {
     /// <summary>
-    /// HCLR 编辑器工具
+    /// HCLR 编辑器工具。
+    /// HCLR editor tools.
+    /// 该类型负责在编辑器构建前准备 HybridCLR 运行所需的热更 DLL、AOT 补充元数据与本地安装状态。
+    /// This type prepares hotfix DLLs, supplemental AOT metadata, and local installation state required by HybridCLR before editor builds.
     /// </summary>
     static public class HyCLREditorTools
     {
@@ -38,9 +41,11 @@ namespace BDFramework.Editor.HotfixScript
 
         
         /// <summary>
-        /// 在打包前执行
+        /// 在打包前执行 HybridCLR 预处理。
+        /// Execute HybridCLR prebuild preparation before packaging.
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="target">目标构建平台。</param>
+        /// <param name="target">Target build platform.</param>
         static public void PreBuild(BuildTarget target)
         {
             if (HybridCLRSettings.Instance == null)
@@ -74,12 +79,56 @@ namespace BDFramework.Editor.HotfixScript
 
                 //编译补充元数据的DLL
                 PrebuildCommand.GenerateAll();
-                //拷贝用于补充泛型
+                // 阶段 1：把 AOT 补充元数据同步到所有会参与母包构建的输出根目录。
+                // Phase 1: Synchronize supplemental AOT metadata into every output root that participates in package builds.
                 var sourceDir = SettingsUtil.GetAssembliesPostIl2CppStripDir(target);
-                CopyAOTMetadataDLL(sourceDir,Application.streamingAssetsPath, target);
+                foreach (var outputRoot in GetAotMetadataOutputRoots(Application.streamingAssetsPath, BApplication.DevOpsPublishAssetsPath))
+                {
+                    Debug.Log($"[HCLR] 同步 AOT Patch 输出根: {outputRoot}");
+                    CopyAOTMetadataDLL(sourceDir, outputRoot, target);
+                }
             }
             BDebug.LogWatchEnd(tag);
             Debug.Log($"[HCLR] PreBuild finished target={target}");
+        }
+
+        /// <summary>
+        /// 解析 AOT 补充元数据需要同步的输出根目录。
+        /// Resolve the output roots that must receive AOT supplemental metadata.
+        /// 母包构建会在 <c>PreBuild</c> 之后用 DevOpsPublishAssets 覆盖 StreamingAssets，
+        /// 因此 AOT patch 需要同时写入 DevOpsPublishAssets 与当前 StreamingAssets，避免前置产物在拷贝阶段丢失。
+        /// Package builds overwrite StreamingAssets with DevOpsPublishAssets after <c>PreBuild</c>,
+        /// so AOT patches must be written to both DevOpsPublishAssets and the current StreamingAssets to avoid losing the prebuilt files during the copy stage.
+        /// </summary>
+        /// <param name="streamingAssetsPath">当前 Unity StreamingAssets 根目录。</param>
+        /// <param name="streamingAssetsPath">Current Unity StreamingAssets root.</param>
+        /// <param name="devOpsPublishAssetsPath">最终母包资产来源目录。</param>
+        /// <param name="devOpsPublishAssetsPath">Final package-asset source directory.</param>
+        /// <returns>去重且规范化后的输出根目录列表，优先返回 DevOpsPublishAssets。</returns>
+        /// <returns>Deduplicated normalized output roots, returning DevOpsPublishAssets first.</returns>
+        static internal string[] GetAotMetadataOutputRoots(string streamingAssetsPath, string devOpsPublishAssetsPath)
+        {
+            var outputRoots = new List<string>();
+
+            void AddUniqueRoot(string path)
+            {
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    return;
+                }
+
+                var normalizedPath = IPath.ReplaceBackSlash(
+                    Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+                if (!outputRoots.Any(existingPath =>
+                        string.Equals(existingPath, normalizedPath, StringComparison.OrdinalIgnoreCase)))
+                {
+                    outputRoots.Add(normalizedPath);
+                }
+            }
+
+            AddUniqueRoot(devOpsPublishAssetsPath);
+            AddUniqueRoot(streamingAssetsPath);
+            return outputRoots.ToArray();
         }
 
         static void EnsureHybridClrInstalled(HybridCLR.Editor.Installer.InstallerController installer)
