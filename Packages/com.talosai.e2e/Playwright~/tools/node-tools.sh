@@ -606,25 +606,33 @@ ensure_talos_mumu_running() {
         # 尝试用 mumu-cli.exe 无头启动实例 0（MuMu 12 NX CI 标准方式）。
         # Try mumu-cli.exe to headlessly start instance 0 (standard CI method for MuMu 12 NX).
         local cli_path="${exe_path%/*}/mumu-cli.exe"
-        local win_cli_path=""
-        if command -v cygpath >/dev/null 2>&1; then
-            win_cli_path="$(cygpath -w "${cli_path}" 2>/dev/null || printf '%s' "${cli_path}")"
-        else
-            win_cli_path="${cli_path}"
-        fi
+
+        # 先诊断：打印启动前 MuMuNx* 进程状态，帮助确认 SYSTEM 账号是否能与服务交互。
+        # Diagnostic: show MuMuNx* processes before launch to confirm SYSTEM can interact with service.
+        echo "    === 启动前 MuMuNx* 进程状态 ==="
+        tasklist.exe /FI "IMAGENAME eq MuMu*" 2>/dev/null | tr -d '\r' | grep -v "^$" || echo "    (无 MuMuNx 进程)"
 
         if [[ -f "${cli_path}" ]]; then
             echo "    使用 mumu-cli.exe 无头启动实例 0 (headless CI mode)"
-            # mumu-cli.exe API: launch <index> 或 api -v index:0 name:launch
-            # 注：先打印 help 辅助诊断，再执行 launch。/ Print help for diagnostics, then launch.
-            cmd.exe /c "\"${win_cli_path}\" --help 2>&1" 2>/dev/null | tr -d '\r' | head -20 || true
-            echo "    --- 执行 mumu-cli launch 0 ---"
-            cmd.exe /c "\"${win_cli_path}\" launch -v index:0 2>&1" 2>/dev/null | tr -d '\r' || true
-            echo "    --- mumu-cli launch 完成 ---"
+            # 注：在 Git Bash(MINGW) 中直接执行 Windows .exe 无需通过 cmd.exe；
+            # 避免 cmd.exe 路径转换问题，输出可正常捕获到 bash stdout。
+            # Note: in Git Bash (MINGW) run Windows .exe directly to avoid cmd.exe path conversion issues.
+            echo "    === mumu-cli --help ==="
+            MSYS_NO_PATHCONV=1 "${cli_path}" --help 2>&1 | tr -d '\r' | head -30 || true
+            echo "    === mumu-cli launch -v index:0 ==="
+            MSYS_NO_PATHCONV=1 "${cli_path}" launch -v index:0 2>&1 | tr -d '\r' || true
+            echo "    === mumu-cli launch 完成 ==="
         else
-            echo "    mumu-cli.exe 不存在，回退到 MuMuManager.exe GUI 启动"
-            cmd.exe /c start "" "${win_path}" 2>/dev/null || true
+            echo "    mumu-cli.exe 不存在，回退到 MuMuManager.exe GUI 直接启动"
+            MSYS_NO_PATHCONV=1 "${exe_path}" 2>/dev/null &
+            disown $! 2>/dev/null || true
         fi
+
+        # 等待 15s 后打印进程状态，确认 MuMu 已启动。
+        # Wait 15s then print process state to confirm MuMu started.
+        sleep 10
+        echo "    === 启动后 MuMuNx* 进程状态 ==="
+        tasklist.exe /FI "IMAGENAME eq MuMu*" 2>/dev/null | tr -d '\r' | grep -v "^$" || echo "    (无 MuMuNx 进程)"
     else
         # 非 Windows 本地调测回退：无法真正启动 Windows .exe，仅打印告知。
         # Non-Windows local debug fallback: cannot actually run a .exe; log only.
