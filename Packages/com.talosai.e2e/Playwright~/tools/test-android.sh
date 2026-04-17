@@ -207,40 +207,62 @@ echo ">>> 检查 Playwright 依赖..."
 ensure_talos_playwright_dependencies "${PLAYWRIGHT_DIR}"
 cd "${PLAYWRIGHT_DIR}"
 
-# ======== 等待 Android 系统完全启动（package 服务就绪）========
-# Android VM 设备变为 'device' 状态后，framework 服务（如 package manager）可能还未就绪。
-# Wait for Android OS services to fully boot after device enters 'device' state.
-# The 'package' service may not be ready right after adbd connects.
-echo ""
-echo ">>> 等待 Android package 服务就绪..."
-BOOT_WAIT_MAX="${TALOS_ADB_BOOT_TIMEOUT:-120}"
-BOOT_WAITED=0
-while [[ ${BOOT_WAITED} -lt ${BOOT_WAIT_MAX} ]]; do
-    _boot_done=$("${ADB_CMD[@]}" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r\n ') || true
-    if [[ "${_boot_done}" == "1" ]]; then
-        # 再确认 package 服务可用
-        # Also verify package manager is responsive
-        _pm_ok=$("${ADB_CMD[@]}" shell pm list packages 2>/dev/null | grep -c 'package:' || true)
-        if [[ "${_pm_ok}" -gt 0 ]]; then
-            echo "    ✅ Android 系统完全启动，package 服务就绪 (${BOOT_WAITED}s)"
-            break
-        fi
-    fi
-    sleep 5
-    BOOT_WAITED=$((BOOT_WAITED + 5))
-    echo "    Android 系统启动中... (${BOOT_WAITED}/${BOOT_WAIT_MAX}s)"
-done
-if [[ ${BOOT_WAITED} -ge ${BOOT_WAIT_MAX} ]]; then
-    echo "    ⚠️ 等待 Android 系统超时 (${BOOT_WAIT_MAX}s)，尝试继续安装 APK..."
-fi
-
-# ======== 安装 APK ========
+# ======== 安装 APK（带重试逻辑）========
+# Android VM 可能还未完全启动（package 服务未就绪），需要重试；
+# 若设备变为 offline，也要重连后重试。
+# Install APK with retry: Android OS may not have finished booting (package service not ready),
+# or the device may transiently go offline; reconnect + retry handles both cases.
 echo ""
 echo ">>> 安装 APK..."
-"${ADB_CMD[@]}" install -r -t "${APK_PATH}" || {
-    echo "❌ APK 安装失败"
+APK_INSTALL_MAX="${TALOS_APK_INSTALL_RETRIES:-8}"
+APK_INSTALL_TRIED=0
+APK_INSTALL_OK=0
+while [[ ${APK_INSTALL_TRIED} -lt ${APK_INSTALL_MAX} ]]; do
+    APK_INSTALL_TRIED=$((APK_INSTALL_TRIED + 1))
+    _apk_result=$("${ADB_CMD[@]}" install -r -t "${APK_PATH}" 2>&1) && {
+        # 命令返回 0，但 adb install 有时以 0 返回 "FAILED" 字样，需检查输出。
+        # Command succeeded (exit 0), but adb install may still print FAILED in output.
+        if echo "${_apk_result}" | grep -qi 'FAILED\|error'; then
+            echo "    [尝试 ${APK_INSTALL_TRIED}/${APK_INSTALL_MAX}] APK 安装报告错误: ${_apk_result}"
+        else
+            APK_INSTALL_OK=1
+            break
+        fi
+    } || {
+        echo "    [尝试 ${APK_INSTALL_TRIED}/${APK_INSTALL_MAX}] APK 安装失败: ${_apk_result}"
+    }
+    if [[ ${APK_INSTALL_TRIED} -lt ${APK_INSTALL_MAX} ]]; then
+        echo "    等待 20s 后重试（让 Android 系统继续启动）..."
+        sleep 20
+        # 若设备 offline，尝试重连
+        # If device offline, attempt reconnect before retry
+        _dev_state=$("${ADB_CMD[@]}" devices 2>/dev/null | grep 'device$' | wc -l || true)
+        if [[ "${_dev_state}" -eq 0 && -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+            echo "    设备已离线，尝试重连..."
+            IFS=',' read -ra _retry_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
+            for _rt in "${_retry_targets[@]}"; do
+                _rt="$(printf '%s' "${_rt}" | tr -d '[:space:]')"
+                [[ -z "${_rt}" ]] && continue
+                "${ADB_CMD[@]}" disconnect "${_rt}" 2>/dev/null || true
+                _rc=$("${ADB_CMD[@]}" connect "${_rt}" 2>/dev/null || true)
+                echo "        ${_rt}: ${_rc}"
+            done
+            sleep 5
+            # 重连后更新序列号
+            # Re-select serial after reconnect
+            _new_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
+            if [[ -n "${_new_serial}" ]]; then
+                # 更新 ADB_CMD 中的序列号 / Update serial in ADB_CMD
+                ADB_CMD=("${ADB_CMD[0]}" "-s" "${_new_serial}")
+                echo "    重连后切换序列号: ${_new_serial}"
+            fi
+        fi
+    fi
+done
+if [[ ${APK_INSTALL_OK} -eq 0 ]]; then
+    echo "❌ APK 安装失败（已重试 ${APK_INSTALL_MAX} 次）"
     exit 1
-}
+fi
 echo "    ✅ APK 安装完成"
 
 # ======== 停止旧实例 + 设置端口转发 ========
