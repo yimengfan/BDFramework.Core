@@ -566,9 +566,14 @@ ensure_talos_mumu_running() {
             for _sub in /d/Netease/*/; do
                 [[ -d "$_sub" ]] && { echo "      子目录: $_sub"; ls "$_sub" 2>/dev/null | head -10 || true; }
             done
-            # 递归查找 MuMuPlayer.exe 精确路径 / Recursively find MuMuPlayer.exe exact path
-            echo "    === 诊断：find MuMuPlayer.exe in D:/Netease ==="
-            find /d/Netease/ -name "MuMuPlayer.exe" -o -name "NemuPlayer.exe" 2>/dev/null | head -10 || true
+            # 递归查找任意 .exe 找到 MuMu 的启动程序 / Find all .exe files to identify MuMu launcher name
+            echo "    === 诊断：D:/Netease 内所有 .exe 文件 ==="
+            find /d/Netease/ -name "*.exe" 2>/dev/null | grep -v "~" | head -30 || true
+            # 同时列 nx_main 目录（MuMu 12 常见启动目录）/ Also list nx_main dir (common MuMu 12 launcher dir)
+            if [[ -d /d/Netease/MuMu/nx_main ]]; then
+                echo "    === 诊断：D:/Netease/MuMu/nx_main 内容 ==="
+                ls /d/Netease/MuMu/nx_main/ 2>/dev/null | head -20 || true
+            fi
         fi
         echo "    === 诊断：结束 ==="
         return 0
