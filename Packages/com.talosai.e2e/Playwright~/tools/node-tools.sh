@@ -258,8 +258,8 @@ ensure_talos_adb_connect_targets() {
 #   MuMu Player 2 (MuMu2): 进程 MuMuPlayer.exe，路径含 MuMuPlayer-12.0 或 MuMuPlayer
 #   MuMu 旧版 / MuMu X:    进程 NemuPlayer.exe / NemuVM.exe，路径含 nemu64 或 nemu
 #
-# 可通过 TALOS_MUMU_WAIT_SECONDS 环境变量控制启动后等待时间（默认 20 秒）。
-# The startup wait duration can be overridden via TALOS_MUMU_WAIT_SECONDS (default 20s).
+# 可通过 TALOS_MUMU_WAIT_SECONDS 环境变量控制启动后等待时间（默认 45 秒，MuMu 12 NX 冷启动约需 40-60s）。
+# The startup wait duration can be overridden via TALOS_MUMU_WAIT_SECONDS (default 45s; MuMu 12 NX cold start ~40-60s).
 ensure_talos_mumu_running() {
     # 确保 MuMu Android 模拟器进程正在运行。
     # 优先顺序：① TALOS_MUMU_EXE_PATH 直接指定；② 静态候选路径（C: / D: / E: 盘）；③ where.exe 动态搜索。
@@ -280,18 +280,32 @@ ensure_talos_mumu_running() {
     #   TALOS_MUMU_WAIT_SECONDS  — 启动后等待秒数（默认 20）/ Startup wait seconds (default 20)
 
     # MuMu 各版本进程名，用于 tasklist.exe / ps 探测。
-    # Process names covering MuMu2, MuMu X, and legacy MuMu.
+    # Process names covering MuMu 12 NX, MuMu2, MuMu X, and legacy MuMu.
     local -a mumu_process_names=(
+        "MuMuManager.exe"   # MuMu 12 NX 主界面 / MuMu 12 NX GUI launcher (D:\Netease\MuMu\nx_main\)
+        "MuMuNxMain.exe"    # MuMu 12 NX 主进程 / MuMu 12 NX main process
+        "MuMuNxDevice.exe"  # MuMu 12 NX 设备进程 / MuMu 12 NX device process
         "MuMuPlayer.exe"    # MuMu Player 2 (MuMu2) 主进程 / main process
         "MuMuVMMSVC.exe"    # MuMu2 VM 服务进程 / VM service
         "NemuPlayer.exe"    # MuMu 旧版 / MuMu X 主进程 / legacy main
         "NemuVM.exe"        # MuMu 旧版 VM 进程 / legacy VM service
     )
 
-    # MuMu 各版本常见安装目录，覆盖 C: / D: / E: 盘（MuMu2 优先，向下兼容旧版）。
-    # Candidate exe paths in version-priority order covering C:/D:/E: drives (MuMu2 first, legacy last).
+    # MuMu 各版本常见安装目录，覆盖 C: / D: / E: 盘（MuMu 12 NX 优先）。
+    # Candidate exe paths in version-priority order covering C:/D:/E: drives (MuMu 12 NX first).
     local -a mumu_exe_candidates=(
-        # ---- C 盘 / C: drive ----
+        # ---- D 盘 MuMu 12 NX 根目录（TC agent 实测路径，最高优先）----
+        # D: drive MuMu 12 NX root-level install (confirmed on TC agent, highest priority)
+        "/d/Netease/MuMu/nx_main/MuMuManager.exe"
+        "/d/Netease/MuMu/nx_main/MuMuNxMain.exe"
+        "/d/NetEase/MuMu/nx_main/MuMuManager.exe"
+        "/d/NetEase/MuMu/nx_main/MuMuNxMain.exe"
+        # ---- C 盘 MuMu 12 NX ----
+        "/c/Netease/MuMu/nx_main/MuMuManager.exe"
+        "/c/Netease/MuMu/nx_main/MuMuNxMain.exe"
+        "/c/NetEase/MuMu/nx_main/MuMuManager.exe"
+        "/c/NetEase/MuMu/nx_main/MuMuNxMain.exe"
+        # ---- C 盘 MuMu2 / legacy ----
         "/c/Program Files/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/c/Program Files/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/c/Program Files/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
@@ -303,12 +317,7 @@ ensure_talos_mumu_running() {
         "/c/Program Files (x86)/NetEase/MuMu Player/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
         "/c/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
         "/c/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
-        # ---- D 盘 / D: drive (TC agent 常见工作盘 / common TC agent data drive) ----
-        # 优先检查 D:\Netease\MuMu\ 路径（实测 TC agent 安装路径），/ Root-level D:\Netease\MuMu\ confirmed on TC agent
-        "/d/Netease/MuMu/shell/MuMuPlayer.exe"
-        "/d/Netease/MuMu/MuMuPlayer.exe"
-        "/d/NetEase/MuMu/shell/MuMuPlayer.exe"
-        "/d/NetEase/MuMu/MuMuPlayer.exe"
+        # ---- D 盘 MuMu2 / legacy ----
         "/d/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/d/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
         "/d/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
@@ -420,6 +429,9 @@ ensure_talos_mumu_running() {
         for _base in "${bash_localappdata}/Programs" "${bash_localappdata}" "${bash_userprofile}/AppData/Local/Programs" "${bash_userprofile}/AppData/Local" "${bash_userprofile}" "${bash_programfiles}"; do
             [[ -z "${_base}" ]] && continue
             mumu_exe_candidates+=(
+                "${_base}/Netease/MuMu/nx_main/MuMuManager.exe"
+                "${_base}/NetEase/MuMu/nx_main/MuMuManager.exe"
+                "${_base}/Netease/MuMu/nx_main/MuMuNxMain.exe"
                 "${_base}/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
                 "${_base}/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
                 "${_base}/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
@@ -465,26 +477,20 @@ ensure_talos_mumu_running() {
         for drive in "${all_drives[@]}"; do
             echo "    搜索 ${drive}: 盘..."
             local found=""
-            found="$(where.exe /r "${drive}:\\" MuMuPlayer.exe 2>/dev/null | head -1 || true)"
-            if [[ -n "${found}" ]]; then
-                if command -v cygpath >/dev/null 2>&1; then
-                    exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
-                else
-                    exe_path="${found}"
+            # 按优先级搜索：MuMu 12 NX（MuMuManager）> MuMu2（MuMuPlayer）> 旧版（NemuPlayer）
+            # Search in priority: MuMu 12 NX (MuMuManager) > MuMu2 (MuMuPlayer) > legacy (NemuPlayer)
+            for _exe_name in "MuMuManager.exe" "MuMuNxMain.exe" "MuMuPlayer.exe" "NemuPlayer.exe"; do
+                found="$(MSYS_NO_PATHCONV=1 where.exe /r "${drive}:\\" "${_exe_name}" 2>/dev/null | head -1 | tr -d '\r' || true)"
+                if [[ -n "${found}" ]]; then
+                    if command -v cygpath >/dev/null 2>&1; then
+                        exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
+                    else
+                        exe_path="$(printf '%s' "${found}" | sed 's|^[Cc]:|/c|; s|^[Dd]:|/d|; s|^[Ee]:|/e|; s|\\|/|g')"
+                    fi
+                    echo "    where.exe 找到 MuMu (${_exe_name}): ${found} -> ${exe_path}"
+                    break 2
                 fi
-                echo "    where.exe 找到 MuMu: ${found} -> ${exe_path}"
-                break
-            fi
-            found="$(where.exe /r "${drive}:\\" NemuPlayer.exe 2>/dev/null | head -1 || true)"
-            if [[ -n "${found}" ]]; then
-                if command -v cygpath >/dev/null 2>&1; then
-                    exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
-                else
-                    exe_path="${found}"
-                fi
-                echo "    where.exe 找到 MuMu X (legacy): ${found} -> ${exe_path}"
-                break
-            fi
+            done
         done
     fi
 
@@ -596,7 +602,9 @@ ensure_talos_mumu_running() {
         echo "    (非 Windows 环境，跳过 exe 启动)"
     fi
 
-    local wait_secs="${TALOS_MUMU_WAIT_SECONDS:-20}"
+    # MuMu 12 NX 冷启动需要约 40-60s：先等待 UI 出现，再等待 ADB 设备就绪。
+    # MuMu 12 NX cold start takes ~40-60s: wait for UI, then wait for ADB device ready.
+    local wait_secs="${TALOS_MUMU_WAIT_SECONDS:-45}"
     echo "    等待 MuMu 虚拟机初始化 (${wait_secs}s)..."
     sleep "${wait_secs}"
     echo "    ✅ MuMu 启动等待完成，继续后续 ADB 连接"
