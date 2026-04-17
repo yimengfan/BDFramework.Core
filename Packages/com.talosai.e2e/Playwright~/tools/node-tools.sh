@@ -587,15 +587,44 @@ ensure_talos_mumu_running() {
 
     # 步骤 3：后台启动 MuMu，并等待虚拟机初始化完成。
     # Step 3: launch MuMu in background and wait for VM initialization.
+    #
+    # MuMu 12 NX 优先使用 mumu-cli.exe 无头启动（适合 CI 无人值守场景）；
+    # 若 mumu-cli.exe 不存在则回退到 MuMuManager.exe GUI 启动。
+    # MuMu 12 NX: prefer mumu-cli.exe for headless launch (CI-friendly);
+    # fall back to MuMuManager.exe GUI if mumu-cli.exe is absent.
     echo "    正在后台启动 MuMu: ${exe_path}"
     if command -v cmd.exe >/dev/null 2>&1; then
-        # Windows Git Bash 环境：通过 cmd.exe /c start 在后台启动 exe。
-        # Windows Git Bash: use cmd.exe /c start to launch exe detached in background.
-        local win_path="${exe_path}"
+        # Windows Git Bash 环境：通过 cmd.exe 启动 exe。
+        # Windows Git Bash: launch exe via cmd.exe.
+        local win_path=""
         if command -v cygpath >/dev/null 2>&1; then
             win_path="$(cygpath -w "${exe_path}" 2>/dev/null || printf '%s' "${exe_path}")"
+        else
+            win_path="${exe_path}"
         fi
-        cmd.exe /c start "" "${win_path}" 2>/dev/null || true
+
+        # 尝试用 mumu-cli.exe 无头启动实例 0（MuMu 12 NX CI 标准方式）。
+        # Try mumu-cli.exe to headlessly start instance 0 (standard CI method for MuMu 12 NX).
+        local cli_path="${exe_path%/*}/mumu-cli.exe"
+        local win_cli_path=""
+        if command -v cygpath >/dev/null 2>&1; then
+            win_cli_path="$(cygpath -w "${cli_path}" 2>/dev/null || printf '%s' "${cli_path}")"
+        else
+            win_cli_path="${cli_path}"
+        fi
+
+        if [[ -f "${cli_path}" ]]; then
+            echo "    使用 mumu-cli.exe 无头启动实例 0 (headless CI mode)"
+            # mumu-cli.exe API: launch <index> 或 api -v index:0 name:launch
+            # 注：先打印 help 辅助诊断，再执行 launch。/ Print help for diagnostics, then launch.
+            cmd.exe /c "\"${win_cli_path}\" --help 2>&1" 2>/dev/null | tr -d '\r' | head -20 || true
+            echo "    --- 执行 mumu-cli launch 0 ---"
+            cmd.exe /c "\"${win_cli_path}\" launch -v index:0 2>&1" 2>/dev/null | tr -d '\r' || true
+            echo "    --- mumu-cli launch 完成 ---"
+        else
+            echo "    mumu-cli.exe 不存在，回退到 MuMuManager.exe GUI 启动"
+            cmd.exe /c start "" "${win_path}" 2>/dev/null || true
+        fi
     else
         # 非 Windows 本地调测回退：无法真正启动 Windows .exe，仅打印告知。
         # Non-Windows local debug fallback: cannot actually run a .exe; log only.
