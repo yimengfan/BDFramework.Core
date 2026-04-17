@@ -372,12 +372,24 @@ ensure_talos_mumu_running() {
 
     # MuMu 进程已在运行时，仍使用 mumu-cli 重新 launch 一次，确保 Android VM 处于就绪（非 offline）状态。
     # 上一次构建可能遗留 adbd offline 状态；重新 launch 会触发 ADB 重连，最终变为 device。
-    # Even if MuMu process is running, re-launch via mumu-cli to ensure Android VM is in a ready (non-offline) state.
-    # A previous build may have left adbd in an offline state; re-launch triggers a fresh ADB handshake.
+    # 同时尝试从缓存文件读取 mumu-cli 路径，避免 TALOS_MUMU_EXE_PATH 未设置时找不到 cli。
+    # Even if MuMu process is running, re-launch via mumu-cli to ensure Android VM is ready (non-offline).
+    # A previous build may have left adbd offline; re-launch triggers a fresh ADB handshake.
+    # Also try loading the cache file so we can find mumu-cli even if TALOS_MUMU_EXE_PATH is unset.
     if [[ ${is_running} -eq 1 ]] && command -v cmd.exe >/dev/null 2>&1; then
+        # 优先读取缓存获取 cli 路径 / Prefer cache to find cli path
+        local _cache_for_relaunch="${TALOS_MUMU_CACHE_FILE:-/tmp/talos_mumu_cache.env}"
+        if [[ -z "${TALOS_MUMU_EXE_PATH:-}" && -f "${_cache_for_relaunch}" ]]; then
+            # shellcheck source=/dev/null
+            source "${_cache_for_relaunch}" 2>/dev/null || true
+            echo "    [缓存] 从缓存载入 TALOS_MUMU_EXE_PATH=${TALOS_MUMU_EXE_PATH:-<空>}"
+            echo "    [Cache] Loaded TALOS_MUMU_EXE_PATH=${TALOS_MUMU_EXE_PATH:-<empty>} from cache"
+        fi
         local _cli_relaunch="/d/Netease/MuMu/nx_main/mumu-cli.exe"
         if [[ -n "${TALOS_MUMU_EXE_PATH:-}" ]]; then
             _cli_relaunch="${TALOS_MUMU_EXE_PATH%/*}/mumu-cli.exe"
+        elif [[ -n "${TALOS_MUMU_CLI_PATH:-}" ]]; then
+            _cli_relaunch="${TALOS_MUMU_CLI_PATH}"
         fi
         if [[ -f "${_cli_relaunch}" ]]; then
             echo "    MuMu 进程已运行，执行 mumu-cli launch 确保 VM 就绪 (idempotent)..."
@@ -605,6 +617,27 @@ ensure_talos_mumu_running() {
         echo "    === 诊断：结束 ==="
         return 0
     fi
+
+    # 步骤 2-z：路径发现成功后，将 exe_path 导出为环境变量并写入路径缓存文件。
+    # 缓存文件路径由 TALOS_MUMU_CACHE_FILE 控制，默认 /tmp/talos_mumu_cache.env。
+    # Step 2-z: After successful path discovery, export exe_path and write to cache file.
+    # Cache file location is controlled by TALOS_MUMU_CACHE_FILE (default /tmp/talos_mumu_cache.env).
+    local _mumu_cache_write="${TALOS_MUMU_CACHE_FILE:-/tmp/talos_mumu_cache.env}"
+    local _discovered_cli="${exe_path%/*}/mumu-cli.exe"
+    # 导出到当前 shell（被 source 时生效，独立执行时对子进程生效）。
+    # Export into the current shell (effective when sourced; visible to subprocesses when run standalone).
+    export TALOS_MUMU_EXE_PATH="${exe_path}"
+    [[ -f "${_discovered_cli}" ]] && export TALOS_MUMU_CLI_PATH="${_discovered_cli}"
+    # 写入缓存文件，供后续构建直接加载跳过扫描。
+    # Write cache file so subsequent builds can load it and skip the scan.
+    {
+        echo "# Talos MuMu path cache — written by ensure_talos_mumu_running on $(date)"
+        echo "# 勿手动编辑，由脚本自动生成。Do not edit manually; auto-generated."
+        echo "export TALOS_MUMU_EXE_PATH='${exe_path}'"
+        [[ -f "${_discovered_cli}" ]] && echo "export TALOS_MUMU_CLI_PATH='${_discovered_cli}'"
+    } > "${_mumu_cache_write}" 2>/dev/null || true
+    echo "    MuMu 路径已缓存至: ${_mumu_cache_write}"
+    echo "    MuMu path cached to: ${_mumu_cache_write}"
 
     # 步骤 3：后台启动 MuMu，并等待虚拟机初始化完成。
     # Step 3: launch MuMu in background and wait for VM initialization.

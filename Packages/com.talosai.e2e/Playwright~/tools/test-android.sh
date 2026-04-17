@@ -116,24 +116,6 @@ if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
 fi
 echo "============================================"
 
-# ======== MuMu 模拟器自动启动（在 ADB 连接前执行）========
-# 当 TALOS_MUMU_AUTO_START=true 时：先检测进程列表，再搜索常见安装目录，
-# 找到 exe 后后台启动并等待虚拟机初始化；之后再执行 ADB connect 与设备探测。
-# When TALOS_MUMU_AUTO_START=true: check the process list, search common install dirs,
-# launch exe in background and wait for VM init, then proceed with ADB connect and device detection.
-if [[ "${TALOS_MUMU_AUTO_START:-}" == "true" ]]; then
-    ensure_talos_mumu_running
-fi
-
-# ======== 模拟器连接修复（在设备探测前执行）========
-# 当 TALOS_ADB_CONNECT_TARGETS 非空时，先尝试连接宿主机本地模拟器（如 MuMu 模拟器），
-# 之后再执行 adb devices 探测，避免因模拟器未被主动连接而被误报为无设备。
-# When TALOS_ADB_CONNECT_TARGETS is non-empty, attempt to connect to host-local emulators (e.g. MuMu)
-# before running adb devices detection, preventing false "no device" errors.
-if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
-    ensure_talos_adb_connect_targets "${TALOS_ADB_CONNECT_TARGETS}"
-fi
-
 # ======== 前置检查 ========
 if [[ -z "${APK_PATH}" ]]; then
     echo "❌ 错误: 未指定 APK 路径"
@@ -146,60 +128,13 @@ if [[ ! -f "${APK_PATH}" ]]; then
     exit 1
 fi
 
-# 检查设备连接（带 offline→online 等待循环，含定期重连）
-# MuMu 12 NX adbd 上线时，旧 ADB 连接不会自动刷新为 online，需要断开并重连才能识别为 device。
-# MuMu 12 NX: when adbd comes online, stale ADB connections stay "offline"; a fresh connect is needed.
-echo ""
-DEVICE_WAIT_MAX="${TALOS_ADB_DEVICE_ONLINE_TIMEOUT:-900}"
-echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s，每 60s 自动重连）..."
-DEVICE_COUNT=0
-DEVICE_WAITED=0
-while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
-    DEVICE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c 'device$' || true)
-    if [[ ${DEVICE_COUNT} -gt 0 ]]; then
-        break
-    fi
-    OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c 'offline' || true)
-    if [[ ${OFFLINE_COUNT} -gt 0 ]]; then
-        echo "    设备 offline，等待 Android adbd 就绪... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
-    else
-        echo "    无设备，继续等待... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
-    fi
-    # 每 60s 断开并重连一次：adbd 上线后旧连接仍显示 offline，需重连才能变为 device。
-    # Every 60s: disconnect + reconnect so a fresh ADB handshake picks up the now-live adbd.
-    if [[ $((DEVICE_WAITED % 60)) -eq 0 && ${DEVICE_WAITED} -gt 0 && -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
-        echo "    >>> 重连 ADB 目标 (第 $((DEVICE_WAITED / 60)) 次重连)..."
-        IFS=',' read -ra _reconnect_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
-        for _rt in "${_reconnect_targets[@]}"; do
-            _rt="$(printf '%s' "${_rt}" | tr -d '[:space:]')"
-            [[ -z "${_rt}" ]] && continue
-            "${ADB_CMD[@]}" disconnect "${_rt}" 2>/dev/null || true
-            _rc=$("${ADB_CMD[@]}" connect "${_rt}" 2>/dev/null || true)
-            echo "        ${_rt}: ${_rc}"
-        done
-        # 重连后等待 5s 让 adbd 完成握手再继续轮询 devices 状态
-        # Wait 5s after reconnect to allow adbd to complete ADB handshake
-        sleep 5
-    fi
-    sleep 10
-    DEVICE_WAITED=$((DEVICE_WAITED + 10))
-done
-if [[ ${DEVICE_COUNT} -eq 0 ]]; then
-    echo "❌ 错误: 未检测到已连接的 Android 设备 (已等待 ${DEVICE_WAITED}s)"
-    "${ADB_CMD[@]}" devices
-    exit 1
-fi
-echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1' || true))"
-
-# 未指定 ADB 序列号时，若有多台设备在线则自动选择第一台，避免 "more than one device" 错误。
-# If no ADB serial specified and multiple devices are online, auto-select the first one.
-if [[ -z "${ADB_SERIAL:-}" ]]; then
-    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
-    if [[ -n "${_auto_serial}" ]]; then
-        ADB_CMD+=("-s" "${_auto_serial}")
-        echo "    自动选择设备序列号: ${_auto_serial}"
-    fi
-fi
+# ======== Android 虚拟设备连接（MuMu 启动 + ADB 连接 + 设备上线等待）========
+# 通过独立脚本处理全链路：避免 test-android.sh 承担环境搭建职责。
+# 脚本 source 后：ADB_CMD 中含 -s <serial>，TALOS_ANDROID_SERIAL 已导出。
+# Full Android VM setup handled by the dedicated script (launch + connect + wait).
+# After sourcing: ADB_CMD contains -s <serial>, TALOS_ANDROID_SERIAL is exported.
+# shellcheck source=./connect_androidVirtualDevice.sh
+source "${SCRIPT_DIR}/connect_androidVirtualDevice.sh"
 
 # ======== 安装 Playwright 依赖 ========
 echo ""
@@ -281,13 +216,20 @@ echo ">>> 启动应用..."
 echo "    ✅ 应用已启动"
 
 # ======== 等待 TCP 服务就绪 ========
+# Unity 应用启动后需要加载热更 DLL、初始化框架、启动 TCP 监听服务。
+# 正常情况为秒级（< 30s）；首次安装 AOT 场景预留 180s 保障裕量。
+# 若持续超时超过 MAX_WAIT，说明应用未能正常启动，需检查 logcat。
+# After launch, Unity loads hotfix DLLs, initialises the framework, then starts the TCP listener.
+# Normally this completes in seconds (< 30s); 180s provides ample headroom.
+# If TCP is still not ready at MAX_WAIT the app has failed to start — check logcat.
 echo ""
 echo ">>> 等待 Unity E2E TCP 服务就绪..."
-MAX_WAIT=60
+MAX_WAIT="${TALOS_UNITY_TCP_TIMEOUT:-180}"
 WAITED=0
 
 while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
     if probe_talos_unity_ready 127.0.0.1 "${UNITY_PORT}" 1000; then
+        echo ""
         echo "    ✅ TCP 服务已就绪 (${WAITED}s)"
         break
     fi
@@ -299,6 +241,10 @@ done
 if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo ""
     echo "❌ 等待 TCP 服务超时 (${MAX_WAIT}s)"
+    echo "    可能原因 / Possible causes:"
+    echo "    1. 应用崩溃或启动失败（查看 logcat）"
+    echo "    2. Unity 热更 DLL 加载出错"
+    echo "    3. adb forward tcp:${UNITY_PORT} 未生效"
     capture_android_logcat
     "${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
     exit 1

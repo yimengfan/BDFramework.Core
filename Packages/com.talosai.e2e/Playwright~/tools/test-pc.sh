@@ -159,9 +159,7 @@ fi
 # ======== 等待 TCP 服务就绪 ========
 echo ""
 echo ">>> 等待 Unity E2E TCP 服务就绪..."
-# HybridCLR 需要在启动时加载 AOT 元数据并进行 IL 编译，在 CI 机器上首次启动可达 3~5 分钟。
-# HybridCLR requires AOT metadata loading and IL compilation on startup; first boot on CI can take 3–5 minutes.
-MAX_WAIT=300
+MAX_WAIT=60
 WAITED=0
 
 while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do

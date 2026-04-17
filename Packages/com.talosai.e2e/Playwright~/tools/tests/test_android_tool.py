@@ -24,6 +24,7 @@ import subprocess
 TOOLS_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_TEST_ANDROID = TOOLS_ROOT / "test-android.sh"
 SOURCE_NODE_TOOLS = TOOLS_ROOT / "node-tools.sh"
+SOURCE_CONNECT_ANDROID = TOOLS_ROOT / "connect_androidVirtualDevice.sh"
 
 
 def write_executable(path: Path, content: str) -> None:
@@ -53,8 +54,10 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
 
     copied_test_android = tools_dir / "test-android.sh"
     copied_node_tools = tools_dir / "node-tools.sh"
+    copied_connect_android = tools_dir / "connect_androidVirtualDevice.sh"
     copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
     copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+    copy_tool_script(SOURCE_CONNECT_ANDROID, copied_connect_android)
 
     fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
     fake_apk.write_text("stub apk", encoding="utf-8")
@@ -198,9 +201,11 @@ def test_test_android_connect_targets_calls_adb_connect_before_devices(tmp_path:
 
     copied_test_android = tools_dir / "test-android.sh"
     copied_node_tools = tools_dir / "node-tools.sh"
+    copied_connect_android = tools_dir / "connect_androidVirtualDevice.sh"
 
     copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
     copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+    copy_tool_script(SOURCE_CONNECT_ANDROID, copied_connect_android)
 
     fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
     fake_apk.write_text("stub apk", encoding="utf-8")
@@ -310,8 +315,10 @@ def test_test_android_start_mumu_flag_searches_process_list_and_logs(tmp_path: P
 
     copied_test_android = tools_dir / "test-android.sh"
     copied_node_tools = tools_dir / "node-tools.sh"
+    copied_connect_android = tools_dir / "connect_androidVirtualDevice.sh"
     copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
     copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+    copy_tool_script(SOURCE_CONNECT_ANDROID, copied_connect_android)
 
     fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
     fake_apk.write_text("stub apk", encoding="utf-8")
