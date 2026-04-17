@@ -131,6 +131,13 @@ fi
 # When TALOS_ADB_CONNECT_TARGETS is non-empty, attempt to connect to host-local emulators (e.g. MuMu)
 # before running adb devices detection, preventing false "no device" errors.
 if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+    # 先重启 ADB server，清除上次构建残留的 offline 连接状态。
+    # Restart ADB server first to clear stale offline connections from previous builds.
+    echo ">>> 重启 ADB server（清除旧连接状态）..."
+    "${TALOS_ADB_BIN}" kill-server 2>/dev/null || true
+    sleep 2
+    "${TALOS_ADB_BIN}" start-server 2>/dev/null || true
+    sleep 1
     ensure_talos_adb_connect_targets "${TALOS_ADB_CONNECT_TARGETS}"
 fi
 
@@ -177,6 +184,9 @@ while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
             _rc=$("${ADB_CMD[@]}" connect "${_rt}" 2>/dev/null || true)
             echo "        ${_rt}: ${_rc}"
         done
+        # 重连后等待 5s 让 adbd 完成握手再继续轮询 devices 状态
+        # Wait 5s after reconnect to allow adbd to complete ADB handshake
+        sleep 5
     fi
     sleep 10
     DEVICE_WAITED=$((DEVICE_WAITED + 10))
