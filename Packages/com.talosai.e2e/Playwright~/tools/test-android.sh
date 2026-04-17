@@ -207,6 +207,33 @@ echo ">>> 检查 Playwright 依赖..."
 ensure_talos_playwright_dependencies "${PLAYWRIGHT_DIR}"
 cd "${PLAYWRIGHT_DIR}"
 
+# ======== 等待 Android 系统完全启动（package 服务就绪）========
+# Android VM 设备变为 'device' 状态后，framework 服务（如 package manager）可能还未就绪。
+# Wait for Android OS services to fully boot after device enters 'device' state.
+# The 'package' service may not be ready right after adbd connects.
+echo ""
+echo ">>> 等待 Android package 服务就绪..."
+BOOT_WAIT_MAX="${TALOS_ADB_BOOT_TIMEOUT:-120}"
+BOOT_WAITED=0
+while [[ ${BOOT_WAITED} -lt ${BOOT_WAIT_MAX} ]]; do
+    _boot_done=$("${ADB_CMD[@]}" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r\n ') || true
+    if [[ "${_boot_done}" == "1" ]]; then
+        # 再确认 package 服务可用
+        # Also verify package manager is responsive
+        _pm_ok=$("${ADB_CMD[@]}" shell pm list packages 2>/dev/null | grep -c 'package:' || true)
+        if [[ "${_pm_ok}" -gt 0 ]]; then
+            echo "    ✅ Android 系统完全启动，package 服务就绪 (${BOOT_WAITED}s)"
+            break
+        fi
+    fi
+    sleep 5
+    BOOT_WAITED=$((BOOT_WAITED + 5))
+    echo "    Android 系统启动中... (${BOOT_WAITED}/${BOOT_WAIT_MAX}s)"
+done
+if [[ ${BOOT_WAITED} -ge ${BOOT_WAIT_MAX} ]]; then
+    echo "    ⚠️ 等待 Android 系统超时 (${BOOT_WAIT_MAX}s)，尝试继续安装 APK..."
+fi
+
 # ======== 安装 APK ========
 echo ""
 echo ">>> 安装 APK..."
