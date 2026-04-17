@@ -543,10 +543,12 @@ ensure_talos_mumu_running() {
         fi
         # 列出 C: / D: 盘根目录，帮助判断 MuMu 是否以非标准路径安装（如便携版）。
         # List C:/D: root directories to help detect non-standard (portable) MuMu installs.
+        # 注：在 Git Bash 中 /c/ 映射到 C:\，用 ls 而非 cmd.exe dir（避免路径转换问题）。
+        # Note: in Git Bash /c/ maps to C:\; use ls rather than cmd.exe dir to avoid POSIX path conversion.
         echo "    === 诊断：C:\\ 根目录内容 ==="
-        cmd.exe /c "dir /b C:\\ 2>nul" 2>/dev/null | tr -d '\r' || ls /c/ 2>/dev/null || true
+        ls /c/ 2>/dev/null || cmd.exe /c "dir /b C:\\" 2>/dev/null | tr -d '\r' || echo "    <无法列出 C: 内容>"
         echo "    === 诊断：D:\\ 根目录内容 ==="
-        cmd.exe /c "dir /b D:\\ 2>nul" 2>/dev/null | tr -d '\r' || ls /d/ 2>/dev/null || true
+        ls /d/ 2>/dev/null || cmd.exe /c "dir /b D:\\" 2>/dev/null | tr -d '\r' || echo "    <无法列出 D: 内容>"
         echo "    === 诊断：结束 ==="
         return 0
     fi
