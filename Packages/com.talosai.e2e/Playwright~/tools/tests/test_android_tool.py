@@ -296,3 +296,93 @@ def test_test_android_connect_targets_calls_adb_connect_before_devices(tmp_path:
     )
     assert any("connect 127.0.0.1:16384" in line for line in adb_log_lines)
     assert any("connect 127.0.0.1:7555" in line for line in adb_log_lines)
+
+
+def test_test_android_start_mumu_flag_searches_process_list_and_logs(tmp_path: Path) -> None:
+    """验证 --start-mumu true 时脚本会进入 MuMu 检测分支，即使在非 Windows 环境下也不报错。
+    Verify that --start-mumu true causes the script to enter MuMu detection logic without
+    crashing, even in a non-Windows environment where MuMu cannot actually be started.
+    """
+    playwright_root = tmp_path / "PlaywrightRoot"
+    tools_dir = playwright_root / "tools"
+    tools_dir.mkdir(parents=True)
+    (playwright_root / "test-results").mkdir(parents=True)
+
+    copied_test_android = tools_dir / "test-android.sh"
+    copied_node_tools = tools_dir / "node-tools.sh"
+    copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
+    copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+
+    fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
+    fake_apk.write_text("stub apk", encoding="utf-8")
+
+    adb_log_path = tmp_path / "adb-args.txt"
+    android_sdk_root = tmp_path / "android-sdk"
+    platform_tools_dir = android_sdk_root / "platform-tools"
+    platform_tools_dir.mkdir(parents=True)
+    write_executable(
+        platform_tools_dir / "adb.exe",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"printf '%s\\n' \"$*\" >> {adb_log_path}",
+            "if [[ \"${1:-}\" == \"-s\" ]]; then shift 2; fi",
+            "case \"${1:-}\" in",
+            "  devices) printf 'List of devices attached\\nemulator-5554\\tdevice\\n' ;;",
+            "  *) exit 0 ;;",
+            "esac",
+        ]) + "\n",
+    )
+
+    fake_bin_dir = tmp_path / "fake-bin"
+    fake_bin_dir.mkdir()
+    write_executable(fake_bin_dir / "nc", "#!/bin/bash\nexit 0\n")
+
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
+    playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
+    playwright_cli_path.parent.mkdir(parents=True, exist_ok=True)
+    playwright_cli_path.write_text("console.log('stub playwright cli');", encoding="utf-8")
+
+    write_executable(
+        node_home / "node",
+        "\n".join([
+            "#!/bin/bash",
+            "exit 0",
+        ]) + "\n",
+    )
+    write_executable(
+        node_home / "npm",
+        "#!/bin/bash\nexit 0\n",
+    )
+
+    result = subprocess.run(
+        [
+            "/bin/bash",
+            str(copied_test_android),
+            "--apk", str(fake_apk),
+            "--start-mumu", "true",
+            "--connect-targets", "127.0.0.1:16384",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(playwright_root),
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
+            "TALOS_NODEJS_HOME": str(node_home),
+            "ANDROID_SDK_ROOT": str(android_sdk_root),
+            # 覆盖等待时间为 0 避免测试变慢。
+            # Override wait to 0 so the test does not sleep 20s.
+            "TALOS_MUMU_WAIT_SECONDS": "0",
+        },
+        timeout=30,
+    )
+
+    # 脚本应运行成功（MuMu 检测分支不会导致退出）。
+    # Script should complete successfully (MuMu detection branch must not cause exit).
+    assert result.returncode == 0, result.stdout + result.stderr
+    # 日志应包含 MuMu 检测入口日志。
+    # Log should contain the MuMu detection entry log line.
+    combined = result.stdout + result.stderr
+    assert "检查 MuMu 模拟器是否正在运行" in combined

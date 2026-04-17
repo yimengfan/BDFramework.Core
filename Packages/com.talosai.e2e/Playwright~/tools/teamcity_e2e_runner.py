@@ -298,6 +298,7 @@ def build_test_tool_environment(
     *,
     test_file: str | None = None,
     adb_connect_targets: str | None = None,
+    mumu_auto_start: str | None = None,
 ) -> dict[str, str]:
     """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
@@ -312,6 +313,11 @@ def build_test_tool_environment(
     normalized_connect_targets = normalize_optional_value(adb_connect_targets)
     if normalized_connect_targets:
         environment["TALOS_ADB_CONNECT_TARGETS"] = normalized_connect_targets
+    # 传递 MuMu 自动启动开关，供 test-android.sh 在 ADB 连接前先确保模拟器进程已运行。
+    # Pass MuMu auto-start flag so test-android.sh ensures the emulator process is running before ADB connect.
+    normalized_mumu_auto_start = normalize_optional_value(mumu_auto_start)
+    if normalized_mumu_auto_start.lower() == "true":
+        environment["TALOS_MUMU_AUTO_START"] = "true"
     return environment
 
 
@@ -345,7 +351,17 @@ def parse_args() -> argparse.Namespace:
         default="",
         help=(
             "可选：Android 模拟器修复模式，逗号分隔的 host:port 列表，如 127.0.0.1:16384,127.0.0.1:7555。"
-            " 设置后在 adb devices 检测前先执行 adb connect，小専配 MuMu2 等宿主机模拟器。"
+            " 设置后在 adb devices 检测前先执行 adb connect，专配 MuMu2 等宿主机模拟器。"
+        ),
+    )
+    parser.add_argument(
+        "--start-mumu",
+        default="",
+        help=(
+            "可选：MuMu 自动启动模式（传 true 启用）。先检测 MuMu 进程是否运行，"
+            " 未运行时搜索常见安装目录，找到 exe 后后台启动并等待虚拟机初始化（默认 20s）。"
+            " Optional: MuMu auto-start mode (pass 'true' to enable). Detects MuMu process,"
+            " searches common install dirs, launches in background and waits for VM init if not running."
         ),
     )
     parser.add_argument(
@@ -1073,6 +1089,9 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     adb_connect_targets = normalize_optional_value(getattr(args, "adb_connect_targets", None))
     if adb_connect_targets:
         print(f"{LOG_PREFIX} adbConnectTargets={adb_connect_targets}")
+    mumu_auto_start = normalize_optional_value(getattr(args, "start_mumu", None))
+    if mumu_auto_start.lower() == "true":
+        print(f"{LOG_PREFIX} mumuAutoStart=true")
     completed = subprocess.Popen(
         command,
         cwd=REPO_ROOT,
@@ -1080,6 +1099,7 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
             node_tooling,
             test_file=args.test_file,
             adb_connect_targets=adb_connect_targets or None,
+            mumu_auto_start=mumu_auto_start or None,
         ),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

@@ -243,6 +243,120 @@ ensure_talos_adb_connect_targets() {
     return 0
 }
 
+# 确保 MuMu Android 模拟器进程正在运行。
+# 步骤：① 检测进程列表是否有 MuMu 相关进程；② 若未运行，按优先级搜索常见安装目录；
+#       ③ 找到 exe 后在后台启动，并等待虚拟机初始化，之后由调用方执行 adb connect。
+# 始终返回 0（最大努力策略），实际连通性由后续 adb connect / adb devices 验证。
+#
+# Ensure the MuMu Android emulator process is running.
+# Steps: ① check the process list for any MuMu-related process; ② if not running, search
+#        common install paths in version-priority order; ③ launch in background and wait for VM init,
+#        then the caller runs adb connect.
+# Always returns 0 (best-effort); actual device availability is confirmed by later adb checks.
+#
+# 支持版本 / Supported versions:
+#   MuMu Player 2 (MuMu2): 进程 MuMuPlayer.exe，路径含 MuMuPlayer-12.0 或 MuMuPlayer
+#   MuMu 旧版 / MuMu X:    进程 NemuPlayer.exe / NemuVM.exe，路径含 nemu64 或 nemu
+#
+# 可通过 TALOS_MUMU_WAIT_SECONDS 环境变量控制启动后等待时间（默认 20 秒）。
+# The startup wait duration can be overridden via TALOS_MUMU_WAIT_SECONDS (default 20s).
+ensure_talos_mumu_running() {
+    # MuMu 各版本进程名，用于 tasklist.exe / ps 探测。
+    # Process names covering MuMu2, MuMu X, and legacy MuMu.
+    local -a mumu_process_names=(
+        "MuMuPlayer.exe"    # MuMu Player 2 (MuMu2) 主进程 / main process
+        "MuMuVMMSVC.exe"    # MuMu2 VM 服务进程 / VM service
+        "NemuPlayer.exe"    # MuMu 旧版 / MuMu X 主进程 / legacy main
+        "NemuVM.exe"        # MuMu 旧版 VM 进程 / legacy VM service
+    )
+
+    # MuMu 各版本常见安装目录（MuMu2 优先，向下兼容旧版）。
+    # Candidate exe paths in version-priority order (MuMu2 first, legacy last).
+    local -a mumu_exe_candidates=(
+        "/c/Program Files/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/c/Program Files/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/c/Program Files/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/c/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/c/Program Files/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/c/Program Files/NetEase/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/c/Program Files/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/c/Program Files/NetEase/MuMu Player/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/c/Program Files (x86)/NetEase/MuMu Player/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/c/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/c/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
+    )
+
+    echo ">>> 检查 MuMu 模拟器是否正在运行..."
+
+    # 步骤 1：检测进程列表，Windows 用 tasklist.exe，其余环境用 ps。
+    # Step 1: detect process list; use tasklist.exe on Windows, ps on other platforms.
+    local pname=""
+    local is_running=0
+    if command -v tasklist.exe >/dev/null 2>&1; then
+        for pname in "${mumu_process_names[@]}"; do
+            if tasklist.exe /FI "IMAGENAME eq ${pname}" 2>/dev/null | grep -qi "${pname}"; then
+                echo "    ✅ MuMu 模拟器已在运行 (进程: ${pname})"
+                is_running=1
+                break
+            fi
+        done
+    else
+        # 非 Windows 环境回退（macOS / Linux 单元测试场景）。
+        # Non-Windows fallback (macOS/Linux unit test environments).
+        for pname in "${mumu_process_names[@]}"; do
+            if ps aux 2>/dev/null | grep -v grep | grep -qi "${pname}"; then
+                echo "    ✅ MuMu 模拟器已在运行 (进程: ${pname})"
+                is_running=1
+                break
+            fi
+        done
+    fi
+
+    [[ ${is_running} -eq 1 ]] && return 0
+
+    # 步骤 2：搜索常见安装目录，获取可执行文件路径。
+    # Step 2: search common install directories for the MuMu executable.
+    echo "    MuMu 未在运行，开始搜索常见安装目录..."
+    local exe_path=""
+    local candidate=""
+    for candidate in "${mumu_exe_candidates[@]}"; do
+        if [[ -f "${candidate}" ]]; then
+            exe_path="${candidate}"
+            echo "    已找到 MuMu 可执行文件: ${exe_path}"
+            break
+        fi
+    done
+
+    if [[ -z "${exe_path}" ]]; then
+        echo "    ⚠️  常见目录下未找到 MuMu 可执行文件，跳过自动启动"
+        echo "    (若已通过其他方式启动，后续 ADB connect 步骤仍会尝试连接)"
+        return 0
+    fi
+
+    # 步骤 3：后台启动 MuMu，并等待虚拟机初始化完成。
+    # Step 3: launch MuMu in background and wait for VM initialization.
+    echo "    正在后台启动 MuMu: ${exe_path}"
+    if command -v cmd.exe >/dev/null 2>&1; then
+        # Windows Git Bash 环境：通过 cmd.exe /c start 在后台启动 exe。
+        # Windows Git Bash: use cmd.exe /c start to launch exe detached in background.
+        local win_path="${exe_path}"
+        if command -v cygpath >/dev/null 2>&1; then
+            win_path="$(cygpath -w "${exe_path}" 2>/dev/null || printf '%s' "${exe_path}")"
+        fi
+        cmd.exe /c start "" "${win_path}" 2>/dev/null || true
+    else
+        # 非 Windows 本地调测回退：无法真正启动 Windows .exe，仅打印告知。
+        # Non-Windows local debug fallback: cannot actually run a .exe; log only.
+        echo "    (非 Windows 环境，跳过 exe 启动)"
+    fi
+
+    local wait_secs="${TALOS_MUMU_WAIT_SECONDS:-20}"
+    echo "    等待 MuMu 虚拟机初始化 (${wait_secs}s)..."
+    sleep "${wait_secs}"
+    echo "    ✅ MuMu 启动等待完成，继续后续 ADB 连接"
+    return 0
+}
+
 resolve_talos_node_bin() {
     local candidate=""
 

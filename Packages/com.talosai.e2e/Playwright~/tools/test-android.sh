@@ -34,6 +34,9 @@ ADB_SERIAL="${ADB_SERIAL:-}"
 # MuMu 模拟器等宿主本机模拟器的 ADB 连接目标，逗号分隔，如 127.0.0.1:16384,127.0.0.1:7555。
 # Comma-separated ADB connect targets for host-local emulators such as MuMu. E.g. 127.0.0.1:16384,127.0.0.1:7555
 TALOS_ADB_CONNECT_TARGETS="${TALOS_ADB_CONNECT_TARGETS:-}"
+# MuMu 模拟器自动启动开关（true 启用）：先检测进程，再搜索安装目录，找到后后台启动并等待初始化。
+# MuMu auto-start flag (set to "true" to enable): checks process list, searches install dirs, starts in background.
+TALOS_MUMU_AUTO_START="${TALOS_MUMU_AUTO_START:-}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
@@ -64,6 +67,9 @@ while [[ $# -gt 0 ]]; do
         # 模拟器修复模式：连接宿主机本地 ADB 目标（例如 MuMu2 的 127.0.0.1:16384）。
         # Emulator fix mode: connect to host-local ADB targets (e.g. MuMu2 at 127.0.0.1:16384).
         --connect-targets) TALOS_ADB_CONNECT_TARGETS="$2"; shift 2 ;;
+        # MuMu 自动启动：在 ADB 连接前先检测并启动 MuMu 模拟器进程。
+        # MuMu auto-start: detect and launch the MuMu emulator before ADB connect.
+        --start-mumu) TALOS_MUMU_AUTO_START="$2"; shift 2 ;;
         --help)
             echo "用法: $0 --apk <path/to/app.apk>"
             echo ""
@@ -109,6 +115,15 @@ if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
     echo "  测试文件: ${PLAYWRIGHT_TEST_FILE}"
 fi
 echo "============================================"
+
+# ======== MuMu 模拟器自动启动（在 ADB 连接前执行）========
+# 当 TALOS_MUMU_AUTO_START=true 时：先检测进程列表，再搜索常见安装目录，
+# 找到 exe 后后台启动并等待虚拟机初始化；之后再执行 ADB connect 与设备探测。
+# When TALOS_MUMU_AUTO_START=true: check the process list, search common install dirs,
+# launch exe in background and wait for VM init, then proceed with ADB connect and device detection.
+if [[ "${TALOS_MUMU_AUTO_START:-}" == "true" ]]; then
+    ensure_talos_mumu_running
+fi
 
 # ======== 模拟器连接修复（在设备探测前执行）========
 # 当 TALOS_ADB_CONNECT_TARGETS 非空时，先尝试连接宿主机本地模拟器（如 MuMu 模拟器），

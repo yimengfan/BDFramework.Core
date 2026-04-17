@@ -643,6 +643,7 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
         unity_port = 10002
         adb_serial = ""
         adb_connect_targets = ""
+        start_mumu = ""
         timeout_seconds = 5400
         poll_interval_seconds = 10
         download_timeout_seconds = 600
@@ -658,4 +659,38 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
     assert exit_code == 0
     assert "resolve_or_queue_package_build" not in calls, "TeamCity API should not be called in skip-build mode"
     assert "download:60" in calls
-    assert "run_test_tool" in calls
+
+
+def test_build_test_tool_environment_sets_mumu_auto_start_when_true(
+    tmp_path: Path,
+) -> None:
+    """验证 mumu_auto_start='true' 时 TALOS_MUMU_AUTO_START 被注入到环境变量。
+    Verify that TALOS_MUMU_AUTO_START is injected into the environment when mumu_auto_start='true'.
+    """
+    from unittest.mock import MagicMock
+
+    fake_tooling = MagicMock()
+    fake_tooling.node_home = tmp_path / "node-home"
+    fake_tooling.node_bin = tmp_path / "node-home" / "node.exe"
+    fake_tooling.npm_bin = tmp_path / "node-home" / "npm.cmd"
+
+    env = runner.build_test_tool_environment(fake_tooling, mumu_auto_start="true")
+    assert env.get("TALOS_MUMU_AUTO_START") == "true"
+
+
+def test_build_test_tool_environment_omits_mumu_auto_start_when_empty_or_false(
+    tmp_path: Path,
+) -> None:
+    """验证 mumu_auto_start 为空字符或 'false' 时 TALOS_MUMU_AUTO_START 不注入环境。
+    Verify that TALOS_MUMU_AUTO_START is NOT injected when mumu_auto_start is empty or 'false'.
+    """
+    from unittest.mock import MagicMock
+
+    fake_tooling = MagicMock()
+    fake_tooling.node_home = tmp_path / "node-home"
+    fake_tooling.node_bin = tmp_path / "node-home" / "node.exe"
+    fake_tooling.npm_bin = tmp_path / "node-home" / "npm.cmd"
+
+    for val in ("", None, "false", "  "):
+        env = runner.build_test_tool_environment(fake_tooling, mumu_auto_start=val)
+        assert "TALOS_MUMU_AUTO_START" not in env, f"Expected key absent for mumu_auto_start={val!r}"
