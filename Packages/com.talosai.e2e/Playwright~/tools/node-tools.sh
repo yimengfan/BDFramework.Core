@@ -617,10 +617,13 @@ ensure_talos_mumu_running() {
             # 注：在 Git Bash(MINGW) 中直接执行 Windows .exe 无需通过 cmd.exe；
             # 避免 cmd.exe 路径转换问题，输出可正常捕获到 bash stdout。
             # Note: in Git Bash (MINGW) run Windows .exe directly to avoid cmd.exe path conversion issues.
-            echo "    === mumu-cli control --help ==="
-            MSYS_NO_PATHCONV=1 "${cli_path}" control --help 2>&1 | tr -d '\r' | head -40 || true
-            echo "    === mumu-cli control -v index:0 -v name:launch ==="
-            MSYS_NO_PATHCONV=1 "${cli_path}" control -v index:0 -v name:launch 2>&1 | tr -d '\r' || true
+            # mumu-cli.exe 正确用法（来自 control --help）：
+            #   control --vmindex <index> launch    # 启动指定实例
+            #   control --vmindex <index> shutdown  # 关闭指定实例
+            # mumu-cli.exe correct usage (from control --help):
+            #   control --vmindex <index> launch    # start specified instance
+            echo "    === mumu-cli control --vmindex 0 launch ==="
+            MSYS_NO_PATHCONV=1 "${cli_path}" control --vmindex 0 launch 2>&1 | tr -d '\r' || true
             echo "    === mumu-cli control launch 完成 ==="
         else
             echo "    mumu-cli.exe 不存在，回退到 MuMuManager.exe GUI 直接启动"
