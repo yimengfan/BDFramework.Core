@@ -261,6 +261,24 @@ ensure_talos_adb_connect_targets() {
 # 可通过 TALOS_MUMU_WAIT_SECONDS 环境变量控制启动后等待时间（默认 20 秒）。
 # The startup wait duration can be overridden via TALOS_MUMU_WAIT_SECONDS (default 20s).
 ensure_talos_mumu_running() {
+    # 确保 MuMu Android 模拟器进程正在运行。
+    # 优先顺序：① TALOS_MUMU_EXE_PATH 直接指定；② 静态候选路径（C: / D: / E: 盘）；③ where.exe 动态搜索。
+    # 始终返回 0（最大努力策略），实际连通性由后续 adb connect / adb devices 验证。
+    #
+    # Ensure the MuMu Android emulator process is running.
+    # Priority: ① direct override via TALOS_MUMU_EXE_PATH; ② static candidate list (C:/D:/E:);
+    #           ③ dynamic discovery via where.exe /r.
+    # Always returns 0 (best-effort); actual device availability is confirmed by later adb checks.
+    #
+    # 支持版本 / Supported versions:
+    #   MuMu Player 2 (MuMu2): 进程 MuMuPlayer.exe，路径含 MuMuPlayer-12.0 或 MuMuPlayer
+    #   MuMu 旧版 / MuMu X:    进程 NemuPlayer.exe / NemuVM.exe，路径含 nemu64 或 nemu
+    #
+    # 环境变量 / Environment variables:
+    #   TALOS_MUMU_EXE_PATH      — 直接指定 MuMu exe 绝对路径（Git Bash 格式，如 /d/MuMuPlayer-12.0/...）
+    #                              Specify exact MuMu exe absolute path (Git Bash format, e.g. /d/MuMuPlayer-12.0/...)
+    #   TALOS_MUMU_WAIT_SECONDS  — 启动后等待秒数（默认 20）/ Startup wait seconds (default 20)
+
     # MuMu 各版本进程名，用于 tasklist.exe / ps 探测。
     # Process names covering MuMu2, MuMu X, and legacy MuMu.
     local -a mumu_process_names=(
@@ -270,9 +288,10 @@ ensure_talos_mumu_running() {
         "NemuVM.exe"        # MuMu 旧版 VM 进程 / legacy VM service
     )
 
-    # MuMu 各版本常见安装目录（MuMu2 优先，向下兼容旧版）。
-    # Candidate exe paths in version-priority order (MuMu2 first, legacy last).
+    # MuMu 各版本常见安装目录，覆盖 C: / D: / E: 盘（MuMu2 优先，向下兼容旧版）。
+    # Candidate exe paths in version-priority order covering C:/D:/E: drives (MuMu2 first, legacy last).
     local -a mumu_exe_candidates=(
+        # ---- C 盘 / C: drive ----
         "/c/Program Files/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/c/Program Files/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/c/Program Files/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
@@ -284,6 +303,27 @@ ensure_talos_mumu_running() {
         "/c/Program Files (x86)/NetEase/MuMu Player/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
         "/c/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
         "/c/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
+        # ---- D 盘 / D: drive (TC agent 常见工作盘 / common TC agent data drive) ----
+        "/d/Program Files/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/d/Program Files/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/d/Program Files/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/d/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/d/Program Files/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/d/Program Files/NetEase/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/d/Program Files/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/d/Program Files/NetEase/MuMu Player/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/d/Program Files (x86)/NetEase/MuMu Player/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/d/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/d/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
+        # ---- E 盘 / E: drive ----
+        "/e/Program Files/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/e/Program Files/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/e/Program Files/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/e/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/e/Program Files/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/e/Program Files/NetEase/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/e/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
+        "/e/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
     )
 
     echo ">>> 检查 MuMu 模拟器是否正在运行..."
@@ -314,21 +354,72 @@ ensure_talos_mumu_running() {
 
     [[ ${is_running} -eq 1 ]] && return 0
 
-    # 步骤 2：搜索常见安装目录，获取可执行文件路径。
-    # Step 2: search common install directories for the MuMu executable.
-    echo "    MuMu 未在运行，开始搜索常见安装目录..."
+    # 步骤 2：搜索 MuMu 可执行文件路径（优先级：env 覆盖 > 静态候选列表 > where.exe 动态搜索）。
+    # Step 2: find MuMu exe path (priority: env override > static list > where.exe dynamic search).
+    echo "    MuMu 未在运行，开始搜索可执行文件..."
     local exe_path=""
-    local candidate=""
-    for candidate in "${mumu_exe_candidates[@]}"; do
-        if [[ -f "${candidate}" ]]; then
-            exe_path="${candidate}"
-            echo "    已找到 MuMu 可执行文件: ${exe_path}"
-            break
+
+    # 2-a: TALOS_MUMU_EXE_PATH 环境变量直接覆盖（最高优先级）。
+    # 2-a: honour TALOS_MUMU_EXE_PATH env override (highest priority).
+    if [[ -n "${TALOS_MUMU_EXE_PATH:-}" ]]; then
+        if [[ -f "${TALOS_MUMU_EXE_PATH}" ]]; then
+            exe_path="${TALOS_MUMU_EXE_PATH}"
+            echo "    已通过 TALOS_MUMU_EXE_PATH 指定路径: ${exe_path}"
+        else
+            echo "    ⚠️  TALOS_MUMU_EXE_PATH 指定的路径不存在: ${TALOS_MUMU_EXE_PATH}"
         fi
-    done
+    fi
+
+    # 2-b: 遍历静态候选路径（覆盖 C: / D: / E: 盘）。
+    # 2-b: walk static candidate list (covers C:/D:/E: drives).
+    if [[ -z "${exe_path}" ]]; then
+        local candidate=""
+        for candidate in "${mumu_exe_candidates[@]}"; do
+            if [[ -f "${candidate}" ]]; then
+                exe_path="${candidate}"
+                echo "    已在静态路径找到 MuMu 可执行文件: ${exe_path}"
+                break
+            fi
+        done
+    fi
+
+    # 2-c: 动态搜索回退：在 C: / D: / E: 盘用 where.exe /r 递归查找（最慢但最可靠）。
+    # 2-c: dynamic fallback: recursive where.exe /r search on C:/D:/E: (slower but broadest coverage).
+    if [[ -z "${exe_path}" ]] && command -v where.exe >/dev/null 2>&1; then
+        echo "    静态列表未命中，尝试 where.exe 动态搜索（可能较慢）..."
+        local drive=""
+        for drive in C D E; do
+            local found=""
+            found="$(where.exe /r "${drive}:\\" MuMuPlayer.exe 2>/dev/null | head -1 || true)"
+            if [[ -n "${found}" ]]; then
+                # 将 Windows 反斜线路径转换为 Git Bash 格式。
+                # Convert Windows backslash path to Git Bash format.
+                if command -v cygpath >/dev/null 2>&1; then
+                    exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
+                else
+                    exe_path="${found}"
+                fi
+                echo "    where.exe 找到 MuMu: ${found} -> ${exe_path}"
+                break
+            fi
+            # 旧版 MuMu / MuMu X 回退搜索。
+            # Legacy MuMu / MuMu X fallback search.
+            found="$(where.exe /r "${drive}:\\" NemuPlayer.exe 2>/dev/null | head -1 || true)"
+            if [[ -n "${found}" ]]; then
+                if command -v cygpath >/dev/null 2>&1; then
+                    exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
+                else
+                    exe_path="${found}"
+                fi
+                echo "    where.exe 找到 MuMu X (legacy): ${found} -> ${exe_path}"
+                break
+            fi
+        done
+    fi
 
     if [[ -z "${exe_path}" ]]; then
-        echo "    ⚠️  常见目录下未找到 MuMu 可执行文件，跳过自动启动"
+        echo "    ⚠️  所有搜索策略均未找到 MuMu 可执行文件，跳过自动启动"
+        echo "    提示：可通过 TALOS_MUMU_EXE_PATH 环境变量直接指定路径"
         echo "    (若已通过其他方式启动，后续 ADB connect 步骤仍会尝试连接)"
         return 0
     fi

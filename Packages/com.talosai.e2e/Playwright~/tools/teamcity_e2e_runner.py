@@ -299,6 +299,7 @@ def build_test_tool_environment(
     test_file: str | None = None,
     adb_connect_targets: str | None = None,
     mumu_auto_start: str | None = None,
+    mumu_exe_path: str | None = None,
 ) -> dict[str, str]:
     """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
@@ -318,6 +319,11 @@ def build_test_tool_environment(
     normalized_mumu_auto_start = normalize_optional_value(mumu_auto_start)
     if normalized_mumu_auto_start.lower() == "true":
         environment["TALOS_MUMU_AUTO_START"] = "true"
+    # 若指定了 MuMu exe 绝对路径，注入为 TALOS_MUMU_EXE_PATH 供 bash 脚本直接使用。
+    # If an explicit MuMu exe path is given, inject it as TALOS_MUMU_EXE_PATH for the bash script.
+    normalized_mumu_exe_path = normalize_optional_value(mumu_exe_path)
+    if normalized_mumu_exe_path:
+        environment["TALOS_MUMU_EXE_PATH"] = normalized_mumu_exe_path
     return environment
 
 
@@ -362,6 +368,16 @@ def parse_args() -> argparse.Namespace:
             " 未运行时搜索常见安装目录，找到 exe 后后台启动并等待虚拟机初始化（默认 20s）。"
             " Optional: MuMu auto-start mode (pass 'true' to enable). Detects MuMu process,"
             " searches common install dirs, launches in background and waits for VM init if not running."
+        ),
+    )
+    parser.add_argument(
+        "--mumu-exe-path",
+        default="",
+        help=(
+            "可选：直接指定 MuMu 可执行文件路径（用于静态路径列表命中失败时）。"
+            " 格式：Git Bash 路径，如 /d/MuMuPlayer-12.0/shell/MuMuPlayer.exe 。"
+            " Optional: directly specify MuMu exe path (used when the static search list misses)."
+            " Format: Git Bash path, e.g. /d/MuMuPlayer-12.0/shell/MuMuPlayer.exe ."
         ),
     )
     parser.add_argument(
@@ -1092,6 +1108,9 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     mumu_auto_start = normalize_optional_value(getattr(args, "start_mumu", None))
     if mumu_auto_start.lower() == "true":
         print(f"{LOG_PREFIX} mumuAutoStart=true")
+    mumu_exe_path = normalize_optional_value(getattr(args, "mumu_exe_path", None))
+    if mumu_exe_path:
+        print(f"{LOG_PREFIX} mumuExePath={mumu_exe_path}")
     completed = subprocess.Popen(
         command,
         cwd=REPO_ROOT,
@@ -1100,6 +1119,7 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
             test_file=args.test_file,
             adb_connect_targets=adb_connect_targets or None,
             mumu_auto_start=mumu_auto_start or None,
+            mumu_exe_path=mumu_exe_path or None,
         ),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

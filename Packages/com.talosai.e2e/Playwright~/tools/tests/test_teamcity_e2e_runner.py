@@ -644,6 +644,7 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
         adb_serial = ""
         adb_connect_targets = ""
         start_mumu = ""
+        mumu_exe_path = ""
         timeout_seconds = 5400
         poll_interval_seconds = 10
         download_timeout_seconds = 600
@@ -694,3 +695,24 @@ def test_build_test_tool_environment_omits_mumu_auto_start_when_empty_or_false(
     for val in ("", None, "false", "  "):
         env = runner.build_test_tool_environment(fake_tooling, mumu_auto_start=val)
         assert "TALOS_MUMU_AUTO_START" not in env, f"Expected key absent for mumu_auto_start={val!r}"
+
+
+def test_build_test_tool_environment_sets_mumu_exe_path_when_given(
+    tmp_path: Path,
+) -> None:
+    """验证 mumu_exe_path 非空时 TALOS_MUMU_EXE_PATH 被注入到环境变量。
+    Verify that TALOS_MUMU_EXE_PATH is injected when mumu_exe_path is a non-empty value.
+    """
+    from unittest.mock import MagicMock
+
+    fake_tooling = MagicMock()
+    fake_tooling.node_home = tmp_path / "node-home"
+    fake_tooling.node_bin = tmp_path / "node-home" / "node.exe"
+    fake_tooling.npm_bin = tmp_path / "node-home" / "npm.cmd"
+
+    env = runner.build_test_tool_environment(fake_tooling, mumu_exe_path="/d/MuMuPlayer-12.0/shell/MuMuPlayer.exe")
+    assert env.get("TALOS_MUMU_EXE_PATH") == "/d/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+
+    for val in ("", None, "  "):
+        env2 = runner.build_test_tool_environment(fake_tooling, mumu_exe_path=val)
+        assert "TALOS_MUMU_EXE_PATH" not in env2, f"Expected key absent for mumu_exe_path={val!r}"
