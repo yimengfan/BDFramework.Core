@@ -370,9 +370,56 @@ ensure_talos_mumu_running() {
         fi
     fi
 
-    # 2-b: 遍历静态候选路径（覆盖 C: / D: / E: 盘）。
-    # 2-b: walk static candidate list (covers C:/D:/E: drives).
+    # 2-b: 遍历静态候选路径（覆盖 C: / D: / E: 盘及 Windows 环境变量路径）。
+    # 2-b: walk static candidate list (covers C:/D:/E: drives and Windows env-var paths).
     if [[ -z "${exe_path}" ]]; then
+        # 通过 Windows 环境变量补充用户 Profile 安装路径（per-user 安装场景）。
+        # Augment with user-profile-based install paths via Windows env vars (per-user install).
+        local win_localappdata="${LOCALAPPDATA:-}"
+        local win_userprofile="${USERPROFILE:-}"
+        local win_programfiles="${PROGRAMFILES:-}"
+        # 注：bash 无法引用含括号的变量名 PROGRAMFILES(X86)；x86 路径已在静态候选列表中覆盖。
+        # Note: bash cannot reference PROGRAMFILES(X86) (parens in var names are illegal);
+        #       x86 paths are already covered by the static candidate list.
+
+        local bash_localappdata=""
+        local bash_userprofile=""
+        local bash_programfiles=""
+
+        if command -v cygpath >/dev/null 2>&1; then
+            [[ -n "${win_localappdata}" ]]     && bash_localappdata="$(cygpath -u "${win_localappdata}" 2>/dev/null || true)"
+            [[ -n "${win_userprofile}" ]]       && bash_userprofile="$(cygpath -u "${win_userprofile}" 2>/dev/null || true)"
+            [[ -n "${win_programfiles}" ]]      && bash_programfiles="$(cygpath -u "${win_programfiles}" 2>/dev/null || true)"
+        else
+            # 简单替换（无 cygpath 时）/ Simple drive-letter replacement when cygpath absent.
+            local _conv
+            for _conv in "win_localappdata:bash_localappdata" "win_userprofile:bash_userprofile" "win_programfiles:bash_programfiles"; do
+                local _src="${!_conv%%:*}" _dst="${_conv##*:}"
+                local _val="${!_src:-}"
+                if [[ -n "${_val}" ]]; then
+                    printf -v "${_dst}" '%s' "$(printf '%s' "${_val}" | sed 's|^[Cc]:|/c|; s|^[Dd]:|/d|; s|^[Ee]:|/e|; s|^[Ff]:|/f|; s|\\|/|g')"
+                fi
+            done
+        fi
+
+        echo "    LOCALAPPDATA -> ${bash_localappdata:-<未设置>}"
+        echo "    USERPROFILE  -> ${bash_userprofile:-<未设置>}"
+        echo "    PROGRAMFILES -> ${bash_programfiles:-<未设置>}"
+
+        # 动态构建用户路径候选列表并追加到全局候选列表末尾。
+        # Dynamically build per-user path candidates and append to the global candidate list.
+        for _base in "${bash_localappdata}/Programs" "${bash_localappdata}" "${bash_userprofile}/AppData/Local/Programs" "${bash_userprofile}/AppData/Local" "${bash_userprofile}" "${bash_programfiles}"; do
+            [[ -z "${_base}" ]] && continue
+            mumu_exe_candidates+=(
+                "${_base}/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+                "${_base}/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+                "${_base}/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+                "${_base}/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
+                "${_base}/NetEase/MuMuPlayer/shell/MuMuPlayer.exe"
+                "${_base}/MuMuPlayer/shell/MuMuPlayer.exe"
+            )
+        done
+
         local candidate=""
         for candidate in "${mumu_exe_candidates[@]}"; do
             if [[ -f "${candidate}" ]]; then
