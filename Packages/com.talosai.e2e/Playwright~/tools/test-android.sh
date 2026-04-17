@@ -131,13 +131,6 @@ fi
 # When TALOS_ADB_CONNECT_TARGETS is non-empty, attempt to connect to host-local emulators (e.g. MuMu)
 # before running adb devices detection, preventing false "no device" errors.
 if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
-    # 先重启 ADB server，清除上次构建残留的 offline 连接状态。
-    # Restart ADB server first to clear stale offline connections from previous builds.
-    echo ">>> 重启 ADB server（清除旧连接状态）..."
-    "${TALOS_ADB_BIN}" kill-server 2>/dev/null || true
-    sleep 2
-    "${TALOS_ADB_BIN}" start-server 2>/dev/null || true
-    sleep 1
     ensure_talos_adb_connect_targets "${TALOS_ADB_CONNECT_TARGETS}"
 fi
 
@@ -162,11 +155,11 @@ echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s，每 60s 自动
 DEVICE_COUNT=0
 DEVICE_WAITED=0
 while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
-    DEVICE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep -c '[[:space:]]device$' || true)
+    DEVICE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c 'device$' || true)
     if [[ ${DEVICE_COUNT} -gt 0 ]]; then
         break
     fi
-    OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep -c 'offline' || true)
+    OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c 'offline' || true)
     if [[ ${OFFLINE_COUNT} -gt 0 ]]; then
         echo "    设备 offline，等待 Android adbd 就绪... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
     else
@@ -196,12 +189,12 @@ if [[ ${DEVICE_COUNT} -eq 0 ]]; then
     "${ADB_CMD[@]}" devices
     exit 1
 fi
-echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep '[[:space:]]device$' | awk 'NR==1' || true))"
+echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1' || true))"
 
 # 未指定 ADB 序列号时，若有多台设备在线则自动选择第一台，避免 "more than one device" 错误。
 # If no ADB serial specified and multiple devices are online, auto-select the first one.
 if [[ -z "${ADB_SERIAL:-}" ]]; then
-    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | tr -d '\r' | grep '[[:space:]]device$' | awk 'NR==1{print $1}') || true
+    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
     if [[ -n "${_auto_serial}" ]]; then
         ADB_CMD+=("-s" "${_auto_serial}")
         echo "    自动选择设备序列号: ${_auto_serial}"
