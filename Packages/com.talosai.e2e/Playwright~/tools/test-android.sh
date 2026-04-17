@@ -31,6 +31,9 @@ source "${SCRIPT_DIR}/node-tools.sh"
 # ======== 默认参数 ========
 APK_PATH="${APK_PATH:-}"
 ADB_SERIAL="${ADB_SERIAL:-}"
+# MuMu 模拟器等宿主本机模拟器的 ADB 连接目标，逗号分隔，如 127.0.0.1:16384,127.0.0.1:7555。
+# Comma-separated ADB connect targets for host-local emulators such as MuMu. E.g. 127.0.0.1:16384,127.0.0.1:7555
+TALOS_ADB_CONNECT_TARGETS="${TALOS_ADB_CONNECT_TARGETS:-}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
@@ -53,11 +56,14 @@ capture_android_logcat() {
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --apk)       APK_PATH="$2";    shift 2 ;;
-        --serial)    ADB_SERIAL="$2";  shift 2 ;;
-        --port)      UNITY_PORT="$2";  shift 2 ;;
-        --package)   PACKAGE="$2";     shift 2 ;;
-        --test-file) PLAYWRIGHT_TEST_FILE="$2"; shift 2 ;;
+        --apk)             APK_PATH="$2";                  shift 2 ;;
+        --serial)          ADB_SERIAL="$2";                shift 2 ;;
+        --port)            UNITY_PORT="$2";                shift 2 ;;
+        --package)         PACKAGE="$2";                   shift 2 ;;
+        --test-file)       PLAYWRIGHT_TEST_FILE="$2";      shift 2 ;;
+        # 模拟器修复模式：连接宿主机本地 ADB 目标（例如 MuMu2 的 127.0.0.1:16384）。
+        # Emulator fix mode: connect to host-local ADB targets (e.g. MuMu2 at 127.0.0.1:16384).
+        --connect-targets) TALOS_ADB_CONNECT_TARGETS="$2"; shift 2 ;;
         --help)
             echo "用法: $0 --apk <path/to/app.apk>"
             echo ""
@@ -103,6 +109,15 @@ if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
     echo "  测试文件: ${PLAYWRIGHT_TEST_FILE}"
 fi
 echo "============================================"
+
+# ======== 模拟器连接修复（在设备探测前执行）========
+# 当 TALOS_ADB_CONNECT_TARGETS 非空时，先尝试连接宿主机本地模拟器（如 MuMu 模拟器），
+# 之后再执行 adb devices 探测，避免因模拟器未被主动连接而被误报为无设备。
+# When TALOS_ADB_CONNECT_TARGETS is non-empty, attempt to connect to host-local emulators (e.g. MuMu)
+# before running adb devices detection, preventing false "no device" errors.
+if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+    ensure_talos_adb_connect_targets "${TALOS_ADB_CONNECT_TARGETS}"
+fi
 
 # ======== 前置检查 ========
 if [[ -z "${APK_PATH}" ]]; then

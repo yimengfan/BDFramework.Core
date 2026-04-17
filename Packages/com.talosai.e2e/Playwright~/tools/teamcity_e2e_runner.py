@@ -293,7 +293,12 @@ def ensure_node_tooling() -> NodeTooling:
     )
 
 
-def build_test_tool_environment(node_tooling: NodeTooling, *, test_file: str | None = None) -> dict[str, str]:
+def build_test_tool_environment(
+    node_tooling: NodeTooling,
+    *,
+    test_file: str | None = None,
+    adb_connect_targets: str | None = None,
+) -> dict[str, str]:
     """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
     environment["TALOS_NODEJS_HOME"] = normalize_bash_path(node_tooling.node_home)
@@ -302,6 +307,11 @@ def build_test_tool_environment(node_tooling: NodeTooling, *, test_file: str | N
     normalized_test_file = normalize_optional_value(test_file)
     if normalized_test_file:
         environment["PLAYWRIGHT_TEST_FILE"] = normalized_test_file
+    # 传递 ADB 连接目标，供 test-android.sh 在设备检测前进行模拟器修复连接。
+    # Pass ADB connect targets so test-android.sh can do emulator fix-up before device detection.
+    normalized_connect_targets = normalize_optional_value(adb_connect_targets)
+    if normalized_connect_targets:
+        environment["TALOS_ADB_CONNECT_TARGETS"] = normalized_connect_targets
     return environment
 
 
@@ -330,6 +340,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--unity-host", default="127.0.0.1", help="桌面平台 TCP 连接地址。")
     parser.add_argument("--unity-port", type=int, default=10002, help="Unity E2E TCP 端口。")
     parser.add_argument("--adb-serial", default="", help="Android 多设备场景下的 ADB 序列号。")
+    parser.add_argument(
+        "--adb-connect-targets",
+        default="",
+        help=(
+            "可选：Android 模拟器修复模式，逗号分隔的 host:port 列表，如 127.0.0.1:16384,127.0.0.1:7555。"
+            " 设置后在 adb devices 检测前先执行 adb connect，小専配 MuMu2 等宿主机模拟器。"
+        ),
+    )
+    parser.add_argument(
+        "--package-build-number",
+        default=None,
+        help=(
+            "可选：指定已知的构建号（build.number）直接下载包体，跳过 TeamCity API 调用。"
+            " 适用于 Unity 内容未变、无需重新打包时直接复用已出产的文件服务器包体。"
+        ),
+    )
     parser.add_argument("--timeout-seconds", type=int, default=DEFAULT_TIMEOUT_SECONDS, help="等待上游 TeamCity 构建完成的超时时间。")
     parser.add_argument("--poll-interval-seconds", type=int, default=DEFAULT_POLL_INTERVAL_SECONDS, help="轮询 TeamCity 构建状态的时间间隔。")
     parser.add_argument("--download-timeout-seconds", type=int, default=DEFAULT_DOWNLOAD_TIMEOUT_SECONDS, help="下载文件服务器包体的单次请求超时时间。")
@@ -1044,10 +1070,17 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     print(f"{LOG_PREFIX} nodeBin={normalize_bash_path(node_tooling.node_bin)}")
     print(f"{LOG_PREFIX} npmBin={normalize_bash_path(node_tooling.npm_bin)}")
     print(f"{LOG_PREFIX} testCommand={' '.join(command)}")
+    adb_connect_targets = normalize_optional_value(getattr(args, "adb_connect_targets", None))
+    if adb_connect_targets:
+        print(f"{LOG_PREFIX} adbConnectTargets={adb_connect_targets}")
     completed = subprocess.Popen(
         command,
         cwd=REPO_ROOT,
-        env=build_test_tool_environment(node_tooling, test_file=args.test_file),
+        env=build_test_tool_environment(
+            node_tooling,
+            test_file=args.test_file,
+            adb_connect_targets=adb_connect_targets or None,
+        ),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
@@ -1077,18 +1110,43 @@ def main() -> int:
     print(f"{LOG_PREFIX} clientVersion={normalize_required_value(args.client_version, field_name='clientVersion')}")
     print(f"{LOG_PREFIX} buildDebug={args.build_debug}")
     print(f"{LOG_PREFIX} packageBuildId={normalize_optional_value(args.package_build_id) or '<auto>'}")
+    explicit_build_number = normalize_optional_value(getattr(args, "package_build_number", None))
+    print(f"{LOG_PREFIX} packageBuildNumber={explicit_build_number or '<from-teamcity>'}")
+    adb_connect_targets_log = normalize_optional_value(getattr(args, "adb_connect_targets", None))
+    if adb_connect_targets_log:
+        print(f"{LOG_PREFIX} adbConnectTargets={adb_connect_targets_log}")
     if current_build_id:
         print(f"{LOG_PREFIX} currentBuildId={current_build_id}")
     print(f"{LOG_PREFIX} testFile={normalize_optional_value(args.test_file) or '<all>'}")
 
     print(f"{LOG_PREFIX} ===== Phase 2/5: resolve package source =====")
     if normalize_optional_value(args.package_path):
+        # 直接使用本地包体路径，跳过所有 TeamCity / 文件服务器调用。
+        # Use a local package path directly, bypassing TeamCity and file-server calls.
         package_path = Path(normalize_required_value(args.package_path, field_name="packagePath")).expanduser().resolve()
         if not package_path.exists():
             raise TalosTeamCityE2EError(f"packagePath does not exist: {package_path}")
         print(f"{LOG_PREFIX} packageSource=local")
         print(f"{LOG_PREFIX} packagePath={package_path}")
+    elif explicit_build_number and not normalize_optional_value(args.package_build_id):
+        # 跳过构建模式：已知构建版本号时直接从文件服务器下载，无需 TeamCity API。
+        # Skip-build mode: download directly from file server by known build.number, no TeamCity API call.
+        print(f"{LOG_PREFIX} packageSource=file-server (skip-build, build.number={explicit_build_number})")
+        downloaded_path = download_package_from_build(
+            profile=profile,
+            build_number=explicit_build_number,
+            args=args,
+        )
+        package_path = prepare_local_package(
+            profile,
+            downloaded_path,
+            package_build_number=explicit_build_number,
+            current_build_id=current_build_id,
+        )
+        print(f"{LOG_PREFIX} localRunnablePath={package_path}")
     else:
+        # 标准模式：通过 TeamCity API 解析或排队上游构建，再从文件服务器下载包体。
+        # Standard mode: resolve or queue upstream build via TeamCity API, then download from file server.
         print(f"{LOG_PREFIX} packageSource=teamcity+file-server")
         _, package_build_number = resolve_or_queue_package_build(args, profile)
         downloaded_path = download_package_from_build(profile=profile, build_number=package_build_number, args=args)

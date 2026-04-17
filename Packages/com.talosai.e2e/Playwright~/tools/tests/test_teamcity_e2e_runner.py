@@ -547,3 +547,115 @@ def test_build_teamcity_artifact_url_returns_repository_download_link() -> None:
         "http://teamcity.local/repository/download/"
         "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/html/index.html"
     )
+
+
+def test_build_test_tool_environment_passes_adb_connect_targets_when_set(tmp_path: Path) -> None:
+    """验证 runner 会把 ADB 连接目标列表注入工具脚本环境变量，以支持 MuMu 等宿主机模拟器的自动修复连接。
+    Verify that the runner injects TALOS_ADB_CONNECT_TARGETS into the tool script environment
+    to support auto-recovery ADB connection for host-local emulators such as MuMu.
+    """
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+
+    environment = runner.build_test_tool_environment(
+        tooling,
+        adb_connect_targets="127.0.0.1:16384,127.0.0.1:7555",
+    )
+
+    assert environment["TALOS_ADB_CONNECT_TARGETS"] == "127.0.0.1:16384,127.0.0.1:7555"
+
+
+def test_build_test_tool_environment_omits_adb_connect_targets_when_empty(tmp_path: Path) -> None:
+    """验证未配置 ADB 连接目标时，runner 不会把 TALOS_ADB_CONNECT_TARGETS 注入环境变量。
+    Verify that TALOS_ADB_CONNECT_TARGETS is not injected when adb_connect_targets is empty or unset.
+    """
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+
+    environment = runner.build_test_tool_environment(tooling, adb_connect_targets=None)
+
+    assert "TALOS_ADB_CONNECT_TARGETS" not in environment
+
+
+def test_main_skip_build_mode_uses_package_build_number_directly(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """验证传入 --package-build-number 且未传 --package-build-id 时，runner 跳过 TeamCity API 直接从文件服务器下载。
+    Verify that when --package-build-number is given without --package-build-id, the runner bypasses
+    the TeamCity API and downloads from the file server directly by that build number.
+    """
+    profile = runner.resolve_platform_profile("android")
+    downloaded_apk = tmp_path / "Launcher.apk"
+    downloaded_apk.write_text("stub apk", encoding="utf-8")
+
+    calls: list[str] = []
+
+    def fake_resolve_or_queue(_args, _profile):
+        """如果 TeamCity API 被调用则记录，用来验证跳过逻辑。"""
+        calls.append("resolve_or_queue_package_build")
+        return (999, "99")
+
+    def fake_download_package(*, profile, build_number, args):
+        """验证 build_number 已被正确传递，并返回预设 APK 路径。"""
+        calls.append(f"download:{build_number}")
+        return downloaded_apk
+
+    def fake_prepare_local_package(profile, downloaded_path, **kwargs):
+        """直接返回下载路径，绕过解压流程。"""
+        return downloaded_apk
+
+    def fake_run_test_tool(_profile, _package_path, _args):
+        """跳过实际测试执行，记录调用并返回成功。"""
+        calls.append("run_test_tool")
+        return 0
+
+    monkeypatch.setattr(runner, "resolve_or_queue_package_build", fake_resolve_or_queue)
+    monkeypatch.setattr(runner, "download_package_from_build", fake_download_package)
+    monkeypatch.setattr(runner, "prepare_local_package", fake_prepare_local_package)
+    monkeypatch.setattr(runner, "run_test_tool", fake_run_test_tool)
+    monkeypatch.setattr(runner, "emit_playwright_report_metadata", lambda **_kwargs: None)
+
+    class FakeArgs:
+        """模拟 parse_args 产物，指定已知构建版本号，不传 package_build_id。
+        Simulates a parsed args namespace with a known build number and no package_build_id.
+        """
+
+        platform = "android"
+        client_version = "0.1"
+        build_debug = "true"
+        package_build_id = ""
+        package_build_number = "60"
+        package_build_extra_args = ""
+        package_build_type_id = ""
+        package_path = ""
+        branch = "v4/v-4.0.0"
+        config = None
+        file_server_url = None
+        file_server_token = None
+        test_file = ""
+        unity_host = "127.0.0.1"
+        unity_port = 10002
+        adb_serial = ""
+        adb_connect_targets = ""
+        timeout_seconds = 5400
+        poll_interval_seconds = 10
+        download_timeout_seconds = 600
+
+    monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
+    monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(runner, "resolve_current_teamcity_build_context", lambda: runner.TeamCityCurrentBuildContext(
+        base_url=None, build_id=None, build_type_id=None, build_url=None
+    ))
+
+    exit_code = runner.main()
+
+    assert exit_code == 0
+    assert "resolve_or_queue_package_build" not in calls, "TeamCity API should not be called in skip-build mode"
+    assert "download:60" in calls
+    assert "run_test_tool" in calls

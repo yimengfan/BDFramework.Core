@@ -202,6 +202,47 @@ ensure_talos_adb_tooling() {
     echo ">>> Android 工具: adb=${TALOS_ADB_BIN}"
 }
 
+# 尝试连接一批 ADB 目标地址，适用于宿主机运行 Android 模拟器（如 MuMu 模拟器）无法通过 USB 探测的场景。
+# Try to connect a batch of ADB targets for host-local emulators (e.g. MuMu) that are invisible to adb devices until explicitly connected.
+#
+# 参数：逗号分隔的 host:port 字符串，例如 "127.0.0.1:16384,127.0.0.1:7555"。
+# Argument: comma-separated host:port list, e.g. "127.0.0.1:16384,127.0.0.1:7555".
+#   MuMu Player 2 (MuMu2) 第一个实例默认监听 127.0.0.1:16384。
+#   MuMu Player 2 (MuMu2) first instance listens on 127.0.0.1:16384 by default.
+#   MuMu 旧版 / MuMu Pro 默认监听 127.0.0.1:7555。
+#   MuMu legacy / MuMu Pro listens on 127.0.0.1:7555 by default.
+# 返回值：无论连接成功与否均返回 0；调用方自行校验 adb devices 输出。
+# Return: always 0; callers verify adb devices output themselves.
+ensure_talos_adb_connect_targets() {
+    local raw_targets="${1:-}"
+    [[ -z "${raw_targets}" ]] && return 0
+
+    local adb_cmd="${TALOS_ADB_BIN:-adb}"
+    local connected_any=0
+    local target=""
+
+    IFS=',' read -ra target_list <<< "${raw_targets}"
+    for target in "${target_list[@]}"; do
+        target="$(printf '%s' "${target}" | tr -d '[:space:]')"
+        [[ -z "${target}" ]] && continue
+        echo ">>> 正在尝试连接 ADB 目标: ${target}"
+        local connect_output=""
+        connect_output="$("${adb_cmd}" connect "${target}" 2>&1 || true)"
+        echo "    ${connect_output}"
+        if printf '%s' "${connect_output}" | grep -qiE 'connected to|already connected'; then
+            echo "    ✅ 已连接: ${target}"
+            connected_any=1
+        else
+            echo "    ⚠️  连接未确认: ${target} (继续尝试其余目标)"
+        fi
+    done
+
+    if [[ ${connected_any} -gt 0 ]]; then
+        sleep 1
+    fi
+    return 0
+}
+
 resolve_talos_node_bin() {
     local candidate=""
 

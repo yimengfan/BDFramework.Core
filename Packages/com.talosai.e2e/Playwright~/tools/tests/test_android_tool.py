@@ -182,3 +182,117 @@ def test_test_android_resolves_adb_from_android_sdk_root_without_path(tmp_path: 
     ]
     assert "--project=android" in node_args
     assert npm_args_path.read_text(encoding="utf-8").strip() == "install"
+
+
+def test_test_android_connect_targets_calls_adb_connect_before_devices(tmp_path: Path) -> None:
+    """验证传入 --connect-targets 或设置 TALOS_ADB_CONNECT_TARGETS 时，脚本会在 adb devices 探测前调用 adb connect。
+    Verify that when --connect-targets is given (or TALOS_ADB_CONNECT_TARGETS is set),
+    the script calls adb connect for each target before running the device detection check.
+    这用于 MuMu 等宿主机模拟器的修复模式：设备在 connect 之前对 adb devices 不可见。
+    This covers the MuMu-emulator fix mode where the device is invisible to adb devices until connected.
+    """
+    playwright_root = tmp_path / "PlaywrightRoot"
+    tools_dir = playwright_root / "tools"
+    tools_dir.mkdir(parents=True)
+    (playwright_root / "test-results").mkdir(parents=True)
+
+    copied_test_android = tools_dir / "test-android.sh"
+    copied_node_tools = tools_dir / "node-tools.sh"
+
+    copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
+    copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+
+    fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
+    fake_apk.write_text("stub apk", encoding="utf-8")
+
+    adb_log_path = tmp_path / "adb-args.txt"
+    node_args_path = tmp_path / "node-args.txt"
+    node_env_path = tmp_path / "node-env.txt"
+    npm_args_path = tmp_path / "npm-args.txt"
+
+    fake_bin_dir = tmp_path / "fake-bin"
+    fake_bin_dir.mkdir()
+    write_executable(fake_bin_dir / "nc", "#!/bin/bash\nexit 0\n")
+
+    # ADB 桩：第一次 connect 时返回 "connected to ..." 模拟 MuMu 接受连接；
+    # devices 命令在 connect 之后返回已连接设备，模拟修复成功。
+    # ADB stub: return "connected to ..." for 'connect', return a device on 'devices' afterwards.
+    write_executable(
+        fake_bin_dir / "adb",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"printf '%s\\n' \"$*\" >> {adb_log_path}",
+            "case \"${1:-}\" in",
+            "  connect)",
+            "    printf 'connected to %s\\n' \"${2:-}\"",
+            "    ;;",
+            "  devices)",
+            "    printf 'List of devices attached\\n127.0.0.1:16384\\tdevice\\n'",
+            "    ;;",
+            "  *)",
+            "    exit 0",
+            "    ;;",
+            "esac",
+        ]) + "\n",
+    )
+
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
+    playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
+    write_executable(
+        node_home / "node.exe",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            "if [[ \"${1:-}\" == \"-e\" ]]; then exit 0; fi",
+            f"printf '%s\\n' \"$@\" > {node_args_path}",
+            f"printf '%s\\n%s\\n%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_REPORT:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PW_TEST_HTML_REPORT_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
+            "exit 0",
+        ]) + "\n",
+    )
+    write_executable(
+        node_home / "npm.cmd",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"printf '%s\\n' \"$@\" > {npm_args_path}",
+            f"mkdir -p {playwright_cli_path.parent}",
+            f"cat <<'EOF' > {playwright_cli_path}",
+            "console.log('stub playwright cli');",
+            "EOF",
+        ]) + "\n",
+    )
+
+    result = subprocess.run(
+        [
+            "/bin/bash",
+            str(copied_test_android),
+            "--apk", str(fake_apk),
+            "--connect-targets", "127.0.0.1:16384,127.0.0.1:7555",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(playwright_root),
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
+            "TALOS_NODEJS_HOME": str(node_home),
+        },
+        timeout=30,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    adb_log_lines = adb_log_path.read_text(encoding="utf-8").splitlines()
+
+    # connect は devices より先に呼ばれているはず。
+    # 'connect' entries must appear before any 'devices' entry in the ADB call log.
+    connect_indices = [i for i, line in enumerate(adb_log_lines) if line.startswith("connect ")]
+    devices_indices = [i for i, line in enumerate(adb_log_lines) if "devices" in line]
+    assert connect_indices, "adb connect should have been called for the emulator targets"
+    assert devices_indices, "adb devices should have been called after connect"
+    assert connect_indices[0] < devices_indices[0], (
+        "adb connect must be called before adb devices in emulator fix mode"
+    )
+    assert any("connect 127.0.0.1:16384" in line for line in adb_log_lines)
+    assert any("connect 127.0.0.1:7555" in line for line in adb_log_lines)
