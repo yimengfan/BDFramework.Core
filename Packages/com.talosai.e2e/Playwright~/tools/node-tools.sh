@@ -370,6 +370,27 @@ ensure_talos_mumu_running() {
         done
     fi
 
+    # MuMu 进程已在运行时，仍使用 mumu-cli 重新 launch 一次，确保 Android VM 处于就绪（非 offline）状态。
+    # 上一次构建可能遗留 adbd offline 状态；重新 launch 会触发 ADB 重连，最终变为 device。
+    # Even if MuMu process is running, re-launch via mumu-cli to ensure Android VM is in a ready (non-offline) state.
+    # A previous build may have left adbd in an offline state; re-launch triggers a fresh ADB handshake.
+    if [[ ${is_running} -eq 1 ]] && command -v cmd.exe >/dev/null 2>&1; then
+        local _cli_relaunch="/d/Netease/MuMu/nx_main/mumu-cli.exe"
+        if [[ -n "${TALOS_MUMU_EXE_PATH:-}" ]]; then
+            _cli_relaunch="${TALOS_MUMU_EXE_PATH%/*}/mumu-cli.exe"
+        fi
+        if [[ -f "${_cli_relaunch}" ]]; then
+            echo "    MuMu 进程已运行，执行 mumu-cli launch 确保 VM 就绪 (idempotent)..."
+            echo "    === mumu-cli control --vmindex 0 launch ==="
+            MSYS_NO_PATHCONV=1 "${_cli_relaunch}" control --vmindex 0 launch 2>&1 | tr -d '\r' || true
+            echo "    === mumu-cli launch 完成（进程已存在时的重复 launch）==="
+        fi
+        local wait_secs="${TALOS_MUMU_WAIT_SECONDS:-45}"
+        echo "    等待 MuMu 虚拟机初始化 (${wait_secs}s)..."
+        sleep "${wait_secs}"
+        echo "    ✅ MuMu 启动等待完成，继续后续 ADB 连接"
+        return 0
+    fi
     [[ ${is_running} -eq 1 ]] && return 0
 
     # 步骤 2：搜索 MuMu 可执行文件路径（优先级：env 覆盖 > 静态候选列表 > where.exe 动态搜索）。
