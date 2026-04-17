@@ -304,7 +304,11 @@ ensure_talos_mumu_running() {
         "/c/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
         "/c/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
         # ---- D 盘 / D: drive (TC agent 常见工作盘 / common TC agent data drive) ----
-        # 优先检查 D:\Netease\ 根目录直装路径（非 Program Files），TC agent 实测确认 / Root-level install confirmed on TC agent
+        # 优先检查 D:\Netease\MuMu\ 路径（实测 TC agent 安装路径），/ Root-level D:\Netease\MuMu\ confirmed on TC agent
+        "/d/Netease/MuMu/shell/MuMuPlayer.exe"
+        "/d/Netease/MuMu/MuMuPlayer.exe"
+        "/d/NetEase/MuMu/shell/MuMuPlayer.exe"
+        "/d/NetEase/MuMu/MuMuPlayer.exe"
         "/d/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/d/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
         "/d/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
@@ -559,9 +563,12 @@ ensure_talos_mumu_running() {
         if [[ -d /d/Netease ]]; then
             echo "    === 诊断：D:\\Netease\\ 内容 ==="
             ls /d/Netease/ 2>/dev/null || true
-            for _sub in /d/Netease/*/shell/ /d/NetEase/*/shell/; do
-                [[ -d "$_sub" ]] && { echo "      shell目录: $_sub"; ls "$_sub" 2>/dev/null | head -5 || true; }
+            for _sub in /d/Netease/*/; do
+                [[ -d "$_sub" ]] && { echo "      子目录: $_sub"; ls "$_sub" 2>/dev/null | head -10 || true; }
             done
+            # 递归查找 MuMuPlayer.exe 精确路径 / Recursively find MuMuPlayer.exe exact path
+            echo "    === 诊断：find MuMuPlayer.exe in D:/Netease ==="
+            find /d/Netease/ -name "MuMuPlayer.exe" -o -name "NemuPlayer.exe" 2>/dev/null | head -10 || true
         fi
         echo "    === 诊断：结束 ==="
         return 0
