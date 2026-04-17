@@ -383,17 +383,34 @@ ensure_talos_mumu_running() {
         done
     fi
 
-    # 2-c: 动态搜索回退：在 C: / D: / E: 盘用 where.exe /r 递归查找（最慢但最可靠）。
-    # 2-c: dynamic fallback: recursive where.exe /r search on C:/D:/E: (slower but broadest coverage).
+    # 2-c: 动态搜索回退：枚举实际存在的盘符，逐盘 where.exe /r 递归查找。
+    # 2-c: dynamic fallback: enumerate actual drives, then where.exe /r per drive.
     if [[ -z "${exe_path}" ]] && command -v where.exe >/dev/null 2>&1; then
-        echo "    静态列表未命中，尝试 where.exe 动态搜索（可能较慢）..."
+        echo "    静态列表未命中，枚举实际盘符再动态搜索..."
+
+        # 通过 wmic 获取所有本地盘符；回退到穷举 A-Z。
+        # Enumerate drive letters via wmic; fall back to brute-force A-Z if wmic unavailable.
+        local -a all_drives=()
+        if command -v wmic.exe >/dev/null 2>&1; then
+            local wmic_out
+            wmic_out="$(wmic.exe logicaldisk get name 2>/dev/null | tr -d '\r' | grep -Eo '[A-Z]:' | tr '[:lower:]' '[:upper:]' || true)"
+            while IFS= read -r drv; do
+                [[ -n "${drv}" ]] && all_drives+=("${drv%:}")
+            done <<< "${wmic_out}"
+            echo "    所有盘符: ${all_drives[*]:-<wmic 无输出>}"
+        fi
+        if [[ ${#all_drives[@]} -eq 0 ]]; then
+            # 回退：穷举常见盘符。
+            # Fallback: try common drive letters.
+            all_drives=(C D E F G)
+        fi
+
         local drive=""
-        for drive in C D E; do
+        for drive in "${all_drives[@]}"; do
+            echo "    搜索 ${drive}: 盘..."
             local found=""
             found="$(where.exe /r "${drive}:\\" MuMuPlayer.exe 2>/dev/null | head -1 || true)"
             if [[ -n "${found}" ]]; then
-                # 将 Windows 反斜线路径转换为 Git Bash 格式。
-                # Convert Windows backslash path to Git Bash format.
                 if command -v cygpath >/dev/null 2>&1; then
                     exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
                 else
@@ -402,8 +419,6 @@ ensure_talos_mumu_running() {
                 echo "    where.exe 找到 MuMu: ${found} -> ${exe_path}"
                 break
             fi
-            # 旧版 MuMu / MuMu X 回退搜索。
-            # Legacy MuMu / MuMu X fallback search.
             found="$(where.exe /r "${drive}:\\" NemuPlayer.exe 2>/dev/null | head -1 || true)"
             if [[ -n "${found}" ]]; then
                 if command -v cygpath >/dev/null 2>&1; then
@@ -417,10 +432,68 @@ ensure_talos_mumu_running() {
         done
     fi
 
+    # 2-d: Windows 注册表查询——MuMu 安装一般会在 Uninstall 键下记录安装路径。
+    # 2-d: Windows Registry fallback — MuMu install usually records path under Uninstall key.
+    if [[ -z "${exe_path}" ]] && command -v reg.exe >/dev/null 2>&1; then
+        echo "    盘符搜索未命中，尝试注册表查询 MuMu 安装路径..."
+        local reg_keys=(
+            "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+            "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+            "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+        )
+        local reg_key
+        for reg_key in "${reg_keys[@]}"; do
+            local reg_out=""
+            reg_out="$(reg.exe query "${reg_key}" /s /f "MuMu" 2>/dev/null | grep -i "InstallLocation\|InstallPath\|UninstallString" | head -5 || true)"
+            if [[ -n "${reg_out}" ]]; then
+                echo "    注册表命中: ${reg_out}"
+                # 从注册表输出提取路径，尝试拼接 exe。
+                # Extract path from registry output and try to locate exe.
+                local reg_path
+                reg_path="$(printf '%s\n' "${reg_out}" | sed 's/.*REG_SZ\s*//' | head -1 | tr -d '\r')"
+                if [[ -n "${reg_path}" ]]; then
+                    local bash_path
+                    if command -v cygpath >/dev/null 2>&1; then
+                        bash_path="$(cygpath -u "${reg_path}" 2>/dev/null || printf '%s' "${reg_path}")"
+                    else
+                        # 简单替换：将 Windows 路径转换为 Git Bash 格式。
+                        # Simple conversion from Windows path to Git Bash format.
+                        bash_path="$(printf '%s' "${reg_path}" | sed 's|^[Cc]:|/c|; s|^[Dd]:|/d|; s|^[Ee]:|/e|; s|^[Ff]:|/f|; s|\\|/|g')"
+                    fi
+                    # 尝试注册表路径下的 exe 拼装。
+                    # Try exe locations relative to the registry install path.
+                    local try_paths=(
+                        "${bash_path}/shell/MuMuPlayer.exe"
+                        "${bash_path}/MuMuPlayer.exe"
+                        "${bash_path}/EmulatorShell/NemuPlayer.exe"
+                        "${bash_path}/NemuPlayer.exe"
+                    )
+                    local tp
+                    for tp in "${try_paths[@]}"; do
+                        if [[ -f "${tp}" ]]; then
+                            exe_path="${tp}"
+                            echo "    注册表路径命中 exe: ${exe_path}"
+                            break 2
+                        fi
+                    done
+                fi
+            fi
+        done
+    fi
+
     if [[ -z "${exe_path}" ]]; then
         echo "    ⚠️  所有搜索策略均未找到 MuMu 可执行文件，跳过自动启动"
         echo "    提示：可通过 TALOS_MUMU_EXE_PATH 环境变量直接指定路径"
         echo "    (若已通过其他方式启动，后续 ADB connect 步骤仍会尝试连接)"
+        # 诊断打印：列出系统所有已安装程序中含 MuMu/Nemu/NetEase 的条目，便于人工定位安装路径。
+        # Diagnostic: list all installed programs containing MuMu/Nemu/NetEase to help locate install path.
+        if command -v reg.exe >/dev/null 2>&1; then
+            echo "    === 诊断：注册表搜索含 MuMu/Nemu 的已安装程序 ==="
+            reg.exe query "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "MuMu" 2>/dev/null | grep -i "DisplayName\|InstallLocation" | head -20 || true
+            reg.exe query "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "MuMu" 2>/dev/null | grep -i "DisplayName\|InstallLocation" | head -20 || true
+            reg.exe query "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "NetEase" 2>/dev/null | grep -i "DisplayName\|InstallLocation" | head -20 || true
+            echo "    === 诊断：注册表搜索结束 ==="
+        fi
         return 0
     fi
 
