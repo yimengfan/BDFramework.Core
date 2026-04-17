@@ -191,7 +191,7 @@ echo "    ✅ 设备已连接 ($("${ADB_CMD[@]}" devices 2>/dev/null | grep "dev
 # 未指定 ADB 序列号时，若有多台设备在线则自动选择第一台，避免 "more than one device" 错误。
 # If no ADB serial specified and multiple devices are online, auto-select the first one.
 if [[ -z "${ADB_SERIAL:-}" ]]; then
-    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep "device$" | awk '{print $1}' | head -1 | tr -d '\r')
+    _auto_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep "device$" | awk 'NR==1{print $1}' | tr -d '\r') || true
     if [[ -n "${_auto_serial}" ]]; then
         ADB_CMD+=("-s" "${_auto_serial}")
         echo "    自动选择设备序列号: ${_auto_serial}"
