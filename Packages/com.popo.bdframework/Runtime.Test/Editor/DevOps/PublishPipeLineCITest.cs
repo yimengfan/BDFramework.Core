@@ -351,8 +351,8 @@ namespace BDFramework.EditorTest.DevOps
 
                 Assert.That(outputRoots, Is.EqualTo(new[]
                 {
-                    BDFramework.Core.Tools.IPath.ReplaceBackSlash(Path.GetFullPath(devOpsPublishAssetsPath)),
-                    BDFramework.Core.Tools.IPath.ReplaceBackSlash(Path.GetFullPath(streamingAssetsPath))
+                    Path.GetFullPath(devOpsPublishAssetsPath).Replace("\\", "/"),
+                    Path.GetFullPath(streamingAssetsPath).Replace("\\", "/")
                 }));
 
                 var deduplicatedRoots = (string[])helperMethod.Invoke(
@@ -361,7 +361,7 @@ namespace BDFramework.EditorTest.DevOps
 
                 Assert.That(deduplicatedRoots, Is.EqualTo(new[]
                 {
-                    BDFramework.Core.Tools.IPath.ReplaceBackSlash(Path.GetFullPath(streamingAssetsPath))
+                    Path.GetFullPath(streamingAssetsPath).Replace("\\", "/")
                 }));
             }
             finally
