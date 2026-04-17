@@ -532,8 +532,8 @@ ensure_talos_mumu_running() {
         echo "    ⚠️  所有搜索策略均未找到 MuMu 可执行文件，跳过自动启动"
         echo "    提示：可通过 TALOS_MUMU_EXE_PATH 环境变量直接指定路径"
         echo "    (若已通过其他方式启动，后续 ADB connect 步骤仍会尝试连接)"
-        # 诊断打印：列出系统所有已安装程序中含 MuMu/Nemu/NetEase 的条目，便于人工定位安装路径。
-        # Diagnostic: list all installed programs containing MuMu/Nemu/NetEase to help locate install path.
+        # 诊断打印：打印各盘根目录清单和注册表 MuMu 条目，便于人工判断安装路径。
+        # Diagnostic: print root dir listings and registry MuMu entries to help locate install path.
         if command -v reg.exe >/dev/null 2>&1; then
             echo "    === 诊断：注册表搜索含 MuMu/Nemu 的已安装程序 ==="
             reg.exe query "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "MuMu" 2>/dev/null | grep -i "DisplayName\|InstallLocation" | head -20 || true
@@ -541,6 +541,13 @@ ensure_talos_mumu_running() {
             reg.exe query "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "NetEase" 2>/dev/null | grep -i "DisplayName\|InstallLocation" | head -20 || true
             echo "    === 诊断：注册表搜索结束 ==="
         fi
+        # 列出 C: / D: 盘根目录，帮助判断 MuMu 是否以非标准路径安装（如便携版）。
+        # List C:/D: root directories to help detect non-standard (portable) MuMu installs.
+        echo "    === 诊断：C:\\ 根目录内容 ==="
+        cmd.exe /c "dir /b C:\\ 2>nul" 2>/dev/null | tr -d '\r' || ls /c/ 2>/dev/null || true
+        echo "    === 诊断：D:\\ 根目录内容 ==="
+        cmd.exe /c "dir /b D:\\ 2>nul" 2>/dev/null | tr -d '\r' || ls /d/ 2>/dev/null || true
+        echo "    === 诊断：结束 ==="
         return 0
     fi
 
