@@ -304,6 +304,11 @@ ensure_talos_mumu_running() {
         "/c/MuMu/emulator/nemu64/EmulatorShell/NemuPlayer.exe"
         "/c/MuMu/emulator/nemu/EmulatorShell/NemuPlayer.exe"
         # ---- D 盘 / D: drive (TC agent 常见工作盘 / common TC agent data drive) ----
+        # 优先检查 D:\Netease\ 根目录直装路径（非 Program Files），TC agent 实测确认 / Root-level install confirmed on TC agent
+        "/d/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/d/Netease/MuMuPlayer/shell/MuMuPlayer.exe"
+        "/d/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
+        "/d/NetEase/MuMuPlayer/shell/MuMuPlayer.exe"
         "/d/Program Files/Netease/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/d/Program Files/NetEase/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
         "/d/Program Files/MuMuPlayer-12.0/shell/MuMuPlayer.exe"
@@ -549,6 +554,15 @@ ensure_talos_mumu_running() {
         ls /c/ 2>/dev/null || cmd.exe /c "dir /b C:\\" 2>/dev/null | tr -d '\r' || echo "    <无法列出 C: 内容>"
         echo "    === 诊断：D:\\ 根目录内容 ==="
         ls /d/ 2>/dev/null || cmd.exe /c "dir /b D:\\" 2>/dev/null | tr -d '\r' || echo "    <无法列出 D: 内容>"
+        # 若 D:\Netease 目录存在则再列一层，辅助定位具体子目录名。
+        # If D:\Netease exists, list one level deeper to pinpoint the exact subdirectory name.
+        if [[ -d /d/Netease ]]; then
+            echo "    === 诊断：D:\\Netease\\ 内容 ==="
+            ls /d/Netease/ 2>/dev/null || true
+            for _sub in /d/Netease/*/shell/ /d/NetEase/*/shell/; do
+                [[ -d "$_sub" ]] && { echo "      shell目录: $_sub"; ls "$_sub" 2>/dev/null | head -5 || true; }
+            done
+        fi
         echo "    === 诊断：结束 ==="
         return 0
     fi
