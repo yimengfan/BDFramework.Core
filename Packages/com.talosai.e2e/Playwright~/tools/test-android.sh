@@ -146,12 +146,12 @@ if [[ ! -f "${APK_PATH}" ]]; then
     exit 1
 fi
 
-# 检查设备连接（带 offline→online 等待循环）
-# MuMu 12 NX 的 adbd 需要更多时间完成 Android 启动后才会从 offline 变为 device。
-# MuMu 12 NX adbd may stay offline for ~1-2min while Android finishes booting.
+# 检查设备连接（带 offline→online 等待循环，含定期重连）
+# MuMu 12 NX adbd 上线时，旧 ADB 连接不会自动刷新为 online，需要断开并重连才能识别为 device。
+# MuMu 12 NX: when adbd comes online, stale ADB connections stay "offline"; a fresh connect is needed.
 echo ""
-DEVICE_WAIT_MAX="${TALOS_ADB_DEVICE_ONLINE_TIMEOUT:-180}"
-echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s）..."
+DEVICE_WAIT_MAX="${TALOS_ADB_DEVICE_ONLINE_TIMEOUT:-600}"
+echo ">>> 检查设备连接（最多等待 ${DEVICE_WAIT_MAX}s，每 60s 自动重连）..."
 DEVICE_COUNT=0
 DEVICE_WAITED=0
 while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
@@ -161,9 +161,22 @@ while [[ ${DEVICE_WAITED} -lt ${DEVICE_WAIT_MAX} ]]; do
     fi
     OFFLINE_COUNT=$("${ADB_CMD[@]}" devices 2>/dev/null | grep -c "offline" || true)
     if [[ ${OFFLINE_COUNT} -gt 0 ]]; then
-        echo "    设备 offline，等待 Android 启动... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
+        echo "    设备 offline，等待 Android adbd 就绪... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
     else
         echo "    无设备，继续等待... (${DEVICE_WAITED}/${DEVICE_WAIT_MAX}s)"
+    fi
+    # 每 60s 断开并重连一次：adbd 上线后旧连接仍显示 offline，需重连才能变为 device。
+    # Every 60s: disconnect + reconnect so a fresh ADB handshake picks up the now-live adbd.
+    if [[ $((DEVICE_WAITED % 60)) -eq 0 && ${DEVICE_WAITED} -gt 0 && -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+        echo "    >>> 重连 ADB 目标 (第 $((DEVICE_WAITED / 60)) 次重连)..."
+        IFS=',' read -ra _reconnect_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
+        for _rt in "${_reconnect_targets[@]}"; do
+            _rt="$(printf '%s' "${_rt}" | tr -d '[:space:]')"
+            [[ -z "${_rt}" ]] && continue
+            "${ADB_CMD[@]}" disconnect "${_rt}" 2>/dev/null || true
+            _rc=$("${ADB_CMD[@]}" connect "${_rt}" 2>/dev/null || true)
+            echo "        ${_rt}: ${_rc}"
+        done
     fi
     sleep 10
     DEVICE_WAITED=$((DEVICE_WAITED + 10))
