@@ -586,9 +586,9 @@ def test_build_test_tool_environment_omits_adb_connect_targets_when_empty(tmp_pa
 def test_main_skip_build_mode_uses_package_build_number_directly(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    """验证传入 --package-build-number 且未传 --package-build-id 时，runner 跳过 TeamCity API 直接从文件服务器下载。
-    Verify that when --package-build-number is given without --package-build-id, the runner bypasses
-    the TeamCity API and downloads from the file server directly by that build number.
+    """验证传入 --package-build-number 时，无论是否同时传 --package-build-id，runner 均跳过 TeamCity API 直接从文件服务器下载。
+    Verify that when --package-build-number is given, the runner bypasses the TeamCity API and
+    downloads from the file server directly, regardless of whether --package-build-id is also set.
     """
     profile = runner.resolve_platform_profile("android")
     downloaded_apk = tmp_path / "Launcher.apk"

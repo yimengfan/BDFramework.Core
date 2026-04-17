@@ -1128,10 +1128,16 @@ def main() -> int:
             raise TalosTeamCityE2EError(f"packagePath does not exist: {package_path}")
         print(f"{LOG_PREFIX} packageSource=local")
         print(f"{LOG_PREFIX} packagePath={package_path}")
-    elif explicit_build_number and not normalize_optional_value(args.package_build_id):
-        # 跳过构建模式：已知构建版本号时直接从文件服务器下载，无需 TeamCity API。
-        # Skip-build mode: download directly from file server by known build.number, no TeamCity API call.
-        print(f"{LOG_PREFIX} packageSource=file-server (skip-build, build.number={explicit_build_number})")
+    elif explicit_build_number:
+        # 跳过构建模式：指定了已知构建版本号时直接从文件服务器下载，无需 TeamCity API 调用。
+        # 当 --package-build-id 和 --package-build-number 同时给出时，以版本号为准，build-id 仅作日志信息使用。
+        # Skip-build mode: explicit build number is the highest priority; downloads directly from file server.
+        # When both --package-build-id and --package-build-number are given, the number wins and no TC API is called.
+        explicit_build_id_log = normalize_optional_value(args.package_build_id)
+        source_info = f"skip-build, build.number={explicit_build_number}"
+        if explicit_build_id_log:
+            source_info = f"skip-build, buildId={explicit_build_id_log}, build.number={explicit_build_number}"
+        print(f"{LOG_PREFIX} packageSource=file-server ({source_info})")
         downloaded_path = download_package_from_build(
             profile=profile,
             build_number=explicit_build_number,
