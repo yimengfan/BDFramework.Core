@@ -89,6 +89,23 @@ def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
     assert "method.Invoke(null, new object[] { 10002 });" in script_loader_content
 
 
+def test_bdframework_script_loader_primes_host_suites_before_talos_auto_launch() -> None:
+    """验证 ScriptLoder 会在强制 Talos 模式下先解析宿主侧 launch/BaseFlow 套件，再触发自动启动入口。
+    Verify that ScriptLoder resolves the host launch/BaseFlow suites under forced Talos mode before invoking the auto-launch entry.
+    """
+
+    script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
+
+    assert "TryPrimeTalosHostE2ESuites();" in script_loader_content
+    assert '"-talosForceE2E"' in script_loader_content
+    assert '"BDFramework.HostE2E.LaunchFlowHostTests"' in script_loader_content
+    assert '"BDFramework.HostE2E.BaseFlowHostRuntimeTests"' in script_loader_content
+    assert 'Type.GetType($"{typeName}, BDFramework.HostE2E", false)' in script_loader_content
+    assert script_loader_content.index("TryPrimeTalosHostE2ESuites();") < script_loader_content.index(
+        "method.Invoke(null, new object[] { 10002 });"
+    )
+
+
 def test_playwright_scripts_call_bdframework_owned_execute_methods() -> None:
     """验证本地 Playwright 启动脚本已经切到 BDFramework 自己的 executeMethod 入口。
     Verify that local Playwright launcher scripts now call BDFramework-owned executeMethod entries.
