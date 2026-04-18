@@ -12,7 +12,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// AOT 界面 没办法使用框架加成
+/// AOT 预配置界面。
+/// AOT preconfiguration screen.
+/// 该界面在资源下载与进入主流程前保留宿主侧可见入口，并在 Talos E2E 强制模式下由宿主显式桥接测试启动。
+/// This screen keeps the host-owned visible entry before resource download and main-flow launch, and explicitly bridges Talos E2E startup from host code in forced mode.
 /// </summary>
 public class WindowPreconfig : MonoBehaviour
 {
@@ -25,7 +28,10 @@ public class WindowPreconfig : MonoBehaviour
     private Button btn_ClearPersistent;
     ServerConfigProcessor.Config serverConfig;
     /// <summary>
-    /// 开始
+    /// 预配置界面启动入口。
+    /// Startup entry for the preconfiguration screen.
+    /// 负责绑定 UI、加载服务器配置，并在 `-talosForceE2E` 模式下显式触发 Talos E2E 自动启动入口。
+    /// It binds UI, loads server configuration, and explicitly triggers the Talos E2E auto-start entry when `-talosForceE2E` is present.
     /// </summary>
     void Start()
     {
@@ -59,7 +65,8 @@ public class WindowPreconfig : MonoBehaviour
 
         if (System.Environment.GetCommandLineArgs().Any(arg => string.Equals(arg, "-talosForceE2E", System.StringComparison.OrdinalIgnoreCase)))
         {
-            Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 保持可见，E2E TCP 应已在 ScriptLoder.Init 阶段启动");
+            Talos.E2E.E2EAutoInit.CheckAndLaunch();
+            Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 保持可见，宿主已显式调用 E2EAutoInit.CheckAndLaunch");
         }
     }
 
