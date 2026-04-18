@@ -180,8 +180,8 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
-        /// 验证 AOT 启动阶段会先装载框架与 firstpass 热更程序集，再装载 Assembly-CSharp，避免由文件枚举顺序触发 placeholder assembly 重载异常。
-        /// Verify that AOT startup loads the framework and firstpass hotfix assemblies before Assembly-CSharp so file-enumeration order cannot trigger placeholder-assembly reload failures.
+        /// 验证 AOT 启动阶段会先装载框架与 firstpass 热更程序集，再装载 Assembly-CSharp，并在单个热更文件缺失时跳过告警继续后续装载。
+        /// Verify that AOT startup loads the framework and firstpass hotfix assemblies before Assembly-CSharp and skips forward with a warning when a single hotfix file is missing.
         /// </summary>
         public static void VerifyScriptLoderAOTHotfixAssemblyLoadOrderContract()
         {
@@ -223,6 +223,40 @@ namespace BDFramework.RuntimeTests.Contracts
                 new[] { "BDFramework.Core", "Assembly-CSharp-firstpass", "Assembly-CSharp", "Game.Hotfix" },
                 loadOrder,
                 "热更程序集应按稳定依赖顺序装载，避免 Assembly-CSharp 早于其依赖被装载。"
+            );
+
+            var loadOrderWithMissingFirstpass = new List<string>();
+            helperMethod.Invoke(
+                null,
+                new object[]
+                {
+                    new[]
+                    {
+                        "android/script/hotfix/Assembly-CSharp.zlua.bytes",
+                        "android/script/hotfix/BDFramework.Core.zlua.bytes",
+                        "android/script/hotfix/Assembly-CSharp-firstpass.zlua.bytes",
+                        "android/script/hotfix/Game.Hotfix.zlua.bytes"
+                    },
+                    (Func<string, byte[]>)(path =>
+                    {
+                        if (path.EndsWith("Assembly-CSharp-firstpass.zlua.bytes", StringComparison.OrdinalIgnoreCase))
+                        {
+                            throw new DirectoryNotFoundException(path);
+                        }
+
+                        return new byte[] { 1 };
+                    }),
+                    (Action<string, byte[]>)((path, _) =>
+                    {
+                        loadOrderWithMissingFirstpass.Add(
+                            Path.GetFileName(path).Replace(".zlua.bytes", string.Empty, StringComparison.OrdinalIgnoreCase));
+                    })
+                });
+
+            EnsureSequenceEqual(
+                new[] { "BDFramework.Core", "Assembly-CSharp", "Game.Hotfix" },
+                loadOrderWithMissingFirstpass,
+                "单个热更文件缺失时，应跳过该文件并继续后续程序集装载，避免把整条启动链直接打断。"
             );
         }
 

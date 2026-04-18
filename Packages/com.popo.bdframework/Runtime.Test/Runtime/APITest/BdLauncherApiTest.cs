@@ -44,8 +44,8 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
-        /// 验证 AOT 启动阶段装载热更程序集时，会先装载框架与 firstpass，再装载 Assembly-CSharp。
-        /// Verify that AOT startup loads the framework and firstpass assemblies before Assembly-CSharp.
+        /// 验证 AOT 启动阶段装载热更程序集时，会先装载框架与 firstpass，再装载 Assembly-CSharp，并在单个热更文件缺失时继续后续装载。
+        /// Verify that AOT startup loads the framework and firstpass assemblies before Assembly-CSharp and continues with remaining assemblies when one hotfix file is missing.
         /// </summary>
         public void LoadHotfixAssemblies_ShouldRespectKnownDependencyOrder()
         {

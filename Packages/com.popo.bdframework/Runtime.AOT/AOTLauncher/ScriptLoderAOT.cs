@@ -162,10 +162,12 @@ namespace BDFramework
         /// <summary>
         /// 按稳定依赖顺序装载热更程序集，避免 Unity 在首次失败后留下 placeholder assembly，导致同名程序集无法再次装载。
         /// Load hotfix assemblies in a stable dependency order so Unity does not leave a placeholder assembly after the first failure, which would prevent the same assembly from being loaded again.
-        /// 当前仓库在 HybridCLR 下会把 <c>BDFramework.Core</c>、<c>Assembly-CSharp-firstpass</c> 与 <c>Assembly-CSharp</c>
+        /// 当前仓库在 HybridCLR 下通常会把 <c>BDFramework.Core</c>、<c>Assembly-CSharp-firstpass</c> 与 <c>Assembly-CSharp</c>
         /// 一起作为热更程序集发布；其中主工程脚本常依赖前两个程序集，因此运行时必须先装载框架与 firstpass，再装载主工程程序集。
-        /// In this repository HybridCLR publishes <c>BDFramework.Core</c>, <c>Assembly-CSharp-firstpass</c>, and <c>Assembly-CSharp</c>
+        /// 某些打包链路会在文件枚举后清理或漏拷单个热更文件，因此这里还需要把单文件缺失收敛成告警并继续后续装载，避免一个缺失文件把整条启动链直接打断。
+        /// In this repository HybridCLR usually publishes <c>BDFramework.Core</c>, <c>Assembly-CSharp-firstpass</c>, and <c>Assembly-CSharp</c>
         /// together as hotfix assemblies; the main project scripts commonly depend on the first two, so runtime must load the framework and firstpass assemblies before the main project assembly.
+        /// Some packaging flows can delete or miss a single hotfix file after enumeration, so this method also normalizes a per-file miss into a warning and continues loading the remaining assemblies instead of aborting the whole startup chain.
         /// </summary>
         /// <param name="hotfixDlls">待装载的热更程序集路径列表。</param>
         /// <param name="hotfixDlls">Paths of the hotfix assemblies that still need to be loaded.</param>
@@ -183,7 +185,26 @@ namespace BDFramework
 
             foreach (var hotfixDll in orderedHotfixDlls)
             {
-                loadHotfixAssembly(hotfixDll, readDllBytes(hotfixDll));
+                byte[] dllBytes;
+
+                // 阶段 1：如果单个热更文件在枚举后被清理或根本未落盘，则记录告警并继续后续程序集，避免整个启动链被一个缺失文件打断。
+                // Phase 1: If a single hotfix file is cleaned up after enumeration or never lands on disk, log a warning and continue with the remaining assemblies so one missing file does not abort the whole startup chain.
+                try
+                {
+                    dllBytes = readDllBytes(hotfixDll);
+                }
+                catch (FileNotFoundException)
+                {
+                    Debug.LogWarning($"【AOT.Load】热更程序集缺失，跳过:{hotfixDll}");
+                    continue;
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    Debug.LogWarning($"【AOT.Load】热更程序集目录缺失，跳过:{hotfixDll}");
+                    continue;
+                }
+
+                loadHotfixAssembly(hotfixDll, dllBytes);
             }
         }
 
