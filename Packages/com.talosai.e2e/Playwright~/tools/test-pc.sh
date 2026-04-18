@@ -17,6 +17,7 @@
 #   EXE_PATH    — 可执行文件路径（或通过 --exe 参数）
 #   UNITY_HOST  — 应用 IP 地址，默认 127.0.0.1
 #   UNITY_PORT  — TCP 端口，默认 10002
+#   TALOS_UNITY_TCP_TIMEOUT — TCP 就绪等待秒数，默认 180
 #   NODE_BIN / NPM_BIN / TALOS_NODEJS_HOME — 可选：显式指定 Node/npm 安装位置
 # ============================================================================
 
@@ -159,7 +160,9 @@ fi
 # ======== 等待 TCP 服务就绪 ========
 echo ""
 echo ">>> 等待 Unity E2E TCP 服务就绪..."
-MAX_WAIT=60
+# TeamCity Windows agent 上的冷启动往往慢于本地；默认对齐 Android 的 180s，并允许环境变量覆盖。
+# Cold starts on TeamCity Windows agents are often slower than local runs; default to 180s like Android and allow an environment override.
+MAX_WAIT="${TALOS_UNITY_TCP_TIMEOUT:-180}"
 WAITED=0
 
 while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do

@@ -4,10 +4,12 @@ Talos PC launcher script tests.
 覆盖范围：
 1. Windows/macOS 共用桌面脚本会为 player 注入 Talos E2E 与窗口模式参数。
 2. 启动脚本会复用解析后的 Node CLI 执行 Playwright，而不是依赖外部 npx。
+3. 桌面脚本允许通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限。
 
 Coverage:
 1. The shared desktop launcher script injects Talos E2E and window-mode arguments for player startup.
 2. The launcher script reuses the resolved Node CLI to run Playwright instead of relying on external npx.
+3. The desktop launcher allows overriding the TCP readiness timeout through TALOS_UNITY_TCP_TIMEOUT.
 """
 
 from __future__ import annotations
@@ -177,3 +179,108 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
         str(playwright_root / "test-results" / "junit.xml"),
     ]
     assert npm_args_path.read_text(encoding="utf-8").strip() == "install"
+
+
+def test_test_pc_honours_unity_tcp_timeout_override(tmp_path: Path) -> None:
+    """验证桌面脚本支持通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限。
+    Verify that the desktop script supports overriding the TCP readiness wait limit through TALOS_UNITY_TCP_TIMEOUT.
+    """
+    playwright_root = tmp_path / "PlaywrightRoot"
+    tools_dir = playwright_root / "tools"
+    tools_dir.mkdir(parents=True)
+    (playwright_root / "test-results").mkdir(parents=True)
+
+    copied_test_pc = tools_dir / "test-pc.sh"
+    copied_node_tools = tools_dir / "node-tools.sh"
+    copy_tool_script(SOURCE_TEST_PC, copied_test_pc)
+    copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+
+    fake_launcher = tmp_path / "Launcher.exe"
+    write_executable(
+        fake_launcher,
+        "\n".join(
+            [
+                "#!/bin/bash",
+                "set -euo pipefail",
+                "trap 'exit 0' TERM INT",
+                "while true; do",
+                "  sleep 1",
+                "done",
+            ]
+        )
+        + "\n",
+    )
+
+    fake_bin_dir = tmp_path / "fake-bin"
+    fake_bin_dir.mkdir()
+    write_executable(
+        fake_bin_dir / "nc",
+        "\n".join(
+            [
+                "#!/bin/bash",
+                "exit 1",
+            ]
+        )
+        + "\n",
+    )
+
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
+    playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
+    write_executable(
+        node_home / "node.exe",
+        "\n".join(
+            [
+                "#!/bin/bash",
+                "set -euo pipefail",
+                "if [[ \"${1:-}\" == \"-e\" ]]; then",
+                "  if [[ $# -gt 2 ]]; then",
+                "    exit 1",
+                "  fi",
+                "  exit 0",
+                "fi",
+                "exit 0",
+            ]
+        )
+        + "\n",
+    )
+    write_executable(
+        node_home / "npm.cmd",
+        "\n".join(
+            [
+                "#!/bin/bash",
+                "set -euo pipefail",
+                f"mkdir -p {playwright_cli_path.parent}",
+                f"cat <<'EOF' > {playwright_cli_path}",
+                "console.log('stub playwright cli');",
+                "EOF",
+            ]
+        )
+        + "\n",
+    )
+
+    result = subprocess.run(
+        [
+            "/bin/bash",
+            str(copied_test_pc),
+            "--exe",
+            str(fake_launcher),
+            "--port",
+            "12345",
+            "--host",
+            "127.0.0.1",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(playwright_root),
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
+            "TALOS_NODEJS_HOME": str(node_home),
+            "TALOS_UNITY_TCP_TIMEOUT": "2",
+        },
+        timeout=15,
+    )
+
+    assert result.returncode != 0
+    assert "等待 TCP 服务超时 (2s)" in result.stdout

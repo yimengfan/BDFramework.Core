@@ -5,8 +5,8 @@ Talos WindowPreconfig stage regression tests.
 Coverage:
 1. 预配置界面仍然会识别 -talosForceE2E 模式并打印阶段日志。
 1. The preconfiguration screen must still recognise -talosForceE2E mode and emit a stage log.
-2. 宿主代码必须显式调用 E2EAutoInit.CheckAndLaunch，避免 Player 端只靠反射发现导致程序集被裁剪。
-2. Host code must explicitly call E2EAutoInit.CheckAndLaunch so player builds do not rely on reflection-only discovery that can strip the assembly.
+2. 宿主代码必须显式根引用 BDFramework.Test 程序集，并调用 E2EAutoInit.CheckAndLaunch，避免 Player 端缺少测试程序集或只靠反射发现导致程序集被裁剪。
+2. Host code must explicitly root the BDFramework.Test assembly and call E2EAutoInit.CheckAndLaunch so player builds do not lose the test assembly or rely on reflection-only discovery that can strip assemblies.
 3. 该界面不能再因为 Talos 参数自动跳过，否则无法覆盖预配置界面的 UI 测试内容。
 3. The screen must not auto-skip because of Talos flags, otherwise the preconfiguration UI tests lose coverage.
 """
@@ -28,7 +28,10 @@ def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None
 
     assert '"-talosForceE2E"' in content
     assert "WindowPreconfig 保持可见" in content
+    assert "typeof(BDFramework.Test.E2E.LaunchTests).Assembly" in content
+    assert "宿主已绑定 E2E 测试程序集" in content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" in content
     assert "宿主已显式调用 E2EAutoInit.CheckAndLaunch" in content
     assert "ShouldAutoLaunchForTalosE2E" not in content
     assert "跳过预配置界面并直接进入框架启动" not in content
+
