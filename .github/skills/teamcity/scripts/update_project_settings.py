@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-"""TeamCity Web API 辅助脚本。
+"""TeamCity Web API 辅助脚本。 TeamCity Web API helper script.
 
-用途：
-1. 读取指定 project 的当前信息与 Versioned Settings。
-2. 导出当前 Versioned Settings，作为后续修改的基线。
-3. 读取用户自定义 JSON，再通过 Web API PUT 回 TeamCity。
-4. 更新后立即再次读取并打印关键字段，便于确认是否已经从 VCS 设置生效。
+用途 / Purpose:
+1. 读取指定 project 的当前信息与 Versioned Settings。 Read the current project metadata and Versioned Settings.
+2. 导出当前 Versioned Settings，作为后续修改的基线。 Export the current Versioned Settings as the update baseline.
+3. 读取用户自定义 JSON，再通过 Web API PUT 回 TeamCity。 Load user-provided JSON and PUT it back through the Web API.
+4. 更新后立即再次读取并打印关键字段，便于确认是否已经从 VCS 设置生效。 Re-read key fields after updates so VCS-backed settings activation can be verified immediately.
 
-安全约束：
-- 不在仓库中保存真实密钥。
-- 优先通过 TEAMCITY_TOKEN 使用 Bearer Token。
-- 如果必须使用账号密码，请在本地 .env 中填写，不要提交到 Git。
+安全约束 / Security constraints:
+- 不在仓库中保存真实密钥。 Never persist real secrets in the repository.
+- 优先通过 TEAMCITY_TOKEN 使用 Bearer Token。 Prefer TEAMCITY_TOKEN as a Bearer token.
+- 如果必须使用账号密码，请在本地 .env 中填写，不要提交到 Git。 If basic auth is required, keep credentials in a local .env file and never commit them.
 """
 
 import argparse
@@ -869,6 +869,37 @@ def resolve_single_build_type_id(raw_build_type_ids: list[str]) -> str:
     return build_type_ids[0]
 
 
+def merge_queue_properties_with_ci_credentials(
+    config: TeamCityConfig,
+    properties: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """为排队构建补齐当前会话凭据，同时保留显式传入属性优先级。 Inject current-session CI credentials into queued builds while preserving explicit caller overrides."""
+
+    merged_properties = list(properties)
+    property_names = {
+        (property_item.get("name") or "").strip()
+        for property_item in properties
+        if isinstance(property_item, dict)
+    }
+
+    if config.token and "env.TEAMCITY_TOKEN" not in property_names:
+        merged_properties.append({"name": "env.TEAMCITY_TOKEN", "value": config.token})
+        property_names.add("env.TEAMCITY_TOKEN")
+
+    if not config.token and config.username and config.password:
+        if "env.TEAMCITY_USERNAME" not in property_names:
+            merged_properties.append(
+                {"name": "env.TEAMCITY_USERNAME", "value": config.username}
+            )
+            property_names.add("env.TEAMCITY_USERNAME")
+        if "env.TEAMCITY_PASSWORD" not in property_names:
+            merged_properties.append(
+                {"name": "env.TEAMCITY_PASSWORD", "value": config.password}
+            )
+
+    return merged_properties
+
+
 def queue_build(
     config: TeamCityConfig,
     *,
@@ -878,10 +909,13 @@ def queue_build(
     comment: str | None,
     tags: list[str],
 ) -> QueuedBuildHandle:
+    """排队单个 TeamCity 构建，并把当前 API 会话凭据透传给远端 step。 Queue a single TeamCity build and forward the current API-session credentials to the remote step."""
+
+    resolved_properties = merge_queue_properties_with_ci_credentials(config, properties)
     payload = build_queue_payload(
         build_type_id=build_type_id,
         branch=branch,
-        properties=properties,
+        properties=resolved_properties,
         comment=comment,
         tags=tags,
     )

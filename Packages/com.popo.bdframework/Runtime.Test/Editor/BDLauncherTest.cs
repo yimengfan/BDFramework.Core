@@ -11,9 +11,9 @@ namespace Runtime.Test.Editor
     /// 启动器 Runtime API 套件的编辑器 BatchMode 桥接器。
     /// Editor BatchMode bridge for the launcher runtime API suite.
     /// 该桥接器不再承载编辑器侧 NUnit 测试所有权；它只在本地验证脚本需要 <c>-executeMethod</c> 入口时，
-    /// 顺序调用 Runtime.Test/Runtime/APITest 下的启动器、AOT 启动、缺失 BDebug 补挂与热更装载顺序断言并写出稳定报告。
+    /// 顺序调用 Runtime.Test/Runtime/APITest 下的启动器、AOT 启动、缺失 BDebug 补挂、热更装载顺序与 E2E 运行时桥接断言并写出稳定报告。
     /// This bridge no longer owns editor-side NUnit tests; it only provides a stable <c>-executeMethod</c> entrypoint for local verification scripts,
-    /// sequentially invoking the launcher, AOT-startup, missing-BDebug restoration, and hotfix-load-order assertions under Runtime.Test/Runtime/APITest and writing a stable report.
+    /// sequentially invoking the launcher, AOT-startup, missing-BDebug restoration, hotfix-load-order, and E2E runtime-bridge assertions under Runtime.Test/Runtime/APITest and writing a stable report.
     /// </summary>
     public static class BdLauncherBatchBridge
     {
@@ -27,8 +27,8 @@ namespace Runtime.Test.Editor
         {
             ApiTestLog.LogTestPurposeAndMeans(
                 nameof(BdLauncherBatchBridge),
-                "验证启动器反射契约、AOT 启动 StreamingAssets 与热更装载顺序规则、缺失 BDebug 补挂策略、默认执行顺序与 E2E 自动检测入口保持稳定。",
-                "顺序执行 Runtime APITest 启动器、AOT 启动、缺失 BDebug 补挂与热更装载顺序断言，写出批验证报告，并使用显式退出码反馈结果。"
+                "验证启动器反射契约、AOT 启动 StreamingAssets 与热更装载顺序规则、缺失 BDebug 补挂策略、默认执行顺序与 E2E 自动检测入口运行时可达规则保持稳定。",
+                "顺序执行 Runtime APITest 启动器、AOT 启动、缺失 BDebug 补挂、热更装载顺序与 E2E 运行时桥接断言，写出批验证报告，并使用显式退出码反馈结果。"
             );
             UnityDebug.Log("[测试进度] suite=BdLauncherBatchBridge stage=start");
 
@@ -73,11 +73,11 @@ namespace Runtime.Test.Editor
                         runtimeTest.BDLauncher_ShouldDeclareMinimumDefaultExecutionOrder)
                 ),
                 (
-                    nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldUseConditionalDebugAttribute),
+                    nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldRemainRuntimeReachable),
                     () => ExecuteWithSetUp(
                         runtimeTest,
-                        nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldUseConditionalDebugAttribute),
-                        runtimeTest.TryStartE2EFramework_ShouldUseConditionalDebugAttribute)
+                        nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldRemainRuntimeReachable),
+                        runtimeTest.TryStartE2EFramework_ShouldRemainRuntimeReachable)
                 ),
             };
 

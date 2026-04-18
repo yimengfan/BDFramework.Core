@@ -77,6 +77,18 @@ def test_bdframework_owns_talos_e2e_execute_method_entries() -> None:
     assert "AdditionalMarkerDirectoriesProvider" not in script_loader_content
 
 
+def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
+    """验证 ScriptLoder 保持 Talos 运行时桥接且不再依赖 Conditional(DEBUG) 裁剪。
+    Verify that ScriptLoder keeps the Talos runtime bridge and no longer relies on Conditional(DEBUG) stripping.
+    """
+
+    script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
+
+    assert "TryStartE2EFramework();" in script_loader_content
+    assert '[System.Diagnostics.Conditional("DEBUG")]' not in script_loader_content
+    assert "method.Invoke(null, new object[] { 10002 });" in script_loader_content
+
+
 def test_playwright_scripts_call_bdframework_owned_execute_methods() -> None:
     """验证本地 Playwright 启动脚本已经切到 BDFramework 自己的 executeMethod 入口。
     Verify that local Playwright launcher scripts now call BDFramework-owned executeMethod entries.

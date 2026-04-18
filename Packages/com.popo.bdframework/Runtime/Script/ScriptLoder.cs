@@ -172,14 +172,15 @@ namespace BDFramework
          /// <summary>
          /// 尝试桥接 Talos E2E 自动检测入口。
          /// Try to bridge the Talos E2E auto-detection entrypoint.
-         /// 该入口必须使用 Conditional(DEBUG) 做编译期裁剪，避免 Release 非调试环境把 E2E 自动检测入口一起发布出去；
-         /// 当 DEBUG 生效时，是否真正启动 E2E 仍由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
-         /// This entry must use Conditional(DEBUG) for compile-time stripping so Release non-debug environments do not ship the E2E auto-detection entry;
-         /// when DEBUG is active, whether E2E actually starts is still decided later at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
+         /// 该入口必须在 Player 与真机场景中保持运行时可达，不能再依赖 Conditional(DEBUG) 的编译期裁剪；
+         /// 否则像 Windows 这样直接经由 ScriptLoder 启动的母包会静默丢失 Talos TCP 启动桥接。
+         /// This entry must remain runtime-reachable in player and packaged-device scenarios and can no longer rely on Conditional(DEBUG) compile-time stripping;
+         /// otherwise packaged players that boot directly through ScriptLoder, such as Windows, silently lose the Talos TCP startup bridge.
+         /// 是否真正启动 E2E 仍由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
+         /// Whether E2E actually starts is still decided at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
          /// 如果 Talos.E2E 包不存在，则静默跳过。
          /// If the Talos.E2E package is not present, the method exits quietly.
          /// </summary>
-        [System.Diagnostics.Conditional("DEBUG")]
         static private void TryStartE2EFramework()
         {
             try

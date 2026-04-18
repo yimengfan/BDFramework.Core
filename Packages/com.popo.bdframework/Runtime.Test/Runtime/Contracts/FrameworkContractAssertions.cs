@@ -78,10 +78,10 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
-        /// 验证 E2E 自动检测入口显式依赖编译期 DEBUG 条件裁剪。
-        /// Verify that the E2E auto-detection entry explicitly depends on compile-time DEBUG conditional stripping.
+        /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
+        /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>
-        public static void VerifyTryStartE2EFrameworkUsesConditionalDebugAttribute()
+        public static void VerifyTryStartE2EFrameworkRemainsRuntimeReachable()
         {
             var method = typeof(BDFramework.ScriptLoder).GetMethod(
                 "TryStartE2EFramework",
@@ -89,8 +89,8 @@ namespace BDFramework.RuntimeTests.Contracts
 
             EnsureTrue(method != null, "应该能够找到 ScriptLoder.TryStartE2EFramework 私有静态方法。");
             EnsureTrue(
-                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Length > 0,
-                "TryStartE2EFramework 必须使用 Conditional(DEBUG)，避免 Release 非调试环境把 E2E 自动检测入口发布出去。");
+                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Length == 0,
+                "TryStartE2EFramework 不能再依赖 Conditional(DEBUG)；Windows 等直接经由 ScriptLoder 启动的 Player 母包需要在运行时保留 Talos E2E 启动桥接。");
         }
 
         /// <summary>

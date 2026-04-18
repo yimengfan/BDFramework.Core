@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""验证 TeamCity 主脚本的调度与重试行为。"""
+"""验证 TeamCity 主脚本的调度与重试行为。 Verify TeamCity helper dispatch and retry behavior."""
 
 from io import BytesIO
 from pathlib import Path
@@ -26,6 +26,7 @@ from update_project_settings import (
     build_queue_payload,
     build_queue_tags,
     build_dispatch_plan,
+    merge_queue_properties_with_ci_credentials,
     parse_build_tags,
     parse_build_type_ids,
 )
@@ -129,6 +130,53 @@ def test_build_queue_payload_includes_comment_and_tags() -> None:
             ]
         },
     }
+
+
+def test_merge_queue_properties_with_ci_credentials_injects_token_when_missing() -> None:
+    """验证 run-build 默认会把当前 TEAMCITY_TOKEN 透传给远端构建。 Verify run-build forwards the current TEAMCITY_TOKEN to queued builds by default."""
+
+    merged_properties = merge_queue_properties_with_ci_credentials(
+        make_config(),
+        [{"name": "build.client.version", "value": "0.1"}],
+    )
+
+    assert merged_properties == [
+        {"name": "build.client.version", "value": "0.1"},
+        {"name": "env.TEAMCITY_TOKEN", "value": "token"},
+    ]
+
+
+def test_merge_queue_properties_with_ci_credentials_keeps_explicit_token_override() -> None:
+    """验证显式传入的 env.TEAMCITY_TOKEN 不会被 helper 自动覆盖。 Verify an explicit env.TEAMCITY_TOKEN property is never overwritten by the helper."""
+
+    merged_properties = merge_queue_properties_with_ci_credentials(
+        make_config(),
+        [{"name": "env.TEAMCITY_TOKEN", "value": "manual-token"}],
+    )
+
+    assert merged_properties == [
+        {"name": "env.TEAMCITY_TOKEN", "value": "manual-token"}
+    ]
+
+
+def test_merge_queue_properties_with_ci_credentials_falls_back_to_basic_auth() -> None:
+    """验证没有 token 时 helper 会退回透传账号密码变量。 Verify the helper falls back to username and password properties when no token is available."""
+
+    config = TeamCityConfig(
+        base_url="http://svn.funtoo.games",
+        project_id="BDFrameworkCore",
+        token=None,
+        username="user",
+        password="pass",
+        output_dir=Path("/tmp/teamcityskill-tests"),
+    )
+
+    merged_properties = merge_queue_properties_with_ci_credentials(config, [])
+
+    assert merged_properties == [
+        {"name": "env.TEAMCITY_USERNAME", "value": "user"},
+        {"name": "env.TEAMCITY_PASSWORD", "value": "pass"},
+    ]
 
 
 def test_build_dispatch_plan_prefers_parallel_when_idle_agents_cover_all_builds() -> None:

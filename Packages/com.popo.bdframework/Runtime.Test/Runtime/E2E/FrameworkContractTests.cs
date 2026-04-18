@@ -40,15 +40,15 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
-        /// 验证 E2E 自动检测入口依赖编译期 DEBUG 裁剪。
-        /// Verify that the E2E auto-detection entry depends on compile-time DEBUG stripping.
+        /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
+        /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>
         [E2ETest(suite: "framework-contract", order: 3, des: "launcher-e2e-contract")]
         public static void LauncherE2EEntryContract()
         {
             var test = new BdLauncherApiTest();
             test.SetUp(nameof(LauncherE2EEntryContract));
-            test.TryStartE2EFramework_ShouldUseConditionalDebugAttribute();
+            test.TryStartE2EFramework_ShouldRemainRuntimeReachable();
         }
 
         /// <summary>
