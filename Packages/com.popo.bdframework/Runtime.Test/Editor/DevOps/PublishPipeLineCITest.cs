@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -84,6 +85,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
+                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
+                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
                 (nameof(HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                     testInstance.HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
@@ -320,6 +323,82 @@ namespace BDFramework.EditorTest.DevOps
             Assert.That(disabledReason, Does.Contain("hybridClrEnabled=False"));
             Assert.That(shouldPrepareWhenGlobalIl2cpp, Is.False);
             Assert.That(globalReason, Does.Contain("useGlobalIl2cpp=True"));
+        }
+
+        /// <summary>
+        /// 验证 HybridCLR 预处理会先于 Debug 母包的 EditorUserBuildSettings 覆盖执行。
+        /// Verify that HybridCLR prebuild runs before the debug package overrides EditorUserBuildSettings.
+        /// 这覆盖 Android stripped-AOT 临时构建的回归场景：预处理阶段应看到未污染的默认全局开关，
+        /// 而正式母包构建阶段才应启用 development、debugging、profiler 与 deep profiling。
+        /// This covers the Android stripped-AOT regression: the prebuild phase should observe clean default global flags,
+        /// while the final package-build phase should enable development, debugging, profiler, and deep profiling only afterwards.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var previousDevelopment = EditorUserBuildSettings.development;
+            var previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
+            var previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
+            var previousDeepProfiling = EditorUserBuildSettings.buildWithDeepProfilingSupport;
+            var preBuildSnapshots = new List<(bool Development, bool AllowDebugging, bool ConnectProfiler, bool DeepProfiling)>();
+
+            try
+            {
+                EditorUserBuildSettings.development = false;
+                EditorUserBuildSettings.allowDebugging = false;
+                EditorUserBuildSettings.connectProfiler = false;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
+
+                var scope = (IDisposable)helperMethod.Invoke(
+                    null,
+                    new object[]
+                    {
+                        BuildTools_ClientPackage.BuildMode.Debug,
+                        true,
+                        "test-hybridclr-order",
+                        BuildTarget.Android,
+                        (Action<BuildTarget>)(_ =>
+                        {
+                            preBuildSnapshots.Add((
+                                EditorUserBuildSettings.development,
+                                EditorUserBuildSettings.allowDebugging,
+                                EditorUserBuildSettings.connectProfiler,
+                                EditorUserBuildSettings.buildWithDeepProfilingSupport));
+                        })
+                    });
+
+                Assert.That(preBuildSnapshots, Has.Count.EqualTo(1));
+                Assert.That(preBuildSnapshots[0].Development, Is.False);
+                Assert.That(preBuildSnapshots[0].AllowDebugging, Is.False);
+                Assert.That(preBuildSnapshots[0].ConnectProfiler, Is.False);
+                Assert.That(preBuildSnapshots[0].DeepProfiling, Is.False);
+
+                using (scope)
+                {
+                    Assert.That(EditorUserBuildSettings.development, Is.True);
+                    Assert.That(EditorUserBuildSettings.allowDebugging, Is.True);
+                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.True);
+                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.True);
+                }
+
+                Assert.That(EditorUserBuildSettings.development, Is.False);
+                Assert.That(EditorUserBuildSettings.allowDebugging, Is.False);
+                Assert.That(EditorUserBuildSettings.connectProfiler, Is.False);
+                Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False);
+            }
+            finally
+            {
+                EditorUserBuildSettings.development = previousDevelopment;
+                EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
+                EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
         }
 
         /// <summary>

@@ -19,8 +19,10 @@ using Debug = UnityEngine.Debug;
 namespace BDFramework.Editor.BuildPipeline
 {
     /// <summary>
-    /// 构建包体工具
-    /// 这里是第一次构建母包
+    /// 构建包体工具。
+    /// Package build tool.
+    /// 这里负责母包构建主流程，包括配置装载、HybridCLR 预处理、资源拷贝与最终 BuildPlayer 调用。
+    /// This type owns the primary package-build flow, including config loading, HybridCLR prebuild, asset copying, and the final BuildPlayer call.
     /// </summary>
     static public class BuildTools_ClientPackage
     {
@@ -179,6 +181,45 @@ namespace BDFramework.Editor.BuildPipeline
                 baseConfig != null ? (AssetLoadPathType?)baseConfig.CodeRoot : null,
                 baseConfig != null ? (HotfixCodeRunMode?)baseConfig.CodeRunMode : null,
                 out reason);
+        }
+
+        /// <summary>
+        /// 先执行 HybridCLR 预处理，再创建正式母包构建阶段需要的 EditorUserBuildSettings 覆盖作用域。
+        /// Run HybridCLR prebuild first, then create the EditorUserBuildSettings override scope required by the real package build phase.
+        /// HybridCLR 的临时 stripped-AOT 构建依赖稳定的默认 EditorUserBuildSettings；
+        /// 如果过早把 Debug 包的 profiler、debugging 与 deep profiling 开关写入全局状态，第三方内部 BuildPlayer 会继承这些调试标记并在 CI 上失败。
+        /// HybridCLR's temporary stripped-AOT build depends on stable default EditorUserBuildSettings;
+        /// if debug-package profiler, debugging, and deep-profiling flags are written into the global state too early,
+        /// the third-party internal BuildPlayer inherits those debug markers and can fail on CI.
+        /// </summary>
+        /// <param name="buildMode">正式母包构建模式。</param>
+        /// <param name="buildMode">Final package build mode.</param>
+        /// <param name="shouldPrepareHybridClr">是否需要执行 HybridCLR 预处理。</param>
+        /// <param name="shouldPrepareHybridClr">Whether HybridCLR prebuild should run.</param>
+        /// <param name="hybridClrPrepareReason">HybridCLR 预处理判定原因。</param>
+        /// <param name="hybridClrPrepareReason">Reason describing the HybridCLR prebuild decision.</param>
+        /// <param name="buildTarget">目标平台。</param>
+        /// <param name="buildTarget">Target platform.</param>
+        /// <param name="hybridClrPreBuildAction">可选的 HybridCLR 预处理委托，默认调用 <c>HyCLREditorTools.PreBuild</c>。</param>
+        /// <param name="hybridClrPreBuildAction">Optional HybridCLR prebuild delegate, defaulting to <c>HyCLREditorTools.PreBuild</c>.</param>
+        /// <returns>供正式母包构建阶段使用的 EditorUserBuildSettings 作用域。</returns>
+        /// <returns>An EditorUserBuildSettings scope for the final package build phase.</returns>
+        static IDisposable PrepareHybridClrAndCreateBuildPlayerSettingsScope(
+            BuildMode buildMode,
+            bool shouldPrepareHybridClr,
+            string hybridClrPrepareReason,
+            BuildTarget buildTarget,
+            Action<BuildTarget> hybridClrPreBuildAction = null)
+        {
+            Debug.Log($"【BuildPackage】 HybridCLR 预处理判定 => shouldPrepare:{shouldPrepareHybridClr} reason:{hybridClrPrepareReason}");
+            if (shouldPrepareHybridClr)
+            {
+                Debug.Log($"【BuildPackage】 开始执行 HybridCLR 预处理: {hybridClrPrepareReason}");
+                (hybridClrPreBuildAction ?? HyCLREditorTools.PreBuild)(buildTarget);
+                Debug.Log("【BuildPackage】 HybridCLR 预处理完成");
+            }
+
+            return new BuildPlayerSettingsScope(buildMode);
         }
 
         static BuildTargetGroup ResolveBuildTargetGroup(BuildTarget buildTarget)
@@ -392,8 +433,10 @@ namespace BDFramework.Editor.BuildPipeline
         static public bool IsBuilding { get; private set; } = false;
 
         /// <summary>
-        /// 构建包体，使用当前配置、资源
-        /// 这里默认建议使用单场景结构打包.
+        /// 构建包体，使用当前配置、资源。
+        /// Build the package with the current config and assets.
+        /// 这里默认建议使用单场景结构打包。
+        /// This flow assumes the single-scene package-build layout by default.
         /// </summary>
         static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll, string clientVersion = null)
         {
@@ -484,7 +527,7 @@ namespace BDFramework.Editor.BuildPipeline
             var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
             BuildConfigOverrideContext configOverrideContext = null;
-            BuildPlayerSettingsScope buildPlayerSettingsScope = null;
+            IDisposable buildPlayerSettingsScope = null;
             var isAssetEditing = false;
             bool buildResult = false;
             string outputpath = "";
@@ -496,16 +539,12 @@ namespace BDFramework.Editor.BuildPipeline
                 //0.加载场景配置
                 BDebug.Log($"===>1.加载场景配置(母包版本:{clientVersion})", Color.yellow );
                 configOverrideContext = LoadConfig(buildScene, buildConfig, clientVersion);
-                buildPlayerSettingsScope = new BuildPlayerSettingsScope(buildMode);
-
                 var shouldPrepareHybridClr = ShouldPrepareHybridClrForBuild(buildTargetGroup, out var hybridClrPrepareReason);
-                Debug.Log($"【BuildPackage】 HybridCLR 预处理判定 => shouldPrepare:{shouldPrepareHybridClr} reason:{hybridClrPrepareReason}");
-                if (shouldPrepareHybridClr)
-                {
-                    Debug.Log($"【BuildPackage】 开始执行 HybridCLR 预处理: {hybridClrPrepareReason}");
-                    HyCLREditorTools.PreBuild(buildTarget);
-                    Debug.Log("【BuildPackage】 HybridCLR 预处理完成");
-                }
+                buildPlayerSettingsScope = PrepareHybridClrAndCreateBuildPlayerSettingsScope(
+                    buildMode,
+                    shouldPrepareHybridClr,
+                    hybridClrPrepareReason,
+                    buildTarget);
                 //1.生成资源到Devops
                 BDebug.Log("===>2.生成资产", Color.yellow );
                 var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
