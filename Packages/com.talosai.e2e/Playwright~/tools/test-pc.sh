@@ -110,6 +110,11 @@ PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-screen-fulls
 # 因此该分支只保留窗口化标记，把分辨率交回给系统默认值。
 # On Windows Git Bash + TeamCity Server 2022, fixed resolution plus popupwindow can stall the player before managed startup,
 # so that branch keeps only the windowed flag and lets the system default resolution win.
+if ${IS_WINDOWS_GIT_BASH}; then
+    # Windows TeamCity agent 不需要桌面输入，改用 batchmode 让 standalone player 跳过窗口交互初始化。
+    # The Windows TeamCity agent does not need desktop input, so batchmode lets the standalone player bypass window-interaction initialization.
+    PLAYER_LAUNCH_ARGS=("-batchmode" "${PLAYER_LAUNCH_ARGS[@]}")
+fi
 if ${IS_MACOS}; then
     PLAYER_LAUNCH_ARGS+=("-screen-width" "1280" "-screen-height" "720")
 elif ! ${IS_WINDOWS_GIT_BASH}; then
@@ -143,7 +148,7 @@ else
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
         APP_PID="$({
             powershell.exe -NoProfile -Command "\
-                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru; \
+                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-batchmode','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru; \
                 [Console]::Out.Write(\$proc.Id)\
             "
         } | tr -d '\r')"

@@ -3,13 +3,13 @@ Talos PC launcher script tests.
 
 覆盖范围：
 1. Windows/macOS 共用桌面脚本会为 player 注入 Talos E2E 参数，并在非 Windows Git Bash 桌面路径上附带窗口模式参数。
-2. Windows Git Bash 分支会改用更保守的启动参数，避免远端无头 agent 在图形初始化阶段卡死。
+2. Windows Git Bash 分支会改用 batchmode + 更保守的启动参数，避免远端无头 agent 在图形初始化阶段卡死。
 3. 启动脚本会复用解析后的 Node CLI 执行 Playwright，而不是依赖外部 npx。
 4. 桌面脚本允许通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限。
 
 Coverage:
 1. The shared desktop launcher script injects Talos E2E arguments and keeps window-mode arguments on non-Windows-Git-Bash desktop launches.
-2. The Windows Git Bash branch switches to a more conservative launch contract so remote headless agents do not stall during graphics initialization.
+2. The Windows Git Bash branch switches to batchmode plus a more conservative launch contract so remote headless agents do not stall during graphics initialization.
 3. The launcher script reuses the resolved Node CLI to run Playwright instead of relying on external npx.
 4. The desktop launcher allows overriding the TCP readiness timeout through TALOS_UNITY_TCP_TIMEOUT.
 """
@@ -288,14 +288,15 @@ def test_test_pc_honours_unity_tcp_timeout_override(tmp_path: Path) -> None:
     assert "等待 TCP 服务超时 (2s)" in result.stdout
 
 
-def test_test_pc_source_uses_conservative_windows_git_bash_launch_args() -> None:
-    """验证 Windows Git Bash 分支不再强制固定分辨率与 popupwindow。
-    Verify that the Windows Git Bash branch no longer forces fixed resolution or popupwindow.
+def test_test_pc_source_uses_batchmode_on_windows_git_bash() -> None:
+    """验证 Windows Git Bash 分支会开启 batchmode，并且不再强制固定分辨率与 popupwindow。
+    Verify that the Windows Git Bash branch enables batchmode and no longer forces fixed resolution or popupwindow.
     """
 
     content = SOURCE_TEST_PC.read_text(encoding="utf-8")
 
+    assert 'PLAYER_LAUNCH_ARGS=("-batchmode" "${PLAYER_LAUNCH_ARGS[@]}")' in content
     assert "elif ! ${IS_WINDOWS_GIT_BASH}; then" in content
     assert 'Start-Process -FilePath' in content
-    assert "@('-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}')" in content
+    assert "@('-batchmode','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}')" in content
     assert "@('-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-popupwindow','-logFile','${PLAYER_LOG_FILE_WIN}')" not in content
