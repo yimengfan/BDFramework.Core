@@ -202,7 +202,9 @@ def test_find_windows_launcher_prefers_launcher_name(tmp_path: Path) -> None:
 
 
 def test_prepare_local_package_extracts_windows_zip(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """验证 Windows 包体 zip 会按 package build 与当前 E2E run 隔离解压，并返回 Launcher.exe。"""
+    """验证 Windows 包体 zip 会落到短路径解压目录，并返回 Launcher.exe。
+    Verify that a Windows package zip is extracted under the shortened path layout and returns Launcher.exe.
+    """
     profile = runner.resolve_platform_profile("windows")
     archive_path = tmp_path / "GameRuntime.zip"
     with zipfile.ZipFile(archive_path, "w") as archive:
@@ -218,7 +220,11 @@ def test_prepare_local_package_extracts_windows_zip(tmp_path: Path, monkeypatch:
 
     assert launcher_path.name == "Launcher.exe"
     assert launcher_path.is_file()
-    assert "GameRuntime-35-run-724" in str(launcher_path)
+    assert launcher_path.relative_to(tmp_path / "PlaywrightRoot").parts[:3] == (
+        "test-results",
+        "p",
+        "w-b35-r724",
+    )
 
 
 def test_normalize_bool_flag_rejects_invalid_value() -> None:
@@ -678,6 +684,7 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
         """
 
         platform = "android"
+        phase = "all"
         client_version = "0.1"
         build_debug = "true"
         package_build_id = ""
@@ -711,6 +718,142 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
     assert exit_code == 0
     assert "resolve_or_queue_package_build" not in calls, "TeamCity API should not be called in skip-build mode"
     assert "download:60" in calls
+
+
+def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """验证 prepare 阶段只准备本地包体并回写 TeamCity 参数，不执行平台工具。
+    Verify that the prepare phase only prepares the local package, emits the TeamCity parameter, and skips the platform tool.
+    """
+    prepared_path = tmp_path / "prepared" / "Launcher.exe"
+    prepared_path.parent.mkdir(parents=True)
+    prepared_path.write_text("stub", encoding="utf-8")
+    emitted_parameters: dict[str, str] = {}
+    calls: list[str] = []
+
+    class FakeArgs:
+        """模拟 prepare 阶段的最小参数集合。
+        Simulate the minimal parsed-args shape for the prepare phase.
+        """
+
+        phase = "prepare"
+        platform = "windows"
+        client_version = "0.1"
+        build_debug = "true"
+        package_build_id = ""
+        package_build_number = ""
+        package_build_extra_args = ""
+        package_build_type_id = ""
+        package_path = ""
+        branch = "v4/v-4.0.0"
+        config = None
+        file_server_url = None
+        file_server_token = None
+        test_file = "tests/testBaseFlow-e2e.spec.ts"
+        unity_host = "127.0.0.1"
+        unity_port = 10002
+        adb_serial = ""
+        adb_connect_targets = ""
+        start_mumu = ""
+        mumu_exe_path = ""
+        timeout_seconds = 5400
+        poll_interval_seconds = 10
+        download_timeout_seconds = 600
+
+    monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
+    monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(
+        runner,
+        "resolve_current_teamcity_build_context",
+        lambda: runner.TeamCityCurrentBuildContext(
+            base_url="http://teamcity.local",
+            build_id="901",
+            build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            build_url=None,
+        ),
+    )
+    monkeypatch.setattr(
+        runner,
+        "resolve_local_package_path",
+        lambda _args, _profile, current_build_id=None: prepared_path,
+    )
+    monkeypatch.setattr(
+        runner,
+        "emit_teamcity_parameter",
+        lambda name, value: emitted_parameters.__setitem__(name, value),
+    )
+    monkeypatch.setattr(
+        runner,
+        "run_test_tool",
+        lambda _profile, _package_path, _args: calls.append("run_test_tool") or 0,
+    )
+    monkeypatch.setattr(
+        runner,
+        "emit_playwright_report_metadata",
+        lambda **_kwargs: calls.append("emit_playwright_report_metadata"),
+    )
+
+    exit_code = runner.main()
+
+    assert exit_code == 0
+    assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
+    assert "run_test_tool" not in calls
+    assert "emit_playwright_report_metadata" not in calls
+
+
+def test_main_run_phase_requires_prepared_package_path(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 run 阶段缺少 packagePath 时会立即失败，而不是重新下载包体。
+    Verify that the run phase fails fast when packagePath is missing instead of silently downloading a package again.
+    """
+
+    class FakeArgs:
+        """模拟 run 阶段缺少 packagePath 的最小参数集合。
+        Simulate the minimal parsed-args shape for the run phase with a missing packagePath.
+        """
+
+        phase = "run"
+        platform = "windows"
+        client_version = "0.1"
+        build_debug = "true"
+        package_build_id = ""
+        package_build_number = ""
+        package_build_extra_args = ""
+        package_build_type_id = ""
+        package_path = ""
+        branch = "v4/v-4.0.0"
+        config = None
+        file_server_url = None
+        file_server_token = None
+        test_file = "tests/testBaseFlow-e2e.spec.ts"
+        unity_host = "127.0.0.1"
+        unity_port = 10002
+        adb_serial = ""
+        adb_connect_targets = ""
+        start_mumu = ""
+        mumu_exe_path = ""
+        timeout_seconds = 5400
+        poll_interval_seconds = 10
+        download_timeout_seconds = 600
+
+    monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
+    monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(
+        runner,
+        "resolve_current_teamcity_build_context",
+        lambda: runner.TeamCityCurrentBuildContext(
+            base_url="http://teamcity.local",
+            build_id="901",
+            build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            build_url=None,
+        ),
+    )
+
+    with pytest.raises(
+        runner.TalosTeamCityE2EError,
+        match="run phase requires --package-path",
+    ):
+        runner.main()
 
 
 def test_build_test_tool_environment_sets_mumu_auto_start_when_true(

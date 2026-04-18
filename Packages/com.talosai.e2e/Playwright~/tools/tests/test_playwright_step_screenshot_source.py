@@ -6,12 +6,16 @@ Talos Playwright step screenshot source regression tests.
 2. UnityConnector 必须提供 captureScreenshot 能力，确保 Playwright 不需要感知底层 action 细节。
 3. Windows BaseFlow 规范测试必须通过 talosStep 执行关键步骤，确保截图进入标准 Playwright 报告。
 4. PC 启动脚本必须保留桌面窗口模式覆盖参数，避免远端 Player 回退到不稳定的默认分辨率。
+5. Windows BaseFlow 规范测试必须覆盖热更 DLL、AB 资源系统与 SQLite 三条基础链路。
+6. BaseFlow TeamCity buildType 必须拆分为 prepare / run 两个步骤，并通过本地包体参数交接。
 
 Coverage:
 1. Shared fixtures must expose the talosStep wrapper so steps are recorded uniformly and screenshots are attached afterwards.
 2. UnityConnector must provide captureScreenshot so Playwright does not need to know lower-level action details.
 3. The Windows BaseFlow spec must execute key steps through talosStep so screenshots land in the standard Playwright report.
 4. The PC launcher script must keep desktop window-mode override arguments so remote players do not fall back to unstable default resolutions.
+5. The Windows BaseFlow spec must cover the hotfix-DLL, AssetBundle resource, and SQLite foundational paths.
+6. The BaseFlow TeamCity buildType must be split into prepare and run steps and hand off the local package path explicitly.
 """
 
 from __future__ import annotations
@@ -24,6 +28,7 @@ FIXTURES_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "te
 CONNECTOR_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "src" / "unity-connector.ts"
 BASEFLOW_SPEC_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tests" / "testBaseFlow-e2e.spec.ts"
 PC_TOOL_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tools" / "test-pc.sh"
+BASEFLOW_BUILDTYPE_PATH = REPO_ROOT / ".test-DevOps" / ".teamcity" / "buildTypes" / "TalosAIStep01BaseFlowTest.kt"
 
 
 def test_playwright_step_screenshot_contract_is_wired() -> None:
@@ -66,3 +71,31 @@ def test_pc_tool_keeps_force_e2e_and_windows_player_log_capture() -> None:
     assert 'unity-player.log' in tool_content
     assert 'print_windows_player_logs' in tool_content
     assert 'taskkill.exe //PID ${APP_PID}' in tool_content
+
+
+def test_baseflow_spec_covers_foundational_runtime_suites() -> None:
+    """验证 BaseFlow spec 会执行热更、AB 资源与 SQLite 相关的基础套件。
+    Verify that the BaseFlow spec executes the foundational suites covering hotfix, AssetBundle resource, and SQLite checks.
+    """
+    baseflow_content = BASEFLOW_SPEC_PATH.read_text(encoding="utf-8")
+
+    assert "suite: 'launch'" in baseflow_content
+    assert "suite: 'asset-load'" in baseflow_content
+    assert "suite: 'framework-integration'" in baseflow_content
+    assert "热更 DLL 可用性" in baseflow_content
+    assert "AB 资产系统可用性" in baseflow_content
+    assert "SQLite 可用性" in baseflow_content
+
+
+def test_baseflow_buildtype_splits_prepare_and_run_steps() -> None:
+    """验证 BaseFlow TeamCity buildType 已拆为 prepare/run 两步，并使用本地包体参数交接。
+    Verify that the BaseFlow TeamCity buildType is split into prepare and run steps and passes the prepared local package path between them.
+    """
+    buildtype_content = BASEFLOW_BUILDTYPE_PATH.read_text(encoding="utf-8")
+
+    assert 'param("talos.e2e.local.package.path", "")' in buildtype_content
+    assert 'name = "Prepare Windows package for Talos BaseFlow"' in buildtype_content
+    assert 'name = "Run Talos BaseFlow on prepared Windows package"' in buildtype_content
+    assert '--phase prepare' in buildtype_content
+    assert '--phase run' in buildtype_content
+    assert '--package-path "%talos.e2e.local.package.path%"' in buildtype_content

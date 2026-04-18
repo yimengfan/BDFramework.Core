@@ -1,10 +1,17 @@
 """Talos TeamCity E2E 远程编排入口。
 
+Talos TeamCity E2E remote orchestration entrypoint.
+
 职责：
+Responsibilities:
 1. 复用或触发远端 TeamCity 母包构建。
+1. Reuse or trigger upstream TeamCity player-package builds.
 2. 从文件服务器下载对应平台的可执行包体。
+2. Download the executable package for the target platform from the file server.
 3. 调用 Playwright 工具脚本执行 BaseFlow 或指定测试文件。
+3. Invoke the Playwright tool script to run BaseFlow or a specific test file.
 4. 把测试报告稳定落到 Playwright~/test-results，供 TeamCity Artifact 收集。
+4. Persist reports under Playwright~/test-results so TeamCity artifact collection stays stable.
 """
 
 from __future__ import annotations
@@ -56,6 +63,7 @@ DEFAULT_GET_RETRY_ATTEMPTS = 5
 DEFAULT_GET_RETRY_MAX_DELAY_SECONDS = 5
 DEFAULT_NODE_VERSION = "20.18.0"
 DEFAULT_NODE_DOWNLOAD_TIMEOUT_SECONDS = 300
+PREPARED_PACKAGE_PATH_PARAMETER = "talos.e2e.local.package.path"
 WINDOWS_SKIPPED_PACKAGE_MARKERS = (
     "_BurstDebugInformation_DoNotShip",
     "不要发布",
@@ -329,9 +337,18 @@ def build_test_tool_environment(
 
 
 def parse_args() -> argparse.Namespace:
-    """解析 TeamCity E2E 编排入口参数。"""
+    """解析 TeamCity E2E 编排入口参数。
+
+    Parse the TeamCity E2E orchestration entry arguments.
+    """
     parser = argparse.ArgumentParser(
         description="Resolve TeamCity package builds, download the player package, and run Talos Playwright E2E tests."
+    )
+    parser.add_argument(
+        "--phase",
+        default="all",
+        choices=["all", "prepare", "run"],
+        help="执行阶段：all=准备包体并执行测试，prepare=只准备包体，run=只运行已准备好的本地包体。",
     )
     parser.add_argument("--platform", default="windows", help="目标平台：windows / android / macos。")
     parser.add_argument("--client-version", default=DEFAULT_CLIENT_VERSION, help="上游母包构建使用的 major.minor 版本号。")
@@ -959,20 +976,27 @@ def prepare_local_package(
     package_build_number: str | None = None,
     current_build_id: str | None = None,
 ) -> Path:
-    """把下载后的包体整理成工具脚本可以直接消费的本地路径，并为重复验证隔离解压目录。"""
+    """把下载后的包体整理成工具脚本可以直接消费的本地路径，并为重复验证隔离解压目录。
+
+    Normalize the downloaded package into a local path that the tool script can consume directly,
+    and isolate extraction directories so repeated validations do not stomp on each other.
+    """
     if profile.platform_key == "windows":
-        extract_folder_name_parts = [downloaded_path.stem]
+        extract_folder_name_parts = ["w"]
         if normalize_optional_value(package_build_number):
             extract_folder_name_parts.append(
-                normalize_required_value(package_build_number, field_name="packageBuildNumber")
+                f"b{normalize_required_value(package_build_number, field_name='packageBuildNumber')}"
             )
         if normalize_optional_value(current_build_id):
             extract_folder_name_parts.append(
-                f"run-{normalize_required_value(current_build_id, field_name='currentBuildId')}"
+                f"r{normalize_required_value(current_build_id, field_name='currentBuildId')}"
             )
+        if len(extract_folder_name_parts) == 1:
+            normalized_stem = normalize_optional_value(downloaded_path.stem).replace(" ", "-")
+            extract_folder_name_parts.append((normalized_stem or "pkg")[:24])
 
         extract_folder_name = "-".join(extract_folder_name_parts)
-        extract_root = PLAYWRIGHT_DIR / "test-results" / "packages" / "windows" / extract_folder_name
+        extract_root = PLAYWRIGHT_DIR / "test-results" / "p" / extract_folder_name
         if extract_root.exists():
             shutil.rmtree(extract_root)
         extract_root.mkdir(parents=True, exist_ok=True)
@@ -981,6 +1005,58 @@ def prepare_local_package(
         return find_windows_launcher(extract_root)
 
     return downloaded_path
+
+
+def resolve_local_package_path(
+    args: argparse.Namespace,
+    profile: PlatformProfile,
+    *,
+    current_build_id: str | None = None,
+) -> Path:
+    """解析或准备工具脚本可直接消费的本地包体路径。
+
+    Resolve or prepare the local package path that the platform tool script can consume directly.
+    """
+    if normalize_optional_value(args.package_path):
+        package_path = Path(normalize_required_value(args.package_path, field_name="packagePath")).expanduser().resolve()
+        if not package_path.exists():
+            raise TalosTeamCityE2EError(f"packagePath does not exist: {package_path}")
+        print(f"{LOG_PREFIX} packageSource=local")
+        print(f"{LOG_PREFIX} packagePath={package_path}")
+        return package_path
+
+    explicit_build_number = normalize_optional_value(getattr(args, "package_build_number", None))
+    if explicit_build_number:
+        explicit_build_id_log = normalize_optional_value(args.package_build_id)
+        source_info = f"skip-build, build.number={explicit_build_number}"
+        if explicit_build_id_log:
+            source_info = f"skip-build, buildId={explicit_build_id_log}, build.number={explicit_build_number}"
+        print(f"{LOG_PREFIX} packageSource=file-server ({source_info})")
+        downloaded_path = download_package_from_build(
+            profile=profile,
+            build_number=explicit_build_number,
+            args=args,
+        )
+        package_path = prepare_local_package(
+            profile,
+            downloaded_path,
+            package_build_number=explicit_build_number,
+            current_build_id=current_build_id,
+        )
+        print(f"{LOG_PREFIX} localRunnablePath={package_path}")
+        return package_path
+
+    print(f"{LOG_PREFIX} packageSource=teamcity+file-server")
+    _, package_build_number = resolve_or_queue_package_build(args, profile)
+    downloaded_path = download_package_from_build(profile=profile, build_number=package_build_number, args=args)
+    package_path = prepare_local_package(
+        profile,
+        downloaded_path,
+        package_build_number=package_build_number,
+        current_build_id=current_build_id,
+    )
+    print(f"{LOG_PREFIX} localRunnablePath={package_path}")
+    return package_path
 
 
 def resolve_bash_command() -> str:
@@ -1169,16 +1245,21 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
 
 
 def main() -> int:
-    """执行 Talos TeamCity E2E 的完整编排流程。"""
+    """执行 Talos TeamCity E2E 的完整编排流程。
+
+    Execute the full Talos TeamCity E2E orchestration flow.
+    """
     configure_console_streams()
     args = parse_args()
     profile = resolve_platform_profile(args.platform)
     args.build_debug = normalize_bool_flag(args.build_debug)
+    selected_phase = normalize_optional_value(getattr(args, "phase", None)) or "all"
     current_build_id = normalize_optional_value(resolve_current_teamcity_build_context().build_id)
 
     print(f"{LOG_PREFIX} 测试目的=验证 Talos 远端母包构建、包体下载与 Playwright E2E 工具链闭环")
     print(f"{LOG_PREFIX} 实现手段=复用或排队 TeamCity 母包构建 -> 下载文件服务器包体 -> 调用 tools/{profile.tool_script_name}")
     print(f"{LOG_PREFIX} ===== Phase 1/5: parse args =====")
+    print(f"{LOG_PREFIX} phase={selected_phase}")
     print(f"{LOG_PREFIX} platform={profile.platform_key}")
     print(f"{LOG_PREFIX} clientVersion={normalize_required_value(args.client_version, field_name='clientVersion')}")
     print(f"{LOG_PREFIX} buildDebug={args.build_debug}")
@@ -1192,50 +1273,18 @@ def main() -> int:
         print(f"{LOG_PREFIX} currentBuildId={current_build_id}")
     print(f"{LOG_PREFIX} testFile={normalize_optional_value(args.test_file) or '<all>'}")
 
+    if selected_phase == "run" and not normalize_optional_value(args.package_path):
+        raise TalosTeamCityE2EError("run phase requires --package-path so it can reuse the package prepared by the previous step")
+
     print(f"{LOG_PREFIX} ===== Phase 2/5: resolve package source =====")
-    if normalize_optional_value(args.package_path):
-        # 直接使用本地包体路径，跳过所有 TeamCity / 文件服务器调用。
-        # Use a local package path directly, bypassing TeamCity and file-server calls.
-        package_path = Path(normalize_required_value(args.package_path, field_name="packagePath")).expanduser().resolve()
-        if not package_path.exists():
-            raise TalosTeamCityE2EError(f"packagePath does not exist: {package_path}")
-        print(f"{LOG_PREFIX} packageSource=local")
-        print(f"{LOG_PREFIX} packagePath={package_path}")
-    elif explicit_build_number:
-        # 跳过构建模式：指定了已知构建版本号时直接从文件服务器下载，无需 TeamCity API 调用。
-        # 当 --package-build-id 和 --package-build-number 同时给出时，以版本号为准，build-id 仅作日志信息使用。
-        # Skip-build mode: explicit build number is the highest priority; downloads directly from file server.
-        # When both --package-build-id and --package-build-number are given, the number wins and no TC API is called.
-        explicit_build_id_log = normalize_optional_value(args.package_build_id)
-        source_info = f"skip-build, build.number={explicit_build_number}"
-        if explicit_build_id_log:
-            source_info = f"skip-build, buildId={explicit_build_id_log}, build.number={explicit_build_number}"
-        print(f"{LOG_PREFIX} packageSource=file-server ({source_info})")
-        downloaded_path = download_package_from_build(
-            profile=profile,
-            build_number=explicit_build_number,
-            args=args,
-        )
-        package_path = prepare_local_package(
-            profile,
-            downloaded_path,
-            package_build_number=explicit_build_number,
-            current_build_id=current_build_id,
-        )
-        print(f"{LOG_PREFIX} localRunnablePath={package_path}")
-    else:
-        # 标准模式：通过 TeamCity API 解析或排队上游构建，再从文件服务器下载包体。
-        # Standard mode: resolve or queue upstream build via TeamCity API, then download from file server.
-        print(f"{LOG_PREFIX} packageSource=teamcity+file-server")
-        _, package_build_number = resolve_or_queue_package_build(args, profile)
-        downloaded_path = download_package_from_build(profile=profile, build_number=package_build_number, args=args)
-        package_path = prepare_local_package(
-            profile,
-            downloaded_path,
-            package_build_number=package_build_number,
-            current_build_id=current_build_id,
-        )
-        print(f"{LOG_PREFIX} localRunnablePath={package_path}")
+    package_path = resolve_local_package_path(args, profile, current_build_id=current_build_id)
+    emit_teamcity_parameter(PREPARED_PACKAGE_PATH_PARAMETER, str(package_path))
+
+    if selected_phase == "prepare":
+        print(f"{LOG_PREFIX} ===== Phase 5/5: finish =====")
+        print(f"{LOG_PREFIX} preparedPackagePath={package_path}")
+        print(f"{LOG_PREFIX} status=prepared")
+        return 0
 
     print(f"{LOG_PREFIX} ===== Phase 3/5: ensure report directories =====")
     report_root = PLAYWRIGHT_DIR / "test-results"
