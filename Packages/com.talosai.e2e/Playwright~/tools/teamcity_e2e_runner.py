@@ -564,6 +564,22 @@ def build_headers(config: TeamCityRuntimeConfig, *, has_json_body: bool) -> dict
     return headers
 
 
+def should_retry_teamcity_get_http_error(status_code: int, response_body: str) -> bool:
+    """判断 GET 请求的 HTTP 错误是否应按 TeamCity 瞬态故障重试。
+
+    Decide whether a GET-request HTTP error should be retried as a transient TeamCity failure.
+    目前保留对 `502` 网关错误与 `503 Cleanup in progress` 清理窗口的容忍，
+    避免上游构建轮询因为 TeamCity 短暂维护窗口而被误判成母包构建失败。
+    The current policy tolerates `502` gateway errors and `503 Cleanup in progress` maintenance windows,
+    preventing upstream-build polling from being misclassified as a player-package failure during short TeamCity maintenance intervals.
+    """
+    if status_code == 502:
+        return True
+    if status_code != 503:
+        return False
+    return "cleanup in progress" in response_body.lower()
+
+
 def api_request_json(
     config: TeamCityRuntimeConfig,
     method: str,
@@ -571,7 +587,10 @@ def api_request_json(
     *,
     payload: dict[str, object] | None = None,
 ) -> dict[str, object]:
-    """发起 TeamCity JSON REST 请求，并对 GET 做轻量重试。"""
+    """发起 TeamCity JSON REST 请求，并对 GET 做轻量重试。
+
+    Issue a TeamCity JSON REST request and apply lightweight retries to GET calls.
+    """
     request_url = f"{config.base_url}{path}"
     request_body = None if payload is None else json.dumps(payload).encode("utf-8")
     max_attempts = DEFAULT_GET_RETRY_ATTEMPTS if method.upper() == "GET" else 1
@@ -589,7 +608,11 @@ def api_request_json(
                 return json.loads(raw_payload) if raw_payload else {}
         except urllib.error.HTTPError as exc:
             response_body = exc.read().decode("utf-8", errors="replace")
-            if method.upper() == "GET" and exc.code == 502 and attempt < max_attempts:
+            if (
+                method.upper() == "GET"
+                and attempt < max_attempts
+                and should_retry_teamcity_get_http_error(exc.code, response_body)
+            ):
                 time.sleep(min(attempt, DEFAULT_GET_RETRY_MAX_DELAY_SECONDS))
                 continue
             raise TalosTeamCityE2EError(

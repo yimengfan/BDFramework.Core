@@ -20,9 +20,11 @@ Coverage:
 from __future__ import annotations
 
 import importlib.util
+import io
 from pathlib import Path
 import sys
 from types import SimpleNamespace
+import urllib.error
 import zipfile
 
 import pytest
@@ -81,6 +83,41 @@ class FakeBinaryResponse:
 
     def read(self) -> bytes:
         """返回完整的 zip 载荷，模拟网络下载结果。"""
+        return self.payload
+
+
+class FakeJsonResponse:
+    """模拟 TeamCity JSON 响应，供 REST 重试测试复用。
+
+    Simulate a TeamCity JSON response for REST retry tests.
+    """
+
+    def __init__(self, payload: str) -> None:
+        """保存预构造的 JSON 文本载荷。
+
+        Store the prebuilt JSON payload text.
+        """
+        self.payload = payload.encode("utf-8")
+
+    def __enter__(self) -> "FakeJsonResponse":
+        """让测试桩兼容 with urllib.request.urlopen(...) 的调用方式。
+
+        Make the stub compatible with the with urllib.request.urlopen(...) calling style.
+        """
+        return self
+
+    def __exit__(self, exc_type, exc, exc_tb) -> None:
+        """保持与真实响应对象一致的上下文管理接口。
+
+        Preserve the context-manager interface expected from the real response object.
+        """
+        return None
+
+    def read(self) -> bytes:
+        """返回完整的 JSON 载荷，模拟 TeamCity REST 成功响应。
+
+        Return the full JSON payload, simulating a successful TeamCity REST response.
+        """
         return self.payload
 
 
@@ -187,6 +224,84 @@ def test_resolve_teamcity_runtime_config_falls_back_to_repo_env_file(
     assert resolved.token == "repo-token"
     assert resolved.username == "repo-user"
     assert resolved.password == "repo-pass"
+
+
+def test_api_request_json_retries_teamcity_cleanup_503(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 TeamCity cleanup 触发的 503 会按 GET 瞬态故障重试。
+
+    Verify that GET requests retry when TeamCity returns a cleanup-triggered 503.
+    """
+    attempts = {"count": 0}
+
+    def fake_urlopen(request: object) -> FakeJsonResponse:
+        """先返回 cleanup 503，再返回一次成功 JSON，模拟短暂维护窗口。
+
+        Return a cleanup 503 first and then a successful JSON response to simulate a short maintenance window.
+        """
+        attempts["count"] += 1
+        if attempts["count"] == 1:
+            raise urllib.error.HTTPError(
+                getattr(request, "full_url", "http://teamcity.local/app/rest/builds/id:123"),
+                503,
+                "Cleanup in progress",
+                hdrs=None,
+                fp=io.BytesIO(b"Cleanup in progress"),
+            )
+        return FakeJsonResponse('{"id": 123, "buildTypeId": "BT", "state": "running", "status": "SUCCESS"}')
+
+    monkeypatch.setattr(runner.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(runner.time, "sleep", lambda _seconds: None)
+
+    config = runner.TeamCityRuntimeConfig(
+        base_url="http://teamcity.local",
+        token="repo-token",
+        username=None,
+        password=None,
+        config_path=None,
+    )
+
+    response = runner.api_request_json(config, "GET", "/app/rest/builds/id:123")
+
+    assert attempts["count"] == 2
+    assert response["id"] == 123
+
+
+def test_api_request_json_keeps_generic_503_as_failure(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证非 cleanup 的 503 仍会快速失败，避免掩盖真实 TeamCity 服务端错误。
+
+    Verify that non-cleanup 503 errors still fail fast so real TeamCity server faults are not masked.
+    """
+    attempts = {"count": 0}
+
+    def fake_urlopen(request: object) -> FakeJsonResponse:
+        """持续返回普通 503，模拟非维护窗口的服务端错误。
+
+        Keep returning a generic 503 to simulate a server-side error that is not a maintenance window.
+        """
+        attempts["count"] += 1
+        raise urllib.error.HTTPError(
+            getattr(request, "full_url", "http://teamcity.local/app/rest/builds/id:123"),
+            503,
+            "Service Unavailable",
+            hdrs=None,
+            fp=io.BytesIO(b"Service Unavailable"),
+        )
+
+    monkeypatch.setattr(runner.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(runner.time, "sleep", lambda _seconds: None)
+
+    config = runner.TeamCityRuntimeConfig(
+        base_url="http://teamcity.local",
+        token="repo-token",
+        username=None,
+        password=None,
+        config_path=None,
+    )
+
+    with pytest.raises(runner.TalosTeamCityE2EError, match="HTTP 503"):
+        runner.api_request_json(config, "GET", "/app/rest/builds/id:123")
+
+    assert attempts["count"] == 1
 
 
 def test_find_windows_launcher_prefers_launcher_name(tmp_path: Path) -> None:
