@@ -30,8 +30,8 @@ public class WindowPreconfig : MonoBehaviour
     /// <summary>
     /// 预配置界面启动入口。
     /// Startup entry for the preconfiguration screen.
-    /// 负责绑定 UI、加载服务器配置，并在 `-talosForceE2E` 模式下显式触发 Talos E2E 自动启动入口。
-    /// It binds UI, loads server configuration, and explicitly triggers the Talos E2E auto-start entry when `-talosForceE2E` is present.
+    /// 负责绑定 UI、加载服务器配置，并在 `-talosForceE2E` 模式下显式根引用宿主侧 launch/BaseFlow 测试入口后再触发 Talos E2E 自动启动入口。
+    /// It binds UI, loads server configuration, explicitly roots the host-owned launch/BaseFlow test entrypoints under `-talosForceE2E`, and then triggers the Talos E2E auto-start entry.
     /// </summary>
     void Start()
     {
@@ -65,8 +65,12 @@ public class WindowPreconfig : MonoBehaviour
 
         if (System.Environment.GetCommandLineArgs().Any(arg => string.Equals(arg, "-talosForceE2E", System.StringComparison.OrdinalIgnoreCase)))
         {
-            var hostE2ETestAssembly = typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly;
-            Debug.Log($"[TalosE2E] 宿主已绑定 launch 宿主测试程序集: {hostE2ETestAssembly.GetName().Name}");
+            // 显式根引用宿主侧 launch 与 BaseFlow 套件类型，避免 Player 端只保留 launch 类型而裁剪新增的基础系统入口。
+            // Explicitly root the host launch and BaseFlow suite types so player builds do not keep only the launch type while stripping the added foundational entrypoints.
+            var hostLaunchSuiteAssembly = typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly;
+            var hostBaseFlowSuiteAssembly = typeof(BDFramework.HostE2E.BaseFlowHostRuntimeTests).Assembly;
+            Debug.Log(
+                $"[TalosE2E] 宿主已绑定 launch/BaseFlow 宿主测试程序集: launch={hostLaunchSuiteAssembly.GetName().Name} baseflow={hostBaseFlowSuiteAssembly.GetName().Name}");
             Talos.E2E.E2EAutoInit.CheckAndLaunch();
             Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 保持可见，宿主已显式调用 E2EAutoInit.CheckAndLaunch");
         }

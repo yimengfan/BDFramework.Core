@@ -29,7 +29,8 @@ def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None
     assert '"-talosForceE2E"' in content
     assert "WindowPreconfig 保持可见" in content
     assert "typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly" in content
-    assert "宿主已绑定 launch 宿主测试程序集" in content
+    assert "typeof(BDFramework.HostE2E.BaseFlowHostRuntimeTests).Assembly" in content
+    assert "宿主已绑定 launch/BaseFlow 宿主测试程序集" in content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" in content
     assert "宿主已显式调用 E2EAutoInit.CheckAndLaunch" in content
     assert "ShouldAutoLaunchForTalosE2E" not in content
