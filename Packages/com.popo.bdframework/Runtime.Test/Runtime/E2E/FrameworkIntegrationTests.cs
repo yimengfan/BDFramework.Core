@@ -9,7 +9,6 @@ using BDFramework.ResourceMgr;
 using SQLite4Unity3d;
 using Talos.E2E;
 using UnityEngine;
-using Preserve = UnityEngine.Scripting.PreserveAttribute;
 
 namespace BDFramework.Test.E2E
 {
@@ -21,7 +20,7 @@ namespace BDFramework.Test.E2E
     /// This suite targets Talos E2E runs after player startup and inspects the startup, configuration, resource, SQLite, and log-persistence mainlines in order,
     /// confirming with minimal external prerequisites that BDFramework's foundational capabilities are wired together in the real runtime state.
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public static class FrameworkIntegrationTests
     {
         private const string IntegrationDatabaseName = "TalosFrameworkIntegration.db";
@@ -46,7 +45,7 @@ namespace BDFramework.Test.E2E
         /// 真机模式下要求运行标记、版本号和托管类型发现均已就绪；编辑器仅保留无场景副作用的轻量检查。
         /// In player mode, this requires the runtime flag, framework version, and hosted-type discovery to be ready; the editor keeps only the light checks without scene-side side effects.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         [E2ETest(suite: "framework-integration", order: 1, des: "startup-context-ready")]
         public static void StartupPipelineReady()
         {
@@ -77,7 +76,7 @@ namespace BDFramework.Test.E2E
         /// 该检查直接走 `GameConfigManager` 的公共入口，确认配置文本来源回退、处理器注册与对象反序列化已经协同可用。
         /// This check uses the public `GameConfigManager` entry so configuration-source fallback, processor registration, and object deserialization are proven to work together.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         [E2ETest(suite: "framework-integration", order: 2, des: "config-pipeline-ready")]
         public static void ConfigPipelineReady()
         {
@@ -98,7 +97,7 @@ namespace BDFramework.Test.E2E
         /// This check does not depend on concrete asset content and instead verifies path composition, asset-group caching, and common lookup entrypoints,
         /// keeping it stable across different player packages while still exposing resource-system initialization gaps early.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         [E2ETest(suite: "framework-integration", order: 3, des: "resource-pipeline-ready")]
         public static void ResourcePipelineReady()
         {
@@ -136,7 +135,7 @@ namespace BDFramework.Test.E2E
         /// 该检查使用独立的临时数据库文件，避免与框架默认连接池或业务数据库发生冲突。
         /// This check uses an isolated temporary database file so it does not conflict with the framework's default connection pool or business databases.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         [E2ETest(suite: "framework-integration", order: 4, des: "sqlite-pipeline-ready")]
         public static void SqlitePipelineReady()
         {
@@ -194,7 +193,7 @@ namespace BDFramework.Test.E2E
         /// This capability is intentionally compiled out in the editor, so the strict assertion only runs in player mode,
         /// preventing editor-only execution behavior from being misclassified as a persistence failure.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         [E2ETest(suite: "framework-integration", order: 5, des: "logging-pipeline-ready")]
         public static void LoggingPipelineReady()
         {

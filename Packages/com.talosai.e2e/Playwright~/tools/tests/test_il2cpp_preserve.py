@@ -46,7 +46,10 @@ def test_launch_suite_preserves_android_il2cpp_entrypoints() -> None:
     """
     content = LAUNCH_TESTS_PATH.read_text(encoding="utf-8")
 
-    assert "using UnityEngine.Scripting;" in content
+    assert (
+        "using UnityEngine.Scripting;" in content
+        or "using Preserve = UnityEngine.Scripting.PreserveAttribute;" in content
+    )
     assert re.search(r"\[Preserve\]\s*static public class LaunchTests", content)
     assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"launch\", order: 1", content)
     assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"launch\", order: 2", content)
@@ -74,13 +77,9 @@ def test_framework_integration_suite_preserves_player_entrypoints() -> None:
     """
     content = FRAMEWORK_INTEGRATION_TESTS_PATH.read_text(encoding="utf-8")
 
-    assert (
-        "using UnityEngine.Scripting;" in content
-        or "using Preserve = UnityEngine.Scripting.PreserveAttribute;" in content
-    )
-    assert re.search(r"\[Preserve\]\s*public static class FrameworkIntegrationTests", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 1", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 2", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 3", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 4", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 5", content)
+    assert re.search(r"\[(?:Preserve|UnityEngine\.Scripting\.Preserve)\]\s*public static class FrameworkIntegrationTests", content)
+    assert re.search(r"\[(?:Preserve|UnityEngine\.Scripting\.Preserve)\]\s*\[E2ETest\(suite: \"framework-integration\", order: 1", content)
+    assert re.search(r"\[(?:Preserve|UnityEngine\.Scripting\.Preserve)\]\s*\[E2ETest\(suite: \"framework-integration\", order: 2", content)
+    assert re.search(r"\[(?:Preserve|UnityEngine\.Scripting\.Preserve)\]\s*\[E2ETest\(suite: \"framework-integration\", order: 3", content)
+    assert re.search(r"\[(?:Preserve|UnityEngine\.Scripting\.Preserve)\]\s*\[E2ETest\(suite: \"framework-integration\", order: 4", content)
+    assert re.search(r"\[(?:Preserve|UnityEngine\.Scripting\.Preserve)\]\s*\[E2ETest\(suite: \"framework-integration\", order: 5", content)
