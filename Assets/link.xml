@@ -1,4 +1,9 @@
 <linker>
-  <assembly fullname="BDFramework.Core" preserve="all"/>
+  <!--
+    HybridCLR 热更程序集会在运行时单独装载，不应继续在母包静态 link.xml 中强保留；
+    否则 Android stripped-AOT 临时工程会尝试解析并不在 Managed 目录中的热更程序集。
+    HybridCLR hot-update assemblies are loaded separately at runtime and must not be force-preserved in the base-package static link.xml;
+    otherwise the Android stripped-AOT temp project tries to resolve hot-update assemblies that are not present in the Managed directory.
+  -->
   <assembly fullname="ServiceStack.Text" preserve="all"/>
 </linker>

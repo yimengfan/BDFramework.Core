@@ -1,0 +1,17 @@
+{
+    "name": "BDFramework.HostE2E",
+    "rootNamespace": "BDFramework.HostE2E",
+    "references": [
+        "GUID:38782fc8e87cac14f9cb740af8b2232a",
+        "GUID:ce089cfb561304a8caacae17e8045dc5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

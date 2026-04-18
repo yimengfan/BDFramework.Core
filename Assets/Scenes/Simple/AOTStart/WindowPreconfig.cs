@@ -65,8 +65,8 @@ public class WindowPreconfig : MonoBehaviour
 
         if (System.Environment.GetCommandLineArgs().Any(arg => string.Equals(arg, "-talosForceE2E", System.StringComparison.OrdinalIgnoreCase)))
         {
-            var hostE2ETestAssembly = typeof(BDFramework.Test.E2E.LaunchTests).Assembly;
-            Debug.Log($"[TalosE2E] 宿主已绑定 E2E 测试程序集: {hostE2ETestAssembly.GetName().Name}");
+            var hostE2ETestAssembly = typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly;
+            Debug.Log($"[TalosE2E] 宿主已绑定 launch 宿主测试程序集: {hostE2ETestAssembly.GetName().Name}");
             Talos.E2E.E2EAutoInit.CheckAndLaunch();
             Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 保持可见，宿主已显式调用 E2EAutoInit.CheckAndLaunch");
         }
