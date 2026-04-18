@@ -5,6 +5,16 @@
 2. 远端排队属性构造中的 debug 开关透传。
 3. 文件服务器目录列表中的包体挑选规则。
 4. Windows 包体解压后的 Launcher 定位。
+5. TeamCity runner 在 agent 缺少凭据变量时，会回退读取仓库内的 .env。
+
+Talos TeamCity E2E orchestration script tests.
+
+Coverage:
+1. Platform mapping and default upstream package buildTypeIds.
+2. Debug-flag forwarding in remote queue properties.
+3. Package selection rules from file-server directory listings.
+4. Launcher discovery after extracting Windows packages.
+5. Repository .env fallback when TeamCity agents miss injected credentials.
 """
 
 from __future__ import annotations
@@ -12,6 +22,7 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import zipfile
 
 import pytest
@@ -136,6 +147,46 @@ def test_select_remote_package_entry_requires_android_apk() -> None:
 
     assert selected.remote_path == "ClientPackage_android/123/Launcher.apk"
     assert selected.file_name == "Launcher.apk"
+
+
+def test_resolve_teamcity_runtime_config_falls_back_to_repo_env_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """验证 TeamCity runner 在 agent 缺少凭据变量时，会回退读取仓库内的 .env。
+    Verify that the TeamCity runner falls back to the repository .env when the agent does not provide credential environment variables.
+    """
+    env_file = tmp_path / ".test-DevOps" / ".teamcity" / ".env"
+    env_file.parent.mkdir(parents=True)
+    env_file.write_text(
+        "TEAMCITY_TOKEN=repo-token\nTEAMCITY_USERNAME=repo-user\nTEAMCITY_PASSWORD=repo-pass\n",
+        encoding="utf-8",
+    )
+
+    external_config = SimpleNamespace(
+        ci_server=SimpleNamespace(
+            provider="teamcity",
+            base_url="http://teamcity.local",
+            token=None,
+            token_env="TEAMCITY_TOKEN",
+        ),
+        config_path=None,
+    )
+
+    monkeypatch.setattr(runner, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(runner, "DEFAULT_TEAMCITY_ENV_FILE", env_file)
+    monkeypatch.setattr(runner, "load_external_config_if_available", lambda _config_path: external_config)
+    monkeypatch.delenv("TEAMCITY_TOKEN", raising=False)
+    monkeypatch.delenv("TEAMCITY_USERNAME", raising=False)
+    monkeypatch.delenv("TEAMCITY_PASSWORD", raising=False)
+    monkeypatch.delenv("TEAMCITY_BASE_URL", raising=False)
+    monkeypatch.delenv("TEAMCITY_SERVER_URL", raising=False)
+
+    resolved = runner.resolve_teamcity_runtime_config(None)
+
+    assert resolved.base_url == "http://teamcity.local"
+    assert resolved.token == "repo-token"
+    assert resolved.username == "repo-user"
+    assert resolved.password == "repo-pass"
 
 
 def test_find_windows_launcher_prefers_launcher_name(tmp_path: Path) -> None:

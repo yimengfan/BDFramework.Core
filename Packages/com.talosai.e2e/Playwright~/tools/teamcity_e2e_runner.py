@@ -61,6 +61,7 @@ WINDOWS_SKIPPED_PACKAGE_MARKERS = (
     "不要发布",
 )
 NODE_TOOLCACHE_DIR = PLAYWRIGHT_DIR / ".toolcache" / "node"
+DEFAULT_TEAMCITY_ENV_FILE = REPO_ROOT / ".test-DevOps" / ".teamcity" / ".env"
 
 
 class TalosTeamCityE2EError(RuntimeError):
@@ -456,24 +457,52 @@ def resolve_platform_profile(platform_key: str) -> PlatformProfile:
 
 
 def load_external_config_if_available(config_path: str | None):
-    """按需读取 BuildTools 外部配置；失败时统一转成 Talos 编排错误。"""
+    """按需读取 BuildTools 外部配置；失败时统一转成 Talos 编排错误。
+    Load the BuildTools external config on demand and normalize loader failures into Talos orchestration errors.
+    """
     try:
         return load_buildtools_external_config(config_path=config_path)
     except BuildToolsConfigError as exc:
         raise TalosTeamCityE2EError(str(exc)) from exc
 
 
+def load_env_file_values_if_available(env_file: Path) -> dict[str, str]:
+    """按需读取仓库内的 .env 文件，为 TeamCity agent 缺失环境变量时提供回退。
+    Load a repository-local .env file on demand so TeamCity agents can fall back when credential environment variables are missing.
+    """
+    values: dict[str, str] = {}
+    if not env_file.exists():
+        return values
+
+    for raw_line in env_file.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            raise TalosTeamCityE2EError(f"Invalid .env line: {raw_line!r}")
+        key, value = line.split("=", 1)
+        values.setdefault(key.strip(), value.strip())
+
+    return values
+
+
 def resolve_teamcity_runtime_config(config_path: str | None) -> TeamCityRuntimeConfig:
-    """解析 TeamCity 地址与凭据，优先使用环境变量，其次复用 BuildTools 外部配置。"""
+    """解析 TeamCity 地址与凭据，优先使用环境变量，其次复用 BuildTools 外部配置，并在 agent 缺参时回退仓库 .env。
+    Resolve TeamCity base URL and credentials by preferring environment variables, then the BuildTools external config, and finally the repository .env fallback when agents miss injected variables.
+    """
     external_config = load_external_config_if_available(config_path)
     ci_server = external_config.ci_server
     provider = normalize_optional_value(ci_server.provider).lower()
     if provider and provider != "teamcity":
         raise TalosTeamCityE2EError(f"Unsupported ci_server.provider: {ci_server.provider!r}")
 
+    env_fallback = load_env_file_values_if_available(DEFAULT_TEAMCITY_ENV_FILE)
+
     base_url = normalize_optional_value(
         os.environ.get("TEAMCITY_BASE_URL")
         or os.environ.get("TEAMCITY_SERVER_URL")
+        or env_fallback.get("TEAMCITY_BASE_URL")
+        or env_fallback.get("TEAMCITY_SERVER_URL")
         or ci_server.base_url
     )
     if not base_url:
@@ -482,9 +511,13 @@ def resolve_teamcity_runtime_config(config_path: str | None) -> TeamCityRuntimeC
         )
 
     token_env_name = normalize_optional_value(ci_server.token_env) or "TEAMCITY_TOKEN"
-    token = normalize_optional_value(os.environ.get(token_env_name) or ci_server.token) or None
-    username = normalize_optional_value(os.environ.get("TEAMCITY_USERNAME")) or None
-    password = normalize_optional_value(os.environ.get("TEAMCITY_PASSWORD")) or None
+    token = normalize_optional_value(
+        os.environ.get(token_env_name)
+        or env_fallback.get(token_env_name)
+        or ci_server.token
+    ) or None
+    username = normalize_optional_value(os.environ.get("TEAMCITY_USERNAME") or env_fallback.get("TEAMCITY_USERNAME")) or None
+    password = normalize_optional_value(os.environ.get("TEAMCITY_PASSWORD") or env_fallback.get("TEAMCITY_PASSWORD")) or None
     if not token and not (username and password):
         raise TalosTeamCityE2EError(
             "TeamCity credential is empty. Provide TEAMCITY_TOKEN / ci_server.token, or TEAMCITY_USERNAME + TEAMCITY_PASSWORD."
