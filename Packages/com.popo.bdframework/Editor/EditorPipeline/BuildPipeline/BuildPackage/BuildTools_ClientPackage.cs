@@ -96,6 +96,14 @@ namespace BDFramework.Editor.BuildPipeline
             }
         }
 
+        /// <summary>
+        /// 在正式 BuildPlayer 前暂存并覆盖 EditorUserBuildSettings。
+        /// Temporarily capture and override EditorUserBuildSettings before the final BuildPlayer call.
+        /// 这里集中控制 development、debugging 与 profiler 相关开关，避免 CI 预处理或 Windows 无头 Player
+        /// 在不同调用点各自散落一套调试标记策略。
+        /// This keeps development, debugging, and profiler-related flags in one place so CI prebuilds and
+        /// Windows headless players do not each drift into separate debug-flag policies.
+        /// </summary>
         sealed class BuildPlayerSettingsScope : IDisposable
         {
             readonly bool previousDevelopment;
@@ -103,7 +111,15 @@ namespace BDFramework.Editor.BuildPipeline
             readonly bool previousConnectProfiler;
             readonly bool previousDeepProfilingSupport;
 
-            public BuildPlayerSettingsScope(BuildMode buildMode)
+            /// <summary>
+            /// 根据目标平台与构建模式覆盖 EditorUserBuildSettings。
+            /// Override EditorUserBuildSettings according to the target platform and package build mode.
+            /// Windows Talos 调试母包必须保留脚本调试能力，但不能再自动连接 profiler，
+            /// 否则无头 TeamCity agent 上的 Standalone Player 会在进入托管启动前卡住。
+            /// Windows Talos debug packages must keep script debugging, but they must no longer auto-connect the profiler,
+            /// otherwise the standalone player can stall on headless TeamCity agents before managed startup begins.
+            /// </summary>
+            public BuildPlayerSettingsScope(BuildMode buildMode, BuildTarget buildTarget)
             {
                 this.previousDevelopment = EditorUserBuildSettings.development;
                 this.previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
@@ -111,12 +127,13 @@ namespace BDFramework.Editor.BuildPipeline
                 this.previousDeepProfilingSupport = EditorUserBuildSettings.buildWithDeepProfilingSupport;
 
                 var isDebugBuild = buildMode == BuildMode.Debug;
+                var enableProfiler = ShouldEnableProfilerForPackageBuild(buildMode, buildTarget);
                 EditorUserBuildSettings.development = isDebugBuild;
                 EditorUserBuildSettings.allowDebugging = isDebugBuild;
-                EditorUserBuildSettings.connectProfiler = isDebugBuild;
-                EditorUserBuildSettings.buildWithDeepProfilingSupport = isDebugBuild;
+                EditorUserBuildSettings.connectProfiler = enableProfiler;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = enableProfiler;
 
-                Debug.Log($"【BuildPackage】 同步 EditorUserBuildSettings => mode:{buildMode} development:{EditorUserBuildSettings.development} allowDebugging:{EditorUserBuildSettings.allowDebugging} connectProfiler:{EditorUserBuildSettings.connectProfiler} deepProfiling:{EditorUserBuildSettings.buildWithDeepProfilingSupport}");
+                Debug.Log($"【BuildPackage】 同步 EditorUserBuildSettings => target:{buildTarget} mode:{buildMode} development:{EditorUserBuildSettings.development} allowDebugging:{EditorUserBuildSettings.allowDebugging} connectProfiler:{EditorUserBuildSettings.connectProfiler} deepProfiling:{EditorUserBuildSettings.buildWithDeepProfilingSupport}");
             }
 
             public void Dispose()
@@ -125,6 +142,59 @@ namespace BDFramework.Editor.BuildPipeline
                 EditorUserBuildSettings.allowDebugging = this.previousAllowDebugging;
                 EditorUserBuildSettings.connectProfiler = this.previousConnectProfiler;
                 EditorUserBuildSettings.buildWithDeepProfilingSupport = this.previousDeepProfilingSupport;
+            }
+        }
+
+        /// <summary>
+        /// 判断当前母包构建是否应该开启 profiler 与 deep profiling。
+        /// Determine whether the current package build should enable profiler and deep-profiling flags.
+        /// Windows Talos 调试母包在 CI 上只需要脚本调试，不需要 profiler 握手；
+        /// 其余 Debug 包继续沿用现有 profiler 行为，避免误改 Android 等已稳定链路。
+        /// Windows Talos debug packages on CI only need script debugging and should skip profiler handshakes;
+        /// other debug packages keep the existing profiler behavior so stable Android and other flows do not change unexpectedly.
+        /// </summary>
+        static bool ShouldEnableProfilerForPackageBuild(BuildMode buildMode, BuildTarget buildTarget)
+        {
+            if (buildMode != BuildMode.Debug)
+            {
+                return false;
+            }
+
+            return buildTarget != BuildTarget.StandaloneWindows64;
+        }
+
+        /// <summary>
+        /// 计算 Windows Standalone 母包的 BuildOptions。
+        /// Resolve the BuildOptions for Windows standalone package builds.
+        /// Windows Talos 调试包保留 Development 与 AllowDebugging，
+        /// 但显式移除 profiler 与 deep profiling，避免 Player 在无头 agent 上卡在 profiler 连接阶段。
+        /// Windows Talos debug packages keep Development and AllowDebugging,
+        /// but explicitly drop profiler and deep-profiling flags so the player does not stall on headless agents during profiler connection.
+        /// </summary>
+        static BuildOptions ResolveWindowsBuildOptions(BuildMode mode)
+        {
+            switch (mode)
+            {
+                case BuildMode.Debug:
+                {
+                    var options = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging;
+                    if (ShouldEnableProfilerForPackageBuild(mode, BuildTarget.StandaloneWindows64))
+                    {
+                        options |= BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    }
+
+                    return options;
+                }
+
+                case BuildMode.Release:
+                {
+                    return BuildOptions.CompressWithLz4HC;
+                }
+
+                default:
+                {
+                    return BuildOptions.None;
+                }
             }
         }
 
@@ -219,7 +289,7 @@ namespace BDFramework.Editor.BuildPipeline
                 Debug.Log("【BuildPackage】 HybridCLR 预处理完成");
             }
 
-            return new BuildPlayerSettingsScope(buildMode);
+            return new BuildPlayerSettingsScope(buildMode, buildTarget);
         }
 
         static BuildTargetGroup ResolveBuildTargetGroup(BuildTarget buildTarget)
@@ -888,9 +958,17 @@ namespace BDFramework.Editor.BuildPipeline
         #region Windows
 
         /// <summary>
-        /// 编译Xcode（这里是出母包版本）
+        /// 构建 Windows Standalone 母包并返回可执行文件路径。
+        /// Build the Windows standalone package and return the executable path.
+        /// 这里复用统一的场景与资源装配流程，但会对 Windows 调试包额外收紧 profiler 相关标记，
+        /// 避免 TeamCity 无头 agent 上的 Talos Player 在进入托管启动前被 profiler 握手阻塞。
+        /// This reuses the shared scene and asset packaging flow, but further tightens profiler-related flags for Windows debug packages
+        /// so Talos players on headless TeamCity agents are not blocked by profiler handshakes before managed startup.
         /// </summary>
-        /// <param name="mode"></param>
+        /// <param name="mode">母包构建模式。</param>
+        /// <param name="mode">Package build mode.</param>
+        /// <param name="outdir">Windows 输出目录。</param>
+        /// <param name="outdir">Windows output directory.</param>
         static private (bool, string) BuildExe(BuildMode mode, string outdir)
         {
 
@@ -921,21 +999,8 @@ namespace BDFramework.Editor.BuildPipeline
 
             //开始项目一键打包
             string[] scenes = { SCENE_PATH };
-            BuildOptions opa = BuildOptions.None;
-            switch (mode)
-            {
-                case BuildMode.Debug:
-                {
-                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
-                }
-                    break;
-
-                case BuildMode.Release:
-                {
-                    opa = BuildOptions.CompressWithLz4HC;
-                }
-                    break;
-            }
+            var opa = ResolveWindowsBuildOptions(mode);
+            Debug.Log($"【BuildPackage】 Windows BuildOptions => mode:{mode} options:{opa}");
 
             //构建包体
             Debug.Log("------------->Begin build<------------");

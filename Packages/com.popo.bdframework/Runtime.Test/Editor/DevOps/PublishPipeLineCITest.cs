@@ -85,8 +85,12 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
+                (nameof(BuildTools_ClientPackage_ResolveWindowsBuildOptions_ShouldKeepDebuggingWithoutProfilerFlags),
+                    testInstance.BuildTools_ClientPackage_ResolveWindowsBuildOptions_ShouldKeepDebuggingWithoutProfilerFlags),
                 (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
+                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
+                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
                 (nameof(HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                     testInstance.HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
@@ -326,12 +330,45 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
+        /// 验证 Windows 调试母包会保留脚本调试能力，但不会再把 profiler 与 deep profiling 打进 BuildOptions。
+        /// Verify that Windows debug packages keep script-debugging support but no longer carry profiler or deep-profiling flags in BuildOptions.
+        /// 这覆盖 TeamCity Windows agent 上的 Talos Player 回归场景：若继续自动连接 profiler，
+        /// Standalone Player 可能在进入托管启动前卡住，导致 TCP 就绪检测永远超时。
+        /// This covers the Talos Player regression on TeamCity Windows agents: if profiler auto-connect remains enabled,
+        /// the standalone player can stall before managed startup and the TCP readiness probe never succeeds.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_ResolveWindowsBuildOptions_ShouldKeepDebuggingWithoutProfilerFlags()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "ResolveWindowsBuildOptions",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var debugOptions = (BuildOptions)helperMethod.Invoke(
+                null,
+                new object[] { BuildTools_ClientPackage.BuildMode.Debug });
+            var releaseOptions = (BuildOptions)helperMethod.Invoke(
+                null,
+                new object[] { BuildTools_ClientPackage.BuildMode.Release });
+
+            Assert.That(debugOptions.HasFlag(BuildOptions.CompressWithLz4HC), Is.True);
+            Assert.That(debugOptions.HasFlag(BuildOptions.Development), Is.True);
+            Assert.That(debugOptions.HasFlag(BuildOptions.AllowDebugging), Is.True);
+            Assert.That(debugOptions.HasFlag(BuildOptions.ConnectWithProfiler), Is.False);
+            Assert.That(debugOptions.HasFlag(BuildOptions.EnableDeepProfilingSupport), Is.False);
+
+            Assert.That(releaseOptions, Is.EqualTo(BuildOptions.CompressWithLz4HC));
+        }
+
+        /// <summary>
         /// 验证 HybridCLR 预处理会先于 Debug 母包的 EditorUserBuildSettings 覆盖执行。
         /// Verify that HybridCLR prebuild runs before the debug package overrides EditorUserBuildSettings.
         /// 这覆盖 Android stripped-AOT 临时构建的回归场景：预处理阶段应看到未污染的默认全局开关，
-        /// 而正式母包构建阶段才应启用 development、debugging、profiler 与 deep profiling。
+        /// 而 Android 正式母包构建阶段才应启用 development、debugging、profiler 与 deep profiling。
         /// This covers the Android stripped-AOT regression: the prebuild phase should observe clean default global flags,
-        /// while the final package-build phase should enable development, debugging, profiler, and deep profiling only afterwards.
+        /// while the Android final package-build phase should enable development, debugging, profiler, and deep profiling only afterwards.
         /// </summary>
         [Test]
         public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild()
@@ -385,6 +422,70 @@ namespace BDFramework.EditorTest.DevOps
                     Assert.That(EditorUserBuildSettings.allowDebugging, Is.True);
                     Assert.That(EditorUserBuildSettings.connectProfiler, Is.True);
                     Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.True);
+                }
+
+                Assert.That(EditorUserBuildSettings.development, Is.False);
+                Assert.That(EditorUserBuildSettings.allowDebugging, Is.False);
+                Assert.That(EditorUserBuildSettings.connectProfiler, Is.False);
+                Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False);
+            }
+            finally
+            {
+                EditorUserBuildSettings.development = previousDevelopment;
+                EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
+                EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
+        }
+
+        /// <summary>
+        /// 验证 Windows 调试母包在进入正式 BuildPlayer 作用域后，仍保留 development 与 debugging，
+        /// 但不会再打开 connectProfiler 与 deepProfiling。
+        /// Verify that Windows debug packages still enable development and debugging inside the final BuildPlayer scope,
+        /// but no longer turn on connectProfiler or deepProfiling.
+        /// 这把 profiler 关闭策略锁定在 EditorUserBuildSettings 层，避免即使 BuildOptions 已收紧，
+        /// 全局编辑器开关仍把 Windows Talos Player 带回 profiler 握手路径。
+        /// This locks the profiler-disabled policy at the EditorUserBuildSettings layer so Windows Talos players do not fall
+        /// back into the profiler handshake path even if BuildOptions have already been tightened.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var previousDevelopment = EditorUserBuildSettings.development;
+            var previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
+            var previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
+            var previousDeepProfiling = EditorUserBuildSettings.buildWithDeepProfilingSupport;
+
+            try
+            {
+                EditorUserBuildSettings.development = false;
+                EditorUserBuildSettings.allowDebugging = false;
+                EditorUserBuildSettings.connectProfiler = false;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
+
+                var scope = (IDisposable)helperMethod.Invoke(
+                    null,
+                    new object[]
+                    {
+                        BuildTools_ClientPackage.BuildMode.Debug,
+                        false,
+                        "test-windows-profiler-flags",
+                        BuildTarget.StandaloneWindows64,
+                        null
+                    });
+
+                using (scope)
+                {
+                    Assert.That(EditorUserBuildSettings.development, Is.True);
+                    Assert.That(EditorUserBuildSettings.allowDebugging, Is.True);
+                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.False);
+                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False);
                 }
 
                 Assert.That(EditorUserBuildSettings.development, Is.False);
