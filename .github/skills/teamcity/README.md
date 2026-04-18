@@ -220,11 +220,11 @@ mvn -version
 mvn teamcity-configs:generate
 ```
 
-补充说明：
+Supplemental notes:
 
-1. 仓库内已经提供 `.test-DevOps/.teamcity/.mvn/maven.config` 和 `.test-DevOps/.teamcity/.mvn/local-settings.xml`，用于禁用 Maven 3.9+ 默认的 HTTP blocker。
-2. `.test-DevOps/.teamcity/pom.xml` 当前优先使用公网 DSL 仓库 `http://svn.funtoo.games/app/dsl-plugins-repository`，内网 `http://192.168.0.240:20000/app/dsl-plugins-repository` 作为次级兜底。
-3. 如果 `mvn teamcity-configs:generate` 仍报 `configs-dsl-kotlin-parent` 无法解析，优先检查这两个仓库地址可达性。
+1. The repository already provides `.test-DevOps/.teamcity/.mvn/maven.config` and `.test-DevOps/.teamcity/.mvn/local-settings.xml` to disable the Maven 3.9+ default HTTP blocker.
+2. `.test-DevOps/.teamcity/pom.xml` currently prefers the public DSL repository `http://svn.funtoo.games/app/dsl-plugins-repository`, with the intranet fallback `http://192.168.0.240:20000/app/dsl-plugins-repository` as a secondary fallback.
+3. If `mvn teamcity-configs:generate` still fails to resolve `configs-dsl-kotlin-parent`, check reachability to those two repository URLs first.
 
 ## 远端触发前置条件
 
@@ -255,6 +255,11 @@ cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
 - `--dispatch-mode auto`：默认，自动判断。
 - `--dispatch-mode parallel`：强制并发；如果 agent 容量不足会直接报错。
 - `--dispatch-mode sequential`：强制串行。
+
+Operational note:
+- For builds that call TeamCity again from inside the build scripts, `run-build` now forwards the current TeamCity token automatically when `env.TEAMCITY_TOKEN` is not provided explicitly.
+- If a rerun must use a different token or a basic-auth pair, pass the matching `env.TEAMCITY_*` property explicitly and the helper will preserve that override.
+- Talos BaseFlow reruns should still override `--property talos.e2e.test.file=tests/testBaseFlow-e2e.spec.ts` when the Playwright spec naming has changed, instead of relying on server-side defaults.
 
 ## 常见只读验证
 
