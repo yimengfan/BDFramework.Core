@@ -234,26 +234,71 @@ namespace Talos.E2E
         /// 扫描一个程序集中所有带 [E2ETest] 标记的静态方法。
         /// </summary>
         /// <param name="assembly">待扫描的程序集。</param>
+        /// <summary>
+        /// 扫描一个程序集提供的一组候选类型，并在去重后继续下钻到方法级别。
+        /// Scan a candidate type set provided by an assembly and continue down to method-level discovery after deduplication.
+        /// 该补扫用于处理 Player 或 IL2CPP 下 `GetTypes()` 只返回部分公共类型的场景，
+        /// 让 `ExportedTypes` 等备用入口仍能补回漏掉的公开 E2E 套件类型。
+        /// This supplemental pass handles Player or IL2CPP cases where `GetTypes()` surfaces only a subset of public types,
+        /// allowing fallback entrypoints such as `ExportedTypes` to recover missed public E2E suite types.
+        /// </summary>
+        /// <param name="candidateTypes">候选类型序列。</param>
+        /// <param name="candidateTypes">Candidate type sequence.</param>
+        /// <param name="scannedTypeNames">已扫描类型集合。</param>
+        /// <param name="scannedTypeNames">Deduplicated set of scanned types.</param>
+        static private void ScanCandidateTypes(IEnumerable<Type> candidateTypes, HashSet<string> scannedTypeNames)
+        {
+            if (candidateTypes == null)
+            {
+                return;
+            }
+
+            foreach (var type in candidateTypes)
+            {
+                if (type == null)
+                {
+                    continue;
+                }
+
+                var typeKey = type.FullName ?? type.Name;
+                if (!scannedTypeNames.Add(typeKey))
+                {
+                    continue;
+                }
+
+                ScanType(type);
+            }
+        }
+
         static private void ScanAssembly(Assembly assembly)
         {
+            var scannedTypeNames = new HashSet<string>(StringComparer.Ordinal);
             try
             {
-                foreach (var type in assembly.GetTypes())
-                {
-                    ScanType(type);
-                }
+                ScanCandidateTypes(assembly.GetTypes(), scannedTypeNames);
             }
             catch (ReflectionTypeLoadException ex)
             {
                 // 某些类型加载失败时，处理已成功加载的类型
                 UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {assembly.GetName().Name} 部分类型加载失败，跳过失败类型");
-                if (ex.Types != null)
+                if (ex.LoaderExceptions != null)
                 {
-                    foreach (var type in ex.Types)
+                    foreach (var loaderException in ex.LoaderExceptions.Where(item => item != null).Take(3))
                     {
-                        if (type != null) ScanType(type);
+                        UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {assembly.GetName().Name} 类型加载异常: {loaderException.Message}");
                     }
                 }
+
+                ScanCandidateTypes(ex.Types, scannedTypeNames);
+            }
+
+            try
+            {
+                ScanCandidateTypes(assembly.ExportedTypes, scannedTypeNames);
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {assembly.GetName().Name} 公共类型补扫失败: {ex.Message}");
             }
         }
 

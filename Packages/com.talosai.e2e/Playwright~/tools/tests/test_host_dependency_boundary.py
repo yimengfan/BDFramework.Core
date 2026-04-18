@@ -106,6 +106,19 @@ def test_bdframework_script_loader_primes_host_suites_before_talos_auto_launch()
     )
 
 
+def test_talos_e2e_runner_keeps_public_type_fallback_for_player_discovery() -> None:
+    """验证 E2ETestRunner 会在程序集部分类型加载失败时继续补扫公共类型。
+    Verify that E2ETestRunner continues with a public-type fallback when an assembly only partially loads its types.
+    """
+
+    runner_content = E2E_TEST_RUNNER.read_text(encoding="utf-8")
+
+    assert "ScanCandidateTypes(assembly.GetTypes(), scannedTypeNames);" in runner_content
+    assert "ScanCandidateTypes(ex.Types, scannedTypeNames);" in runner_content
+    assert "ScanCandidateTypes(assembly.ExportedTypes, scannedTypeNames);" in runner_content
+    assert "程序集 {assembly.GetName().Name} 类型加载异常" in runner_content
+
+
 def test_playwright_scripts_call_bdframework_owned_execute_methods() -> None:
     """验证本地 Playwright 启动脚本已经切到 BDFramework 自己的 executeMethod 入口。
     Verify that local Playwright launcher scripts now call BDFramework-owned executeMethod entries.
