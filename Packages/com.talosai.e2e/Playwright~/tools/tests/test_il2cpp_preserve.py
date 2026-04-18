@@ -74,7 +74,10 @@ def test_framework_integration_suite_preserves_player_entrypoints() -> None:
     """
     content = FRAMEWORK_INTEGRATION_TESTS_PATH.read_text(encoding="utf-8")
 
-    assert "using UnityEngine.Scripting;" in content
+    assert (
+        "using UnityEngine.Scripting;" in content
+        or "using Preserve = UnityEngine.Scripting.PreserveAttribute;" in content
+    )
     assert re.search(r"\[Preserve\]\s*public static class FrameworkIntegrationTests", content)
     assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 1", content)
     assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 2", content)

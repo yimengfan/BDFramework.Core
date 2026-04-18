@@ -9,7 +9,7 @@ using BDFramework.ResourceMgr;
 using SQLite4Unity3d;
 using Talos.E2E;
 using UnityEngine;
-using UnityEngine.Scripting;
+using Preserve = UnityEngine.Scripting.PreserveAttribute;
 
 namespace BDFramework.Test.E2E
 {
