@@ -171,12 +171,16 @@ namespace SQLite4Unity3d
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare_v2", CallingConvention = CallingConvention.Cdecl)]
 		public static extern Result Prepare2(IntPtr db, byte[] sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
 
+		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare16_v2", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+		public static extern Result Prepare16(IntPtr db, [MarshalAs(UnmanagedType.LPWStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
+
 		public static IntPtr Prepare2(IntPtr db, string query)
 		{
 			IntPtr stmt;
 		#if UNITY_STANDALONE_WIN
-			var queryBytes = Encoding.UTF8.GetBytes(query + "\0");
-			var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);
+			// Windows standalone 的 SQLCipher Player 在 UTF-8 prepare 封送上不稳定，这里直接走 UTF-16 prepare。
+			// The Windows standalone SQLCipher player is unstable with UTF-8 prepare marshalling, so use UTF-16 prepare directly.
+			var r = Prepare16(db, query, -1, out stmt, IntPtr.Zero);
 		#else
 			var r = Prepare2(db, query, System.Text.UTF8Encoding.UTF8.GetByteCount(query), out stmt, IntPtr.Zero);
 		#endif
