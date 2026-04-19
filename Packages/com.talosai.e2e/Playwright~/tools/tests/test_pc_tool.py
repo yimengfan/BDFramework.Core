@@ -323,3 +323,16 @@ def test_test_pc_source_archives_persistent_player_logs_for_teamcity() -> None:
     assert "printf '%s/%s_Data/.AppData/playerlogs\\n'" in content
     assert 'capture_persistent_player_logs() {' in content
     assert 'player_log_index_file="${PLAYER_LOG_ARCHIVE_DIR}/index.txt"' in content
+
+
+def test_test_pc_source_cleans_stale_windows_players_before_launch() -> None:
+    """验证 Windows 分支会在启动前清理残留端口占用与旧 Launcher 进程。
+    Verify that the Windows branch cleans stale port owners and old Launcher processes before startup.
+    """
+
+    content = SOURCE_TEST_PC.read_text(encoding="utf-8")
+
+    assert 'cleanup_stale_windows_player_processes() {' in content
+    assert r'Get-NetTCPConnection -State Listen -LocalPort \$unityPort' in content
+    assert "Get-Process -Name '${executable_stem}' -ErrorAction SilentlyContinue" in content
+    assert 'cleanup_stale_windows_player_processes' in content

@@ -181,6 +181,61 @@ capture_persistent_player_logs() {
     fi
 }
 
+cleanup_stale_windows_player_processes() {
+    # 在启动新的 Windows Player 前先清理 TeamCity 工作区里遗留的旧进程，避免旧实例继续占用 Talos TCP 端口或锁住上一次运行的日志文件。
+    # Clean old TeamCity workspace player processes before starting a new Windows player so stale instances do not keep the Talos TCP port or the previous run log files locked.
+    if ! ${IS_WINDOWS_GIT_BASH} || ! command -v powershell.exe >/dev/null 2>&1 || ! command -v cygpath >/dev/null 2>&1; then
+        return 0
+    fi
+
+    local prepared_package_root_win executable_name executable_stem cleanup_summary
+    prepared_package_root_win="$(cygpath -w "${PLAYWRIGHT_DIR}/test-results/p")"
+    executable_name="$(basename "${EXE_PATH}")"
+    executable_stem="${executable_name%.*}"
+
+    cleanup_summary="$({
+        powershell.exe -NoProfile -Command "\
+            \$unityPort = ${UNITY_PORT}; \
+            \$preparedRoot = '${prepared_package_root_win}'.ToLowerInvariant(); \
+            \$targetName = '${executable_stem}'.ToLowerInvariant(); \
+            \$stopped = New-Object System.Collections.Generic.List[string]; \
+            \$seen = New-Object System.Collections.Generic.HashSet[int]; \
+            if (Get-Command Get-NetTCPConnection -ErrorAction SilentlyContinue) { \
+                Get-NetTCPConnection -State Listen -LocalPort \$unityPort -ErrorAction SilentlyContinue | \
+                    Select-Object -ExpandProperty OwningProcess -Unique | \
+                    ForEach-Object { \
+                        \$pid = [int]\$_; \
+                        if (\$seen.Add(\$pid)) { \
+                            Stop-Process -Id \$pid -Force -ErrorAction SilentlyContinue; \
+                            [void]\$stopped.Add(\"port:\$pid\"); \
+                        } \
+                    }; \
+            } \
+            Get-Process -Name '${executable_stem}' -ErrorAction SilentlyContinue | \
+                Where-Object { \
+                    \$_.Path -and \
+                    \$_.Path.ToLowerInvariant().StartsWith(\$preparedRoot) -and \
+                    \$_.ProcessName.ToLowerInvariant() -eq \$targetName \
+                } | \
+                ForEach-Object { \
+                    if (\$seen.Add(\$_.Id)) { \
+                        Stop-Process -Id \$_.Id -Force -ErrorAction SilentlyContinue; \
+                        [void]\$stopped.Add(\"path:\$($_.Id)\"); \
+                    } \
+                }; \
+            if (\$stopped.Count -gt 0) { \
+                [Console]::Out.Write([string]::Join(',', \$stopped)); \
+            }\
+        "
+    } | tr -d '\r')"
+
+    if [[ -n "${cleanup_summary}" ]]; then
+        echo ">>> 已清理 Windows 残留进程: ${cleanup_summary}"
+    fi
+}
+
+cleanup_stale_windows_player_processes
+
 if ${IS_MACOS}; then
     # macOS: 使用 open 命令启动 .app
     open "${EXE_PATH}" --args "${PLAYER_LAUNCH_ARGS[@]}"
