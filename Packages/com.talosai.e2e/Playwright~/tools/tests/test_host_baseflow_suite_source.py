@@ -116,3 +116,15 @@ def test_windows_sqlite_runtime_keeps_utf8_prepare_strategy() -> None:
     assert "public static extern Result Prepare16(IntPtr db, [MarshalAs(UnmanagedType.LPWStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
     assert "var queryBytes = Encoding.UTF8.GetBytes(query + \"\\0\");" in content
     assert "var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);" in content
+
+
+def test_sqlite_execute_nonquery_accepts_row_for_pragma_results() -> None:
+    """验证 SQLite 非查询执行路径会接受返回 Row 的 PRAGMA 结果。
+    Verify that the SQLite non-query execution path accepts PRAGMA results that first return Row.
+    """
+    content = SQLITE_RUNTIME_PATH.read_text(encoding="utf-8")
+
+    assert "ConsumeRemainingRowsForNonQuery" in content
+    assert "if (r == SQLite3.Result.Row)" in content
+    assert "r = ConsumeRemainingRowsForNonQuery(stmt);" in content
+    assert "while (stepResult == SQLite3.Result.Row)" in content

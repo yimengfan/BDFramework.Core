@@ -3359,6 +3359,14 @@ namespace SQLite4Unity3d
         }
     }
 
+    /// <summary>
+    /// SQLite 命令执行器，负责准备语句、绑定参数并分发查询或非查询执行路径。
+    /// SQLite command executor that prepares statements, binds parameters, and dispatches query or non-query execution paths.
+    /// 兼容性说明：部分 Windows/sqlcipher 组合会让设置型 PRAGMA 在首个 step 返回 Row，
+    /// 因此这里的非查询执行路径需要把这类结果消费到 Done，而不是把它们误判成失败。
+    /// Compatibility note: some Windows/sqlcipher combinations make write-like PRAGMA statements return Row on the first step,
+    /// so the non-query path here must consume those results through Done instead of misclassifying them as failures.
+    /// </summary>
     public partial class SQLiteCommand
     {
         SQLiteConnection _conn;
@@ -3373,6 +3381,14 @@ namespace SQLite4Unity3d
             CommandText = "";
         }
 
+        /// <summary>
+        /// 执行不需要消费业务结果集的 SQL，并兼容返回配置行的 PRAGMA 语句。
+        /// Execute SQL that does not need to consume business result sets and tolerate PRAGMA statements that emit configuration rows.
+        /// 某些数据库实现会在设置型 PRAGMA 上先返回 Row 再进入 Done，
+        /// 这里会继续推进语句直到离开 Row，再按 changes 统计作为成功返回。
+        /// Some database implementations return Row before Done for write-like PRAGMA statements,
+        /// so this method keeps stepping until the statement leaves Row and then reports success via sqlite changes.
+        /// </summary>
         public int ExecuteNonQuery()
         {
             if (_conn.Trace)
@@ -3382,8 +3398,19 @@ namespace SQLite4Unity3d
 
             var r = SQLite3.Result.OK;
             var stmt = Prepare();
-            r = SQLite3.Step(stmt);
-            Finalize(stmt);
+            try
+            {
+                r = SQLite3.Step(stmt);
+                if (r == SQLite3.Result.Row)
+                {
+                    r = ConsumeRemainingRowsForNonQuery(stmt);
+                }
+            }
+            finally
+            {
+                Finalize(stmt);
+            }
+
             if (r == SQLite3.Result.Done)
             {
                 int rowsAffected = SQLite3.Changes(_conn.Handle);
@@ -3403,6 +3430,21 @@ namespace SQLite4Unity3d
             }
 
             throw SQLiteException.New(r, SQLite3.GetErrmsg(_conn.Handle));
+        }
+
+        /// <summary>
+        /// 继续推进非查询语句直到结果离开 Row，避免 PRAGMA 元数据行被误判为异常。
+        /// Continue stepping a non-query statement until the result leaves Row so PRAGMA metadata rows are not misclassified as errors.
+        /// </summary>
+        private SQLite3.Result ConsumeRemainingRowsForNonQuery(Sqlite3Statement stmt)
+        {
+            var stepResult = SQLite3.Result.Row;
+            while (stepResult == SQLite3.Result.Row)
+            {
+                stepResult = SQLite3.Step(stmt);
+            }
+
+            return stepResult;
         }
 
         public IEnumerable<T> ExecuteDeferredQuery<T>()
