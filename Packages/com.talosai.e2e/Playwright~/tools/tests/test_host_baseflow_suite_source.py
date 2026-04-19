@@ -74,6 +74,8 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert "Path.GetTempPath()" in content
     assert "sqliteOpenPath" in content
     assert "fileApiPath" in content
+    assert "PRAGMA temp_store=MEMORY;" in content
+    assert "PRAGMA journal_mode=MEMORY;" in content
     assert "ReadRequiredStaticStringProperty" in content
     assert "CombinePath" in content
     assert "Application.persistentDataPath" in content

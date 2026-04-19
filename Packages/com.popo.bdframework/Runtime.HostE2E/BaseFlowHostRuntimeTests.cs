@@ -241,6 +241,23 @@ namespace BDFramework.HostE2E
                     "SQLiteConnection..ctor",
                     sqliteConnectionString);
 
+                Debug.Log("[E2E] SQLite probe phase=configure-temp-store value=MEMORY");
+                InvokeInstanceMethod(
+                    sqliteConnection,
+                    executeMethod,
+                    "SQLiteConnection.Execute(pragma-temp-store)",
+                    "PRAGMA temp_store=MEMORY;",
+                    Array.Empty<object>());
+
+                Debug.Log("[E2E] SQLite probe phase=configure-journal-mode value=MEMORY");
+                var journalMode = InvokeInstanceMethod(
+                    sqliteConnection,
+                    executeScalarDefinition.MakeGenericMethod(typeof(string)),
+                    "SQLiteConnection.ExecuteScalar<string>(pragma-journal-mode)",
+                    "PRAGMA journal_mode=MEMORY;",
+                    Array.Empty<object>()) as string;
+                Debug.Log($"[E2E] SQLite probe phase=journal-mode-ready value={journalMode ?? "<null>"}");
+
                 Debug.Log("[E2E] SQLite probe phase=create-table");
                 InvokeInstanceMethod(
                     sqliteConnection,
