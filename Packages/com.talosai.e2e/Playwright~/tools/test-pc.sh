@@ -204,10 +204,10 @@ cleanup_stale_windows_player_processes() {
                 Get-NetTCPConnection -State Listen -LocalPort \$unityPort -ErrorAction SilentlyContinue | \
                     Select-Object -ExpandProperty OwningProcess -Unique | \
                     ForEach-Object { \
-                        \$pid = [int]\$_; \
-                        if (\$seen.Add(\$pid)) { \
-                            Stop-Process -Id \$pid -Force -ErrorAction SilentlyContinue; \
-                            [void]\$stopped.Add(\"port:\$pid\"); \
+                        \$processId = [int]\$_; \
+                        if (\$seen.Add(\$processId)) { \
+                            Stop-Process -Id \$processId -Force -ErrorAction SilentlyContinue; \
+                            [void]\$stopped.Add(\"port:\$processId\"); \
                         } \
                     }; \
             } \
