@@ -168,10 +168,18 @@ namespace SQLite4Unity3d
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare_v2", CallingConvention = CallingConvention.Cdecl)]
 		public static extern Result Prepare2(IntPtr db, [MarshalAs(UnmanagedType.LPStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
 
+		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare_v2", CallingConvention = CallingConvention.Cdecl)]
+		public static extern Result Prepare2(IntPtr db, byte[] sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
+
 		public static IntPtr Prepare2(IntPtr db, string query)
 		{
 			IntPtr stmt;
+		#if UNITY_STANDALONE_WIN
+			var queryBytes = Encoding.UTF8.GetBytes(query + "\0");
+			var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);
+		#else
 			var r = Prepare2(db, query, System.Text.UTF8Encoding.UTF8.GetByteCount(query), out stmt, IntPtr.Zero);
+		#endif
 			if (r != Result.OK)
 			{
 				throw SQLiteException.New(r, GetErrmsg(db));

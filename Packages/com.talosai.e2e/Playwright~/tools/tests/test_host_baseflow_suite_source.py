@@ -36,6 +36,17 @@ SQLITE_RUNTIME_PATH = (
     / "SqliteNet"
     / "SQLite.cs"
 )
+SQLITE_DLLIMPORT_PATH = (
+    REPO_ROOT
+    / "Packages"
+    / "com.popo.bdframework"
+    / "Runtime"
+    / "Data"
+    / "Sql"
+    / "Sqlite"
+    / "SqliteNet"
+    / "Sqlite4SqlCipherDllImport.cs"
+)
 
 
 def test_host_baseflow_suites_stay_in_host_package() -> None:
@@ -93,3 +104,15 @@ def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:
     assert "connectionString.OpenFlags == (SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create)" in content
     assert "SQLite3.Open16(connectionString.DatabasePath, out handle);" in content
     assert "var databasePathAsBytes = GetNullTerminatedUtf8(connectionString.DatabasePath);" in content
+
+
+def test_windows_sqlite_runtime_keeps_utf8_prepare_strategy() -> None:
+    """验证 Windows standalone 的 SQL prepare 保留 UTF-8 byte[] 路线。
+    Verify that the Windows standalone SQL prepare path keeps the UTF-8 byte[] route.
+    """
+    content = SQLITE_DLLIMPORT_PATH.read_text(encoding="utf-8")
+
+    assert "public static extern Result Prepare2(IntPtr db, byte[] sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
+    assert "#if UNITY_STANDALONE_WIN" in content
+    assert 'var queryBytes = Encoding.UTF8.GetBytes(query + "\\0");' in content
+    assert "var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);" in content
