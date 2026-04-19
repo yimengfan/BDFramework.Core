@@ -106,16 +106,20 @@ def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:
     assert "var databasePathAsBytes = GetNullTerminatedUtf8(connectionString.DatabasePath);" in content
 
 
-def test_windows_sqlite_runtime_keeps_utf8_prepare_strategy() -> None:
-    """验证 Windows standalone 的 SQL prepare 保留显式 UTF-8 byte[] 路线。
-    Verify that the Windows standalone SQL prepare path keeps the explicit UTF-8 byte[] route.
+def test_windows_sqlite_runtime_keeps_unmanaged_utf8_prepare_strategy() -> None:
+    """验证 Windows standalone 的 SQL prepare 走 unmanaged UTF-8 缓冲区路线。
+    Verify that the Windows standalone SQL prepare path uses an unmanaged UTF-8 buffer route.
     """
     content = SQLITE_DLLIMPORT_PATH.read_text(encoding="utf-8")
 
+    assert "public static extern Result Prepare2(IntPtr db, IntPtr sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
     assert "public static extern Result Prepare2(IntPtr db, byte[] sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
     assert "public static extern Result Prepare16(IntPtr db, [MarshalAs(UnmanagedType.LPWStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
-    assert "var queryBytes = Encoding.UTF8.GetBytes(query + \"\\0\");" in content
-    assert "var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);" in content
+    assert "AllocateNullTerminatedUtf8Sql(query)" in content
+    assert "var r = Prepare2(db, queryPointer, -1, out stmt, IntPtr.Zero);" in content
+    assert "Marshal.AllocHGlobal(queryBytes.Length + 1);" in content
+    assert "Marshal.WriteByte(queryPointer, queryBytes.Length, 0);" in content
+    assert "Encoding.UTF8.GetBytes(query + \"\\0\")" not in content
 
 
 def test_sqlite_execute_nonquery_accepts_row_for_pragma_results() -> None:

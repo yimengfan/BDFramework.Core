@@ -6,7 +6,11 @@ using Sqlite3BackupHandle = System.IntPtr;
 
 namespace SQLite4Unity3d
 {
-    public static partial class SQLite3
+	/// <summary>
+	/// 中文：封装 SQLCipher 原生 sqlite3 入口，统一处理 Windows Player 与其他平台的字符串封送差异。
+	/// English: Wraps the native SQLCipher sqlite3 entrypoints and centralizes string marshalling differences between the Windows player and other platforms.
+	/// </summary>
+	public static partial class SQLite3
     {
         public enum ColType
         {
@@ -169,21 +173,52 @@ namespace SQLite4Unity3d
 		public static extern Result Prepare2(IntPtr db, [MarshalAs(UnmanagedType.LPStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
 
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare_v2", CallingConvention = CallingConvention.Cdecl)]
+		public static extern Result Prepare2(IntPtr db, IntPtr sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
+
+		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare_v2", CallingConvention = CallingConvention.Cdecl)]
 		public static extern Result Prepare2(IntPtr db, byte[] sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
 
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_prepare16_v2", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
 		public static extern Result Prepare16(IntPtr db, [MarshalAs(UnmanagedType.LPWStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);
 
+		/// <summary>
+		/// 中文：使用手动分配的 UTF-8 SQL 缓冲区准备语句，避免 Windows Player 下 byte[] P/Invoke 封送污染 PRAGMA 文本。
+		/// English: Prepares a statement with a manually allocated UTF-8 SQL buffer so the Windows player avoids byte[] P/Invoke marshalling corrupting PRAGMA text.
+		/// </summary>
 		public static IntPtr Prepare2(IntPtr db, string query)
 		{
 			IntPtr stmt;
-			var queryBytes = Encoding.UTF8.GetBytes(query + "\0");
-			var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);
-			if (r != Result.OK)
+			var queryPointer = IntPtr.Zero;
+			try
 			{
-				throw SQLiteException.New(r, GetErrmsg(db));
+				queryPointer = AllocateNullTerminatedUtf8Sql(query);
+				var r = Prepare2(db, queryPointer, -1, out stmt, IntPtr.Zero);
+				if (r != Result.OK)
+				{
+					throw SQLiteException.New(r, GetErrmsg(db));
+				}
+			}
+			finally
+			{
+				if (queryPointer != IntPtr.Zero)
+				{
+					Marshal.FreeHGlobal(queryPointer);
+				}
 			}
 			return stmt;
+		}
+
+		/// <summary>
+		/// 中文：构造以 NUL 结尾的 UTF-8 SQL 缓冲区，确保 sqlite3_prepare_v2 读取到稳定的原始字节序列。
+		/// English: Builds a NUL-terminated UTF-8 SQL buffer so sqlite3_prepare_v2 reads a stable raw byte sequence.
+		/// </summary>
+		private static IntPtr AllocateNullTerminatedUtf8Sql(string query)
+		{
+			var queryBytes = Encoding.UTF8.GetBytes(query);
+			var queryPointer = Marshal.AllocHGlobal(queryBytes.Length + 1);
+			Marshal.Copy(queryBytes, 0, queryPointer, queryBytes.Length);
+			Marshal.WriteByte(queryPointer, queryBytes.Length, 0);
+			return queryPointer;
 		}
 
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_step", CallingConvention = CallingConvention.Cdecl)]
