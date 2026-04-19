@@ -188,7 +188,12 @@ namespace BDFramework.HostE2E
                 typeof(object[]));
 
             var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
-            var sqlitePersistentRoot = NormalizePathForWindowsFileApis(Application.persistentDataPath);
+            var applicationPersistentDataPath = Application.persistentDataPath;
+            var sqlitePersistentRoot = NormalizePathForWindowsFileApis(
+                ResolveSqliteProbeRoot(
+                    frameworkPersistentDataPath,
+                    applicationPersistentDataPath,
+                    out var sqlitePersistentRootReason));
             var databasePath = CombinePath(
                 sqlitePersistentRoot,
                 $"talos-baseflow-host-{Guid.NewGuid():N}.db");
@@ -207,7 +212,7 @@ namespace BDFramework.HostE2E
             try
             {
                 Debug.Log(
-                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={Application.persistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot}");
+                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot} sqlitePersistentRootReason={sqlitePersistentRootReason}");
                 if (File.Exists(normalizedDatabasePath))
                 {
                     Debug.Log($"[E2E] SQLite probe phase=delete-existing-file databasePath={normalizedDatabasePath}");
@@ -550,6 +555,48 @@ namespace BDFramework.HostE2E
         {
             var normalizedPath = path.Replace('/', Path.DirectorySeparatorChar);
             return Path.GetFullPath(normalizedPath);
+        }
+
+        /// <summary>
+        /// 为宿主 SQLite 探针选择稳定可写的根目录。
+        /// Choose a stable writable root directory for the host SQLite probe.
+        /// Windows TeamCity 服务账号会把 `Application.persistentDataPath` 解析到 `systemprofile` 目录，
+        /// 该路径已经在真机链路里被验证会让 SQLite 打开失败，因此这里仅针对该环境降级到系统临时目录。
+        /// The Windows TeamCity service account resolves `Application.persistentDataPath` into the `systemprofile` directory,
+        /// and that path has already been proven to make SQLite open fail in the player flow, so this logic degrades only that environment to the system temp directory.
+        /// </summary>
+        /// <param name="frameworkPersistentDataPath">框架公开的持久化根目录。</param>
+        /// <param name="applicationPersistentDataPath">Unity Player 公开的持久化根目录。</param>
+        /// <param name="selectionReason">返回本次选路原因，便于日志诊断。</param>
+        /// <returns>最终用于 SQLite 探针的根目录。</returns>
+        /// <returns>The final root directory used by the SQLite probe.</returns>
+        private static string ResolveSqliteProbeRoot(
+            string frameworkPersistentDataPath,
+            string applicationPersistentDataPath,
+            out string selectionReason)
+        {
+            if (Application.platform == RuntimePlatform.WindowsPlayer
+                && !string.IsNullOrWhiteSpace(applicationPersistentDataPath)
+                && applicationPersistentDataPath.IndexOf("systemprofile", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                selectionReason = "windows-systemprofile-temp-fallback";
+                return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
+            }
+
+            if (!string.IsNullOrWhiteSpace(applicationPersistentDataPath))
+            {
+                selectionReason = "application-persistent-data-path";
+                return applicationPersistentDataPath;
+            }
+
+            if (!string.IsNullOrWhiteSpace(frameworkPersistentDataPath))
+            {
+                selectionReason = "framework-persistent-data-path";
+                return frameworkPersistentDataPath;
+            }
+
+            selectionReason = "system-temp-path";
+            return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
         }
 
         /// <summary>
