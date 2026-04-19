@@ -88,4 +88,6 @@ def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:
     assert "#elif UNITY_STANDALONE_WIN" in content
     assert "TeamCity service-account player" in content
     assert "SQLite3.Open(connectionString.DatabasePath, out handle, (int)connectionString.OpenFlags, connectionString.VfsName);" in content
+    assert "connectionString.OpenFlags == (SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create)" in content
+    assert "SQLite3.Open16(connectionString.DatabasePath, out handle);" in content
     assert "var databasePathAsBytes = GetNullTerminatedUtf8(connectionString.DatabasePath);" in content
