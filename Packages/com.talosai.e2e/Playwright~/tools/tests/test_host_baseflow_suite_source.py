@@ -82,6 +82,7 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert 'GetConstructor(new[] { typeof(string), sqliteOpenFlagsType, typeof(bool) })' not in content
     assert "ResolveSqliteProbeRoot" in content
     assert "windows-systemprofile-temp-fallback" in content
+    assert "android-temporary-cache-path" in content
     assert "Path.GetTempPath()" in content
     assert "sqliteOpenPath" in content
     assert "fileApiPath" in content
@@ -90,6 +91,7 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert "ReadRequiredStaticStringProperty" in content
     assert "CombinePath" in content
     assert "Application.persistentDataPath" in content
+    assert "Application.temporaryCachePath" in content
 
 
 def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:

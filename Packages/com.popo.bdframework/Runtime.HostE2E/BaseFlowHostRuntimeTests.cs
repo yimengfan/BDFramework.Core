@@ -189,10 +189,12 @@ namespace BDFramework.HostE2E
 
             var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
             var applicationPersistentDataPath = Application.persistentDataPath;
+            var temporaryCachePath = Application.temporaryCachePath;
             var sqlitePersistentRoot = NormalizePathForWindowsFileApis(
                 ResolveSqliteProbeRoot(
                     frameworkPersistentDataPath,
                     applicationPersistentDataPath,
+                    temporaryCachePath,
                     out var sqlitePersistentRootReason));
             var databasePath = CombinePath(
                 sqlitePersistentRoot,
@@ -213,7 +215,7 @@ namespace BDFramework.HostE2E
             try
             {
                 Debug.Log(
-                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot} sqlitePersistentRootReason={sqlitePersistentRootReason} sqliteOpenPath={sqliteOpenPath}");
+                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} temporaryCachePath={temporaryCachePath} sqlitePersistentRoot={sqlitePersistentRoot} sqlitePersistentRootReason={sqlitePersistentRootReason} sqliteOpenPath={sqliteOpenPath}");
                 if (File.Exists(normalizedDatabasePath))
                 {
                     Debug.Log($"[E2E] SQLite probe phase=delete-existing-file databasePath={normalizedDatabasePath}");
@@ -580,17 +582,27 @@ namespace BDFramework.HostE2E
         /// Choose a stable writable root directory for the host SQLite probe.
         /// Windows TeamCity 服务账号会把 `Application.persistentDataPath` 解析到 `systemprofile` 目录，
         /// 该路径已经在真机链路里被验证会让 SQLite 打开失败，因此这里仅针对该环境降级到系统临时目录。
+        /// Android 真机链路里 `Application.persistentDataPath` 会落到外部 app-specific 目录，
+        /// 该路径已经在 native SQLite 打开阶段验证会返回 CannotOpen，因此 Android 探针优先降级到内部 temporary cache 子目录。
         /// The Windows TeamCity service account resolves `Application.persistentDataPath` into the `systemprofile` directory,
         /// and that path has already been proven to make SQLite open fail in the player flow, so this logic degrades only that environment to the system temp directory.
+        /// In the Android player flow `Application.persistentDataPath` lands in the external app-specific directory,
+        /// and that path has already been proven to return CannotOpen during the native SQLite open phase, so the Android probe prefers an isolated subdirectory under the internal temporary cache.
         /// </summary>
         /// <param name="frameworkPersistentDataPath">框架公开的持久化根目录。</param>
+        /// <param name="frameworkPersistentDataPath">The framework-exposed persistence root.</param>
         /// <param name="applicationPersistentDataPath">Unity Player 公开的持久化根目录。</param>
+        /// <param name="applicationPersistentDataPath">The Unity Player persistence root.</param>
+        /// <param name="temporaryCachePath">Unity Player 公开的临时缓存根目录。</param>
+        /// <param name="temporaryCachePath">The Unity Player temporary-cache root.</param>
         /// <param name="selectionReason">返回本次选路原因，便于日志诊断。</param>
+        /// <param name="selectionReason">Returns the selection reason for log diagnostics.</param>
         /// <returns>最终用于 SQLite 探针的根目录。</returns>
         /// <returns>The final root directory used by the SQLite probe.</returns>
         private static string ResolveSqliteProbeRoot(
             string frameworkPersistentDataPath,
             string applicationPersistentDataPath,
+            string temporaryCachePath,
             out string selectionReason)
         {
             if (Application.platform == RuntimePlatform.WindowsPlayer
@@ -599,6 +611,13 @@ namespace BDFramework.HostE2E
             {
                 selectionReason = "windows-systemprofile-temp-fallback";
                 return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
+            }
+
+            if (Application.platform == RuntimePlatform.Android
+                && !string.IsNullOrWhiteSpace(temporaryCachePath))
+            {
+                selectionReason = "android-temporary-cache-path";
+                return Path.Combine(temporaryCachePath, "bdframework-host-sqlite");
             }
 
             if (!string.IsNullOrWhiteSpace(applicationPersistentDataPath))
