@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
-    public class Props_HeroData : APropsBase
+    public class RD_HeroData : ARenderDataBase
     {
         [ComponentValueBind("Hero/Content/t_Name",typeof(Text), nameof(Text.text))]
         public string Name;
@@ -28,7 +28,7 @@ namespace BDFramework.UFlux.Test
     /// 设置props 就能刷新Windows
     /// </summary>
     [UI((int) WinEnum.Win_UFlux_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
-    public class Window_PropsDemo05 : AWindow<Props_HeroData>
+    public class Window_PropsDemo05 : AWindow<RD_HeroData>
     {
         public Window_PropsDemo05(string path) : base(path)
         {
@@ -49,19 +49,19 @@ namespace BDFramework.UFlux.Test
         private void btn_TestWindowProps()
         {
             //触发属性变动
-            this.Props.Name = "吕布";
-            this.Props.Hp = Random.Range(1, 100);
-            this.Props.MaxHp = 100;
-            if (this.Props.Hp < 50)
+            this.RenderData.Name = "吕布";
+            this.RenderData.Hp = Random.Range(1, 100);
+            this.RenderData.MaxHp = 100;
+            if (this.RenderData.Hp < 50)
             {
-                this.Props.HpColor = Color.red;
+                this.RenderData.HpColor = Color.red;
             }
             else
             {
-                this.Props.HpColor = Color.blue;
+                this.RenderData.HpColor = Color.blue;
             }
 
-            this.CommitProps();
+            this.CommitRenderData();
         }
     }
 }

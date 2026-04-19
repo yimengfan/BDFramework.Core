@@ -8,14 +8,14 @@ namespace BDFramework.UFlux
     /// 无属性的Props
     /// TODO 不允许外部使用
     /// </summary>
-    public class NoProps : APropsBase
+    public class NoRenderData : ARenderDataBase
     {
     }
 
     /// <summary>
     /// Component的基类
     /// </summary>
-    abstract public class AComponent : ATComponent<NoProps>
+    abstract public class AComponent : ATComponent<NoRenderData>
     {
         /// <summary>
         /// 动态传入节点

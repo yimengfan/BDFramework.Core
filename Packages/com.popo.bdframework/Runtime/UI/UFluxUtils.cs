@@ -141,9 +141,9 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="trans"></param>
         /// <param name="aState"></param>
-        static public void SetComponentProps(Transform trans, APropsBase props)
+        static public void SetComponentRenderData(Transform trans, ARenderDataBase renderData)
         {
-            ComponentBindAdaptorManager.Inst.SetTransformProps(trans, props);
+            ComponentBindAdaptorManager.Inst.SetTransformRenderData(trans, renderData);
         }
 
         #endregion

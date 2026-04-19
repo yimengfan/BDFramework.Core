@@ -55,7 +55,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// Props
         /// </summary>
-        public APropsBase Props { get; set; }
+        public ARenderDataBase RenderData { get; set; }
 
         /// <summary>
         /// 组件属性缓存表
@@ -113,8 +113,8 @@ namespace BDFramework.UFlux
         /// 设置组件绑定值
         /// </summary>
         /// <param name="transform"></param>
-        /// <param name="newProps"></param>
-        public void SetTransformProps(Transform transform, APropsBase newProps)
+        /// <param name="newRenderData"></param>
+        public void SetTransformRenderData(Transform transform, ARenderDataBase newRenderData)
         {
             //第一次进行缓存绑定后，就不再重新解析了，
             //所以使用者要保证每次的 state尽量是一致的
@@ -126,19 +126,19 @@ namespace BDFramework.UFlux
                 transformBindData = new TransformBindData();
                 transformBindData.Transform = transform;
                 //生成Bind信息
-                transformBindData.FieldCacheMap = BindTransformProps(transform, newProps);
+                transformBindData.FieldCacheMap = BindTransformRenderData(transform, newRenderData);
                 globalTransformBindCacheMap[transform] = transformBindData;
             }
 
             //修改field
-            List<string> changedFieldList = AnalysisPropsChanged(transformBindData, newProps);
+            List<string> changedFieldList = AnalysisRenderDataChanged(transformBindData, newRenderData);
             //
             for (int j = 0; j < changedFieldList.Count; j++)
             {
                 var fieldName = changedFieldList[j];
                 var cf = transformBindData.FieldCacheMap[fieldName];
                 //TODO 这里考虑优化多次获取值的性能
-                var newFieldValue = newProps.GetValue(fieldName);
+                var newFieldValue = newRenderData.GetValue(fieldName);
                 //执行赋值操作
                 var comBindAdaptor = componentBindAdaptorMap[cf.Attribute.Type];
                 if (cf.UIBehaviour != null) //UI操作
@@ -156,15 +156,15 @@ namespace BDFramework.UFlux
         /// bind Tansform和State的值，防止每次都修改
         /// </summary>
         /// <param name="transform"></param>
-        /// <param name="props"></param>
+        /// <param name="renderData"></param>
         /// <returns></returns>
-        private Dictionary<string, TransformBindData.ComponentFieldCahce> BindTransformProps(Transform transform,
-            APropsBase props)
+        private Dictionary<string, TransformBindData.ComponentFieldCahce> BindTransformRenderData(Transform transform,
+            ARenderDataBase renderData)
         {
             var componentFieldCacheMap = new Dictionary<string, TransformBindData.ComponentFieldCahce>();
             //先初始化Props的成员信息
-            var type = props.GetType();
-            if (props.MemberinfoMap == null)
+            var type = renderData.GetType();
+            if (renderData.MemberinfoMap == null)
             {
                 var memberInfoMap = StateFactory.GetMemberinfoCache(type);
                 if (memberInfoMap == null)
@@ -187,10 +187,10 @@ namespace BDFramework.UFlux
                     StateFactory.AddMemberinfoCache(type, memberInfoMap);
                 }
 
-                props.MemberinfoMap = memberInfoMap;
+                renderData.MemberinfoMap = memberInfoMap;
             }
             //进行值绑定
-            foreach (var mi in props.MemberinfoMap.Values)
+            foreach (var mi in renderData.MemberinfoMap.Values)
             {
                 var cf = new TransformBindData.ComponentFieldCahce();
                 var attribute = mi.GetAttributeInILRuntime<ComponentValueBindAttribute>();
@@ -223,17 +223,17 @@ namespace BDFramework.UFlux
         /// 分析Props修改
         /// </summary>
         /// <param name="transformBindData"></param>
-        /// <param name="newProps"></param>
+        /// <param name="newRenderData"></param>
         /// <returns></returns>
-        List<string> AnalysisPropsChanged(TransformBindData transformBindData, APropsBase newProps)
+        List<string> AnalysisRenderDataChanged(TransformBindData transformBindData, ARenderDataBase newRenderData)
         {
             List<string> changedFiledList = new List<string>();
             //手动设置field模式
-            if (newProps.IsMunalMarkMode)
+            if (newRenderData.IsMunalMarkMode)
             {
-                if (newProps.IsChanged)
+                if (newRenderData.IsChanged)
                 {
-                    changedFiledList.AddRange(newProps.GetChangedPropertise());
+                    changedFiledList.AddRange(newRenderData.GetChangedPropertise());
                 }
             }
             else
@@ -242,7 +242,7 @@ namespace BDFramework.UFlux
                 foreach (var item in transformBindData.FieldCacheMap)
                 {
                     var fieldName = item.Key;
-                    var newFieldValue = newProps.GetValue(fieldName);
+                    var newFieldValue = newRenderData.GetValue(fieldName);
                     //旧数据为null 直接加入
                     if (newFieldValue == null)
                     {
@@ -259,7 +259,7 @@ namespace BDFramework.UFlux
                     //开始新的对比判断
                     if (newValueType.IsValueType || newValueType.Namespace == "System") //内置类型处理
                     {
-                        if (!newProps.Equals(item.Value.LastValue))
+                        if (!newRenderData.Equals(item.Value.LastValue))
                         {
                             isChanged = true;
                         }
@@ -268,9 +268,9 @@ namespace BDFramework.UFlux
                     {
                         continue;
                     }
-                    else if (newFieldValue is APropsBase) //成员属性尽量使用手动版本设置改变
+                    else if (newFieldValue is ARenderDataBase) //成员属性尽量使用手动版本设置改变
                     {
-                        var props = newFieldValue as APropsBase;
+                        var props = newFieldValue as ARenderDataBase;
                         if (props.IsMunalMarkMode)
                         {
                             if (props.IsChanged)
@@ -282,7 +282,7 @@ namespace BDFramework.UFlux
                         {
                             //这里较慢，因为是全局列表更新
                             var transofrmdata =
-                                globalTransformBindCacheMap.Values.FirstOrDefault((v) => v.Props == props);
+                                globalTransformBindCacheMap.Values.FirstOrDefault((v) => v.RenderData == props);
                             if (transofrmdata == null)
                             {
                                 isChanged = true;
@@ -290,7 +290,7 @@ namespace BDFramework.UFlux
                             else
                             {
                                 //递归获取是否改变，一旦层数过多，效率不是很高，所以一般嵌套不要超过2层
-                                var ret = AnalysisPropsChanged(transformBindData, props);
+                                var ret = AnalysisRenderDataChanged(transformBindData, props);
                                 if (ret.Count > 0)
                                 {
                                     isChanged = true;

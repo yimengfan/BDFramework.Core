@@ -8,7 +8,7 @@ namespace BDFramework.UFlux.View.Props
     /// 1.Prop的成员变量如果是复合类型，则类型必须为Prop.
     ///  如List<Props> Dictionnary<int,Props> 
     /// </summary>
-    abstract  public class APropsBase : AStateBase
+    abstract  public class ARenderDataBase : AStateBase
     {
         /// <summary>
         /// 这里是描述ComponentType的类型，

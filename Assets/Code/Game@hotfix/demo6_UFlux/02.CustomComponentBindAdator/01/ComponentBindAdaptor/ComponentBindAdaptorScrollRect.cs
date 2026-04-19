@@ -55,7 +55,7 @@ namespace BDFramework.UFlux
                         //添加组件 
                         scrollRectAdaptor.AddItem(props, com);
                         //更新组件
-                        com.SetProps(props);
+                        com.SetRenderData(props);
                     }
                 }
                 else
@@ -70,7 +70,7 @@ namespace BDFramework.UFlux
             {
                 //刷新节点
                 var com = scrollRectAdaptor.GetItem(props);
-                com.SetProps(props);
+                com.SetRenderData(props);
             }
 
             /**********************删***********************/

@@ -12,18 +12,18 @@ namespace BDFramework.UFlux.Test
     /// 这里是渲染状态，用以描述页面渲染
     /// 
     /// </summary>
-    public class Props_HeroDataContent : APropsBase
+    public class Props_HeroDataContent : ARenderDataBase
     {
         /// <summary>
         /// 左边的英雄信息
         /// 这里只是演示流程，才将组件数据存在着，实际上应该组件自身保存，处理
         /// </summary>
-        public Com_HeroData.Props_Demo6HeroData Content { get; set; } = new Com_HeroData.Props_Demo6HeroData();
+        public Com_HeroData.RD_Demo6HeroData Content { get; set; } = new Com_HeroData.RD_Demo6HeroData();
         /// <summary>
         /// 右边的英雄信息
         /// 这里只是演示流程，才将组件数据存在着，实际上应该组件自身保存，处理
         /// </summary>
-        public Com_HeroData.Props_Demo6HeroData Content2 { get; set; }  = new Com_HeroData.Props_Demo6HeroData();
+        public Com_HeroData.RD_Demo6HeroData Content2 { get; set; }  = new Com_HeroData.RD_Demo6HeroData();
 
     }
 
@@ -59,7 +59,7 @@ namespace BDFramework.UFlux.Test
             store.Subscribe((newState) =>
             {
                 //刷新
-                StateToProps(newState);
+                StateToRenderData(newState);
             });
             //自动订阅
             store.ScanThisSubscribe(this);
@@ -71,13 +71,13 @@ namespace BDFramework.UFlux.Test
             storeWrapper.Subscribe<S_HeroDataDemo6Copy>((newState) =>
             {
                 //设置Content2
-                State2ToContent2(newState);
+                State2ToRenderData2(newState);
             });
             // //监听State:Server_HeroData
             storeWrapper.Subscribe<Server_HeroData>((newState) =>
             {
                 //刷新
-                StateToProps(newState);
+                StateToRenderData(newState);
             });
         }
 
@@ -88,53 +88,53 @@ namespace BDFramework.UFlux.Test
         /// 需要注意的是，不要刷新整个页面，只要刷新部分更新的数值即可
         /// </summary>
         /// <param name="server"></param>
-        public void StateToProps(Server_HeroData server)
+        public void StateToRenderData(Server_HeroData server)
         {
-            this.Props.Content.Name  = server.Name;
-            this.Props.Content.Hp = server.Hp;
-            this.Props.Content.MaxHp = server.MaxHp;
+            this.RenderData.Content.Name  = server.Name;
+            this.RenderData.Content.Hp = server.Hp;
+            this.RenderData.Content.MaxHp = server.MaxHp;
             //这里表现出State不一定跟Props完全一样，
             //有些ui的渲染状态，需要根据State算出来
             if (server.Hp < 50)
             {
-                this.Props.Content.HpColor = Color.red;
+                this.RenderData.Content.HpColor = Color.red;
             }
             else
             {
-                this.Props.Content.HpColor = Color.blue;
+                this.RenderData.Content.HpColor = Color.blue;
             }
 
             //提交修改
             //this.CommitProps();
             //这里只是演示流程，实际上组件本身的逻辑，组件自己处理，最要不要依赖父窗口
-            this.com_HeroDataContent.SetData(this.Props.Content);
+            this.com_HeroDataContent.SetData(this.RenderData.Content);
         }
 
 
         /// <summary>
         /// Content2的渲染
         /// </summary>
-        public void State2ToContent2(S_HeroDataDemo6Copy server)
+        public void State2ToRenderData2(S_HeroDataDemo6Copy server)
         {
-            this.Props.Content2.Name  = server.Name;
-            this.Props.Content2.Hp = server.Hp;
-            this.Props.Content2.MaxHp = server.MaxHp;
+            this.RenderData.Content2.Name  = server.Name;
+            this.RenderData.Content2.Hp = server.Hp;
+            this.RenderData.Content2.MaxHp = server.MaxHp;
             //这里表现出State不一定跟Props完全一样，
             //有些ui的渲染状态，需要根据State算出来
             if (server.Hp < 50)
             {
-                this.Props.Content2.HpColor = Color.green;
+                this.RenderData.Content2.HpColor = Color.green;
             }
             else
             {
-                this.Props.Content2.HpColor = Color.yellow;
+                this.RenderData.Content2.HpColor = Color.yellow;
             }
 
             //提交修改
             //this.CommitProps();
             
             //这里只是演示流程，实际上组件本身的逻辑，组件自己处理，最要不要依赖父窗口
-            this.com_HeroDataContent2.SetData(this.Props.Content2);
+            this.com_HeroDataContent2.SetData(this.RenderData.Content2);
         }
 
 

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.demo6_UFlux.ComponentBindAdaptor
 {
-    public class Props_Window : APropsBase
+    public class Props_Window : ARenderDataBase
     {
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace Game.demo6_UFlux.ComponentBindAdaptor
 
             
             Debug.Log("自定义值映射，点击跟踪代码");
-            this.Props.ShowChildNum = Random.Range(1, 6);
-            this.CommitProps();
+            this.RenderData.ShowChildNum = Random.Range(1, 6);
+            this.CommitRenderData();
         }
 
         [ButtonOnclick("btn_Close")]

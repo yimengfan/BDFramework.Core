@@ -17,16 +17,16 @@ namespace BDFramework.UFlux
             this.sr = sr;
         }
 
-        public Dictionary<APropsBase, IComponent> ContentMap { get;private  set; } = new Dictionary<APropsBase, IComponent>();
+        public Dictionary<ARenderDataBase, IComponent> ContentMap { get;private  set; } = new Dictionary<ARenderDataBase, IComponent>();
 
 
         /// <summary>
         /// 添加item
         /// </summary>
-        public void AddItem(APropsBase propsBase, IComponent component)
+        public void AddItem(ARenderDataBase renderDataBase, IComponent component)
         {
             component.Transform.SetParent(this.sr.content, false);
-            this.ContentMap[propsBase] = component;
+            this.ContentMap[renderDataBase] = component;
         }
 
         /// <summary>
@@ -34,21 +34,21 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public IComponent GetItem(APropsBase props)
+        public IComponent GetItem(ARenderDataBase renderData)
         {
-            return ContentMap[props];
+            return ContentMap[renderData];
         }
 
         /// <summary>
         /// 删除
         /// </summary>
-        /// <param name="props"></param>
-        public void Destroy(APropsBase props)
+        /// <param name="renderData"></param>
+        public void Destroy(ARenderDataBase renderData)
         {
 
-            var com = ContentMap[props];
+            var com = ContentMap[renderData];
             com.Destroy();
-            ContentMap.Remove(props);
+            ContentMap.Remove(renderData);
         }
         
     }

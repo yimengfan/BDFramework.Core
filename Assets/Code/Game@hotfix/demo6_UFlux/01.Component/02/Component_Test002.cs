@@ -11,7 +11,7 @@ namespace Game.demo6_UFlux.Comonent._02
     
     //这里是Component标签，用以创建时候进行绑定Transform
     [Component("Windows/UFlux/01Component/Component_test01",false)] 
-    public class Component_Test002 : ATComponent<Props_Test001>
+    public class Component_Test002 : ATComponent<RD_Test001>
     {
         public override void Open(UIMsgData uiMsg = null)
         {
@@ -39,10 +39,10 @@ namespace Game.demo6_UFlux.Comonent._02
                
                 Debug.Log(i+" - 自动分析差值,点击跟踪代码");
                 //这里对当前数据进行赋值
-                this.Props.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
-                this.Props.content = contentList[(int) Random.Range(0f, contentList.Count)];
+                this.RenderData.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
+                this.RenderData.content = contentList[(int) Random.Range(0f, contentList.Count)];
                 yield return new WaitForSeconds(2);
-                this.CommitProps();
+                this.CommitRenderData();
                 
             }
            

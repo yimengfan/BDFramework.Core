@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Game.demo6_UFlux.CustomCponentBindAdaptor
 {
 
-    public class Props_ItemTest002 : APropsBase
+    public class RD_ItemTest002 : ARenderDataBase
     {
         [ComponentValueBind("img", typeof(Image), nameof(Image.overrideSprite))] //数据赋值对象
         public string ItemImg = "";
@@ -25,7 +25,7 @@ namespace Game.demo6_UFlux.CustomCponentBindAdaptor
     /// 滑动列表中添加的元素
     /// </summary>
     [Component("Windows/UFlux/02CustomComponentBindAdator/01/item")]
-    public class Component_ItemTest002 : ATComponent<Props_ItemTest002>
+    public class Component_ItemTest002 : ATComponent<RD_ItemTest002>
     {
     }
     

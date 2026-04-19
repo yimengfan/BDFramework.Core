@@ -17,7 +17,7 @@ namespace BDFramework.UFlux
     /// 不带Flux Store
     /// </summary>
     /// <typeparam name="TP"></typeparam>
-    public class AWindow<TP> : ATComponent<TP>, IWindow, IUIMessage where TP : APropsBase, new()
+    public class AWindow<TP> : ATComponent<TP>, IWindow, IUIMessage where TP : ARenderDataBase, new()
     {
         /// <summary>
         /// 根节点

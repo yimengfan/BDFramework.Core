@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Game.demo6_UFlux.Comonent._01
 {
-    public class Props_Test001 : APropsBase
+    public class RD_Test001 : ARenderDataBase
     {
         //这里进行数据的绑定
         [ComponentValueBind( "chatbox/head", typeof(Image),nameof(Image.overrideSprite))]//数据赋值对象
@@ -21,7 +21,7 @@ namespace Game.demo6_UFlux.Comonent._01
     
     //这里是Component标签，用以创建时候进行绑定Transform
     [Component("Windows/UFlux/01Component/Component_test01",false)] 
-    public class Component_Test001 : ATComponent<Props_Test001>
+    public class Component_Test001 : ATComponent<RD_Test001>
     {
         public override void Open(UIMsgData uiMsg = null)
         {
@@ -48,14 +48,14 @@ namespace Game.demo6_UFlux.Comonent._01
             {
                 Debug.Log(i+" - 手动mark变化,点击跟踪代码");
                 //这里对当前数据进行赋值
-                this.Props.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
-                this.Props.content = contentList[(int) Random.Range(0f, contentList.Count)];
+                this.RenderData.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
+                this.RenderData.content = contentList[(int) Random.Range(0f, contentList.Count)];
                 //这里是手动设置修改版本
                 //设置属性修改
-                this.Props.SetPropertyChange(nameof(this.Props.headImg));
-                this.Props.SetPropertyChange(nameof(this.Props.content));
+                this.RenderData.SetPropertyChange(nameof(this.RenderData.headImg));
+                this.RenderData.SetPropertyChange(nameof(this.RenderData.content));
                 //提交修改数据
-                this.CommitProps();
+                this.CommitRenderData();
                 yield return new WaitForSeconds(2);
             }
            

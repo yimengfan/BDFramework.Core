@@ -9,19 +9,19 @@ using UnityEngine.UI;
 
 namespace Game.demo6_UFlux.Comonent._03
 {
-    public class Props_Window : APropsBase
+    public class Props_Window : ARenderDataBase
     {
         /// <summary>
         ///嵌套： 绑定单个节点
         /// </summary>
         [ComponentValueBind("Item",typeof(UFluxBindLogic), nameof(UFluxBindLogic.BindChild))]
-        public Props_Item Item= new Props_Item();
+        public RD_Item Item= new RD_Item();
         
         /// <summary>
         ///嵌套： 绑定到每个子节点的
         /// </summary>
         [ComponentValueBind("Items",typeof(UFluxBindLogic), nameof(UFluxBindLogic.BindChildren))]
-        public PropsList<Props_Item> ItemList = new PropsList<Props_Item>();
+        public PropsList<RD_Item> ItemList = new PropsList<RD_Item>();
 
     }
 
@@ -36,11 +36,11 @@ namespace Game.demo6_UFlux.Comonent._03
         private void btn_BindSingle()
         {
             int i = Random.Range(1, 6);
-            this.Props.Item.IconPath = "Image/" + i;
-            this.Props.Item.IconName = "小新被刷新:" + i;
+            this.RenderData.Item.IconPath = "Image/" + i;
+            this.RenderData.Item.IconName = "小新被刷新:" + i;
             //嵌套的父级Class最好，手动标记修改
-            this.Props.SetPropertyChange(nameof(this.Props.Item));
-            this.CommitProps();
+            this.RenderData.SetPropertyChange(nameof(this.RenderData.Item));
+            this.CommitRenderData();
             
             Debug.Log("嵌套绑定单节点,点击跟踪代码");
         }
@@ -51,15 +51,15 @@ namespace Game.demo6_UFlux.Comonent._03
          
             for (int i = 0;  i < 6; i++)
             {
-                var item = new Props_Item();
+                var item = new RD_Item();
                 item.IconPath = "Image/1";
                 item.IconName = "小新" + i + "号";
-                this.Props.ItemList.Add(item);
+                this.RenderData.ItemList.Add(item);
             }
             //嵌套的父级Class最好，手动标记修改
-            this.Props.SetPropertyChange(nameof(this.Props.ItemList));
+            this.RenderData.SetPropertyChange(nameof(this.RenderData.ItemList));
             
-            this.CommitProps();
+            this.CommitRenderData();
             
             Debug.Log("嵌套绑定多节点,点击跟踪代码");
         }

@@ -15,7 +15,7 @@ namespace BDFramework.UFlux.Collections
         /// 遍历
         /// </summary>
         /// <param name="action"></param>
-        void Foreach(Action<int,APropsBase> action);
+        void Foreach(Action<int,ARenderDataBase> action);
         
 
         /// <summary>
@@ -27,19 +27,19 @@ namespace BDFramework.UFlux.Collections
         /// 获取新增列表
         /// </summary>
         /// <returns></returns>
-        APropsBase[] GetNewDatas();
+        ARenderDataBase[] GetNewDatas();
 
         /// <summary>
         /// 获取移除的元素
         /// </summary>
         /// <returns></returns>
-        APropsBase[] GetRemovedDatas();
+        ARenderDataBase[] GetRemovedDatas();
         
         /// <summary>
         /// 获取改变的元素
         /// </summary>
         /// <returns></returns>
-        APropsBase[] GetChangedDatas();
+        ARenderDataBase[] GetChangedDatas();
 
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace BDFramework.UFlux.Collections
     /// 组件列表的实例
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PropsList<T> : IPropsList where T : APropsBase
+    public class PropsList<T> : IPropsList where T : ARenderDataBase
     {
         /// <summary>
         /// 所有组件的列表，
@@ -84,7 +84,7 @@ namespace BDFramework.UFlux.Collections
         /// 遍历
         /// </summary>
         /// <param name="action"></param>
-        public void Foreach(Action<int,APropsBase> action)
+        public void Foreach(Action<int,ARenderDataBase> action)
         {
             for (int i = 0; i < this.BaseList.Count; i++)
             {
@@ -178,7 +178,7 @@ namespace BDFramework.UFlux.Collections
         /// 获取新增列表
         /// </summary>
         /// <returns></returns>
-        public APropsBase[] GetNewDatas()
+        public ARenderDataBase[] GetNewDatas()
         {
             var ret = this.newDataList.ToArray();
             this.newDataList.Clear();
@@ -195,7 +195,7 @@ namespace BDFramework.UFlux.Collections
         /// 获取移除的元素
         /// </summary>
         /// <returns></returns>
-        public APropsBase[] GetRemovedDatas()
+        public ARenderDataBase[] GetRemovedDatas()
         {
             var ret = this.removeDataList.ToArray();
             this.removeDataList.Clear();
@@ -212,7 +212,7 @@ namespace BDFramework.UFlux.Collections
         /// 获取改变的元素
         /// </summary>
         /// <returns></returns>
-        public APropsBase[] GetChangedDatas()
+        public ARenderDataBase[] GetChangedDatas()
         {
             var ret = this.changedDataList.ToArray();
             this.changedDataList.Clear();

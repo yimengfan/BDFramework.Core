@@ -36,14 +36,14 @@ namespace BDFramework.UFlux
         /// <param name="value"></param>
         private void BindChild(Transform transform, object value)
         {
-            var props = value as APropsBase;
+            var props = value as ARenderDataBase;
             if (props == null)
             {
                 Debug.LogError("类型不是props:" + value.GetType().Name);
                 return;
             }
 
-            UFluxUtils.SetComponentProps(transform, props);
+            UFluxUtils.SetComponentRenderData(transform, props);
         }
 
 
@@ -62,7 +62,7 @@ namespace BDFramework.UFlux
             {
                 if (idx < transform.childCount)
                 {
-                    UFluxUtils.SetComponentProps(transform.GetChild(idx), props);
+                    UFluxUtils.SetComponentRenderData(transform.GetChild(idx), props);
                 }
             });
         }

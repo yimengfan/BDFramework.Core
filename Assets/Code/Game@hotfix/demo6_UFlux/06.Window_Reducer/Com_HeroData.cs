@@ -9,9 +9,9 @@ namespace BDFramework.UFlux.Test
     /// HeroData组件
     /// </summary>
     [Component("Windows/UFlux/demo006/Com_HeroData")]
-    public class Com_HeroData : ATComponent<Com_HeroData.Props_Demo6HeroData>
+    public class Com_HeroData : ATComponent<Com_HeroData.RD_Demo6HeroData>
     {
-        public class Props_Demo6HeroData : APropsBase
+        public class RD_Demo6HeroData : ARenderDataBase
         {
             [ComponentValueBind("t_Name", typeof(Text), nameof(Text.text))]
             public string Name;
@@ -38,15 +38,15 @@ namespace BDFramework.UFlux.Test
         /// <summary>
         /// 设置数据
         /// </summary>
-        /// <param name="propsDemo6"></param>
-        public void SetData(Props_Demo6HeroData propsDemo6)
+        /// <param name="renderDataDemo6"></param>
+        public void SetData(RD_Demo6HeroData renderDataDemo6)
         {
-            this.Props.Hp = propsDemo6.Hp;
-            this.Props.HpColor = propsDemo6.HpColor;
-            this.Props.Name = propsDemo6.Name;
-            this.Props.MaxHp = propsDemo6.MaxHp;
+            this.RenderData.Hp = renderDataDemo6.Hp;
+            this.RenderData.HpColor = renderDataDemo6.HpColor;
+            this.RenderData.Name = renderDataDemo6.Name;
+            this.RenderData.MaxHp = renderDataDemo6.MaxHp;
             //提交属性修改
-            this.CommitProps();
+            this.CommitRenderData();
         }
         
         

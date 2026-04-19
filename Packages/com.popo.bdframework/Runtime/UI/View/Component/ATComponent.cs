@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace BDFramework.UFlux
 {
-    abstract public class ATComponent<T> : IComponent where T : APropsBase, new()
+    abstract public class ATComponent<T> : IComponent where T : ARenderDataBase, new()
     {
         /// <summary>
-        /// 当前组件所有状态集合
+        /// 当前组件渲染数据
         /// </summary>
-        public T Props { get; private set; }
+        public T RenderData { get; private set; }
 
         /// <summary>
         /// 父窗口
@@ -34,8 +34,6 @@ namespace BDFramework.UFlux
         /// </summary>
         public bool IsOpen { get; private set; } = false;
         
-
-
         /// <summary>
         /// 是否被删除
         /// </summary>
@@ -57,7 +55,7 @@ namespace BDFramework.UFlux
             this.resPath = attr.Path;
             
             //创建State
-            this.Props = new T();
+            this.RenderData = new T();
             //自动加载
             if (isLoadAsset)
             {
@@ -76,7 +74,7 @@ namespace BDFramework.UFlux
         {
             this.Transform = trans;
             //创建State
-            this.Props = new T();
+            this.RenderData = new T();
             UFluxUtils.InitComponent(this);
         }
 
@@ -88,7 +86,7 @@ namespace BDFramework.UFlux
         {
             this.resPath = resPath;
             //创建State
-            this.Props = new T();
+            this.RenderData = new T();
         }
 
 
@@ -167,48 +165,48 @@ namespace BDFramework.UFlux
         #endregion
 
 
-        #region 状态处理
+        #region 渲染数据-处理
 
         /// <summary>
         /// 设置数据，全局只能通过这个接口设置数据
         /// </summary>
         /// <param name="props"></param>
-        public void SetProps(T props)
+        public void SetRenderData(T props)
         {
-            this.Props = props;
-            this.CommitProps();
+            this.RenderData = props;
+            this.CommitRenderData();
         }
 
         /// <summary>
         /// 设置数据
         /// </summary>
-        /// <param name="propsBase"></param>
-        public void SetProps(APropsBase propsBase)
+        /// <param name="renderDataBase"></param>
+        public void SetRenderData(ARenderDataBase renderDataBase)
         {
-            var t = propsBase as T;
+            var t = renderDataBase as T;
             if (t == null)
             {
-                BDebug.LogError("类型转换失败:" + propsBase.GetType().Name);
+                BDebug.LogError("类型转换失败:" + renderDataBase.GetType().Name);
             }
             else
             {
-                this.SetProps(t);
+                this.SetRenderData(t);
             }
         }
 
         /// <summary>
-        ///  提交状态 刷新
+        ///  提交渲染数据
         /// </summary>
         /// <param name="transform">不为null，则指定一个Transform刷新.不然则刷新当前Window.Transform</param>
-        protected void CommitProps(Transform transform = null)
+        protected void CommitRenderData(Transform transform = null)
         {
             if (transform)
             {
-                UFluxUtils.SetComponentProps(transform, this.Props);
+                UFluxUtils.SetComponentRenderData(transform, this.RenderData);
             }
             else
             {
-                UFluxUtils.SetComponentProps(this.Transform, this.Props);
+                UFluxUtils.SetComponentRenderData(this.Transform, this.RenderData);
             }
         }
 
