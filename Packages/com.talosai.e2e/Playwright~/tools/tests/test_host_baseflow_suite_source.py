@@ -55,3 +55,4 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert '"BDFramework.Core.Tools.BApplication"' in content
     assert "ReadRequiredStaticStringProperty" in content
     assert "CombinePath" in content
+    assert "Application.persistentDataPath" in content

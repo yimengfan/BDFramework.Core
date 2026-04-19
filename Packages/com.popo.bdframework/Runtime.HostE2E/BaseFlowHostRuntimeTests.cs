@@ -165,8 +165,9 @@ namespace BDFramework.HostE2E
                 typeof(object[]));
 
             var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
+            var sqlitePersistentRoot = NormalizePathForWindowsFileApis(Application.persistentDataPath);
             var databasePath = CombinePath(
-                frameworkPersistentDataPath,
+                sqlitePersistentRoot,
                 $"talos-baseflow-host-{Guid.NewGuid():N}.db");
             var normalizedDatabasePath = NormalizePathForWindowsFileApis(databasePath);
             var databaseDirectory = Path.GetDirectoryName(normalizedDatabasePath);
@@ -182,6 +183,8 @@ namespace BDFramework.HostE2E
             object sqliteConnection = null;
             try
             {
+                Debug.Log(
+                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={Application.persistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot}");
                 if (!File.Exists(normalizedDatabasePath))
                 {
                     Debug.Log($"[E2E] SQLite probe phase=precreate-file databasePath={normalizedDatabasePath}");
