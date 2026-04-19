@@ -78,11 +78,11 @@ def test_parse_build_type_ids_supports_repeat_and_comma_separated_values() -> No
 def test_parse_build_tags_supports_repeat_and_comma_separated_values() -> None:
     assert parse_build_tags(
         [
-            "teamcityskill, manual-check",
+            "windows, manual-check",
             "manual-check",
             "android",
         ]
-    ) == ["teamcityskill", "manual-check", "android"]
+    ) == ["windows", "manual-check", "android"]
 
 
 def test_build_queue_comment_always_includes_target_and_branch() -> None:
@@ -93,13 +93,14 @@ def test_build_queue_comment_always_includes_target_and_branch() -> None:
     ) == "回归验证 | 测试目标: BDFrameworkCore_BuildClientPackageAndroid | 分支: v4/v-4.0.0"
 
 
-def test_build_queue_tags_include_defaults_and_user_tags() -> None:
-    """验证 build_queue_tags 只包含 teamcityskill 默认 tag 和用户自定义 tag，不自动注入 buildTypeId。"""
+def test_build_queue_tags_keep_only_user_supplied_tags() -> None:
+    """验证 build_queue_tags 只保留用户显式传入的 tag，不再自动注入默认来源标记。
+    Verify that build_queue_tags keeps only the explicitly supplied tags and no longer injects a default source tag.
+    """
     assert build_queue_tags(
         build_type_id="BDFrameworkCore_BuildClientPackageAndroid",
         tags=["win64", "manual-check"],
     ) == [
-        "teamcityskill",
         "win64",
         "manual-check",
     ]
@@ -125,7 +126,6 @@ def test_build_queue_payload_includes_comment_and_tags() -> None:
         },
         "tags": {
             "tag": [
-                {"name": "teamcityskill"},
                 {"name": "manual-check"},
             ]
         },

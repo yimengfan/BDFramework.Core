@@ -113,6 +113,7 @@ Operational note:
 - For builds that call TeamCity again from inside the build scripts, `run-build` now forwards the current TeamCity token automatically when `env.TEAMCITY_TOKEN` is not provided explicitly.
 - If a rerun must use a different token or basic-auth pair, pass the matching `env.TEAMCITY_*` property explicitly and the helper will preserve that override.
 - Talos BaseFlow reruns should also override `--property talos.e2e.test.file=tests/testBaseFlow-e2e.spec.ts` when the Playwright spec naming has changed, instead of relying on server-side defaults.
+- Talos E2E reruns should pass only the platform tag that matches the job, for example `--tag windows` or `--tag android`; the helper no longer injects a default source tag.
 
 ### run-build-group — 批量触发构建
 

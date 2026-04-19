@@ -12,6 +12,8 @@ Responsibilities:
 3. Invoke the Playwright tool script to run BaseFlow or a specific test file.
 4. 把测试报告稳定落到 Playwright~/test-results，供 TeamCity Artifact 收集。
 4. Persist reports under Playwright~/test-results so TeamCity artifact collection stays stable.
+5. 在构建开始前清理旧缓存，并把平台日志与 playerlogs 归档到可上传目录。
+5. Clean stale caches before each build and archive platform logs plus playerlogs into uploadable directories.
 """
 
 from __future__ import annotations
@@ -70,6 +72,16 @@ WINDOWS_SKIPPED_PACKAGE_MARKERS = (
 )
 NODE_TOOLCACHE_DIR = PLAYWRIGHT_DIR / ".toolcache" / "node"
 DEFAULT_TEAMCITY_ENV_FILE = REPO_ROOT / ".test-DevOps" / ".teamcity" / ".env"
+TEST_RESULTS_ROOT = PLAYWRIGHT_DIR / "test-results"
+TEST_RESULTS_PACKAGE_ROOT = TEST_RESULTS_ROOT / "packages"
+TEST_RESULTS_PREPARED_PACKAGE_ROOT = TEST_RESULTS_ROOT / "p"
+TEST_RESULTS_REPORT_DIR_NAMES = ("html", "artifacts", "playerlogs")
+TEST_RESULTS_REPORT_FILE_NAMES = (
+    "junit.xml",
+    "test-output.log",
+    "unity-player.log",
+    "android-logcat.txt",
+)
 
 
 class TalosTeamCityE2EError(RuntimeError):
@@ -312,6 +324,10 @@ def build_test_tool_environment(
 ) -> dict[str, str]:
     """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
+    environment.setdefault("PYTHONIOENCODING", "utf-8")
+    environment.setdefault("PYTHONUTF8", "1")
+    environment.setdefault("LANG", "C.UTF-8")
+    environment.setdefault("LC_ALL", "C.UTF-8")
     environment["TALOS_NODEJS_HOME"] = normalize_bash_path(node_tooling.node_home)
     environment["NODE_BIN"] = normalize_bash_path(node_tooling.node_bin)
     environment["NPM_BIN"] = normalize_bash_path(node_tooling.npm_bin)
@@ -440,6 +456,38 @@ def configure_console_streams() -> None:
                 break
             except (LookupError, OSError, ValueError):
                 continue
+
+
+def remove_path_if_exists(path: Path) -> None:
+    """删除已有文件或目录。
+
+    Remove an existing file or directory.
+    """
+    if path.is_dir() and not path.is_symlink():
+        shutil.rmtree(path)
+    elif path.exists():
+        path.unlink()
+
+
+def reset_report_outputs() -> None:
+    """清理本次构建会重新生成的报告与日志输出。
+
+    Remove report and log outputs that the current build will regenerate.
+    """
+    TEST_RESULTS_ROOT.mkdir(parents=True, exist_ok=True)
+    for directory_name in TEST_RESULTS_REPORT_DIR_NAMES:
+        remove_path_if_exists(TEST_RESULTS_ROOT / directory_name)
+    for file_name in TEST_RESULTS_REPORT_FILE_NAMES:
+        remove_path_if_exists(TEST_RESULTS_ROOT / file_name)
+
+
+def reset_package_workspace() -> None:
+    """清理旧的下载包与解压目录，避免 TeamCity agent 持续累积大体积缓存。
+
+    Remove stale downloaded-package and extraction caches so TeamCity agents do not keep accumulating large payloads.
+    """
+    remove_path_if_exists(TEST_RESULTS_PACKAGE_ROOT)
+    remove_path_if_exists(TEST_RESULTS_PREPARED_PACKAGE_ROOT)
 
 
 def normalize_required_value(raw_value: object | None, *, field_name: str) -> str:
@@ -883,7 +931,10 @@ def build_teamcity_artifact_url(context: TeamCityCurrentBuildContext, artifact_p
 
 
 def emit_playwright_report_metadata(*, config_path: str | None = None) -> None:
-    """在 TeamCity 收尾阶段输出标准 Playwright 报告路径与可点击 artifact 链接。"""
+    """在 TeamCity 收尾阶段输出报告、平台日志与 playerlogs 的 artifact 元数据。
+
+    Emit TeamCity artifact metadata for reports, platform logs, and playerlogs at shutdown.
+    """
     html_artifact_path = "talos-e2e-test-results/html/index.html"
     junit_artifact_path = "talos-e2e-test-results/junit.xml"
     context = complete_current_teamcity_build_context(
@@ -904,6 +955,41 @@ def emit_playwright_report_metadata(*, config_path: str | None = None) -> None:
     if junit_report_url:
         print(f"{LOG_PREFIX} playwrightJUnitReportUrl={junit_report_url}")
         emit_teamcity_parameter("talos.e2e.playwright.junit.report.url", junit_report_url)
+
+    additional_artifacts = (
+        (
+            "playwrightOutputLog",
+            TEST_RESULTS_ROOT / "test-output.log",
+            "talos-e2e-test-results/test-output.log",
+            "talos.e2e.playwright.output.log.url",
+        ),
+        (
+            "unityPlayerLog",
+            TEST_RESULTS_ROOT / "unity-player.log",
+            "talos-e2e-test-results/unity-player.log",
+            "talos.e2e.unity.player.log.url",
+        ),
+        (
+            "androidLogcat",
+            TEST_RESULTS_ROOT / "android-logcat.txt",
+            "talos-e2e-test-results/android-logcat.txt",
+            "talos.e2e.android.logcat.url",
+        ),
+        (
+            "playerLogsIndex",
+            TEST_RESULTS_ROOT / "playerlogs" / "index.txt",
+            "talos-e2e-test-results/playerlogs/index.txt",
+            "talos.e2e.playerlogs.index.url",
+        ),
+    )
+    for label, local_path, artifact_path, parameter_name in additional_artifacts:
+        if not local_path.exists():
+            continue
+        print(f"{LOG_PREFIX} {label}ArtifactPath={artifact_path}")
+        artifact_url = build_teamcity_artifact_url(context, artifact_path)
+        if artifact_url:
+            print(f"{LOG_PREFIX} {label}ArtifactUrl={artifact_url}")
+            emit_teamcity_parameter(parameter_name, artifact_url)
 
 
 def build_remote_root(remote_root_prefix: str, build_number: str) -> str:
@@ -1019,7 +1105,7 @@ def prepare_local_package(
             extract_folder_name_parts.append((normalized_stem or "pkg")[:24])
 
         extract_folder_name = "-".join(extract_folder_name_parts)
-        extract_root = PLAYWRIGHT_DIR / "test-results" / "p" / extract_folder_name
+        extract_root = TEST_RESULTS_PREPARED_PACKAGE_ROOT / extract_folder_name
         if extract_root.exists():
             shutil.rmtree(extract_root)
         extract_root.mkdir(parents=True, exist_ok=True)
@@ -1168,7 +1254,7 @@ def download_package_from_build(
 
     selected_entry = select_remote_package_entry(profile, entries)
     print(f"{LOG_PREFIX} packageRemotePath={selected_entry.remote_path}")
-    cached_file = PLAYWRIGHT_DIR / "test-results" / "packages" / profile.platform_key / selected_entry.file_name
+    cached_file = TEST_RESULTS_PACKAGE_ROOT / profile.platform_key / selected_entry.file_name
     downloaded_path = download_remote_file(
         remote_path=selected_entry.remote_path,
         destination_path=cached_file,
@@ -1299,27 +1385,35 @@ def main() -> int:
     if selected_phase == "run" and not normalize_optional_value(args.package_path):
         raise TalosTeamCityE2EError("run phase requires --package-path so it can reuse the package prepared by the previous step")
 
-    print(f"{LOG_PREFIX} ===== Phase 2/5: resolve package source =====")
+    print(f"{LOG_PREFIX} ===== Phase 2/6: clean workspace =====")
+    reset_report_outputs()
+    if selected_phase in {"all", "prepare"}:
+        reset_package_workspace()
+        print(f"{LOG_PREFIX} cleanupMode=full")
+    else:
+        print(f"{LOG_PREFIX} cleanupMode=reports-only")
+
+    print(f"{LOG_PREFIX} ===== Phase 3/6: resolve package source =====")
     package_path = resolve_local_package_path(args, profile, current_build_id=current_build_id)
     emit_teamcity_parameter(PREPARED_PACKAGE_PATH_PARAMETER, str(package_path))
 
     if selected_phase == "prepare":
-        print(f"{LOG_PREFIX} ===== Phase 5/5: finish =====")
+        print(f"{LOG_PREFIX} ===== Phase 6/6: finish =====")
         print(f"{LOG_PREFIX} preparedPackagePath={package_path}")
         print(f"{LOG_PREFIX} status=prepared")
         return 0
 
-    print(f"{LOG_PREFIX} ===== Phase 3/5: ensure report directories =====")
-    report_root = PLAYWRIGHT_DIR / "test-results"
+    print(f"{LOG_PREFIX} ===== Phase 4/6: ensure report directories =====")
+    report_root = TEST_RESULTS_ROOT
     report_root.mkdir(parents=True, exist_ok=True)
     print(f"{LOG_PREFIX} reportRoot={report_root}")
 
-    print(f"{LOG_PREFIX} ===== Phase 4/5: run platform tool =====")
+    print(f"{LOG_PREFIX} ===== Phase 5/6: run platform tool =====")
     exit_code = run_test_tool(profile, package_path, args)
 
-    print(f"{LOG_PREFIX} ===== Phase 5/5: finish =====")
-    print(f"{LOG_PREFIX} playwrightHtmlReport={PLAYWRIGHT_DIR / 'test-results' / 'html' / 'index.html'}")
-    print(f"{LOG_PREFIX} playwrightJUnitReport={PLAYWRIGHT_DIR / 'test-results' / 'junit.xml'}")
+    print(f"{LOG_PREFIX} ===== Phase 6/6: finish =====")
+    print(f"{LOG_PREFIX} playwrightHtmlReport={TEST_RESULTS_ROOT / 'html' / 'index.html'}")
+    print(f"{LOG_PREFIX} playwrightJUnitReport={TEST_RESULTS_ROOT / 'junit.xml'}")
     emit_playwright_report_metadata(config_path=args.config)
     if exit_code != 0:
         raise TalosTeamCityE2EError(f"Talos E2E tool failed with exit code {exit_code}")

@@ -6,12 +6,14 @@ Talos PC launcher script tests.
 2. Windows Git Bash 分支会改用 batchmode + nographics + 更保守的启动参数，避免远端无头 agent 在图形初始化阶段卡死。
 3. 启动脚本会复用解析后的 Node CLI 执行 Playwright，而不是依赖外部 npx。
 4. 桌面脚本允许通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限。
+5. 桌面脚本会把 BDebug playerlogs 归档到 test-results/playerlogs，便于 TeamCity artifact 回传平台日志。
 
 Coverage:
 1. The shared desktop launcher script injects Talos E2E arguments and keeps window-mode arguments on non-Windows-Git-Bash desktop launches.
 2. The Windows Git Bash branch switches to batchmode plus nographics and a more conservative launch contract so remote headless agents do not stall during graphics initialization.
 3. The launcher script reuses the resolved Node CLI to run Playwright instead of relying on external npx.
 4. The desktop launcher allows overriding the TCP readiness timeout through TALOS_UNITY_TCP_TIMEOUT.
+5. The desktop launcher archives BDebug playerlogs into test-results/playerlogs so TeamCity artifacts can bring back platform logs.
 """
 
 from __future__ import annotations
@@ -65,6 +67,9 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
     ready_marker_path = tmp_path / "unity-ready.marker"
 
     fake_launcher = tmp_path / "Launcher.exe"
+    persistent_playerlogs_dir = tmp_path / "Launcher_Data" / ".AppData" / "playerlogs"
+    persistent_playerlogs_dir.mkdir(parents=True)
+    (persistent_playerlogs_dir / "session.bin").write_text("serialized-log", encoding="utf-8")
     write_executable(
         fake_launcher,
         "\n".join(
@@ -181,6 +186,10 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
         str(playwright_root / "test-results" / "junit.xml"),
     ]
     assert npm_args_path.read_text(encoding="utf-8").strip() == "install"
+    assert (playwright_root / "test-results" / "playerlogs" / "session.bin").read_text(encoding="utf-8") == "serialized-log"
+    playerlogs_index = (playwright_root / "test-results" / "playerlogs" / "index.txt").read_text(encoding="utf-8")
+    assert "status=found" in playerlogs_index
+    assert "file=session.bin" in playerlogs_index
 
 
 def test_test_pc_honours_unity_tcp_timeout_override(tmp_path: Path) -> None:
@@ -300,3 +309,17 @@ def test_test_pc_source_uses_headless_batchmode_on_windows_git_bash() -> None:
     assert 'Start-Process -FilePath' in content
     assert "@('-batchmode','-nographics','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}')" in content
     assert "@('-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-popupwindow','-logFile','${PLAYER_LOG_FILE_WIN}')" not in content
+
+
+def test_test_pc_source_archives_persistent_player_logs_for_teamcity() -> None:
+    """验证桌面脚本会归档 BDebug playerlogs 并生成索引，便于 TeamCity 回收平台日志。
+    Verify that the desktop launcher archives BDebug playerlogs and writes an index so TeamCity can recover platform logs.
+    """
+
+    content = SOURCE_TEST_PC.read_text(encoding="utf-8")
+
+    assert 'PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"' in content
+    assert 'resolve_player_log_source_dir() {' in content
+    assert "printf '%s/%s_Data/.AppData/playerlogs\\n'" in content
+    assert 'capture_persistent_player_logs() {' in content
+    assert 'player_log_index_file="${PLAYER_LOG_ARCHIVE_DIR}/index.txt"' in content

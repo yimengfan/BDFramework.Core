@@ -72,8 +72,6 @@ namespace BDFramework
 
         #region 托管 type
 
-        
-
         public static bool IsRunning { get; private set; } = false;
 
 
@@ -105,11 +103,8 @@ namespace BDFramework
             if (hostingTypeList != null)
             {
                 return hostingTypeList;
-            }
 
             BDebug.LogWatchBegin("加载所有DLL-types");
-            var typeList = new List<Type>(1000);
-            Assembly[] assemblyList = System.AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblyList)
             {
                 //只搜集以下DLLType
@@ -164,69 +159,33 @@ namespace BDFramework
 
             return instance;
         }
+
         #endregion
 
 
-         #region E2E 测试自动集成
+        #region E2E 测试自动集成
 
-         /// <summary>
-         /// 尝试桥接 Talos E2E 自动检测入口。
-         /// Try to bridge the Talos E2E auto-detection entrypoint.
-         /// 该入口必须在 Player 与真机场景中保持运行时可达，不能再依赖 Conditional(DEBUG) 的编译期裁剪；
-         /// 否则像 Windows 这样直接经由 ScriptLoder 启动的母包会静默丢失 Talos TCP 启动桥接。
-         /// This entry must remain runtime-reachable in player and packaged-device scenarios and can no longer rely on Conditional(DEBUG) compile-time stripping;
-         /// otherwise packaged players that boot directly through ScriptLoder, such as Windows, silently lose the Talos TCP startup bridge.
-         /// 是否真正启动 E2E 仍由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
-         /// Whether E2E actually starts is still decided at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
-         /// 如果 Talos.E2E 包不存在，则静默跳过。
-         /// If the Talos.E2E package is not present, the method exits quietly.
-         /// </summary>
         /// <summary>
-        /// 在 Talos 强制模式下提前解析宿主侧 E2E 套件类型。
-        /// Prime the host-owned E2E suite types early under forced Talos mode.
-        /// ScriptLoder.Init 会先于 WindowPreconfig.Start 触发 Talos 自动检测，
-        /// 因此 step_01 必须在这里先触达 launch 与 BaseFlow 宿主套件，避免测试发现发生时 AppDomain 里还没有装载这些宿主类型。
-        /// ScriptLoder.Init triggers the Talos auto-detection before WindowPreconfig.Start,
-        /// so step_01 must touch the launch and BaseFlow host suites here first to avoid running test discovery before those host types are loaded into the AppDomain.
+        /// 尝试桥接 Talos E2E 自动检测入口。
+        /// Try to bridge the Talos E2E auto-detection entrypoint.
+        /// 该入口必须在 Player 与真机场景中保持运行时可达，不能再依赖 Conditional(DEBUG) 的编译期裁剪；
+        /// 否则像 Windows 这样直接经由 ScriptLoder 启动的母包会静默丢失 Talos TCP 启动桥接。
+        /// This entry must remain runtime-reachable in player and packaged-device scenarios and can no longer rely on Conditional(DEBUG) compile-time stripping;
+        /// otherwise packaged players that boot directly through ScriptLoder, such as Windows, silently lose the Talos TCP startup bridge.
+        /// ScriptLoder 只负责桥接 Talos 通用框架入口，不负责指定宿主侧 suite、场景或业务流程编排；
+        /// 具体执行内容必须留给 Playwright 和宿主包自己的入口决定。
+        /// ScriptLoder only bridges the generic Talos framework entry and must not choose host suites, scenes, or business-flow choreography;
+        /// concrete execution content must remain owned by Playwright and host-package entrypoints.
+        /// 是否真正启动 E2E 仍由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
+        /// Whether E2E actually starts is still decided at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
+        /// 如果 Talos.E2E 包不存在，则静默跳过。
+        /// If the Talos.E2E package is not present, the method exits quietly.
         /// </summary>
-        static private void TryPrimeTalosHostE2ESuites()
-        {
-            var forceTalosE2E = System.Environment.GetCommandLineArgs()
-                .Any(arg => string.Equals(arg, "-talosForceE2E", StringComparison.OrdinalIgnoreCase));
-            if (!forceTalosE2E)
-            {
-                return;
-            }
-
-            var rootedTypes = new List<string>();
-            foreach (var typeName in new[]
-                     {
-                         "BDFramework.HostE2E.LaunchFlowHostTests",
-                         "BDFramework.HostE2E.BaseFlowHostRuntimeTests",
-                     })
-            {
-                var hostType = Type.GetType($"{typeName}, BDFramework.HostE2E", false);
-                if (hostType == null)
-                {
-                    UnityEngine.Debug.LogWarning($"[TalosE2E] 强制模式下未能提前解析宿主测试类型: {typeName}");
-                    continue;
-                }
-
-                rootedTypes.Add(hostType.FullName);
-            }
-
-            if (rootedTypes.Count > 0)
-            {
-                UnityEngine.Debug.Log($"[TalosE2E] ScriptLoder.Init 阶段已提前解析宿主测试类型: {string.Join(", ", rootedTypes)}");
-            }
-        }
-
         static private void TryStartE2EFramework()
         {
             try
             {
                 UnityEngine.Debug.Log("[TalosE2E] ScriptLoder.Init 阶段开始检测 E2E 自动启动入口");
-                TryPrimeTalosHostE2ESuites();
 
                 // 查找 Talos.E2E 程序集中的 E2EAutoInit 类型
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())

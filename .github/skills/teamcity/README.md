@@ -137,7 +137,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 说明：
 
 - `--comment` 会保留用户前缀，并自动追加 `测试目标: <buildTypeId>`。
-- `--tag` 可重复传入或使用逗号分隔，仅限平台等关键元信息（如 `win64`、`android`）。脚本会与默认 tag `teamcityskill` 合并去重。测试目标等日志信息请放在 `--comment` 中。
+- `--tag` 可重复传入或使用逗号分隔，仅限平台等关键元信息（如 `win64`、`android`）。The helper does not inject any default tag automatically. Keep test-target and branch details in `--comment`.
 - 失败时脚本会自动打印末尾构建日志，便于直接定位问题。
 - If the build script needs to call TeamCity again while it is running, explicitly forward `--property env.TEAMCITY_TOKEN="$TEAMCITY_TOKEN"`. The remote worker does not inherit the local shell token automatically.
 
@@ -150,7 +150,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
   --build-type-id BDFrameworkCore_TalosAIStep01BaseFlowTest \
   --branch v4/v-4.0.0 \
   --comment "Talos BaseFlow on rebuilt Windows package" \
-  --tag talos-baseflow \
+  --tag windows \
   --property build.client.version=0.1 \
   --property build.debugBuild=true \
   --property talos.e2e.package.build.id=<packageBuildId> \
@@ -163,6 +163,7 @@ Notes:
 
 - `talos.e2e.package.build.id` must point to a successful `BDFrameworkCore_BuildClientPackageWindows` build.
 - Override `talos.e2e.test.file` explicitly when the Playwright spec naming changes; do not rely on stale defaults from the loaded DSL revision.
+- For Talos E2E reruns, pass only the platform tag that matches the job, for example `--tag windows` or `--tag android`.
 - Forward `env.TEAMCITY_TOKEN` whenever the Talos build resolves package artifacts or other TeamCity resources from inside the running build.
 
 ### 批量触发多个构建并自动决定并发或串行

@@ -47,6 +47,7 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Packages marked as generic (e.g. `com.talosai.e2e`) must not contain any specific business-party test cases, configurations, or hardcoded logic.
 - Business-party test code must live in the business party's own package or project directory, referencing the generic package to use its capabilities.
 - Test: if removing a piece of code leaves the generic package still usable by other projects, that code does not belong in the package.
+- Shared startup bridges may boot generic capabilities, but they must not hardcode host-owned suite selection, scene sequencing, or business execution choreography. For Talos E2E specifically, Playwright owns what to execute; host bridges such as `ScriptLoder` may only start the generic E2E framework.
 
 ## Scope Guardrails
 

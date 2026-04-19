@@ -86,24 +86,23 @@ def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
 
     assert "TryStartE2EFramework();" in script_loader_content
     assert '[System.Diagnostics.Conditional("DEBUG")]' not in script_loader_content
+    assert '[Conditional("ENABLE_E2ETEST")]' not in script_loader_content
+    assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in script_loader_content
     assert "method.Invoke(null, new object[] { 10002 });" in script_loader_content
 
 
-def test_bdframework_script_loader_primes_host_suites_before_talos_auto_launch() -> None:
-    """验证 ScriptLoder 会在强制 Talos 模式下先解析宿主侧 launch/BaseFlow 套件，再触发自动启动入口。
-    Verify that ScriptLoder resolves the host launch/BaseFlow suites under forced Talos mode before invoking the auto-launch entry.
+def test_bdframework_script_loader_does_not_compose_host_suite_execution() -> None:
+    """验证 ScriptLoder 只桥接 Talos 框架入口，而不直接编排宿主 suite。
+    Verify that ScriptLoder only bridges the Talos framework entry and does not directly compose host suites.
     """
 
     script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
 
-    assert "TryPrimeTalosHostE2ESuites();" in script_loader_content
-    assert '"-talosForceE2E"' in script_loader_content
-    assert '"BDFramework.HostE2E.LaunchFlowHostTests"' in script_loader_content
-    assert '"BDFramework.HostE2E.BaseFlowHostRuntimeTests"' in script_loader_content
-    assert 'Type.GetType($"{typeName}, BDFramework.HostE2E", false)' in script_loader_content
-    assert script_loader_content.index("TryPrimeTalosHostE2ESuites();") < script_loader_content.index(
-        "method.Invoke(null, new object[] { 10002 });"
-    )
+    assert "TryPrimeTalosHostE2ESuites" not in script_loader_content
+    assert '"BDFramework.HostE2E.LaunchFlowHostTests"' not in script_loader_content
+    assert '"BDFramework.HostE2E.BaseFlowHostRuntimeTests"' not in script_loader_content
+    assert 'Type.GetType($"{typeName}, BDFramework.HostE2E", false)' not in script_loader_content
+    assert "ScriptLoder only bridges the generic Talos framework entry" in script_loader_content
 
 
 def test_talos_e2e_runner_keeps_public_type_fallback_for_player_discovery() -> None:

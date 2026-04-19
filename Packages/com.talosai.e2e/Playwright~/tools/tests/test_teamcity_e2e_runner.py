@@ -6,6 +6,7 @@
 3. 文件服务器目录列表中的包体挑选规则。
 4. Windows 包体解压后的 Launcher 定位。
 5. TeamCity runner 在 agent 缺少凭据变量时，会回退读取仓库内的 .env。
+6. TeamCity runner 会清理旧的 test-results 缓存，并输出平台日志 artifact 元数据。
 
 Talos TeamCity E2E orchestration script tests.
 
@@ -15,6 +16,7 @@ Coverage:
 3. Package selection rules from file-server directory listings.
 4. Launcher discovery after extracting Windows packages.
 5. Repository .env fallback when TeamCity agents miss injected credentials.
+6. The TeamCity runner cleans stale test-results caches and emits platform-log artifact metadata.
 """
 
 from __future__ import annotations
@@ -326,6 +328,9 @@ def test_prepare_local_package_extracts_windows_zip(tmp_path: Path, monkeypatch:
         archive.writestr("GameRuntime/Launcher.exe", "stub")
 
     monkeypatch.setattr(runner, "PLAYWRIGHT_DIR", tmp_path / "PlaywrightRoot")
+    monkeypatch.setattr(runner, "TEST_RESULTS_ROOT", runner.PLAYWRIGHT_DIR / "test-results")
+    monkeypatch.setattr(runner, "TEST_RESULTS_PACKAGE_ROOT", runner.TEST_RESULTS_ROOT / "packages")
+    monkeypatch.setattr(runner, "TEST_RESULTS_PREPARED_PACKAGE_ROOT", runner.TEST_RESULTS_ROOT / "p")
     launcher_path = runner.prepare_local_package(
         profile,
         archive_path,
@@ -547,7 +552,98 @@ def test_build_test_tool_environment_includes_playwright_test_file(tmp_path: Pat
     assert environment["TALOS_NODEJS_HOME"] == runner.normalize_bash_path(tooling.node_home)
     assert environment["NODE_BIN"] == runner.normalize_bash_path(tooling.node_bin)
     assert environment["NPM_BIN"] == runner.normalize_bash_path(tooling.npm_bin)
+    assert environment["PYTHONIOENCODING"] == "utf-8"
+    assert environment["PYTHONUTF8"] == "1"
+    assert environment["LANG"] == "C.UTF-8"
+    assert environment["LC_ALL"] == "C.UTF-8"
     assert environment["PLAYWRIGHT_TEST_FILE"] == "tests/testBaseFlow-e2e.spec.ts"
+
+
+def test_reset_report_outputs_and_package_workspace_remove_stale_test_results(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """验证 runner 会清理旧的报告、日志、下载包与解压目录，避免 TeamCity agent 累积历史缓存。
+    Verify that the runner removes stale reports, logs, downloads, and extracted packages so TeamCity agents do not keep historical cache growth.
+    """
+
+    test_results_root = tmp_path / "test-results"
+    (test_results_root / "html").mkdir(parents=True)
+    (test_results_root / "artifacts").mkdir(parents=True)
+    (test_results_root / "playerlogs").mkdir(parents=True)
+    (test_results_root / "packages" / "windows").mkdir(parents=True)
+    (test_results_root / "p" / "w-b60-r901").mkdir(parents=True)
+    (test_results_root / "unity-player.log").write_text("player", encoding="utf-8")
+    (test_results_root / "test-output.log").write_text("console", encoding="utf-8")
+
+    monkeypatch.setattr(runner, "TEST_RESULTS_ROOT", test_results_root)
+    monkeypatch.setattr(runner, "TEST_RESULTS_PACKAGE_ROOT", test_results_root / "packages")
+    monkeypatch.setattr(runner, "TEST_RESULTS_PREPARED_PACKAGE_ROOT", test_results_root / "p")
+
+    runner.reset_report_outputs()
+    runner.reset_package_workspace()
+
+    assert not (test_results_root / "html").exists()
+    assert not (test_results_root / "artifacts").exists()
+    assert not (test_results_root / "playerlogs").exists()
+    assert not (test_results_root / "unity-player.log").exists()
+    assert not (test_results_root / "test-output.log").exists()
+    assert not (test_results_root / "packages").exists()
+    assert not (test_results_root / "p").exists()
+
+
+def test_emit_playwright_report_metadata_emits_platform_log_urls_when_files_exist(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """验证 runner 会为已有的平台日志与 playerlogs 索引输出 TeamCity artifact 链接。
+    Verify that the runner emits TeamCity artifact links for platform logs and the playerlogs index when those files exist.
+    """
+
+    test_results_root = tmp_path / "test-results"
+    (test_results_root / "html").mkdir(parents=True)
+    (test_results_root / "html" / "index.html").write_text("html", encoding="utf-8")
+    (test_results_root / "junit.xml").write_text("junit", encoding="utf-8")
+    (test_results_root / "test-output.log").write_text("console", encoding="utf-8")
+    (test_results_root / "unity-player.log").write_text("unity", encoding="utf-8")
+    (test_results_root / "playerlogs").mkdir(parents=True)
+    (test_results_root / "playerlogs" / "index.txt").write_text("status=found", encoding="utf-8")
+    emitted_parameters: dict[str, str] = {}
+
+    monkeypatch.setattr(runner, "TEST_RESULTS_ROOT", test_results_root)
+    monkeypatch.setattr(
+        runner,
+        "resolve_current_teamcity_build_context",
+        lambda: runner.TeamCityCurrentBuildContext(
+            base_url="http://teamcity.local",
+            build_id="901",
+            build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            build_url="http://teamcity.local/build/901",
+        ),
+    )
+    monkeypatch.setattr(runner, "complete_current_teamcity_build_context", lambda context, config_path=None: context)
+    monkeypatch.setattr(
+        runner,
+        "emit_teamcity_parameter",
+        lambda name, value: emitted_parameters.__setitem__(name, value),
+    )
+
+    runner.emit_playwright_report_metadata(config_path=None)
+    captured = capsys.readouterr()
+
+    assert "playwrightOutputLogArtifactPath=talos-e2e-test-results/test-output.log" in captured.out
+    assert "unityPlayerLogArtifactPath=talos-e2e-test-results/unity-player.log" in captured.out
+    assert "playerLogsIndexArtifactPath=talos-e2e-test-results/playerlogs/index.txt" in captured.out
+    assert emitted_parameters["talos.e2e.playwright.output.log.url"] == (
+        "http://teamcity.local/repository/download/"
+        "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/test-output.log"
+    )
+    assert emitted_parameters["talos.e2e.unity.player.log.url"] == (
+        "http://teamcity.local/repository/download/"
+        "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/unity-player.log"
+    )
+    assert emitted_parameters["talos.e2e.playerlogs.index.url"] == (
+        "http://teamcity.local/repository/download/"
+        "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/playerlogs/index.txt"
+    )
 
 
 def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -878,6 +974,8 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
 
     monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
     monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(runner, "reset_report_outputs", lambda: calls.append("reset_report_outputs"))
+    monkeypatch.setattr(runner, "reset_package_workspace", lambda: calls.append("reset_package_workspace"))
     monkeypatch.setattr(
         runner,
         "resolve_current_teamcity_build_context",
@@ -912,6 +1010,7 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
     exit_code = runner.main()
 
     assert exit_code == 0
+    assert calls[:2] == ["reset_report_outputs", "reset_package_workspace"]
     assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
     assert "run_test_tool" not in calls
     assert "emit_playwright_report_metadata" not in calls

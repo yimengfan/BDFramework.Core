@@ -103,6 +103,7 @@ echo ""
 echo ">>> 启动应用..."
 APP_PID=""
 PLAYER_LOG_FILE=""
+PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 # 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
 # Keep Unity logging on stdout by default so macOS/Linux local runs can inspect the startup chain directly.
 PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-screen-fullscreen" "0")
@@ -134,6 +135,51 @@ print_windows_player_logs() {
     fi
 }
 
+resolve_player_log_source_dir() {
+    # 按 BDFramework 的 BApplication / BDebug 约定推导 playerlogs 目录，供 TeamCity artifact 回收持久化日志。
+    # Resolve the playerlogs directory from the BDFramework BApplication and BDebug contract so TeamCity artifacts can recover persisted logs.
+    if ${IS_MACOS}; then
+        printf '%s/Contents/.AppData/playerlogs\n' "${EXE_PATH}"
+        return 0
+    fi
+
+    local exe_dir exe_name exe_stem
+    exe_dir="$(dirname "${EXE_PATH}")"
+    exe_name="$(basename "${EXE_PATH}")"
+    exe_stem="${exe_name%.*}"
+    printf '%s/%s_Data/.AppData/playerlogs\n' "${exe_dir}" "${exe_stem}"
+}
+
+capture_persistent_player_logs() {
+    # 把 BDebug 二进制日志整体拷回 test-results/playerlogs，并生成索引文件，便于 TeamCity 直接查看来源与文件清单。
+    # Copy the BDebug binary logs back into test-results/playerlogs and write an index file so TeamCity can inspect the source path and file list directly.
+    local player_log_source_dir player_log_index_file
+    player_log_source_dir="$(resolve_player_log_source_dir)"
+    rm -rf "${PLAYER_LOG_ARCHIVE_DIR}"
+    mkdir -p "${PLAYER_LOG_ARCHIVE_DIR}"
+    player_log_index_file="${PLAYER_LOG_ARCHIVE_DIR}/index.txt"
+
+    {
+        echo "source=${player_log_source_dir}"
+        if [[ -d "${player_log_source_dir}" ]]; then
+            echo "status=found"
+            while IFS= read -r relative_path; do
+                [[ -n "${relative_path}" ]] || continue
+                echo "file=${relative_path}"
+            done < <(cd "${player_log_source_dir}" && find . -type f | sed 's#^\./##' | LC_ALL=C sort)
+        else
+            echo "status=missing"
+        fi
+    } > "${player_log_index_file}"
+
+    if [[ -d "${player_log_source_dir}" ]]; then
+        cp -R "${player_log_source_dir}/." "${PLAYER_LOG_ARCHIVE_DIR}/"
+        echo ">>> 已归档 BDebug playerlogs: ${PLAYER_LOG_ARCHIVE_DIR}"
+    else
+        echo ">>> 未发现 BDebug playerlogs: ${player_log_source_dir}"
+    fi
+}
+
 if ${IS_MACOS}; then
     # macOS: 使用 open 命令启动 .app
     open "${EXE_PATH}" --args "${PLAYER_LAUNCH_ARGS[@]}"
@@ -157,6 +203,7 @@ else
         if [[ -z "${APP_PID}" ]]; then
             echo "    ❌ 未能获取应用 PID"
             print_windows_player_logs
+            capture_persistent_player_logs
             exit 1
         fi
         echo "    ✅ 应用已启动 (PID: ${APP_PID}, cwd: ${EXE_DIR_WIN})"
@@ -187,11 +234,13 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
                 echo ""
                 echo "❌ 应用进程已退出"
                 print_windows_player_logs
+                capture_persistent_player_logs
                 exit 1
             fi
         elif ! kill -0 ${APP_PID} 2>/dev/null; then
             echo ""
             echo "❌ 应用进程已退出"
+            capture_persistent_player_logs
             exit 1
         fi
     fi
@@ -216,6 +265,7 @@ if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
             kill ${APP_PID} 2>/dev/null || true
         fi
     fi
+    capture_persistent_player_logs
     exit 1
 fi
 
@@ -269,6 +319,10 @@ if [[ -n "${APP_PID}" ]]; then
         done
         kill -9 ${APP_PID} 2>/dev/null || true
     fi
+fi
+capture_persistent_player_logs
+if [[ ${TEST_EXIT_CODE} -ne 0 || -n "${TEAMCITY_VERSION:-}" ]]; then
+    print_windows_player_logs
 fi
 
 # ======== 结果 ========
