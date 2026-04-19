@@ -197,6 +197,7 @@ namespace BDFramework.HostE2E
             var databasePath = CombinePath(
                 sqlitePersistentRoot,
                 $"talos-baseflow-host-{Guid.NewGuid():N}.db");
+            var sqliteOpenPath = databasePath;
             var normalizedDatabasePath = NormalizePathForWindowsFileApis(databasePath);
             var databaseDirectory = Path.GetDirectoryName(normalizedDatabasePath);
             if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
@@ -212,7 +213,7 @@ namespace BDFramework.HostE2E
             try
             {
                 Debug.Log(
-                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot} sqlitePersistentRootReason={sqlitePersistentRootReason}");
+                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot} sqlitePersistentRootReason={sqlitePersistentRootReason} sqliteOpenPath={sqliteOpenPath}");
                 if (File.Exists(normalizedDatabasePath))
                 {
                     Debug.Log($"[E2E] SQLite probe phase=delete-existing-file databasePath={normalizedDatabasePath}");
@@ -220,11 +221,11 @@ namespace BDFramework.HostE2E
                 }
 
                 var sqliteOpenFlags = Enum.ToObject(sqliteOpenFlagsType, SqliteReadWriteCreateOpenFlagsValue);
-                Debug.Log($"[E2E] SQLite probe phase=build-connection-string databasePath={normalizedDatabasePath} openFlags={sqliteOpenFlags}");
+                Debug.Log($"[E2E] SQLite probe phase=build-connection-string databasePath={sqliteOpenPath} fileApiPath={normalizedDatabasePath} openFlags={sqliteOpenFlags}");
                 var sqliteConnectionString = InvokeConstructor(
                     sqliteConnectionStringConstructor,
                     "SQLiteConnectionString..ctor",
-                    normalizedDatabasePath,
+                    sqliteOpenPath,
                     sqliteOpenFlags,
                     true,
                     Type.Missing,
@@ -234,7 +235,7 @@ namespace BDFramework.HostE2E
                     Type.Missing,
                     Type.Missing);
 
-                Debug.Log($"[E2E] SQLite probe phase=open databasePath={normalizedDatabasePath}");
+                Debug.Log($"[E2E] SQLite probe phase=open databasePath={sqliteOpenPath} fileApiPath={normalizedDatabasePath}");
                 sqliteConnection = InvokeConstructor(
                     sqliteConnectionConstructor,
                     "SQLiteConnection..ctor",
