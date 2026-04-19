@@ -542,6 +542,30 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证 BResources.FindShader 在 ResLoader 尚未初始化时返回 null，而不是抛出空引用。
+        /// Verify that BResources.FindShader returns null instead of throwing a null reference when ResLoader has not been initialized yet.
+        /// </summary>
+        public static void VerifyFindShaderReturnsNullWithoutLoader()
+        {
+            var loaderField = typeof(BResources).GetField(
+                "<ResLoader>k__BackingField",
+                BindingFlags.Static | BindingFlags.NonPublic);
+            EnsureTrue(loaderField != null, "ResLoader backing field should exist for the no-loader shader lookup contract test.");
+
+            var originalLoader = loaderField.GetValue(null);
+            try
+            {
+                loaderField.SetValue(null, null);
+                var shader = BResources.FindShader("__Framework_Contract_NoLoader_Shader__");
+                EnsureTrue(shader == null, "ResLoader 未初始化时，FindShader 应返回 null。");
+            }
+            finally
+            {
+                loaderField.SetValue(null, originalLoader);
+            }
+        }
+
+        /// <summary>
         /// 统一的相等断言。
         /// Shared equality assertion helper.
         /// </summary>

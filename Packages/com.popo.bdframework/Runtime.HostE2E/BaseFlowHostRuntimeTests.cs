@@ -168,20 +168,33 @@ namespace BDFramework.HostE2E
             var databasePath = CombinePath(
                 frameworkPersistentDataPath,
                 $"talos-baseflow-host-{Guid.NewGuid():N}.db");
-            var databaseDirectory = Path.GetDirectoryName(databasePath);
+            var normalizedDatabasePath = NormalizePathForWindowsFileApis(databasePath);
+            var databaseDirectory = Path.GetDirectoryName(normalizedDatabasePath);
             if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
             {
                 Directory.CreateDirectory(databaseDirectory);
+            }
+            if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
+            {
+                throw new Exception($"SQLite 目录创建失败: {databaseDirectory}");
             }
 
             object sqliteConnection = null;
             try
             {
-                Debug.Log($"[E2E] SQLite probe phase=open databasePath={databasePath}");
+                if (!File.Exists(normalizedDatabasePath))
+                {
+                    Debug.Log($"[E2E] SQLite probe phase=precreate-file databasePath={normalizedDatabasePath}");
+                    using (File.Create(normalizedDatabasePath))
+                    {
+                    }
+                }
+
+                Debug.Log($"[E2E] SQLite probe phase=open databasePath={normalizedDatabasePath}");
                 sqliteConnection = InvokeConstructor(
                     sqliteConnectionConstructor,
                     "SQLiteConnection..ctor",
-                    databasePath,
+                    normalizedDatabasePath,
                     true);
 
                 Debug.Log("[E2E] SQLite probe phase=create-table");
@@ -230,14 +243,14 @@ namespace BDFramework.HostE2E
                     throw new Exception($"SQLite 查询结果异常: name={loadedName ?? "<null>"}");
                 }
 
-                Debug.Log($"[E2E] 宿主 SQLite 读写闭环完成: databasePath={databasePath}");
+                Debug.Log($"[E2E] 宿主 SQLite 读写闭环完成: databasePath={normalizedDatabasePath}");
             }
             finally
             {
                 (sqliteConnection as IDisposable)?.Dispose();
-                if (File.Exists(databasePath))
+                if (File.Exists(normalizedDatabasePath))
                 {
-                    File.Delete(databasePath);
+                    File.Delete(normalizedDatabasePath);
                 }
             }
         }
@@ -486,6 +499,19 @@ namespace BDFramework.HostE2E
             }
 
             return normalizedLeft + "/" + normalizedRight.TrimStart('/');
+        }
+
+        /// <summary>
+        /// 为 Windows 文件 API 标准化路径分隔符和绝对路径格式。
+        /// Normalize a path into the separator and absolute-path format expected by Windows file APIs.
+        /// </summary>
+        /// <param name="path">原始路径。</param>
+        /// <returns>标准化后的绝对路径。</returns>
+        /// <returns>The normalized absolute path.</returns>
+        private static string NormalizePathForWindowsFileApis(string path)
+        {
+            var normalizedPath = path.Replace('/', Path.DirectorySeparatorChar);
+            return Path.GetFullPath(normalizedPath);
         }
 
         /// <summary>

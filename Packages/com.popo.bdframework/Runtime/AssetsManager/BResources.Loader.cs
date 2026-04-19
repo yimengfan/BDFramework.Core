@@ -12,7 +12,12 @@ using Object = UnityEngine.Object;
 namespace BDFramework.ResourceMgr
 {
     /// <summary>
-    /// 资源管理类
+    /// 资源管理静态入口。
+    /// Static resource-management entrypoint.
+    /// 该类型统一暴露资源加载、卸载、路径组合和查询接口，并在调用端无法感知具体资源后端时承担稳定契约层，
+    /// 因此像 <c>FindShader</c> 这类读接口即使遇到未初始化或降级场景，也应优先返回可判定结果而不是直接抛出空引用。
+    /// This type centralizes resource loading, unloading, path composition, and lookup APIs while serving as the stable contract layer when callers do not know the concrete resource backend,
+    /// so read-style entrypoints such as <c>FindShader</c> should prefer returning a deterministic result instead of throwing a null reference when the loader is not initialized or has degraded.
     /// </summary>
     static public partial class BResources
     {
@@ -362,13 +367,16 @@ namespace BDFramework.ResourceMgr
 
 
         /// <summary>
-        /// 寻找一个shader
-        /// 类似Shader.Find用法
+        /// 按名称查找 Shader，并在资源加载器缺失时安全返回 null。
+        /// Find a Shader by name and safely return null when the resource loader is unavailable.
         /// </summary>
-        /// <param name="shaderName"></param>
+        /// <param name="shaderName">目标 Shader 名称。</param>
+        /// <param name="shaderName">Target shader name.</param>
+        /// <returns>命中时返回 Shader；未命中或加载器未初始化时返回 null。</returns>
+        /// <returns>Returns the Shader when found; otherwise returns null when there is no match or the loader is not initialized.</returns>
         public static Shader FindShader(string shaderName)
         {
-            return ResLoader.FindShader(shaderName);
+            return ResLoader?.FindShader(shaderName);
         }
 
         #endregion

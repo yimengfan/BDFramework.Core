@@ -87,5 +87,14 @@ namespace BDFramework.RuntimeTests.ApiTest.AssetsManager
         {
             FrameworkContractAssertions.VerifyShaderLookupReturnsNullWithoutWarmupCache();
         }
+
+        /// <summary>
+        /// 验证 BResources.FindShader 在 ResLoader 尚未初始化时返回 null，而不是抛出空引用。
+        /// Verify that BResources.FindShader returns null instead of throwing a null reference when ResLoader has not been initialized yet.
+        /// </summary>
+        public void FindShader_WithoutLoader_ReturnsNull()
+        {
+            FrameworkContractAssertions.VerifyFindShaderReturnsNullWithoutLoader();
+        }
     }
 }
