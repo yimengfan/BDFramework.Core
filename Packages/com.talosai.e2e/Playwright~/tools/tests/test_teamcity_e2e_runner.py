@@ -572,7 +572,7 @@ def test_reset_report_outputs_and_package_workspace_remove_stale_test_results(
     (test_results_root / "playerlogs").mkdir(parents=True)
     (test_results_root / "packages" / "windows").mkdir(parents=True)
     (test_results_root / "p" / "w-b60-r901").mkdir(parents=True)
-    (test_results_root / "unity-player.log").write_text("player", encoding="utf-8")
+    (test_results_root / "unity-player-901.log").write_text("player", encoding="utf-8")
     (test_results_root / "test-output.log").write_text("console", encoding="utf-8")
 
     monkeypatch.setattr(runner, "TEST_RESULTS_ROOT", test_results_root)
@@ -585,7 +585,7 @@ def test_reset_report_outputs_and_package_workspace_remove_stale_test_results(
     assert not (test_results_root / "html").exists()
     assert not (test_results_root / "artifacts").exists()
     assert not (test_results_root / "playerlogs").exists()
-    assert not (test_results_root / "unity-player.log").exists()
+    assert not (test_results_root / "unity-player-901.log").exists()
     assert not (test_results_root / "test-output.log").exists()
     assert not (test_results_root / "packages").exists()
     assert not (test_results_root / "p").exists()
@@ -603,7 +603,7 @@ def test_emit_playwright_report_metadata_emits_platform_log_urls_when_files_exis
     (test_results_root / "html" / "index.html").write_text("html", encoding="utf-8")
     (test_results_root / "junit.xml").write_text("junit", encoding="utf-8")
     (test_results_root / "test-output.log").write_text("console", encoding="utf-8")
-    (test_results_root / "unity-player.log").write_text("unity", encoding="utf-8")
+    (test_results_root / "unity-player-901.log").write_text("unity", encoding="utf-8")
     (test_results_root / "playerlogs").mkdir(parents=True)
     (test_results_root / "playerlogs" / "index.txt").write_text("status=found", encoding="utf-8")
     emitted_parameters: dict[str, str] = {}
@@ -630,7 +630,7 @@ def test_emit_playwright_report_metadata_emits_platform_log_urls_when_files_exis
     captured = capsys.readouterr()
 
     assert "playwrightOutputLogArtifactPath=talos-e2e-test-results/test-output.log" in captured.out
-    assert "unityPlayerLogArtifactPath=talos-e2e-test-results/unity-player.log" in captured.out
+    assert "unityPlayerLogArtifactPath=talos-e2e-test-results/unity-player-901.log" in captured.out
     assert "playerLogsIndexArtifactPath=talos-e2e-test-results/playerlogs/index.txt" in captured.out
     assert emitted_parameters["talos.e2e.playwright.output.log.url"] == (
         "http://teamcity.local/repository/download/"
@@ -638,7 +638,7 @@ def test_emit_playwright_report_metadata_emits_platform_log_urls_when_files_exis
     )
     assert emitted_parameters["talos.e2e.unity.player.log.url"] == (
         "http://teamcity.local/repository/download/"
-        "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/unity-player.log"
+        "BDFrameworkCore_TalosAIStep01BaseFlowTest/901:id/talos-e2e-test-results/unity-player-901.log"
     )
     assert emitted_parameters["talos.e2e.playerlogs.index.url"] == (
         "http://teamcity.local/repository/download/"
@@ -1010,7 +1010,7 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
     exit_code = runner.main()
 
     assert exit_code == 0
-    assert calls[:2] == ["reset_report_outputs", "reset_package_workspace"]
+    assert calls == ["reset_package_workspace"]
     assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
     assert "run_test_tool" not in calls
     assert "emit_playwright_report_metadata" not in calls

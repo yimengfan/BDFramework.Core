@@ -103,6 +103,7 @@ echo ""
 echo ">>> 启动应用..."
 APP_PID=""
 PLAYER_LOG_FILE=""
+PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-local-$$}"
 PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 # 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
 # Keep Unity logging on stdout by default so macOS/Linux local runs can inspect the startup chain directly.
@@ -191,7 +192,7 @@ else
         # 同时让 Unity 自己写日志文件，避免 Start-Process 重定向卡住 GUI 进程返回 PID。
         EXE_PATH_WIN="$(cygpath -w "${EXE_PATH}")"
         EXE_DIR_WIN="$(cygpath -w "$(dirname "${EXE_PATH}")")"
-        PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player.log"
+        PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player-${PLAYER_LOG_FILE_SUFFIX}.log"
         : > "${PLAYER_LOG_FILE}"
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
         APP_PID="$({

@@ -79,7 +79,6 @@ TEST_RESULTS_REPORT_DIR_NAMES = ("html", "artifacts", "playerlogs")
 TEST_RESULTS_REPORT_FILE_NAMES = (
     "junit.xml",
     "test-output.log",
-    "unity-player.log",
     "android-logcat.txt",
 )
 
@@ -463,10 +462,13 @@ def remove_path_if_exists(path: Path) -> None:
 
     Remove an existing file or directory.
     """
-    if path.is_dir() and not path.is_symlink():
-        shutil.rmtree(path)
-    elif path.exists():
-        path.unlink()
+    try:
+        if path.is_dir() and not path.is_symlink():
+            shutil.rmtree(path)
+        elif path.exists():
+            path.unlink()
+    except PermissionError:
+        print(f"{LOG_PREFIX} cleanupSkipLockedPath={path}")
 
 
 def reset_report_outputs() -> None:
@@ -479,6 +481,21 @@ def reset_report_outputs() -> None:
         remove_path_if_exists(TEST_RESULTS_ROOT / directory_name)
     for file_name in TEST_RESULTS_REPORT_FILE_NAMES:
         remove_path_if_exists(TEST_RESULTS_ROOT / file_name)
+    for player_log_file in TEST_RESULTS_ROOT.glob("unity-player*.log"):
+        remove_path_if_exists(player_log_file)
+
+
+def resolve_latest_unity_player_log() -> Path | None:
+    """返回当前 test-results 目录下最新的 Unity player log 文件。
+
+    Return the newest Unity player log file under the current test-results directory.
+    """
+    player_log_candidates = sorted(
+        TEST_RESULTS_ROOT.glob("unity-player*.log"),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    return player_log_candidates[0] if player_log_candidates else None
 
 
 def reset_package_workspace() -> None:
@@ -964,12 +981,6 @@ def emit_playwright_report_metadata(*, config_path: str | None = None) -> None:
             "talos.e2e.playwright.output.log.url",
         ),
         (
-            "unityPlayerLog",
-            TEST_RESULTS_ROOT / "unity-player.log",
-            "talos-e2e-test-results/unity-player.log",
-            "talos.e2e.unity.player.log.url",
-        ),
-        (
             "androidLogcat",
             TEST_RESULTS_ROOT / "android-logcat.txt",
             "talos-e2e-test-results/android-logcat.txt",
@@ -990,6 +1001,15 @@ def emit_playwright_report_metadata(*, config_path: str | None = None) -> None:
         if artifact_url:
             print(f"{LOG_PREFIX} {label}ArtifactUrl={artifact_url}")
             emit_teamcity_parameter(parameter_name, artifact_url)
+
+    latest_unity_player_log = resolve_latest_unity_player_log()
+    if latest_unity_player_log is not None:
+        unity_player_log_artifact_path = f"talos-e2e-test-results/{latest_unity_player_log.name}"
+        print(f"{LOG_PREFIX} unityPlayerLogArtifactPath={unity_player_log_artifact_path}")
+        unity_player_log_url = build_teamcity_artifact_url(context, unity_player_log_artifact_path)
+        if unity_player_log_url:
+            print(f"{LOG_PREFIX} unityPlayerLogArtifactUrl={unity_player_log_url}")
+            emit_teamcity_parameter("talos.e2e.unity.player.log.url", unity_player_log_url)
 
 
 def build_remote_root(remote_root_prefix: str, build_number: str) -> str:
@@ -1386,7 +1406,11 @@ def main() -> int:
         raise TalosTeamCityE2EError("run phase requires --package-path so it can reuse the package prepared by the previous step")
 
     print(f"{LOG_PREFIX} ===== Phase 2/6: clean workspace =====")
-    reset_report_outputs()
+    if selected_phase in {"all", "run"}:
+        reset_report_outputs()
+        print(f"{LOG_PREFIX} reportCleanup=enabled")
+    else:
+        print(f"{LOG_PREFIX} reportCleanup=skipped")
     if selected_phase in {"all", "prepare"}:
         reset_package_workspace()
         print(f"{LOG_PREFIX} cleanupMode=full")
