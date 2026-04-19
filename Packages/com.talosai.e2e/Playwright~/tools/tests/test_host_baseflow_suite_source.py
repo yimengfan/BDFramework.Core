@@ -25,6 +25,17 @@ HOST_BASEFLOW_TESTS_PATH = (
     / "Runtime.HostE2E"
     / "BaseFlowHostRuntimeTests.cs"
 )
+SQLITE_RUNTIME_PATH = (
+    REPO_ROOT
+    / "Packages"
+    / "com.popo.bdframework"
+    / "Runtime"
+    / "Data"
+    / "Sql"
+    / "Sqlite"
+    / "SqliteNet"
+    / "SQLite.cs"
+)
 
 
 def test_host_baseflow_suites_stay_in_host_package() -> None:
@@ -66,3 +77,15 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert "ReadRequiredStaticStringProperty" in content
     assert "CombinePath" in content
     assert "Application.persistentDataPath" in content
+
+
+def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:
+    """验证 Windows standalone 的 SQLite 连接保留 string open 分支。
+    Verify that the Windows standalone SQLite connection keeps the string-based open branch.
+    """
+    content = SQLITE_RUNTIME_PATH.read_text(encoding="utf-8")
+
+    assert "#elif UNITY_STANDALONE_WIN" in content
+    assert "TeamCity service-account player" in content
+    assert "SQLite3.Open(connectionString.DatabasePath, out handle, (int)connectionString.OpenFlags, connectionString.VfsName);" in content
+    assert "var databasePathAsBytes = GetNullTerminatedUtf8(connectionString.DatabasePath);" in content

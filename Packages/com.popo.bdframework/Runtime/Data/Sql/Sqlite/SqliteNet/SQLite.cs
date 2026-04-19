@@ -435,6 +435,10 @@ namespace SQLite4Unity3d
 
 #if SILVERLIGHT || USE_CSHARP_SQLITE || USE_SQLITEPCL_RAW
 			var r = SQLite3.Open (connectionString.DatabasePath, out handle, (int)connectionString.OpenFlags, connectionString.VfsName);
+#elif UNITY_STANDALONE_WIN
+            // Windows standalone 的 sqlcipher DllImport 在 TeamCity service-account Player 下对 string 入口更稳定，
+            // Windows standalone sqlcipher resolves more reliably through the string-based DllImport entrypoint under the TeamCity service-account player.
+            var r = SQLite3.Open(connectionString.DatabasePath, out handle, (int)connectionString.OpenFlags, connectionString.VfsName);
 #else
             // open using the byte[]
             // in the case where the path may include Unicode
