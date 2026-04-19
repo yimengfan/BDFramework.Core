@@ -55,6 +55,10 @@ namespace BDFramework
             ManagerInstHelper.LoadManager(types);
             GameConfigLoder.LoadFrameworkConfig();
 
+            // 在主线程预热 BApplication，避免后台线程先触发静态构造时访问 Application.dataPath 并把资源/SQLite 相关路径状态永久污染。
+            // Warm up BApplication on the main thread so a background thread cannot trigger its static constructor first, touch Application.dataPath, and permanently poison later resource and SQLite path state.
+            _ = BDFramework.Core.Tools.BApplication.persistentDataPath;
+
             // 桥接 E2E 自动检测入口；如果 Talos.E2E 包不存在，则该调用会在方法内部静默退出。
             // Bridge the E2E auto-detection entry; if the Talos.E2E package is absent, the method exits quietly from inside.
             TryStartE2EFramework();

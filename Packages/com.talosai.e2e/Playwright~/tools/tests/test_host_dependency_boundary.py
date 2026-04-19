@@ -91,6 +91,17 @@ def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
     assert "method.Invoke(null, new object[] { 10002 });" in script_loader_content
 
 
+def test_bdframework_script_loader_prewarms_bapplication_on_main_thread() -> None:
+    """验证 ScriptLoder 会在主线程预热 BApplication，避免后台线程抢先触发静态构造。
+    Verify that ScriptLoder prewarms BApplication on the main thread so a background thread cannot win the static-constructor race.
+    """
+
+    script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
+
+    assert "Warm up BApplication on the main thread" in script_loader_content
+    assert "BDFramework.Core.Tools.BApplication.persistentDataPath" in script_loader_content
+
+
 def test_bdframework_script_loader_does_not_compose_host_suite_execution() -> None:
     """验证 ScriptLoder 只桥接 Talos 框架入口，而不直接编排宿主 suite。
     Verify that ScriptLoder only bridges the Talos framework entry and does not directly compose host suites.
