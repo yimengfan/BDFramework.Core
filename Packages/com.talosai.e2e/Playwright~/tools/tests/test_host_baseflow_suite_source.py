@@ -52,5 +52,6 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert "RequireLoadedAssembly" in content
     assert "RequireLoadedType" in content
     assert "RequireInstanceGenericMethod" in content
-    assert "BApplication.persistentDataPath" in content
-    assert "IPath.Combine" in content
+    assert '"BDFramework.Core.Tools.BApplication"' in content
+    assert "ReadRequiredStaticStringProperty" in content
+    assert "CombinePath" in content

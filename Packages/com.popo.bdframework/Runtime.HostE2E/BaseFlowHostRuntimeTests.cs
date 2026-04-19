@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using BDFramework.Core.Tools;
 using Talos.E2E;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -24,6 +23,7 @@ namespace BDFramework.HostE2E
     public static class BaseFlowHostRuntimeTests
     {
         private const string HotfixFrameworkAssemblyName = "BDFramework.Core";
+        private const string BApplicationTypeName = "BDFramework.Core.Tools.BApplication";
         private const string BResourcesTypeName = "BDFramework.ResourceMgr.BResources";
         private const string SqliteConnectionTypeName = "SQLite4Unity3d.SQLiteConnection";
         private const string SqliteProbeValue = "framework-integration";
@@ -72,7 +72,8 @@ namespace BDFramework.HostE2E
                 typeof(string));
 
             var groupName = $"talos-baseflow-host-{Guid.NewGuid():N}";
-            var frameworkPersistentDataPath = BApplication.persistentDataPath;
+            var bApplicationType = RequireType(hotfixAssembly, BApplicationTypeName);
+            var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
             try
             {
                 Debug.Log($"[E2E] Asset probe phase=group-cache-add group={groupName}");
@@ -143,6 +144,8 @@ namespace BDFramework.HostE2E
         {
             Debug.Log("[E2E] 测试目的=验证宿主可完成 SQLite 最小读写闭环 实现手段=反射创建 SQLiteConnection 并执行建表、写入、查询");
 
+            var hotfixAssembly = RequireLoadedAssembly(HotfixFrameworkAssemblyName);
+            var bApplicationType = RequireType(hotfixAssembly, BApplicationTypeName);
             var sqliteConnectionType = RequireLoadedType(SqliteConnectionTypeName);
             var sqliteConnectionConstructor = sqliteConnectionType.GetConstructor(new[] { typeof(string), typeof(bool) });
             if (sqliteConnectionConstructor == null)
@@ -161,8 +164,9 @@ namespace BDFramework.HostE2E
                 typeof(string),
                 typeof(object[]));
 
-            var databasePath = IPath.Combine(
-                BApplication.persistentDataPath,
+            var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
+            var databasePath = CombinePath(
+                frameworkPersistentDataPath,
                 $"talos-baseflow-host-{Guid.NewGuid():N}.db");
             var databaseDirectory = Path.GetDirectoryName(databasePath);
             if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
@@ -425,6 +429,63 @@ namespace BDFramework.HostE2E
             }
 
             return method;
+        }
+
+        /// <summary>
+        /// 读取指定类型上的公开静态字符串属性，并在缺失或为空时抛出异常。
+        /// Read a public static string property from the specified type and throw when it is missing or empty.
+        /// </summary>
+        /// <param name="type">声明属性的类型。</param>
+        /// <param name="propertyName">属性名称。</param>
+        /// <returns>属性当前值。</returns>
+        /// <returns>The current property value.</returns>
+        private static string ReadRequiredStaticStringProperty(Type type, string propertyName)
+        {
+            var property = type.GetProperty(
+                propertyName,
+                BindingFlags.Public | BindingFlags.Static);
+            if (property == null)
+            {
+                throw new Exception($"未发现公开静态属性: {type.FullName}.{propertyName}");
+            }
+
+            var value = property.GetValue(null) as string;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new Exception($"公开静态属性为空: {type.FullName}.{propertyName}");
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// 用稳定的正斜杠规则拼接路径，避免宿主探针在 Windows 上生成混合分隔符路径。
+        /// Combine paths with stable forward-slash rules so the host probe does not generate mixed-separator paths on Windows.
+        /// </summary>
+        /// <param name="left">左侧目录。</param>
+        /// <param name="right">右侧文件或子路径。</param>
+        /// <returns>拼接后的标准化路径。</returns>
+        /// <returns>The combined normalized path.</returns>
+        private static string CombinePath(string left, string right)
+        {
+            if (string.IsNullOrEmpty(left))
+            {
+                return right;
+            }
+
+            if (string.IsNullOrEmpty(right))
+            {
+                return left;
+            }
+
+            var normalizedLeft = left.Replace('\\', '/');
+            var normalizedRight = right.Replace('\\', '/');
+            if (normalizedLeft.EndsWith("/", StringComparison.Ordinal))
+            {
+                return normalizedLeft + normalizedRight.TrimStart('/');
+            }
+
+            return normalizedLeft + "/" + normalizedRight.TrimStart('/');
         }
 
         /// <summary>
