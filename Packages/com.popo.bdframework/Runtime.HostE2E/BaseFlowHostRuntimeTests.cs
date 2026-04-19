@@ -73,42 +73,57 @@ namespace BDFramework.HostE2E
             var groupName = $"talos-baseflow-host-{Guid.NewGuid():N}";
             try
             {
-                addAssetsPathToGroupMethod.Invoke(
-                    null,
-                    new object[]
+                Debug.Log($"[E2E] Asset probe phase=group-cache-add group={groupName}");
+                InvokeStaticMethod(
+                    addAssetsPathToGroupMethod,
+                    "BResources.AddAssetsPathToGroup",
+                    groupName,
+                    new[]
                     {
-                        groupName,
-                        new[]
-                        {
-                            "talos/baseflow/host/a.prefab",
-                            "talos/baseflow/host/b.mat",
-                        },
+                        "talos/baseflow/host/a.prefab",
+                        "talos/baseflow/host/b.mat",
                     });
 
-                var groupedPaths = getAssetsPathByGroupMethod.Invoke(null, new object[] { groupName }) as string[];
+                Debug.Log($"[E2E] Asset probe phase=group-cache-read group={groupName}");
+                var groupedPaths = InvokeStaticMethod(
+                    getAssetsPathByGroupMethod,
+                    "BResources.GetAssetsPathByGroup",
+                    groupName) as string[];
                 if (groupedPaths == null || groupedPaths.Length != 2)
                 {
                     throw new Exception($"资源组公共接口返回异常，数量={groupedPaths?.Length ?? 0}");
                 }
 
-                var assetsInfoPath = getAssetsInfoPathMethod.Invoke(
-                    null,
-                    new object[] { Application.persistentDataPath }) as string;
-                var versionInfoPath = getServerAssetsVersionInfoPathMethod.Invoke(
-                    null,
-                    new object[] { Application.persistentDataPath, Application.platform }) as string;
+                Debug.Log($"[E2E] Asset probe phase=version-path root={Application.persistentDataPath} platform={Application.platform}");
+                var assetsInfoPath = InvokeStaticMethod(
+                    getAssetsInfoPathMethod,
+                    "BResources.GetAssetsInfoPath",
+                    Application.persistentDataPath) as string;
+                var versionInfoPath = InvokeStaticMethod(
+                    getServerAssetsVersionInfoPathMethod,
+                    "BResources.GetServerAssetsVersionInfoPath",
+                    Application.persistentDataPath,
+                    Application.platform) as string;
                 if (string.IsNullOrWhiteSpace(assetsInfoPath) || string.IsNullOrWhiteSpace(versionInfoPath))
                 {
                     throw new Exception("资源版控路径拼接结果为空");
                 }
 
-                findShaderMethod.Invoke(null, new object[] { "__Talos_BaseFlow_Host_NonExistent_Shader__" });
+                Debug.Log("[E2E] Asset probe phase=shader-lookup name=__Talos_BaseFlow_Host_NonExistent_Shader__");
+                InvokeStaticMethod(
+                    findShaderMethod,
+                    "BResources.FindShader",
+                    "__Talos_BaseFlow_Host_NonExistent_Shader__");
                 Debug.Log(
                     $"[E2E] 宿主资源接口联通完成: groupedPaths={groupedPaths.Length} assetsInfoPath={assetsInfoPath} versionInfoPath={versionInfoPath}");
             }
             finally
             {
-                clearAssetGroupMethod.Invoke(null, new object[] { groupName });
+                Debug.Log($"[E2E] Asset probe phase=group-cache-clear group={groupName}");
+                InvokeStaticMethod(
+                    clearAssetGroupMethod,
+                    "BResources.ClearAssetGroup",
+                    groupName);
             }
         }
 
@@ -156,53 +171,54 @@ namespace BDFramework.HostE2E
             object sqliteConnection = null;
             try
             {
-                sqliteConnection = sqliteConnectionConstructor.Invoke(new object[] { databasePath, true });
+                Debug.Log($"[E2E] SQLite probe phase=open databasePath={databasePath}");
+                sqliteConnection = InvokeConstructor(
+                    sqliteConnectionConstructor,
+                    "SQLiteConnection..ctor",
+                    databasePath,
+                    true);
 
-                executeMethod.Invoke(
+                Debug.Log("[E2E] SQLite probe phase=create-table");
+                InvokeInstanceMethod(
                     sqliteConnection,
-                    new object[]
-                    {
-                        "CREATE TABLE IF NOT EXISTS TalosBaseFlowHostSqlite (id INTEGER PRIMARY KEY, name TEXT NOT NULL);",
-                        Array.Empty<object>(),
-                    });
-                executeMethod.Invoke(
+                    executeMethod,
+                    "SQLiteConnection.Execute(create-table)",
+                    "CREATE TABLE IF NOT EXISTS TalosBaseFlowHostSqlite (id INTEGER PRIMARY KEY, name TEXT NOT NULL);",
+                    Array.Empty<object>());
+                Debug.Log("[E2E] SQLite probe phase=delete-existing");
+                InvokeInstanceMethod(
                     sqliteConnection,
-                    new object[]
-                    {
-                        "DELETE FROM TalosBaseFlowHostSqlite;",
-                        Array.Empty<object>(),
-                    });
-                executeMethod.Invoke(
+                    executeMethod,
+                    "SQLiteConnection.Execute(delete-existing)",
+                    "DELETE FROM TalosBaseFlowHostSqlite;",
+                    Array.Empty<object>());
+                Debug.Log($"[E2E] SQLite probe phase=insert probeValue={SqliteProbeValue}");
+                InvokeInstanceMethod(
                     sqliteConnection,
-                    new object[]
-                    {
-                        "INSERT INTO TalosBaseFlowHostSqlite (id, name) VALUES (1, ?);",
-                        new object[] { SqliteProbeValue },
-                    });
+                    executeMethod,
+                    "SQLiteConnection.Execute(insert)",
+                    "INSERT INTO TalosBaseFlowHostSqlite (id, name) VALUES (1, ?);",
+                    new object[] { SqliteProbeValue });
 
-                var count = (int)executeScalarDefinition
-                    .MakeGenericMethod(typeof(int))
-                    .Invoke(
-                        sqliteConnection,
-                        new object[]
-                        {
-                            "SELECT COUNT(*) FROM TalosBaseFlowHostSqlite;",
-                            Array.Empty<object>(),
-                        });
+                Debug.Log("[E2E] SQLite probe phase=query-count");
+                var count = (int)InvokeInstanceMethod(
+                    sqliteConnection,
+                    executeScalarDefinition.MakeGenericMethod(typeof(int)),
+                    "SQLiteConnection.ExecuteScalar<int>(count)",
+                    "SELECT COUNT(*) FROM TalosBaseFlowHostSqlite;",
+                    Array.Empty<object>());
                 if (count != 1)
                 {
                     throw new Exception($"SQLite 写入条数异常: count={count}");
                 }
 
-                var loadedName = executeScalarDefinition
-                    .MakeGenericMethod(typeof(string))
-                    .Invoke(
-                        sqliteConnection,
-                        new object[]
-                        {
-                            "SELECT name FROM TalosBaseFlowHostSqlite WHERE id = 1;",
-                            Array.Empty<object>(),
-                        }) as string;
+                Debug.Log("[E2E] SQLite probe phase=query-name");
+                var loadedName = InvokeInstanceMethod(
+                    sqliteConnection,
+                    executeScalarDefinition.MakeGenericMethod(typeof(string)),
+                    "SQLiteConnection.ExecuteScalar<string>(name)",
+                    "SELECT name FROM TalosBaseFlowHostSqlite WHERE id = 1;",
+                    Array.Empty<object>()) as string;
                 if (!string.Equals(loadedName, SqliteProbeValue, StringComparison.Ordinal))
                 {
                     throw new Exception($"SQLite 查询结果异常: name={loadedName ?? "<null>"}");
@@ -218,6 +234,109 @@ namespace BDFramework.HostE2E
                     File.Delete(databasePath);
                 }
             }
+        }
+
+        /// <summary>
+        /// 调用公开静态方法，并在反射失败时展开根异常与上下文。
+        /// Invoke a public static method and expand the root cause plus context when reflection fails.
+        /// </summary>
+        /// <param name="method">目标方法。</param>
+        /// <param name="operationName">当前执行步骤名称。</param>
+        /// <param name="arguments">反射调用参数。</param>
+        /// <returns>返回方法执行结果。</returns>
+        /// <returns>Returns the method result.</returns>
+        private static object InvokeStaticMethod(MethodInfo method, string operationName, params object[] arguments)
+        {
+            return InvokeWithContext(
+                operationName,
+                () => method.Invoke(null, arguments));
+        }
+
+        /// <summary>
+        /// 调用公开实例方法，并在反射失败时展开根异常与上下文。
+        /// Invoke a public instance method and expand the root cause plus context when reflection fails.
+        /// </summary>
+        /// <param name="instance">方法所属实例。</param>
+        /// <param name="method">目标方法。</param>
+        /// <param name="operationName">当前执行步骤名称。</param>
+        /// <param name="arguments">反射调用参数。</param>
+        /// <returns>返回方法执行结果。</returns>
+        /// <returns>Returns the method result.</returns>
+        private static object InvokeInstanceMethod(object instance, MethodInfo method, string operationName, params object[] arguments)
+        {
+            return InvokeWithContext(
+                operationName,
+                () => method.Invoke(instance, arguments));
+        }
+
+        /// <summary>
+        /// 调用构造函数，并在反射失败时展开根异常与上下文。
+        /// Invoke a constructor and expand the root cause plus context when reflection fails.
+        /// </summary>
+        /// <param name="constructor">目标构造函数。</param>
+        /// <param name="operationName">当前执行步骤名称。</param>
+        /// <param name="arguments">反射调用参数。</param>
+        /// <returns>返回新建实例。</returns>
+        /// <returns>Returns the constructed instance.</returns>
+        private static object InvokeConstructor(ConstructorInfo constructor, string operationName, params object[] arguments)
+        {
+            return InvokeWithContext(
+                operationName,
+                () => constructor.Invoke(arguments));
+        }
+
+        /// <summary>
+        /// 在统一上下文里执行反射调用，并把 TargetInvocationException 展开为可读根因。
+        /// Execute a reflection call under a unified context and expand TargetInvocationException into a readable root cause.
+        /// </summary>
+        /// <param name="operationName">当前执行步骤名称。</param>
+        /// <param name="action">实际反射调用。</param>
+        /// <returns>返回执行结果。</returns>
+        /// <returns>Returns the action result.</returns>
+        private static object InvokeWithContext(string operationName, Func<object> action)
+        {
+            try
+            {
+                return action();
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw CreateInvocationFailure(operationName, exception);
+            }
+        }
+
+        /// <summary>
+        /// 构造包含步骤名、根异常类型与消息的诊断异常。
+        /// Build a diagnostic exception that includes the step name plus the root exception type and message.
+        /// </summary>
+        /// <param name="operationName">当前执行步骤名称。</param>
+        /// <param name="exception">反射层抛出的包装异常。</param>
+        /// <returns>面向日志的可读异常。</returns>
+        /// <returns>A readable exception tailored for logs.</returns>
+        private static Exception CreateInvocationFailure(string operationName, TargetInvocationException exception)
+        {
+            var rootException = UnwrapInvocationException(exception);
+            return new Exception(
+                $"{operationName} 失败: {rootException.GetType().FullName}: {rootException.Message}",
+                rootException);
+        }
+
+        /// <summary>
+        /// 递归剥离反射包装异常，直到拿到最内层真实异常。
+        /// Recursively peel off reflection wrapper exceptions until the innermost real exception is reached.
+        /// </summary>
+        /// <param name="exception">待展开的异常。</param>
+        /// <returns>最内层真实异常。</returns>
+        /// <returns>The innermost real exception.</returns>
+        private static Exception UnwrapInvocationException(Exception exception)
+        {
+            while (exception is TargetInvocationException targetInvocationException
+                   && targetInvocationException.InnerException != null)
+            {
+                exception = targetInvocationException.InnerException;
+            }
+
+            return exception;
         }
 
         /// <summary>
