@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using BDFramework.Core.Tools;
 using Talos.E2E;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -71,6 +72,7 @@ namespace BDFramework.HostE2E
                 typeof(string));
 
             var groupName = $"talos-baseflow-host-{Guid.NewGuid():N}";
+            var frameworkPersistentDataPath = BApplication.persistentDataPath;
             try
             {
                 Debug.Log($"[E2E] Asset probe phase=group-cache-add group={groupName}");
@@ -94,15 +96,15 @@ namespace BDFramework.HostE2E
                     throw new Exception($"资源组公共接口返回异常，数量={groupedPaths?.Length ?? 0}");
                 }
 
-                Debug.Log($"[E2E] Asset probe phase=version-path root={Application.persistentDataPath} platform={Application.platform}");
+                Debug.Log($"[E2E] Asset probe phase=version-path root={frameworkPersistentDataPath} platform={Application.platform}");
                 var assetsInfoPath = InvokeStaticMethod(
                     getAssetsInfoPathMethod,
                     "BResources.GetAssetsInfoPath",
-                    Application.persistentDataPath) as string;
+                    frameworkPersistentDataPath) as string;
                 var versionInfoPath = InvokeStaticMethod(
                     getServerAssetsVersionInfoPathMethod,
                     "BResources.GetServerAssetsVersionInfoPath",
-                    Application.persistentDataPath,
+                    frameworkPersistentDataPath,
                     Application.platform) as string;
                 if (string.IsNullOrWhiteSpace(assetsInfoPath) || string.IsNullOrWhiteSpace(versionInfoPath))
                 {
@@ -159,8 +161,8 @@ namespace BDFramework.HostE2E
                 typeof(string),
                 typeof(object[]));
 
-            var databasePath = Path.Combine(
-                Application.persistentDataPath,
+            var databasePath = IPath.Combine(
+                BApplication.persistentDataPath,
                 $"talos-baseflow-host-{Guid.NewGuid():N}.db");
             var databaseDirectory = Path.GetDirectoryName(databasePath);
             if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))

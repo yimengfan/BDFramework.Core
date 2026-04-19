@@ -5,6 +5,7 @@ using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using BDFramework.ResourceMgr.V2;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using ConditionalAttribute = System.Diagnostics.ConditionalAttribute;
@@ -526,6 +527,18 @@ namespace BDFramework.RuntimeTests.Contracts
             EnsureTrue(callbackInvoked, "空资源列表异步加载应立即触发完成回调。");
             EnsureTrue(callbackResult != null, "空资源列表异步加载应返回空字典而非 null。");
             EnsureEqual(0, callbackResult.Count, "空资源列表异步加载回调结果数量应为 0。");
+        }
+
+        /// <summary>
+        /// 验证 ShaderLoder 在预热前的空缓存状态下执行查找不会抛出空引用。
+        /// Verify that ShaderLoder does not throw a null reference when lookup happens before warmup populates the cache.
+        /// </summary>
+        public static void VerifyShaderLookupReturnsNullWithoutWarmupCache()
+        {
+            var shaderLoader = new ShaderLoder(null);
+            var shader = shaderLoader.FindShader("__Framework_Contract_NonExistent_Shader__");
+
+            EnsureTrue(shader == null, "未命中的 Shader 查询应返回 null，而不是抛出异常。");
         }
 
         /// <summary>

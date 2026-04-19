@@ -78,5 +78,14 @@ namespace BDFramework.RuntimeTests.ApiTest.AssetsManager
         {
             FrameworkContractAssertions.VerifyAsyncLoadWithEmptyListReturnsEmptyAndInvokesCallbackWithoutLoader();
         }
+
+        /// <summary>
+        /// 验证 Shader 查找在预热前不会因为空缓存直接抛出空引用。
+        /// Verify that shader lookup does not fail with a null reference when queried before warmup populates the cache.
+        /// </summary>
+        public void FindShader_WithoutWarmupCache_ReturnsNull()
+        {
+            FrameworkContractAssertions.VerifyShaderLookupReturnsNullWithoutWarmupCache();
+        }
     }
 }

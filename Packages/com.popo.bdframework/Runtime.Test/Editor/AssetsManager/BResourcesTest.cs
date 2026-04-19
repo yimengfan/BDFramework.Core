@@ -127,6 +127,16 @@ namespace BDFramework.EditorTest.AssetsManager
         {
             runtimeTest.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader();
         }
+
+        /// <summary>
+        /// 验证 Shader 查找在预热前不会因为空缓存直接抛出空引用。
+        /// Verify that shader lookup does not fail with a null reference when queried before warmup populates the cache.
+        /// </summary>
+        [Test]
+        public void FindShader_WithoutWarmupCache_ReturnsNull()
+        {
+            runtimeTest.FindShader_WithoutWarmupCache_ReturnsNull();
+        }
     }
 
     /// <summary>
@@ -192,6 +202,12 @@ namespace BDFramework.EditorTest.AssetsManager
                     () => ExecuteWithSetUp(
                         testInstance.SetUp,
                         testInstance.AsyncLoad_WithEmptyAssetList_ReturnsEmptyAndInvokesCallbackWithoutLoader)
+                ),
+                (
+                    nameof(BResourcesTest.FindShader_WithoutWarmupCache_ReturnsNull),
+                    () => ExecuteWithSetUp(
+                        testInstance.SetUp,
+                        testInstance.FindShader_WithoutWarmupCache_ReturnsNull)
                 ),
             };
 
