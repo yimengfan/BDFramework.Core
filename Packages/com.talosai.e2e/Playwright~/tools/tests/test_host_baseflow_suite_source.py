@@ -55,6 +55,9 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert '"BDFramework.Core.Tools.BApplication"' in content
     assert '"SQLite4Unity3d.SQLiteConnectionString"' in content
     assert '"SQLite4Unity3d.SQLiteOpenFlags"' in content
+    assert "typeof(Action<>).MakeGenericType(sqliteConnectionType)" in content
+    assert "Type.Missing" in content
+    assert 'GetConstructor(new[] { typeof(string), sqliteOpenFlagsType, typeof(bool) })' not in content
     assert "ReadRequiredStaticStringProperty" in content
     assert "CombinePath" in content
     assert "Application.persistentDataPath" in content

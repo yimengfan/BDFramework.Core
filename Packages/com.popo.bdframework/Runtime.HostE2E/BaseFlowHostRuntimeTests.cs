@@ -152,15 +152,22 @@ namespace BDFramework.HostE2E
             var sqliteConnectionType = RequireLoadedType(SqliteConnectionTypeName);
             var sqliteConnectionStringType = RequireLoadedType(SqliteConnectionStringTypeName);
             var sqliteOpenFlagsType = RequireLoadedType(SqliteOpenFlagsTypeName);
+            var sqliteConnectionActionType = typeof(Action<>).MakeGenericType(sqliteConnectionType);
             var sqliteConnectionStringConstructor = sqliteConnectionStringType.GetConstructor(new[]
             {
                 typeof(string),
                 sqliteOpenFlagsType,
                 typeof(bool),
+                typeof(object),
+                sqliteConnectionActionType,
+                sqliteConnectionActionType,
+                typeof(string),
+                typeof(string),
+                typeof(bool),
             });
             if (sqliteConnectionStringConstructor == null)
             {
-                throw new Exception("未发现 SQLiteConnectionString(string, SQLiteOpenFlags, bool) 构造入口");
+                throw new Exception("未发现 SQLiteConnectionString(string, SQLiteOpenFlags, bool, object, Action<SQLiteConnection>, Action<SQLiteConnection>, string, string, bool) 构造入口");
             }
 
             var sqliteConnectionConstructor = sqliteConnectionType.GetConstructor(new[] { sqliteConnectionStringType });
@@ -214,7 +221,13 @@ namespace BDFramework.HostE2E
                     "SQLiteConnectionString..ctor",
                     normalizedDatabasePath,
                     sqliteOpenFlags,
-                    true);
+                    true,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing);
 
                 Debug.Log($"[E2E] SQLite probe phase=open databasePath={normalizedDatabasePath}");
                 sqliteConnection = InvokeConstructor(
