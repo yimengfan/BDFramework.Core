@@ -94,8 +94,10 @@ namespace BDFramework
 
 
         /// <summary>
-        /// 获取程序域
-        /// 框架托管的所有类型
+        /// 获取当前程序域中由框架托管的所有类型。
+        /// Get all framework-hosted types from the current application domain.
+        /// 该方法会缓存第一次扫描结果，后续调用直接复用缓存，避免重复遍历程序集。
+        /// The method caches the first scan result and reuses it on later calls to avoid rescanning assemblies.
         /// </summary>
         /// <returns></returns>
         static public IEnumerable<Type> GetAppDomainHostingTypes()
@@ -103,6 +105,10 @@ namespace BDFramework
             if (hostingTypeList != null)
             {
                 return hostingTypeList;
+            }
+
+            var typeList = new List<Type>();
+            var assemblyList = AppDomain.CurrentDomain.GetAssemblies();
 
             BDebug.LogWatchBegin("加载所有DLL-types");
             foreach (var assembly in assemblyList)
@@ -131,6 +137,7 @@ namespace BDFramework
 #if UNITY_EDITOR
             typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));
 #endif
+            hostingTypeList = typeList;
             BDebug.LogWatchEnd("加载所有DLL-types");
             return typeList;
         }
