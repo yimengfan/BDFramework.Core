@@ -26,6 +26,9 @@ namespace BDFramework.HostE2E
         private const string BApplicationTypeName = "BDFramework.Core.Tools.BApplication";
         private const string BResourcesTypeName = "BDFramework.ResourceMgr.BResources";
         private const string SqliteConnectionTypeName = "SQLite4Unity3d.SQLiteConnection";
+        private const string SqliteConnectionStringTypeName = "SQLite4Unity3d.SQLiteConnectionString";
+        private const string SqliteOpenFlagsTypeName = "SQLite4Unity3d.SQLiteOpenFlags";
+        private const int SqliteReadWriteCreateOpenFlagsValue = 2 | 4;
         private const string SqliteProbeValue = "framework-integration";
 
         /// <summary>
@@ -147,10 +150,23 @@ namespace BDFramework.HostE2E
             var hotfixAssembly = RequireLoadedAssembly(HotfixFrameworkAssemblyName);
             var bApplicationType = RequireType(hotfixAssembly, BApplicationTypeName);
             var sqliteConnectionType = RequireLoadedType(SqliteConnectionTypeName);
-            var sqliteConnectionConstructor = sqliteConnectionType.GetConstructor(new[] { typeof(string), typeof(bool) });
+            var sqliteConnectionStringType = RequireLoadedType(SqliteConnectionStringTypeName);
+            var sqliteOpenFlagsType = RequireLoadedType(SqliteOpenFlagsTypeName);
+            var sqliteConnectionStringConstructor = sqliteConnectionStringType.GetConstructor(new[]
+            {
+                typeof(string),
+                sqliteOpenFlagsType,
+                typeof(bool),
+            });
+            if (sqliteConnectionStringConstructor == null)
+            {
+                throw new Exception("未发现 SQLiteConnectionString(string, SQLiteOpenFlags, bool) 构造入口");
+            }
+
+            var sqliteConnectionConstructor = sqliteConnectionType.GetConstructor(new[] { sqliteConnectionStringType });
             if (sqliteConnectionConstructor == null)
             {
-                throw new Exception("未发现 SQLiteConnection(string, bool) 构造入口");
+                throw new Exception("未发现 SQLiteConnection(SQLiteConnectionString) 构造入口");
             }
 
             var executeMethod = RequireInstanceMethod(
@@ -185,20 +201,26 @@ namespace BDFramework.HostE2E
             {
                 Debug.Log(
                     $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={Application.persistentDataPath} sqlitePersistentRoot={sqlitePersistentRoot}");
-                if (!File.Exists(normalizedDatabasePath))
+                if (File.Exists(normalizedDatabasePath))
                 {
-                    Debug.Log($"[E2E] SQLite probe phase=precreate-file databasePath={normalizedDatabasePath}");
-                    using (File.Create(normalizedDatabasePath))
-                    {
-                    }
+                    Debug.Log($"[E2E] SQLite probe phase=delete-existing-file databasePath={normalizedDatabasePath}");
+                    File.Delete(normalizedDatabasePath);
                 }
+
+                var sqliteOpenFlags = Enum.ToObject(sqliteOpenFlagsType, SqliteReadWriteCreateOpenFlagsValue);
+                Debug.Log($"[E2E] SQLite probe phase=build-connection-string databasePath={normalizedDatabasePath} openFlags={sqliteOpenFlags}");
+                var sqliteConnectionString = InvokeConstructor(
+                    sqliteConnectionStringConstructor,
+                    "SQLiteConnectionString..ctor",
+                    normalizedDatabasePath,
+                    sqliteOpenFlags,
+                    true);
 
                 Debug.Log($"[E2E] SQLite probe phase=open databasePath={normalizedDatabasePath}");
                 sqliteConnection = InvokeConstructor(
                     sqliteConnectionConstructor,
                     "SQLiteConnection..ctor",
-                    normalizedDatabasePath,
-                    true);
+                    sqliteConnectionString);
 
                 Debug.Log("[E2E] SQLite probe phase=create-table");
                 InvokeInstanceMethod(

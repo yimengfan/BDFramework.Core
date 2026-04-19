@@ -53,6 +53,8 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert "RequireLoadedType" in content
     assert "RequireInstanceGenericMethod" in content
     assert '"BDFramework.Core.Tools.BApplication"' in content
+    assert '"SQLite4Unity3d.SQLiteConnectionString"' in content
+    assert '"SQLite4Unity3d.SQLiteOpenFlags"' in content
     assert "ReadRequiredStaticStringProperty" in content
     assert "CombinePath" in content
     assert "Application.persistentDataPath" in content
