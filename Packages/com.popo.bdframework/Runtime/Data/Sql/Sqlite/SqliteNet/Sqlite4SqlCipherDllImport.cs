@@ -177,13 +177,8 @@ namespace SQLite4Unity3d
 		public static IntPtr Prepare2(IntPtr db, string query)
 		{
 			IntPtr stmt;
-		#if UNITY_STANDALONE_WIN
-			// Windows standalone 的 SQLCipher Player 在 UTF-8 prepare 封送上不稳定，这里直接走 UTF-16 prepare。
-			// The Windows standalone SQLCipher player is unstable with UTF-8 prepare marshalling, so use UTF-16 prepare directly.
-			var r = Prepare16(db, query, -1, out stmt, IntPtr.Zero);
-		#else
-			var r = Prepare2(db, query, System.Text.UTF8Encoding.UTF8.GetByteCount(query), out stmt, IntPtr.Zero);
-		#endif
+			var queryBytes = Encoding.UTF8.GetBytes(query + "\0");
+			var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);
 			if (r != Result.OK)
 			{
 				throw SQLiteException.New(r, GetErrmsg(db));

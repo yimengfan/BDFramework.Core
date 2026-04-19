@@ -107,12 +107,12 @@ def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:
 
 
 def test_windows_sqlite_runtime_keeps_utf8_prepare_strategy() -> None:
-    """验证 Windows standalone 的 SQL prepare 保留宽字符 prepare 路线。
-    Verify that the Windows standalone SQL prepare path keeps the wide-char prepare route.
+    """验证 Windows standalone 的 SQL prepare 保留显式 UTF-8 byte[] 路线。
+    Verify that the Windows standalone SQL prepare path keeps the explicit UTF-8 byte[] route.
     """
     content = SQLITE_DLLIMPORT_PATH.read_text(encoding="utf-8")
 
     assert "public static extern Result Prepare2(IntPtr db, byte[] sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
     assert "public static extern Result Prepare16(IntPtr db, [MarshalAs(UnmanagedType.LPWStr)] string sql, int numBytes, out IntPtr stmt, IntPtr pzTail);" in content
-    assert "#if UNITY_STANDALONE_WIN" in content
-    assert "var r = Prepare16(db, query, -1, out stmt, IntPtr.Zero);" in content
+    assert "var queryBytes = Encoding.UTF8.GetBytes(query + \"\\0\");" in content
+    assert "var r = Prepare2(db, queryBytes, queryBytes.Length, out stmt, IntPtr.Zero);" in content
