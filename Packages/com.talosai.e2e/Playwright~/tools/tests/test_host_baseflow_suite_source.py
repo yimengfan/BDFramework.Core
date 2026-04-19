@@ -122,6 +122,21 @@ def test_windows_sqlite_runtime_keeps_unmanaged_utf8_prepare_strategy() -> None:
     assert "Encoding.UTF8.GetBytes(query + \"\\0\")" not in content
 
 
+def test_windows_sqlite_runtime_keeps_utf8_bind_and_column_string_strategy() -> None:
+    """验证 Windows standalone 的 SQLite 字符串绑定与读取保留 UTF-8 路线。
+    Verify that the Windows standalone SQLite string bind and read path stays on the UTF-8 route.
+    """
+    content = SQLITE_DLLIMPORT_PATH.read_text(encoding="utf-8")
+
+    assert 'EntryPoint = "sqlite3_bind_text"' in content
+    assert "private static extern int BindTextUtf8Internal(IntPtr stmt, int index, IntPtr val, int n, IntPtr free);" in content
+    assert "Encoding.UTF8.GetBytes(val)" in content
+    assert "return BindTextUtf8Internal(stmt, index, utf8Pointer, utf8Bytes.Length, SqliteTransientUtf8Value);" in content
+    assert "return ReadUtf8String(SQLite3.ColumnText(stmt, index), ColumnBytes(stmt, index));" in content
+    assert "return Encoding.UTF8.GetString(valueBytes);" in content
+    assert "Marshal.PtrToStringUni(SQLite3.ColumnText16(stmt, index));" not in content
+
+
 def test_sqlite_execute_nonquery_accepts_row_for_pragma_results() -> None:
     """验证 SQLite 非查询执行路径会接受返回 Row 的 PRAGMA 结果。
     Verify that the SQLite non-query execution path accepts PRAGMA results that first return Row.

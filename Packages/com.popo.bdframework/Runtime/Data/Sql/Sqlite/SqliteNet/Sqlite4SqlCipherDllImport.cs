@@ -256,8 +256,39 @@ namespace SQLite4Unity3d
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_bind_double", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int BindDouble(IntPtr stmt, int index, double val);
 
-		[DllImport(DLL_NAME, EntryPoint = "sqlite3_bind_text16", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-		public static extern int BindText(IntPtr stmt, int index, [MarshalAs(UnmanagedType.LPWStr)] string val, int n, IntPtr free);
+		[DllImport(DLL_NAME, EntryPoint = "sqlite3_bind_text", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int BindTextUtf8Internal(IntPtr stmt, int index, IntPtr val, int n, IntPtr free);
+
+		private static readonly IntPtr SqliteTransientUtf8Value = new IntPtr(-1);
+
+		/// <summary>
+		/// 中文：使用手动分配的 UTF-8 文本缓冲区绑定参数，避免 Windows Player 下 SQLCipher 的 UTF-16 文本接口污染字符串内容。
+		/// English: Binds parameters through a manually allocated UTF-8 text buffer so the Windows player avoids SQLCipher UTF-16 text APIs corrupting string payloads.
+		/// </summary>
+		public static int BindText(IntPtr stmt, int index, string val, int n, IntPtr free)
+		{
+			if (val == null)
+			{
+				return BindNull(stmt, index);
+			}
+
+			var utf8Pointer = IntPtr.Zero;
+			try
+			{
+				var utf8Bytes = Encoding.UTF8.GetBytes(val);
+				utf8Pointer = Marshal.AllocHGlobal(utf8Bytes.Length + 1);
+				Marshal.Copy(utf8Bytes, 0, utf8Pointer, utf8Bytes.Length);
+				Marshal.WriteByte(utf8Pointer, utf8Bytes.Length, 0);
+				return BindTextUtf8Internal(stmt, index, utf8Pointer, utf8Bytes.Length, SqliteTransientUtf8Value);
+			}
+			finally
+			{
+				if (utf8Pointer != IntPtr.Zero)
+				{
+					Marshal.FreeHGlobal(utf8Pointer);
+				}
+			}
+		}
 
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_bind_blob", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int BindBlob(IntPtr stmt, int index, byte[] val, int n, IntPtr free);
@@ -299,9 +330,34 @@ namespace SQLite4Unity3d
 		[DllImport(DLL_NAME, EntryPoint = "sqlite3_column_bytes", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ColumnBytes(IntPtr stmt, int index);
 
+		/// <summary>
+		/// 中文：按 sqlite3_column_text 返回的 UTF-8 字节读取字符串，避免 Windows Player 将 UTF-8 结果误按 UTF-16 解释。
+		/// English: Reads strings from the UTF-8 bytes returned by sqlite3_column_text so the Windows player does not misinterpret UTF-8 result payloads as UTF-16.
+		/// </summary>
 		public static string ColumnString(IntPtr stmt, int index)
 		{
-			return Marshal.PtrToStringUni(SQLite3.ColumnText16(stmt, index));
+			return ReadUtf8String(SQLite3.ColumnText(stmt, index), ColumnBytes(stmt, index));
+		}
+
+		/// <summary>
+		/// 中文：把 sqlite3 暴露的 UTF-8 文本指针按字节长度转换为托管字符串，并保持空指针与空字符串的区别。
+		/// English: Converts a sqlite3 UTF-8 text pointer into a managed string using the reported byte length while preserving the distinction between null and empty values.
+		/// </summary>
+		private static string ReadUtf8String(IntPtr valuePointer, int valueByteLength)
+		{
+			if (valuePointer == IntPtr.Zero)
+			{
+				return null;
+			}
+
+			if (valueByteLength == 0)
+			{
+				return string.Empty;
+			}
+
+			var valueBytes = new byte[valueByteLength];
+			Marshal.Copy(valuePointer, valueBytes, 0, valueByteLength);
+			return Encoding.UTF8.GetString(valueBytes);
 		}
 
 		public static byte[] ColumnByteArray(IntPtr stmt, int index)
