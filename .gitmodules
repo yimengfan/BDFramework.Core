@@ -3,4 +3,4 @@
 	url = https://github.com/yimengfan/BDFramework.DevOps.git
 [submodule ".test-DevOps"]
 	path = .test-DevOps
-	url = http://gitlab.funtoo.games/m12s/DevOps.git
+	url = http://gitlab.darkduck.games/m12s/DevOps.git
