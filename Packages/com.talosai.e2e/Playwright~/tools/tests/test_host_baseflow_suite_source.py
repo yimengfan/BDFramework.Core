@@ -107,9 +107,10 @@ def test_windows_sqlite_runtime_keeps_string_open_strategy() -> None:
     """
     content = SQLITE_RUNTIME_PATH.read_text(encoding="utf-8")
 
-    assert "#elif UNITY_STANDALONE_WIN" in content
-    assert "TeamCity service-account player" in content
+    assert "#elif UNITY_STANDALONE_WIN || UNITY_ANDROID" in content
+    assert "BaseFlow player flow" in content
     assert "SQLite3.Open(connectionString.DatabasePath, out handle, (int)connectionString.OpenFlags, connectionString.VfsName);" in content
+    assert "Application.platform == RuntimePlatform.WindowsPlayer" in content
     assert "connectionString.OpenFlags == (SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create)" in content
     assert "SQLite3.Open16(connectionString.DatabasePath, out handle);" in content
     assert "var databasePathAsBytes = GetNullTerminatedUtf8(connectionString.DatabasePath);" in content
