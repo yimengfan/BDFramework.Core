@@ -222,6 +222,8 @@ namespace BDFramework.HostE2E
                     File.Delete(normalizedDatabasePath);
                 }
 
+                EnsureSqliteProbeFileExists(normalizedDatabasePath);
+
                 var sqliteOpenFlags = Enum.ToObject(sqliteOpenFlagsType, SqliteReadWriteCreateOpenFlagsValue);
                 Debug.Log($"[E2E] SQLite probe phase=build-connection-string databasePath={sqliteOpenPath} fileApiPath={normalizedDatabasePath} openFlags={sqliteOpenFlags}");
                 var sqliteConnectionString = InvokeConstructor(
@@ -648,6 +650,30 @@ namespace BDFramework.HostE2E
 
             selectionReason = "system-temp-path";
             return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
+        }
+
+        /// <summary>
+        /// 先用托管 File API 落地 SQLite 探针文件，区分“目录本身不可写”和“native sqlite 无法创建新文件”两类故障。
+        /// Materialize the SQLite probe file with managed File APIs first so the host test can distinguish an unwritable directory from a native sqlite failure to create a new file.
+        /// </summary>
+        /// <param name="databasePath">将要交给 SQLite 打开的数据库文件路径。</param>
+        /// <param name="databasePath">The database file path that will later be opened by SQLite.</param>
+        private static void EnsureSqliteProbeFileExists(string databasePath)
+        {
+            Debug.Log($"[E2E] SQLite probe phase=managed-file-touch databasePath={databasePath}");
+
+            using (var fileStream = new FileStream(databasePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                fileStream.Flush();
+            }
+
+            if (!File.Exists(databasePath))
+            {
+                throw new Exception($"SQLite 托管文件落地失败: {databasePath}");
+            }
+
+            var fileInfo = new FileInfo(databasePath);
+            Debug.Log($"[E2E] SQLite probe phase=managed-file-touch-ready databasePath={databasePath} length={fileInfo.Length}");
         }
 
         /// <summary>
