@@ -82,7 +82,14 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert 'GetConstructor(new[] { typeof(string), sqliteOpenFlagsType, typeof(bool) })' not in content
     assert "ResolveSqliteProbeRoot" in content
     assert "windows-systemprofile-temp-fallback" in content
-    assert "android-temporary-cache-path" in content
+    assert "android-internal-cache-dir" in content
+    assert "android-internal-files-dir" in content
+    assert "android-temporary-cache-path-fallback" in content
+    assert "TryReadAndroidContextDirectory" in content
+    assert 'TryReadAndroidContextDirectory("getCacheDir"' in content
+    assert 'TryReadAndroidContextDirectory("getFilesDir"' in content
+    assert 'currentActivity"' in content
+    assert 'getCanonicalPath' in content
     assert "Path.GetTempPath()" in content
     assert "sqliteOpenPath" in content
     assert "fileApiPath" in content

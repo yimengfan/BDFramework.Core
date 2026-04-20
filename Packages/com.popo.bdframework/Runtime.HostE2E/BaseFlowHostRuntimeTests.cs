@@ -582,12 +582,12 @@ namespace BDFramework.HostE2E
         /// Choose a stable writable root directory for the host SQLite probe.
         /// Windows TeamCity 服务账号会把 `Application.persistentDataPath` 解析到 `systemprofile` 目录，
         /// 该路径已经在真机链路里被验证会让 SQLite 打开失败，因此这里仅针对该环境降级到系统临时目录。
-        /// Android 真机链路里 `Application.persistentDataPath` 会落到外部 app-specific 目录，
-        /// 该路径已经在 native SQLite 打开阶段验证会返回 CannotOpen，因此 Android 探针优先降级到内部 temporary cache 子目录。
+        /// Android 真机链路里 Unity 暴露的 `persistentDataPath` 与 `temporaryCachePath` 都可能落到外部 app-specific 目录，
+        /// 该路径已经在 native SQLite 打开阶段验证会返回 CannotOpen，因此 Android 探针优先改走 Activity Context 的内部 cache/files 目录，仅在 JNI 取值失败时才回退到 Unity 路径。
         /// The Windows TeamCity service account resolves `Application.persistentDataPath` into the `systemprofile` directory,
         /// and that path has already been proven to make SQLite open fail in the player flow, so this logic degrades only that environment to the system temp directory.
-        /// In the Android player flow `Application.persistentDataPath` lands in the external app-specific directory,
-        /// and that path has already been proven to return CannotOpen during the native SQLite open phase, so the Android probe prefers an isolated subdirectory under the internal temporary cache.
+        /// In the Android player flow Unity can expose both `persistentDataPath` and `temporaryCachePath` under the external app-specific directory,
+        /// and that location has already been proven to return CannotOpen during the native SQLite open phase, so the Android probe prefers the Activity Context internal cache/files directories and falls back to the Unity path only when the JNI lookup fails.
         /// </summary>
         /// <param name="frameworkPersistentDataPath">框架公开的持久化根目录。</param>
         /// <param name="frameworkPersistentDataPath">The framework-exposed persistence root.</param>
@@ -614,9 +614,23 @@ namespace BDFramework.HostE2E
             }
 
             if (Application.platform == RuntimePlatform.Android
+                && TryReadAndroidContextDirectory("getCacheDir", out var androidInternalCachePath))
+            {
+                selectionReason = "android-internal-cache-dir";
+                return Path.Combine(androidInternalCachePath, "bdframework-host-sqlite");
+            }
+
+            if (Application.platform == RuntimePlatform.Android
+                && TryReadAndroidContextDirectory("getFilesDir", out var androidInternalFilesPath))
+            {
+                selectionReason = "android-internal-files-dir";
+                return Path.Combine(androidInternalFilesPath, "bdframework-host-sqlite");
+            }
+
+            if (Application.platform == RuntimePlatform.Android
                 && !string.IsNullOrWhiteSpace(temporaryCachePath))
             {
-                selectionReason = "android-temporary-cache-path";
+                selectionReason = "android-temporary-cache-path-fallback";
                 return Path.Combine(temporaryCachePath, "bdframework-host-sqlite");
             }
 
@@ -634,6 +648,51 @@ namespace BDFramework.HostE2E
 
             selectionReason = "system-temp-path";
             return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
+        }
+
+        /// <summary>
+        /// 通过 Android Activity Context 查询内部可写目录，避免 Unity 暴露的外部目录再次触发 SQLite CannotOpen。
+        /// Query an internal writable directory through the Android Activity Context so the SQLite probe avoids Unity paths that resolve to external storage and fail with CannotOpen.
+        /// </summary>
+        /// <param name="contextMethodName">Activity Context 上返回 File 目录的 Java 方法名。</param>
+        /// <param name="contextMethodName">The Java method name on the Activity Context that returns a File directory.</param>
+        /// <param name="directoryPath">成功时返回可写目录路径。</param>
+        /// <param name="directoryPath">Returns the writable directory path when successful.</param>
+        /// <returns>成功拿到内部目录时返回 true，否则返回 false 并继续走回退分支。</returns>
+        /// <returns>Returns true when the internal directory is resolved; otherwise false so the caller can continue its fallback chain.</returns>
+        private static bool TryReadAndroidContextDirectory(string contextMethodName, out string directoryPath)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                using (var currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                using (var javaFile = currentActivity.Call<AndroidJavaObject>(contextMethodName))
+                {
+                    if (javaFile == null)
+                    {
+                        directoryPath = string.Empty;
+                        return false;
+                    }
+
+                    directoryPath = javaFile.Call<string>("getCanonicalPath");
+                    if (string.IsNullOrWhiteSpace(directoryPath))
+                    {
+                        directoryPath = javaFile.Call<string>("getAbsolutePath");
+                    }
+
+                    return !string.IsNullOrWhiteSpace(directoryPath);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning(
+                    $"[E2E] SQLite probe phase=android-context-dir-read method={contextMethodName} error={exception.GetType().FullName}: {exception.Message}");
+            }
+#endif
+
+            directoryPath = string.Empty;
+            return false;
         }
 
         /// <summary>
