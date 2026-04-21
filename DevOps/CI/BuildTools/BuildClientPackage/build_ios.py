@@ -36,7 +36,10 @@ LOG_PREFIX = "[BuildClientPackage][iOS]"
 
 
 def parse_args() -> argparse.Namespace:
-    """解析 iOS 母包构建参数。"""
+    """解析 iOS 母包构建参数。
+
+    Parse the iOS client-package build arguments.
+    """
     parser = argparse.ArgumentParser(
         description="Build iOS client package via Unity batchmode."
     )
@@ -74,6 +77,11 @@ def parse_args() -> argparse.Namespace:
         help="Whether to request debug-capable Unity build flow and Talos E2E compilation symbols.",
     )
     parser.add_argument(
+        "--file-server-url",
+        default=None,
+        help="Optional file-server base URL override used during artifact upload.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Only print the final Unity command, do not execute Unity.",
@@ -96,7 +104,10 @@ def validate_client_version(client_version: str) -> str:
 
 
 def main() -> int:
-    """执行 iOS 母包构建、日志回收和产物上传主流程。"""
+    """执行 iOS 母包构建、日志回收和产物上传主流程。
+
+    Execute the iOS client-package build, log collection, and artifact upload workflow.
+    """
     configure_live_console_output()
     print(f"{LOG_PREFIX} ===== Step 1/7: parse args =====")
     args = parse_args()
@@ -107,6 +118,7 @@ def main() -> int:
     )
     client_version = compose_client_version(client_version_prefix, build_number)
     debug_build = str(getattr(args, "debug_build", "false")).strip().lower()
+    file_server_url = str(getattr(args, "file_server_url", "") or "").strip() or None
 
     print(f"{LOG_PREFIX} ===== Step 2/7: validate host =====")
     host_os = detect_host_os()
@@ -119,6 +131,8 @@ def main() -> int:
         print(f"{LOG_PREFIX} buildName={build_name}")
     if build_number:
         print(f"{LOG_PREFIX} buildNumber={build_number}")
+    if file_server_url:
+        print(f"{LOG_PREFIX} fileServerUrlOverride={file_server_url}")
 
     print(f"{LOG_PREFIX} ===== Step 3/7: resolve Unity =====")
     unity_path, actual_unity_version = resolve_unity_executable(
@@ -176,6 +190,7 @@ def main() -> int:
             build_number=build_number,
             client_version=client_version,
             log_prefix=LOG_PREFIX,
+            file_server_url=file_server_url,
         )
 
     print(f"{LOG_PREFIX} build finished successfully")

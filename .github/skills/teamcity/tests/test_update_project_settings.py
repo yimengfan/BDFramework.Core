@@ -394,3 +394,167 @@ def test_api_request_does_not_retry_post_502(
 
     assert attempts == 1
     assert sleep_calls == []
+
+
+def test_normalize_public_teamcity_url_rebases_internal_web_url() -> None:
+    """验证 helper 会把 TeamCity 返回的内网 webUrl 重写到当前配置的公开 base_url。
+    Verify that the helper rebases an intranet TeamCity webUrl onto the currently configured public base URL.
+    """
+    config = TeamCityConfig(
+        base_url="https://ci.example.com/teamcity",
+        project_id="BDFrameworkCore",
+        token="token",
+        username=None,
+        password=None,
+        output_dir=Path("/tmp/teamcityskill-tests"),
+    )
+
+    normalized_url = ups.normalize_public_teamcity_url(
+        config,
+        "http://192.168.0.240:20000/buildConfiguration/BDFrameworkCore_TalosAIStep01BaseFlowTest/1001?mode=builds",
+    )
+
+    assert normalized_url == (
+        "https://ci.example.com/teamcity/buildConfiguration/"
+        "BDFrameworkCore_TalosAIStep01BaseFlowTest/1001?mode=builds"
+    )
+
+
+def test_print_build_summary_rewrites_web_url_and_shows_running_info(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """验证构建摘要会同时输出公开 webUrl 和 running-info 阶段字段。
+    Verify that the build summary prints both the public webUrl and the running-info stage fields.
+    """
+    build = {
+        "id": 1001,
+        "buildTypeId": "BDFrameworkCore_TalosAIStep01BaseFlowTest",
+        "state": "running",
+        "status": "SUCCESS",
+        "statusText": "Step 1/2",
+        "webUrl": "http://192.168.0.240:20000/buildConfiguration/BDFrameworkCore_TalosAIStep01BaseFlowTest/1001",
+        "running-info": {
+            "percentageComplete": 38,
+            "probablyHanging": False,
+            "currentStageText": "Step 1/2: waiting upstream build 1002",
+        },
+    }
+
+    ups.print_build_summary(make_config(), build)
+
+    output = capsys.readouterr().out
+    assert "webUrl='http://svn.funtoo.games/buildConfiguration/BDFrameworkCore_TalosAIStep01BaseFlowTest/1001'" in output
+    assert "serverWebUrl='http://192.168.0.240:20000/buildConfiguration/BDFrameworkCore_TalosAIStep01BaseFlowTest/1001'" in output
+    assert "progress=38" in output
+    assert "hanging=False" in output
+    assert "stage='Step 1/2: waiting upstream build 1002'" in output
+
+
+def test_wait_for_build_completion_reprints_same_state_after_heartbeat(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """验证等待循环在状态不变但超过心跳窗口时仍会再次输出构建摘要。
+    Verify that the wait loop still prints another build summary after the heartbeat window even when the state tuple stays unchanged.
+    """
+    builds = [
+        {
+            "id": 277,
+            "buildTypeId": "BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            "state": "running",
+            "status": "SUCCESS",
+            "statusText": "Step 1/2",
+            "webUrl": "http://192.168.0.240:20000/build/277",
+            "running-info": {
+                "percentageComplete": 10,
+                "probablyHanging": False,
+                "currentStageText": "stage-a",
+            },
+        },
+        {
+            "id": 277,
+            "buildTypeId": "BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            "state": "running",
+            "status": "SUCCESS",
+            "statusText": "Step 1/2",
+            "webUrl": "http://192.168.0.240:20000/build/277",
+            "running-info": {
+                "percentageComplete": 10,
+                "probablyHanging": False,
+                "currentStageText": "stage-a",
+            },
+        },
+        {
+            "id": 277,
+            "buildTypeId": "BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            "state": "finished",
+            "status": "SUCCESS",
+            "statusText": "Success",
+            "webUrl": "http://192.168.0.240:20000/build/277",
+            "running-info": {},
+        },
+    ]
+    monotonic_values = iter([0.0, 0.0, 61.0, 62.0])
+
+    # The wait loop now does a fast-path state-only check first; mock it to return running
+    # so the test continues into the full polling loop as originally designed.
+    monkeypatch.setattr(
+        ups,
+        "_fetch_build_state_only",
+        lambda config, build_id: {"id": build_id, "state": "running", "status": "SUCCESS"},
+    )
+    monkeypatch.setattr(ups, "get_build", lambda config, build_id: builds.pop(0))
+    monkeypatch.setattr(ups.time, "monotonic", lambda: next(monotonic_values))
+    monkeypatch.setattr(ups.time, "sleep", lambda seconds: None)
+
+    result = ups.wait_for_build_completion(
+        make_config(),
+        build_id=277,
+        timeout_seconds=120,
+        poll_interval_seconds=5,
+        log_tail_lines=20,
+    )
+
+    output = capsys.readouterr().out
+    assert result == 0
+    assert output.count("[TeamCitySkill] build summary") == 3
+
+
+def test_wait_for_build_completion_fast_path_returns_immediately_when_already_finished(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """验证快速检查发现构建已结束时，wait 立即返回且不进入轮询循环。
+    Verify that the fast-path state-only check returns immediately when the build is already finished.
+    """
+    finished_build = {
+        "id": 42,
+        "buildTypeId": "BDFrameworkCore_TalosAIStep01BaseFlowTest",
+        "state": "finished",
+        "status": "SUCCESS",
+        "statusText": "Success",
+        "webUrl": "http://192.168.0.240:20000/build/42",
+        "running-info": {},
+    }
+
+    # The fast-path check should see state=finished and skip the full polling loop.
+    monkeypatch.setattr(
+        ups,
+        "_fetch_build_state_only",
+        lambda config, build_id: {"id": build_id, "state": "finished", "status": "SUCCESS", "finishDate": "20260421T100555+0800"},
+    )
+    # get_build is still called once for the final summary, but the polling loop must never run.
+    monkeypatch.setattr(ups, "get_build", lambda config, build_id: finished_build)
+
+    result = ups.wait_for_build_completion(
+        make_config(),
+        build_id=42,
+        timeout_seconds=120,
+        poll_interval_seconds=5,
+        log_tail_lines=20,
+    )
+
+    output = capsys.readouterr().out
+    assert result == 0
+    assert "state='finished'" in output
+    assert output.count("[TeamCitySkill] build summary") == 1

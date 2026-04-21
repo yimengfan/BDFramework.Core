@@ -202,11 +202,13 @@ ensure_talos_adb_tooling() {
     echo ">>> Android 工具: adb=${TALOS_ADB_BIN}"
 }
 
-# 尝试连接一批 ADB 目标地址，适用于宿主机运行 Android 模拟器（如 MuMu 模拟器）无法通过 USB 探测的场景。
-# Try to connect a batch of ADB targets for host-local emulators (e.g. MuMu) that are invisible to adb devices until explicitly connected.
+# 尝试连接一批 ADB 目标地址，适用于宿主机运行 Android 模拟器（如 MuMu、Nox 等）无法通过 USB 探测的场景。
+# Try to connect a batch of ADB targets for host-local emulators (e.g. MuMu, Nox) that are invisible to adb devices until explicitly connected.
 #
-# 参数：逗号分隔的 host:port 字符串，例如 "127.0.0.1:16384,127.0.0.1:7555"。
-# Argument: comma-separated host:port list, e.g. "127.0.0.1:16384,127.0.0.1:7555".
+# 参数：逗号分隔的 host:port 字符串，例如 "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555"。
+# Argument: comma-separated host:port list, e.g. "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555".
+#   Nox Player 默认监听 127.0.0.1:62001。
+#   Nox Player listens on 127.0.0.1:62001 by default.
 #   MuMu Player 2 (MuMu2) 第一个实例默认监听 127.0.0.1:16384。
 #   MuMu Player 2 (MuMu2) first instance listens on 127.0.0.1:16384 by default.
 #   MuMu 旧版 / MuMu Pro 默认监听 127.0.0.1:7555。
@@ -702,6 +704,87 @@ ensure_talos_mumu_running() {
     echo "    等待 MuMu 虚拟机初始化 (${wait_secs}s)..."
     sleep "${wait_secs}"
     echo "    ✅ MuMu 启动等待完成，继续后续 ADB 连接"
+    return 0
+}
+
+# 确保 Android 模拟器进程正在运行（支持 MuMu 和 Nox）。
+# Ensure an Android emulator process is running (supports MuMu and Nox).
+#
+# 通过 TALOS_EMULATOR_TYPE 环境变量选择模拟器类型：
+# Select emulator type via TALOS_EMULATOR_TYPE environment variable:
+#   "mumu"（默认）— 调用 ensure_talos_mumu_running 进行自动发现和启动。
+#   "mumu" (default) — calls ensure_talos_mumu_running for auto-discovery and launch.
+#   "nox"          — 检测 Nox 进程是否在运行；Nox 不支持脚本自动启动（需手动预启动或通过系统服务）。
+#   "nox"          — checks if Nox process is running; Nox does not support script auto-launch (must be pre-started manually or via system service).
+#   "none"         — 跳过模拟器检测和启动（用于已手动连接 ADB 的场景）。
+#   "none"         — skip emulator detection and launch (for scenarios where ADB is already connected manually).
+#
+# 始终返回 0（最大努力策略），实际连通性由后续 adb connect / adb devices 验证。
+# Always returns 0 (best-effort); actual device availability is confirmed by later adb checks.
+#
+# Nox 默认 ADB 端口：127.0.0.1:62001。
+# Nox default ADB port: 127.0.0.1:62001.
+# MuMu2 默认 ADB 端口：127.0.0.1:16384。
+# MuMu2 default ADB port: 127.0.0.1:16384.
+# MuMu 旧版默认 ADB 端口：127.0.0.1:7555。
+# MuMu legacy default ADB port: 127.0.0.1:7555.
+ensure_talos_emulator_running() {
+    local emulator_type="${TALOS_EMULATOR_TYPE:-mumu}"
+    # 兼容旧调用方：若设置了 TALOS_MUMU_AUTO_START=true 但未设置 TALOS_EMULATOR_TYPE，默认使用 mumu。
+    # Backward compat: if TALOS_MUMU_AUTO_START=true is set but TALOS_EMULATOR_TYPE is unset, default to mumu.
+    emulator_type="$(printf '%s' "${emulator_type}" | tr '[:upper:]' '[:lower:]')"
+
+    echo ">>> [ensure_talos_emulator_running] 模拟器类型 / emulator type: ${emulator_type}"
+
+    case "${emulator_type}" in
+        mumu)
+            ensure_talos_mumu_running
+            ;;
+        nox)
+            # Nox 模拟器进程检测。Nox 不支持 CLI 无头启动，需由 CI agent 或运维手动预启动。
+            # Nox emulator process detection. Nox does not support headless CLI launch; must be pre-started by CI agent or ops.
+            local -a nox_process_names=(
+                "Nox.exe"            # Nox 主进程 / Nox main process
+                "NoxVMHandle.exe"    # Nox VM 进程 / Nox VM process
+                "NoxPlayer.exe"      # Nox Player UI / Nox Player UI
+            )
+            echo ">>> 检查 Nox 模拟器是否正在运行..."
+            local _nox_running=0
+            if command -v tasklist.exe >/dev/null 2>&1; then
+                local _pname
+                for _pname in "${nox_process_names[@]}"; do
+                    if tasklist.exe /FI "IMAGENAME eq ${_pname}" 2>/dev/null | grep -qi "${_pname}"; then
+                        echo "    ✅ Nox 模拟器已在运行 (进程: ${_pname})"
+                        _nox_running=1
+                        break
+                    fi
+                done
+            else
+                local _pname
+                for _pname in "${nox_process_names[@]}"; do
+                    if ps aux 2>/dev/null | grep -v grep | grep -qi "${_pname}"; then
+                        echo "    ✅ Nox 模拟器已在运行 (进程: ${_pname})"
+                        _nox_running=1
+                        break
+                    fi
+                done
+            fi
+            if [[ ${_nox_running} -eq 0 ]]; then
+                echo "    ⚠️  Nox 模拟器未在运行。Nox 不支持脚本自动启动，请在 CI agent 上手动预启动。"
+                echo "    ⚠️  Nox emulator is not running. Nox does not support scripted auto-launch; please pre-start it on the CI agent."
+                echo "    提示：确保 Nox 已启动后，adb connect 127.0.0.1:62001 即可连接。"
+                echo "    Hint: after Nox is started, run 'adb connect 127.0.0.1:62001' to connect."
+            fi
+            ;;
+        none|"")
+            echo ">>> 跳过模拟器自动检测和启动（TALOS_EMULATOR_TYPE=${emulator_type}）。"
+            echo ">>> Skipping emulator auto-detection and launch (TALOS_EMULATOR_TYPE=${emulator_type})."
+            ;;
+        *)
+            echo "    ⚠️  未知的模拟器类型 '${emulator_type}'，跳过自动启动。支持类型: mumu, nox, none。"
+            echo "    ⚠️  Unknown emulator type '${emulator_type}'; skipping auto-launch. Supported types: mumu, nox, none."
+            ;;
+    esac
     return 0
 }
 

@@ -851,6 +851,60 @@ def test_build_test_tool_environment_omits_adb_connect_targets_when_empty(tmp_pa
     assert "TALOS_ADB_CONNECT_TARGETS" not in environment
 
 
+def test_build_test_tool_environment_injects_emulator_type(tmp_path: Path) -> None:
+    """验证 runner 会将 emulator_type 注入环境变量，供 bash 脚本根据模拟器类型（Nox/MuMu/none）选择启动逻辑。
+    Verify that the runner injects TALOS_EMULATOR_TYPE into the tool script environment
+    so bash scripts can select the correct emulator launch logic (Nox/MuMu/none).
+    """
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+
+    environment = runner.build_test_tool_environment(tooling, emulator_type="nox")
+    assert environment["TALOS_EMULATOR_TYPE"] == "nox"
+
+    environment_mumu = runner.build_test_tool_environment(tooling, emulator_type="mumu")
+    assert environment_mumu["TALOS_EMULATOR_TYPE"] == "mumu"
+
+
+def test_build_test_tool_environment_emulator_type_overrides_mumu_auto_start(tmp_path: Path) -> None:
+    """验证当 emulator_type 已设置时，mumu_auto_start 不会覆盖 TALOS_EMULATOR_TYPE（新接口优先）。
+    Verify that when emulator_type is set, mumu_auto_start does not override TALOS_EMULATOR_TYPE (new API takes precedence).
+    """
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+
+    environment = runner.build_test_tool_environment(
+        tooling, emulator_type="nox", mumu_auto_start="true"
+    )
+    assert environment["TALOS_EMULATOR_TYPE"] == "nox"
+    # TALOS_MUMU_AUTO_START 不应设置，因为 emulator_type 已覆盖。
+    # TALOS_MUMU_AUTO_START should not be set when emulator_type overrides.
+    assert "TALOS_MUMU_AUTO_START" not in environment
+
+
+def test_build_test_tool_environment_mumu_auto_start_backward_compat(tmp_path: Path) -> None:
+    """验证仅设置 mumu_auto_start=true 时（不设 emulator_type），仍会注入 TALOS_MUMU_AUTO_START=true（向后兼容）。
+    Verify backward compat: when only mumu_auto_start=true is set (no emulator_type),
+    TALOS_MUMU_AUTO_START=true is still injected.
+    """
+    tooling = runner.NodeTooling(
+        node_home=tmp_path / "node-home",
+        node_bin=tmp_path / "node-home" / "node.exe",
+        npm_bin=tmp_path / "node-home" / "npm.cmd",
+    )
+
+    environment = runner.build_test_tool_environment(
+        tooling, mumu_auto_start="true"
+    )
+    assert environment.get("TALOS_MUMU_AUTO_START") == "true"
+
+
 def test_main_skip_build_mode_uses_package_build_number_directly(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -914,6 +968,7 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
         adb_connect_targets = ""
         start_mumu = ""
         mumu_exe_path = ""
+        emulator_type = ""
         timeout_seconds = 5400
         poll_interval_seconds = 10
         download_timeout_seconds = 600
@@ -968,6 +1023,7 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
         adb_connect_targets = ""
         start_mumu = ""
         mumu_exe_path = ""
+        emulator_type = ""
         timeout_seconds = 5400
         poll_interval_seconds = 10
         download_timeout_seconds = 600
@@ -1046,6 +1102,7 @@ def test_main_run_phase_requires_prepared_package_path(monkeypatch: pytest.Monke
         adb_connect_targets = ""
         start_mumu = ""
         mumu_exe_path = ""
+        emulator_type = ""
         timeout_seconds = 5400
         poll_interval_seconds = 10
         download_timeout_seconds = 600

@@ -95,15 +95,19 @@ TeamCity 页面中，这四个母包相关任务统一位于 `ClientPackage` 子
 - `--build-name`
 - `--build-number`
 - `--debug-build`
+- `--file-server-url`
 - `--unity-version`
 - `--project-dir`
 - `--dry-run`
 
 `--debug-build true` now forwards `-buildDebug true` into Unity BatchMode, so `PublishPipeLineCI` can switch the package build to the debug path and inject Talos E2E compilation symbols.
 
+`--file-server-url` overrides the artifact upload target resolved by `package_artifacts.py`. Use it when a TeamCity agent must upload through a temporary proxy or a public file-server route while `buildtools.toml` still points at an internal address.
+
 TeamCity 侧通过 `%build.extra.args%` 透传这些可选参数，例如：
 
 - `--unity-version 2022.3.74f1`
+- `--file-server-url https://files.example.com/fileserver`
 - `--project-dir /path/to/UnityProject`
 - `--dry-run`
 
@@ -128,6 +132,7 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-versio
 
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2022.3.74f1
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --project-dir /path/to/UnityProject
+python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --file-server-url https://files.example.com/fileserver
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --dry-run
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --debug-build true --dry-run
 ```

@@ -34,6 +34,7 @@ DEFAULT_ENV_FILE = REPO_ROOT / ".test-DevOps" / ".teamcity" / ".env"
 DEFAULT_OUTPUT_DIR_NAME = "output"
 DEFAULT_GET_RETRY_ATTEMPTS = 5
 DEFAULT_GET_RETRY_MAX_DELAY_SECONDS = 5
+DEFAULT_WAIT_HEARTBEAT_SECONDS = 60
 CPOLAR_TRANSIENT_404_MARKERS = (
     "cpolar.com",
     "domain doesn't exist",
@@ -285,6 +286,47 @@ def build_headers(config: TeamCityConfig, *, has_json_body: bool = False) -> dic
 def project_locator(project_id: str) -> str:
     encoded = urllib.parse.quote(project_id, safe="")
     return f"id:{encoded}"
+
+
+def normalize_public_teamcity_url(
+    config: TeamCityConfig,
+    server_url: str | None,
+) -> str | None:
+    """把 TeamCity 服务端返回的内网 URL 重写成当前配置的公开访问基址。
+    Rewrite a TeamCity server-returned intranet URL onto the currently configured public base URL.
+
+    TeamCity Web API 常会返回服务器自己声明的 `webUrl`，当操作者通过外网反向代理访问时，
+    这些地址通常仍指向内网主机名或端口，导致日志里的链接无法直接打开。
+    The TeamCity Web API often returns the server-declared `webUrl`, and when operators access TeamCity through a public reverse proxy,
+    those links usually still point at intranet hosts or ports, which makes the logged links unusable.
+    """
+    if not server_url:
+        return None
+
+    parsed_base_url = urllib.parse.urlparse(config.base_url)
+    if not parsed_base_url.scheme or not parsed_base_url.netloc:
+        return server_url
+
+    parsed_server_url = urllib.parse.urlparse(server_url)
+    server_path = parsed_server_url.path or ""
+    if not parsed_server_url.scheme and not parsed_server_url.netloc:
+        server_path = server_url if server_url.startswith("/") else f"/{server_url}"
+
+    base_path_prefix = parsed_base_url.path.rstrip("/")
+    rebased_path = f"{base_path_prefix}{server_path}" if base_path_prefix else server_path
+    if not rebased_path.startswith("/"):
+        rebased_path = f"/{rebased_path}"
+
+    return urllib.parse.urlunparse(
+        (
+            parsed_base_url.scheme,
+            parsed_base_url.netloc,
+            rebased_path,
+            parsed_server_url.params,
+            parsed_server_url.query,
+            parsed_server_url.fragment,
+        )
+    )
 
 
 def get_request_retry_attempts(method: str) -> int:
@@ -938,12 +980,16 @@ def queue_build(
 
 
 def get_build(config: TeamCityConfig, build_id: int) -> dict[str, Any]:
+    """读取单个构建的状态快照，并包含等待阶段需要的 running-info 字段。
+    Read a single build status snapshot and include the running-info fields needed by the wait loop.
+    """
     response = api_request(
         config,
         "GET",
         "/app/rest/builds/id:{buildId}?fields="
         "id,buildTypeId,number,state,status,statusText,branchName,webUrl,"
-        "queuedDate,startDate,finishDate,agent(name),comment(text),tags(tag(name)),properties(property(name,value))".format(
+        "queuedDate,startDate,finishDate,agent(name),comment(text),tags(tag(name)),"
+        "running-info(percentageComplete,currentStageText,probablyHanging),properties(property(name,value))".format(
             buildId=build_id
         ),
     )
@@ -1173,6 +1219,18 @@ def print_dispatch_plan(
         print(f"  parallelAssignment={assignment_labels}")
 
 
+def _fetch_build_state_only(config: TeamCityConfig, build_id: int) -> dict[str, Any]:
+    """仅查询构建的 state/status/finishDate，用于快速判断是否已结束。
+    Fetch only state/status/finishDate for a fast completion check without the heavy running-info payload.
+    """
+    response = api_request(
+        config,
+        "GET",
+        "/app/rest/builds/id:{buildId}?fields=id,state,status,finishDate".format(buildId=build_id),
+    )
+    return response.data
+
+
 def wait_for_build_completion(
     config: TeamCityConfig,
     *,
@@ -1181,20 +1239,50 @@ def wait_for_build_completion(
     poll_interval_seconds: int,
     log_tail_lines: int,
 ) -> int:
+    """轮询构建直到完成，并在长时间等待时输出稳定心跳与阶段信息。
+    Poll the build until completion and emit steady heartbeats plus stage information during long waits.
+
+    首次轮询前先做一次轻量 state-only 检查：如果构建已经 finished，直接跳过详细轮询。
+    Before the first full poll, perform a lightweight state-only check so already-finished builds
+    are detected immediately without waiting for the heartbeat interval.
+    """
     deadline = time.monotonic() + max(timeout_seconds, 1)
     poll_interval = max(poll_interval_seconds, 1)
-    last_state: tuple[Any, Any, Any] | None = None
+    heartbeat_interval_seconds = max(DEFAULT_WAIT_HEARTBEAT_SECONDS, poll_interval)
+    last_state: tuple[Any, Any, Any, Any, Any] | None = None
+    last_report_time: float | None = None
+
+    # 快速检查：如果构建已结束，直接打印完整摘要并返回。
+    # Fast-path: if the build is already finished, print a full summary and return immediately.
+    quick = _fetch_build_state_only(config, build_id)
+    if quick.get("state") == "finished":
+        build = get_build(config, build_id)
+        print_build_summary(config, build)
+        if build.get("status") != "SUCCESS":
+            print("[TeamCitySkill] build log tail")
+            print(get_build_log_tail(config, build_id, log_tail_lines))
+            return 1
+        return 0
 
     while True:
+        current_time = time.monotonic()
         build = get_build(config, build_id)
+        running_info = build.get("running-info") or {}
         current_state = (
             build.get("state"),
             build.get("status"),
             build.get("statusText"),
+            running_info.get("currentStageText"),
+            running_info.get("probablyHanging"),
         )
-        if current_state != last_state:
-            print_build_summary(build)
+        if (
+            current_state != last_state
+            or last_report_time is None
+            or current_time - last_report_time >= heartbeat_interval_seconds
+        ):
+            print_build_summary(config, build)
             last_state = current_state
+            last_report_time = current_time
 
         if build.get("state") == "finished":
             if build.get("status") != "SUCCESS":
@@ -1203,7 +1291,7 @@ def wait_for_build_completion(
                 return 1
             return 0
 
-        if time.monotonic() >= deadline:
+        if current_time >= deadline:
             raise TeamCityApiError(
                 f"Timed out waiting for build {build_id} after {timeout_seconds} seconds"
             )
@@ -1219,9 +1307,12 @@ def get_build_log_tail(config: TeamCityConfig, build_id: int, tail_lines: int) -
     return "\n".join(lines[-tail_lines:])
 
 
-def print_build_summary(build: dict[str, Any]) -> None:
+def print_build_summary(config: TeamCityConfig, build: dict[str, Any]) -> None:
+    """打印构建摘要，并把链接重写成当前配置下可直接访问的公开地址。
+    Print a build summary and rewrite links into the currently configured publicly reachable base URL.
+    """
     print("[TeamCitySkill] build summary")
-    for key in (
+    summary_keys = (
         "id",
         "buildTypeId",
         "number",
@@ -1232,10 +1323,28 @@ def print_build_summary(build: dict[str, Any]) -> None:
         "queuedDate",
         "startDate",
         "finishDate",
-        "webUrl",
-    ):
+    )
+    for key in summary_keys:
         if key in build:
             print(f"  {key}={build.get(key)!r}")
+
+    web_url = build.get("webUrl")
+    if web_url:
+        normalized_web_url = normalize_public_teamcity_url(config, web_url)
+        if normalized_web_url:
+            print(f"  webUrl={normalized_web_url!r}")
+            if normalized_web_url != web_url:
+                print(f"  serverWebUrl={web_url!r}")
+
+    running_info = build.get("running-info") or {}
+    if isinstance(running_info, dict):
+        if running_info.get("percentageComplete") is not None:
+            print(f"  progress={running_info.get('percentageComplete')!r}")
+        if running_info.get("probablyHanging") is not None:
+            print(f"  hanging={running_info.get('probablyHanging')!r}")
+        if running_info.get("currentStageText"):
+            print(f"  stage={running_info.get('currentStageText')!r}")
+
     agent = build.get("agent") or {}
     if isinstance(agent, dict) and agent.get("name"):
         print(f"  agent={agent.get('name')!r}")
@@ -1290,7 +1399,10 @@ def command_run_build(
     )
     print(f"[TeamCitySkill] queued build id={queued.build_id}")
     if queued.web_url:
-        print(f"[TeamCitySkill] webUrl={queued.web_url}")
+        normalized_web_url = normalize_public_teamcity_url(config, queued.web_url)
+        print(f"[TeamCitySkill] webUrl={normalized_web_url or queued.web_url}")
+        if normalized_web_url and normalized_web_url != queued.web_url:
+            print(f"[TeamCitySkill] serverWebUrl={queued.web_url}")
 
     if not wait:
         return 0
@@ -1374,7 +1486,10 @@ def command_run_build_group(
             queued_builds.append((build_type_id, queued))
             print(f"[TeamCitySkill] queued buildTypeId={build_type_id} buildId={queued.build_id}")
             if queued.web_url:
-                print(f"[TeamCitySkill] webUrl={queued.web_url}")
+                normalized_web_url = normalize_public_teamcity_url(config, queued.web_url)
+                print(f"[TeamCitySkill] webUrl={normalized_web_url or queued.web_url}")
+                if normalized_web_url and normalized_web_url != queued.web_url:
+                    print(f"[TeamCitySkill] serverWebUrl={queued.web_url}")
     else:
         for build_type_id in build_type_ids:
             queued = queue_build(
@@ -1388,7 +1503,10 @@ def command_run_build_group(
             queued_builds.append((build_type_id, queued))
             print(f"[TeamCitySkill] queued buildTypeId={build_type_id} buildId={queued.build_id}")
             if queued.web_url:
-                print(f"[TeamCitySkill] webUrl={queued.web_url}")
+                normalized_web_url = normalize_public_teamcity_url(config, queued.web_url)
+                print(f"[TeamCitySkill] webUrl={normalized_web_url or queued.web_url}")
+                if normalized_web_url and normalized_web_url != queued.web_url:
+                    print(f"[TeamCitySkill] serverWebUrl={queued.web_url}")
 
             if wait:
                 result = wait_for_build_completion(

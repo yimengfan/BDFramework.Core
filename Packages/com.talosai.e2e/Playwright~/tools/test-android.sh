@@ -31,12 +31,15 @@ source "${SCRIPT_DIR}/node-tools.sh"
 # ======== 默认参数 ========
 APK_PATH="${APK_PATH:-}"
 ADB_SERIAL="${ADB_SERIAL:-}"
-# MuMu 模拟器等宿主本机模拟器的 ADB 连接目标，逗号分隔，如 127.0.0.1:16384,127.0.0.1:7555。
-# Comma-separated ADB connect targets for host-local emulators such as MuMu. E.g. 127.0.0.1:16384,127.0.0.1:7555
+# MuMu 模拟器等宿主本机模拟器的 ADB 连接目标，逗号分隔，如 127.0.0.1:16384,127.0.0.1:7555,127.0.0.1:62001。
+# Comma-separated ADB connect targets for host-local emulators such as MuMu, Nox. E.g. 127.0.0.1:16384,127.0.0.1:7555,127.0.0.1:62001
 TALOS_ADB_CONNECT_TARGETS="${TALOS_ADB_CONNECT_TARGETS:-}"
 # MuMu 模拟器自动启动开关（true 启用）：先检测进程，再搜索安装目录，找到后后台启动并等待初始化。
 # MuMu auto-start flag (set to "true" to enable): checks process list, searches install dirs, starts in background.
 TALOS_MUMU_AUTO_START="${TALOS_MUMU_AUTO_START:-}"
+# 模拟器类型选择（mumu / nox / none），控制自动启动逻辑。mumu 为默认值（向后兼容）。
+# Emulator type selection (mumu / nox / none), controls auto-start logic. mumu is default (backward compatible).
+TALOS_EMULATOR_TYPE="${TALOS_EMULATOR_TYPE:-}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
@@ -70,15 +73,21 @@ while [[ $# -gt 0 ]]; do
         # MuMu 自动启动：在 ADB 连接前先检测并启动 MuMu 模拟器进程。
         # MuMu auto-start: detect and launch the MuMu emulator before ADB connect.
         --start-mumu) TALOS_MUMU_AUTO_START="$2"; shift 2 ;;
+        # 模拟器类型选择：mumu（默认，自动发现和启动 MuMu）、nox（检测 Nox 进程，需手动预启动）、none（跳过自动启动）。
+        # Emulator type: mumu (default, auto-discover and launch MuMu), nox (detect Nox process, must pre-start manually), none (skip auto-launch).
+        --emulator-type) TALOS_EMULATOR_TYPE="$2"; shift 2 ;;
         --help)
             echo "用法: $0 --apk <path/to/app.apk>"
             echo ""
             echo "选项:"
-            echo "  --apk       APK 文件路径"
-            echo "  --serial    ADB 设备序列号"
-            echo "  --port      TCP 端口 (默认 10002)"
-            echo "  --package   Android 包名 (默认 com.popo.bdframework)"
-            echo "  --test-file Playwright 测试文件路径（相对 Playwright~ 根目录）"
+            echo "  --apk            APK 文件路径"
+            echo "  --serial         ADB 设备序列号"
+            echo "  --port           TCP 端口 (默认 10002)"
+            echo "  --package        Android 包名 (默认 com.popo.bdframework)"
+            echo "  --test-file      Playwright 测试文件路径（相对 Playwright~ 根目录）"
+            echo "  --connect-targets ADB TCP 目标 (逗号分隔, 如 127.0.0.1:62001)"
+            echo "  --emulator-type  模拟器类型: mumu (默认), nox, none"
+            echo "  --start-mumu     MuMu 自动启动 (true|false, 等同 --emulator-type mumu/none)"
             exit 0
             ;;
         *) echo "未知参数: $1"; exit 1 ;;
@@ -128,11 +137,14 @@ if [[ ! -f "${APK_PATH}" ]]; then
     exit 1
 fi
 
-# ======== Android 虚拟设备连接（MuMu 启动 + ADB 连接 + 设备上线等待）========
+# ======== Android 虚拟设备连接（模拟器启动 + ADB 连接 + 设备上线等待）========
 # 通过独立脚本处理全链路：避免 test-android.sh 承担环境搭建职责。
 # 脚本 source 后：ADB_CMD 中含 -s <serial>，TALOS_ANDROID_SERIAL 已导出。
 # Full Android VM setup handled by the dedicated script (launch + connect + wait).
 # After sourcing: ADB_CMD contains -s <serial>, TALOS_ANDROID_SERIAL is exported.
+# 导出模拟器类型供 connect_androidVirtualDevice.sh 读取。
+# Export emulator type for connect_androidVirtualDevice.sh to read.
+export TALOS_EMULATOR_TYPE
 # shellcheck source=./connect_androidVirtualDevice.sh
 source "${SCRIPT_DIR}/connect_androidVirtualDevice.sh"
 

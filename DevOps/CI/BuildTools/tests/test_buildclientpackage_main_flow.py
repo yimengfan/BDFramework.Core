@@ -1,9 +1,17 @@
 """BuildClientPackage 各平台入口流程测试。
 
+BuildClientPackage entry-flow tests across supported platforms.
+
 通过参数化覆盖 Android、iOS、Windows 三个平台，验证：
 1. dry-run 执行跳过破坏性步骤但保留主流程顺序。
 2. 非 dry-run 执行清理输出目录并上传构建产物。
 3. batchmode 失败时输出日志尾部并抛出执行错误。
+4. 文件服务器覆盖地址会从入口脚本传递到上传辅助函数。
+These parameterized tests cover Android, iOS, and Windows to verify:
+1. dry-run skips destructive actions while preserving the main workflow order.
+2. non-dry-run clears the output directory and uploads artifacts.
+3. batchmode failures print the log tail and raise execution errors.
+4. explicit file-server override URLs flow from the entry script into the upload helper.
 """
 
 from __future__ import annotations
@@ -41,7 +49,10 @@ BUILD_SCRIPT_CASES = (
 
 @pytest.fixture(params=BUILD_SCRIPT_CASES)
 def build_script_module(request):
-    """加载每个平台的构建脚本模块，用于共享主流程测试。"""
+    """加载每个平台的构建脚本模块，用于共享主流程测试。
+
+    Load each platform build script module for shared main-flow assertions.
+    """
     module_name, platform_key, log_prefix = request.param
     module = importlib.import_module(module_name)
     return module, platform_key, log_prefix
@@ -53,21 +64,35 @@ def install_flow_fakes(
     *,
     dry_run: bool,
     debug_build: str = "false",
+    file_server_url: str | None = None,
     return_code: int = 0,
 ):
     """安装共享的 mock 协作者并返回捕获的流程上下文。
 
+    Install shared collaborator fakes and return the captured workflow context.
+
     通过 monkeypatch 替换模块内的所有外部依赖（参数解析、路径解析、Unity 执行、上传等），
     使测试可以验证主流程的调用顺序和参数传递。
+    Monkeypatch replaces external collaborators such as argument parsing, path resolution,
+    Unity execution, and artifact upload so the tests can assert ordering and parameter threading.
 
     参数：
         monkeypatch: pytest monkeypatch 实例。
         module: 待测试的平台构建模块。
         dry_run: 是否启用 dry-run 模式。
+        file_server_url: 可选的文件服务器覆盖地址。
         return_code: Unity batchmode 返回码（默认 0 表示成功）。
+    Args:
+        monkeypatch: pytest monkeypatch instance.
+        module: platform build module under test.
+        dry_run: whether dry-run mode is enabled.
+        file_server_url: optional file-server override URL.
+        return_code: Unity batchmode exit code where 0 means success.
 
     返回：
         包含 events（事件列表）、publish_output_dir、tail_output 的字典。
+    Returns:
+        A dictionary containing captured events, publish_output_dir, and tail_output.
     """
     resolved_project_dir = Path("/tmp/BDFramework.Core")
     unity_path = Path(
@@ -95,6 +120,7 @@ def install_flow_fakes(
         unity_version="2022.3.74f1",
         project_dir=str(resolved_project_dir),
         debug_build=debug_build,
+        file_server_url=file_server_url,
         dry_run=dry_run,
     )
 
@@ -216,6 +242,7 @@ def install_flow_fakes(
         build_number: str | None,
         client_version: str,
         log_prefix: str,
+        file_server_url: str | None,
     ) -> list[str]:
         events.append("upload_publish_package")
         assert platform_key == module.PLATFORM_KEY
@@ -223,6 +250,7 @@ def install_flow_fakes(
         assert build_number == "238"
         assert client_version == "0.1.238"
         assert log_prefix == module.LOG_PREFIX
+        assert file_server_url == args.file_server_url
         return ["uploaded"]
 
     monkeypatch.setattr(module, "upload_publish_package", fake_upload_publish_package)
@@ -275,7 +303,10 @@ def test_main_non_dry_run_clears_output_and_uploads_artifact(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """验证非 dry-run 执行会清理输出目录并上传构建好的客户端母包。"""
+    """验证非 dry-run 执行会清理输出目录并上传构建好的客户端母包。
+
+    Verify that non-dry-run execution clears the output directory and uploads the built client package.
+    """
     module, _, log_prefix = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=False)
 
@@ -305,7 +336,10 @@ def test_main_reads_log_tail_and_raises_on_batchmode_failure(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """验证 batchmode 失败时输出日志尾部内容并抛出执行错误。"""
+    """验证 batchmode 失败时输出日志尾部内容并抛出执行错误。
+
+    Verify that batchmode failures print the log tail and raise an execution error.
+    """
     module, platform_key, _ = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=False, return_code=17)
 
@@ -337,7 +371,10 @@ def test_main_threads_debug_build_flag_to_unity_command(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """验证 debug 母包任务会把共享开关透传给 Unity BatchMode 命令。"""
+    """验证 debug 母包任务会把共享开关透传给 Unity BatchMode 命令。
+
+    Verify that debug package builds forward the shared flag into the Unity batchmode command.
+    """
     module, platform_key, log_prefix = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=True, debug_build="true")
 
@@ -356,5 +393,43 @@ def test_main_threads_debug_build_flag_to_unity_command(
         "get_log_path",
         "build_batchmode_command",
         "run_batchmode",
+    ]
+    assert platform_key == module.PLATFORM_KEY
+
+
+def test_main_threads_file_server_override_to_upload_helper(
+    build_script_module,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证文件服务器覆盖地址会透传到上传辅助函数。
+
+    Verify that an explicit file-server override URL is forwarded to the upload helper.
+    """
+    module, platform_key, log_prefix = build_script_module
+    context = install_flow_fakes(
+        monkeypatch,
+        module,
+        dry_run=False,
+        file_server_url="https://files.example.com/fileserver",
+    )
+
+    assert module.main() == 0
+
+    output = capsys.readouterr().out
+    assert f"{log_prefix} fileServerUrlOverride=https://files.example.com/fileserver" in output
+    assert context["events"] == [
+        "configure_live_console_output",
+        "resolve_build_metadata",
+        "detect_host_os",
+        "ensure_platform_allowed",
+        "resolve_unity_executable",
+        "resolve_project_dir",
+        "get_execute_method",
+        "get_log_path",
+        "clear_publish_package_dir",
+        "build_batchmode_command",
+        "run_batchmode",
+        "upload_publish_package",
     ]
     assert platform_key == module.PLATFORM_KEY

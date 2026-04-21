@@ -320,6 +320,7 @@ def build_test_tool_environment(
     adb_connect_targets: str | None = None,
     mumu_auto_start: str | None = None,
     mumu_exe_path: str | None = None,
+    emulator_type: str | None = None,
 ) -> dict[str, str]:
     """为平台工具脚本补齐 Node/npm 与测试文件环境变量，避免远端 agent 依赖 PATH 与命令行编码。"""
     environment = os.environ.copy()
@@ -338,10 +339,15 @@ def build_test_tool_environment(
     normalized_connect_targets = normalize_optional_value(adb_connect_targets)
     if normalized_connect_targets:
         environment["TALOS_ADB_CONNECT_TARGETS"] = normalized_connect_targets
-    # 传递 MuMu 自动启动开关，供 test-android.sh 在 ADB 连接前先确保模拟器进程已运行。
-    # Pass MuMu auto-start flag so test-android.sh ensures the emulator process is running before ADB connect.
+    # 传递模拟器类型（mumu / nox / none），控制自动启动和进程检测逻辑。
+    # Pass emulator type (mumu / nox / none) to control auto-start and process detection.
+    normalized_emulator_type = normalize_optional_value(emulator_type)
+    if normalized_emulator_type:
+        environment["TALOS_EMULATOR_TYPE"] = normalized_emulator_type
+    # 传递 MuMu 自动启动开关（向后兼容；若已设置 emulator-type 则此项被忽略）。
+    # Pass MuMu auto-start flag (backward compat; ignored if emulator-type is already set).
     normalized_mumu_auto_start = normalize_optional_value(mumu_auto_start)
-    if normalized_mumu_auto_start.lower() == "true":
+    if normalized_mumu_auto_start.lower() == "true" and not normalized_emulator_type:
         environment["TALOS_MUMU_AUTO_START"] = "true"
     # 若指定了 MuMu exe 绝对路径，注入为 TALOS_MUMU_EXE_PATH 供 bash 脚本直接使用。
     # If an explicit MuMu exe path is given, inject it as TALOS_MUMU_EXE_PATH for the bash script.
@@ -411,6 +417,20 @@ def parse_args() -> argparse.Namespace:
             " 格式：Git Bash 路径，如 /d/MuMuPlayer-12.0/shell/MuMuPlayer.exe 。"
             " Optional: directly specify MuMu exe path (used when the static search list misses)."
             " Format: Git Bash path, e.g. /d/MuMuPlayer-12.0/shell/MuMuPlayer.exe ."
+        ),
+    )
+    parser.add_argument(
+        "--emulator-type",
+        default="",
+        help=(
+            "可选：模拟器类型选择（mumu / nox / none）。"
+            " mumu = 自动发现和启动 MuMu（默认，向后兼容）；"
+            " nox = 检测 Nox 进程（需手动预启动，ADB 端口 127.0.0.1:62001）；"
+            " none = 跳过模拟器自动启动。"
+            " Optional: emulator type selection (mumu / nox / none)."
+            " mumu = auto-discover and launch MuMu (default, backward compatible);"
+            " nox = detect Nox process (must be pre-started manually, ADB port 127.0.0.1:62001);"
+            " none = skip emulator auto-launch."
         ),
     )
     parser.add_argument(
@@ -1349,6 +1369,9 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     mumu_exe_path = normalize_optional_value(getattr(args, "mumu_exe_path", None))
     if mumu_exe_path:
         print(f"{LOG_PREFIX} mumuExePath={mumu_exe_path}")
+    emulator_type = normalize_optional_value(getattr(args, "emulator_type", None))
+    if emulator_type:
+        print(f"{LOG_PREFIX} emulatorType={emulator_type}")
     completed = subprocess.Popen(
         command,
         cwd=REPO_ROOT,
@@ -1358,6 +1381,7 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
             adb_connect_targets=adb_connect_targets or None,
             mumu_auto_start=mumu_auto_start or None,
             mumu_exe_path=mumu_exe_path or None,
+            emulator_type=emulator_type or None,
         ),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

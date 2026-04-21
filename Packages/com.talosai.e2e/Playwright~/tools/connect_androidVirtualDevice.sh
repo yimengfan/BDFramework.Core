@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Android 虚拟设备连接脚本 — 专门处理宿主机本地 Android 模拟器（MuMu 12 NX 等）
+# Android 虚拟设备连接脚本 — 专门处理宿主机本地 Android 模拟器（MuMu 12 NX、Nox 等）
 # 的自动发现、缓存、启动和 ADB 连接全链路流程。
 #
 # Android virtual-device setup script — handles full lifecycle for host-local
-# Android emulators (MuMu 12 NX etc.): discovery, path caching, launch, and
-# ADB device-online wait.
+# Android emulators (MuMu 12 NX, Nox, etc.): discovery, path caching, launch,
+# and ADB device-online wait.
 #
 # 使用方式 / Usage modes:
 #   1. 被 test-android.sh 等脚本 source 调用（推荐）：
@@ -35,10 +35,12 @@
 #   skip re-scanning, which is important for fast CI builds.
 #
 # 导出的环境变量 / Exported variables:
-#   TALOS_MUMU_EXE_PATH   — 发现的 MuMu 主入口 exe 绝对路径。
-#                           Absolute path to discovered MuMu launcher exe.
-#   TALOS_MUMU_CLI_PATH   — mumu-cli.exe 绝对路径。
-#                           Absolute path to mumu-cli.exe.
+#   TALOS_EMULATOR_TYPE   — 模拟器类型（mumu / nox / none）。
+#                           Emulator type (mumu / nox / none).
+#   TALOS_MUMU_EXE_PATH   — 发现的 MuMu 主入口 exe 绝对路径（仅 MuMu）。
+#                           Absolute path to discovered MuMu launcher exe (MuMu only).
+#   TALOS_MUMU_CLI_PATH   — mumu-cli.exe 绝对路径（仅 MuMu）。
+#                           Absolute path to mumu-cli.exe (MuMu only).
 #   TALOS_ANDROID_SERIAL  — 选定的 ADB 设备序列号。
 #                           Selected ADB device serial number.
 # ============================================================================
@@ -69,15 +71,17 @@ _cav_parse_args() {
         case $1 in
             --connect-targets) TALOS_ADB_CONNECT_TARGETS="$2"; shift 2 ;;
             --start-mumu)      TALOS_MUMU_AUTO_START="$2";     shift 2 ;;
+            --emulator-type)   TALOS_EMULATOR_TYPE="$2";       shift 2 ;;
             --adb-bin)         TALOS_ADB_BIN="$2";             shift 2 ;;
             --timeout)         TALOS_ADB_DEVICE_ONLINE_TIMEOUT="$2"; shift 2 ;;
             --reconnect-interval) _CAV_RECONNECT_INTERVAL="$2"; shift 2 ;;
             --help)
-                echo "用法 / Usage: $0 [--connect-targets <t1,t2>] [--start-mumu true|false]"
-                echo "  --connect-targets  逗号分隔的 ADB TCP 目标 / Comma-separated ADB TCP targets"
-                echo "  --start-mumu       是否自动启动 MuMu (true|false) / Auto-start MuMu emulator"
-                echo "  --adb-bin          ADB 可执行文件路径 / Path to adb binary"
-                echo "  --timeout          设备上线等待超时秒数 / Device-online wait timeout (seconds)"
+                echo "用法 / Usage: $0 [--connect-targets <t1,t2>] [--start-mumu true|false] [--emulator-type mumu|nox|none]"
+                echo "  --connect-targets   逗号分隔的 ADB TCP 目标 / Comma-separated ADB TCP targets"
+                echo "  --start-mumu        是否自动启动 MuMu (true|false) / Auto-start MuMu emulator"
+                echo "  --emulator-type     模拟器类型: mumu (默认), nox, none / Emulator type: mumu (default), nox, none"
+                echo "  --adb-bin           ADB 可执行文件路径 / Path to adb binary"
+                echo "  --timeout           设备上线等待超时秒数 / Device-online wait timeout (seconds)"
                 echo "  --reconnect-interval  重连间隔秒数（默认 30） / Reconnect interval seconds (default 30)"
                 exit 0
                 ;;
@@ -124,16 +128,28 @@ _cav_load_cache() {
 _cav_load_cache || true
 
 # ============================================================================
-# 步骤 1：MuMu 自动启动（如已启用）
-# Step 1: MuMu auto-start (when enabled)
+# 步骤 1：模拟器自动启动（如已启用）
+# Step 1: Emulator auto-start (when enabled)
+#
+# 支持两种触发方式（向后兼容）：
+# Two trigger modes supported (backward compatible):
+#   - TALOS_MUMU_AUTO_START=true   → 等同于 TALOS_EMULATOR_TYPE=mumu（旧接口，仍有效）
+#                                   Equivalent to TALOS_EMULATOR_TYPE=mumu (legacy, still works)
+#   - TALOS_EMULATOR_TYPE=nox      → 使用 Nox 模拟器（需手动预启动）
+#                                   Use Nox emulator (must be pre-started manually)
 # ============================================================================
-if [[ "${TALOS_MUMU_AUTO_START:-}" == "true" ]]; then
+if [[ "${TALOS_MUMU_AUTO_START:-}" == "true" && -z "${TALOS_EMULATOR_TYPE:-}" ]]; then
+    # 向后兼容：--start-mumu true 但未设置 --emulator-type，默认使用 mumu。
+    # Backward compat: --start-mumu true without --emulator-type defaults to mumu.
+    export TALOS_EMULATOR_TYPE="mumu"
+fi
+if [[ -n "${TALOS_EMULATOR_TYPE:-}" ]]; then
     echo ""
-    echo ">>> [connect_androidVirtualDevice] MuMu 自动启动流程..."
-    echo ">>> [connect_androidVirtualDevice] MuMu auto-start flow..."
-    # ensure_talos_mumu_running 内部会在发现路径后写入 _CAV_CACHE_FILE。
-    # ensure_talos_mumu_running writes the cache file internally after discovery.
-    TALOS_MUMU_CACHE_FILE="${_CAV_CACHE_FILE}" ensure_talos_mumu_running
+    echo ">>> [connect_androidVirtualDevice] 模拟器自动启动流程 (type=${TALOS_EMULATOR_TYPE})..."
+    echo ">>> [connect_androidVirtualDevice] Emulator auto-start flow (type=${TALOS_EMULATOR_TYPE})..."
+    # ensure_talos_emulator_running 内部会根据类型调用 MuMu/Nox 检测。
+    # ensure_talos_emulator_running dispatches to MuMu/Nox detection based on type.
+    TALOS_MUMU_CACHE_FILE="${_CAV_CACHE_FILE}" ensure_talos_emulator_running
 fi
 
 # ============================================================================
@@ -164,8 +180,7 @@ fi
 # 步骤 4：等待设备上线（带超时 + 定期重连 + reconnect offline）
 # Step 4: Wait for device online (timeout + periodic reconnect + reconnect offline)
 #
-# MuMu 12 NX adbd 上线策略：
-# MuMu 12 NX adbd online strategy:
+# 模拟器 adbd 上线策略 / Emulator adbd online strategy:
 #   a) 每 30s 重连 TCP 目标（旧连接在 adbd 上线前会记录为 offline）。
 #      Reconnect TCP targets every 30s (stale connections appear offline until adbd is live).
 #   b) 若 ADB 设备列表中有 offline 的 emulator-* 条目，执行 adb reconnect offline。
@@ -280,6 +295,7 @@ if [[ "${BASH_SOURCE[0]:-}" == "$0" ]]; then
         echo "# Generated by connect_androidVirtualDevice.sh — $(date)"
         echo "# 勿手动编辑，由脚本自动写入 / Do not edit manually; auto-written by script."
         echo "export TALOS_ANDROID_SERIAL='${TALOS_ANDROID_SERIAL:-}'"
+        echo "export TALOS_EMULATOR_TYPE='${TALOS_EMULATOR_TYPE:-}'"
         echo "export TALOS_MUMU_EXE_PATH='${TALOS_MUMU_EXE_PATH:-}'"
         echo "export TALOS_MUMU_CLI_PATH='${TALOS_MUMU_CLI_PATH:-}'"
     } > "${_CAV_ENV_OUT}"

@@ -43,6 +43,11 @@ cp .test-DevOps/.teamcity/.env.example .test-DevOps/.teamcity/.env
 
 认证优先级：`TEAMCITY_TOKEN` > `TEAMCITY_USERNAME` + `TEAMCITY_PASSWORD`。
 
+重要说明：
+
+- `TEAMCITY_BASE_URL` 只控制本地 TeamCity helper 访问哪一个 TeamCity HTTP 入口，以及控制台里重写后的公开 `webUrl`；它不会自动改写 `DevOps/CI/BuildTools/buildtools.toml` 里的 `[ci_server]` 或 `[artifact_file_server]`。
+- 如果 TeamCity 服务器通过 Web API 返回的是内网 `webUrl`，helper 现在会额外按当前 `TEAMCITY_BASE_URL` 重写出一个可直接访问的 `webUrl`，并把原始服务端地址保留为 `serverWebUrl` 便于对照。
+
 默认环境文件位置：
 
 - `.test-DevOps/.teamcity/.env`
@@ -139,7 +144,14 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - `--comment` 会保留用户前缀，并自动追加 `测试目标: <buildTypeId>`。
 - `--tag` 可重复传入或使用逗号分隔，仅限平台等关键元信息（如 `win64`、`android`）。The helper does not inject any default tag automatically. Keep test-target and branch details in `--comment`.
 - 失败时脚本会自动打印末尾构建日志，便于直接定位问题。
+- `--wait` 现在除了 `state/status/statusText` 之外，还会输出 TeamCity `running-info` 里的 `progress`、`hanging` 和 `stage`，并在长时间等待时按固定心跳重报一次当前摘要，避免构建已在推进但控制台长时间静默。
+- `--wait` 进入轮询前会先做一次轻量 state-only 检查；如果构建已 `finished`，直接打印最终摘要并退出，不再进入详细轮询循环。
 - If the build script needs to call TeamCity again while it is running, explicitly forward `--property env.TEAMCITY_TOKEN="$TEAMCITY_TOKEN"`. The remote worker does not inherit the local shell token automatically.
+
+排障建议：
+
+- 如果构建早已结束，不要继续只盯着后台终端等待；优先直接查询 `GET /app/rest/builds/id:<buildId>`，再按 buildId 读取 `test-output.log` 或 `downloadBuildLog.html`。
+- 如果 TeamCity helper 能访问公网 TeamCity，但远端构建内部仍打印内网 `teamcityBaseUrl` 或 `uploadServerUrl`，应继续检查 `DevOps/CI/BuildTools/buildtools.toml` 和相关外部服务，而不是只改 `.test-DevOps/.teamcity/.env`。
 
 ### Re-run Talos BaseFlow with a rebuilt Windows package
 

@@ -1,5 +1,7 @@
 """BuildClientPackage 产物准备与上传辅助函数测试。
 
+BuildClientPackage artifact preparation and upload helper tests.
+
 测试覆盖范围：
 1. CI 日志根名称：验证 TeamCity 构建默认和显式覆盖两种模式。
 2. 发布目录清理：验证清理后重新创建空的上传根目录。
@@ -7,7 +9,15 @@
 4. 发布摘要构建：验证使用 CI 构建号作为远端标签。
 5. iOS 产物打包：验证 iOS 发布产物被重新打包为 Xcode 项目 ZIP。
 6. Windows 产物拆分：验证运行时负载和禁止发布负载被拆分为独立 ZIP。
-7. 发布上传：验证回退到 clientVersion 并发出进度日志。
+7. 发布上传：验证回退到 clientVersion、透传文件服务器覆盖地址并发出进度日志。
+Coverage includes:
+1. CI log-root naming for TeamCity defaults and explicit overrides.
+2. Publish-directory cleanup recreating an empty upload root.
+3. HybridCLR legacy-output cleanup removing generated files and meta files together.
+4. Publish-summary construction preferring CI build numbers as remote labels.
+5. iOS packaging repacking the Xcode project into a ZIP archive.
+6. Windows packaging splitting runtime payloads and do-not-publish payloads.
+7. Publish uploads falling back to clientVersion, forwarding file-server overrides, and emitting progress logs.
 """
 
 from __future__ import annotations
@@ -245,12 +255,16 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     monkeypatch,
     capsys,
 ) -> None:
-    """验证发布上传在缺少构建号时回退到 clientVersion，并为每个 ZIP 文件发出进度日志。"""
+    """验证发布上传在缺少构建号时回退到 clientVersion，并为每个 ZIP 文件发出进度日志。
+
+    Verify that uploads fall back to clientVersion, forward the file-server override URL, and emit per-file progress logs.
+    """
     output_dir = create_publish_output(tmp_path, include_do_not_publish=True)
     fake_settings = SimpleNamespace(
-        base_url="http://127.0.0.1:20001",
+        base_url="https://files.example.com/fileserver",
         config_path=Path("/tmp/buildtools.toml"),
     )
+    captured_resolve_kwargs: dict[str, str | None] = {}
 
     def fake_upload_client_package(
         source_path,
@@ -301,7 +315,11 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
 
     import package_artifacts
 
-    monkeypatch.setattr(package_artifacts, "resolve_file_server_settings", lambda: fake_settings)
+    def fake_resolve_file_server_settings(*, server_url=None, **_):
+        captured_resolve_kwargs["server_url"] = server_url
+        return fake_settings
+
+    monkeypatch.setattr(package_artifacts, "resolve_file_server_settings", fake_resolve_file_server_settings)
     monkeypatch.setattr(package_artifacts, "upload_client_package", fake_upload_client_package)
 
     results = upload_publish_package(
@@ -310,14 +328,18 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
         build_number=None,
         client_version="0.1.238",
         log_prefix="[TestUpload]",
+        file_server_url="https://files.example.com/fileserver",
     )
     output = capsys.readouterr().out
 
     assert len(results) == 2
+    assert captured_resolve_kwargs == {"server_url": "https://files.example.com/fileserver"}
     assert f"[TestUpload] uploadSourceDir={output_dir}" in output
     assert "[TestUpload] uploadPreparedSource=" in output
     assert "[TestUpload] uploadBuildLabel=0.1.238" in output
     assert "[TestUpload] uploadRemoteRoot=ClientPackage_windows/0.1.238" in output
+    assert "[TestUpload] uploadServerUrlOverride=https://files.example.com/fileserver" in output
+    assert "[TestUpload] uploadServerUrl=https://files.example.com/fileserver" in output
     assert "[TestUpload] uploadFileCount=2" in output
     assert "[TestUpload] uploadProgress=1/2 state=uploading" in output
     assert "[TestUpload] uploadProgress=2/2 state=uploaded" in output

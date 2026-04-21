@@ -283,10 +283,15 @@ def upload_publish_package(
     build_number: str | None,
     client_version: str,
     log_prefix: str,
+    file_server_url: str | None = None,
 ) -> list[UploadedArtifact]:
-    """上传 Unity 默认输出目录下的母包，并输出适合 CI 观察的进度日志。"""
+    """上传 Unity 默认输出目录下的母包，并输出适合 CI 观察的进度日志。
+
+    Upload the client package from Unity's default publish directory and emit CI-friendly progress logs.
+    """
     source_dir = get_publish_package_dir(platform_key, project_dir=project_dir)
-    settings = resolve_file_server_settings()
+    normalized_file_server_url = str(file_server_url or "").strip() or None
+    settings = resolve_file_server_settings(server_url=normalized_file_server_url)
 
     with tempfile.TemporaryDirectory(prefix=f"buildclientpackage_{platform_key}_") as temp_dir:
         prepared_source_path = prepare_publish_package_upload_source(
@@ -307,6 +312,8 @@ def upload_publish_package(
             print(f"{log_prefix} uploadPreparedSource={summary.upload_source_path}")
         print(f"{log_prefix} uploadBuildLabel={summary.build_label}")
         print(f"{log_prefix} uploadRemoteRoot={summary.remote_root}")
+        if normalized_file_server_url:
+            print(f"{log_prefix} uploadServerUrlOverride={normalized_file_server_url}")
         print(f"{log_prefix} uploadServerUrl={settings.base_url}")
         if settings.config_path is not None:
             print(f"{log_prefix} uploadConfig={settings.config_path}")

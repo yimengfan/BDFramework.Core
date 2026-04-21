@@ -38,11 +38,20 @@ LOG_PREFIX = "[BuildClientPackage][Android]"
 def parse_args() -> argparse.Namespace:
     """解析脚本参数。
 
+    Parse the script arguments.
+
     当前只要求一个必要参数：clientVersion。
     其他参数为可选增强能力：
     1. --unity-version: 指定使用哪个 Unity 版本。
     2. --project-dir: 指定 Unity 工程目录。
-    3. --dry-run: 只输出命令，不真正执行 Unity。
+    3. --file-server-url: 显式覆盖产物上传时使用的文件服务器访问地址。
+    4. --dry-run: 只输出命令，不真正执行 Unity。
+    The only required parameter is clientVersion.
+    The remaining options are optional enhancements:
+    1. --unity-version: choose the Unity version explicitly.
+    2. --project-dir: point to a specific Unity project directory.
+    3. --file-server-url: explicitly override the file-server URL used during artifact upload.
+    4. --dry-run: print the final command without executing Unity.
     """
     parser = argparse.ArgumentParser(
         description="Build Android client package via Unity batchmode."
@@ -81,6 +90,11 @@ def parse_args() -> argparse.Namespace:
         help="Whether to request debug-capable Unity build flow and Talos E2E compilation symbols.",
     )
     parser.add_argument(
+        "--file-server-url",
+        default=None,
+        help="Optional file-server base URL override used during artifact upload.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Only print the final Unity command, do not execute Unity.",
@@ -103,7 +117,10 @@ def validate_client_version(client_version: str) -> str:
 
 
 def main() -> int:
-    """执行 Android 母包构建、日志回收和产物上传主流程。"""
+    """执行 Android 母包构建、日志回收和产物上传主流程。
+
+    Execute the Android client-package build, log collection, and artifact upload workflow.
+    """
     configure_live_console_output()
     print(f"{LOG_PREFIX} ===== Step 1/7: parse args =====")
     args = parse_args()
@@ -114,6 +131,7 @@ def main() -> int:
     )
     client_version = compose_client_version(client_version_prefix, build_number)
     debug_build = str(getattr(args, "debug_build", "false")).strip().lower()
+    file_server_url = str(getattr(args, "file_server_url", "") or "").strip() or None
 
     print(f"{LOG_PREFIX} ===== Step 2/7: validate host =====")
     host_os = detect_host_os()
@@ -126,6 +144,8 @@ def main() -> int:
         print(f"{LOG_PREFIX} buildName={build_name}")
     if build_number:
         print(f"{LOG_PREFIX} buildNumber={build_number}")
+    if file_server_url:
+        print(f"{LOG_PREFIX} fileServerUrlOverride={file_server_url}")
 
     print(f"{LOG_PREFIX} ===== Step 3/7: resolve Unity =====")
     unity_path, actual_unity_version = resolve_unity_executable(
@@ -183,6 +203,7 @@ def main() -> int:
             build_number=build_number,
             client_version=client_version,
             log_prefix=LOG_PREFIX,
+            file_server_url=file_server_url,
         )
 
     print(f"{LOG_PREFIX} build finished successfully")
