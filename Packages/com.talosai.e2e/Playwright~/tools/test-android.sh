@@ -58,6 +58,7 @@ PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 ANDROID_LOGCAT_FILE="${PLAYWRIGHT_DIR}/test-results/android-logcat.txt"
+PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 
 # 以硬超时执行命令，避免外部工具在 TeamCity 上无限挂起。
 # Run a command with a hard timeout so external tools cannot hang forever in TeamCity.
@@ -151,6 +152,72 @@ capture_android_logcat() {
         echo ""
         echo ">>> Android logcat 导出失败"
     fi
+}
+
+# 归档 Android 侧 BDebug playerlogs，补足 logcat 超时或被 ADB 传输问题截断时的应用持久化日志。
+# Archive Android-side BDebug playerlogs so failure diagnostics still include persisted app logs when logcat export times out or gets cut off by ADB transport issues.
+resolve_android_player_log_source_dirs() {
+    printf '%s\n' "/sdcard/Android/data/${PACKAGE}/files/playerlogs"
+    printf '%s\n' "/storage/emulated/0/Android/data/${PACKAGE}/files/playerlogs"
+}
+
+capture_android_player_logs() {
+    local _candidate _detected_dir _payload_dir _index_file _pull_output _pull_rc
+
+    _detected_dir=""
+    rm -rf "${PLAYER_LOG_ARCHIVE_DIR}"
+    _payload_dir="${PLAYER_LOG_ARCHIVE_DIR}/payload"
+    _index_file="${PLAYER_LOG_ARCHIVE_DIR}/index.txt"
+    mkdir -p "${_payload_dir}"
+
+    while IFS= read -r _candidate; do
+        [[ -z "${_candidate}" ]] && continue
+        if talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" shell "[ -d '${_candidate}' ]" >/dev/null; then
+            _detected_dir="${_candidate}"
+            break
+        fi
+    done < <(resolve_android_player_log_source_dirs)
+
+    if [[ -z "${_detected_dir}" ]]; then
+        {
+            echo "source=<missing>"
+            echo "status=missing"
+        } > "${_index_file}"
+        echo ">>> 未发现 Android playerlogs / Android playerlogs not found"
+        return 0
+    fi
+
+    _pull_output="$(talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" pull "${_detected_dir}" "${_payload_dir}")" && _pull_rc=0 || _pull_rc=$?
+
+    if [[ ${_pull_rc} -eq 124 ]]; then
+        {
+            echo "source=${_detected_dir}"
+            echo "status=timeout"
+        } > "${_index_file}"
+        echo ">>> Android playerlogs 导出超时 / Android playerlogs export timed out"
+        return 124
+    fi
+
+    if [[ ${_pull_rc} -ne 0 ]]; then
+        {
+            echo "source=${_detected_dir}"
+            echo "status=failed"
+        } > "${_index_file}"
+        [[ -n "${_pull_output}" ]] && echo "${_pull_output}"
+        echo ">>> Android playerlogs 导出失败 / Android playerlogs export failed"
+        return ${_pull_rc}
+    fi
+
+    {
+        echo "source=${_detected_dir}"
+        echo "status=found"
+        while IFS= read -r _relative_path; do
+            [[ -n "${_relative_path}" ]] && echo "file=${_relative_path}"
+        done < <(cd "${PLAYER_LOG_ARCHIVE_DIR}" && find . -type f ! -name 'index.txt' | sed 's#^\./##' | LC_ALL=C sort)
+    } > "${_index_file}"
+
+    echo ">>> 已归档 Android playerlogs: ${PLAYER_LOG_ARCHIVE_DIR}"
+    return 0
 }
 
 # 用超时保护执行清理类 ADB 命令，保证失败路径能尽快退出并把日志返回给 TeamCity。
@@ -529,6 +596,7 @@ if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo "    2. Unity 热更 DLL 加载出错"
     echo "    3. adb forward tcp:${UNITY_PORT} 未生效"
     capture_android_logcat
+    capture_android_player_logs || true
     talos_run_adb_cleanup_command "force-stop package" shell am force-stop "${PACKAGE}" 2>/dev/null || true
     exit 1
 fi
