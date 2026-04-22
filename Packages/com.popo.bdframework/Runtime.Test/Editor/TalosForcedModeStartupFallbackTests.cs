@@ -1,5 +1,6 @@
+using System;
+using System.Linq;
 using NUnit.Framework;
-using Talos.E2E;
 using UnityEngine;
 
 namespace Runtime.Test.Editor
@@ -25,6 +26,56 @@ namespace Runtime.Test.Editor
         }
 
         /// <summary>
+        /// 解析 Talos 强制模式补偿启动辅助器类型。
+        /// Resolve the Talos forced-mode fallback startup helper type.
+        /// 这里通过已加载程序集反射查找运行时类型，避免 BDFramework 的 Editor 测试程序集对 Talos runtime asmdef 形成编译期硬依赖。
+        /// This locates the runtime type through loaded assemblies so the BDFramework editor test assembly avoids a compile-time hard dependency on the Talos runtime asmdef.
+        /// </summary>
+        /// <returns>已加载的辅助器类型。The loaded helper type.</returns>
+        private static Type GetFallbackHelperType()
+        {
+            var helperType = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Select(assembly => assembly.GetType("Talos.E2E.ForcedModeStartupFallback"))
+                .FirstOrDefault(type => type != null);
+
+            Assert.That(helperType, Is.Not.Null, "应能在当前 AppDomain 中解析到 Talos.E2E.ForcedModeStartupFallback 类型。");
+            return helperType!;
+        }
+
+        /// <summary>
+        /// 通过反射调用 `TryLaunchFromForcedMode`。
+        /// Invoke `TryLaunchFromForcedMode` through reflection.
+        /// </summary>
+        /// <param name="args">测试用命令行参数。Test command-line arguments.</param>
+        /// <param name="port">测试用端口。Test port.</param>
+        /// <param name="launchAction">测试用启动动作。Test launch action.</param>
+        /// <returns>反射调用返回的布尔结果。Boolean result returned by the reflected call.</returns>
+        private static bool InvokeTryLaunchFromForcedMode(string[] args, int port, Action<int> launchAction)
+        {
+            var helperType = GetFallbackHelperType();
+            var method = helperType.GetMethod("TryLaunchFromForcedMode");
+
+            Assert.That(method, Is.Not.Null, "应能找到 TryLaunchFromForcedMode 公开静态方法。");
+            return (bool)method!.Invoke(null, new object[] { args, port, launchAction });
+        }
+
+        /// <summary>
+        /// 通过反射调用 `ContainsTalosForceE2EArgument`。
+        /// Invoke `ContainsTalosForceE2EArgument` through reflection.
+        /// </summary>
+        /// <param name="args">测试用命令行参数。Test command-line arguments.</param>
+        /// <returns>反射调用返回的布尔结果。Boolean result returned by the reflected call.</returns>
+        private static bool InvokeContainsTalosForceE2EArgument(string[] args)
+        {
+            var helperType = GetFallbackHelperType();
+            var method = helperType.GetMethod("ContainsTalosForceE2EArgument");
+
+            Assert.That(method, Is.Not.Null, "应能找到 ContainsTalosForceE2EArgument 公开静态方法。");
+            return (bool)method!.Invoke(null, new object[] { args });
+        }
+
+        /// <summary>
         /// 验证存在 `-talosForceE2E` 参数时会触发补偿启动，并把端口原样透传给调用动作。
         /// Verify that the fallback launch is invoked when `-talosForceE2E` is present and that the port is passed through unchanged.
         /// </summary>
@@ -34,7 +85,7 @@ namespace Runtime.Test.Editor
             var invoked = false;
             var capturedPort = -1;
 
-            var result = ForcedModeStartupFallback.TryLaunchFromForcedMode(
+            var result = InvokeTryLaunchFromForcedMode(
                 new[] { "game.exe", "-talosPort", "10002", "-talosForceE2E" },
                 10002,
                 port =>
@@ -57,7 +108,7 @@ namespace Runtime.Test.Editor
         {
             var invoked = false;
 
-            var result = ForcedModeStartupFallback.TryLaunchFromForcedMode(
+            var result = InvokeTryLaunchFromForcedMode(
                 new[] { "game.exe", "-batchmode" },
                 10002,
                 _ => invoked = true);
@@ -73,7 +124,7 @@ namespace Runtime.Test.Editor
         [Test]
         public void ContainsTalosForceE2EArgument_IsCaseInsensitive()
         {
-            var result = ForcedModeStartupFallback.ContainsTalosForceE2EArgument(
+            var result = InvokeContainsTalosForceE2EArgument(
                 new[] { "game.exe", "-TALOSFORCEE2E" });
 
             Assert.That(result, Is.True, "强制模式参数匹配应保持大小写不敏感。");
