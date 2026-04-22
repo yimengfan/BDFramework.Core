@@ -1034,3 +1034,147 @@ def test_test_android_tcp_timeout_logcat_export_retries_after_daemon_restart(tmp
     assert "actual device logcat line" in combined
     exported_logcat = (playwright_root / "test-results" / "android-logcat.txt").read_text(encoding="utf-8")
     assert "actual device logcat line" in exported_logcat
+
+
+def test_test_android_tcp_wait_recovers_forward_after_launch_disconnect(tmp_path: Path) -> None:
+    """验证 Unity TCP 等待阶段会重建 adb forward，从而在启动后连接抖动恢复后继续探测到服务。
+    Verify that the Unity TCP wait stage rebuilds adb forward so the probe can recover after a post-launch transport drop and still detect the service.
+    """
+    playwright_root = tmp_path / "PlaywrightRoot"
+    tools_dir = playwright_root / "tools"
+    tools_dir.mkdir(parents=True)
+    (playwright_root / "test-results").mkdir(parents=True)
+
+    copied_test_android = tools_dir / "test-android.sh"
+    copied_node_tools = tools_dir / "node-tools.sh"
+    copied_connect_android = tools_dir / "connect_androidVirtualDevice.sh"
+    copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
+    copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+    copy_tool_script(SOURCE_CONNECT_ANDROID, copied_connect_android)
+
+    fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
+    fake_apk.write_text("stub apk", encoding="utf-8")
+
+    adb_log_path = tmp_path / "adb-wait-recovery-args.txt"
+    adb_state_dir = tmp_path / "adb-wait-recovery-state"
+    adb_state_dir.mkdir(parents=True)
+    node_args_path = tmp_path / "node-args.txt"
+    node_env_path = tmp_path / "node-env.txt"
+    npm_args_path = tmp_path / "npm-args.txt"
+
+    fake_bin_dir = tmp_path / "fake-bin"
+    fake_bin_dir.mkdir()
+    write_executable(
+        fake_bin_dir / "adb",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"state_dir={adb_state_dir}",
+            f"printf '%s\\n' \"$*\" >> {adb_log_path}",
+            "if [[ \"${1:-}\" == \"-s\" ]]; then",
+            "  shift 2",
+            "fi",
+            "case \"${1:-}\" in",
+            "  devices)",
+            "    printf 'List of devices attached\\n127.0.0.1:62001\\tdevice\\n'",
+            "    ;;",
+            "  connect)",
+            "    printf 'connected to %s\\n' \"${2:-}\"",
+            "    ;;",
+            "  disconnect|install|logcat)",
+            "    exit 0",
+            "    ;;",
+            "  forward)",
+            "    if [[ \"${2:-}\" == \"--remove\" ]]; then",
+            "      exit 0",
+            "    fi",
+            "    if [[ -f \"${state_dir}/launch-started\" ]]; then",
+            "      touch \"${state_dir}/forward-refreshed\"",
+            "    fi",
+            "    exit 0",
+            "    ;;",
+            "  shell)",
+            "    if [[ \"$*\" == *\"am start\"* ]]; then",
+            "      touch \"${state_dir}/launch-started\"",
+            "      exit 0",
+            "    fi",
+            "    if [[ \"${2:-}\" == \"pidof\" ]]; then",
+            "      printf '4321\\n'",
+            "      exit 0",
+            "    fi",
+            "    exit 0",
+            "    ;;",
+            "  *)",
+            "    exit 0",
+            "    ;;",
+            "esac",
+        ]) + "\n",
+    )
+
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
+    playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
+    write_executable(
+        node_home / "node.exe",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"state_dir={adb_state_dir}",
+            "if [[ \"${1:-}\" == \"-e\" ]]; then",
+            "  if [[ -f \"${state_dir}/forward-refreshed\" ]]; then",
+            "    exit 0",
+            "  fi",
+            "  exit 1",
+            "fi",
+            f"printf '%s\\n' \"$@\" > {node_args_path}",
+            f"printf '%s\\n%s\\n%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_REPORT:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PW_TEST_HTML_REPORT_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
+            "exit 0",
+        ]) + "\n",
+    )
+    write_executable(
+        node_home / "npm.cmd",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"printf '%s\\n' \"$@\" > {npm_args_path}",
+            f"mkdir -p {playwright_cli_path.parent}",
+            f"cat <<'EOF' > {playwright_cli_path}",
+            "console.log('stub playwright cli');",
+            "EOF",
+        ]) + "\n",
+    )
+
+    result = subprocess.run(
+        [
+            "/bin/bash",
+            str(copied_test_android),
+            "--apk", str(fake_apk),
+            "--connect-targets", "127.0.0.1:62001",
+            "--port", "12345",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(playwright_root),
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
+            "TALOS_NODEJS_HOME": str(node_home),
+            "TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS": "2",
+            "TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS": "0",
+            "TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS": "0",
+        },
+        timeout=30,
+    )
+
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    assert "Unity TCP is still pending; attempting to recover ADB connectivity and port forwarding" in combined
+    assert "当前应用进程 PID: 4321" in combined
+    adb_log_lines = adb_log_path.read_text(encoding="utf-8").splitlines()
+    launch_index = next(i for i, line in enumerate(adb_log_lines) if "shell am start -n com.talos.BuildTest.debug/com.unity3d.player.UnityPlayerActivity" in line)
+    post_launch_forward_lines = [
+        line for i, line in enumerate(adb_log_lines)
+        if i > launch_index and "forward tcp:12345 tcp:12345" in line
+    ]
+    assert post_launch_forward_lines, "the wait-stage recovery should rebuild adb forward after launch"
+    assert any(i > launch_index and "shell pidof com.talos.BuildTest.debug" in line for i, line in enumerate(adb_log_lines))

@@ -53,6 +53,9 @@ TALOS_ADB_CLEANUP_TIMEOUT_SECONDS="${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS:-10}"
 # APK 安装命令的单次硬超时；用于拦截 adb install 在设备传输异常时长时间无响应的问题。
 # Hard timeout for a single APK install command so adb install cannot stall for hours when device transport gets stuck.
 TALOS_APK_INSTALL_TIMEOUT_SECONDS="${TALOS_APK_INSTALL_TIMEOUT_SECONDS:-180}"
+# Unity TCP 等待阶段的 ADB/forward 自愈周期；默认每 15 秒尝试一次重连与 forward 刷新。
+# Recovery interval for ADB/forward healing during the Unity TCP wait stage; defaults to one reconnect+forward refresh attempt every 15 seconds.
+TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS="${TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS:-15}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
@@ -239,6 +242,47 @@ talos_run_adb_cleanup_command() {
     fi
 
     return ${_cleanup_rc}
+}
+
+# 读取 Android 侧应用进程 PID，帮助判断超时时是“应用未启动”还是“forward/连接链路失效”。
+# Read the Android app PID so timeout diagnostics can distinguish between “app never started” and “forward/transport chain failed”.
+talos_log_android_process_pid() {
+    local _pid_output _pid_rc _trimmed_pid
+    _pid_output="$(talos_run_adb_with_reconnect_timeout "${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS}" shell pidof "${PACKAGE}")" && _pid_rc=0 || _pid_rc=$?
+
+    if [[ ${_pid_rc} -ne 0 ]]; then
+        echo "    当前未能读取应用 PID / Failed to read the current app PID"
+        return ${_pid_rc}
+    fi
+
+    _trimmed_pid="$(printf '%s' "${_pid_output}" | tr -d '\r' | tr '\n' ' ' | xargs 2>/dev/null || true)"
+    if [[ -n "${_trimmed_pid}" ]]; then
+        echo "    当前应用进程 PID: ${_trimmed_pid}"
+    else
+        echo "    当前未检测到应用进程 PID / No app PID detected"
+    fi
+
+    return 0
+}
+
+# 在 Unity TCP 等待阶段尝试恢复 ADB 与端口转发，避免设备短暂掉线后本地探针永久看不到已经启动的服务。
+# Attempt to heal ADB connectivity and port forwarding during the Unity TCP wait stage so a brief device drop does not make the local probe miss an already-running service forever.
+talos_recover_unity_tcp_probe_chain() {
+    echo ""
+    echo "    ⚠️ Unity TCP 等待中，尝试恢复 ADB 连接与端口转发..."
+    echo "    ⚠️ Unity TCP is still pending; attempting to recover ADB connectivity and port forwarding..."
+
+    talos_log_android_process_pid || true
+    adb_with_reconnect forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
+    if adb_with_reconnect forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}" >/dev/null; then
+        echo "    已刷新 adb forward: localhost:${UNITY_PORT} -> device:${UNITY_PORT}"
+        echo "    Refreshed adb forward: localhost:${UNITY_PORT} -> device:${UNITY_PORT}"
+        return 0
+    fi
+
+    echo "    adb forward 刷新失败，继续等待下一次恢复窗口"
+    echo "    Failed to refresh adb forward; continuing until the next recovery window"
+    return 1
 }
 
 # 从 adb devices 输出中优先选择配置顺序里的 TCP 目标；若都不存在，再退回到任意在线 TCP 设备或任意在线设备。
@@ -576,6 +620,7 @@ echo ""
 echo ">>> 等待 Unity E2E TCP 服务就绪..."
 MAX_WAIT="${TALOS_UNITY_TCP_TIMEOUT:-180}"
 WAITED=0
+NEXT_TCP_RECOVERY_AT="${TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS}"
 
 while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
     if probe_talos_unity_ready 127.0.0.1 "${UNITY_PORT}" 1000; then
@@ -586,6 +631,13 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
     sleep 2
     WAITED=$((WAITED + 2))
     echo -n "."
+
+    if [[ ${TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS} -gt 0 ]]; then
+        while [[ ${WAITED} -ge ${NEXT_TCP_RECOVERY_AT} && ${NEXT_TCP_RECOVERY_AT} -lt ${MAX_WAIT} ]]; do
+            talos_recover_unity_tcp_probe_chain || true
+            NEXT_TCP_RECOVERY_AT=$((NEXT_TCP_RECOVERY_AT + TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS))
+        done
+    fi
 done
 
 if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
