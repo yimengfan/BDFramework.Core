@@ -109,6 +109,22 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - `--poll-interval-seconds`：轮询间隔（默认 5 秒）
 - `--log-tail-lines`：失败时显示日志行数（默认 80 行）
 
+⚠️ **Copilot 轮询纪律 / Copilot Polling Discipline**：
+
+使用 `run-build --wait` 时，**必须通过 `run_in_terminal` 异步模式**运行。脚本内置心跳输出，Copilot **不得** 同时用 `pylanceRunCodeSnippet` + `time.sleep()` 做额外轮询——这会耗尽上下文窗口并导致会话卡住十数小时。
+
+正确做法：
+1. `run_in_terminal`（mode=async）启动 `run-build --wait`
+2. 等待终端完成通知，**不要** 在等待期间反复调用 `pylanceRunCodeSnippet` 查询状态
+3. 收到完成通知后，用 `get_terminal_output` 读取结果
+
+For `run-build --wait`, always run via `run_in_terminal` in async mode. The script has built-in heartbeat output. Copilot **MUST NOT** simultaneously run `pylanceRunCodeSnippet` + `time.sleep()` polling — this exhausts the context window and freezes the session for hours.
+
+Correct pattern:
+1. `run_in_terminal` (mode=async) to launch `run-build --wait`
+2. Wait for the terminal completion notification — do NOT poll with `pylanceRunCodeSnippet` in between
+3. After notification, use `get_terminal_output` to read results
+
 Operational note:
 - For builds that call TeamCity again from inside the build scripts, `run-build` now forwards the current TeamCity token automatically when `env.TEAMCITY_TOKEN` is not provided explicitly.
 - If a rerun must use a different token or basic-auth pair, pass the matching `env.TEAMCITY_*` property explicitly and the helper will preserve that override.
