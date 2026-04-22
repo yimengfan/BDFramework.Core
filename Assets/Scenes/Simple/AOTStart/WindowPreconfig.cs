@@ -64,7 +64,7 @@ public class WindowPreconfig : MonoBehaviour
         }
         Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
 
-        var commandLineArgs = System.Environment.GetCommandLineArgs();
+        var commandLineArgs = RuntimeLaunchArguments.ResolveCurrentProcessArguments();
         if (ForcedModeStartupFallback.TryLaunchFromForcedMode(commandLineArgs, 10002, E2EAutoInit.CheckAndLaunch))
         {
             // 显式根引用宿主侧 launch 与 BaseFlow 套件类型，避免 Player 端只保留 launch 类型而裁剪新增的基础系统入口。

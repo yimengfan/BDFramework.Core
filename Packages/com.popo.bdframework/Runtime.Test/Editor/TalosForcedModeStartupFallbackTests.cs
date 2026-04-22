@@ -6,12 +6,12 @@ using UnityEngine;
 namespace Runtime.Test.Editor
 {
     /// <summary>
-    /// Talos 强制模式补偿启动辅助器测试。
-    /// Tests for the Talos forced-mode fallback startup helper.
-    /// 这些测试只验证强制模式判定与补偿调用触发契约，
-    /// 让 Android 启动链的宿主补偿逻辑可以在 Editor NUnit 下先锁住行为，再交给 TeamCity 真机链路做端到端验证。
-    /// These tests verify only the forced-mode detection and fallback invocation contract,
-    /// so the host compensation logic for the Android startup path is locked down in editor NUnit before TeamCity validates it end to end on device.
+    /// Talos 强制模式补偿启动与运行时参数辅助器测试。
+    /// Tests for the Talos forced-mode fallback and runtime launch-argument helpers.
+    /// 这些测试锁定两类纯逻辑契约：
+    /// 强制模式补偿调用触发规则，以及 Android `unity` extra 被并入运行时参数快照后的解析行为。
+    /// These tests lock two pure-logic contracts:
+    /// the fallback invocation rules for forced mode and the parsing behavior after Android `unity` extra tokens are merged into the runtime argument snapshot.
     /// </summary>
     public class TalosForcedModeStartupFallbackTests
     {
@@ -22,7 +22,24 @@ namespace Runtime.Test.Editor
         [SetUp]
         public void SetUp()
         {
-            Debug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证 Talos 强制模式补偿启动辅助器只在 -talosForceE2E 路径下触发一次显式补偿调用。 实现手段=构造命令行参数数组并断言补偿动作是否被调用。 ");
+            Debug.Log($"[测试开始] name={TestContext.CurrentContext.Test.Name} 测试目的=验证 Talos 强制模式补偿启动与 Android 运行时参数合并逻辑在 Editor NUnit 下保持稳定。 实现手段=通过反射调用 Talos runtime 辅助器并断言参数快照与补偿动作结果。 ");
+        }
+
+        /// <summary>
+        /// 解析指定的 Talos runtime 类型。
+        /// Resolve the specified Talos runtime type.
+        /// </summary>
+        /// <param name="fullTypeName">类型全名。Fully qualified type name.</param>
+        /// <returns>已加载的运行时类型。The loaded runtime type.</returns>
+        private static Type RequireTalosRuntimeType(string fullTypeName)
+        {
+            var runtimeType = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Select(assembly => assembly.GetType(fullTypeName))
+                .FirstOrDefault(type => type != null);
+
+            Assert.That(runtimeType, Is.Not.Null, $"应能在当前 AppDomain 中解析到 {fullTypeName} 类型。");
+            return runtimeType!;
         }
 
         /// <summary>
@@ -34,13 +51,17 @@ namespace Runtime.Test.Editor
         /// <returns>已加载的辅助器类型。The loaded helper type.</returns>
         private static Type GetFallbackHelperType()
         {
-            var helperType = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Select(assembly => assembly.GetType("Talos.E2E.ForcedModeStartupFallback"))
-                .FirstOrDefault(type => type != null);
+            return RequireTalosRuntimeType("Talos.E2E.ForcedModeStartupFallback");
+        }
 
-            Assert.That(helperType, Is.Not.Null, "应能在当前 AppDomain 中解析到 Talos.E2E.ForcedModeStartupFallback 类型。");
-            return helperType!;
+        /// <summary>
+        /// 解析 Talos 运行时参数辅助器类型。
+        /// Resolve the Talos runtime launch-argument helper type.
+        /// </summary>
+        /// <returns>已加载的辅助器类型。The loaded helper type.</returns>
+        private static Type GetRuntimeLaunchArgumentsType()
+        {
+            return RequireTalosRuntimeType("Talos.E2E.RuntimeLaunchArguments");
         }
 
         /// <summary>
@@ -73,6 +94,22 @@ namespace Runtime.Test.Editor
 
             Assert.That(method, Is.Not.Null, "应能找到 ContainsTalosForceE2EArgument 公开静态方法。");
             return (bool)method!.Invoke(null, new object[] { args });
+        }
+
+        /// <summary>
+        /// 通过反射调用 `BuildArgumentSnapshot`。
+        /// Invoke `BuildArgumentSnapshot` through reflection.
+        /// </summary>
+        /// <param name="environmentArgs">环境命令行参数。Environment command-line arguments.</param>
+        /// <param name="androidUnityExtra">Android `unity` extra 原始字符串。Raw Android `unity` extra string.</param>
+        /// <returns>反射调用返回的参数快照。Argument snapshot returned by the reflected call.</returns>
+        private static string[] InvokeBuildArgumentSnapshot(string[] environmentArgs, string androidUnityExtra)
+        {
+            var helperType = GetRuntimeLaunchArgumentsType();
+            var method = helperType.GetMethod("BuildArgumentSnapshot");
+
+            Assert.That(method, Is.Not.Null, "应能找到 BuildArgumentSnapshot 公开静态方法。");
+            return (string[])method!.Invoke(null, new object[] { environmentArgs, androidUnityExtra });
         }
 
         /// <summary>
@@ -128,6 +165,39 @@ namespace Runtime.Test.Editor
                 new[] { "game.exe", "-TALOSFORCEE2E" });
 
             Assert.That(result, Is.True, "强制模式参数匹配应保持大小写不敏感。");
+        }
+
+        /// <summary>
+        /// 验证 Android `unity` extra 会被切分并追加到运行时参数快照末尾。
+        /// Verify that the Android `unity` extra is tokenized and appended to the runtime argument snapshot.
+        /// </summary>
+        [Test]
+        public void BuildArgumentSnapshot_AppendsAndroidUnityExtraTokens()
+        {
+            var snapshot = InvokeBuildArgumentSnapshot(
+                new[] { "game.exe" },
+                "-talosPort 11002 -talosForceE2E");
+
+            Assert.That(snapshot, Is.EqualTo(new[] { "game.exe", "-talosPort", "11002", "-talosForceE2E" }),
+                "运行时参数快照应把 Android unity extra 切分后追加到环境参数末尾。");
+        }
+
+        /// <summary>
+        /// 验证从 Android `unity` extra 合成的参数快照仍能触发强制模式补偿启动。
+        /// Verify that a snapshot synthesized from the Android `unity` extra can still trigger the forced-mode fallback launch.
+        /// </summary>
+        [Test]
+        public void TryLaunchFromForcedMode_UsesForceFlagFromAndroidUnityExtraSnapshot()
+        {
+            var invoked = false;
+            var snapshot = InvokeBuildArgumentSnapshot(
+                new[] { "game.exe" },
+                "-talosForceE2E");
+
+            var result = InvokeTryLaunchFromForcedMode(snapshot, 10002, _ => invoked = true);
+
+            Assert.That(result, Is.True, "由 Android unity extra 合成的参数快照应能触发强制模式补偿调用。");
+            Assert.That(invoked, Is.True, "Android unity extra 中的强制模式参数应驱动补偿启动动作。");
         }
     }
 }

@@ -36,65 +36,86 @@ namespace Talos.E2E
     static public class E2EAutoInit
     {
         /// <summary>
-        /// 是否已完成自动初始化检查。
+        /// 是否已成功启动 Talos E2E。
+        /// Whether Talos E2E has already been launched successfully.
+        /// 这里不再缓存“检查过但未启动”的失败结果，
+        /// 这样 Android 等平台仍可在更晚的宿主可见入口补试一次，而不会被早期探测永久锁死。
+        /// This no longer caches a failed “checked but not launched” result,
+        /// so Android and similar platforms can retry from a later host-visible entrypoint instead of being locked out forever by the first probe.
         /// </summary>
-        static private bool hasChecked = false;
+        static private bool hasLaunched = false;
 
         /// <summary>
-        /// 自动检测 Debug 构建标记，如果条件满足则启动 E2E 测试系统。
-        /// 此方法可安全地被多次调用，只会执行一次。
+        /// 自动检测 Talos 启动条件，并在条件满足时启动 E2E 测试系统。
+        /// Auto-detect the Talos launch conditions and start the E2E test system when they are satisfied.
+        /// 该方法允许“未成功启动”的调用在后续再次补试，
+        /// 但一旦真正启动成功，就会稳定拒绝重复启动请求。
+        /// This method allows later retries when an earlier call did not actually launch the service,
+        /// but once startup succeeds it consistently rejects duplicate launch requests.
         /// </summary>
         /// <param name="port">TCP 服务监听端口，默认 10002。可通过命令行参数 -talosPort 覆盖。</param>
         [Preserve]
         static public void CheckAndLaunch(int port = Transport.Protocol.DefaultPort)
         {
-            if (hasChecked) return;
-            hasChecked = true;
+            if (hasLaunched)
+            {
+                Debug.Log("[TalosE2E] E2E 测试系统已启动，跳过重复启动请求");
+                return;
+            }
 
             Debug.Log("[TalosE2E] 开始自动检测...");
 
-            // Phase 1: 读取命令行参数覆盖端口
-            var args = System.Environment.GetCommandLineArgs();
-            for (int i = 0; i < args.Length - 1; i++)
+            // 阶段 1：统一收集当前进程可见的 Talos 参数，覆盖普通命令行与 Android Intent `unity` extra。
+            // Phase 1: Collect the Talos arguments visible to the current process, covering both normal command-line args and the Android Intent `unity` extra.
+            var args = RuntimeLaunchArguments.ResolveCurrentProcessArguments();
+            if (RuntimeLaunchArguments.TryGetArgumentValue(args, "-talosPort", out var customPortText))
             {
-                if (string.Equals(args[i], "-talosPort", StringComparison.OrdinalIgnoreCase))
+                if (int.TryParse(customPortText, out var customPort))
                 {
-                    if (int.TryParse(args[i + 1], out var customPort))
-                    {
-                        port = customPort;
-                        Debug.Log($"[TalosE2E] 从命令行参数读取端口: {port}");
-                    }
+                    port = customPort;
+                    Debug.Log($"[TalosE2E] 从启动参数读取端口: {port}");
                 }
-
-                // 强制启用 E2E 测试模式（不依赖 DEBUG 标记文件）
-                if (string.Equals(args[i], "-talosForceE2E", StringComparison.OrdinalIgnoreCase))
+                else
                 {
-                    Debug.Log("[TalosE2E] 检测到 -talosForceE2E 参数，强制启用 E2E 测试");
-                    LaunchInternal(port);
-                    return;
+                    Debug.LogWarning($"[TalosE2E] 启动参数中的 -talosPort 非法，已忽略: {customPortText}");
                 }
             }
 
-            // Phase 2: 检查 DEBUG 构建标记
+            // 阶段 2：优先处理强制模式，允许 Android 从 Intent extra 补齐 `-talosForceE2E`。
+            // Phase 2: Handle forced mode first so Android can recover `-talosForceE2E` from the Intent extra.
+            if (ForcedModeStartupFallback.TryLaunchFromForcedMode(args, port, LaunchInternal))
+            {
+                Debug.Log("[TalosE2E] 检测到强制模式参数，已进入 E2E 启动流程");
+                return;
+            }
+
+            // 阶段 3：回退到 Debug 构建判定。
+            // Phase 3: Fall back to the Debug-build decision.
             if (DebugBuildMarker.IsDebugBuild())
             {
                 LaunchInternal(port);
             }
             else
             {
-                Debug.Log("[TalosE2E] 非 Debug 构建，跳过 E2E 测试系统启动");
+                Debug.Log("[TalosE2E] 非 Debug 构建，当前调用未启动 E2E；后续若出现强制模式参数仍允许再次补试");
             }
         }
 
         /// <summary>
         /// 内部启动逻辑，执行实际的 E2E 系统初始化。
-        /// 
+        /// Internal startup logic that performs the actual E2E system initialization.
         /// 启动模式选择：
-        /// - Editor 环境：使用静态模式（LaunchE2EStatic），配合 DidReloadScripts 管理生命周期
-        /// - 真机环境：使用 MonoBehaviour 模式（LaunchE2E），拥有完整 Unity 生命周期
+        /// Editor 环境使用静态模式，真机场景使用 MonoBehaviour 模式。
+        /// Startup mode selection:
+        /// the editor uses the static mode, while players use the MonoBehaviour mode.
         /// </summary>
         static private void LaunchInternal(int port)
         {
+            if (hasLaunched)
+            {
+                return;
+            }
+
             try
             {
                 if (UnityEngine.Application.isEditor)
@@ -110,6 +131,8 @@ namespace Talos.E2E
                     Debug.Log($"[TalosE2E] 真机模式，启动 MonoBehaviour E2E 服务，端口: {port}");
                     TalosE2EBootstrap.LaunchE2E(port);
                 }
+
+                hasLaunched = true;
             }
             catch (Exception ex)
             {
