@@ -59,6 +59,56 @@ capture_android_logcat() {
     fi
 }
 
+# 执行 ADB 命令并自动处理 daemon 重启后的 TCP 设备重连。
+# Nox 模拟器等使用 TCP 连接的设备在 ADB daemon 重启后（例如版本不匹配触发 killing + restart）
+# 会丢失 TCP 连接。此函数检测 daemon 重启并自动重连，然后重试命令。
+#
+# Execute an ADB command with automatic TCP-device reconnect after daemon restart.
+# TCP-connected emulators (e.g. Nox) lose their connection when the ADB daemon restarts
+# (e.g. due to version mismatch triggering killing + restart).
+# This function detects the restart, reconnects, and retries the command.
+#
+# 用法 / Usage: adb_with_reconnect <any adb args...>
+# 返回码 / Return code: 最终 adb 命令的退出码 / final adb command exit code
+adb_with_reconnect() {
+    local _output _stderr _rc
+    # 合并 stdout+stderr 以检测 daemon 重启 / combine to detect daemon restart
+    _output=$("${ADB_CMD[@]}" "$@" 2>&1) && _rc=0 || _rc=$?
+
+    # 检测 ADB daemon 是否重启 / Detect if ADB daemon restarted
+    if echo "${_output}" | grep -qi "daemon started successfully\|killing\.\.\."; then
+        echo "    ⚠️ 检测到 ADB daemon 重启，正在重连 TCP 目标..."
+        echo "    ⚠️ Detected ADB daemon restart, reconnecting TCP targets..."
+        # 重连所有 TCP 目标 / Reconnect all TCP targets
+        if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+            local _rt _rc2
+            IFS=',' read -ra _reconnect_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
+            for _rt in "${_reconnect_targets[@]}"; do
+                _rt="$(printf '%s' "${_rt}" | tr -d '[:space:]')"
+                [[ -z "${_rt}" ]] && continue
+                "${ADB_CMD[0]}" disconnect "${_rt}" 2>/dev/null || true
+                _rc2=$("${ADB_CMD[0]}" connect "${_rt}" 2>&1) || true
+                echo "        ${_rt}: ${_rc2}"
+            done
+            sleep 3
+            # 重选序列号 / Re-select serial
+            local _new_serial
+            _new_serial=$("${ADB_CMD[0]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
+            if [[ -n "${_new_serial}" ]]; then
+                ADB_CMD=("${ADB_CMD[0]}" "-s" "${_new_serial}")
+                echo "    重连后序列号: ${_new_serial} / Reconnected serial: ${_new_serial}"
+            fi
+        fi
+        # 重试原始命令 / Retry the original command
+        echo "    重试 adb $* ..."
+        _output=$("${ADB_CMD[@]}" "$@" 2>&1) && _rc=0 || _rc=$?
+    fi
+
+    # 输出原始结果 / Output the result
+    echo "${_output}"
+    return ${_rc}
+}
+
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -213,18 +263,23 @@ fi
 echo "    ✅ APK 安装完成"
 
 # ======== 停止旧实例 + 设置端口转发 ========
+# 使用 adb_with_reconnect 包装：ADB daemon 可能因版本不匹配而重启（Nox 自带 ADB v36 vs
+# 系统 ADB v41），重启后 TCP 设备断开，需要自动重连再重试。
+# Wrap with adb_with_reconnect: the ADB daemon may restart due to version mismatch
+# (Nox bundles ADB v36 vs system ADB v41); after restart the TCP device drops,
+# so we auto-reconnect and retry.
 echo ""
 echo ">>> 准备端口转发..."
-"${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
-"${ADB_CMD[@]}" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
-"${ADB_CMD[@]}" forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}"
-"${ADB_CMD[@]}" logcat -c 2>/dev/null || true
+adb_with_reconnect shell am force-stop "${PACKAGE}" 2>/dev/null || true
+adb_with_reconnect forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
+adb_with_reconnect forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}"
+adb_with_reconnect logcat -c 2>/dev/null || true
 echo "    ✅ 端口转发: localhost:${UNITY_PORT} -> device:${UNITY_PORT}"
 
 # ======== 启动应用 ========
 echo ""
 echo ">>> 启动应用..."
-"${ADB_CMD[@]}" shell "am start -n ${ACTIVITY} -e unity '-talosPort ${UNITY_PORT} -talosForceE2E'"
+adb_with_reconnect shell "am start -n ${ACTIVITY} -e unity '-talosPort ${UNITY_PORT} -talosForceE2E'"
 echo "    ✅ 应用已启动"
 
 # ======== 等待 TCP 服务就绪 ========
