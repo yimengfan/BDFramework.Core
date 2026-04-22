@@ -50,6 +50,9 @@ TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS="${TALOS_ADB_RECONNECT_RETRY_SLEEP_SECON
 # Timeout for failure-path logcat export and cleanup ADB commands so TeamCity does not hang when ADB stalls.
 TALOS_ADB_LOGCAT_TIMEOUT_SECONDS="${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS:-20}"
 TALOS_ADB_CLEANUP_TIMEOUT_SECONDS="${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS:-10}"
+# APK 安装命令的单次硬超时；用于拦截 adb install 在设备传输异常时长时间无响应的问题。
+# Hard timeout for a single APK install command so adb install cannot stall for hours when device transport gets stuck.
+TALOS_APK_INSTALL_TIMEOUT_SECONDS="${TALOS_APK_INSTALL_TIMEOUT_SECONDS:-180}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
@@ -98,9 +101,10 @@ talos_run_adb_command_with_timeout() {
         cat "${_output_file}" 2>/dev/null || true
         rm -f "${_output_file}"
         return 0
+    else
+        _rc=$?
     fi
 
-    _rc=$?
     cat "${_output_file}" 2>/dev/null || true
     rm -f "${_output_file}"
     return ${_rc}
@@ -118,9 +122,10 @@ talos_run_adb_with_reconnect_timeout() {
         cat "${_output_file}" 2>/dev/null || true
         rm -f "${_output_file}"
         return 0
+    else
+        _rc=$?
     fi
 
-    _rc=$?
     cat "${_output_file}" 2>/dev/null || true
     rm -f "${_output_file}"
     return ${_rc}
@@ -412,7 +417,8 @@ APK_INSTALL_TRIED=0
 APK_INSTALL_OK=0
 while [[ ${APK_INSTALL_TRIED} -lt ${APK_INSTALL_MAX} ]]; do
     APK_INSTALL_TRIED=$((APK_INSTALL_TRIED + 1))
-    _apk_result=$("${ADB_CMD[@]}" install -r -t "${APK_PATH}" 2>&1) && {
+    _apk_result="$(talos_run_adb_command_with_timeout "${TALOS_APK_INSTALL_TIMEOUT_SECONDS}" install -r -t "${APK_PATH}")" && _apk_rc=0 || _apk_rc=$?
+    if [[ ${_apk_rc} -eq 0 ]]; then
         # 命令返回 0，但 adb install 有时以 0 返回 "FAILED" 字样，需检查输出。
         # Command succeeded (exit 0), but adb install may still print FAILED in output.
         if echo "${_apk_result}" | grep -qi 'FAILED\|error'; then
@@ -421,9 +427,23 @@ while [[ ${APK_INSTALL_TRIED} -lt ${APK_INSTALL_MAX} ]]; do
             APK_INSTALL_OK=1
             break
         fi
-    } || {
+    else
+        if [[ ${_apk_rc} -eq 124 ]]; then
+            echo "    [尝试 ${APK_INSTALL_TRIED}/${APK_INSTALL_MAX}] APK 安装超时: ${TALOS_APK_INSTALL_TIMEOUT_SECONDS}s"
+        else
         echo "    [尝试 ${APK_INSTALL_TRIED}/${APK_INSTALL_MAX}] APK 安装失败: ${_apk_result}"
-    }
+        fi
+    fi
+    if echo "${_apk_result}" | grep -qi "daemon started successfully\|killing\.\.\.\|not found\|device.*offline\|no devices"; then
+        echo "    检测到 ADB 连接异常，尝试重连..."
+        talos_reconnect_primary_adb_target || true
+        sleep "${TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS}"
+        _new_serial=$(talos_pick_preferred_adb_serial) || true
+        if [[ -n "${_new_serial}" ]]; then
+            ADB_CMD=("${ADB_CMD[0]}" "-s" "${_new_serial}")
+            echo "    重连后切换序列号: ${_new_serial}"
+        fi
+    fi
     if [[ ${APK_INSTALL_TRIED} -lt ${APK_INSTALL_MAX} ]]; then
         echo "    等待 20s 后重试（让 Android 系统继续启动）..."
         sleep 20
