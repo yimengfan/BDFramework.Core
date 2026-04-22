@@ -8,6 +8,7 @@ using BDFramework.ResourceMgr;
 using Cysharp.Threading.Tasks;
 using Game.Config;
 using LitJson;
+using Talos.E2E;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,17 +64,18 @@ public class WindowPreconfig : MonoBehaviour
         }
         Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
 
-        if (System.Environment.GetCommandLineArgs().Any(arg => string.Equals(arg, "-talosForceE2E", System.StringComparison.OrdinalIgnoreCase)))
+        var commandLineArgs = System.Environment.GetCommandLineArgs();
+        if (ForcedModeStartupFallback.TryLaunchFromForcedMode(commandLineArgs, 10002, E2EAutoInit.CheckAndLaunch))
         {
             // 显式根引用宿主侧 launch 与 BaseFlow 套件类型，避免 Player 端只保留 launch 类型而裁剪新增的基础系统入口。
             // Explicitly root the host launch and BaseFlow suite types so player builds do not keep only the launch type while stripping the added foundational entrypoints.
-            // E2E TCP 的真正启动入口仍由 ScriptLoder.Init 阶段统一负责，避免 WindowPreconfig 再次触发 Talos 自动检测后在同一进程里重复抢占端口。
-            // ScriptLoder.Init remains the single owner of the E2E TCP startup so WindowPreconfig does not trigger Talos auto-detection again and race for the same port inside one process.
+            // ScriptLoder.Init 仍是首选启动入口；这里追加一次显式补偿触发，只为覆盖 Android 上更早阶段未成功拉起 Talos TCP 的场景。
+            // ScriptLoder.Init remains the preferred startup entrypoint; this branch adds one explicit compensating replay only for Android cases where the earlier stage failed to bring up the Talos TCP service.
             var hostLaunchSuiteAssembly = typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly;
             var hostBaseFlowSuiteAssembly = typeof(BDFramework.HostE2E.BaseFlowHostRuntimeTests).Assembly;
             Debug.Log(
                 $"[TalosE2E] 宿主已绑定 launch/BaseFlow 宿主测试程序集: launch={hostLaunchSuiteAssembly.GetName().Name} baseflow={hostBaseFlowSuiteAssembly.GetName().Name}");
-            Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 保持可见，E2E TCP 应已在 ScriptLoder.Init 阶段启动");
+            Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 已显式补触发 E2E 自动检测；若 ScriptLoder.Init 已启动，该调用会被安全忽略");
         }
     }
 
