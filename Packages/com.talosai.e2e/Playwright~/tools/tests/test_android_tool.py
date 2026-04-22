@@ -21,6 +21,7 @@ from pathlib import Path
 import shutil
 import stat
 import subprocess
+import time
 
 
 TOOLS_ROOT = Path(__file__).resolve().parents[1]
@@ -594,8 +595,11 @@ def test_test_android_tcp_timeout_failure_path_bounds_logcat_and_cleanup(tmp_pat
             "    exit 0",
             "    ;;",
             "  logcat)",
-            "    sleep 2",
-            "    printf 'slow logcat output\\n'",
+            "    if [[ \"${2:-}\" == \"-d\" ]]; then",
+            "      sleep 2",
+            "      printf 'slow logcat output\\n'",
+            "    fi",
+            "    exit 0",
             "    ;;",
             "  shell)",
             "    sleep 2",
@@ -607,6 +611,133 @@ def test_test_android_tcp_timeout_failure_path_bounds_logcat_and_cleanup(tmp_pat
             "esac",
         ]) + "\n",
     )
+    playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
+    write_executable(
+        node_home / "node.exe",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            "if [[ \"${1:-}\" == \"-e\" ]]; then exit 0; fi",
+            f"printf '%s\\n' \"$@\" > {node_args_path}",
+            f"printf '%s\\n%s\\n%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_REPORT:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PW_TEST_HTML_REPORT_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
+            "exit 0",
+        ]) + "\n",
+    )
+    write_executable(
+        node_home / "npm.cmd",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"printf '%s\\n' \"$@\" > {npm_args_path}",
+            f"mkdir -p {playwright_cli_path.parent}",
+            f"cat <<'EOF' > {playwright_cli_path}",
+            "console.log('stub playwright cli');",
+            "EOF",
+        ]) + "\n",
+    )
+
+    start_time = time.monotonic()
+    result = subprocess.run(
+        [
+            "/bin/bash",
+            str(copied_test_android),
+            "--apk", str(fake_apk),
+            "--connect-targets", "127.0.0.1:62001",
+            "--port", "12345",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(playwright_root),
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
+            "TALOS_NODEJS_HOME": str(node_home),
+            "TALOS_UNITY_TCP_TIMEOUT": "0",
+            "TALOS_ADB_LOGCAT_TIMEOUT_SECONDS": "1",
+            "TALOS_ADB_CLEANUP_TIMEOUT_SECONDS": "1",
+        },
+        timeout=30,
+    )
+    elapsed_seconds = time.monotonic() - start_time
+
+    assert result.returncode == 1, result.stdout + result.stderr
+    combined = result.stdout + result.stderr
+    assert elapsed_seconds < 20
+    assert "等待 TCP 服务超时" in combined
+    assert "Android logcat (tail 200)" in combined
+    adb_log_lines = adb_log_path.read_text(encoding="utf-8").splitlines()
+    assert any("logcat -d -v threadtime" in line for line in adb_log_lines)
+    assert any("shell am force-stop com.talos.BuildTest.debug" in line for line in adb_log_lines)
+
+
+def test_test_android_tcp_timeout_logcat_export_retries_after_daemon_restart(tmp_path: Path) -> None:
+    """验证 TCP 超时后的 logcat 导出会在 daemon 重启后自动重连并拿到真实日志。
+    Verify that the TCP-timeout logcat export reconnects after a daemon restart and captures the real device log.
+    """
+    playwright_root = tmp_path / "PlaywrightRoot"
+    tools_dir = playwright_root / "tools"
+    tools_dir.mkdir(parents=True)
+    (playwright_root / "test-results").mkdir(parents=True)
+
+    copied_test_android = tools_dir / "test-android.sh"
+    copied_node_tools = tools_dir / "node-tools.sh"
+    copied_connect_android = tools_dir / "connect_androidVirtualDevice.sh"
+    copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
+    copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+    copy_tool_script(SOURCE_CONNECT_ANDROID, copied_connect_android)
+
+    fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
+    fake_apk.write_text("stub apk", encoding="utf-8")
+
+    adb_log_path = tmp_path / "adb-logcat-retry-args.txt"
+    adb_state_dir = tmp_path / "adb-logcat-state"
+    adb_state_dir.mkdir(parents=True)
+    node_args_path = tmp_path / "node-args.txt"
+    node_env_path = tmp_path / "node-env.txt"
+    npm_args_path = tmp_path / "npm-args.txt"
+    fake_bin_dir = tmp_path / "fake-bin"
+    fake_bin_dir.mkdir()
+    write_executable(fake_bin_dir / "nc", "#!/bin/bash\nexit 1\n")
+    write_executable(
+        fake_bin_dir / "adb",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"state_dir={adb_state_dir}",
+            f"printf '%s\\n' \"$*\" >> {adb_log_path}",
+            "if [[ \"${1:-}\" == \"-s\" ]]; then",
+            "  shift 2",
+            "fi",
+            "case \"${1:-}\" in",
+            "  devices)",
+            "    printf 'List of devices attached\\n127.0.0.1:62001\\tdevice\\n'",
+            "    ;;",
+            "  connect)",
+            "    printf 'connected to %s\\n' \"${2:-}\"",
+            "    ;;",
+            "  disconnect|install|forward)",
+            "    exit 0",
+            "    ;;",
+            "  logcat)",
+            "    if [[ ! -f \"${state_dir}/restarted\" ]]; then",
+            "      touch \"${state_dir}/restarted\"",
+            "      printf 'adb server version (36) does not match this client (41); killing...\\n* daemon started successfully *\\n'",
+            "      exit 1",
+            "    fi",
+            "    printf 'actual device logcat line\\n'",
+            "    ;;",
+            "  shell)",
+            "    exit 0",
+            "    ;;",
+            "  *)",
+            "    exit 0",
+            "    ;;",
+            "esac",
+        ]) + "\n",
+    )
+
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
     playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
     write_executable(
         node_home / "node.exe",
@@ -648,16 +779,18 @@ def test_test_android_tcp_timeout_failure_path_bounds_logcat_and_cleanup(tmp_pat
             "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
             "TALOS_NODEJS_HOME": str(node_home),
             "TALOS_UNITY_TCP_TIMEOUT": "0",
-            "TALOS_ADB_LOGCAT_TIMEOUT_SECONDS": "1",
+            "TALOS_ADB_LOGCAT_TIMEOUT_SECONDS": "5",
             "TALOS_ADB_CLEANUP_TIMEOUT_SECONDS": "1",
+            "TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS": "0",
+            "TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS": "0",
         },
-        timeout=10,
+        timeout=15,
     )
 
-    assert result.returncode == 1, result.stdout + result.stderr
     combined = result.stdout + result.stderr
-    assert "Android logcat 导出超时" in combined
-    assert "force-stop package 超时" in combined
-    adb_log_lines = adb_log_path.read_text(encoding="utf-8").splitlines()
-    assert any("logcat -d -v threadtime" in line for line in adb_log_lines)
-    assert any("shell am force-stop com.talos.BuildTest.debug" in line for line in adb_log_lines)
+    assert result.returncode == 1, combined
+    assert "Detected ADB daemon restart, reconnecting TCP targets" in combined
+    assert "Android logcat (tail 200)" in combined
+    assert "actual device logcat line" in combined
+    exported_logcat = (playwright_root / "test-results" / "android-logcat.txt").read_text(encoding="utf-8")
+    assert "actual device logcat line" in exported_logcat

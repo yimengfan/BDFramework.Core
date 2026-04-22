@@ -56,34 +56,70 @@ ACTIVITY="${ACTIVITY:-}"
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 ANDROID_LOGCAT_FILE="${PLAYWRIGHT_DIR}/test-results/android-logcat.txt"
 
-# 以超时保护执行 ADB 命令，避免 logcat / cleanup 在 daemon 异常时无限阻塞 TeamCity。
-# Run an ADB command with a hard timeout so logcat / cleanup cannot block TeamCity forever when the daemon misbehaves.
-talos_run_adb_command_with_timeout() {
+# 以硬超时执行命令，避免外部工具在 TeamCity 上无限挂起。
+# Run a command with a hard timeout so external tools cannot hang forever in TeamCity.
+talos_run_command_with_timeout() {
     local _timeout_seconds="$1"
-    shift
+    local _output_file="$2"
+    shift 2
 
-    local _output_file _pid _elapsed _rc
-    _output_file="$(mktemp "${PLAYWRIGHT_DIR}/test-results/adb-command.XXXXXX.log")"
-
-    (
-        "${ADB_CMD[@]}" "$@" > "${_output_file}" 2>&1
-    ) &
+    local _pid _elapsed _rc
+    "$@" > "${_output_file}" 2>&1 &
     _pid=$!
     _elapsed=0
 
     while kill -0 "${_pid}" 2>/dev/null; do
         if [[ ${_elapsed} -ge ${_timeout_seconds} ]]; then
+            if command -v pkill >/dev/null 2>&1; then
+                pkill -TERM -P "${_pid}" 2>/dev/null || true
+                pkill -KILL -P "${_pid}" 2>/dev/null || true
+            fi
             kill "${_pid}" 2>/dev/null || true
             wait "${_pid}" 2>/dev/null || true
-            cat "${_output_file}" 2>/dev/null || true
-            rm -f "${_output_file}"
             return 124
         fi
         sleep 1
         _elapsed=$((_elapsed + 1))
     done
 
-    wait "${_pid}"
+    wait "${_pid}" 2>/dev/null && _rc=0 || _rc=$?
+    return ${_rc}
+}
+
+# 对原始 adb 命令增加硬超时；用于不需要自动重连的简单采集或测试桩路径。
+# Add a hard timeout around raw adb commands for simple collection paths that do not need reconnect logic.
+talos_run_adb_command_with_timeout() {
+    local _timeout_seconds="$1"
+    shift
+
+    local _output_file _rc
+    _output_file="$(mktemp "${PLAYWRIGHT_DIR}/test-results/adb-command.XXXXXX.log")"
+    if talos_run_command_with_timeout "${_timeout_seconds}" "${_output_file}" "${ADB_CMD[@]}" "$@"; then
+        cat "${_output_file}" 2>/dev/null || true
+        rm -f "${_output_file}"
+        return 0
+    fi
+
+    _rc=$?
+    cat "${_output_file}" 2>/dev/null || true
+    rm -f "${_output_file}"
+    return ${_rc}
+}
+
+# 对 adb_with_reconnect 增加硬超时；用于失败路径采集真实日志时同时处理 daemon 重启。
+# Add a hard timeout around adb_with_reconnect so failure-path collection can still recover from daemon restarts.
+talos_run_adb_with_reconnect_timeout() {
+    local _timeout_seconds="$1"
+    shift
+
+    local _output_file _rc
+    _output_file="$(mktemp "${PLAYWRIGHT_DIR}/test-results/adb-reconnect.XXXXXX.log")"
+    if talos_run_command_with_timeout "${_timeout_seconds}" "${_output_file}" adb_with_reconnect "$@"; then
+        cat "${_output_file}" 2>/dev/null || true
+        rm -f "${_output_file}"
+        return 0
+    fi
+
     _rc=$?
     cat "${_output_file}" 2>/dev/null || true
     rm -f "${_output_file}"
@@ -94,7 +130,7 @@ talos_run_adb_command_with_timeout() {
 # Clear logcat before launch and export it on key failure paths so the TeamCity artifact contains the same Android startup session logs.
 capture_android_logcat() {
     local _logcat_output _logcat_rc
-    _logcat_output="$(talos_run_adb_command_with_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" logcat -d -v threadtime)" && _logcat_rc=0 || _logcat_rc=$?
+    _logcat_output="$(talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" logcat -d -v threadtime)" && _logcat_rc=0 || _logcat_rc=$?
 
     if [[ ${_logcat_rc} -eq 0 ]]; then
         printf '%s' "${_logcat_output}" > "${ANDROID_LOGCAT_FILE}"
@@ -119,7 +155,7 @@ talos_run_adb_cleanup_command() {
     shift
 
     local _cleanup_output _cleanup_rc
-    _cleanup_output="$(talos_run_adb_command_with_timeout "${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS}" "$@")" && _cleanup_rc=0 || _cleanup_rc=$?
+    _cleanup_output="$(talos_run_adb_with_reconnect_timeout "${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS}" "$@")" && _cleanup_rc=0 || _cleanup_rc=$?
 
     if [[ ${_cleanup_rc} -eq 124 ]]; then
         echo ">>> ${_description} 超时 / ${_description} timed out"
