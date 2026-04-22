@@ -40,6 +40,12 @@ TALOS_MUMU_AUTO_START="${TALOS_MUMU_AUTO_START:-}"
 # 模拟器类型选择（mumu / nox / none），控制自动启动逻辑。mumu 为默认值（向后兼容）。
 # Emulator type selection (mumu / nox / none), controls auto-start logic. mumu is default (backward compatible).
 TALOS_EMULATOR_TYPE="${TALOS_EMULATOR_TYPE:-}"
+# ADB daemon 重启后的基础稳定等待秒数；默认 10 秒，测试可覆写为 0 以避免慢测。
+# Baseline wait after an ADB daemon restart; defaults to 10s and can be overridden to 0 in tests.
+TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS="${TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS:-10}"
+# ADB 重试失败后的再次重连等待秒数；默认 5 秒，测试可覆写为 0。
+# Retry wait after a failed reconnect attempt; defaults to 5s and can be overridden to 0 in tests.
+TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS="${TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS:-5}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
@@ -57,6 +63,54 @@ capture_android_logcat() {
         echo ""
         echo ">>> Android logcat 导出失败"
     fi
+}
+
+# 从 adb devices 输出中优先选择配置顺序里的 TCP 目标；若都不存在，再退回到任意在线 TCP 设备或任意在线设备。
+# Pick the preferred serial from adb devices output: first any configured TCP target in order, then any online TCP device, finally any online device.
+talos_pick_preferred_adb_serial_from_devices_output() {
+    local _devices_output="$1"
+    local _candidate _preferred
+
+    if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+        IFS=',' read -ra _preferred_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
+        for _candidate in "${_preferred_targets[@]}"; do
+            _candidate="$(printf '%s' "${_candidate}" | tr -d '[:space:]')"
+            [[ -z "${_candidate}" ]] && continue
+            if printf '%s\n' "${_devices_output}" | awk -v serial="${_candidate}" '$1 == serial && $2 == "device" { found = 1 } END { exit found ? 0 : 1 }'; then
+                printf '%s' "${_candidate}"
+                return 0
+            fi
+        done
+    fi
+
+    _preferred=$(printf '%s\n' "${_devices_output}" | awk '
+        $2 == "device" && index($1, ":") > 0 { print $1; exit }
+        $2 == "device" && first == "" { first = $1 }
+        END { if (first != "") print first }
+    ' | head -n 1 | tr -d '\r')
+    printf '%s' "${_preferred}"
+}
+
+# 读取当前 adb devices 并解析出优先序列号，供 daemon 重启后的重连路径复用。
+# Read the current adb devices output and resolve the preferred serial for daemon-restart reconnect flows.
+talos_pick_preferred_adb_serial() {
+    local _devices_output
+    _devices_output=$("${ADB_CMD[0]}" devices 2>/dev/null || true)
+    talos_pick_preferred_adb_serial_from_devices_output "${_devices_output}"
+}
+
+# 重连配置中的首选 TCP 目标，并回显 adb connect 输出便于 CI 日志定位。
+# Reconnect the primary configured TCP target and echo adb connect output for CI diagnostics.
+talos_reconnect_primary_adb_target() {
+    local _first_target _connect_output
+
+    _first_target="$(printf '%s' "${TALOS_ADB_CONNECT_TARGETS:-}" | cut -d',' -f1 | tr -d '[:space:]')"
+    [[ -z "${_first_target}" ]] && return 1
+
+    "${ADB_CMD[0]}" disconnect "${_first_target}" 2>/dev/null || true
+    _connect_output=$("${ADB_CMD[0]}" connect "${_first_target}" 2>&1) || true
+    echo "        ${_first_target}: ${_connect_output}"
+    return 0
 }
 
 # 执行 ADB 命令并自动处理 daemon 重启后的 TCP 设备重连。
@@ -92,49 +146,22 @@ adb_with_reconnect() {
             done
             # 等待 daemon 稳定：10s 基础等待，给 ADB 协议握手留足时间。
             # Wait for daemon to stabilise: 10s baseline so ADB protocol handshake completes.
-            sleep 10
-            # 优先选取 TCP 目标作为序列号（比 emulator-* 更稳定，不会变成 offline）。
-            # Prefer TCP target as serial (more stable than emulator-* which can go offline).
+            sleep "${TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS}"
+            # 优先选取配置顺序里的 TCP 目标作为序列号（比 emulator-* 更稳定，不会变成 offline）。
+            # Prefer the configured TCP target order as the serial because it is more stable than emulator-* aliases.
             local _wait_serial=""
-            local _dev_list
-            _dev_list=$("${ADB_CMD[0]}" devices 2>/dev/null || true)
-            echo "${_dev_list}" | while IFS=$'\t' read -r _sn _st; do
-                _sn="$(printf '%s' "${_sn}" | tr -d '\r\n')"
-                _st="$(printf '%s' "${_st}" | tr -d '\r\n')"
-                # 优先 TCP 地址 / Prefer TCP addresses
-                if [[ "${_st}" == "device" && "${_sn}" == *":"* ]]; then
-                    echo "PREFERRED:${_sn}"
-                    return 0
-                fi
-            done | head -1 | grep -q '^PREFERRED:' && {
-                _wait_serial=$(echo "${_dev_list}" | while IFS=$'\t' read -r _sn _st; do
-                    _sn="$(printf '%s' "${_sn}" | tr -d '\r\n')"
-                    _st="$(printf '%s' "${_st}" | tr -d '\r\n')"
-                    if [[ "${_st}" == "device" && "${_sn}" == *":"* ]]; then
-                        echo "${_sn}"
-                        return 0
-                    fi
-                done | head -1)
-            }
-            # 如果没有 TCP 设备在线，退而求其次选任意在线设备 / Fall back to any online device
-            if [[ -z "${_wait_serial}" ]]; then
-                _wait_serial=$(echo "${_dev_list}" | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
-            fi
+            _wait_serial=$(talos_pick_preferred_adb_serial) || true
             # 如果仍无设备，轮询等待（最多 60s） / Still no device — poll up to 60s
             local _wait_tries=0
             while [[ -z "${_wait_serial}" && ${_wait_tries} -lt 12 ]]; do
-                sleep 5
+                sleep "${TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS}"
                 _wait_tries=$(( _wait_tries + 1 ))
-                _dev_list=$("${ADB_CMD[0]}" devices 2>/dev/null || true)
-                _wait_serial=$(echo "${_dev_list}" | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
+                _wait_serial=$(talos_pick_preferred_adb_serial) || true
                 if [[ -n "${_wait_serial}" ]]; then
                     break
                 fi
                 # 重新 connect 第一个目标 / Re-connect first target
-                local _ft
-                _ft="$(printf '%s' "${TALOS_ADB_CONNECT_TARGETS}" | cut -d',' -f1 | tr -d '[:space:]')"
-                "${ADB_CMD[0]}" disconnect "${_ft}" 2>/dev/null || true
-                "${ADB_CMD[0]}" connect "${_ft}" 2>/dev/null || true
+                talos_reconnect_primary_adb_target || true
             done
             if [[ -n "${_wait_serial}" ]]; then
                 ADB_CMD=("${ADB_CMD[0]}" "-s" "${_wait_serial}")
@@ -154,13 +181,10 @@ adb_with_reconnect() {
             if echo "${_output}" | grep -qi "not found\|device.*offline\|no devices"; then
                 echo "    设备不可用，重连中... / Device unavailable, reconnecting..."
                 if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
-                    local _ft
-                    _ft="$(printf '%s' "${TALOS_ADB_CONNECT_TARGETS}" | cut -d',' -f1 | tr -d '[:space:]')"
-                    "${ADB_CMD[0]}" disconnect "${_ft}" 2>/dev/null || true
-                    "${ADB_CMD[0]}" connect "${_ft}" 2>/dev/null || true
-                    sleep 5
+                    talos_reconnect_primary_adb_target || true
+                    sleep "${TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS}"
                     local _re_sn
-                    _re_sn=$("${ADB_CMD[0]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
+                    _re_sn=$(talos_pick_preferred_adb_serial) || true
                     if [[ -n "${_re_sn}" ]]; then
                         ADB_CMD=("${ADB_CMD[0]}" "-s" "${_re_sn}")
                         echo "    重连后序列号: ${_re_sn}"

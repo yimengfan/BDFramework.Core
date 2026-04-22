@@ -148,6 +148,15 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - `--wait` 进入轮询前会先做一次轻量 state-only 检查；如果构建已 `finished`，直接打印最终摘要并退出，不再进入详细轮询循环。
 - If the build script needs to call TeamCity again while it is running, explicitly forward `--property env.TEAMCITY_TOKEN="$TEAMCITY_TOKEN"`. The remote worker does not inherit the local shell token automatically.
 
+Copilot 轮询纪律 / Copilot polling discipline:
+
+- 对 `run-build --wait`，优先使用 `run_in_terminal` 的 `async` 模式启动，然后等待该终端的完成通知。
+- 不要在同一时段再额外启动 `pylanceRunCodeSnippet` + `time.sleep()` 的轮询脚本；这会重复消耗上下文窗口，看起来像“卡住几个小时”。
+- 如果必须临时查看进度，读取同一个异步终端的输出即可；不要再并行起第二套轮询链路。
+- For `run-build --wait`, prefer launching it via `run_in_terminal` in `async` mode and then wait for that terminal's completion notification.
+- Do not start an extra `pylanceRunCodeSnippet` + `time.sleep()` polling loop in parallel; that burns context budget and looks like the session is frozen for hours.
+- If a spot progress check is required, read the same async terminal output instead of starting a second polling pipeline.
+
 排障建议：
 
 - 如果构建早已结束，不要继续只盯着后台终端等待；优先直接查询 `GET /app/rest/builds/id:<buildId>`，再按 buildId 读取 `test-output.log` 或 `downloadBuildLog.html`。

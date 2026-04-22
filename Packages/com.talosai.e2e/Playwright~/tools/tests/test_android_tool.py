@@ -5,11 +5,13 @@ Talos Android launcher script tests.
 1. 当 PATH 缺少 adb 时，脚本会回退到 ANDROID_SDK_ROOT 下的 platform-tools/adb。
 2. Android 工具脚本会使用解析后的 adb 执行安装、端口转发、启动应用与清理流程。
 3. Playwright 启动仍复用解析后的 Node CLI，而不是依赖外部 npx。
+4. ADB daemon 重启后，脚本会优先保留配置里的 TCP 序列号，而不是退回到不稳定的 emulator-* 别名。
 
 Coverage:
 1. When PATH does not contain adb, the script falls back to platform-tools/adb under ANDROID_SDK_ROOT.
 2. The Android tool script uses the resolved adb for install, port-forward, app launch, and cleanup.
 3. Playwright startup still reuses the resolved Node CLI instead of depending on external npx.
+4. After an ADB daemon restart, the script keeps the configured TCP serial instead of falling back to unstable emulator-* aliases.
 """
 
 from __future__ import annotations
@@ -393,3 +395,151 @@ def test_test_android_start_mumu_flag_searches_process_list_and_logs(tmp_path: P
     # Log should contain the MuMu detection entry log line.
     combined = result.stdout + result.stderr
     assert "检查 MuMu 模拟器是否正在运行" in combined
+
+
+def test_test_android_reconnect_prefers_configured_tcp_serial_after_offline_retry(tmp_path: Path) -> None:
+    """验证 daemon 重启后的重试会优先继续使用配置里的 TCP 序列号，而不是退回到 emulator-* 别名。
+    Verify that the daemon-restart retry flow keeps using the configured TCP serial instead of falling back to an emulator-* alias.
+    """
+    playwright_root = tmp_path / "PlaywrightRoot"
+    tools_dir = playwright_root / "tools"
+    tools_dir.mkdir(parents=True)
+    (playwright_root / "test-results").mkdir(parents=True)
+
+    copied_test_android = tools_dir / "test-android.sh"
+    copied_node_tools = tools_dir / "node-tools.sh"
+    copied_connect_android = tools_dir / "connect_androidVirtualDevice.sh"
+    copy_tool_script(SOURCE_TEST_ANDROID, copied_test_android)
+    copy_tool_script(SOURCE_NODE_TOOLS, copied_node_tools)
+    copy_tool_script(SOURCE_CONNECT_ANDROID, copied_connect_android)
+
+    fake_apk = tmp_path / "com.talos.BuildTest.debug.apk"
+    fake_apk.write_text("stub apk", encoding="utf-8")
+
+    adb_log_path = tmp_path / "adb-args.txt"
+    adb_state_dir = tmp_path / "adb-state"
+    adb_state_dir.mkdir(parents=True)
+    node_args_path = tmp_path / "node-args.txt"
+    node_env_path = tmp_path / "node-env.txt"
+    npm_args_path = tmp_path / "npm-args.txt"
+
+    fake_bin_dir = tmp_path / "fake-bin"
+    fake_bin_dir.mkdir()
+    write_executable(fake_bin_dir / "nc", "#!/bin/bash\nexit 0\n")
+
+    write_executable(
+        fake_bin_dir / "adb",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"state_dir={adb_state_dir}",
+            f"printf '%s\\n' \"$*\" >> {adb_log_path}",
+            "serial=''",
+            "if [[ \"${1:-}\" == \"-s\" ]]; then",
+            "  serial=\"${2:-}\"",
+            "  shift 2",
+            "fi",
+            "case \"${1:-}\" in",
+            "  connect)",
+            "    printf 'connected to %s\\n' \"${2:-}\"",
+            "    ;;",
+            "  disconnect)",
+            "    exit 0",
+            "    ;;",
+            "  devices)",
+            "    if [[ -f \"${state_dir}/offline-retry\" ]]; then",
+            "      printf 'List of devices attached\\nemulator-5554\\tdevice\\n127.0.0.1:62001\\tdevice\\n'",
+            "    else",
+            "      printf 'List of devices attached\\n127.0.0.1:62001\\tdevice\\n'",
+            "    fi",
+            "    ;;",
+            "  install)",
+            "    exit 0",
+            "    ;;",
+            "  forward)",
+            "    if [[ \"${2:-}\" == \"--remove\" ]]; then",
+            "      if [[ ! -f \"${state_dir}/daemon-restarted\" ]]; then",
+            "        touch \"${state_dir}/daemon-restarted\"",
+            "        printf 'adb server version (36) does not match this client (41); killing...\\n* daemon started successfully *\\n'",
+            "        exit 1",
+            "      fi",
+            "      if [[ ! -f \"${state_dir}/offline-retry\" ]]; then",
+            "        touch \"${state_dir}/offline-retry\"",
+            "        printf 'adb.exe: error: device offline\\n'",
+            "        exit 1",
+            "      fi",
+            "    fi",
+            "    exit 0",
+            "    ;;",
+            "  logcat)",
+            "    exit 0",
+            "    ;;",
+            "  shell)",
+            "    exit 0",
+            "    ;;",
+            "  *)",
+            "    exit 0",
+            "    ;;",
+            "esac",
+        ]) + "\n",
+    )
+
+    node_home = tmp_path / "node-home"
+    node_home.mkdir()
+    playwright_cli_path = playwright_root / "node_modules" / "@playwright" / "test" / "cli.js"
+    write_executable(
+        node_home / "node.exe",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            "if [[ \"${1:-}\" == \"-e\" ]]; then exit 0; fi",
+            f"printf '%s\\n' \"$@\" > {node_args_path}",
+            f"printf '%s\\n%s\\n%s\\n%s\\n%s\\n' \"${{PLAYWRIGHT_HTML_OUTPUT_DIR:-}}\" \"${{PLAYWRIGHT_HTML_REPORT:-}}\" \"${{PLAYWRIGHT_HTML_OPEN:-}}\" \"${{PW_TEST_HTML_REPORT_OPEN:-}}\" \"${{PLAYWRIGHT_JUNIT_OUTPUT_FILE:-}}\" > {node_env_path}",
+            "exit 0",
+        ]) + "\n",
+    )
+    write_executable(
+        node_home / "npm.cmd",
+        "\n".join([
+            "#!/bin/bash",
+            "set -euo pipefail",
+            f"printf '%s\\n' \"$@\" > {npm_args_path}",
+            f"mkdir -p {playwright_cli_path.parent}",
+            f"cat <<'EOF' > {playwright_cli_path}",
+            "console.log('stub playwright cli');",
+            "EOF",
+        ]) + "\n",
+    )
+
+    result = subprocess.run(
+        [
+            "/bin/bash",
+            str(copied_test_android),
+            "--apk", str(fake_apk),
+            "--connect-targets", "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555",
+            "--port", "12345",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(playwright_root),
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin_dir}:/usr/bin:/bin",
+            "TALOS_NODEJS_HOME": str(node_home),
+            "TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS": "0",
+            "TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS": "0",
+        },
+        timeout=30,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    adb_log_lines = adb_log_path.read_text(encoding="utf-8").splitlines()
+    forward_remove_lines = [line for line in adb_log_lines if "forward --remove tcp:12345" in line]
+    assert forward_remove_lines, "forward --remove should have been retried after daemon restart"
+    assert all("-s 127.0.0.1:62001" in line for line in forward_remove_lines), (
+        "reconnect retries must keep the configured TCP serial instead of switching to emulator-* aliases"
+    )
+    assert not any("-s emulator-5554 forward --remove tcp:12345" in line for line in adb_log_lines)
+    combined = result.stdout + result.stderr
+    assert "设备不可用，重连中" in combined
+    assert "重连后序列号: 127.0.0.1:62001" in combined
