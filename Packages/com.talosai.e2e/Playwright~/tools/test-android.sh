@@ -46,23 +46,91 @@ TALOS_ADB_RECONNECT_BASELINE_SLEEP_SECONDS="${TALOS_ADB_RECONNECT_BASELINE_SLEEP
 # ADB 重试失败后的再次重连等待秒数；默认 5 秒，测试可覆写为 0。
 # Retry wait after a failed reconnect attempt; defaults to 5s and can be overridden to 0 in tests.
 TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS="${TALOS_ADB_RECONNECT_RETRY_SLEEP_SECONDS:-5}"
+# 失败采集 logcat 与清理阶段的 ADB 命令超时；用于避免 TeamCity 在 ADB 卡死时整步假死。
+# Timeout for failure-path logcat export and cleanup ADB commands so TeamCity does not hang when ADB stalls.
+TALOS_ADB_LOGCAT_TIMEOUT_SECONDS="${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS:-20}"
+TALOS_ADB_CLEANUP_TIMEOUT_SECONDS="${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS:-10}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 ANDROID_LOGCAT_FILE="${PLAYWRIGHT_DIR}/test-results/android-logcat.txt"
 
+# 以超时保护执行 ADB 命令，避免 logcat / cleanup 在 daemon 异常时无限阻塞 TeamCity。
+# Run an ADB command with a hard timeout so logcat / cleanup cannot block TeamCity forever when the daemon misbehaves.
+talos_run_adb_command_with_timeout() {
+    local _timeout_seconds="$1"
+    shift
+
+    local _output_file _pid _elapsed _rc
+    _output_file="$(mktemp "${PLAYWRIGHT_DIR}/test-results/adb-command.XXXXXX.log")"
+
+    (
+        "${ADB_CMD[@]}" "$@" > "${_output_file}" 2>&1
+    ) &
+    _pid=$!
+    _elapsed=0
+
+    while kill -0 "${_pid}" 2>/dev/null; do
+        if [[ ${_elapsed} -ge ${_timeout_seconds} ]]; then
+            kill "${_pid}" 2>/dev/null || true
+            wait "${_pid}" 2>/dev/null || true
+            cat "${_output_file}" 2>/dev/null || true
+            rm -f "${_output_file}"
+            return 124
+        fi
+        sleep 1
+        _elapsed=$((_elapsed + 1))
+    done
+
+    wait "${_pid}"
+    _rc=$?
+    cat "${_output_file}" 2>/dev/null || true
+    rm -f "${_output_file}"
+    return ${_rc}
+}
+
 # 在启动前清空并在关键失败点导出 logcat，保证 TeamCity artifact 能带回同一次 Android 启动期日志。
 # Clear logcat before launch and export it on key failure paths so the TeamCity artifact contains the same Android startup session logs.
 capture_android_logcat() {
-    if "${ADB_CMD[@]}" logcat -d -v threadtime > "${ANDROID_LOGCAT_FILE}" 2>/dev/null; then
+    local _logcat_output _logcat_rc
+    _logcat_output="$(talos_run_adb_command_with_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" logcat -d -v threadtime)" && _logcat_rc=0 || _logcat_rc=$?
+
+    if [[ ${_logcat_rc} -eq 0 ]]; then
+        printf '%s' "${_logcat_output}" > "${ANDROID_LOGCAT_FILE}"
         echo ""
         echo ">>> Android logcat (tail 200)"
         tail -n 200 "${ANDROID_LOGCAT_FILE}" || true
+    elif [[ ${_logcat_rc} -eq 124 ]]; then
+        printf '%s' "${_logcat_output}" > "${ANDROID_LOGCAT_FILE}" 2>/dev/null || true
+        echo ""
+        echo ">>> Android logcat 导出超时 / Android logcat export timed out"
     else
+        printf '%s' "${_logcat_output}" > "${ANDROID_LOGCAT_FILE}" 2>/dev/null || true
         echo ""
         echo ">>> Android logcat 导出失败"
     fi
+}
+
+# 用超时保护执行清理类 ADB 命令，保证失败路径能尽快退出并把日志返回给 TeamCity。
+# Execute cleanup-style ADB commands with a timeout so failure paths exit promptly and return logs to TeamCity.
+talos_run_adb_cleanup_command() {
+    local _description="$1"
+    shift
+
+    local _cleanup_output _cleanup_rc
+    _cleanup_output="$(talos_run_adb_command_with_timeout "${TALOS_ADB_CLEANUP_TIMEOUT_SECONDS}" "$@")" && _cleanup_rc=0 || _cleanup_rc=$?
+
+    if [[ ${_cleanup_rc} -eq 124 ]]; then
+        echo ">>> ${_description} 超时 / ${_description} timed out"
+        return 124
+    fi
+
+    if [[ ${_cleanup_rc} -ne 0 && -n "${_cleanup_output}" ]]; then
+        echo "${_cleanup_output}"
+    fi
+
+    return ${_cleanup_rc}
 }
 
 # 从 adb devices 输出中优先选择配置顺序里的 TCP 目标；若都不存在，再退回到任意在线 TCP 设备或任意在线设备。
@@ -405,7 +473,7 @@ if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     echo "    2. Unity 热更 DLL 加载出错"
     echo "    3. adb forward tcp:${UNITY_PORT} 未生效"
     capture_android_logcat
-    "${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
+    talos_run_adb_cleanup_command "force-stop package" shell am force-stop "${PACKAGE}" 2>/dev/null || true
     exit 1
 fi
 
@@ -442,8 +510,8 @@ capture_android_logcat
 # ======== 清理 ========
 echo ""
 echo ">>> 清理..."
-"${ADB_CMD[@]}" shell am force-stop "${PACKAGE}" 2>/dev/null || true
-"${ADB_CMD[@]}" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
+talos_run_adb_cleanup_command "force-stop package" shell am force-stop "${PACKAGE}" 2>/dev/null || true
+talos_run_adb_cleanup_command "remove adb forward" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
 
 # ======== 结果 ========
 echo ""
