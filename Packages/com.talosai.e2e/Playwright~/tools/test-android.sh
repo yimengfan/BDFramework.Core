@@ -90,18 +90,51 @@ adb_with_reconnect() {
                 _rc2=$("${ADB_CMD[0]}" connect "${_rt}" 2>&1) || true
                 echo "        ${_rt}: ${_rc2}"
             done
-            sleep 3
+            # 等待 daemon 稳定：5s 基础等待 + 轮询直到至少一个设备在线（最多 30s）。
+            # Wait for daemon to stabilise: 5s baseline + poll until at least one device is online (max 30s).
+            sleep 5
+            local _wait_serial _wait_tries=0
+            while [[ ${_wait_tries} -lt 10 ]]; do
+                _wait_serial=$("${ADB_CMD[0]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
+                if [[ -n "${_wait_serial}" ]]; then
+                    break
+                fi
+                sleep 2
+                _wait_tries=$(( _wait_tries + 1 ))
+            done
             # 重选序列号 / Re-select serial
-            local _new_serial
-            _new_serial=$("${ADB_CMD[0]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
-            if [[ -n "${_new_serial}" ]]; then
-                ADB_CMD=("${ADB_CMD[0]}" "-s" "${_new_serial}")
-                echo "    重连后序列号: ${_new_serial} / Reconnected serial: ${_new_serial}"
+            if [[ -n "${_wait_serial}" ]]; then
+                ADB_CMD=("${ADB_CMD[0]}" "-s" "${_wait_serial}")
+                echo "    重连后序列号: ${_wait_serial} / Reconnected serial: ${_wait_serial}"
+            else
+                # 最后兜底：再次尝试 connect 第一个目标 / Last resort: retry connect to first target
+                local _first_target
+                _first_target="$(printf '%s' "${TALOS_ADB_CONNECT_TARGETS}" | cut -d',' -f1 | tr -d '[:space:]')"
+                if [[ -n "${_first_target}" ]]; then
+                    "${ADB_CMD[0]}" disconnect "${_first_target}" 2>/dev/null || true
+                    "${ADB_CMD[0]}" connect "${_first_target}" 2>/dev/null || true
+                    sleep 3
+                    _wait_serial=$("${ADB_CMD[0]}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' | tr -d '\r\n') || true
+                    if [[ -n "${_wait_serial}" ]]; then
+                        ADB_CMD=("${ADB_CMD[0]}" "-s" "${_wait_serial}")
+                        echo "    兜底重连后序列号: ${_wait_serial} / Fallback reconnected serial: ${_wait_serial}"
+                    fi
+                fi
             fi
         fi
-        # 重试原始命令 / Retry the original command
-        echo "    重试 adb $* ..."
-        _output=$("${ADB_CMD[@]}" "$@" 2>&1) && _rc=0 || _rc=$?
+        # 重试原始命令（最多 3 次） / Retry the original command (up to 3 attempts)
+        local _retry=0
+        while [[ ${_retry} -lt 3 ]]; do
+            _retry=$(( _retry + 1 ))
+            echo "    重试 adb $* (attempt ${_retry}/3) ..."
+            _output=$("${ADB_CMD[@]}" "$@" 2>&1) && _rc=0 || _rc=$?
+            # 如果还是 device not found，等待后重试 / If still device not found, wait and retry
+            if [[ ${_rc} -ne 0 ]] && echo "${_output}" | grep -qi "not found\|device.*offline"; then
+                sleep 3
+                continue
+            fi
+            break
+        done
     fi
 
     # 输出原始结果 / Output the result
