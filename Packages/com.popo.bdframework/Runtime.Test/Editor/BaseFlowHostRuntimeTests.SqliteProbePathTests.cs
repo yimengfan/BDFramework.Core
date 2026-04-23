@@ -17,6 +17,9 @@ namespace Runtime.Test.Editor
     /// </summary>
     public class BaseFlowHostRuntimeTestsSqliteProbePathTests
     {
+        private const int SqliteReadWriteCreateOpenFlagsValue = 2 | 4;
+        private const string SqliteDefaultDateTimeStringFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff";
+
         /// <summary>
         /// 候选路径摘要。
         /// Candidate-path summary.
@@ -76,6 +79,23 @@ namespace Runtime.Test.Editor
 
             Assert.That(runtimeType, Is.Not.Null, "应能在当前 AppDomain 中解析到 BDFramework.HostE2E.BaseFlowHostRuntimeTests 类型。");
             return runtimeType!;
+        }
+
+        /// <summary>
+        /// 解析当前 AppDomain 中已装载的目标类型。
+        /// Resolve a loaded target type from the current AppDomain.
+        /// </summary>
+        /// <param name="typeName">目标类型全名。The full target type name.</param>
+        /// <returns>已装载的目标类型。The loaded target type.</returns>
+        private static Type GetLoadedType(string typeName)
+        {
+            var loadedType = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Select(assembly => assembly.GetType(typeName))
+                .FirstOrDefault(type => type != null);
+
+            Assert.That(loadedType, Is.Not.Null, $"应能在当前 AppDomain 中解析到 {typeName} 类型。");
+            return loadedType!;
         }
 
         /// <summary>
@@ -178,6 +198,84 @@ namespace Runtime.Test.Editor
                 arguments[3] as string ?? string.Empty,
                 arguments[2] as string ?? string.Empty,
                 result!);
+        }
+
+        /// <summary>
+        /// 通过反射调用宿主的 SQLite 路径回退执行辅助器，并返回最终抛出的根异常。
+        /// Invoke the host SQLite fallback executor through reflection and return the final root exception.
+        /// </summary>
+        /// <param name="pathOptions">私有候选路径数组。The private candidate-path array.</param>
+        /// <param name="openAction">测试用打开动作。The test open action.</param>
+        /// <returns>宿主回退执行器抛出的根异常。The root exception thrown by the host fallback executor.</returns>
+        private static Exception CaptureExecuteWithSqliteProbePathFallbackFailure(
+            Array pathOptions,
+            Func<string, object> openAction)
+        {
+            var hostType = GetBaseFlowHostRuntimeTestsType();
+            var method = hostType.GetMethod("ExecuteWithSqliteProbePathFallback", BindingFlags.NonPublic | BindingFlags.Static);
+
+            Assert.That(method, Is.Not.Null, "应能找到 ExecuteWithSqliteProbePathFallback 私有静态方法。");
+            try
+            {
+                method!.Invoke(
+                    null,
+                    new object[]
+                    {
+                        pathOptions,
+                        openAction,
+                        null!,
+                        null!,
+                    });
+            }
+            catch (TargetInvocationException exception) when (exception.InnerException != null)
+            {
+                return exception.InnerException;
+            }
+
+            Assert.Fail("应当捕获到宿主 SQLite 回退执行器抛出的异常。");
+            return new Exception("unreachable");
+        }
+
+        /// <summary>
+        /// 通过与宿主探针一致的反射参数创建 SQLiteConnectionString。
+        /// Create a SQLiteConnectionString with the same reflection arguments used by the host probe.
+        /// </summary>
+        /// <param name="databasePath">数据库路径。The database path.</param>
+        /// <returns>创建出的 SQLiteConnectionString 实例。The constructed SQLiteConnectionString instance.</returns>
+        private static object InvokeReflectedSqliteConnectionStringConstructor(string databasePath)
+        {
+            var sqliteConnectionType = GetLoadedType("SQLite4Unity3d.SQLiteConnection");
+            var sqliteConnectionStringType = GetLoadedType("SQLite4Unity3d.SQLiteConnectionString");
+            var sqliteOpenFlagsType = GetLoadedType("SQLite4Unity3d.SQLiteOpenFlags");
+            var sqliteConnectionActionType = typeof(Action<>).MakeGenericType(sqliteConnectionType);
+            var constructor = sqliteConnectionStringType.GetConstructor(new[]
+            {
+                typeof(string),
+                sqliteOpenFlagsType,
+                typeof(bool),
+                typeof(object),
+                sqliteConnectionActionType,
+                sqliteConnectionActionType,
+                typeof(string),
+                typeof(string),
+                typeof(bool),
+            });
+
+            Assert.That(constructor, Is.Not.Null,
+                "应能找到 SQLiteConnectionString(string, SQLiteOpenFlags, bool, object, Action<SQLiteConnection>, Action<SQLiteConnection>, string, string, bool) 构造函数。");
+            var sqliteOpenFlags = Enum.ToObject(sqliteOpenFlagsType, SqliteReadWriteCreateOpenFlagsValue);
+            return constructor!.Invoke(new object[]
+            {
+                databasePath,
+                sqliteOpenFlags,
+                true,
+                null!,
+                null!,
+                null!,
+                null!,
+                SqliteDefaultDateTimeStringFormat,
+                true,
+            });
         }
 
         /// <summary>
@@ -286,6 +384,59 @@ namespace Runtime.Test.Editor
                 "成功命中的数据库路径应与第二条候选项一致。");
             Assert.That(executionResult.Result as string, Is.EqualTo("/data/user/0/com.talos/files/bdframework-host-sqlite/probe.db"),
                 "回退执行器应把成功路径的打开结果原样返回给调用方。");
+        }
+
+        /// <summary>
+        /// 验证全部候选都失败时，最终异常会包含逐候选的路径与根异常摘要，便于 TeamCity 直接定位失败原因。
+        /// Verify that when all candidates fail, the final exception includes per-candidate path and root-exception summaries so TeamCity can diagnose the failure directly.
+        /// </summary>
+        [Test]
+        public void ExecuteWithSqliteProbePathFallback_IncludesCandidateFailureDetailsWhenAllCandidatesFail()
+        {
+            var pathOptions = InvokeBuildSqliteProbePathOptions(
+                RuntimePlatform.Android,
+                "/framework/persistent",
+                "/storage/emulated/0/Android/data/com.talos/files",
+                "/storage/emulated/0/Android/data/com.talos/cache",
+                "probe.db",
+                "/data/user/0/com.talos/databases/probe.db",
+                "/data/user/0/com.talos/files",
+                "/data/user/0/com.talos/cache");
+
+            var exception = CaptureExecuteWithSqliteProbePathFallbackFailure(
+                pathOptions,
+                databasePath => throw new InvalidOperationException($"cannot open {databasePath}"));
+
+            Assert.That(exception.Message,
+                Does.Contain("android-context-database-path:/data/user/0/com.talos/databases/probe.db => System.InvalidOperationException: cannot open /data/user/0/com.talos/databases/probe.db"),
+                "全部候选都失败时，异常消息应包含首个候选路径及其根异常摘要。");
+            Assert.That(exception.Message,
+                Does.Contain("android-internal-files-dir:/data/user/0/com.talos/files/bdframework-host-sqlite/probe.db => System.InvalidOperationException: cannot open /data/user/0/com.talos/files/bdframework-host-sqlite/probe.db"),
+                "异常消息应继续包含后续候选的失败摘要，避免运行日志只剩路径列表而缺少具体错误原因。");
+        }
+
+        /// <summary>
+        /// 验证宿主采用的反射构造参数会显式传入空 key 与默认时间格式，而不是依赖 `Type.Missing` 占位。
+        /// Verify that the host reflection constructor arguments pass an explicit null key and default date-time format instead of relying on `Type.Missing` placeholders.
+        /// </summary>
+        [Test]
+        public void ReflectedSqliteConnectionStringConstructor_UsesExplicitDefaults()
+        {
+            var connectionString = InvokeReflectedSqliteConnectionStringConstructor("/tmp/baseflow-host-probe.db");
+            var connectionStringType = connectionString.GetType();
+
+            Assert.That(connectionStringType.GetProperty("DatabasePath")!.GetValue(connectionString) as string,
+                Is.EqualTo("/tmp/baseflow-host-probe.db"),
+                "反射构造得到的 SQLiteConnectionString 应保留调用方传入的数据库路径。");
+            Assert.That(connectionStringType.GetProperty("Key")!.GetValue(connectionString),
+                Is.Null,
+                "宿主探针的反射构造应显式传入 null key，避免把 `Type.Missing` 误当成加密键对象。");
+            Assert.That(connectionStringType.GetProperty("DateTimeStringFormat")!.GetValue(connectionString) as string,
+                Is.EqualTo(SqliteDefaultDateTimeStringFormat),
+                "宿主探针的反射构造应显式传入 SQLite 默认时间格式，保持与公开构造的默认行为一致。");
+            Assert.That(connectionStringType.GetProperty("StoreTimeSpanAsTicks")!.GetValue(connectionString),
+                Is.EqualTo(true),
+                "宿主探针的反射构造应显式保留 TimeSpan ticks 存储默认值。");
         }
     }
 }

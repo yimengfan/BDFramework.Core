@@ -33,6 +33,7 @@ namespace BDFramework.HostE2E
         private const int SqliteReadWriteCreateOpenFlagsValue = 2 | 4;
         private const string SqliteProbeDirectoryName = "bdframework-host-sqlite";
         private const string SqliteProbeValue = "framework-integration";
+        private const string SqliteDefaultDateTimeStringFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff";
 
         /// <summary>
         /// SQLite 探针候选路径描述对象。
@@ -294,12 +295,12 @@ namespace BDFramework.HostE2E
                                 databasePathCandidate,
                                 sqliteOpenFlags,
                                 true,
-                                Type.Missing,
-                                Type.Missing,
-                                Type.Missing,
-                                Type.Missing,
-                                Type.Missing,
-                                Type.Missing);
+                                null,
+                                null,
+                                null,
+                                null,
+                                SqliteDefaultDateTimeStringFormat,
+                                true);
 
                             Debug.Log($"[E2E] SQLite probe phase=open databasePath={databasePathCandidate} fileApiPath={candidateNormalizedDatabasePath}");
                             var openedConnection = InvokeConstructor(
@@ -799,6 +800,7 @@ namespace BDFramework.HostE2E
             out string selectedSelectionReason)
         {
             Exception lastException = null;
+            var attemptFailureSummaries = new List<string>();
             foreach (var probePathOption in probePathOptions)
             {
                 try
@@ -812,6 +814,8 @@ namespace BDFramework.HostE2E
                 catch (Exception exception)
                 {
                     lastException = exception;
+                    attemptFailureSummaries.Add(
+                        $"{probePathOption.SelectionReason}:{probePathOption.DatabasePath} => {exception.GetType().FullName}: {exception.Message}");
                     Debug.LogWarning(
                         $"[E2E] SQLite probe phase=path-attempt-failed reason={probePathOption.SelectionReason} databasePath={probePathOption.DatabasePath} error={exception.GetType().FullName}: {exception.Message}");
                 }
@@ -821,7 +825,9 @@ namespace BDFramework.HostE2E
             selectedSelectionReason = string.Empty;
             var attemptSummary = string.Join(
                 " | ",
-                probePathOptions.Select(option => $"{option.SelectionReason}:{option.DatabasePath}"));
+                attemptFailureSummaries.Count > 0
+                    ? attemptFailureSummaries
+                    : probePathOptions.Select(option => $"{option.SelectionReason}:{option.DatabasePath}"));
             throw new Exception($"SQLite 探针所有候选路径均打开失败: {attemptSummary}", lastException);
         }
 
