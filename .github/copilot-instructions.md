@@ -33,6 +33,72 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Reflection is allowed only lightly in framework or infrastructure code when needed for compatibility, platform isolation, or controlled extension points, and the reason must be documented in code comments.
 
 
+## Trust Boundary — Fail Fast vs Graceful Degradation
+
+// 信任边界 —— Fail Fast 与优雅降级
+// All data flowing through the system is classified as either **Trusted** or **Untrusted**. The error handling strategy is determined by the data's origin, not by the developer's mood.
+
+### Trusted Path (Internal Data) — Fail Fast
+// 可信路径（内部数据）—— 快速失败
+
+Data that originates from inside the system boundary. Errors here are rare; if they happen, it is a **bug**, not a user scenario. **Throw immediately. Do not silently swallow or defensively handle.**
+
+| Source | Examples |
+|---|---|
+| Config loaded from StreamingAssets / persistentDataPath | `BDFrameworkSetting.conf`, `HotfixFile.conf` |
+| SQLite table data already validated at import time | Excel-generated game tables |
+| Internal serialization / deserialization | AOT metadata, hotfix DLL loading |
+| Framework-internal state | Manager registration, ScreenView navigation stack |
+
+```csharp
+// BAD — silently swallows a config error
+var config = JsonUtility.FromJson<GameConfig>(json) ?? new GameConfig();
+
+// GOOD — config is trusted; if it fails, it is a bug
+var config = JsonUtility.FromJson<GameConfig>(json);
+if (config == null)
+    throw new Exception($"GameConfig decode failed, path={path}");
+```
+
+### Untrusted Path (External Input) — Catch and Report
+// 不可信路径（外部输入）—— 捕获并报告
+
+Data that originates from outside the system boundary. Errors here are **expected and frequent**. Catch the error and report it back to the caller or user.
+
+| Source | Examples |
+|---|---|
+| Network / server responses | Version manifests, hotfix resource downloads |
+| User input | Player settings, chat messages |
+| External file content before validation | Downloaded asset bundles, CDN resources |
+| AI-generated content | Any procedurally generated data |
+
+```csharp
+// Untrusted: CDN-downloaded manifest may be corrupted or tampered
+var manifest = await DownloadManifestAsync(url);
+if (manifest == null || !ValidateManifest(manifest))
+{
+    BDebug.LogError($"版本清单校验失败, url={url}");
+    OnUpdateFailed("资源更新失败，请检查网络");
+    return;
+}
+```
+
+### Key Principle — Persisted Data Is Trusted
+// 核心原则 —— 持久化后的数据即可信数据
+
+Strict validation at the **write boundary** (Excel→SQLite import, config file generation, resource build pipeline) ensures bad-format data never reaches storage. If malformed data is read back from SQLite or a config file, it is a **human or pipeline bug** — throw, do not defensively handle.
+
+### Forbidden Patterns
+// 禁止的模式
+
+```csharp
+// BAD — silently converts errors to null/default, hides bugs
+try { DoSomethingCritical(); } catch { /* swallowed */ }
+if (obj == null) return; // silently returns, no log, no error
+```
+
+The only exception: `TryGet` / `TryParse` patterns where the caller explicitly handles the "not found" case and it is a **normal business flow**, not an error.
+
 ## Naming vs Comment Language Boundary
 
 - **File names and directory names** must use ASCII English only. No Chinese, Japanese, or other non-Latin characters.
