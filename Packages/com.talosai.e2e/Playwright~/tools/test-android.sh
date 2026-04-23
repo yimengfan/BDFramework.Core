@@ -597,7 +597,41 @@ echo "    ✅ APK 安装完成"
 # so we auto-reconnect and retry.
 echo ""
 echo ">>> 准备端口转发..."
+
+# 停止目标包及其调试变体（如 com.talos.BuildTest 和 com.talos.BuildTest.debug）。
+# Unity TCP 端口 10002 可能被旧进程占用，必须确保完全终止后再启动新实例。
+# Stop the target package and its debug variant (e.g. com.talos.BuildTest and com.talos.BuildTest.debug).
+# Unity TCP port 10002 may be held by an old process; we must fully terminate before launching a new instance.
 adb_with_reconnect shell am force-stop "${PACKAGE}" 2>/dev/null || true
+adb_with_reconnect shell am force-stop "${PACKAGE}.debug" 2>/dev/null || true
+
+# 等待进程完全终止：轮询 pidof 直到返回空或超时。
+# Wait for process termination: poll pidof until it returns empty or timeout.
+FORCE_STOP_WAIT_SECONDS=10
+FORCE_STOP_ELAPSED=0
+while [[ ${FORCE_STOP_ELAPSED} -lt ${FORCE_STOP_WAIT_SECONDS} ]]; do
+    _pid_output="$(adb_with_reconnect shell pidof "${PACKAGE}" 2>/dev/null || true)"
+    _pid_debug_output="$(adb_with_reconnect shell pidof "${PACKAGE}.debug" 2>/dev/null || true)"
+    if [[ -z "${_pid_output}" && -z "${_pid_debug_output}" ]]; then
+        break
+    fi
+    sleep 1
+    FORCE_STOP_ELAPSED=$((FORCE_STOP_ELAPSED + 1))
+done
+
+if [[ ${FORCE_STOP_ELAPSED} -ge ${FORCE_STOP_WAIT_SECONDS} ]]; then
+    echo "    ⚠️ 进程终止超时，尝试强制 kill / Process termination timeout, attempting force kill"
+    _pid_output="$(adb_with_reconnect shell pidof "${PACKAGE}" 2>/dev/null || true)"
+    if [[ -n "${_pid_output}" ]]; then
+        adb_with_reconnect shell "kill ${_pid_output}" 2>/dev/null || true
+    fi
+    _pid_debug_output="$(adb_with_reconnect shell pidof "${PACKAGE}.debug" 2>/dev/null || true)"
+    if [[ -n "${_pid_debug_output}" ]]; then
+        adb_with_reconnect shell "kill ${_pid_debug_output}" 2>/dev/null || true
+    fi
+    sleep 2
+fi
+
 adb_with_reconnect forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
 adb_with_reconnect forward "tcp:${UNITY_PORT}" "tcp:${UNITY_PORT}"
 adb_with_reconnect logcat -c 2>/dev/null || true
@@ -650,6 +684,7 @@ if [[ ${WAITED} -ge ${MAX_WAIT} ]]; then
     capture_android_logcat
     capture_android_player_logs || true
     talos_run_adb_cleanup_command "force-stop package" shell am force-stop "${PACKAGE}" 2>/dev/null || true
+    talos_run_adb_cleanup_command "force-stop debug package" shell am force-stop "${PACKAGE}.debug" 2>/dev/null || true
     exit 1
 fi
 
@@ -687,6 +722,7 @@ capture_android_logcat
 echo ""
 echo ">>> 清理..."
 talos_run_adb_cleanup_command "force-stop package" shell am force-stop "${PACKAGE}" 2>/dev/null || true
+talos_run_adb_cleanup_command "force-stop debug package" shell am force-stop "${PACKAGE}.debug" 2>/dev/null || true
 talos_run_adb_cleanup_command "remove adb forward" forward --remove "tcp:${UNITY_PORT}" 2>/dev/null || true
 
 # ======== 结果 ========
