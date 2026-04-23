@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Talos.E2E;
 using UnityEngine;
@@ -29,7 +31,45 @@ namespace BDFramework.HostE2E
         private const string SqliteConnectionStringTypeName = "SQLite4Unity3d.SQLiteConnectionString";
         private const string SqliteOpenFlagsTypeName = "SQLite4Unity3d.SQLiteOpenFlags";
         private const int SqliteReadWriteCreateOpenFlagsValue = 2 | 4;
+        private const string SqliteProbeDirectoryName = "bdframework-host-sqlite";
         private const string SqliteProbeValue = "framework-integration";
+
+        /// <summary>
+        /// SQLite 探针候选路径描述对象。
+        /// Descriptor for a candidate SQLite probe path.
+        /// 该类型把“为什么选这条路径”和“真正要传给 SQLite 的数据库文件路径”绑定在一起，
+        /// 让运行时日志与 Editor 回归都能稳定校验 Android/Windows 的选路与回退顺序。
+        /// This type binds together the selection reason and the concrete database-file path passed into SQLite,
+        /// so runtime logs and editor regressions can validate the Android and Windows selection plus fallback order consistently.
+        /// 使用说明：候选项按优先级顺序生成，探针会按顺序尝试并在 native open 失败时继续回退到下一项。
+        /// Usage note: candidates are generated in priority order, and the probe tries them sequentially while falling back to the next entry after a native open failure.
+        /// </summary>
+        private sealed class SqliteProbePathOption
+        {
+            /// <summary>
+            /// 初始化 SQLite 探针候选路径描述对象。
+            /// Initialize a SQLite probe-path descriptor.
+            /// </summary>
+            /// <param name="selectionReason">候选路径的选路原因。The selection reason for the candidate path.</param>
+            /// <param name="databasePath">将要交给 SQLite 的数据库文件路径。The database-file path that will be passed into SQLite.</param>
+            public SqliteProbePathOption(string selectionReason, string databasePath)
+            {
+                SelectionReason = selectionReason;
+                DatabasePath = databasePath;
+            }
+
+            /// <summary>
+            /// 当前候选项的选路原因。
+            /// The selection reason for the current candidate.
+            /// </summary>
+            public string SelectionReason { get; }
+
+            /// <summary>
+            /// 当前候选项的数据库文件路径。
+            /// The database-file path for the current candidate.
+            /// </summary>
+            public string DatabasePath { get; }
+        }
 
         /// <summary>
         /// 验证宿主可以通过热更资源入口联通 AB 资源系统的基础公共接口。
@@ -190,60 +230,98 @@ namespace BDFramework.HostE2E
             var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
             var applicationPersistentDataPath = Application.persistentDataPath;
             var temporaryCachePath = Application.temporaryCachePath;
-            var sqlitePersistentRoot = NormalizePathForWindowsFileApis(
-                ResolveSqliteProbeRoot(
-                    frameworkPersistentDataPath,
-                    applicationPersistentDataPath,
-                    temporaryCachePath,
-                    out var sqlitePersistentRootReason));
-            var databasePath = CombinePath(
-                sqlitePersistentRoot,
-                $"talos-baseflow-host-{Guid.NewGuid():N}.db");
-            var sqliteOpenPath = databasePath;
-            var normalizedDatabasePath = NormalizePathForWindowsFileApis(databasePath);
-            var databaseDirectory = Path.GetDirectoryName(normalizedDatabasePath);
-            if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
+            var databaseFileName = $"talos-baseflow-host-{Guid.NewGuid():N}.db";
+            var androidContextDatabasePath = string.Empty;
+            var androidInternalFilesPath = string.Empty;
+            var androidInternalCachePath = string.Empty;
+
+            if (Application.platform == RuntimePlatform.Android)
             {
-                Directory.CreateDirectory(databaseDirectory);
+                TryReadAndroidContextDatabasePath(databaseFileName, out androidContextDatabasePath);
+                TryReadAndroidContextDirectory("getFilesDir", out androidInternalFilesPath);
+                TryReadAndroidContextDirectory("getCacheDir", out androidInternalCachePath);
             }
-            if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
-            {
-                throw new Exception($"SQLite 目录创建失败: {databaseDirectory}");
-            }
+
+            var sqliteProbePathOptions = BuildSqliteProbePathOptions(
+                Application.platform,
+                frameworkPersistentDataPath,
+                applicationPersistentDataPath,
+                temporaryCachePath,
+                databaseFileName,
+                androidContextDatabasePath,
+                androidInternalFilesPath,
+                androidInternalCachePath);
+            var sqliteProbeCandidates = string.Join(
+                " || ",
+                sqliteProbePathOptions.Select(option => $"{option.SelectionReason}:{option.DatabasePath}"));
 
             object sqliteConnection = null;
+            string normalizedDatabasePath = string.Empty;
             try
             {
-                Debug.Log(
-                    $"[E2E] SQLite probe phase=path-select frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} temporaryCachePath={temporaryCachePath} sqlitePersistentRoot={sqlitePersistentRoot} sqlitePersistentRootReason={sqlitePersistentRootReason} sqliteOpenPath={sqliteOpenPath}");
-                if (File.Exists(normalizedDatabasePath))
-                {
-                    Debug.Log($"[E2E] SQLite probe phase=delete-existing-file databasePath={normalizedDatabasePath}");
-                    File.Delete(normalizedDatabasePath);
-                }
-
-                EnsureSqliteProbeFileExists(normalizedDatabasePath);
-
                 var sqliteOpenFlags = Enum.ToObject(sqliteOpenFlagsType, SqliteReadWriteCreateOpenFlagsValue);
-                Debug.Log($"[E2E] SQLite probe phase=build-connection-string databasePath={sqliteOpenPath} fileApiPath={normalizedDatabasePath} openFlags={sqliteOpenFlags}");
-                var sqliteConnectionString = InvokeConstructor(
-                    sqliteConnectionStringConstructor,
-                    "SQLiteConnectionString..ctor",
-                    sqliteOpenPath,
-                    sqliteOpenFlags,
-                    true,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing);
+                Debug.Log(
+                    $"[E2E] SQLite probe phase=path-candidates frameworkPersistentDataPath={frameworkPersistentDataPath} applicationPersistentDataPath={applicationPersistentDataPath} temporaryCachePath={temporaryCachePath} androidContextDatabasePath={androidContextDatabasePath} androidInternalFilesPath={androidInternalFilesPath} androidInternalCachePath={androidInternalCachePath} candidates={sqliteProbeCandidates}");
+                sqliteConnection = ExecuteWithSqliteProbePathFallback(
+                    sqliteProbePathOptions,
+                    databasePathCandidate =>
+                    {
+                        var candidateNormalizedDatabasePath = NormalizePathForWindowsFileApis(databasePathCandidate);
+                        var databaseDirectory = Path.GetDirectoryName(candidateNormalizedDatabasePath);
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
+                            {
+                                Directory.CreateDirectory(databaseDirectory);
+                            }
 
-                Debug.Log($"[E2E] SQLite probe phase=open databasePath={sqliteOpenPath} fileApiPath={normalizedDatabasePath}");
-                sqliteConnection = InvokeConstructor(
-                    sqliteConnectionConstructor,
-                    "SQLiteConnection..ctor",
-                    sqliteConnectionString);
+                            if (!string.IsNullOrEmpty(databaseDirectory) && !Directory.Exists(databaseDirectory))
+                            {
+                                throw new Exception($"SQLite 目录创建失败: {databaseDirectory}");
+                            }
+
+                            if (File.Exists(candidateNormalizedDatabasePath))
+                            {
+                                Debug.Log($"[E2E] SQLite probe phase=delete-existing-file databasePath={candidateNormalizedDatabasePath}");
+                                File.Delete(candidateNormalizedDatabasePath);
+                            }
+
+                            EnsureSqliteProbeFileExists(candidateNormalizedDatabasePath);
+                            Debug.Log($"[E2E] SQLite probe phase=build-connection-string databasePath={databasePathCandidate} fileApiPath={candidateNormalizedDatabasePath} openFlags={sqliteOpenFlags}");
+                            var sqliteConnectionString = InvokeConstructor(
+                                sqliteConnectionStringConstructor,
+                                "SQLiteConnectionString..ctor",
+                                databasePathCandidate,
+                                sqliteOpenFlags,
+                                true,
+                                Type.Missing,
+                                Type.Missing,
+                                Type.Missing,
+                                Type.Missing,
+                                Type.Missing,
+                                Type.Missing);
+
+                            Debug.Log($"[E2E] SQLite probe phase=open databasePath={databasePathCandidate} fileApiPath={candidateNormalizedDatabasePath}");
+                            var openedConnection = InvokeConstructor(
+                                sqliteConnectionConstructor,
+                                "SQLiteConnection..ctor",
+                                sqliteConnectionString);
+                            normalizedDatabasePath = candidateNormalizedDatabasePath;
+                            return openedConnection;
+                        }
+                        catch
+                        {
+                            if (File.Exists(candidateNormalizedDatabasePath))
+                            {
+                                File.Delete(candidateNormalizedDatabasePath);
+                            }
+
+                            throw;
+                        }
+                    },
+                    out var sqliteOpenPath,
+                    out var sqlitePersistentRootReason);
+                Debug.Log($"[E2E] SQLite probe phase=path-selected sqlitePersistentRootReason={sqlitePersistentRootReason} sqliteOpenPath={sqliteOpenPath} fileApiPath={normalizedDatabasePath}");
 
                 Debug.Log("[E2E] SQLite probe phase=configure-temp-store value=MEMORY");
                 InvokeInstanceMethod(
@@ -580,76 +658,171 @@ namespace BDFramework.HostE2E
         }
 
         /// <summary>
-        /// 为宿主 SQLite 探针选择稳定可写的根目录。
-        /// Choose a stable writable root directory for the host SQLite probe.
-        /// Windows TeamCity 服务账号会把 `Application.persistentDataPath` 解析到 `systemprofile` 目录，
-        /// 该路径已经在真机链路里被验证会让 SQLite 打开失败，因此这里仅针对该环境降级到系统临时目录。
-        /// Android 真机链路里 Unity 暴露的 `persistentDataPath` 与 `temporaryCachePath` 都可能落到外部 app-specific 目录，
-        /// 该路径已经在 native SQLite 打开阶段验证会返回 CannotOpen，因此 Android 探针优先改走 Activity Context 的内部 cache/files 目录，仅在 JNI 取值失败时才回退到 Unity 路径。
-        /// The Windows TeamCity service account resolves `Application.persistentDataPath` into the `systemprofile` directory,
-        /// and that path has already been proven to make SQLite open fail in the player flow, so this logic degrades only that environment to the system temp directory.
-        /// In the Android player flow Unity can expose both `persistentDataPath` and `temporaryCachePath` under the external app-specific directory,
-        /// and that location has already been proven to return CannotOpen during the native SQLite open phase, so the Android probe prefers the Activity Context internal cache/files directories and falls back to the Unity path only when the JNI lookup fails.
+        /// 构建宿主 SQLite 探针的候选数据库路径列表。
+        /// Build the candidate database-path list for the host SQLite probe.
+        /// Android 上托管 File API 能写入并不代表 native SQLite 一定能打开同一路径，
+        /// 因此这里把 `Context.getDatabasePath()`、内部 files/cache 目录以及 Unity 暴露路径按稳定性排序，并把真正的可用性判断延后到 native open 阶段。
+        /// On Android a path being writable through managed File APIs does not guarantee native SQLite can open the same location,
+        /// so this method orders `Context.getDatabasePath()`, internal files/cache directories, and Unity-exposed paths by stability while deferring the real usability check to the native open stage.
+        /// Windows `systemprofile` 服务账号仍然优先走系统临时目录，但如果该路径失败，探针也会继续尝试其他候选项而不是直接终止。
+        /// The Windows `systemprofile` service account still prioritizes the system temp directory, but the probe also keeps trying later candidates instead of stopping on the first failure.
         /// </summary>
-        /// <param name="frameworkPersistentDataPath">框架公开的持久化根目录。</param>
-        /// <param name="frameworkPersistentDataPath">The framework-exposed persistence root.</param>
-        /// <param name="applicationPersistentDataPath">Unity Player 公开的持久化根目录。</param>
-        /// <param name="applicationPersistentDataPath">The Unity Player persistence root.</param>
-        /// <param name="temporaryCachePath">Unity Player 公开的临时缓存根目录。</param>
-        /// <param name="temporaryCachePath">The Unity Player temporary-cache root.</param>
-        /// <param name="selectionReason">返回本次选路原因，便于日志诊断。</param>
-        /// <param name="selectionReason">Returns the selection reason for log diagnostics.</param>
-        /// <returns>最终用于 SQLite 探针的根目录。</returns>
-        /// <returns>The final root directory used by the SQLite probe.</returns>
-        private static string ResolveSqliteProbeRoot(
+        /// <param name="platform">当前运行平台。The current runtime platform.</param>
+        /// <param name="frameworkPersistentDataPath">框架公开的持久化根目录。The framework-exposed persistence root.</param>
+        /// <param name="applicationPersistentDataPath">Unity Player 公开的持久化根目录。The Unity Player persistence root.</param>
+        /// <param name="temporaryCachePath">Unity Player 公开的临时缓存根目录。The Unity Player temporary-cache root.</param>
+        /// <param name="databaseFileName">本次探针要创建的数据库文件名。The database-file name created by the current probe run.</param>
+        /// <param name="androidContextDatabasePath">Android Activity Context 返回的数据库文件路径。The database-file path returned by the Android Activity Context.</param>
+        /// <param name="androidInternalFilesPath">Android Activity Context 返回的内部 files 目录。The internal files directory returned by the Android Activity Context.</param>
+        /// <param name="androidInternalCachePath">Android Activity Context 返回的内部 cache 目录。The internal cache directory returned by the Android Activity Context.</param>
+        /// <returns>按优先级排序的候选数据库路径列表。</returns>
+        /// <returns>The candidate database-path list ordered by priority.</returns>
+        private static SqliteProbePathOption[] BuildSqliteProbePathOptions(
+            RuntimePlatform platform,
             string frameworkPersistentDataPath,
             string applicationPersistentDataPath,
             string temporaryCachePath,
-            out string selectionReason)
+            string databaseFileName,
+            string androidContextDatabasePath,
+            string androidInternalFilesPath,
+            string androidInternalCachePath)
         {
-            if (Application.platform == RuntimePlatform.WindowsPlayer
+            var probePathOptions = new List<SqliteProbePathOption>();
+
+            if (platform == RuntimePlatform.WindowsPlayer
                 && !string.IsNullOrWhiteSpace(applicationPersistentDataPath)
                 && applicationPersistentDataPath.IndexOf("systemprofile", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                selectionReason = "windows-systemprofile-temp-fallback";
-                return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "windows-systemprofile-temp-fallback",
+                    CombinePath(
+                        CombinePath(Path.GetTempPath(), SqliteProbeDirectoryName),
+                        databaseFileName));
             }
 
-            if (Application.platform == RuntimePlatform.Android
-                && TryReadAndroidContextDirectory("getCacheDir", out var androidInternalCachePath))
+            if (platform == RuntimePlatform.Android)
             {
-                selectionReason = "android-internal-cache-dir";
-                return Path.Combine(androidInternalCachePath, "bdframework-host-sqlite");
-            }
-
-            if (Application.platform == RuntimePlatform.Android
-                && TryReadAndroidContextDirectory("getFilesDir", out var androidInternalFilesPath))
-            {
-                selectionReason = "android-internal-files-dir";
-                return Path.Combine(androidInternalFilesPath, "bdframework-host-sqlite");
-            }
-
-            if (Application.platform == RuntimePlatform.Android
-                && !string.IsNullOrWhiteSpace(temporaryCachePath))
-            {
-                selectionReason = "android-temporary-cache-path-fallback";
-                return Path.Combine(temporaryCachePath, "bdframework-host-sqlite");
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "android-context-database-path",
+                    androidContextDatabasePath);
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "android-internal-files-dir",
+                    CombinePath(
+                        CombinePath(androidInternalFilesPath, SqliteProbeDirectoryName),
+                        databaseFileName));
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "android-internal-cache-dir",
+                    CombinePath(
+                        CombinePath(androidInternalCachePath, SqliteProbeDirectoryName),
+                        databaseFileName));
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "android-temporary-cache-path-fallback",
+                    CombinePath(
+                        CombinePath(temporaryCachePath, SqliteProbeDirectoryName),
+                        databaseFileName));
             }
 
             if (!string.IsNullOrWhiteSpace(applicationPersistentDataPath))
             {
-                selectionReason = "application-persistent-data-path";
-                return applicationPersistentDataPath;
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "application-persistent-data-path",
+                    CombinePath(applicationPersistentDataPath, databaseFileName));
             }
 
             if (!string.IsNullOrWhiteSpace(frameworkPersistentDataPath))
             {
-                selectionReason = "framework-persistent-data-path";
-                return frameworkPersistentDataPath;
+                AppendSqliteProbePathOption(
+                    probePathOptions,
+                    "framework-persistent-data-path",
+                    CombinePath(frameworkPersistentDataPath, databaseFileName));
             }
 
-            selectionReason = "system-temp-path";
-            return Path.Combine(Path.GetTempPath(), "bdframework-host-sqlite");
+            AppendSqliteProbePathOption(
+                probePathOptions,
+                "system-temp-path",
+                CombinePath(
+                    CombinePath(Path.GetTempPath(), SqliteProbeDirectoryName),
+                    databaseFileName));
+            return probePathOptions.ToArray();
+        }
+
+        /// <summary>
+        /// 把候选数据库路径追加到列表，并在路径为空或重复时自动忽略。
+        /// Append a candidate database path to the list while automatically ignoring empty or duplicate entries.
+        /// </summary>
+        /// <param name="probePathOptions">候选路径列表。The candidate-path list.</param>
+        /// <param name="selectionReason">当前候选路径的选路原因。The selection reason for the current candidate.</param>
+        /// <param name="databasePath">当前候选路径的数据库文件路径。The database-file path for the current candidate.</param>
+        private static void AppendSqliteProbePathOption(
+            List<SqliteProbePathOption> probePathOptions,
+            string selectionReason,
+            string databasePath)
+        {
+            if (string.IsNullOrWhiteSpace(databasePath))
+            {
+                return;
+            }
+
+            var normalizedDatabasePath = databasePath.Replace('\\', '/');
+            if (probePathOptions.Any(option => string.Equals(option.DatabasePath, normalizedDatabasePath, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+
+            probePathOptions.Add(new SqliteProbePathOption(selectionReason, normalizedDatabasePath));
+        }
+
+        /// <summary>
+        /// 按候选顺序执行 SQLite 打开动作，并在单一路径失败时继续回退。
+        /// Execute the SQLite open action in candidate order and keep falling back when a single path fails.
+        /// 该辅助器把“路径列表排序”与“真实 native open 结果”连接起来，
+        /// 避免 Android 链路因为首选目录仅能被托管 File API 访问就提前终止整个探针。
+        /// This helper connects the ordered path list to the real native-open result,
+        /// preventing the Android flow from terminating the whole probe just because the preferred directory is only writable through managed File APIs.
+        /// </summary>
+        /// <param name="probePathOptions">按优先级排序的候选路径列表。The candidate-path list ordered by priority.</param>
+        /// <param name="openAction">针对单个数据库路径执行实际打开动作的委托。The delegate that performs the actual open action for a single database path.</param>
+        /// <param name="selectedDatabasePath">成功打开时返回命中的数据库路径。Returns the selected database path when a candidate opens successfully.</param>
+        /// <param name="selectedSelectionReason">成功打开时返回命中的选路原因。Returns the selected selection reason when a candidate opens successfully.</param>
+        /// <returns>打开动作返回的结果对象。</returns>
+        /// <returns>The result object returned by the open action.</returns>
+        private static object ExecuteWithSqliteProbePathFallback(
+            IList<SqliteProbePathOption> probePathOptions,
+            Func<string, object> openAction,
+            out string selectedDatabasePath,
+            out string selectedSelectionReason)
+        {
+            Exception lastException = null;
+            foreach (var probePathOption in probePathOptions)
+            {
+                try
+                {
+                    Debug.Log($"[E2E] SQLite probe phase=path-attempt reason={probePathOption.SelectionReason} databasePath={probePathOption.DatabasePath}");
+                    var result = openAction(probePathOption.DatabasePath);
+                    selectedDatabasePath = probePathOption.DatabasePath;
+                    selectedSelectionReason = probePathOption.SelectionReason;
+                    return result;
+                }
+                catch (Exception exception)
+                {
+                    lastException = exception;
+                    Debug.LogWarning(
+                        $"[E2E] SQLite probe phase=path-attempt-failed reason={probePathOption.SelectionReason} databasePath={probePathOption.DatabasePath} error={exception.GetType().FullName}: {exception.Message}");
+                }
+            }
+
+            selectedDatabasePath = string.Empty;
+            selectedSelectionReason = string.Empty;
+            var attemptSummary = string.Join(
+                " | ",
+                probePathOptions.Select(option => $"{option.SelectionReason}:{option.DatabasePath}"));
+            throw new Exception($"SQLite 探针所有候选路径均打开失败: {attemptSummary}", lastException);
         }
 
         /// <summary>
@@ -674,6 +847,49 @@ namespace BDFramework.HostE2E
 
             var fileInfo = new FileInfo(databasePath);
             Debug.Log($"[E2E] SQLite probe phase=managed-file-touch-ready databasePath={databasePath} length={fileInfo.Length}");
+        }
+
+        /// <summary>
+        /// 通过 Android Activity Context 查询数据库文件路径，优先复用系统为 SQLite 预留的 `databases` 目录。
+        /// Query the database-file path through the Android Activity Context and preferentially reuse the system `databases` directory reserved for SQLite.
+        /// </summary>
+        /// <param name="databaseFileName">要查询的数据库文件名。The database-file name to resolve.</param>
+        /// <param name="databasePath">成功时返回数据库文件路径。Returns the database-file path when successful.</param>
+        /// <returns>成功拿到数据库文件路径时返回 true，否则返回 false 并继续走其他候选项。</returns>
+        /// <returns>Returns true when the database-file path is resolved; otherwise false so the caller can continue with other candidates.</returns>
+        private static bool TryReadAndroidContextDatabasePath(string databaseFileName, out string databasePath)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                using (var currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                using (var javaFile = currentActivity.Call<AndroidJavaObject>("getDatabasePath", databaseFileName))
+                {
+                    if (javaFile == null)
+                    {
+                        databasePath = string.Empty;
+                        return false;
+                    }
+
+                    databasePath = javaFile.Call<string>("getCanonicalPath");
+                    if (string.IsNullOrWhiteSpace(databasePath))
+                    {
+                        databasePath = javaFile.Call<string>("getAbsolutePath");
+                    }
+
+                    return !string.IsNullOrWhiteSpace(databasePath);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning(
+                    $"[E2E] SQLite probe phase=android-context-database-path file={databaseFileName} error={exception.GetType().FullName}: {exception.Message}");
+            }
+#endif
+
+            databasePath = string.Empty;
+            return false;
         }
 
         /// <summary>
