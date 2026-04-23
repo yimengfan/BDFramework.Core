@@ -17,6 +17,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
+import subprocess
 import sys
 import urllib.error
 import urllib.parse
@@ -30,11 +32,17 @@ from typing import Any
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 REPO_ROOT = SCRIPT_DIR.parents[3]
+PLAYWRIGHT_DIR = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~"
+TALOS_BATCHMODE_SCRIPT = PLAYWRIGHT_DIR / "tools" / "test-batchmode.sh"
 DEFAULT_ENV_FILE = REPO_ROOT / ".test-DevOps" / ".teamcity" / ".env"
 DEFAULT_OUTPUT_DIR_NAME = "output"
 DEFAULT_GET_RETRY_ATTEMPTS = 5
 DEFAULT_GET_RETRY_MAX_DELAY_SECONDS = 5
 DEFAULT_WAIT_HEARTBEAT_SECONDS = 60
+DEFAULT_TALOS_BASEFLOW_BUILD_TYPE_ID = "BDFrameworkCore_TalosAIStep01BaseFlowTest"
+DEFAULT_TALOS_BASEFLOW_TEST_FILE = "tests/testBaseFlow-e2e.spec.ts"
+DEFAULT_TALOS_CLIENT_VERSION = "0.1"
+DEFAULT_TALOS_BUILD_DEBUG = "true"
 CPOLAR_TRANSIENT_404_MARKERS = (
     "cpolar.com",
     "domain doesn't exist",
@@ -122,8 +130,9 @@ def parse_args() -> argparse.Namespace:
             "apply",
             "run-build",
             "run-build-group",
+            "run-talos-baseflow-chain",
         ),
-        help="show-project: print current project + versioned settings; verify-vcs: print a VCS-loading oriented summary; export-current: save current versioned settings; apply: PUT a user-provided payload and verify it; run-build: queue a single build, optionally wait for completion, and print a log tail on failure; run-build-group: inspect compatible agents, choose parallel or sequential dispatch automatically, then queue multiple builds.",
+        help="show-project: print current project + versioned settings; verify-vcs: print a VCS-loading oriented summary; export-current: save current versioned settings; apply: PUT a user-provided payload and verify it; run-build: queue a single build, optionally wait for completion, and print a log tail on failure; run-build-group: inspect compatible agents, choose parallel or sequential dispatch automatically, then queue multiple builds; run-talos-baseflow-chain: run a local Talos batchmode gate first, then rebuild the player package, then queue the matching remote BaseFlow validation.",
     )
     parser.add_argument(
         "--env-file",
@@ -214,6 +223,73 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=80,
         help="For run-build failures, print the last N build log lines. Default: %(default)s.",
+    )
+    parser.add_argument(
+        "--platform",
+        choices=("android", "windows"),
+        default=None,
+        help="For run-talos-baseflow-chain, target platform. Default: android.",
+    )
+    parser.add_argument(
+        "--unity-path",
+        default=None,
+        help="For run-talos-baseflow-chain, local Unity executable path. Defaults to UNITY_PATH when omitted.",
+    )
+    parser.add_argument(
+        "--project-path",
+        default=None,
+        help="For run-talos-baseflow-chain, local Unity project path. Defaults to the current repository root.",
+    )
+    parser.add_argument(
+        "--test-file",
+        default=DEFAULT_TALOS_BASEFLOW_TEST_FILE,
+        help="For run-talos-baseflow-chain, Playwright test file relative to Playwright~. Default: %(default)s.",
+    )
+    parser.add_argument(
+        "--local-batchmode-mode",
+        choices=("tcp", "sync"),
+        default="tcp",
+        help="For run-talos-baseflow-chain, local Talos batchmode mode. tcp keeps exact Playwright-spec parity; sync is a broader fallback. Default: %(default)s.",
+    )
+    parser.add_argument(
+        "--allow-local-sync-fallback",
+        action="store_true",
+        help="For run-talos-baseflow-chain, explicitly allow the less-consistent local sync fallback.",
+    )
+    parser.add_argument(
+        "--client-version",
+        default=DEFAULT_TALOS_CLIENT_VERSION,
+        help="For run-talos-baseflow-chain, build.client.version override. Default: %(default)s.",
+    )
+    parser.add_argument(
+        "--build-debug",
+        default=DEFAULT_TALOS_BUILD_DEBUG,
+        help="For run-talos-baseflow-chain, build.debugBuild override. Default: %(default)s.",
+    )
+    parser.add_argument(
+        "--adb-serial",
+        default=None,
+        help="For run-talos-baseflow-chain Android reruns, Talos adb serial override.",
+    )
+    parser.add_argument(
+        "--adb-connect-targets",
+        default=None,
+        help="For run-talos-baseflow-chain Android reruns, Talos adb connect targets override.",
+    )
+    parser.add_argument(
+        "--emulator-type",
+        default=None,
+        help="For run-talos-baseflow-chain Android reruns, Talos emulator type override.",
+    )
+    parser.add_argument(
+        "--baseflow-build-type-id",
+        default=DEFAULT_TALOS_BASEFLOW_BUILD_TYPE_ID,
+        help="For run-talos-baseflow-chain, the TeamCity BaseFlow build type id. Default: %(default)s.",
+    )
+    parser.add_argument(
+        "--package-build-type-id",
+        default=None,
+        help="For run-talos-baseflow-chain, optional explicit package build type id override.",
     )
     return parser.parse_args()
 
@@ -810,6 +886,34 @@ def parse_build_properties(raw_properties: list[str]) -> list[dict[str, str]]:
     return properties
 
 
+def merge_named_properties(
+    base_properties: list[dict[str, str]],
+    override_properties: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """按属性名合并参数，显式覆盖项优先。 Merge build properties by name and let explicit overrides win."""
+
+    merged_properties = [dict(property_item) for property_item in base_properties]
+    index_by_name = {
+        (property_item.get("name") or "").strip(): index
+        for index, property_item in enumerate(merged_properties)
+        if isinstance(property_item, dict)
+    }
+
+    for property_item in override_properties:
+        if not isinstance(property_item, dict):
+            continue
+        property_name = (property_item.get("name") or "").strip()
+        if not property_name:
+            continue
+        if property_name in index_by_name:
+            merged_properties[index_by_name[property_name]] = dict(property_item)
+            continue
+        index_by_name[property_name] = len(merged_properties)
+        merged_properties.append(dict(property_item))
+
+    return merged_properties
+
+
 def parse_build_type_ids(raw_build_type_ids: list[str]) -> list[str]:
     normalized_build_type_ids: list[str] = []
     for raw_value in raw_build_type_ids:
@@ -1358,6 +1462,256 @@ def print_build_summary(config: TeamCityConfig, build: dict[str, Any]) -> None:
             print(f"  tags={tag_names!r}")
 
 
+def resolve_bash_executable() -> str:
+    """解析本机 bash 路径，供本地 Talos gate 稳定执行。 Resolve the local bash executable path for the Talos preflight gate."""
+
+    resolved_bash = shutil.which("bash")
+    if resolved_bash:
+        return resolved_bash
+    raise TeamCityApiError("bash is required for the local Talos batchmode preflight gate")
+
+
+def resolve_talos_package_build_type_id(
+    platform: str,
+    package_build_type_id: str | None,
+) -> str:
+    """按平台解析 Talos BaseFlow 所依赖的母包 BuildType。 Resolve the package BuildType required by the Talos BaseFlow chain for the selected platform."""
+
+    normalized_override = (package_build_type_id or "").strip()
+    if normalized_override:
+        return normalized_override
+
+    if platform == "android":
+        return "BDFrameworkCore_BuildClientPackageAndroid"
+    if platform == "windows":
+        return "BDFrameworkCore_BuildClientPackageWindows"
+
+    raise TeamCityApiError(f"Unsupported Talos BaseFlow chain platform: {platform!r}")
+
+
+def run_local_talos_batchmode_preflight(
+    *,
+    unity_path: str | None,
+    project_path: Path | None,
+    test_file: str | None,
+    local_batchmode_mode: str,
+) -> int:
+    """执行本地 Talos batchmode gate，并把结果作为远端链路的前置条件。 Run the local Talos batchmode gate and use its exit code as the prerequisite for the remote chain."""
+
+    resolved_unity_path = (unity_path or os.environ.get("UNITY_PATH", "")).strip()
+    if not resolved_unity_path:
+        raise TeamCityApiError(
+            "run-talos-baseflow-chain requires --unity-path or UNITY_PATH so the local Talos batchmode gate can run"
+        )
+
+    resolved_project_path = (
+        project_path.expanduser().resolve()
+        if project_path is not None
+        else REPO_ROOT
+    )
+    normalized_test_file = (test_file or "").strip()
+
+    if not TALOS_BATCHMODE_SCRIPT.is_file():
+        raise TeamCityApiError(
+            f"Talos batchmode script is missing: {TALOS_BATCHMODE_SCRIPT}"
+        )
+
+    environment = os.environ.copy()
+    environment["UNITY_PATH"] = resolved_unity_path
+    environment["PROJECT_PATH"] = str(resolved_project_path)
+    if local_batchmode_mode == "sync":
+        environment["TALOS_MODE"] = "sync"
+        if normalized_test_file:
+            print(
+                "[TeamCitySkill] local sync fallback note: sync mode executes the full exported Talos suite set instead of Playwright-spec filtering"
+            )
+
+    command = [resolve_bash_executable(), str(TALOS_BATCHMODE_SCRIPT)]
+    if normalized_test_file:
+        command.extend(["--test-file", normalized_test_file])
+
+    print("[TeamCitySkill] ===== Step 1/3: local Talos batchmode gate =====")
+    print(f"[TeamCitySkill] localMode={local_batchmode_mode!r}")
+    print(f"[TeamCitySkill] unityPath={resolved_unity_path!r}")
+    print(f"[TeamCitySkill] projectPath={str(resolved_project_path)!r}")
+    if normalized_test_file:
+        print(f"[TeamCitySkill] testFile={normalized_test_file!r}")
+
+    completed_process = subprocess.run(
+        command,
+        cwd=str(PLAYWRIGHT_DIR),
+        env=environment,
+        check=False,
+    )
+    if completed_process.returncode != 0:
+        print(
+            f"[TeamCitySkill][ERROR] local Talos batchmode gate failed with exit code {completed_process.returncode}"
+        )
+    return completed_process.returncode
+
+
+def queue_and_wait_build(
+    config: TeamCityConfig,
+    *,
+    build_type_id: str,
+    branch: str | None,
+    properties: list[dict[str, str]],
+    comment: str | None,
+    tags: list[str],
+    timeout_seconds: int,
+    poll_interval_seconds: int,
+    log_tail_lines: int,
+    step_title: str,
+) -> tuple[int, QueuedBuildHandle]:
+    """排队并等待单个 TeamCity 构建完成，返回退出码和构建句柄。 Queue and wait for a single TeamCity build, then return both the exit code and queued handle."""
+
+    print(f"[TeamCitySkill] ===== {step_title}: queue build =====")
+    queued = queue_build(
+        config,
+        build_type_id=build_type_id,
+        branch=branch,
+        properties=properties,
+        comment=comment,
+        tags=tags,
+    )
+    print(f"[TeamCitySkill] queued build id={queued.build_id}")
+    if queued.web_url:
+        normalized_web_url = normalize_public_teamcity_url(config, queued.web_url)
+        print(f"[TeamCitySkill] webUrl={normalized_web_url or queued.web_url}")
+        if normalized_web_url and normalized_web_url != queued.web_url:
+            print(f"[TeamCitySkill] serverWebUrl={queued.web_url}")
+
+    print(f"[TeamCitySkill] ===== {step_title}: wait for build =====")
+    result = wait_for_build_completion(
+        config,
+        build_id=queued.build_id,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=poll_interval_seconds,
+        log_tail_lines=log_tail_lines,
+    )
+    return result, queued
+
+
+def command_run_talos_baseflow_chain(
+    config: TeamCityConfig,
+    *,
+    platform: str,
+    unity_path: str | None,
+    project_path: Path | None,
+    local_batchmode_mode: str,
+    allow_local_sync_fallback: bool,
+    test_file: str | None,
+    client_version: str,
+    build_debug: str,
+    branch: str | None,
+    comment: str | None,
+    tags: list[str],
+    adb_serial: str | None,
+    adb_connect_targets: str | None,
+    emulator_type: str | None,
+    baseflow_build_type_id: str,
+    package_build_type_id: str | None,
+    extra_properties: list[dict[str, str]],
+    dry_run: bool,
+    timeout_seconds: int,
+    poll_interval_seconds: int,
+    log_tail_lines: int,
+) -> int:
+    """按“本地 gate -> 母包 -> BaseFlow”顺序执行 Talos 链路。 Run the Talos chain in the strict order of local gate -> package build -> BaseFlow."""
+
+    if dry_run:
+        raise TeamCityApiError(
+            "run-talos-baseflow-chain does not support --dry-run because the BaseFlow step depends on the real package build id"
+        )
+
+    normalized_platform = platform.strip().lower()
+    if local_batchmode_mode == "sync" and not allow_local_sync_fallback:
+        raise TeamCityApiError(
+            "local sync fallback is less consistent than TCP mode; pass --allow-local-sync-fallback to opt into it explicitly"
+        )
+
+    local_gate_result = run_local_talos_batchmode_preflight(
+        unity_path=unity_path,
+        project_path=project_path,
+        test_file=test_file,
+        local_batchmode_mode=local_batchmode_mode,
+    )
+    if local_gate_result != 0:
+        return local_gate_result
+
+    resolved_package_build_type_id = resolve_talos_package_build_type_id(
+        normalized_platform,
+        package_build_type_id,
+    )
+    normalized_test_file = (test_file or DEFAULT_TALOS_BASEFLOW_TEST_FILE).strip() or DEFAULT_TALOS_BASEFLOW_TEST_FILE
+    normalized_tags = build_queue_tags(
+        build_type_id=baseflow_build_type_id,
+        tags=tags,
+    )
+    if normalized_platform not in normalized_tags:
+        normalized_tags.append(normalized_platform)
+
+    package_properties = merge_named_properties(
+        [
+            {"name": "build.client.version", "value": client_version},
+            {"name": "build.debugBuild", "value": build_debug},
+        ],
+        extra_properties,
+    )
+    package_result, queued_package = queue_and_wait_build(
+        config,
+        build_type_id=resolved_package_build_type_id,
+        branch=branch,
+        properties=package_properties,
+        comment=(comment or "Talos BaseFlow package rebuild").strip(),
+        tags=normalized_tags,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=poll_interval_seconds,
+        log_tail_lines=log_tail_lines,
+        step_title="Step 2/3: package build",
+    )
+    if package_result != 0:
+        return package_result
+
+    baseflow_defaults = [
+        {"name": "build.client.version", "value": client_version},
+        {"name": "build.debugBuild", "value": build_debug},
+        {"name": "talos.e2e.platform", "value": normalized_platform},
+        {"name": "talos.e2e.package.build.id", "value": str(queued_package.build_id)},
+        {"name": "talos.e2e.package.build.type.id", "value": resolved_package_build_type_id},
+        {"name": "talos.e2e.test.file", "value": normalized_test_file},
+    ]
+    if adb_serial:
+        baseflow_defaults.append({"name": "talos.e2e.adb.serial", "value": adb_serial.strip()})
+    if adb_connect_targets:
+        baseflow_defaults.append(
+            {"name": "talos.e2e.adb.connect.targets", "value": adb_connect_targets.strip()}
+        )
+    if emulator_type:
+        baseflow_defaults.append(
+            {"name": "talos.e2e.emulator.type", "value": emulator_type.strip()}
+        )
+
+    baseflow_properties = merge_named_properties(baseflow_defaults, extra_properties)
+    baseflow_result, queued_baseflow = queue_and_wait_build(
+        config,
+        build_type_id=baseflow_build_type_id,
+        branch=branch,
+        properties=baseflow_properties,
+        comment=(comment or "Talos BaseFlow validation").strip(),
+        tags=normalized_tags,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=poll_interval_seconds,
+        log_tail_lines=log_tail_lines,
+        step_title="Step 3/3: remote BaseFlow",
+    )
+    if baseflow_result == 0:
+        print("[TeamCitySkill] Talos BaseFlow chain completed successfully")
+        print(f"[TeamCitySkill] packageBuildId={queued_package.build_id}")
+        print(f"[TeamCitySkill] baseFlowBuildId={queued_baseflow.build_id}")
+    return baseflow_result
+
+
 def command_run_build(
     config: TeamCityConfig,
     *,
@@ -1608,6 +1962,36 @@ def main() -> int:
             dispatch_mode=args.dispatch_mode,
             dry_run=args.dry_run,
             wait=args.wait,
+            timeout_seconds=args.timeout_seconds,
+            poll_interval_seconds=args.poll_interval_seconds,
+            log_tail_lines=args.log_tail_lines,
+        )
+
+    if args.command == "run-talos-baseflow-chain":
+        return command_run_talos_baseflow_chain(
+            config,
+            platform=(args.platform or "android").strip() or "android",
+            unity_path=(args.unity_path or "").strip() or None,
+            project_path=(
+                Path(args.project_path).expanduser().resolve()
+                if args.project_path
+                else None
+            ),
+            local_batchmode_mode=args.local_batchmode_mode,
+            allow_local_sync_fallback=args.allow_local_sync_fallback,
+            test_file=(args.test_file or "").strip() or DEFAULT_TALOS_BASEFLOW_TEST_FILE,
+            client_version=(args.client_version or "").strip() or DEFAULT_TALOS_CLIENT_VERSION,
+            build_debug=(args.build_debug or "").strip() or DEFAULT_TALOS_BUILD_DEBUG,
+            branch=(args.branch or "").strip() or None,
+            comment=(args.comment or "").strip() or None,
+            tags=parse_build_tags(args.tags),
+            adb_serial=(args.adb_serial or "").strip() or None,
+            adb_connect_targets=(args.adb_connect_targets or "").strip() or None,
+            emulator_type=(args.emulator_type or "").strip() or None,
+            baseflow_build_type_id=(args.baseflow_build_type_id or "").strip() or DEFAULT_TALOS_BASEFLOW_BUILD_TYPE_ID,
+            package_build_type_id=(args.package_build_type_id or "").strip() or None,
+            extra_properties=parse_build_properties(args.properties),
+            dry_run=args.dry_run,
             timeout_seconds=args.timeout_seconds,
             poll_interval_seconds=args.poll_interval_seconds,
             log_tail_lines=args.log_tail_lines,

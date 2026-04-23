@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from io import BytesIO
 from pathlib import Path
+import subprocess
 import sys
 import urllib.error
 
@@ -558,3 +559,141 @@ def test_wait_for_build_completion_fast_path_returns_immediately_when_already_fi
     assert result == 0
     assert "state='finished'" in output
     assert output.count("[TeamCitySkill] build summary") == 1
+
+
+def test_run_local_talos_batchmode_preflight_forwards_test_file_in_tcp_mode(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证本地 Talos gate 在 TCP 模式下会把显式 test-file 传给 batchmode 脚本。
+    Verify that the local Talos gate forwards the explicit test-file to the batchmode script in TCP mode.
+    """
+
+    captured: dict[str, object] = {}
+
+    monkeypatch.setattr(ups, "TALOS_BATCHMODE_SCRIPT", Path("/tmp/test-batchmode.sh"))
+    monkeypatch.setattr(Path, "is_file", lambda self: True)
+    monkeypatch.setattr(ups, "resolve_bash_executable", lambda: "/bin/bash")
+
+    def fake_run(command, cwd, env, check):
+        captured["command"] = command
+        captured["cwd"] = cwd
+        captured["env"] = env
+        captured["check"] = check
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(ups.subprocess, "run", fake_run)
+
+    result = ups.run_local_talos_batchmode_preflight(
+        unity_path="/Applications/Unity/Unity",
+        project_path=Path("/tmp/project"),
+        test_file="tests/testBaseFlow-e2e.spec.ts",
+        local_batchmode_mode="tcp",
+    )
+
+    assert result == 0
+    assert captured["command"] == [
+        "/bin/bash",
+        "/tmp/test-batchmode.sh",
+        "--test-file",
+        "tests/testBaseFlow-e2e.spec.ts",
+    ]
+    assert captured["cwd"] == str(ups.PLAYWRIGHT_DIR)
+    assert captured["env"]["UNITY_PATH"] == "/Applications/Unity/Unity"
+    assert captured["env"]["PROJECT_PATH"] == str(Path("/tmp/project").resolve())
+    assert "TALOS_MODE" not in captured["env"]
+
+
+def test_command_run_talos_baseflow_chain_reuses_package_build_for_remote_baseflow(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证 Talos BaseFlow 链路会先通过本地 gate，再把成功的 package build id 传给远端 BaseFlow。
+    Verify that the Talos BaseFlow chain passes the local gate first and then reuses the successful package build id for the remote BaseFlow step.
+    """
+
+    ordered_calls: list[tuple[str, object]] = []
+
+    monkeypatch.setattr(
+        ups,
+        "run_local_talos_batchmode_preflight",
+        lambda **kwargs: ordered_calls.append(("local", kwargs)) or 0,
+    )
+
+    def fake_queue_and_wait_build(config, **kwargs):
+        ordered_calls.append(("remote", kwargs))
+        build_id = 1038 if kwargs["build_type_id"] == "BDFrameworkCore_BuildClientPackageAndroid" else 1041
+        return 0, ups.QueuedBuildHandle(build_id=build_id, href=None, web_url=f"http://ci.example.com/build/{build_id}")
+
+    monkeypatch.setattr(ups, "queue_and_wait_build", fake_queue_and_wait_build)
+
+    result = ups.command_run_talos_baseflow_chain(
+        make_config(),
+        platform="android",
+        unity_path="/Applications/Unity/Unity",
+        project_path=Path("/tmp/project"),
+        local_batchmode_mode="tcp",
+        allow_local_sync_fallback=False,
+        test_file="tests/testBaseFlow-e2e.spec.ts",
+        client_version="0.1",
+        build_debug="true",
+        branch="v4/v-4.0.0",
+        comment="Android BaseFlow sqlite probe validation",
+        tags=["android", "baseflow-sqlite"],
+        adb_serial="127.0.0.1:62001",
+        adb_connect_targets="127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555",
+        emulator_type="nox",
+        baseflow_build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+        package_build_type_id=None,
+        extra_properties=[],
+        dry_run=False,
+        timeout_seconds=7200,
+        poll_interval_seconds=10,
+        log_tail_lines=200,
+    )
+
+    assert result == 0
+    assert ordered_calls[0][0] == "local"
+    assert ordered_calls[1][1]["build_type_id"] == "BDFrameworkCore_BuildClientPackageAndroid"
+    assert ordered_calls[2][1]["build_type_id"] == "BDFrameworkCore_TalosAIStep01BaseFlowTest"
+    assert ordered_calls[2][1]["properties"] == [
+        {"name": "build.client.version", "value": "0.1"},
+        {"name": "build.debugBuild", "value": "true"},
+        {"name": "talos.e2e.platform", "value": "android"},
+        {"name": "talos.e2e.package.build.id", "value": "1038"},
+        {"name": "talos.e2e.package.build.type.id", "value": "BDFrameworkCore_BuildClientPackageAndroid"},
+        {"name": "talos.e2e.test.file", "value": "tests/testBaseFlow-e2e.spec.ts"},
+        {"name": "talos.e2e.adb.serial", "value": "127.0.0.1:62001"},
+        {"name": "talos.e2e.adb.connect.targets", "value": "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555"},
+        {"name": "talos.e2e.emulator.type", "value": "nox"},
+    ]
+
+
+def test_command_run_talos_baseflow_chain_requires_explicit_sync_fallback_opt_in() -> None:
+    """验证本地 sync 回退必须显式 opt-in，避免把较弱一致性的 gate 默认为标准链路。
+    Verify that the local sync fallback requires an explicit opt-in so the less-consistent gate cannot silently become the default chain.
+    """
+
+    with pytest.raises(TeamCityApiError, match="allow-local-sync-fallback"):
+        ups.command_run_talos_baseflow_chain(
+            make_config(),
+            platform="android",
+            unity_path="/Applications/Unity/Unity",
+            project_path=Path("/tmp/project"),
+            local_batchmode_mode="sync",
+            allow_local_sync_fallback=False,
+            test_file="tests/testBaseFlow-e2e.spec.ts",
+            client_version="0.1",
+            build_debug="true",
+            branch="v4/v-4.0.0",
+            comment="Android BaseFlow sqlite probe validation",
+            tags=["android"],
+            adb_serial=None,
+            adb_connect_targets=None,
+            emulator_type=None,
+            baseflow_build_type_id="BDFrameworkCore_TalosAIStep01BaseFlowTest",
+            package_build_type_id=None,
+            extra_properties=[],
+            dry_run=False,
+            timeout_seconds=7200,
+            poll_interval_seconds=10,
+            log_tail_lines=200,
+        )

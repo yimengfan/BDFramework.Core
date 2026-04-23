@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using BDFramework.Asset;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
@@ -23,6 +24,7 @@ namespace BDFramework.Editor.Environment
     public static class TalosE2EBatchBridge
     {
         private const string TalosForceE2EArgument = "-talosForceE2E";
+        private const string EditorOnlyLauncherObjectName = "TalosE2E.EditorOnlyBDLauncher";
 
         private static readonly string[] LaunchSceneCandidates =
         {
@@ -150,6 +152,7 @@ namespace BDFramework.Editor.Environment
         private static void PrepareEditorOnlyRuntime()
         {
             EnsureEditorOnlyRuntimeFlag("PrepareEditorOnlyRuntime");
+            EnsureEditorOnlyLauncherSignal(null);
 
             GameConfigLoder.LoadFrameworkConfig();
             var config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
@@ -158,6 +161,8 @@ namespace BDFramework.Editor.Environment
                 Debug.LogWarning("[TalosE2E] BDFramework 批入口无法获取框架配置，跳过 editor-only 上下文初始化");
                 return;
             }
+
+            EnsureEditorOnlyLauncherSignal(config.ClientVersionNum);
 
             Debug.Log($"[TalosE2E] BDFramework 批入口框架版本: {BDLauncher.FrameworkVersion}, 母包版本: {config.ClientVersionNum}");
 
@@ -173,6 +178,68 @@ namespace BDFramework.Editor.Environment
             BResources.Init(config.ArtRoot, firstLoadDir, secondLoadDir);
             SqliteLoder.Init(config.SQLRoot, firstLoadDir, secondLoadDir);
             Debug.Log("[TalosE2E] BDFramework 批入口已完成 editor-only 运行上下文初始化");
+        }
+
+        /// <summary>
+        /// 为 editor-only Talos 会话补齐宿主启动器信号。
+        /// Ensure the host launcher signal exists for the editor-only Talos session.
+        /// 本地 sync 回退 gate 不会像真实 PlayMode 那样自动跑过启动场景，因此这里要显式复用现有启动器或创建一个隐藏占位实例，
+        /// 让宿主侧 launch suite 能读取与真机链路等价的最小版本信号。
+        /// The local sync fallback gate does not automatically traverse the startup scene like a real PlayMode session,
+        /// so this method explicitly reuses an existing launcher or creates a hidden placeholder instance so the host launch suite can read the minimal version signal that matches the device flow contract.
+        /// </summary>
+        /// <param name="clientVersion">本次 editor-only 会话应暴露的母包版本；为空时沿用现有值。</param>
+        /// <param name="clientVersion">Base-package version that should be exposed for this editor-only session; when empty, the current value is preserved.</param>
+        private static void EnsureEditorOnlyLauncherSignal(string clientVersion)
+        {
+            Debug.Log($"[TalosE2E] BDFramework 批入口开始补齐启动器信号: hasInst={(BDLauncher.Inst != null)} requestedClientVersion={(string.IsNullOrWhiteSpace(clientVersion) ? "<keep>" : clientVersion)}");
+
+            var launcher = BDLauncher.Inst;
+            if (!launcher)
+            {
+                launcher = GameObject.FindObjectOfType<BDLauncher>();
+            }
+
+            if (!launcher)
+            {
+                var launcherObject = new GameObject(EditorOnlyLauncherObjectName)
+                {
+                    hideFlags = HideFlags.HideAndDontSave
+                };
+                launcher = launcherObject.AddComponent<BDLauncher>();
+                launcher.hideFlags = HideFlags.HideAndDontSave;
+                Debug.Log("[TalosE2E] BDFramework 批入口已创建 editor-only BDLauncher 占位实例");
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientVersion))
+            {
+                launcher.ClientVersion = clientVersion.Trim();
+            }
+
+            AssignEditorOnlyLauncherInstance(launcher);
+            Debug.Log($"[TalosE2E] BDFramework 批入口已补齐启动器信号: name={launcher.name} clientVersion={launcher.ClientVersion}");
+        }
+
+        /// <summary>
+        /// 通过反射回写 editor-only 启动器单例。
+        /// Assign the editor-only launcher singleton through reflection.
+        /// <c>BDLauncher.Inst</c> 的 setter 仍然保持私有，避免运行时入口被普通业务代码随意重写；
+        /// 这里作为框架基础设施只在 batchmode editor-only 补环境时做一次受控回写。
+        /// The setter of <c>BDLauncher.Inst</c> remains private so ordinary business code cannot overwrite the runtime entry casually;
+        /// this framework-infrastructure helper performs one controlled assignment only while restoring the batchmode editor-only environment.
+        /// </summary>
+        /// <param name="launcher">要注册为当前宿主启动器的实例。</param>
+        /// <param name="launcher">Instance to register as the current host launcher.</param>
+        private static void AssignEditorOnlyLauncherInstance(BDLauncher launcher)
+        {
+            var instProperty = typeof(BDLauncher).GetProperty(nameof(BDLauncher.Inst), BindingFlags.Public | BindingFlags.Static);
+            var instSetter = instProperty?.GetSetMethod(true);
+            if (instSetter == null)
+            {
+                throw new MissingMethodException("未找到 BDLauncher.Inst 的私有 setter，无法回写 editor-only 启动器实例");
+            }
+
+            instSetter.Invoke(null, new object[] { launcher });
         }
 
         /// <summary>

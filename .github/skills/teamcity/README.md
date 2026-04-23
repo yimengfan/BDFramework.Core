@@ -78,6 +78,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - `apply`
 - `run-build`
 - `run-build-group`
+- `run-talos-baseflow-chain`
 
 ## 常用命令
 
@@ -161,6 +162,45 @@ Copilot 轮询纪律 / Copilot polling discipline:
 
 - 如果构建早已结束，不要继续只盯着后台终端等待；优先直接查询 `GET /app/rest/builds/id:<buildId>`，再按 buildId 读取 `test-output.log` 或 `downloadBuildLog.html`。
 - 如果 TeamCity helper 能访问公网 TeamCity，但远端构建内部仍打印内网 `teamcityBaseUrl` 或 `uploadServerUrl`，应继续检查 `DevOps/CI/BuildTools/buildtools.toml` 和相关外部服务，而不是只改 `.test-DevOps/.teamcity/.env`。
+
+Guardrail for Talos BaseFlow:
+
+- A plain `run-build --build-type-id BDFrameworkCore_TalosAIStep01BaseFlowTest` is not the default regression path anymore.
+- That direct call bypasses the local runtime-complete gate, which is how device-only failures slipped through repeated reruns.
+- Use `run-talos-baseflow-chain` for the normal Talos BaseFlow regression workflow so the local batchmode gate and the remote TeamCity/device run stay aligned on the same Playwright spec.
+
+### Guarded Talos BaseFlow chain
+
+```bash
+cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
+setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
+.venv/bin/python .github/skills/teamcity/scripts/update_project_settings.py run-talos-baseflow-chain \
+  --platform android \
+  --unity-path "$UNITY_PATH" \
+  --branch v4/v-4.0.0 \
+  --comment "Talos BaseFlow sqlite validation" \
+  --tag android \
+  --tag baseflow-sqlite \
+  --test-file tests/testBaseFlow-e2e.spec.ts \
+  --adb-serial 127.0.0.1:62001 \
+  --adb-connect-targets 127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555 \
+  --emulator-type nox \
+  --timeout-seconds 7200 \
+  --poll-interval-seconds 10
+```
+
+What this command guarantees:
+
+- It runs the local runtime-complete Talos batchmode gate first through `Packages/com.talosai.e2e/Playwright~/tools/test-batchmode.sh`.
+- It forwards the same `--test-file` into the local TCP batchmode gate and the remote BaseFlow rerun, so both lanes exercise the same Playwright spec by default.
+- It rebuilds the target platform package on TeamCity and then reuses that exact package build id in the BaseFlow rerun.
+- It keeps the existing TeamCity helper wait/log-tail behaviour for both remote builds.
+
+Mode note:
+
+- `--local-batchmode-mode tcp` is the exact-parity mode and should be the default whenever the local machine can run it.
+- `--local-batchmode-mode sync` is a fallback only. The script now makes that opt-in through `--allow-local-sync-fallback` because sync mode runs the exported Talos suite set instead of Playwright-spec filtering.
+- If a local machine cannot sustain TCP batchmode (for example due a Unity license/runtime limitation), treat sync mode as a diagnostic fallback rather than proof that the exact remote spec has already passed locally.
 
 ### Re-run Talos BaseFlow with a rebuilt Windows package
 
@@ -256,6 +296,7 @@ Supplemental notes:
 2. 主仓库业务改动也已提交并推送到 TeamCity 实际 checkout 的 GitHub 分支。
 3. `show-project` 与 `verify-vcs` 返回正常。
 4. 新的 buildType ID 已能在服务器查询到；如果仍然 missing，说明 TeamCity 还没加载新 DSL。
+5. Talos BaseFlow validation must use `run-talos-baseflow-chain` or an equivalent local batchmode gate before the remote TeamCity/device leg is queued.
 
 ## 本地测试
 

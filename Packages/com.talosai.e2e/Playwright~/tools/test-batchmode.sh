@@ -37,6 +37,7 @@ UNITY_PATH="${UNITY_PATH:-}"
 UNITY_PORT="${UNITY_PORT:-10002}"
 PROJECT_PATH="${PROJECT_PATH:-}"
 TALOS_MODE="${TALOS_MODE:-tcp}"
+PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 
 # 强制禁用 Unity Hub，防止 "reopen" 提示
 export UNITY_DISABLE_HUB=1
@@ -85,6 +86,20 @@ rm -f "${PROJECT_PATH}/Temp/"*.lock 2>/dev/null || true
 mkdir -p "${PROJECT_PATH}/Logs"
 UNITY_LOG="${PROJECT_PATH}/Logs/talos_e2e_unity_$(date +%s).log"
 
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --test-file) PLAYWRIGHT_TEST_FILE="$2"; shift 2 ;;
+        --help)
+            echo "用法: $0 [--test-file <relative/path/to/spec>]"
+            echo ""
+            echo "选项:"
+            echo "  --test-file      Playwright 测试文件路径（相对 Playwright~ 根目录）"
+            exit 0
+            ;;
+        *) echo "未知参数: $1"; exit 1 ;;
+    esac
+done
+
 # ====================================================================
 # 模式分支
 # ====================================================================
@@ -98,7 +113,14 @@ if [[ "${TALOS_MODE}" == "sync" ]]; then
     echo "  Unity:    ${UNITY_PATH}"
     echo "  项目:     ${PROJECT_PATH}"
     echo "  模式:     sync（-quit 同步执行）"
+    if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+        echo "  测试文件: ${PLAYWRIGHT_TEST_FILE}"
+    fi
     echo "============================================"
+
+    if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+        echo ">>> 警告: sync 模式不会按 Playwright spec 过滤，仅作为本地回退 gate"
+    fi
 
     RESULT_FILE="${PROJECT_PATH}/talos_e2e_results.json"
     rm -f "${RESULT_FILE}"
@@ -183,6 +205,9 @@ else
     echo "  项目:     ${PROJECT_PATH}"
     echo "  端口:     ${UNITY_PORT}"
     echo "  模式:     tcp（Playwright 编排）"
+    if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+        echo "  测试文件: ${PLAYWRIGHT_TEST_FILE}"
+    fi
     echo "============================================"
 
     echo ""
@@ -242,12 +267,19 @@ else
     cd "${PLAYWRIGHT_DIR}"
     ensure_talos_playwright_dependencies "${PLAYWRIGHT_DIR}"
 
+    PLAYWRIGHT_COMMAND=(
+        "${TALOS_NODE_BIN}" "${PLAYWRIGHT_DIR}/node_modules/@playwright/test/cli.js" test
+        --project=batchmode
+        --reporter=list
+    )
+    if [[ -n "${PLAYWRIGHT_TEST_FILE}" ]]; then
+        PLAYWRIGHT_COMMAND+=("${PLAYWRIGHT_TEST_FILE}")
+    fi
+
     PLATFORM=unityplayer \
     UNITY_HOST=127.0.0.1 \
     UNITY_PORT="${UNITY_PORT}" \
-    "${TALOS_NODE_BIN}" "${PLAYWRIGHT_DIR}/node_modules/@playwright/test/cli.js" test \
-        --project=batchmode \
-        --reporter=list \
+    "${PLAYWRIGHT_COMMAND[@]}" \
         2>&1
 
     TEST_EXIT_CODE=$?

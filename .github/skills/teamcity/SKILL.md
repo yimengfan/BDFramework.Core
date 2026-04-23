@@ -51,6 +51,8 @@ cp .test-DevOps/.teamcity/.env.example .test-DevOps/.teamcity/.env
 - `scripts/update_project_settings.py`：主入口，负责 Versioned Settings 查询/导出/更新，以及单个或批量构建触发。
 - `scripts/tc_latest_branch_report.py`：补充性的只读分析脚本，用于抓取固定分支构建日志中的关键上传线索。
 
+For Talos BaseFlow regressions, the guarded entrypoint is now `run-talos-baseflow-chain`, not a plain `run-build` call. The chain enforces a local Talos batchmode gate first, then rebuilds the package, then queues the remote BaseFlow run with the real package build id.
+
 ### 加载环境并执行命令
 
 ```bash
@@ -150,6 +152,31 @@ Operational note:
 
 `--dispatch-mode`：`auto`（默认）/ `parallel`（强制并行）/ `sequential`（强制串行）
 
+### run-talos-baseflow-chain — guard Talos BaseFlow with a local runtime gate
+
+```bash
+.venv/bin/python .github/skills/teamcity/scripts/update_project_settings.py run-talos-baseflow-chain \
+    --platform android \
+    --unity-path "$UNITY_PATH" \
+    --branch v4/v-4.0.0 \
+    --comment "Talos BaseFlow sqlite validation" \
+    --tag android \
+    --tag baseflow-sqlite \
+    --test-file tests/testBaseFlow-e2e.spec.ts \
+    --adb-serial 127.0.0.1:62001 \
+    --adb-connect-targets 127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555 \
+    --emulator-type nox \
+    --timeout-seconds 7200 \
+    --poll-interval-seconds 10
+```
+
+Key contract:
+- The command runs `Packages/com.talosai.e2e/Playwright~/tools/test-batchmode.sh --test-file <spec>` first and aborts immediately if the local gate fails.
+- Only after the local gate passes does it queue the package build for the selected platform and then queue `BDFrameworkCore_TalosAIStep01BaseFlowTest` with the produced package build id.
+- Use `--local-batchmode-mode tcp` for exact Playwright-spec parity between local and remote validation.
+- `--local-batchmode-mode sync` is an explicit fallback only. It runs the exported Talos suite set instead of Playwright-spec filtering, so you must opt in with `--allow-local-sync-fallback` and treat it as a weaker parity mode.
+- For Talos BaseFlow regressions, do not use a plain `run-build` call as the default regression path, because it bypasses the local runtime gate entirely.
+
 ## 常用 BuildType ID
 
 | BuildType ID | 说明 |
@@ -180,6 +207,7 @@ mvn teamcity-configs:generate
 1. `.test-DevOps` 仓库改动已提交并推送
 2. 主仓库业务改动已推送到 TeamCity 实际 checkout 的分支
 3. `show-project` 与 `verify-vcs` 返回正常
+4. Talos BaseFlow remote validation must go through `run-talos-baseflow-chain` or an equivalent local batchmode gate before the remote build is queued.
 
 ## 详细文档
 
