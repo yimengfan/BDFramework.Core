@@ -130,7 +130,7 @@ parse_build_status() {
 parse_build_progress() {
     local json="$1"
     if has_jq; then
-        echo "$json" | jq -r '.running-info // empty | .percentage // 0'
+        echo "$json" | jq -r '.["running-info"].percentage // 0' 2>/dev/null || echo "0"
     else
         echo "$json" | grep -oP '"percentage"\s*:\s*\K[0-9]+' || echo "0"
     fi
@@ -151,6 +151,33 @@ parse_build_web_url() {
         echo "$json" | jq -r '.webUrl // ""'
     else
         echo "$json" | grep -oP '"webUrl"\s*:\s*"\K[^"]+' || echo ""
+    fi
+}
+
+parse_build_type_name() {
+    local json="$1"
+    if has_jq; then
+        echo "$json" | jq -r '.buildType.name // "unknown"'
+    else
+        echo "$json" | grep -oP '"buildType"[^}]*"name"\s*:\s*"\K[^"]+' || echo "unknown"
+    fi
+}
+
+parse_agent_name() {
+    local json="$1"
+    if has_jq; then
+        echo "$json" | jq -r '.agent.name // "queued"'
+    else
+        echo "$json" | grep -oP '"agent"[^}]*"name"\s*:\s*"\K[^"]+' || echo "queued"
+    fi
+}
+
+parse_status_text() {
+    local json="$1"
+    if has_jq; then
+        echo "$json" | jq -r '.statusText // ""'
+    else
+        echo "$json" | grep -oP '"statusText"\s*:\s*"\K[^"]+' || echo ""
     fi
 }
 
@@ -214,12 +241,24 @@ while true; do
     PROGRESS=$(parse_build_progress "$BUILD_JSON")
     NUMBER=$(parse_build_number "$BUILD_JSON")
     WEB_URL=$(parse_build_web_url "$BUILD_JSON")
+    BUILD_TYPE_NAME=$(parse_build_type_name "$BUILD_JSON")
+    AGENT_NAME=$(parse_agent_name "$BUILD_JSON")
+    STATUS_TEXT=$(parse_status_text "$BUILD_JSON")
     
     # 打印状态摘要（仅当进度变化或每 5 分钟）
     # Print status summary (only when progress changes or every 5 minutes)
     MINUTES=$((ELAPSED / 60))
     if [[ "$PROGRESS" != "$LAST_PROGRESS" ]] || [[ $((ELAPSED % 300)) -lt $POLL_INTERVAL ]]; then
-        echo "[tc_build_poller] [${ELAPSED}s] build#${NUMBER} state=${STATE} status=${STATUS} progress=${PROGRESS}%"
+        if [[ "$STATE" == "queued" ]]; then
+            echo "[tc_build_poller] [${ELAPSED}s] build#${NUMBER} state=${STATE} (waiting for agent)"
+        elif [[ "$STATE" == "running" ]]; then
+            echo "[tc_build_poller] [${ELAPSED}s] build#${NUMBER} state=${STATE} status=${STATUS} progress=${PROGRESS}% agent=${AGENT_NAME}"
+            if [[ -n "$STATUS_TEXT" ]]; then
+                echo "[tc_build_poller]          └─ ${STATUS_TEXT}"
+            fi
+        else
+            echo "[tc_build_poller] [${ELAPSED}s] build#${NUMBER} state=${STATE} status=${STATUS} progress=${PROGRESS}%"
+        fi
         LAST_PROGRESS="$PROGRESS"
     fi
     
@@ -229,19 +268,22 @@ while true; do
         echo "[tc_build_poller] ========================================"
         echo "[tc_build_poller] BUILD FINISHED"
         echo "[tc_build_poller] ========================================"
-        echo "[tc_build_poller] Build ID:    ${BUILD_ID}"
-        echo "[tc_build_poller] Build Number: ${NUMBER}"
-        echo "[tc_build_poller] State:       ${STATE}"
-        echo "[tc_build_poller] Status:      ${STATUS}"
-        echo "[tc_build_poller] Elapsed:     ${ELAPSED}s"
-        echo "[tc_build_poller] Web URL:     ${WEB_URL}"
+        echo "[tc_build_poller] Build ID:      ${BUILD_ID}"
+        echo "[tc_build_poller] Build Number:  ${NUMBER}"
+        echo "[tc_build_poller] Build Type:    ${BUILD_TYPE_NAME}"
+        echo "[tc_build_poller] Agent:         ${AGENT_NAME}"
+        echo "[tc_build_poller] State:         ${STATE}"
+        echo "[tc_build_poller] Status:        ${STATUS}"
+        echo "[tc_build_poller] Status Text:   ${STATUS_TEXT}"
+        echo "[tc_build_poller] Elapsed:       ${ELAPSED}s"
+        echo "[tc_build_poller] Web URL:       ${WEB_URL}"
         echo "[tc_build_poller] ========================================"
         
         if [[ "$STATUS" == "SUCCESS" ]]; then
-            echo "[tc_build_poller] Build succeeded!"
+            echo "[tc_build_poller] ✅ Build succeeded!"
             exit 0
         else
-            echo "[tc_build_poller] Build failed!"
+            echo "[tc_build_poller] ❌ Build failed!"
             echo "[tc_build_poller] ========================================"
             get_build_log_tail "$BUILD_ID" 80
             exit 1

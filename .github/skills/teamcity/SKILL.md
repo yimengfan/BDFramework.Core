@@ -144,8 +144,8 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 
 示例：
 ```bash
-# 轮询构建 1075，每 60 秒检查一次，最多等待 1 小时
-.github/skills/teamcity/scripts/tc_build_poller.sh 1075 60 3600
+# 轮询构建 1079，每 60 秒检查一次，最多等待 30 分钟
+.github/skills/teamcity/scripts/tc_build_poller.sh 1079 60 1800
 ```
 
 该工具特点：
