@@ -157,7 +157,37 @@ Copilot 轮询纪律 / Copilot polling discipline:
 - For `run-build --wait`, prefer launching it via `run_in_terminal` in `async` mode and then wait for that terminal's completion notification.
 - Do not start an extra `pylanceRunCodeSnippet` + `time.sleep()` polling loop in parallel; that burns context budget and looks like the session is frozen for hours.
 - If a spot progress check is required, read the same async terminal output instead of starting a second polling pipeline.
+### Shell 轮询工具 / Shell Polling Tool
 
+当需要轮询构建状态但不想占用 Python 进程时，可使用 shell 轮询工具 `tc_build_poller.sh`：
+
+```bash
+cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
+setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
+.github/skills/teamcity/scripts/tc_build_poller.sh <build_id> [poll_interval] [timeout]
+```
+
+参数说明：
+- `build_id`: TeamCity 构建 ID（必需）
+- `poll_interval`: 轮询间隔秒数（可选，默认 30）
+- `timeout`: 超时秒数（可选，默认 7200 = 2小时）
+
+示例：
+```bash
+# 轮询构建 1075，每 60 秒检查一次，最多等待 1 小时
+.github/skills/teamcity/scripts/tc_build_poller.sh 1075 60 3600
+```
+
+该工具特点：
+- 仅在进度变化或每 5 分钟时打印状态，减少输出噪音
+- 构建失败时自动打印日志尾部（最后 80 行）
+- 支持无 jq 环境（使用 grep/sed 降级解析）
+- 退出码：0=成功，1=失败，2=超时，3=参数错误
+
+使用场景：
+- Copilot 触发长时间构建后，需要等待完成但不想阻塞会话
+- CI/CD 流程中需要监控构建状态
+- 调试构建问题时需要持续跟踪进度
 排障建议：
 
 - 如果构建早已结束，不要继续只盯着后台终端等待；优先直接查询 `GET /app/rest/builds/id:<buildId>`，再按 buildId 读取 `test-output.log` 或 `downloadBuildLog.html`。

@@ -127,6 +127,47 @@ Correct pattern:
 2. Wait for the terminal completion notification — do NOT poll with `pylanceRunCodeSnippet` in between
 3. After notification, use `get_terminal_output` to read results
 
+### Shell 轮询工具 / Shell Polling Tool
+
+当需要轮询构建状态但不想占用 Python 进程时，可使用 shell 轮询工具：
+
+```bash
+cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
+setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
+.github/skills/teamcity/scripts/tc_build_poller.sh <build_id> [poll_interval] [timeout]
+```
+
+参数说明：
+- `build_id`: TeamCity 构建 ID（必需）
+- `poll_interval`: 轮询间隔秒数（可选，默认 30）
+- `timeout`: 超时秒数（可选，默认 7200 = 2小时）
+
+示例：
+```bash
+# 轮询构建 1075，每 60 秒检查一次，最多等待 1 小时
+.github/skills/teamcity/scripts/tc_build_poller.sh 1075 60 3600
+```
+
+该工具特点：
+- 仅在进度变化或每 5 分钟时打印状态，减少输出噪音
+- 构建失败时自动打印日志尾部（最后 80 行）
+- 支持无 jq 环境（使用 grep/sed 降级解析）
+- 退出码：0=成功，1=失败，2=超时，3=参数错误
+
+When you need to poll build status without occupying a Python process, use the shell polling tool:
+
+```bash
+cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
+setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
+.github/skills/teamcity/scripts/tc_build_poller.sh <build_id> [poll_interval] [timeout]
+```
+
+Features:
+- Prints status only when progress changes or every 5 minutes, reducing output noise
+- Automatically prints log tail (last 80 lines) on build failure
+- Works without jq (uses grep/sed fallback parsing)
+- Exit codes: 0=success, 1=failure, 2=timeout, 3=parameter error
+
 Operational note:
 - For builds that call TeamCity again from inside the build scripts, `run-build` now forwards the current TeamCity token automatically when `env.TEAMCITY_TOKEN` is not provided explicitly.
 - If a rerun must use a different token or basic-auth pair, pass the matching `env.TEAMCITY_*` property explicitly and the helper will preserve that override.
