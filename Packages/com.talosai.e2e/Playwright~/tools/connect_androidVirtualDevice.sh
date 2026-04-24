@@ -236,17 +236,81 @@ while [[ ${_cav_waited} -lt ${_DEVICE_WAIT_MAX} ]]; do
         echo "    设备 offline，等待 adbd 就绪... (${_cav_waited}/${_DEVICE_WAIT_MAX}s)"
         echo "    Devices offline, waiting for adbd... (${_cav_waited}/${_DEVICE_WAIT_MAX}s)"
 
-        # 若存在 offline 的 emulator-* 条目，尝试 reconnect offline 唤醒它。
-        # If any emulator-* entry is offline, try "adb reconnect offline" to wake it.
+        # 诊断：打印完整的设备列表详情 / Diagnostic: print full device list details
+        echo "    === ADB 设备详情 / ADB devices detail ==="
+        "${ADB_CMD[@]}" devices -l 2>/dev/null || true
+        echo "    === 设备详情结束 ==="
+
+        # 若存在 offline 的 emulator-* 条目，尝试多种恢复策略。
+        # If any emulator-* entry is offline, try multiple recovery strategies.
         if "${ADB_CMD[@]}" devices 2>/dev/null | grep -q 'emulator.*offline'; then
-            echo "    检测到 emulator-* offline，尝试 adb reconnect offline..."
-            echo "    Detected emulator-* offline; trying adb reconnect offline..."
+            _cav_em_serial=$("${ADB_CMD[@]}" devices 2>/dev/null | grep 'emulator.*offline' | awk '{print $1}' | head -1)
+            echo "    检测到 emulator offline: ${_cav_em_serial}"
+            echo "    Detected emulator offline: ${_cav_em_serial}"
+
+            # 策略 1: adb reconnect offline
+            # Strategy 1: adb reconnect offline
+            echo "    [策略 1/3] 尝试 adb reconnect offline..."
+            echo "    [Strategy 1/3] Trying adb reconnect offline..."
             "${ADB_CMD[@]}" reconnect offline 2>/dev/null || true
+            sleep 2
+
+            # 检查是否恢复 / Check if recovered
+            if "${ADB_CMD[@]}" devices 2>/dev/null | grep -q 'device$'; then
+                echo "    ✅ reconnect offline 成功，设备已上线"
+                echo "    ✅ reconnect offline succeeded, device online"
+                break
+            fi
+
+            # 策略 2: adb kill-server + start-server（重置 ADB 服务端状态）
+            # Strategy 2: adb kill-server + start-server (reset ADB server state)
+            echo "    [策略 2/3] 尝试 adb kill-server + start-server..."
+            echo "    [Strategy 2/3] Trying adb kill-server + start-server..."
+            "${ADB_CMD[@]}" kill-server 2>/dev/null || true
+            sleep 2
+            "${ADB_CMD[@]}" start-server 2>/dev/null || true
             sleep 3
+
+            # 重新连接 TCP 目标 / Reconnect TCP targets
+            if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+                echo "    重新连接 TCP 目标..."
+                IFS=',' read -ra _cav_retry_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
+                for _cav_rt in "${_cav_retry_targets[@]}"; do
+                    _cav_rt="$(printf '%s' "${_cav_rt}" | tr -d '[:space:]')"
+                    [[ -z "${_cav_rt}" ]] && continue
+                    "${ADB_CMD[@]}" disconnect "${_cav_rt}" 2>/dev/null || true
+                    _cav_rc=$("${ADB_CMD[@]}" connect "${_cav_rt}" 2>/dev/null || true)
+                    echo "        ${_cav_rt}: ${_cav_rc}"
+                done
+            fi
+            sleep 2
+
+            # 检查是否恢复 / Check if recovered
+            if "${ADB_CMD[@]}" devices 2>/dev/null | grep -q 'device$'; then
+                echo "    ✅ kill-server + start-server 成功，设备已上线"
+                echo "    ✅ kill-server + start-server succeeded, device online"
+                break
+            fi
+
+            # 策略 3: 检查 ADB 授权状态（unauthorized 设备）
+            # Strategy 3: check ADB authorization status (unauthorized devices)
+            if "${ADB_CMD[@]}" devices 2>/dev/null | grep -q 'unauthorized'; then
+                echo "    [策略 3/3] 检测到 unauthorized 设备，可能需要 ADB 授权..."
+                echo "    [Strategy 3/3] Detected unauthorized device, may need ADB authorization..."
+                echo "    提示：在 CI 环境中，请确保 ~/.android/adbkey 存在且已授权"
+                echo "    Hint: in CI, ensure ~/.android/adbkey exists and is authorized"
+            fi
         fi
     else
         echo "    等待设备出现... (${_cav_waited}/${_DEVICE_WAIT_MAX}s)"
         echo "    Waiting for device to appear... (${_cav_waited}/${_DEVICE_WAIT_MAX}s)"
+
+        # 每 60s 打印一次设备列表 / Print device list every 60s
+        if [[ $((_cav_waited % 60)) -eq 0 && ${_cav_waited} -gt 0 ]]; then
+            echo "    === ADB 设备列表 / ADB devices list ==="
+            "${ADB_CMD[@]}" devices -l 2>/dev/null || true
+            echo "    === 设备列表结束 ==="
+        fi
     fi
 
     # 每 _CAV_RECONNECT_INTERVAL 秒重连 TCP 目标一次（比 60s 更密集）。
