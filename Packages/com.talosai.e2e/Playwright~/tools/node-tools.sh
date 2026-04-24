@@ -520,7 +520,7 @@ ensure_talos_mumu_running() {
                     if command -v cygpath >/dev/null 2>&1; then
                         exe_path="$(cygpath -u "${found}" 2>/dev/null || printf '%s' "${found}")"
                     else
-                        exe_path="$(printf '%s' "${found}" | sed 's|^[Cc]:|/c|; s|^[Dd]:|/d|; s|^[Ee]:|/e|; s|\\|/|g')"
+                        exe_path="$(printf '%s' "${found}" | sed 's|^[Cc]:|/c|; s|^[Dd]:|/d|; s|^[Ee]:|/e|; s|^[Ff]:|/f|; s|\\|/|g')"
                     fi
                     echo "    where.exe 找到 MuMu (${_exe_name}): ${found} -> ${exe_path}"
                     break 2
@@ -667,9 +667,24 @@ ensure_talos_mumu_running() {
         # Diagnostic: show MuMuNx* processes before launch to confirm SYSTEM can interact with service.
         echo "    === 启动前 MuMuNx* 进程状态 ==="
         tasklist.exe /FI "IMAGENAME eq MuMu*" 2>/dev/null | tr -d '\r' | grep -v "^$" || echo "    (无 MuMuNx 进程)"
+        
+        # 检查 MuMu 12 NX 服务状态（MuMuService.exe 或 MuMuNxService.exe）。
+        # Check MuMu 12 NX service status (MuMuService.exe or MuMuNxService.exe).
+        echo "    === 检查 MuMu 服务进程 ==="
+        tasklist.exe /FI "IMAGENAME eq MuMu*Service*" 2>/dev/null | tr -d '\r' | grep -v "^$" || echo "    (无 MuMu 服务进程)"
+        tasklist.exe 2>/dev/null | tr -d '\r' | grep -i "MuMu" || echo "    (无任何 MuMu 相关进程)"
 
         if [[ -f "${cli_path}" ]]; then
             echo "    使用 mumu-cli.exe 无头启动实例 0 (headless CI mode)"
+            
+            # 清理陈旧的 ADB 连接，避免误判 "already connected"。
+            # Clean up stale ADB connections to avoid false "already connected".
+            echo "    === 清理陈旧 ADB 连接 ==="
+            adb disconnect 127.0.0.1:16384 2>/dev/null || true
+            adb disconnect 127.0.0.1:7555 2>/dev/null || true
+            adb disconnect emulator-5554 2>/dev/null || true
+            echo "    === ADB 连接已清理 ==="
+            
             # 注：在 Git Bash(MINGW) 中直接执行 Windows .exe 无需通过 cmd.exe；
             # 避免 cmd.exe 路径转换问题，输出可正常捕获到 bash stdout。
             # Note: in Git Bash (MINGW) run Windows .exe directly to avoid cmd.exe path conversion issues.
@@ -681,6 +696,28 @@ ensure_talos_mumu_running() {
             echo "    === mumu-cli control --vmindex 0 launch ==="
             MSYS_NO_PATHCONV=1 "${cli_path}" control --vmindex 0 launch 2>&1 | tr -d '\r' || true
             echo "    === mumu-cli control launch 完成 ==="
+            
+            # 等待进程启动并验证。
+            # Wait for process to start and verify.
+            echo "    === 等待 15s 后检查进程状态 ==="
+            sleep 15
+            
+            # 更精确的进程检测：检查所有 MuMu 相关进程。
+            # More precise process detection: check all MuMu related processes.
+            local mumu_process_count=0
+            mumu_process_count=$(tasklist.exe 2>/dev/null | tr -d '\r' | grep -ic "MuMu" || true)
+            echo "    === 启动后 MuMu 相关进程数量: ${mumu_process_count} ==="
+            tasklist.exe 2>/dev/null | tr -d '\r' | grep -i "MuMu" || echo "    (无 MuMu 相关进程)"
+            
+            if [[ ${mumu_process_count} -eq 0 ]]; then
+                echo "    ⚠️ mumu-cli 返回成功但进程未启动，尝试 MuMuManager.exe 直接启动"
+                echo "    ⚠️ mumu-cli returned success but no process, trying MuMuManager.exe direct launch"
+                MSYS_NO_PATHCONV=1 "${exe_path}" 2>/dev/null &
+                disown $! 2>/dev/null || true
+                sleep 10
+                mumu_process_count=$(tasklist.exe 2>/dev/null | tr -d '\r' | grep -ic "MuMu" || true)
+                echo "    === 直接启动后 MuMu 相关进程数量: ${mumu_process_count} ==="
+            fi
         else
             echo "    mumu-cli.exe 不存在，回退到 MuMuManager.exe GUI 直接启动"
             MSYS_NO_PATHCONV=1 "${exe_path}" 2>/dev/null &
@@ -690,8 +727,8 @@ ensure_talos_mumu_running() {
         # 等待 15s 后打印进程状态，确认 MuMu 已启动。
         # Wait 15s then print process state to confirm MuMu started.
         sleep 10
-        echo "    === 启动后 MuMuNx* 进程状态 ==="
-        tasklist.exe /FI "IMAGENAME eq MuMu*" 2>/dev/null | tr -d '\r' | grep -v "^$" || echo "    (无 MuMuNx 进程)"
+        echo "    === 最终 MuMu 相关进程状态 ==="
+        tasklist.exe 2>/dev/null | tr -d '\r' | grep -i "MuMu" || echo "    (无 MuMu 相关进程)"
     else
         # 非 Windows 本地调测回退：无法真正启动 Windows .exe，仅打印告知。
         # Non-Windows local debug fallback: cannot actually run a .exe; log only.

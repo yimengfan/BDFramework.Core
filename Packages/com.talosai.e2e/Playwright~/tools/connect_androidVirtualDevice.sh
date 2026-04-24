@@ -166,6 +166,32 @@ if [[ -z "${ADB_CMD[*]+x}" ]] || [[ "${#ADB_CMD[@]}" -eq 0 ]]; then
 fi
 
 # ============================================================================
+# 步骤 2.5：清理陈旧的 ADB 连接（避免误判 "already connected"）
+# Step 2.5: Clean up stale ADB connections (avoid false "already connected")
+# ============================================================================
+echo ""
+echo ">>> [connect_androidVirtualDevice] 清理陈旧 ADB 连接..."
+echo ">>> [connect_androidVirtualDevice] Cleaning up stale ADB connections..."
+if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
+    IFS=',' read -ra _cav_stale_targets <<< "${TALOS_ADB_CONNECT_TARGETS}"
+    for _cav_st in "${_cav_stale_targets[@]}"; do
+        _cav_st="$(printf '%s' "${_cav_st}" | tr -d '[:space:]')"
+        [[ -z "${_cav_st}" ]] && continue
+        "${ADB_CMD[@]}" disconnect "${_cav_st}" 2>/dev/null || true
+        echo "    已断开: ${_cav_st}"
+    done
+fi
+# 清理 emulator-* 格式的陈旧连接 / Clean up stale emulator-* connections
+"${ADB_CMD[@]}" devices 2>/dev/null | grep 'emulator' | while read -r _cav_em_line; do
+    _cav_em_serial="$(printf '%s' "${_cav_em_line}" | awk '{print $1}')"
+    if [[ -n "${_cav_em_serial}" ]]; then
+        "${ADB_CMD[@]}" disconnect "${_cav_em_serial}" 2>/dev/null || true
+        echo "    已断开陈旧模拟器连接: ${_cav_em_serial}"
+    fi
+done
+echo "    ✅ ADB 连接清理完成"
+
+# ============================================================================
 # 步骤 3：主动连接 ADB TCP 目标（在设备探测前）
 # Step 3: Proactively connect ADB TCP targets before device detection
 # ============================================================================
