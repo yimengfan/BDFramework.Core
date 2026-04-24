@@ -135,3 +135,206 @@ Every task must pass all items below before being considered complete:
 - [ ] No Chinese file names or directory names (comments and logs may use Chinese)
 - [ ] C# identifiers and Attribute default parameter values use English
 - [ ] Generic packages contain no business-party-specific tests or hardcoded logic
+
+## Task Tracking (Todolist) / 任务追踪 (Todolist)
+
+// 任务追踪规范 —— 多步骤任务必须使用 todolist 进行状态追踪
+// Task tracking convention — multi-step tasks MUST use todolist for status tracking
+
+### When to Create Todolist / 何时创建 Todolist
+
+Create `.agent_memory/todolist.md` when:
+- Task involves multiple sub-tasks that span multiple sessions
+- Task requires CI validation with builds that take significant time
+- Task has dependencies between steps (e.g., fix → build → test)
+- User explicitly requests "until all problems resolved" (直到解决所有问题为止)
+
+### Todolist Structure / Todolist 结构
+
+```markdown
+# [Task Name] Task List
+# [任务名称] 任务列表
+
+**Created**: YYYY-MM-DD
+**Branch**: `branch-name`
+**Commit**: `commit-sha`
+
+---
+
+## Current Status Summary / 当前状态总结
+
+### ✅ Completed Tasks / 已完成任务
+- [Task description with evidence]
+
+### ❌ Failed Tasks / 失败任务
+- [Task description with error details]
+
+### ⏳ In Progress / 进行中
+- [Current task being worked on]
+
+---
+
+## Pending Tasks / 待完成任务
+
+### Task N: [Task Name] [STATUS]
+**Priority**: HIGH/MEDIUM/LOW
+**Dependency**: [Prerequisites if any]
+
+**Sub-tasks**:
+- [ ] Sub-task 1
+- [ ] Sub-task 2
+
+---
+
+## Next Actions / 下一步行动
+1. [Immediate next step]
+```
+
+### Todolist Maintenance Rules / Todolist 维护规则
+
+1. **Update on every progress**: Mark tasks as completed/failed immediately after each step, not at the end
+   // 每次进展后立即更新：完成或失败后立即标记，不要等到最后
+
+2. **Include evidence**: Link to build URLs, commit SHAs, or error logs for each status change
+   // 包含证据：每次状态变化都要链接到构建 URL、commit SHA 或错误日志
+
+3. **Keep it current**: At session end, todolist must reflect actual state, not planned state
+   // 保持最新：会话结束时，todolist 必须反映实际状态，而非计划状态
+
+4. **Use bilingual headers**: All section headers must be bilingual (Chinese first, then English)
+   // 使用双语标题：所有章节标题必须双语（中文在前，英文在后）
+
+5. **Track root cause analysis**: For failed tasks, document root cause and next investigation steps
+   // 追踪根因分析：对于失败任务，记录根本原因和下一步调查步骤
+
+### Progress Update Guidelines / 进度更新规范
+
+// 文档更新时机与清理策略 —— 确保 todolist 始终反映真实进度
+// When to update and how to clean up — keep todolist reflecting actual progress
+
+#### When to Update / 何时更新
+
+Update `.agent_memory/todolist.md` immediately after:
+// 以下情况发生后立即更新：
+
+1. **Sub-task completion**: Any individual sub-task finishes (with evidence link)
+   // 子任务完成：任何单个子任务完成时（附带证据链接）
+
+2. **Status change**: Task status changes (not-started → in-progress → completed/failed)
+   // 状态变更：任务状态变化时
+
+3. **Error discovery**: New error or blocker discovered during execution
+   // 发现错误：执行过程中发现新错误或阻塞点
+
+4. **Build completion**: CI build finishes (success or failure)
+   // 构建完成：CI 构建结束（成功或失败）
+
+5. **Root cause identified**: Analysis reveals the underlying cause of failure
+   // 根因确认：分析确定失败的根本原因
+
+6. **Plan change**: Original plan needs adjustment based on new findings
+   // 计划变更：基于新发现需要调整原计划
+
+#### When NOT to Update / 何时不更新
+
+Do NOT update todolist for:
+// 以下情况不要更新：
+
+- Routine progress without milestone (e.g., "reading file X", "running command Y")
+  // 无里程碑的常规进度（如"正在读取文件 X"、"正在运行命令 Y"）
+
+- Temporary failures that are immediately resolved
+  // 立即解决的临时失败
+
+- Work in progress that hasn't reached a checkpoint
+  // 未到达检查点的进行中工作
+
+#### Task Cleanup Strategy / 任务清理策略
+
+**Major Task Completion / 大任务完成后**:
+
+When a major task (e.g., "Fix ADB offline issue") is fully completed:
+// 当大任务（如"修复 ADB offline 问题"）完全完成时：
+
+1. **Move to "Completed Tasks" section** with:
+   - Completion timestamp
+   - Summary of what was done
+   - Key commit SHAs or build IDs
+   - Links to evidence
+
+2. **After 2 sessions or 7 days** (whichever comes first):
+   - **Remove completely** from todolist
+   - Optionally archive to `/memories/repo/` if it contains valuable lessons
+
+// 1. 移动到"已完成任务"章节，附带：完成时间戳、完成内容摘要、关键 commit SHA 或 build ID、证据链接
+// 2. 2 个会话或 7 天后（以先到者为准）：从 todolist 完全移除，如有价值经验可归档到 `/memories/repo/`
+
+**Failed Task Handling / 失败任务处理**:
+
+When a task fails and needs further investigation:
+// 当任务失败需要进一步调查时：
+
+1. **Keep in "Failed Tasks" section** with:
+   - Failure timestamp
+   - Error details and root cause (if known)
+   - Next investigation steps
+   - Links to failed build logs
+
+2. **When task is abandoned** (e.g., not feasible, blocked permanently):
+   - Mark as `❌ ABANDONED` with reason
+   - Move to bottom of "Failed Tasks" section
+   - Optionally document lesson learned
+
+3. **When task is resolved** (fixed and verified):
+   - Move to "Completed Tasks" section
+   - Include both the failure and the resolution
+
+// 1. 保留在"失败任务"章节，附带：失败时间戳、错误详情和根因（如已知）、下一步调查步骤、失败构建日志链接
+// 2. 当任务被放弃时（如不可行、永久阻塞）：标记为 `❌ ABANDONED` 并说明原因，移到"失败任务"章节底部，可选记录经验教训
+// 3. 当任务被解决时（修复并验证）：移动到"已完成任务"章节，包含失败和解决方案
+
+**Session End Cleanup / 会话结束清理**:
+
+Before ending a session:
+// 会话结束前：
+
+1. **Remove trivial completed sub-tasks**: If a task has 5+ completed sub-tasks and all are trivial, consolidate into single entry
+   // 移除琐碎的已完成子任务：如果任务有 5+ 个已完成的琐碎子任务，合并为单个条目
+
+2. **Archive old completed tasks**: If "Completed Tasks" section has >5 entries, archive oldest ones to `/memories/repo/`
+   // 归档旧的已完成任务：如果"已完成任务"章节超过 5 条，将最旧的归档到 `/memories/repo/`
+
+3. **Update "Next Actions"**: Must reflect actual next step for next session
+   // 更新"下一步行动"：必须反映下一次会话的实际下一步
+
+4. **Verify bilingual headers**: All new sections must have Chinese+English headers
+   // 验证双语标题：所有新章节必须有中英文标题
+
+#### Update Granularity / 更新粒度
+
+**Minimum update unit / 最小更新单元**:
+- One sub-task (e.g., "Check MuMu emulator Android boot logs")
+- One status change (e.g., in-progress → completed)
+- One evidence attachment (e.g., build URL, commit SHA)
+
+**Maximum update delay / 最大更新延迟**:
+- Immediate for CI build results
+- Within 5 minutes for manual task completion
+- Before session ends for all pending changes
+
+// 最小更新单元：一个子任务、一个状态变更、一个证据附件
+// 最大更新延迟：CI 构建结果立即更新、手动任务完成 5 分钟内更新、会话结束前更新所有待更改
+
+### Session Continuity / 会话连续性
+
+When a new session starts:
+1. Check if `.agent_memory/todolist.md` exists
+2. Read todolist to understand current state
+3. Continue from "Next Actions" section
+4. Update todolist as work progresses
+
+// 新会话开始时：
+// 1. 检查 `.agent_memory/todolist.md` 是否存在
+// 2. 读取 todolist 了解当前状态
+// 3. 从 "Next Actions" 章节继续
+// 4. 随着工作进展更新 todolist
