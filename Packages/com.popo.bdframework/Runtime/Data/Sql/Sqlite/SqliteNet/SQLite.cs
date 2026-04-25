@@ -439,13 +439,13 @@ namespace SQLite4Unity3d
             // Windows standalone 与 Android 的 sqlcipher DllImport 在 BaseFlow Player 链路里对 string 入口更稳定，
             // The Windows standalone and Android sqlcipher DllImport path resolves more reliably through the string-based entrypoint in the BaseFlow player flow.
             var r = SQLite3.Open(connectionString.DatabasePath, out handle, (int)connectionString.OpenFlags, connectionString.VfsName);
-            if (Application.platform == RuntimePlatform.WindowsPlayer
+            if ((Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.Android)
                 && r != SQLite3.Result.OK
                 && connectionString.OpenFlags == (SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create)
                 && string.IsNullOrEmpty(connectionString.VfsName))
             {
-                // Windows 上最小可写探针只需要 ReadWrite|Create；当 open_v2 仍失败时，退回 UTF-16 入口继续验证宽字符 Win32 打开路径。
-                // The Windows minimal writable probe only needs ReadWrite|Create; when open_v2 still fails, fall back to the UTF-16 entrypoint to validate the wide-char Win32 open path.
+                // Windows 与 Android 上最小可写探针只需要 ReadWrite|Create；当 open_v2 仍失败时，退回 UTF-16 入口继续验证宽字符打开路径。
+                // The Windows and Android minimal writable probes only need ReadWrite|Create; when open_v2 still fails, fall back to the UTF-16 entrypoint to validate the wide-char open path.
                 if (handle != NullHandle)
                 {
                     SQLite3.Close(handle);
