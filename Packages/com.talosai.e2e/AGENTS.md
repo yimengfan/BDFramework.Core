@@ -1,69 +1,39 @@
-# Talos E2E Package Rules
+# Talos E2E 包级 Agent 规则
 
-## Non-Negotiable Rules
+作用域：`Packages/com.talosai.e2e/**`。
 
-- Playwright owns the main orchestration flow. It decides when to launch the app, wait for status checks, open scenes, drive UI actions such as `page.click`, and trigger Unity-side unit or integration tests.
-- Unity owns test execution and result delivery. Unity code should implement the interfaces that Playwright needs, run core module unit and integration tests, produce outputs, and return results back to Playwright. Capabilities such as screenshots belong to this interface layer.
-- When Unity API behavior or Editor API details are needed, use the local reference under `Documentation~/` before adding wrappers or custom abstractions.
-- Talos E2E is a capability package, not a host workflow package. Do not compose host-owned startup, initialization, scene sequencing, executeMethod wrappers, or fallback recovery workflows inside this package.
-- If a scenario requires project-specific scenes, framework bootstrap, resource or database preparation, manager warm-up, or business launch order, define that flow in the host or business package and let Talos consume it through generic connectors or explicit host-owned entrypoints.
-- Do not add business-party multi-step scenario scripts, launch recipes, or one-off recovery logic under `Playwright~/`, `Editor/`, or `Runtime/` just to make a single project pass. Business parties should reuse Talos fixtures, connectors, and transport primitives from their own package code.
+本文件承载 Talos E2E package 根级规则。不要在本 package 更深目录下新增 `AGENTS.md`。
 
-## Scope
-
-- Applies to `Packages/com.talosai.e2e/**`.
-
-## Architecture Split
-
-- Keep orchestration logic in `Playwright~/src/`, `Playwright~/tests/`, and the shell tools under `Playwright~/tools/`.
-- Keep Unity runtime and editor responsibilities in `Runtime/` and `Editor/`.
-- Do not move basic control flow from Playwright into Unity-side wrapper commands.
-- Unity-side wrappers are allowed only for multi-step flows that need state coordination, recovery, or platform-specific fault handling.
-
-## Package Layout
-
-- `Runtime/Transport/`: TCP protocol and client/server transport.
-- `Runtime/TestRunner/`: bootstrap, discovery, execution, and result export.
-- `Runtime/Tests/`: Unity-side infrastructure-level test coverage only (generic, reusable examples). Business-party tests belong in their own package.
-- `Editor/`: editor bridge entrypoints and editor-only helpers.
-- `Playwright~/`: orchestration, fixtures, scripts, and platform runners.
-- `Documentation~/`: local Unity API mirror for lookup only.
-
-## Working Rules
-
-- Keep all Markdown documentation in English and keep it short.
-- Treat `Documentation~/` as a local reference mirror. Do not rely on it as tracked product content.
-- Update both Unity and Playwright when TCP message shapes, reconnect behavior, or command contracts change.
-- Prefer Unity official APIs plus the cached reflection gateway before adding new Unity-side editor commands.
-- Keep package-owned Playwright orchestration generic. Package scripts and tests may validate reusable editor-control or runtime lanes, but they must not encode host-only acceptance flows or business-party scenario choreography.
-- Add or update the closest automated verification for every behavior change.
-- This package is generic infrastructure. Do not add business-party-specific test cases, configurations, or hardcoded logic here. Business-party test code belongs in the business party's own package directory, referencing this package for its capabilities.
-
-## Test Naming
-
-- Use `description-e2e.spec.ts` for cross-platform cases.
-- Use `description-EditorPlayer-e2e.spec.ts`, `description-Android-e2e.spec.ts`, `description-Windows-e2e.spec.ts`, or `description-MacOS-e2e.spec.ts` for platform-specific cases.
-
-## Validation Entry Points
-
-- Use `Playwright~/tools/test-batchmode.sh` for batchmode validation.
-- Use `Playwright~/tools/test-editorplayer.sh` for editor-control validation only.
-- Use `Playwright~/tools/test-android.sh` for Android validation.
-- Use `Playwright~/tools/test-pc.sh` for Windows or macOS player validation.
-
-## Runtime Matrix
-
-- `test-batchmode.sh` in `TALOS_MODE=sync` is the fallback runtime-complete gate when TCP orchestration is unavailable or unnecessary.
-- `test-batchmode.sh` in default TCP mode is the main runtime-complete gate for cross-platform suites without a platform suffix.
-- `test-editorplayer.sh` is not the runtime-complete gate. It validates editor-command, scene, and PlayMode-control flows through `*-EditorPlayer-e2e.spec.ts` only.
-- Do not assume `unityplayer` can stand in for the runtime launch gate. Host runtime suites such as `launch`, `framework-contract`, and `framework-integration` belong to batchmode or device/player runtime projects.
-- Static editor-only runs can emit step-screenshot warnings. Treat them as capability limits of the static mode unless the test explicitly requires screenshot success.
-
-## Reading Order
+## 阅读顺序
 
 1. `.github/copilot-instructions.md`
-2. `AI_RULES_INDEX.md`
-3. `.github/instructions/e2e.instructions.md`
-4. This file
-5. The specific `Runtime/`, `Editor/`, or `Playwright~/` files being changed
-6. `Documentation~/` only when Unity API details are required
+2. 本文件
+3. 正在修改的 `Runtime/`、`Editor/`、`Playwright~/` 或测试文件
+4. 只有需要 Unity API 细节时才读取 `Documentation~/`
+
+## 不可违背规则
+
+- Playwright 拥有主编排流程，负责启动应用、等待状态检查、打开场景、驱动 UI 动作以及触发 Unity 侧测试。
+- Unity 拥有测试执行和结果交付。Unity 代码实现 Playwright 所需接口，运行测试，产出结果并返回。
+- Talos E2E 是能力包，不是宿主工作流包。
+- 不要在该包内编排宿主启动、框架初始化、资源/数据库准备、场景顺序、executeMethod wrapper 或兜底恢复流程。
+- 如果场景依赖项目场景、配置、资产、manager 或业务启动顺序，应在宿主或业务包中定义流程，让 Talos 通过通用 connector 或显式宿主入口消费。
+- 不要在这里加入业务方专属测试、配置、启动配方或硬编码逻辑。
+
+## 架构边界
+
+- 编排逻辑放在 `Playwright~/src/`、`Playwright~/tests/` 和 `Playwright~/tools/`。
+- Unity runtime 和 editor 职责分别放在 `Runtime/` 和 `Editor/`。
+- 只有需要 Unity API 行为细节时，才把 `Documentation~/` 当作本地 Unity API 参考。
+- TCP 协议字段、消息类型、重连行为或命令契约变化时，Unity 与 Playwright 两侧必须同步更新。
+- 新增 Unity 侧 editor 命令前，优先使用 Unity 官方 API 和缓存反射网关。
+
+## 命名与验证
+
+- 该包内 Markdown 文档可以保持简洁英文；用户明确要求时可翻译。
+- 跨平台 Playwright 测试命名使用 `description-e2e.spec.ts`。
+- 平台后缀使用 `EditorPlayer`、`Android`、`Windows` 和 `MacOS`。
+- Runtime-complete batchmode 验证使用 `Playwright~/tools/test-batchmode.sh`。
+- `Playwright~/tools/test-editorplayer.sh` 只用于 editor-command、scene-control 和 PlayMode-control 流程。
+- 设备/player 平台流程使用 `Playwright~/tools/test-android.sh` 或 `Playwright~/tools/test-pc.sh`。
+- 静态 editor-only 运行可能出现 step-screenshot warning。除非测试明确要求截图成功，否则将其视为能力限制。

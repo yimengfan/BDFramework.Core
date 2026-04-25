@@ -1,445 +1,316 @@
-# BDFramework Copilot Mandatory Rules
+# BDFramework Agent 强制规范
+
+本文件是本仓库唯一的全局 Agent 入口，负责强制工作链路、公共规范与模块路由。集中模块规则放在 `.github/talos-docs/`；README 与 skill 文档只在路由命中后提供详细用法。
+
+## 1. 强制工作链路
+
+除非用户明确要求只读分析或禁止某个阶段，否则所有实现类任务都必须按下面链路推进。每个阶段都是门禁；前一个必需门禁没有通过，不得跳到后一个门禁，也不得把任务标记为完成。
+
+整体链路：
+
+`需求分析 -> 模块路由 -> 编码方案 -> 编码施工 -> 补全测试 -> 本地测试通过 -> commit/push -> TeamCity 远端验证通过 -> 完成前检查 -> 带证据汇报`
+
+1. **需求分析门禁**
+   - 明确用户要交付的结果、限制条件、验收方式和不应触碰的范围。
+   - 编辑前检查当前工作树和已有脏文件。
+   - 不回滚、不覆盖、不提交与当前任务无关的用户改动。
+   - 如果需求、权限或验收条件存在高风险歧义，先用最少问题确认；可以合理假设时继续推进并在结果中说明。
+
+2. **模块路由门禁**
+   - 使用本文件的模块路由表判断受影响模块。
+   - 只读取命中的 `.github/talos-docs` 模块规则、package 根 `AGENTS.md`、附近 README、附近测试和实现文件。
+   - 默认不要加载所有模块文档。
+   - 在动手前判断影响范围：业务逻辑、测试、构建工具链、CI/CD、UI 框架、资源加载、Talos E2E、TeamCity DSL 或文档维护。
+
+3. **编码方案门禁**
+   - 先确定最小实现路径、需要补的测试、需要跑的本地验证和可能需要触发的 TeamCity buildType。
+   - 如果任务多步骤、CI 耗时长或跨会话，先读取并维护 `.agent_memory/todolist.md`。
+   - 发现当前编译链外的代码异味时，按 `.agent_memory/code_smells.md` 规则记录，不扩大本次改动。
+
+4. **编码施工门禁**
+   - 改动只覆盖用户请求和受影响编译链。
+   - 优先复用现有模式、工具函数、asmdef 边界和已记录入口。
+   - 行为、入口、日志、公开契约或配置变化时，同步更新测试与必要文档。
+   - 不把临时调试、一次性脚本或本地机器状态提交成正式行为。
+
+5. **补全测试门禁**
+   - 每条新增或变更代码路径都必须新增或更新最近的自动化测试。
+   - 优先补单元测试；跨模块、跨运行时、资源更新、构建或启动流程变化时，补集成、BatchMode、smoke 或 E2E 验证。
+   - 测试要覆盖具体行为和失败路径，不能只验证“不抛异常”。
+   - 如果确实无法补自动化测试，必须说明原因，并给出最接近的替代验证。
+
+6. **本地验证门禁**
+   - 按命中模块运行最近的单元测试、pytest、Unity Test Framework、BatchMode、dry-run 或 smoke test。
+   - 本地验证失败时，回到编码施工或补全测试阶段修复，直到相关本地验证通过。
+   - 如果推荐检查无法运行，记录原因，并执行最接近的可行验证；不能把“未运行”伪装成“通过”。
+
+7. **提交推送门禁**
+   - 端到端实现任务默认在本地验证通过后提交并推送；用户明确禁止提交/推送时除外。
+   - 提交前复查 diff，只暂存当前任务相关文件。
+   - 不要把无关脏文件放进提交。
+   - `.test-DevOps` 是独立仓库；TeamCity DSL 或 Versioned Settings 变化时需要在该仓库单独提交并推送。
+   - 记录主仓库和必要子仓库的 commit SHA。
+
+8. **TeamCity 远端验证门禁**
+   - 改动影响代码、BuildTools、TeamCity DSL、资源上传、母包构建、Talos E2E、CI 日志、启动链路或设备/Player 行为时，必须触发受影响 TeamCity 构建。
+   - 远端验证只跑本次影响相关的最小必要 buildType；涉及设备/Player/E2E/资源更新时，必须覆盖对应远程真机或 Player 用例。
+   - 触发 TeamCity 前确认相关本地验证已通过，且 TeamCity checkout 能拿到已推送 commit。
+   - TeamCity 命令和排障细节以 `.github/skills/teamcity/SKILL.md` 为准。
+   - 不要假设自动触发已经足够；必须主动触发、等待完成并记录 build ID、URL 和状态。
+
+9. **失败回环门禁**
+   - 本地或远端验证失败时，先分析根因，再回到对应阶段修复。
+   - 修复代码后补齐或修正测试，重跑相关本地验证，通过后再提交/推送并重跑受影响 TeamCity。
+   - 长任务、失败根因和下一步必须同步更新 `.agent_memory/todolist.md`。
+   - 必需检查仍失败、状态未知或没有证据时，不得标记任务完成。
+
+10. **纠正反馈复盘门禁**
+   - 用户纠正 Agent 行为时，先判断问题来自需求误解、漏读已有规则、读错模块规则，还是全局/模块文档确有缺口。
+   - 如果已有规则已覆盖该纠正，应按已有规则执行，并在有帮助时简要说明漏读了哪条规则。
+   - 如果纠正暴露出可复用、高风险或容易重复发生的缺口，且用户期望继续实现，应在同一任务中更新合适的全局或模块规范。
+   - 不要把一次性偏好、临时任务细节或很窄的单次事故写成永久规范。
+   - 对用户只汇报结论和文档更新，不展开内部推理过程。
+
+11. **完成收口门禁**
+   - 逐项对照“完成前检查列表”；必需项未满足时，回到对应门禁处理。
+   - 汇报改动范围、本地测试结果、适用时的 commit SHA、远端 build ID/URL/status 和剩余风险。
+   - 如果某项检查不适用或无法运行，必须说明原因和已执行的替代验证。
+
+## 2. 模块路由
+
+先读 `.github/copilot-instructions.md`，再按下表读取最小命中的本地规则。多个模块同时命中时，读取所有相关规则。
+
+| 目标 | 命中条件 | 必读规则 | 主要验证 |
+| --- | --- | --- | --- |
+| 业务代码 | `Assets/Code/**`、游戏界面、玩法、热更业务流程 | `.github/talos-docs/modules/business-code.md`、附近源码/测试 | `Assets/Code/<Module>/Tests/` 下的业务测试，相关 Unity 测试或 Talos host flow |
+| BDFramework 包 | `Packages/com.popo.bdframework/**` | `Packages/com.popo.bdframework/AGENTS.md` | Unity Test Framework、包内 BatchMode、附近测试 |
+| UI 框架 | `Packages/com.popo.bdframework/Runtime/UI/**`、`Runtime/ScreenNavigation/**`、窗口/导航/状态框架 | `.github/talos-docs/modules/ui-framework.md`、包规则 | UI/window 测试；启动或导航流程变化时跑 host E2E |
+| 资源加载 | `Runtime/AssetsManager/**`、资源版本/更新/加载协议 | `.github/talos-docs/modules/resource-loading.md`、包规则 | AssetsManager 测试、资源更新 BatchMode、服务器协议变化时跑 ClientRes 验证 |
+| 构建业务 | `Editor/EditorPipeline/**`、PublishPipeline、BuildHotfix、BuildAssetBundle、BuildTable、母包构建入口 | `.github/talos-docs/modules/editor-pipeline.md`；面向 CI 时读 CI 文档 | Unity BatchMode bridge 测试；面向 CI 时跑 BuildTools pytest/dry-run |
+| 框架测试 | `Runtime.Test/**`、`Runtime.HostE2E/**`、包测试 asmdef | `.github/talos-docs/modules/testing.md`、包规则 | 目标 Unity 测试程序集；相关时跑 BatchMode |
+| DevOps CI | `DevOps/CI/**`、BuildTools Python、上传 helper、文件服务器配置、pytest | `.github/talos-docs/modules/devops-ci.md`、`DevOps/CI/README.md`、`DevOps/CI/BuildTools/README.md`、目标模块 README | 目标 pytest、dry-run/smoke test；契约/日志/上传/DSL 变化时跑 TeamCity |
+| TeamCity DSL | `.test-DevOps/.teamcity/**`、buildType 映射、Versioned Settings | `.test-DevOps/AGENTS.md`、`.github/skills/teamcity/SKILL.md` | Maven DSL 生成、TeamCity REST 检查、受影响远端构建 |
+| Talos E2E 包 | `Packages/com.talosai.e2e/**` | `Packages/com.talosai.e2e/AGENTS.md` | `Playwright~/tools/test-batchmode.sh`、`test-editorplayer.sh`、相关平台工具 |
+| TeamCity skill | `.github/skills/teamcity/**` | `.github/skills/teamcity/SKILL.md`、`.github/skills/teamcity/README.md` | skill 测试和可行的只读 TeamCity 检查 |
+| 文档维护 | `**/*.md`、`AGENTS.md`、`.github/instructions/*.md`、`.github/talos-docs/**`、skill 文档 | `.github/talos-docs/documentation-maintenance.md` | `rg` 引用检查、`git diff --check` |
+| 第三方或 vendored 代码 | `Packages/com.code-philosophy.*`、vendored plugin 目录 | 本文件的范围保护规则 | 优先从一方包或项目层解决 |
+
+## 3. 注释、命名与文档规范
+
+- **代码注释和 docstring 必须中英双语，中文在前，英文跟在同一注释块内。**
+- 被触碰的类必须保持类级注释最新。关键业务、协议、管线和编排类要说明角色、存在原因，并给出示例或使用说明。
+- 被触碰的函数/方法要说明目的和行为。非平凡 helper 要说明副作用、兜底规则、失败契约或 IO。
+- 测试模块、测试类、测试方法、fixture 和测试 helper 也必须遵守双语文档要求。
+- 重要多步骤流程必须保留阶段注释，并在入口、关键分支/兜底、完成和错误处输出明确日志。
+- 自动化测试、BatchMode 入口和 CI 验证入口必须输出中文开始日志，并包含 `测试目的=` 和 `实现手段=`。
+- 文件名和目录名必须使用 ASCII English。
+- C# 标识符、枚举值、参数名和代码级 Attribute 默认值必须使用英文。
+- 面向开发者的运行时日志可以使用中文。
+- 一方流程和规范 Markdown 以中文为主。已有英文通用包文档，特别是 Talos E2E 包文档，可以保持英文，除非用户明确要求翻译。
+- 不为纯措辞或格式噪音更新 Markdown。只有行为、入口、归属、契约、验证方式或强制策略变化时才更新文档。
+
+## 4. 信任边界
+
+数据来源决定错误处理策略。
+
+### 可信路径
+
+内部数据在写入边界完成校验后即视为可信。如果读取时格式错误，这是 bug，应快速失败。
+
+示例：
+- 生成到 StreamingAssets 或 persistentDataPath 的配置，例如 `BDFrameworkSetting.conf` 和 `HotfixFile.conf`。
+- 导入阶段已校验的 SQLite 表格数据。
+- 内部序列化/反序列化，例如 AOT metadata 和热更 DLL 加载。
+- 框架状态，例如 manager 注册和 ScreenView 导航栈。
 
-This file is the mandatory workspace instruction set for GitHub Copilot in this repository.
+规则：
+- 显式 throw 或失败。
+- 不要静默吞错。
+- 不要把内部损坏转换成 null/default。
 
-## ⚠️ CRITICAL: TeamCity Build Execution Pattern / 关键：TeamCity 构建执行模式
+### 不可信路径
 
-// ⚠️ 关键规则 —— 违反此规则会导致会话崩溃
-// ⚠️ CRITICAL RULE — Violation causes session collapse
+外部输入可能格式错误，必须捕获、报告并处理。
 
-**MANDATORY PATTERN for TeamCity builds / TeamCity 构建必须遵循的模式**:
+示例：
+- 网络/服务器响应。
+- 用户输入。
+- 校验前的下载 manifest 或 CDN 资源。
+- AI 生成内容。
 
-When triggering TeamCity builds via `run-build --wait` or similar long-running commands:
-// 触发 TeamCity 构建时（`run-build --wait` 或其他长时间运行命令）：
+规则：
+- 在边界处校验。
+- 向日志或调用方报告有意义的错误。
+- 不要让损坏的外部数据进入可信持久化数据。
 
-1. **ALWAYS use `run_in_terminal` with `mode=async`**
-   // **必须使用 `run_in_terminal` 的 `mode=async`**
+## 5. 范围与包边界
 
-2. **WAIT for the terminal completion notification** — the system will notify you when done
-   // **等待终端完成通知** —— 系统会在完成时通知你
+- 不修改第三方包或 vendored 插件代码，尤其是 `Packages/com.code-philosophy.*`。
+- 一方包代码改动只允许在 `Packages/com.popo.bdframework` 和 `Packages/com.talosai.e2e` 下进行。
+- 业务方代码属于 `Assets/Code/**` 或业务包，不属于通用包。
+- 通用包不得包含业务方专属场景、配置、场景编排或硬编码宿主流程。
+- Unity3D 业务层代码不得使用反射。
+- 框架或基础设施代码只有在兼容性、平台隔离或受控扩展点需要时才可使用反射，并且必须在注释中说明原因。
 
-3. **Call `get_terminal_output` ONCE after notification** to read the final result
-   // 收到通知后调用 `get_terminal_output` **一次** 读取最终结果
+## 6. 测试与验证策略
 
-**FORBIDDEN PATTERNS / 禁止模式**:
+- 除非用户明确要求只改文档，否则每条新增或变更代码路径都必须新增或更新自动化测试。
+- 优先补最近的单元测试；行为跨模块或跨运行时边界时，再补集成、BatchMode、smoke 或 TeamCity 验证。
+- 测试必须验证具体行为，不能只验证“不抛异常”。
+- 磁盘 IO 测试必须使用临时路径并清理。
+- 需要在 player/device 上运行的 runtime-facing API 和集成测试必须放在 runtime-capable 测试程序集。
+- 如果改动影响启动、资源更新、构建管线、母包构建或 CI 契约，必须同步验证相关文档、日志、本地测试和 TeamCity 入口。
 
-- ❌ Using `mode=sync` for builds that take >5 minutes
-  // 禁止对超过 5 分钟的构建使用 `mode=sync`
+## 7. TeamCity 执行纪律
 
-- ❌ Calling `get_terminal_output` multiple times without receiving completion notification
-  // 禁止在未收到完成通知时多次调用 `get_terminal_output`
+所有 TeamCity Web API 操作都使用 TeamCity skill。
 
-- ❌ Using `pylanceRunCodeSnippet` with `time.sleep()` to poll build status
-  // 禁止使用 `pylanceRunCodeSnippet` + `time.sleep()` 轮询构建状态
+权威来源：
+- `.github/skills/teamcity/SKILL.md`
 
-- ❌ Running shell/python loops that poll TeamCity API every N seconds
-  // 禁止运行每 N 秒轮询 TeamCity API 的 shell/python 循环
+长构建强制执行模式：
+1. 通过 TeamCity skill 以异步终端模式触发 `run-build --wait`、`run-build-group --wait` 或 `run-talos-baseflow-chain`。
+2. 等待终端完成通知。
+3. 完成后只读取一次最终终端输出。
 
-**Why This Matters / 为什么这很重要**:
+禁止模式：
+- 预期超过 5 分钟的构建不得使用同步终端模式。
+- 等待期间不得反复轮询终端输出。
+- 不得使用 `pylanceRunCodeSnippet`、`time.sleep()` 或 shell/Python 循环轮询 TeamCity 状态。
+- 必需远端构建状态未知时，不得标记任务完成。
 
-- TeamCity builds can run for 30+ minutes
-- Polling every few seconds exhausts context window in minutes
-- Each poll wastes tokens and creates noise in conversation
-- The terminal notification system is designed to handle this efficiently
+远端验证检查：
+- 根据改动文件判断受影响 buildType。
+- 远端运行前确认相关本地测试已通过。
+- 确认主仓库改动已推送到 TeamCity checkout 的分支。
+- Versioned Settings 或 DSL 变化时，确认 `.test-DevOps` 改动已推送。
+- 触发时带有意义的 comment 和最小必要 tag。
+- 汇报 build ID、状态和 URL。
 
-// TeamCity 构建可能运行 30+ 分钟
-// 每几秒轮询一次会在几分钟内耗尽上下文窗口
-// 每次轮询都浪费 token 并在对话中制造噪音
-// 终端通知系统设计为高效处理这种情况
+## 8. 任务追踪
 
-**Example: Correct Usage / 示例：正确用法**:
+多步骤或跨会话任务使用 `.agent_memory/todolist.md`。
 
-```python
-# ❌ WRONG - sync mode blocks for 30 minutes
-run_in_terminal(command="run-build --wait ...", mode="sync", timeout=1800000)
+以下情况创建或更新：
+- 任务有多个依赖步骤。
+- CI/TeamCity 验证耗时长。
+- 失败需要根因追踪。
+- 用户要求一直处理到问题全部解决。
 
-# ❌ WRONG - async but polls repeatedly
-terminal_id = run_in_terminal(command="run-build --wait ...", mode="async")
-while True:
-    output = get_terminal_output(id=terminal_id)  # DON'T DO THIS!
-    time.sleep(10)
+以下情况立即更新：
+- 子任务完成或失败。
+- 构建完成。
+- 根因确认。
+- 计划变化。
 
-# ✅ CORRECT - async with notification
-terminal_id = run_in_terminal(command="run-build --wait ...", mode="async", timeout=1800000)
-# ... do other work or simply wait for notification ...
-# When notification arrives:
-output = get_terminal_output(id=terminal_id)  # Read ONCE
-```
+不要因为常规读文件或立即解决的临时失败更新 todolist。
 
-## Module Index
+必要内容：
+- 当前任务摘要。
+- 可用时记录分支、commit 或 build 证据。
+- completed、failed、in-progress 和 next-action 状态。
+- 失败的根因和下一步调查动作。
 
-- Copilot mandatory rules file: `.github/copilot-instructions.md`
-- Sync registry: `AI_RULES_INDEX.md`
-- Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`, `.github/instructions/e2e.instructions.md`
+临时任务状态不要写入长期文档。只有当经验会改变未来行为时，才沉淀到相关规则文件。
 
-## Baseline Code Standards
+## 9. 代码异味追踪
 
-- **All comments and docstrings must be written in paired Chinese and English.** This applies to module docstrings, class docstrings, function docstrings, process comments, fixture descriptions, test docstrings, inline comments, and configuration file comments. Put Chinese first and follow with the English version in the same comment block. Chinese-only or English-only comments do not satisfy this requirement.
-- Every touched class must have a class-level bilingual comment or docstring. It must explain the design role of the type, why it exists, and include an example or usage note for key business, protocol, pipeline, or orchestration classes.
-- Every touched function or method must have a bilingual comment or docstring that explains purpose and behavior. For non-trivial helpers, document inputs, outputs, side effects, fallback rules, or failure contract rather than repeating parameter names.
-- Test files (pytest, Unity tests, etc.) are NOT exempt: every test module, test class, test function, fixture, and test helper must have a bilingual docstring explaining its purpose and the scenario it validates.
-- Major workflows must stay concentrated around an explicit entry or coordinator method so the end-to-end path can be read in one place. Do not scatter the primary process across distant files or tiny helpers without a clear bridge.
-- Major workflows and critical branches must include bilingual process comments. Use phase-oriented comments so readers can follow the flow from top to bottom without reconstructing it from logs alone.
-- Critical configuration files must be documented in bilingual code comments or docstrings where they are declared, loaded, generated, or written. The comment must explain the file purpose and who produces and consumes it.
-- Every new or changed code path must add or update automated tests. Prefer unit tests first; if a flow cannot be covered purely with unit tests, add the closest automated verification and explain the gap. Relevant tests must pass before the task is considered complete.
+发现问题不等于立刻修复问题。
 
-## Markdown Documentation Standards
+规则：
+- **当前编译链内：** 如果阻塞编译/测试或属于当前改动范围，就修。
+- **当前编译链外：** 记录到 `.agent_memory/code_smells.md`，不要扩大 PR。
 
-- All `.md` documentation files must be written in English.
-- Keep `.md` files concise and high-signal. Avoid bloated structure, repetitive narration, and low-value trivia.
-- Do not update `.md` files for minor wording churn or routine noise. Update them only when behavior, entrypoints, ownership, or required policy actually changes.
-
-## Mandatory Conventions
-
-- Important multi-step flows must emit explicit logs at entry, key branch or fallback, and completion or error so runtime debugging does not rely on inference.
-- Automated tests, batch verification entries, and CI validation entrypoints must print Chinese start logs with explicit `测试目的=` and `实现手段=` markers, and multi-step or long-running checks must continue emitting key progress logs so the current validation stage is visible in console and TeamCity output.
-- Unity3D business-layer code must not use reflection.
-- Reflection is allowed only lightly in framework or infrastructure code when needed for compatibility, platform isolation, or controlled extension points, and the reason must be documented in code comments.
-
-## Terminal Async Execution Discipline / 终端异步执行纪律
-
-// 终端异步执行纪律 —— 禁止主动轮询
-// Terminal async execution discipline — NO ACTIVE POLLING
-
-### Forbidden Pattern: Repeated get_terminal_output Polling / 禁止模式：重复调用 get_terminal_output 轮询
-
-**CRITICAL**: When `run_in_terminal` is used with `mode=async` to launch a long-running command (e.g., `run-build --wait`), Copilot **MUST NOT** repeatedly call `get_terminal_output` to poll for progress. This exhausts the context window and freezes the session.
-
-// **关键**：当 `run_in_terminal` 使用 `mode=async` 启动长时间运行的命令（如 `run-build --wait`）时，Copilot **不得** 重复调用 `get_terminal_output` 来轮询进度。这会耗尽上下文窗口并导致会话卡住。
-
-**Correct Pattern / 正确做法**:
-
-1. Use `run_in_terminal` with `mode=async` to launch the command
-   // 使用 `run_in_terminal` 的 `mode=async` 启动命令
-
-2. **WAIT** for the terminal completion notification — do NOT call `get_terminal_output` during the wait
-   // **等待** 终端完成通知 —— 在等待期间不要调用 `get_terminal_output`
-
-3. After receiving the completion notification, call `get_terminal_output` **ONCE** to read the final result
-   // 收到完成通知后，调用 `get_terminal_output` **一次** 读取最终结果
-
-**Why This Matters / 为什么这很重要**:
-
-- The terminal system is designed to notify Copilot when async commands complete
-- Polling with `get_terminal_output` creates a busy-wait loop that consumes context budget
-- A single `run-build --wait` can run for 30+ minutes; polling every few seconds exhausts context in minutes
-- This is a session-killing pattern that must be avoided at all costs
-
-// 终端系统设计为在异步命令完成时通知 Copilot
-// 用 `get_terminal_output` 轮询会创建忙等待循环，消耗上下文预算
-// 单个 `run-build --wait` 可能运行 30+ 分钟；每几秒轮询一次会在几分钟内耗尽上下文
-// 这是一个会杀死会话的模式，必须不惜一切代价避免
-
-**Enforcement / 执行**:
-
-- If you find yourself calling `get_terminal_output` more than once for the same terminal ID without receiving a completion notification, **STOP IMMEDIATELY**
-- This is a violation of workspace policy and indicates a bug in your execution pattern
-// 如果你发现自己在没有收到完成通知的情况下，对同一个终端 ID 调用 `get_terminal_output` 超过一次，**立即停止**
-// 这违反了工作区策略，表明你的执行模式有 bug
-
-
-## Trust Boundary — Fail Fast vs Graceful Degradation
-
-// 信任边界 —— Fail Fast 与优雅降级
-// All data flowing through the system is classified as either **Trusted** or **Untrusted**. The error handling strategy is determined by the data's origin, not by the developer's mood.
-
-### Trusted Path (Internal Data) — Fail Fast
-// 可信路径（内部数据）—— 快速失败
-
-Data that originates from inside the system boundary. Errors here are rare; if they happen, it is a **bug**, not a user scenario. **Throw immediately. Do not silently swallow or defensively handle.**
-
-| Source | Examples |
-|---|---|
-| Config loaded from StreamingAssets / persistentDataPath | `BDFrameworkSetting.conf`, `HotfixFile.conf` |
-| SQLite table data already validated at import time | Excel-generated game tables |
-| Internal serialization / deserialization | AOT metadata, hotfix DLL loading |
-| Framework-internal state | Manager registration, ScreenView navigation stack |
-
-```csharp
-// BAD — silently swallows a config error
-var config = JsonUtility.FromJson<GameConfig>(json) ?? new GameConfig();
-
-// GOOD — config is trusted; if it fails, it is a bug
-var config = JsonUtility.FromJson<GameConfig>(json);
-if (config == null)
-    throw new Exception($"GameConfig decode failed, path={path}");
-```
-
-### Untrusted Path (External Input) — Catch and Report
-// 不可信路径（外部输入）—— 捕获并报告
-
-Data that originates from outside the system boundary. Errors here are **expected and frequent**. Catch the error and report it back to the caller or user.
-
-| Source | Examples |
-|---|---|
-| Network / server responses | Version manifests, hotfix resource downloads |
-| User input | Player settings, chat messages |
-| External file content before validation | Downloaded asset bundles, CDN resources |
-| AI-generated content | Any procedurally generated data |
-
-```csharp
-// Untrusted: CDN-downloaded manifest may be corrupted or tampered
-var manifest = await DownloadManifestAsync(url);
-if (manifest == null || !ValidateManifest(manifest))
-{
-    BDebug.LogError($"版本清单校验失败, url={url}");
-    OnUpdateFailed("资源更新失败，请检查网络");
-    return;
-}
-```
-
-### Key Principle — Persisted Data Is Trusted
-// 核心原则 —— 持久化后的数据即可信数据
-
-Strict validation at the **write boundary** (Excel→SQLite import, config file generation, resource build pipeline) ensures bad-format data never reaches storage. If malformed data is read back from SQLite or a config file, it is a **human or pipeline bug** — throw, do not defensively handle.
-
-### Forbidden Patterns
-// 禁止的模式
-
-```csharp
-// BAD — silently converts errors to null/default, hides bugs
-try { DoSomethingCritical(); } catch { /* swallowed */ }
-if (obj == null) return; // silently returns, no log, no error
-```
-
-The only exception: `TryGet` / `TryParse` patterns where the caller explicitly handles the "not found" case and it is a **normal business flow**, not an error.
-
-## Naming vs Comment Language Boundary
-
-- **File names and directory names** must use ASCII English only. No Chinese, Japanese, or other non-Latin characters.
-- **C# identifiers** — class names, method names, property names, parameter names, enum values — must use English.
-- **Attribute parameter default values** that serve as code-level conventions must use English (e.g. `suite: "default"`, not `"默认"`).
-- **Runtime log text** may use Chinese, since it is developer-facing readable output.
-- **Code comments and docstrings** must follow the bilingual Chinese-first convention from the Baseline Code Standards.
-- Mnemonic: **Names in English, comments in Chinese+English, logs may be Chinese.**
-
-## Package Independence Constraint
-
-- Packages marked as generic (e.g. `com.talosai.e2e`) must not contain any specific business-party test cases, configurations, or hardcoded logic.
-- Business-party test code must live in the business party's own package or project directory, referencing the generic package to use its capabilities.
-- Test: if removing a piece of code leaves the generic package still usable by other projects, that code does not belong in the package.
-- Shared startup bridges may boot generic capabilities, but they must not hardcode host-owned suite selection, scene sequencing, or business execution choreography. For Talos E2E specifically, Playwright owns what to execute; host bridges such as `ScriptLoder` may only start the generic E2E framework.
-
-## Scope Guardrails
-
-- Do not modify third-party packages or vendored plugin code, especially `Packages/com.code-philosophy.*`.
-- Package-scoped code changes are allowed only under first-party embedded packages, currently `Packages/com.popo.bdframework` and `Packages/com.talosai.e2e`.
-- If third-party behavior must change, solve it from `Packages/com.popo.bdframework`, `Packages/com.talosai.e2e`, or project-level files such as `ProjectSettings/`, not by patching the upstream package.
-
-## Completion Checklist
-
-Every task must pass all items below before being considered complete:
-
-- [ ] Local tests pass (lint / unit test / smoke test)
-- [ ] Changes are committed and pushed to remote
-- [ ] Remote CI passes — **must actively trigger and wait, not assume auto-run**:
-  1. **Judge affected BuildTypes**: based on changed files, determine which TeamCity build configurations are affected (code compilation, E2E, AssetBundle, etc.).
-  2. **Trigger builds**: use the TeamCity skill (`run-build` or `run-build-group`) to trigger all affected BuildTypes on the pushed branch, with descriptive comment and tags.
-  3. **Wait and verify**: use `--wait` to block until each build finishes; if any build fails, read its log tail and report the failure — do NOT mark the task as complete.
-  4. **Report results**: summarize build IDs, statuses, and URLs in the completion message.
-- [ ] No Chinese file names or directory names (comments and logs may use Chinese)
-- [ ] C# identifiers and Attribute default parameter values use English
-- [ ] Generic packages contain no business-party-specific tests or hardcoded logic
-
-## Task Tracking (Todolist) / 任务追踪 (Todolist)
-
-// 任务追踪规范 —— 多步骤任务必须使用 todolist 进行状态追踪
-// Task tracking convention — multi-step tasks MUST use todolist for status tracking
-
-### When to Create Todolist / 何时创建 Todolist
-
-Create `.agent_memory/todolist.md` when:
-- Task involves multiple sub-tasks that span multiple sessions
-- Task requires CI validation with builds that take significant time
-- Task has dependencies between steps (e.g., fix → build → test)
-- User explicitly requests "until all problems resolved" (直到解决所有问题为止)
-
-### Todolist Structure / Todolist 结构
+追踪格式：
 
 ```markdown
-# [Task Name] Task List
-# [任务名称] 任务列表
+# Code Smell 追踪
 
-**Created**: YYYY-MM-DD
-**Branch**: `branch-name`
-**Commit**: `commit-sha`
-
----
-
-## Current Status Summary / 当前状态总结
-
-### ✅ Completed Tasks / 已完成任务
-- [Task description with evidence]
-
-### ❌ Failed Tasks / 失败任务
-- [Task description with error details]
-
-### ⏳ In Progress / 进行中
-- [Current task being worked on]
-
----
-
-## Pending Tasks / 待完成任务
-
-### Task N: [Task Name] [STATUS]
-**Priority**: HIGH/MEDIUM/LOW
-**Dependency**: [Prerequisites if any]
-
-**Sub-tasks**:
-- [ ] Sub-task 1
-- [ ] Sub-task 2
-
----
-
-## Next Actions / 下一步行动
-1. [Immediate next step]
+| # | 文件路径 | 行号 | 违反规则 | 简述 |
+|---|---|---|---|---|
+| 1 | Runtime/Core/Example.cs | L42 | 静默吞错误 | catch 块为空，异常被吞 |
 ```
 
-### Todolist Maintenance Rules / Todolist 维护规则
+规则：
+- 最多保留 10 条。
+- 按严重程度排序。
+- 修复后删除对应条目。
+- 如果存在条目，任务结束前说明剩余数量。
 
-1. **Update on every progress**: Mark tasks as completed/failed immediately after each step, not at the end
-   // 每次进展后立即更新：完成或失败后立即标记，不要等到最后
+优先级示例：
+- 高：静默 catch、可信路径优雅降级、用默认值隐藏数据损坏。
+- 中：命名误导、Editor/Runtime 职责泄漏。
+- 低：死代码、未使用 using、局部风格漂移。
 
-2. **Include evidence**: Link to build URLs, commit SHAs, or error logs for each status change
-   // 包含证据：每次状态变化都要链接到构建 URL、commit SHA 或错误日志
+## 10. 文档维护
 
-3. **Keep it current**: At session end, todolist must reflect actual state, not planned state
-   // 保持最新：会话结束时，todolist 必须反映实际状态，而非计划状态
+编辑规则或 Markdown 文档前先读 `.github/talos-docs/documentation-maintenance.md`。
 
-4. **Use bilingual headers**: All section headers must be bilingual (Chinese first, then English)
-   // 使用双语标题：所有章节标题必须双语（中文在前，英文在后）
+职责：
+- `.github/copilot-instructions.md`：强制工作链路、公共规则和模块路由。
+- `.github/talos-docs/modules/*.md`：集中跨包/细分模块规则。package 根 `AGENTS.md` 承载对应 package 的包级规则，不要在 package 更深子目录新增 `AGENTS.md`。
+- README：详细用法、命令、配置、示例和排障。
+- Skill 文档：工具专属命令契约和操作流程。
+- `.agent_memory/**`：只存临时任务状态和代码异味追踪。
 
-5. **Track root cause analysis**: For failed tasks, document root cause and next investigation steps
-   // 追踪根因分析：对于失败任务，记录根本原因和下一步调查步骤
+入口、命令参数、BuildType ID、输出布局、上传协议、测试命令或模块归属变化时，必须在同一改动中更新所有受影响文档。
 
-### Progress Update Guidelines / 进度更新规范
+用户纠正暴露文档缺口时：
+- 模块专属行为优先更新 `.github/talos-docs/modules/` 下最接近的集中模块文件。
+- 只有跨模块工作流或全仓库策略才更新 `.github/copilot-instructions.md`。
+- 命令用法、示例、排障和操作细节更新 README 或 skill 文档。
+- 新规则必须短、可复用、可验证；不要为一次性纠正增加臃肿策略。
 
-// 文档更新时机与清理策略 —— 确保 todolist 始终反映真实进度
-// When to update and how to clean up — keep todolist reflecting actual progress
+避免：
+- 在全局规则里复制很长的命令手册。
+- 把临时任务记录写进永久文档。
+- 新增模块规则却不更新上面的模块路由表。
+- 在 package 更深子目录或业务代码子目录新增主仓库模块 `AGENTS.md`。允许的例外是根轻入口、package 根包级规则入口、独立子仓库如 `.test-DevOps`。
+- 保留已废弃路由文件或旧路径引用。
 
-#### When to Update / 何时更新
+## 11. 完成前检查列表
 
-Update `.agent_memory/todolist.md` immediately after:
-// 以下情况发生后立即更新：
+完成前检查列表是第 1 节“强制工作链路”的闭环表。每个实现类任务在最终回复前必须逐项确认；不适用项必须能说明原因，必需项未满足时回到对应门禁继续处理。
 
-1. **Sub-task completion**: Any individual sub-task finishes (with evidence link)
-   // 子任务完成：任何单个子任务完成时（附带证据链接）
+**需求分析与路由**
 
-2. **Status change**: Task status changes (not-started → in-progress → completed/failed)
-   // 状态变更：任务状态变化时
+- [ ] 已明确交付物、验收方式、限制条件和不应触碰的范围。
+- [ ] 已检查工作树，识别并保护无关脏文件。
+- [ ] 已根据模块路由表读取最小必要规则，没有默认加载全部模块文档。
+- [ ] 已判断影响范围是否触及业务、测试、构建工具链、CI/CD、UI、资源加载、Talos E2E、TeamCity DSL 或文档维护。
 
-3. **Error discovery**: New error or blocker discovered during execution
-   // 发现错误：执行过程中发现新错误或阻塞点
+**编码与测试**
 
-4. **Build completion**: CI build finishes (success or failure)
-   // 构建完成：CI 构建结束（成功或失败）
+- [ ] 改动保持最小，只覆盖用户请求和受影响编译链。
+- [ ] 未回滚、覆盖、格式化或提交无关用户改动。
+- [ ] 代码注释/docstring 符合中文在前的双语规则。
+- [ ] 命名、路径和代码级标识符使用 ASCII English。
+- [ ] 新增或变更行为已补最近的自动化测试，或已说明无法补测试的原因与替代验证。
+- [ ] 需要同步的 docs、README、skill 文档、日志和测试已更新。
 
-5. **Root cause identified**: Analysis reveals the underlying cause of failure
-   // 根因确认：分析确定失败的根本原因
+**本地验证**
 
-6. **Plan change**: Original plan needs adjustment based on new findings
-   // 计划变更：基于新发现需要调整原计划
+- [ ] 已运行命中模块要求的最近本地测试、pytest、Unity Test Framework、BatchMode、dry-run 或 smoke test。
+- [ ] 本地验证全部通过；如果无法运行，已说明原因并执行最接近的可行验证。
+- [ ] 本地失败已完成根因分析、修复、补测和重跑，没有把失败状态带到后续门禁。
 
-#### When NOT to Update / 何时不更新
+**提交与推送**
 
-Do NOT update todolist for:
-// 以下情况不要更新：
+- [ ] 端到端实现任务在本地验证通过后已提交并推送，或用户明确禁止提交/推送并已说明。
+- [ ] 提交只包含当前任务相关文件，没有纳入无关脏文件。
+- [ ] 涉及 `.test-DevOps` 时，独立仓库改动已单独提交并推送。
+- [ ] 已记录必要的主仓库和子仓库 commit SHA。
 
-- Routine progress without milestone (e.g., "reading file X", "running command Y")
-  // 无里程碑的常规进度（如"正在读取文件 X"、"正在运行命令 Y"）
+**TeamCity 远端验证**
 
-- Temporary failures that are immediately resolved
-  // 立即解决的临时失败
+- [ ] 已根据改动文件判断受影响 buildType 和是否需要远程真机/Player/E2E 用例。
+- [ ] 需要远端验证时，已使用 TeamCity skill 主动触发本次影响相关的最小必要构建。
+- [ ] 涉及设备、Player、E2E 或资源更新时，远端验证已覆盖对应真机或 Player 用例。
+- [ ] TeamCity 构建已等待完成并通过；已记录 build ID、URL 和状态。
+- [ ] 如果 TeamCity 失败，已回到编码/测试/本地验证/提交阶段修复并重跑；状态未知时没有标记完成。
 
-- Work in progress that hasn't reached a checkpoint
-  // 未到达检查点的进行中工作
+**收口与记忆**
 
-#### Task Cleanup Strategy / 任务清理策略
-
-**Major Task Completion / 大任务完成后**:
-
-When a major task (e.g., "Fix ADB offline issue") is fully completed:
-// 当大任务（如"修复 ADB offline 问题"）完全完成时：
-
-1. **Move to "Completed Tasks" section** with:
-   - Completion timestamp
-   - Summary of what was done
-   - Key commit SHAs or build IDs
-   - Links to evidence
-
-2. **After 2 sessions or 7 days** (whichever comes first):
-   - **Remove completely** from todolist
-   - Optionally archive to `/memories/repo/` if it contains valuable lessons
-
-// 1. 移动到"已完成任务"章节，附带：完成时间戳、完成内容摘要、关键 commit SHA 或 build ID、证据链接
-// 2. 2 个会话或 7 天后（以先到者为准）：从 todolist 完全移除，如有价值经验可归档到 `/memories/repo/`
-
-**Failed Task Handling / 失败任务处理**:
-
-When a task fails and needs further investigation:
-// 当任务失败需要进一步调查时：
-
-1. **Keep in "Failed Tasks" section** with:
-   - Failure timestamp
-   - Error details and root cause (if known)
-   - Next investigation steps
-   - Links to failed build logs
-
-2. **When task is abandoned** (e.g., not feasible, blocked permanently):
-   - Mark as `❌ ABANDONED` with reason
-   - Move to bottom of "Failed Tasks" section
-   - Optionally document lesson learned
-
-3. **When task is resolved** (fixed and verified):
-   - Move to "Completed Tasks" section
-   - Include both the failure and the resolution
-
-// 1. 保留在"失败任务"章节，附带：失败时间戳、错误详情和根因（如已知）、下一步调查步骤、失败构建日志链接
-// 2. 当任务被放弃时（如不可行、永久阻塞）：标记为 `❌ ABANDONED` 并说明原因，移到"失败任务"章节底部，可选记录经验教训
-// 3. 当任务被解决时（修复并验证）：移动到"已完成任务"章节，包含失败和解决方案
-
-**Session End Cleanup / 会话结束清理**:
-
-Before ending a session:
-// 会话结束前：
-
-1. **Remove trivial completed sub-tasks**: If a task has 5+ completed sub-tasks and all are trivial, consolidate into single entry
-   // 移除琐碎的已完成子任务：如果任务有 5+ 个已完成的琐碎子任务，合并为单个条目
-
-2. **Archive old completed tasks**: If "Completed Tasks" section has >5 entries, archive oldest ones to `/memories/repo/`
-   // 归档旧的已完成任务：如果"已完成任务"章节超过 5 条，将最旧的归档到 `/memories/repo/`
-
-3. **Update "Next Actions"**: Must reflect actual next step for next session
-   // 更新"下一步行动"：必须反映下一次会话的实际下一步
-
-4. **Verify bilingual headers**: All new sections must have Chinese+English headers
-   // 验证双语标题：所有新章节必须有中英文标题
-
-#### Update Granularity / 更新粒度
-
-**Minimum update unit / 最小更新单元**:
-- One sub-task (e.g., "Check MuMu emulator Android boot logs")
-- One status change (e.g., in-progress → completed)
-- One evidence attachment (e.g., build URL, commit SHA)
-
-**Maximum update delay / 最大更新延迟**:
-- Immediate for CI build results
-- Within 5 minutes for manual task completion
-- Before session ends for all pending changes
-
-// 最小更新单元：一个子任务、一个状态变更、一个证据附件
-// 最大更新延迟：CI 构建结果立即更新、手动任务完成 5 分钟内更新、会话结束前更新所有待更改
-
-### Session Continuity / 会话连续性
-
-When a new session starts:
-1. Check if `.agent_memory/todolist.md` exists
-2. Read todolist to understand current state
-3. Continue from "Next Actions" section
-4. Update todolist as work progresses
-
-// 新会话开始时：
-// 1. 检查 `.agent_memory/todolist.md` 是否存在
-// 2. 读取 todolist 了解当前状态
-// 3. 从 "Next Actions" 章节继续
-// 4. 随着工作进展更新 todolist
+- [ ] 任务期间的用户纠正已检查是否漏读规则或暴露可复用文档缺口。
+- [ ] 使用过的 `.agent_memory/todolist.md` 和 `.agent_memory/code_smells.md` 反映真实当前状态。
+- [ ] 最终回复包含改动范围、本地验证结果、适用时的 commit/TeamCity 证据、未运行项原因和剩余风险。

@@ -1,6 +1,6 @@
 # DevOps CI
 
-`AI_RULES_INDEX.md` 维护 `DevOps/CI/` 的 AI 模块规范索引、阅读顺序和验证入口；本文继续承担公共规范与模块目录说明。
+`.github/copilot-instructions.md` 维护全仓库 Agent 公共工作流与模块路由；`.github/talos-docs/modules/devops-ci.md` 维护 DevOps CI 模块 Agent 规则；本文继续承担 `DevOps/CI/` 公共规范、验证策略与模块目录说明。
 
 `DevOps/CI/` 下的公共规范、文档入口和模块索引统一维护在这里。
 
