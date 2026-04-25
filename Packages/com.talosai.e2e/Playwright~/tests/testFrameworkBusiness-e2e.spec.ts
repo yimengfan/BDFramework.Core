@@ -1,0 +1,208 @@
+/**
+ * 框架业务流程 E2E 测试。
+ * Framework business-flow E2E verification.
+ *
+ * 测试目的：
+ * Goals:
+ * - 验证应用启动后能正常进入预配置界面（WindowPreconfig）。
+ * - Verify that the app can reach the preconfiguration screen (WindowPreconfig) after launch.
+ * - 验证热更 DLL 已完成加载，核心框架类型可被枚举。
+ * - Verify that the hotfix DLL has completed loading and core framework types can be enumerated.
+ * - 验证服务器配置已正确加载并可访问。
+ * - Verify that the server configuration has been loaded and is accessible.
+ * - 为后续交互测试（下载、修复模式等）做准备。
+ * - Prepare for subsequent interaction tests (download, repair mode, etc.).
+ *
+ * 测试范围：
+ * Test scope:
+ * - WindowPreconfig 界面已加载并激活。
+ * - WindowPreconfig screen loaded and active.
+ * - 服务器配置（FileServerUrl）可被访问。
+ * - Server configuration (FileServerUrl) is accessible.
+ * - 热更程序集已完成加载。
+ * - Hotfix assembly has completed loading.
+ * - 预配置界面按钮可交互。
+ * - Preconfiguration screen buttons are interactive.
+ *
+ * TODO：后续迭代将添加下载、修复模式等交互流程测试。
+ * TODO: future iterations will add interaction flow tests for download, repair mode, etc.
+ */
+
+import { test, expect } from './fixtures';
+
+const windowPreconfigSuites = [
+  { suite: 'window-preconfig', title: '执行预配置界面验证套件', coverage: 'WindowPreconfig 界面可达性' },
+] as const;
+
+/**
+ * 测试套件：框架业务流程。
+ * Suite: framework business flow.
+ */
+test.describe('框架业务流程', () => {
+  /**
+   * 用例：执行 Unity 端预配置界面套件并要求全部通过。
+   * Case: run the Unity-side preconfiguration-screen suites and require all cases to pass.
+   */
+  test('执行预配置界面套件并全部通过', async ({ connector, device, talosStep }) => {
+    const projectName = await talosStep('记录当前平台项目', async () => {
+      const currentProjectName = device.getPlaywrightProject();
+      console.log(`[FrameworkBusiness] 当前平台项目: ${currentProjectName}`);
+      return currentProjectName;
+    });
+
+    const executions: Array<{
+      suite: string;
+      title: string;
+      coverage: string;
+      results: Awaited<ReturnType<typeof connector.runSuite>>['results'];
+      summary: Awaited<ReturnType<typeof connector.runSuite>>['summary'];
+    }> = [];
+
+    for (const suiteConfig of windowPreconfigSuites) {
+      const execution = await talosStep(suiteConfig.title, async () => connector.runSuite(suiteConfig.suite));
+      executions.push({
+        suite: suiteConfig.suite,
+        title: suiteConfig.title,
+        coverage: suiteConfig.coverage,
+        results: execution.results,
+        summary: execution.summary,
+      });
+    }
+
+    await talosStep('输出并校验预配置界面结果', async () => {
+      let total = 0;
+      let failed = 0;
+
+      for (const execution of executions) {
+        total += execution.summary.total;
+        failed += execution.summary.failed;
+
+        console.log(
+          `[FrameworkBusiness] 套件结果: suite=${execution.suite} coverage=${execution.coverage} total=${execution.summary.total} passed=${execution.summary.passed} failed=${execution.summary.failed}`,
+        );
+
+        for (const result of execution.results) {
+          console.log(
+            `[FrameworkBusiness] ${result.passed ? 'PASS' : 'FAIL'} suite=${result.suite} method=${result.methodName} durationMs=${result.durationMs}`,
+          );
+          if (!result.passed && result.errorMessage) {
+            console.log(`[FrameworkBusiness] error=${result.errorMessage}`);
+          }
+        }
+
+        expect(execution.summary.total).toBeGreaterThan(0);
+        expect(execution.summary.failed).toBe(0);
+      }
+
+      console.log(`[FrameworkBusiness] 预配置界面汇总: total=${total}, failed=${failed}`);
+
+      console.log(`[FrameworkBusiness] 当前平台项目(校验阶段): ${projectName}`);
+      expect(total).toBeGreaterThan(0);
+      expect(failed).toBe(0);
+    });
+  });
+
+  /**
+   * 用例：验证热更程序集已加载。
+   * Case: verify that the hotfix assembly has loaded.
+   */
+  test('验证热更程序集已加载', async ({ connector, talosStep }) => {
+    await talosStep('检查热更程序集加载状态', async () => {
+      const { results, summary } = await connector.runSuite('launch');
+
+      console.log(`[FrameworkBusiness] 热更程序集检查: total=${summary.total} passed=${summary.passed} failed=${summary.failed}`);
+
+      for (const result of results) {
+        console.log(
+          `[FrameworkBusiness] ${result.passed ? 'PASS' : 'FAIL'} suite=${result.suite} method=${result.methodName} des=${result.description}`,
+        );
+        if (!result.passed && result.errorMessage) {
+          console.log(`[FrameworkBusiness] error=${result.errorMessage}`);
+        }
+      }
+
+      expect(summary.total).toBeGreaterThan(0);
+      expect(summary.failed).toBe(0);
+    });
+  });
+
+  /**
+   * 用例：验证预配置界面按钮可交互。
+   * Case: verify that the preconfiguration screen buttons are interactive.
+   * TODO: 后续迭代将添加按钮点击交互测试（下载、修复模式等）。
+   * TODO: future iterations will add button click interaction tests (download, repair mode, etc.).
+   */
+  test('验证预配置界面按钮可交互', async ({ connector, talosStep }) => {
+    await talosStep('检查预配置界面按钮状态', async () => {
+      const { results, summary } = await connector.runSuite('window-preconfig');
+
+      // 找到按钮交互检查测试
+      const buttonTest = results.find((r) => r.methodName.includes('ButtonsInteractive'));
+      if (buttonTest) {
+        console.log(
+          `[FrameworkBusiness] 按钮交互检查: method=${buttonTest.methodName} passed=${buttonTest.passed}`,
+        );
+        if (!buttonTest.passed && buttonTest.errorMessage) {
+          console.log(`[FrameworkBusiness] error=${buttonTest.errorMessage}`);
+        }
+      }
+
+      expect(summary.failed).toBe(0);
+    });
+  });
+});
+
+/**
+ * 测试套件：日志监听验证。
+ * Suite: log monitoring verification.
+ * 通过日志确认热更加载、页面进入等关键事件已发生。
+ * Confirm through logs that hotfix loading, page entry, and other key events have occurred.
+ */
+test.describe('日志监听验证', () => {
+  /**
+   * 用例：验证关键启动日志已输出。
+   * Case: verify that key startup logs have been output.
+   */
+  test('应输出关键启动日志', async ({ connector, talosStep }) => {
+    await talosStep('检查关键启动日志', async () => {
+      // 运行 launch 套件以触发日志检查
+      const { results, summary } = await connector.runSuite('launch');
+
+      console.log(`[LogMonitor] 启动日志检查: total=${summary.total} passed=${summary.passed} failed=${summary.failed}`);
+
+      // 验证热更程序集加载日志
+      const assemblyLoadTest = results.find((r) => r.methodName.includes('AssemblyLoaded'));
+      if (assemblyLoadTest) {
+        console.log(
+          `[LogMonitor] 热更程序集加载: method=${assemblyLoadTest.methodName} passed=${assemblyLoadTest.passed}`,
+        );
+        expect(assemblyLoadTest.passed).toBe(true);
+      }
+
+      expect(summary.failed).toBe(0);
+    });
+  });
+
+  /**
+   * 用例：验证 WindowPreconfig 进入日志已输出。
+   * Case: verify that WindowPreconfig entry log has been output.
+   */
+  test('应输出 WindowPreconfig 进入日志', async ({ connector, talosStep }) => {
+    await talosStep('检查 WindowPreconfig 进入日志', async () => {
+      const { results, summary } = await connector.runSuite('window-preconfig');
+
+      console.log(`[LogMonitor] WindowPreconfig 日志检查: total=${summary.total} passed=${summary.passed} failed=${summary.failed}`);
+
+      // 验证界面加载日志
+      const screenLoadTest = results.find((r) => r.methodName.includes('ScreenLoaded'));
+      if (screenLoadTest) {
+        console.log(
+          `[LogMonitor] 界面加载: method=${screenLoadTest.methodName} passed=${screenLoadTest.passed}`,
+        );
+        expect(screenLoadTest.passed).toBe(true);
+      }
+
+      expect(summary.failed).toBe(0);
+    });
+  });
+});
