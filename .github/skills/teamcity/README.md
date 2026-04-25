@@ -149,17 +149,19 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - `--wait` 进入轮询前会先做一次轻量 state-only 检查；如果构建已 `finished`，直接打印最终摘要并退出，不再进入详细轮询循环。
 - If the build script needs to call TeamCity again while it is running, explicitly forward `--property env.TEAMCITY_TOKEN="$TEAMCITY_TOKEN"`. The remote worker does not inherit the local shell token automatically.
 
-Copilot 轮询纪律 / Copilot polling discipline:
+Agent 等待纪律：
 
-- 对 `run-build --wait`，优先使用 `run_in_terminal` 的 `async` 模式启动，然后等待该终端的完成通知。
-- 不要在同一时段再额外启动 `pylanceRunCodeSnippet` + `time.sleep()` 的轮询脚本；这会重复消耗上下文窗口，看起来像“卡住几个小时”。
-- 如果必须临时查看进度，读取同一个异步终端的输出即可；不要再并行起第二套轮询链路。
-- For `run-build --wait`, prefer launching it via `run_in_terminal` in `async` mode and then wait for that terminal's completion notification.
-- Do not start an extra `pylanceRunCodeSnippet` + `time.sleep()` polling loop in parallel; that burns context budget and looks like the session is frozen for hours.
-- If a spot progress check is required, read the same async terminal output instead of starting a second polling pipeline.
-### Shell 轮询工具 / Shell Polling Tool
+- `run-build --wait`、`run-build-group --wait` 和 `run-talos-baseflow-chain` 是 Agent 等待 TeamCity 的唯一入口。
+- Agent 只启动一个本地 helper 进程，并用当前终端/任务工具自带的进程等待能力等它退出。
+- TeamCity 状态轮询只允许发生在 helper 进程内部；Agent 不要再写外层轮询。
+- 等待期间不要反复读取终端输出当作进度轮询，也不要并行启动第二套 TeamCity REST、shell 或 Python 轮询。
+- helper 进程退出后，再读取最终输出并汇报 build ID、URL、状态和失败日志摘要。
 
-当需要轮询构建状态但不想占用 Python 进程时，可使用 shell 轮询工具 `tc_build_poller.sh`：
+### 手工诊断轮询工具
+
+`tc_build_poller.sh` 只保留给人工手工诊断或特殊脚本集成，不是 Agent 的默认等待入口。Agent 已经启动 `run-build --wait` 后，不得再使用该工具并行等待同一个 build。
+
+当用户明确要求轮询一个已经存在的 build ID，且没有正在运行的 `run-build --wait` helper 时，可以手工使用：
 
 ```bash
 cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
@@ -169,7 +171,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 
 参数说明：
 - `build_id`: TeamCity 构建 ID（必需）
-- `poll_interval`: 轮询间隔秒数（可选，默认 30）
+- `poll_interval`: 手工诊断工具内部检查间隔秒数（可选，默认 30）
 - `timeout`: 超时秒数（可选，默认 7200 = 2小时）
 
 示例：
@@ -185,9 +187,9 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 - 退出码：0=成功，1=失败，2=超时，3=参数错误
 
 使用场景：
-- Copilot 触发长时间构建后，需要等待完成但不想阻塞会话
-- CI/CD 流程中需要监控构建状态
-- 调试构建问题时需要持续跟踪进度
+- 人工诊断一个已经存在的 build ID。
+- CI/CD 脚本集成需要独立监控构建状态。
+- 调试构建问题时需要持续跟踪进度，且没有并行运行的 `run-build --wait` helper。
 排障建议：
 
 - 如果构建早已结束，不要继续只盯着后台终端等待；优先直接查询 `GET /app/rest/builds/id:<buildId>`，再按 buildId 读取 `test-output.log` 或 `downloadBuildLog.html`。
@@ -413,4 +415,3 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 
 - 总流程与排查方法：`/.test-DevOps/README.md`
 - Python 构建脚本说明：`/Users/naipaopao/Documents/GitHub/BDFramework.Core/DevOps/CI/BuildTools/BuildClientPackage/README.md`
-

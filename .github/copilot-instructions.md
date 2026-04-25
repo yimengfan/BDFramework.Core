@@ -169,14 +169,15 @@
 - `.github/skills/teamcity/SKILL.md`
 
 长构建强制执行模式：
-1. 通过 TeamCity skill 以异步终端模式触发 `run-build --wait`、`run-build-group --wait` 或 `run-talos-baseflow-chain`。
-2. 等待终端完成通知。
-3. 完成后只读取一次最终终端输出。
+1. 通过 TeamCity skill 启动一个本地 helper 进程，例如 `run-build --wait`、`run-build-group --wait` 或 `run-talos-baseflow-chain`。
+2. 等待责任属于这个 helper 进程；Agent 只使用当前终端/任务工具自带的进程等待能力等待该命令退出。
+3. helper 进程退出后，再读取一次最终输出并汇报 build ID、URL、状态和失败日志摘要。
 
 禁止模式：
-- 预期超过 5 分钟的构建不得使用同步终端模式。
-- 等待期间不得反复轮询终端输出。
-- 不得使用 `pylanceRunCodeSnippet`、`time.sleep()` 或 shell/Python 循环轮询 TeamCity 状态。
+- 不得由 Agent 自己实现 TeamCity 等待循环。
+- 等待期间不得反复读取终端输出当作进度轮询。
+- 不得使用 `pylanceRunCodeSnippet`、`time.sleep()`、shell/Python 循环、TeamCity REST 查询循环或 `tc_build_poller.sh` 作为外层等待链路。
+- 不得在 `run-build --wait` 已经运行时并行启动第二套 TeamCity 轮询。
 - 必需远端构建状态未知时，不得标记任务完成。
 
 远端验证检查：

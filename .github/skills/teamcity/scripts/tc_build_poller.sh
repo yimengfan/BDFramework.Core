@@ -5,17 +5,19 @@
 # =============================================================================
 # 
 # 【用途 / Purpose】
-# 轮询 TeamCity 构建状态直到完成，避免 Copilot 反复调用 get_terminal_output
-# 耗尽上下文窗口。适用于长时间运行的构建（如 E2E 测试、Android 打包等）。
+# 人工诊断或特殊脚本集成时，按 build_id 等待 TeamCity 构建状态直到完成。
+# Agent 默认不得使用本脚本等待自己刚触发的构建；默认入口是
+# update_project_settings.py run-build --wait / run-build-group --wait。
 #
-# Poll TeamCity build status until completion, avoiding Copilot repeatedly calling
-# get_terminal_output which exhausts the context window. Suitable for long-running
-# builds (e.g., E2E tests, Android packaging, etc.).
+# For manual diagnostics or special script integration, wait for an existing
+# TeamCity build by build_id until completion. Agents must not use this script
+# as the default wait path for builds they just triggered; use
+# update_project_settings.py run-build --wait / run-build-group --wait instead.
 #
 # 【使用场景 / Use Cases】
-# - Copilot 触发长时间构建后，需要等待完成但不想阻塞会话
-# - CI/CD 流程中需要监控构建状态
-# - 调试构建问题时需要持续跟踪进度
+# - 人工诊断一个已经存在的 build ID
+# - CI/CD 脚本集成需要独立监控构建状态
+# - 调试构建问题时需要持续跟踪进度，且没有并行运行的 run-build --wait helper
 #
 # 【依赖 / Dependencies】
 # - curl: HTTP 请求
