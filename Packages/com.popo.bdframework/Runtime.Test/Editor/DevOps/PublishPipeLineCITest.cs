@@ -8,7 +8,6 @@ using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.ResourceMgr;
-using HybridCLR.Editor.Settings;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -625,15 +624,15 @@ namespace BDFramework.EditorTest.DevOps
 
             Assert.That(helperMethod, Is.Not.Null);
 
-            var originalHotUpdateAssemblies = HybridCLRSettings.Instance.hotUpdateAssemblies;
-            var originalPreserveAssemblies = HybridCLRSettings.Instance.preserveHotUpdateAssemblies;
+            var originalHotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
+            var originalPreserveAssemblies = GetHybridClrStringArraySetting("preserveHotUpdateAssemblies");
             var tempRoot = CreateTempDirectory();
             var originalProjectRoot = BApplication.ProjectRoot;
 
             try
             {
-                HybridCLRSettings.Instance.hotUpdateAssemblies = new[] { "BDFramework.Test" };
-                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = new[] { "Assembly-CSharp", "BDFramework.Core" };
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", new[] { "BDFramework.Test" });
+                SetHybridClrStringArraySetting("preserveHotUpdateAssemblies", new[] { "Assembly-CSharp", "BDFramework.Core" });
 
                 var playerDir = Path.Combine(tempRoot, "windows", "com.demo.game");
                 var playerOutputPath = Path.Combine(playerDir, "Launcher.exe");
@@ -655,8 +654,8 @@ namespace BDFramework.EditorTest.DevOps
             }
             finally
             {
-                HybridCLRSettings.Instance.hotUpdateAssemblies = originalHotUpdateAssemblies;
-                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = originalPreserveAssemblies;
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", originalHotUpdateAssemblies);
+                SetHybridClrStringArraySetting("preserveHotUpdateAssemblies", originalPreserveAssemblies);
                 SetBApplicationProjectRoot(originalProjectRoot);
                 DeleteDirectoryIfExists(tempRoot);
             }
@@ -671,32 +670,34 @@ namespace BDFramework.EditorTest.DevOps
         [Test]
         public void HyCLREditorTools_SetBDFramework2HCLRConfig_ShouldPreserveStartupAssemblies()
         {
-            var originalHotUpdateAssemblies = HybridCLRSettings.Instance.hotUpdateAssemblies;
-            var originalPreserveAssemblies = HybridCLRSettings.Instance.preserveHotUpdateAssemblies;
-            var originalPatchAotAssemblies = HybridCLRSettings.Instance.patchAOTAssemblies;
+            var originalHotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
+            var originalPreserveAssemblies = GetHybridClrStringArraySetting("preserveHotUpdateAssemblies");
+            var originalPatchAotAssemblies = GetHybridClrStringArraySetting("patchAOTAssemblies");
 
             try
             {
-                HybridCLRSettings.Instance.hotUpdateAssemblies = new[] { "Assembly-CSharp", "Assembly-CSharp-firstpass", "BDFramework.Core", "BDFramework.Test" };
-                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = Array.Empty<string>();
-                HybridCLRSettings.Instance.patchAOTAssemblies = Array.Empty<string>();
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", new[] { "Assembly-CSharp", "Assembly-CSharp-firstpass", "BDFramework.Core", "BDFramework.Test" });
+                SetHybridClrStringArraySetting("preserveHotUpdateAssemblies", Array.Empty<string>());
+                SetHybridClrStringArraySetting("patchAOTAssemblies", Array.Empty<string>());
 
                 BDFramework.Editor.HotfixScript.HyCLREditorTools.SetBDFramework2HCLRConfig();
 
-                CollectionAssert.DoesNotContain(HybridCLRSettings.Instance.hotUpdateAssemblies, "Assembly-CSharp");
-                CollectionAssert.DoesNotContain(HybridCLRSettings.Instance.hotUpdateAssemblies, "Assembly-CSharp-firstpass");
-                CollectionAssert.DoesNotContain(HybridCLRSettings.Instance.hotUpdateAssemblies, "BDFramework.Core");
-                CollectionAssert.Contains(HybridCLRSettings.Instance.hotUpdateAssemblies, "BDFramework.Test");
+                var hotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
+                var preserveAssemblies = GetHybridClrStringArraySetting("preserveHotUpdateAssemblies");
+                CollectionAssert.DoesNotContain(hotUpdateAssemblies, "Assembly-CSharp");
+                CollectionAssert.DoesNotContain(hotUpdateAssemblies, "Assembly-CSharp-firstpass");
+                CollectionAssert.DoesNotContain(hotUpdateAssemblies, "BDFramework.Core");
+                CollectionAssert.Contains(hotUpdateAssemblies, "BDFramework.Test");
 
-                CollectionAssert.Contains(HybridCLRSettings.Instance.preserveHotUpdateAssemblies, "Assembly-CSharp");
-                CollectionAssert.Contains(HybridCLRSettings.Instance.preserveHotUpdateAssemblies, "Assembly-CSharp-firstpass");
-                CollectionAssert.Contains(HybridCLRSettings.Instance.preserveHotUpdateAssemblies, "BDFramework.Core");
+                CollectionAssert.Contains(preserveAssemblies, "Assembly-CSharp");
+                CollectionAssert.Contains(preserveAssemblies, "Assembly-CSharp-firstpass");
+                CollectionAssert.Contains(preserveAssemblies, "BDFramework.Core");
             }
             finally
             {
-                HybridCLRSettings.Instance.hotUpdateAssemblies = originalHotUpdateAssemblies;
-                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = originalPreserveAssemblies;
-                HybridCLRSettings.Instance.patchAOTAssemblies = originalPatchAotAssemblies;
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", originalHotUpdateAssemblies);
+                SetHybridClrStringArraySetting("preserveHotUpdateAssemblies", originalPreserveAssemblies);
+                SetHybridClrStringArraySetting("patchAOTAssemblies", originalPatchAotAssemblies);
             }
         }
 
@@ -707,13 +708,13 @@ namespace BDFramework.EditorTest.DevOps
         [Test]
         public void HyCLREditorTools_GetHotfixDLLPaths_ShouldIncludePreservedAssemblies()
         {
-            var originalHotUpdateAssemblies = HybridCLRSettings.Instance.hotUpdateAssemblies;
-            var originalPreserveAssemblies = HybridCLRSettings.Instance.preserveHotUpdateAssemblies;
+            var originalHotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
+            var originalPreserveAssemblies = GetHybridClrStringArraySetting("preserveHotUpdateAssemblies");
 
             try
             {
-                HybridCLRSettings.Instance.hotUpdateAssemblies = new[] { "BDFramework.Test" };
-                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = new[] { "Assembly-CSharp", "BDFramework.Core" };
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", new[] { "BDFramework.Test" });
+                SetHybridClrStringArraySetting("preserveHotUpdateAssemblies", new[] { "Assembly-CSharp", "BDFramework.Core" });
 
                 var hotfixPaths = BDFramework.Editor.HotfixScript.HyCLREditorTools.GetHotfixDLLPaths();
 
@@ -723,8 +724,8 @@ namespace BDFramework.EditorTest.DevOps
             }
             finally
             {
-                HybridCLRSettings.Instance.hotUpdateAssemblies = originalHotUpdateAssemblies;
-                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = originalPreserveAssemblies;
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", originalHotUpdateAssemblies);
+                SetHybridClrStringArraySetting("preserveHotUpdateAssemblies", originalPreserveAssemblies);
             }
         }
 
@@ -920,6 +921,68 @@ namespace BDFramework.EditorTest.DevOps
             var setter = property.GetSetMethod(true);
             Assert.That(setter, Is.Not.Null);
             setter.Invoke(null, new object[] { projectRoot });
+        }
+
+        /// <summary>
+        /// 通过反射读取 HybridCLRSettings 上的字符串数组配置，避免 EditorTest 程序集引入额外编译依赖。
+        /// Read a string-array setting from HybridCLRSettings via reflection so the EditorTest assembly avoids an extra compile-time dependency.
+        /// </summary>
+        private static string[] GetHybridClrStringArraySetting(string propertyName)
+        {
+            var property = GetHybridClrSettingsProperty(propertyName);
+            return ((string[])property.GetValue(GetHybridClrSettingsInstance())) ?? Array.Empty<string>();
+        }
+
+        /// <summary>
+        /// 通过反射写入 HybridCLRSettings 上的字符串数组配置。
+        /// Write a string-array setting onto HybridCLRSettings via reflection.
+        /// </summary>
+        private static void SetHybridClrStringArraySetting(string propertyName, string[] value)
+        {
+            var property = GetHybridClrSettingsProperty(propertyName);
+            property.SetValue(GetHybridClrSettingsInstance(), value ?? Array.Empty<string>());
+        }
+
+        /// <summary>
+        /// 获取 HybridCLRSettings 配置实例。
+        /// Resolve the HybridCLRSettings singleton instance.
+        /// </summary>
+        private static object GetHybridClrSettingsInstance()
+        {
+            var settingsType = GetHybridClrSettingsType();
+            var instanceProperty = settingsType.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static);
+            Assert.That(instanceProperty, Is.Not.Null);
+            return instanceProperty.GetValue(null);
+        }
+
+        /// <summary>
+        /// 获取 HybridCLRSettings 上的目标配置属性。
+        /// Resolve the target config property from HybridCLRSettings.
+        /// </summary>
+        private static PropertyInfo GetHybridClrSettingsProperty(string propertyName)
+        {
+            var property = GetHybridClrSettingsType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+            Assert.That(property, Is.Not.Null, $"HybridCLRSettings 应包含属性 {propertyName}");
+            return property;
+        }
+
+        /// <summary>
+        /// 在当前 AppDomain 中解析 HybridCLRSettings 类型。
+        /// Resolve the HybridCLRSettings type from the current AppDomain.
+        /// </summary>
+        private static Type GetHybridClrSettingsType()
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var settingsType = assembly.GetType("HybridCLR.Editor.Settings.HybridCLRSettings");
+                if (settingsType != null)
+                {
+                    return settingsType;
+                }
+            }
+
+            Assert.Fail("当前 AppDomain 中未找到 HybridCLR.Editor.Settings.HybridCLRSettings");
+            return null;
         }
     }
 }
