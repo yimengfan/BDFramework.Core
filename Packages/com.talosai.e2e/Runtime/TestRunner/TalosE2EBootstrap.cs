@@ -635,7 +635,21 @@ namespace Talos.E2E
                         Debug.Log($"[TalosE2E] 执行动作（主线程）: {action}");
                         if (string.Equals(action, "screenshot", StringComparison.OrdinalIgnoreCase))
                         {
-                            BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "静态模式暂不支持步骤截图，请在 Player 或 PlayMode 运行态执行该动作" });
+                            // 截图需要 MonoBehaviour 协程支持，检查是否有活跃实例
+                            // Screenshot requires MonoBehaviour coroutine support; check if there's an active instance
+                            if (_instance != null)
+                            {
+                                // MonoBehaviour 模式：通过实例方法启动协程截图
+                                // MonoBehaviour mode: start coroutine screenshot via instance method
+                                var screenshotName = TryGetString(msg, "name", "talos-step");
+                                _instance.StartCoroutine(CaptureScreenshotAndRespondStatic(action, screenshotName));
+                            }
+                            else
+                            {
+                                // 静态模式：无法截图，返回错误
+                                // Static mode: cannot capture screenshot, return error
+                                BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "静态模式暂不支持步骤截图，请在 Player 或 PlayMode 运行态执行该动作" });
+                            }
                         }
                         else
                         {
@@ -656,6 +670,68 @@ namespace Talos.E2E
             {
                 Debug.LogError($"[TalosE2E] 主线程消息处理异常: {ex}");
                 BroadcastResponse(new { type = Protocol.MsgError, message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 静态截图协程——从 ProcessSingleMessageOnMainThread 通过 _instance.StartCoroutine 调用。
+        /// 用于在 MonoBehaviour 模式下处理截图请求，使用 BroadcastResponse 发送响应。
+        /// Screenshot coroutine for static context — called via _instance.StartCoroutine from ProcessSingleMessageOnMainThread.
+        /// Used to handle screenshot requests in MonoBehaviour mode, using BroadcastResponse to send response.
+        /// </summary>
+        private static IEnumerator CaptureScreenshotAndRespondStatic(string action, string screenshotName)
+        {
+            yield return new WaitForEndOfFrame();
+
+            Texture2D texture = null;
+            try
+            {
+                texture = ScreenCapture.CaptureScreenshotAsTexture();
+                if (texture == null)
+                {
+                    BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "截图失败：未获取到有效的屏幕纹理" });
+                    yield break;
+                }
+
+                var bytes = texture.EncodeToPNG();
+                if (bytes == null || bytes.Length == 0)
+                {
+                    BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = "截图失败：PNG 编码结果为空" });
+                    yield break;
+                }
+
+                var screenshotDir = Path.Combine(Application.persistentDataPath, "talos-e2e", "screenshots");
+                Directory.CreateDirectory(screenshotDir);
+
+                var fileName = BuildScreenshotFileName(screenshotName);
+                var screenshotPath = Path.Combine(screenshotDir, fileName);
+                File.WriteAllBytes(screenshotPath, bytes);
+
+                Debug.Log($"[TalosE2E] 步骤截图已保存: {screenshotPath}");
+                BroadcastResponse(new
+                {
+                    type = Protocol.MsgActionResult,
+                    action,
+                    success = true,
+                    data = new
+                    {
+                        fileName,
+                        path = screenshotPath,
+                        contentBase64 = Convert.ToBase64String(bytes),
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[TalosE2E] 步骤截图失败: {ex}");
+                BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"截图失败: {ex.Message}" });
+            }
+            finally
+            {
+                if (texture != null)
+                {
+                    UnityEngine.Object.Destroy(texture);
+                }
             }
         }
 
