@@ -1011,6 +1011,7 @@ namespace BDFramework.Editor.BuildPipeline
             //检测xcode
             if (File.Exists(outputPath))
             {
+                EnsureHybridClrHotUpdateAssembliesCopiedToManaged(outputPath);
                 ret = true;
                 Debug.Log("打包Exe成功~");
             }
@@ -1028,9 +1029,117 @@ namespace BDFramework.Editor.BuildPipeline
         #region Mac OSX
 
         #endregion
-        
+
 
         #region 资产操作类
+
+        /// <summary>
+        /// 确保 Player 的 Managed 目录中存在所有 HybridCLR 热更 DLL。
+        /// Ensure that the Player Managed directory contains every HybridCLR hot-update DLL.
+        /// Unity 2021 之后的构建后处理只会把热更程序集名字补进 <c>ScriptingAssemblies.json</c>，
+        /// 但首场景里的热更 MonoBehaviour 反序列化仍依赖启动时能在 Managed 目录里找到对应 DLL。
+        /// 如果这里只留 StreamingAssets 里的 <c>.zlua.bytes</c>，Unity 会先把首场景脚本降级成 missing script，
+        /// 后续再通过 Assembly.Load 手工装载也无法恢复已经丢失的组件实例。
+        /// Newer Unity post-build processing only patches hot-update assembly names into <c>ScriptingAssemblies.json</c>,
+        /// but first-scene hotfix MonoBehaviour deserialization still depends on finding the corresponding DLLs under the Managed directory at startup.
+        /// If the package keeps only <c>.zlua.bytes</c> under StreamingAssets, Unity degrades those startup-scene scripts into missing-script placeholders first,
+        /// and a later manual Assembly.Load cannot restore the already-lost component instances.
+        /// </summary>
+        /// <param name="playerOutputPath">Player 输出路径，例如 Windows 的 Launcher.exe。</param>
+        /// <param name="playerOutputPath">Player output path, such as Launcher.exe on Windows.</param>
+        static private void EnsureHybridClrHotUpdateAssembliesCopiedToManaged(string playerOutputPath)
+        {
+            var hybridClrSettings = HybridCLRSettings.Instance;
+            var hotUpdateAssemblies = hybridClrSettings?.hotUpdateAssemblies ?? Array.Empty<string>();
+            if (hotUpdateAssemblies.Length == 0)
+            {
+                Debug.Log("[BuildPackage] 当前没有配置 HybridCLR 热更程序集，跳过 Managed DLL 补齐");
+                return;
+            }
+
+            var scriptAssembliesRoot = Path.GetFullPath(Path.Combine(BApplication.ProjectRoot, "Library", "ScriptAssemblies"));
+            CopyHybridClrHotUpdateAssembliesToManagedDirectory(playerOutputPath, hotUpdateAssemblies, scriptAssembliesRoot);
+        }
+
+        /// <summary>
+        /// 把指定热更程序集从 ScriptAssemblies 复制到 Player Managed 目录。
+        /// Copy the specified hot-update assemblies from ScriptAssemblies into the Player Managed directory.
+        /// 该 helper 同时服务真实构建与编辑器契约测试，保证 Windows 母包首场景里引用的热更脚本
+        /// 不会因为 Managed 目录缺少 DLL 实体而在 Unity 启动阶段变成 missing script。
+        /// This helper serves both real builds and editor contract tests so hotfix scripts referenced by the Windows startup scene
+        /// do not regress into missing scripts just because the Player Managed directory lacks physical DLL files.
+        /// </summary>
+        /// <param name="playerOutputPath">Player 输出路径，例如 Launcher.exe。</param>
+        /// <param name="playerOutputPath">Player output path, for example Launcher.exe.</param>
+        /// <param name="hotUpdateAssemblies">要补齐的热更程序集短名列表。</param>
+        /// <param name="hotUpdateAssemblies">Short names of hot-update assemblies that must be copied.</param>
+        /// <param name="scriptAssembliesRoot">Unity 编译后 ScriptAssemblies 目录。</param>
+        /// <param name="scriptAssembliesRoot">Unity ScriptAssemblies output directory.</param>
+        static private void CopyHybridClrHotUpdateAssembliesToManagedDirectory(
+            string playerOutputPath,
+            IEnumerable<string> hotUpdateAssemblies,
+            string scriptAssembliesRoot)
+        {
+            if (string.IsNullOrWhiteSpace(playerOutputPath))
+            {
+                throw new ArgumentException("Player 输出路径不能为空。", nameof(playerOutputPath));
+            }
+
+            if (hotUpdateAssemblies == null)
+            {
+                throw new ArgumentNullException(nameof(hotUpdateAssemblies));
+            }
+
+            if (string.IsNullOrWhiteSpace(scriptAssembliesRoot))
+            {
+                throw new ArgumentException("ScriptAssemblies 目录不能为空。", nameof(scriptAssembliesRoot));
+            }
+
+            var managedDirectory = ResolveManagedDirectoryForPlayer(playerOutputPath);
+            Directory.CreateDirectory(managedDirectory);
+
+            foreach (var assemblyName in hotUpdateAssemblies.Where(name => !string.IsNullOrWhiteSpace(name)).Distinct(StringComparer.Ordinal))
+            {
+                var sourcePath = Path.Combine(scriptAssembliesRoot, $"{assemblyName}.dll");
+                if (!File.Exists(sourcePath))
+                {
+                    throw new FileNotFoundException($"缺少热更程序集源文件: {sourcePath}", sourcePath);
+                }
+
+                var destinationPath = Path.Combine(managedDirectory, $"{assemblyName}.dll");
+                FileHelper.Copy(sourcePath, destinationPath, true);
+                Debug.Log($"[BuildPackage] 已补齐 HybridCLR 热更 DLL 到 Managed: {sourcePath} => {destinationPath}");
+            }
+        }
+
+        /// <summary>
+        /// 根据 Player 输出路径解析其 Managed 目录。
+        /// Resolve the Managed directory from a Player output path.
+        /// 当前主用场景是 Windows Standalone 输出的 <c>Launcher.exe</c>，
+        /// 因此这里按 Unity 约定推导出同级的 <c>&lt;PlayerName&gt;_Data/Managed</c>。
+        /// The primary current scenario is a Windows standalone output like <c>Launcher.exe</c>,
+        /// so this resolves the sibling <c>&lt;PlayerName&gt;_Data/Managed</c> directory following Unity's output convention.
+        /// </summary>
+        /// <param name="playerOutputPath">Player 输出路径。</param>
+        /// <param name="playerOutputPath">Player output path.</param>
+        /// <returns>Player Managed 目录绝对路径。</returns>
+        /// <returns>Absolute Player Managed directory path.</returns>
+        static private string ResolveManagedDirectoryForPlayer(string playerOutputPath)
+        {
+            var playerDirectory = Path.GetDirectoryName(playerOutputPath);
+            if (string.IsNullOrWhiteSpace(playerDirectory))
+            {
+                throw new ArgumentException($"无法从 Player 输出路径解析目录: {playerOutputPath}", nameof(playerOutputPath));
+            }
+
+            var playerName = Path.GetFileNameWithoutExtension(playerOutputPath);
+            if (string.IsNullOrWhiteSpace(playerName))
+            {
+                throw new ArgumentException($"无法从 Player 输出路径解析文件名: {playerOutputPath}", nameof(playerOutputPath));
+            }
+
+            return Path.Combine(playerDirectory, $"{playerName}_Data", "Managed");
+        }
 
         /// <summary>
         /// 拷贝发布资源

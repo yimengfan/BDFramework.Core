@@ -91,6 +91,10 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
                 (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
+                (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
+                    testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
+                (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
+                    testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
                 (nameof(HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                     testInstance.HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
@@ -499,6 +503,102 @@ namespace BDFramework.EditorTest.DevOps
                 EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
                 EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
                 EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
+        }
+
+        /// <summary>
+        /// 验证 Windows Player 构建后会把 HybridCLR 热更 DLL 补到 Managed 目录。
+        /// Verify that Windows player post-build processing copies HybridCLR hot-update DLLs into the Managed directory.
+        /// 这把 “ScriptingAssemblies.json 只有名字、但 Managed 没有 DLL 实体” 的回归锁定下来，
+        /// 避免首场景上的热更 MonoBehaviour 在 Unity 启动时重新退化成 missing script。
+        /// This locks down the regression where <c>ScriptingAssemblies.json</c> only listed names but the Managed directory lacked physical DLL files,
+        /// causing startup-scene hotfix MonoBehaviours to regress into missing scripts during Unity startup.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "CopyHybridClrHotUpdateAssembliesToManagedDirectory",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var playerDir = Path.Combine(tempRoot, "windows", "com.demo.game");
+                var playerOutputPath = Path.Combine(playerDir, "Launcher.exe");
+                var scriptAssembliesRoot = Path.Combine(tempRoot, "Library", "ScriptAssemblies");
+                Directory.CreateDirectory(playerDir);
+                Directory.CreateDirectory(scriptAssembliesRoot);
+                File.WriteAllText(playerOutputPath, string.Empty);
+                File.WriteAllText(Path.Combine(scriptAssembliesRoot, "Assembly-CSharp.dll"), "assembly-csharp");
+                File.WriteAllText(Path.Combine(scriptAssembliesRoot, "Assembly-CSharp-firstpass.dll"), "assembly-csharp-firstpass");
+                File.WriteAllText(Path.Combine(scriptAssembliesRoot, "BDFramework.Core.dll"), "bdframework-core");
+
+                helperMethod.Invoke(
+                    null,
+                    new object[]
+                    {
+                        playerOutputPath,
+                        new[] { "Assembly-CSharp", "Assembly-CSharp-firstpass", "BDFramework.Core" },
+                        scriptAssembliesRoot
+                    });
+
+                var managedDirectory = Path.Combine(playerDir, "Launcher_Data", "Managed");
+                Assert.That(File.Exists(Path.Combine(managedDirectory, "Assembly-CSharp.dll")), Is.True);
+                Assert.That(File.Exists(Path.Combine(managedDirectory, "Assembly-CSharp-firstpass.dll")), Is.True);
+                Assert.That(File.Exists(Path.Combine(managedDirectory, "BDFramework.Core.dll")), Is.True);
+                Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "BDFramework.Core.dll")), Is.EqualTo("bdframework-core"));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证缺失任一热更 DLL 源文件时，会立即抛出显式错误而不是静默产出不完整包体。
+        /// Verify that a missing hot-update DLL source fails fast with an explicit error instead of silently producing an incomplete package.
+        /// 这样 TeamCity 会在母包构建阶段就暴露问题，不会等到 step_02 Player 启动后才以 missing script 形式晚发现。
+        /// This makes TeamCity fail during package build instead of discovering the problem much later in step_02 as runtime missing scripts.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "CopyHybridClrHotUpdateAssembliesToManagedDirectory",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var playerDir = Path.Combine(tempRoot, "windows", "com.demo.game");
+                var playerOutputPath = Path.Combine(playerDir, "Launcher.exe");
+                var scriptAssembliesRoot = Path.Combine(tempRoot, "Library", "ScriptAssemblies");
+                Directory.CreateDirectory(playerDir);
+                Directory.CreateDirectory(scriptAssembliesRoot);
+                File.WriteAllText(playerOutputPath, string.Empty);
+                File.WriteAllText(Path.Combine(scriptAssembliesRoot, "Assembly-CSharp.dll"), "assembly-csharp");
+
+                var exception = Assert.Throws<TargetInvocationException>(() =>
+                    helperMethod.Invoke(
+                        null,
+                        new object[]
+                        {
+                            playerOutputPath,
+                            new[] { "Assembly-CSharp", "BDFramework.Core" },
+                            scriptAssembliesRoot
+                        }));
+
+                Assert.That(exception?.InnerException, Is.TypeOf<FileNotFoundException>());
+                Assert.That(exception?.InnerException?.Message, Does.Contain("BDFramework.Core.dll"));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
             }
         }
 
