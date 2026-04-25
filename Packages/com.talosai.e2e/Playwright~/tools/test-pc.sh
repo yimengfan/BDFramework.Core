@@ -103,7 +103,7 @@ echo ""
 echo ">>> 启动应用..."
 APP_PID=""
 PLAYER_LOG_FILE=""
-PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-local-$$}"
+PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-${BUILD_ID:-local-$$}}"
 PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 # 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
 # Keep Unity logging on stdout by default so macOS/Linux local runs can inspect the startup chain directly.

@@ -28,11 +28,73 @@
  * TODO: future iterations will add interaction flow tests for download, repair mode, etc.
  */
 
+import type { UnityConnector } from '../src';
 import { test, expect } from './fixtures';
 
 const windowPreconfigSuites = [
   { suite: 'window-preconfig', title: '执行预配置界面验证套件', coverage: 'WindowPreconfig 界面可达性' },
 ] as const;
+
+const windowPreconfigReadyRetryCount = 12;
+const windowPreconfigReadyRetryDelayMs = 1000;
+const windowPreconfigTransientReadinessErrors = [
+  '未发现 WindowPreconfig 实例',
+  '未发现 GameConfigManager.Inst 属性',
+  'GameConfigManager.Inst 为空',
+  '未发现 ServerConfigProcessor 类型',
+] as const;
+
+function collectWindowPreconfigFailureMessages(
+  execution: Awaited<ReturnType<typeof runWindowPreconfigSuiteUntilReady>>,
+): string[] {
+  return execution.results
+    .filter((result) => !result.passed && result.errorMessage)
+    .map((result) => result.errorMessage as string);
+}
+
+function isWindowPreconfigStartupRace(messages: string[]): boolean {
+  return (
+    messages.length > 0 &&
+    messages.every((message) =>
+      windowPreconfigTransientReadinessErrors.some((transientError) => message.includes(transientError)),
+    )
+  );
+}
+
+async function runWindowPreconfigSuiteUntilReady(
+  connector: UnityConnector,
+): Promise<Awaited<ReturnType<typeof connector.runSuite>>> {
+  let lastExecution: Awaited<ReturnType<typeof connector.runSuite>> | null = null;
+
+  for (let attempt = 1; attempt <= windowPreconfigReadyRetryCount; attempt++) {
+    const execution = await connector.runSuite('window-preconfig');
+    lastExecution = execution;
+
+    if (execution.summary.failed === 0) {
+      if (attempt > 1) {
+        console.log(`[FrameworkBusiness] WindowPreconfig 套件重试成功: attempt=${attempt}`);
+      }
+      return execution;
+    }
+
+    const failureMessages = collectWindowPreconfigFailureMessages(execution);
+    const canRetry = attempt < windowPreconfigReadyRetryCount && isWindowPreconfigStartupRace(failureMessages);
+    console.log(
+      `[FrameworkBusiness] WindowPreconfig 套件待就绪: attempt=${attempt} failed=${execution.summary.failed} canRetry=${canRetry}`,
+    );
+    for (const failureMessage of failureMessages) {
+      console.log(`[FrameworkBusiness] WindowPreconfig 待就绪原因=${failureMessage}`);
+    }
+
+    if (!canRetry) {
+      return execution;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, windowPreconfigReadyRetryDelayMs));
+  }
+
+  return lastExecution ?? connector.runSuite('window-preconfig');
+}
 
 /**
  * 测试套件：框架业务流程。
@@ -59,7 +121,7 @@ test.describe('框架业务流程', () => {
     }> = [];
 
     for (const suiteConfig of windowPreconfigSuites) {
-      const execution = await talosStep(suiteConfig.title, async () => connector.runSuite(suiteConfig.suite));
+      const execution = await talosStep(suiteConfig.title, async () => runWindowPreconfigSuiteUntilReady(connector));
       executions.push({
         suite: suiteConfig.suite,
         title: suiteConfig.title,
@@ -134,7 +196,7 @@ test.describe('框架业务流程', () => {
    */
   test('验证预配置界面按钮可交互', async ({ connector, talosStep }) => {
     await talosStep('检查预配置界面按钮状态', async () => {
-      const { results, summary } = await connector.runSuite('window-preconfig');
+      const { results, summary } = await runWindowPreconfigSuiteUntilReady(connector);
 
       // 找到按钮交互检查测试
       const buttonTest = results.find((r) => r.methodName.includes('ButtonsInteractive'));
@@ -189,7 +251,7 @@ test.describe('日志监听验证', () => {
    */
   test('应输出 WindowPreconfig 进入日志', async ({ connector, talosStep }) => {
     await talosStep('检查 WindowPreconfig 进入日志', async () => {
-      const { results, summary } = await connector.runSuite('window-preconfig');
+      const { results, summary } = await runWindowPreconfigSuiteUntilReady(connector);
 
       console.log(`[LogMonitor] WindowPreconfig 日志检查: total=${summary.total} passed=${summary.passed} failed=${summary.failed}`);
 

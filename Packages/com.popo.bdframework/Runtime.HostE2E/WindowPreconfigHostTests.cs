@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Talos.E2E;
 using UnityEngine;
@@ -20,7 +22,7 @@ namespace BDFramework.HostE2E
         private const string HotfixFrameworkAssemblyName = "BDFramework.Core";
         private const string BApplicationTypeName = "BDFramework.Core.Tools.BApplication";
         private const string GameConfigManagerTypeName = "BDFramework.Configure.GameConfigManager";
-        private const string ServerConfigProcessorTypeName = "BDFramework.Configure.ServerConfigProcessor";
+        private const string ServerConfigProcessorTypeName = "Game.Config.ServerConfigProcessor";
         private const string WindowPreconfigTypeName = "WindowPreconfig";
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace BDFramework.HostE2E
                 throw new Exception($"未发现 WindowPreconfig 类型，可能尚未完成场景加载");
             }
 
-            var windowPreconfigInstance = UnityEngine.Object.FindObjectOfType(windowPreconfigType);
+            var windowPreconfigInstance = FindSceneObjectInstance(windowPreconfigType);
             if (windowPreconfigInstance == null)
             {
                 throw new Exception("未发现 WindowPreconfig 实例，场景可能未正确加载");
@@ -85,9 +87,7 @@ namespace BDFramework.HostE2E
                 throw new Exception($"未发现 GameConfigManager 类型: {GameConfigManagerTypeName}");
             }
 
-            var instProperty = gameConfigManagerType.GetProperty(
-                "Inst",
-                BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+            var instProperty = FindStaticPropertyOnTypeHierarchy(gameConfigManagerType, "Inst");
             if (instProperty == null)
             {
                 throw new Exception("未发现 GameConfigManager.Inst 属性");
@@ -200,7 +200,7 @@ namespace BDFramework.HostE2E
                 throw new Exception($"未发现 WindowPreconfig 类型");
             }
 
-            var windowPreconfigInstance = UnityEngine.Object.FindObjectOfType(windowPreconfigType);
+            var windowPreconfigInstance = FindSceneObjectInstance(windowPreconfigType);
             if (windowPreconfigInstance == null)
             {
                 throw new Exception("未发现 WindowPreconfig 实例");
@@ -297,6 +297,81 @@ namespace BDFramework.HostE2E
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 从类型及其基类链上查找公开静态属性。
+        /// Find a public static property from the type hierarchy.
+        /// 某些 Player 运行时对继承静态属性的反射返回不稳定，因此这里显式沿基类链回退。
+        /// Some Player runtimes can be inconsistent when reflecting inherited static properties, so walk the base-type chain explicitly.
+        /// </summary>
+        private static PropertyInfo FindStaticPropertyOnTypeHierarchy(Type type, string propertyName)
+        {
+            var currentType = type;
+            while (currentType != null)
+            {
+                var property = currentType.GetProperty(
+                    propertyName,
+                    BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                if (property != null)
+                {
+                    return property;
+                }
+
+                currentType = currentType.BaseType;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 从场景对象与隐藏对象里查找指定类型实例，并优先返回有效的场景对象。
+        /// Find an instance of the given type from scene and hidden objects, preferring a valid scene object.
+        /// `FindObjectOfType(Type)` 在 Player 启动切场阶段容易漏掉对象，这里改用 `Resources.FindObjectsOfTypeAll`
+        /// 兜底，再手动筛掉 prefab 资源与无效对象。
+        /// `FindObjectOfType(Type)` can miss objects during Player startup scene transitions, so fall back to
+        /// `Resources.FindObjectsOfTypeAll` and filter out prefab assets plus invalid objects manually.
+        /// </summary>
+        private static UnityEngine.Object FindSceneObjectInstance(Type type)
+        {
+            var candidates = Resources.FindObjectsOfTypeAll(type);
+            if (candidates == null || candidates.Length == 0)
+            {
+                return null;
+            }
+
+            var activeSceneObjects = new List<UnityEngine.Object>();
+            foreach (var candidate in candidates)
+            {
+                if (candidate == null)
+                {
+                    continue;
+                }
+
+                var component = candidate as Component;
+                if (component == null)
+                {
+                    continue;
+                }
+
+                var gameObject = component.gameObject;
+                if (gameObject == null || !gameObject.scene.IsValid())
+                {
+                    continue;
+                }
+
+                if (gameObject.activeInHierarchy)
+                {
+                    activeSceneObjects.Add(candidate);
+                }
+            }
+
+            if (activeSceneObjects.Count > 0)
+            {
+                return activeSceneObjects[0];
+            }
+
+            return candidates.FirstOrDefault(candidate => candidate != null);
         }
     }
 }

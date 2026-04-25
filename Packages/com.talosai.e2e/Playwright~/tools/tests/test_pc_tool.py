@@ -325,6 +325,16 @@ def test_test_pc_source_archives_persistent_player_logs_for_teamcity() -> None:
     assert 'player_log_index_file="${PLAYER_LOG_ARCHIVE_DIR}/index.txt"' in content
 
 
+def test_test_pc_source_prefers_teamcity_build_id_for_player_log_suffix() -> None:
+    """验证桌面脚本会优先用 TeamCity build id 生成本次 player log 文件名，避免复用 local-PID 日志。
+    Verify that the desktop launcher prefers the TeamCity build id for player-log file names so local-PID logs do not get reused.
+    """
+
+    content = SOURCE_TEST_PC.read_text(encoding="utf-8")
+
+    assert 'PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-${BUILD_ID:-local-$$}}"' in content
+
+
 def test_test_pc_source_cleans_stale_windows_players_before_launch() -> None:
     """验证 Windows 分支会在启动前清理残留端口占用与旧 Launcher 进程。
     Verify that the Windows branch cleans stale port owners and old Launcher processes before startup.

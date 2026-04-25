@@ -9,6 +9,8 @@ Coverage:
 2. Host code must explicitly root the host-owned launch/BaseFlow test assemblies, but it must not invoke E2EAutoInit.CheckAndLaunch again from WindowPreconfig, otherwise it races with the real ScriptLoder.Init startup path and reuses the same port.
 3. 该界面不能再因为 Talos 参数自动跳过，否则无法覆盖预配置界面的 UI 测试内容。
 3. The screen must not auto-skip because of Talos flags, otherwise the preconfiguration UI tests lose coverage.
+4. 宿主侧 WindowPreconfig 测试需要对 Player 启动竞态保持稳健，包含场景对象补扫、继承静态属性回退和正确的 ServerConfigProcessor 类型名。
+4. The host-side WindowPreconfig tests must stay robust against Player startup races, including scene-object fallback discovery, inherited static-property fallback, and the correct ServerConfigProcessor type name.
 """
 
 from __future__ import annotations
@@ -18,6 +20,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[5]
 WINDOW_PRECONFIG_PATH = REPO_ROOT / "Assets" / "Scenes" / "Simple" / "AOTStart" / "WindowPreconfig.cs"
+WINDOW_PRECONFIG_HOST_TESTS_PATH = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Runtime.HostE2E" / "WindowPreconfigHostTests.cs"
 
 
 def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None:
@@ -37,3 +40,16 @@ def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None
     assert "宿主已显式调用 E2EAutoInit.CheckAndLaunch" not in content
     assert "ShouldAutoLaunchForTalosE2E" not in content
     assert "跳过预配置界面并直接进入框架启动" not in content
+
+
+def test_window_preconfig_host_tests_keep_player_startup_race_guards() -> None:
+    """验证宿主侧 WindowPreconfig 测试保留 Player 启动竞态防护。
+    Verify that the host-side WindowPreconfig tests keep the Player startup race guards.
+    """
+    content = WINDOW_PRECONFIG_HOST_TESTS_PATH.read_text(encoding="utf-8")
+
+    assert 'private const string ServerConfigProcessorTypeName = "Game.Config.ServerConfigProcessor";' in content
+    assert "FindStaticPropertyOnTypeHierarchy" in content
+    assert 'FindSceneObjectInstance(windowPreconfigType)' in content
+    assert "Resources.FindObjectsOfTypeAll(type)" in content
+    assert "gameObject.scene.IsValid()" in content
