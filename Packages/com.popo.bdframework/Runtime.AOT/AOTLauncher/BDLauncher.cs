@@ -87,7 +87,16 @@ namespace BDFramework
 
             // Phase 3: 记录装载完成；真正的业务启动仍等待 BDLauncherBridge.Launch()。
             Debug.Log("------------------AOT Start-----------------------");
-            ScriptLoderAOT.Load(ClientVersion);
+            // 检查热更 DLL 是否已在 BeforeSceneLoad 阶段加载。
+            // Check if hotfix DLLs were already loaded during BeforeSceneLoad phase.
+            if (ScriptLoderAOT.HasLoadedHotfixAssembliesBeforeSceneLoad)
+            {
+                Debug.Log("[AOT] 热更 DLL 已在 BeforeSceneLoad 阶段加载完成，跳过重复加载");
+            }
+            else
+            {
+                ScriptLoderAOT.Load(ClientVersion);
+            }
             Debug.Log("<color=yellow>执行反射：ScriptLoder.Init()，装载热更代码 </color>");
             InitHotfixScriptLoder();
             Debug.Log("------------------AOT Complete！ -----------------------");

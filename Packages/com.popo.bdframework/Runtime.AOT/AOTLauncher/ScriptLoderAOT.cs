@@ -21,6 +21,80 @@ namespace BDFramework
     static public class ScriptLoderAOT
     {
         /// <summary>
+        /// 标记热更程序集是否已在 BeforeSceneLoad 阶段完成加载。
+        /// Marks whether hotfix assemblies have been loaded during the BeforeSceneLoad phase.
+        /// </summary>
+        static public bool HasLoadedHotfixAssembliesBeforeSceneLoad => hasLoadedHotfixAssembliesBeforeSceneLoad;
+
+        static private bool hasLoadedHotfixAssembliesBeforeSceneLoad;
+
+        /// <summary>
+        /// 在场景加载前预先加载热更程序集。
+        /// Pre-load hotfix assemblies before scene loading.
+        /// 该方法通过 <c>RuntimeInitializeOnLoadMethod</c> 在 Unity 反序列化场景前执行,
+        /// 确保热更程序集已加载，避免场景中的 MonoBehaviour 组件因程序集未加载而变成 missing script placeholder。
+        /// This method runs via <c>RuntimeInitializeOnLoadMethod</c> before Unity deserializes the scene,
+        /// ensuring hotfix assemblies are loaded so MonoBehaviour components in the scene do not become missing-script placeholders.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static private void PreLoadHotfixAssembliesBeforeSceneLoad()
+        {
+            // Editor 模式下不需要提前加载，Unity 编辑器已加载所有程序集。
+            // In Editor mode, early loading is not needed; Unity Editor has already loaded all assemblies.
+            if (Application.isEditor)
+            {
+                return;
+            }
+
+            // 尝试从命令行参数获取版本号，默认使用空字符串作为回退。
+            // Try to get version number from command line arguments, defaulting to empty string as fallback.
+            // 注意：这里使用简单解析，因为 RuntimeLaunchArguments 可能还未初始化。
+            // Note: We use simple parsing here because RuntimeLaunchArguments might not be initialized yet.
+            var clientVersion = GetClientVersionFromCommandLine();
+
+            Debug.Log($"[AOT.Load] BeforeSceneLoad 阶段开始加载热更程序集，版本: {clientVersion ?? "(母包内置)"}");
+
+            try
+            {
+                // 如果无法获取版本号，使用空字符串，LoadHotfixDLL 会从 StreamingAssets 加载母包内置 DLL。
+                // If version number cannot be obtained, use empty string; LoadHotfixDLL will load base-package DLLs from StreamingAssets.
+                LoadHotfixDLL(clientVersion ?? "");
+                hasLoadedHotfixAssembliesBeforeSceneLoad = true;
+                Debug.Log("[AOT.Load] BeforeSceneLoad 阶段热更程序集加载完成");
+            }
+            catch (Exception ex)
+            {
+                // 如果提前加载失败，记录错误但不阻止启动。
+                // If early loading fails, log the error but do not block startup.
+                // BDLauncher.Awake() 会在后续阶段重试。
+                // BDLauncher.Awake() will retry in a later phase.
+                Debug.LogError($"[AOT.Load] BeforeSceneLoad 阶段加载失败: {ex.Message}；等待 BDLauncher.Awake() 重试");
+            }
+        }
+
+        /// <summary>
+        /// 从命令行参数解析母包版本号。
+        /// Parse base-package version number from command line arguments.
+        /// </summary>
+        /// <returns>版本号字符串，未找到时返回 null。</returns>
+        /// <returns>Version string, or null if not found.</returns>
+        static private string GetClientVersionFromCommandLine()
+        {
+            var args = Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length - 1; i++)
+            {
+                // 查找 -clientVersion 或 --clientVersion 参数。
+                // Look for -clientVersion or --clientVersion argument.
+                if (args[i] == "-clientVersion" || args[i] == "--clientVersion")
+                {
+                    return args[i + 1];
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// HybridCLR AOT 补充元数据目录。
         /// 该目录由构建流程写入母包，运行时启动阶段在真正加载热更程序集前消费它。
         /// HybridCLR supplemental metadata directory.
