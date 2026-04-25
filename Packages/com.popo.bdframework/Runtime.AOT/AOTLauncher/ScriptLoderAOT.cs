@@ -46,19 +46,17 @@ namespace BDFramework
                 return;
             }
 
-            // 尝试从命令行参数获取版本号，默认使用空字符串作为回退。
-            // Try to get version number from command line arguments, defaulting to empty string as fallback.
-            // 注意：这里使用简单解析，因为 RuntimeLaunchArguments 可能还未初始化。
-            // Note: We use simple parsing here because RuntimeLaunchArguments might not be initialized yet.
-            var clientVersion = GetClientVersionFromCommandLine();
+            // 从 StreamingAssets 的 package_build.info 读取版本号。
+            // Read version number from package_build.info in StreamingAssets.
+            var clientVersion = GetClientVersionFromPackageBuildInfo();
 
-            Debug.Log($"[AOT.Load] BeforeSceneLoad 阶段开始加载热更程序集，版本: {clientVersion ?? "(母包内置)"}");
+            Debug.Log($"[AOT.Load] BeforeSceneLoad 阶段开始加载热更程序集，版本: {(string.IsNullOrEmpty(clientVersion) ? "(母包内置)" : clientVersion)}");
 
             try
             {
-                // 如果无法获取版本号，使用空字符串，LoadHotfixDLL 会从 StreamingAssets 加载母包内置 DLL。
-                // If version number cannot be obtained, use empty string; LoadHotfixDLL will load base-package DLLs from StreamingAssets.
-                LoadHotfixDLL(clientVersion ?? "");
+                // 使用版本号加载热更 DLL。
+                // Load hotfix DLLs using the version number.
+                LoadHotfixDLL(clientVersion);
                 hasLoadedHotfixAssembliesBeforeSceneLoad = true;
                 Debug.Log("[AOT.Load] BeforeSceneLoad 阶段热更程序集加载完成");
             }
@@ -73,25 +71,74 @@ namespace BDFramework
         }
 
         /// <summary>
-        /// 从命令行参数解析母包版本号。
-        /// Parse base-package version number from command line arguments.
+        /// 从 StreamingAssets 的 package_build.info 文件读取母包版本号。
+        /// Read base-package version number from package_build.info in StreamingAssets.
         /// </summary>
-        /// <returns>版本号字符串，未找到时返回 null。</returns>
-        /// <returns>Version string, or null if not found.</returns>
-        static private string GetClientVersionFromCommandLine()
+        /// <returns>版本号字符串，未找到或解析失败时返回空字符串（表示使用母包内置 DLL）。</returns>
+        /// <returns>Version string, or empty string if not found or parsing fails (meaning use base-package built-in DLLs).</returns>
+        static private string GetClientVersionFromPackageBuildInfo()
         {
-            var args = Environment.GetCommandLineArgs();
-            for (int i = 0; i < args.Length - 1; i++)
+            try
             {
-                // 查找 -clientVersion 或 --clientVersion 参数。
-                // Look for -clientVersion or --clientVersion argument.
-                if (args[i] == "-clientVersion" || args[i] == "--clientVersion")
-                {
-                    return args[i + 1];
-                }
-            }
+                // 确保 BetterStreamingAssets 已初始化。
+                // Ensure BetterStreamingAssets is initialized.
+                EnsureBetterStreamingAssetsInitialized();
 
-            return null;
+                // 读取 package_build.info 文件。
+                // Read package_build.info file.
+                var platform = GetPlatformLoadPath();
+                var packageBuildInfoPath = $"{platform}/{PACKAGE_BUILD_INFO_PATH}";
+
+                if (!BetterStreamingAssets.FileExists(packageBuildInfoPath))
+                {
+                    Debug.Log($"[AOT.Load] 未找到 package_build.info: {packageBuildInfoPath}，使用母包内置 DLL");
+                    return "";
+                }
+
+                var json = BetterStreamingAssets.ReadAllText(packageBuildInfoPath);
+                if (string.IsNullOrEmpty(json))
+                {
+                    Debug.Log($"[AOT.Load] package_build.info 内容为空，使用母包内置 DLL");
+                    return "";
+                }
+
+                // 解析 JSON 获取版本号。
+                // Parse JSON to get version number.
+                var buildInfo = LitJson.JsonMapper.ToObject<ClientPackageBuildInfo>(json);
+                if (buildInfo == null || string.IsNullOrEmpty(buildInfo.Version))
+                {
+                    Debug.Log($"[AOT.Load] package_build.info 版本号为空，使用母包内置 DLL");
+                    return "";
+                }
+
+                Debug.Log($"[AOT.Load] 从 package_build.info 读取版本号: {buildInfo.Version}");
+                return buildInfo.Version;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[AOT.Load] 读取 package_build.info 失败: {ex.Message}，使用母包内置 DLL");
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// 母包构建信息文件路径。
+        /// Base-package build info file path.
+        /// </summary>
+        const string PACKAGE_BUILD_INFO_PATH = "package_build.info";
+
+        /// <summary>
+        /// 母包构建信息结构。
+        /// Base-package build info structure.
+        /// </summary>
+        private class ClientPackageBuildInfo
+        {
+            public long BuildTime = 0;
+            public string Version = "0.0.0";
+            public string BasePckScriptSVCVersion = "none";
+            public string HotfixScriptSVCVersion = "none";
+            public string AssetBundleSVCVersion = "none";
+            public string TableSVCVersion = "none";
         }
 
         /// <summary>
