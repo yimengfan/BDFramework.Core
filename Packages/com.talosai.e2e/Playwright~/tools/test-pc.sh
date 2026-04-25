@@ -193,7 +193,9 @@ cleanup_stale_windows_player_processes() {
     executable_name="$(basename "${EXE_PATH}")"
     executable_stem="${executable_name%.*}"
 
-    cleanup_summary="$({
+    # 使用子 shell + set +e 避免 PowerShell 错误导致整个脚本退出
+    # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
+    cleanup_summary="$(set +e; {
         powershell.exe -NoProfile -Command "\
             \$unityPort = ${UNITY_PORT}; \
             \$preparedRoot = '${prepared_package_root_win}'.ToLowerInvariant(); \
@@ -227,7 +229,7 @@ cleanup_stale_windows_player_processes() {
                 [Console]::Out.Write([string]::Join(',', \$stopped)); \
             }\
         "
-    } | tr -d '\r')"
+    } 2>/dev/null | tr -d '\r')" || true
 
     if [[ -n "${cleanup_summary}" ]]; then
         echo ">>> 已清理 Windows 残留进程: ${cleanup_summary}"
@@ -250,14 +252,29 @@ else
         PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player-${PLAYER_LOG_FILE_SUFFIX}.log"
         : > "${PLAYER_LOG_FILE}"
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
-        APP_PID="$({
+        # 使用子 shell + set +e 避免 PowerShell 错误导致整个脚本退出
+        # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
+        APP_PID="$(set +e; {
             powershell.exe -NoProfile -Command "\
-                \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-batchmode','-nographics','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru; \
-                [Console]::Out.Write(\$proc.Id)\
+                try { \
+                    \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-batchmode','-nographics','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru -ErrorAction Stop; \
+                    [Console]::Out.Write(\$proc.Id); \
+                } catch { \
+                    [Console]::Error.Write(\"PowerShell Start-Process failed: \$_\"); \
+                    exit 1; \
+                }\
             "
-        } | tr -d '\r')"
+        } 2>&1 | tr -d '\r')" || true
         if [[ -z "${APP_PID}" ]]; then
             echo "    ❌ 未能获取应用 PID"
+            print_windows_player_logs
+            capture_persistent_player_logs
+            exit 1
+        fi
+        # 检查 APP_PID 是否为有效数字（PowerShell 可能返回错误信息）
+        # Check if APP_PID is a valid number (PowerShell might return error message)
+        if ! [[ "${APP_PID}" =~ ^[0-9]+$ ]]; then
+            echo "    ❌ PowerShell 返回无效 PID: ${APP_PID}"
             print_windows_player_logs
             capture_persistent_player_logs
             exit 1
