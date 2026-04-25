@@ -71,6 +71,15 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
+        /// 验证 AOT 热更预加载同时保留更早钩子与 BeforeSceneLoad 兜底。
+        /// Verify that AOT hotfix preloading keeps both the earlier hook and the BeforeSceneLoad fallback.
+        /// </summary>
+        public void ScriptLoderAOT_ShouldKeepEarlyPreloadHooks()
+        {
+            FrameworkContractAssertions.VerifyScriptLoderAOTEarlyPreloadHooks();
+        }
+
+        /// <summary>
         /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
         /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>

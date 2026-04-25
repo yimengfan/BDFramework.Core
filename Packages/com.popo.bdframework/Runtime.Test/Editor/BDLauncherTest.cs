@@ -73,6 +73,13 @@ namespace Runtime.Test.Editor
                         runtimeTest.BDLauncher_ShouldDeclareMinimumDefaultExecutionOrder)
                 ),
                 (
+                    nameof(BdLauncherApiTest.ScriptLoderAOT_ShouldKeepEarlyPreloadHooks),
+                    () => ExecuteWithSetUp(
+                        runtimeTest,
+                        nameof(BdLauncherApiTest.ScriptLoderAOT_ShouldKeepEarlyPreloadHooks),
+                        runtimeTest.ScriptLoderAOT_ShouldKeepEarlyPreloadHooks)
+                ),
+                (
                     nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldRemainRuntimeReachable),
                     () => ExecuteWithSetUp(
                         runtimeTest,

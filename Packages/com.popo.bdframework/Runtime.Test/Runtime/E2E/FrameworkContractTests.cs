@@ -76,10 +76,22 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
+        /// 验证 AOT 热更预加载保留更早阶段钩子与 BeforeSceneLoad 兜底。
+        /// Verify that AOT hotfix preloading keeps the earlier-stage hook and the BeforeSceneLoad fallback.
+        /// </summary>
+        [E2ETest(suite: "framework-contract", order: 6, des: "aot-early-preload-hooks-contract")]
+        public static void AOTEarlyPreloadHooksContract()
+        {
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(AOTEarlyPreloadHooksContract));
+            test.ScriptLoderAOT_ShouldKeepEarlyPreloadHooks();
+        }
+
+        /// <summary>
         /// 验证基础配置处理器会补挂缺失的 BDebug 组件。
         /// Verify that the base-config processor restores a missing BDebug component.
         /// </summary>
-        [E2ETest(suite: "framework-contract", order: 6, des: "config-restore-bdebug-contract")]
+        [E2ETest(suite: "framework-contract", order: 7, des: "config-restore-bdebug-contract")]
         public static void ConfigRestoreBDebugContract()
         {
             var test = new BdLauncherApiTest();

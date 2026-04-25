@@ -79,6 +79,50 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证 AOT 热更预加载同时保留更早的程序集阶段钩子和 BeforeSceneLoad 兜底。
+        /// Verify that AOT hotfix preloading keeps both the earlier assembly-stage hook and the BeforeSceneLoad fallback.
+        /// 该契约用来固定这次 missing-script 回归的修复方向：
+        /// 必须先争取在首场景反序列化前完成预加载，同时保留旧的 BeforeSceneLoad 路径作为兜底与兼容重试。
+        /// This contract locks in the fix direction for the current missing-script regression:
+        /// preload must try to complete before first-scene deserialization while still preserving the older BeforeSceneLoad path as a fallback and compatibility retry.
+        /// </summary>
+        public static void VerifyScriptLoderAOTEarlyPreloadHooks()
+        {
+            var afterAssembliesLoadedMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
+                "PreLoadHotfixAssembliesAfterAssembliesLoaded",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            var beforeSceneLoadMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
+                "PreLoadHotfixAssembliesBeforeSceneLoad",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            var sharedHelperMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
+                "TryPreLoadHotfixAssembliesAtRuntime",
+                BindingFlags.NonPublic | BindingFlags.Static);
+
+            EnsureTrue(afterAssembliesLoadedMethod != null, "应该保留 AfterAssembliesLoaded 预加载入口，避免首场景热更组件在反序列化前变成 missing script。");
+            EnsureTrue(beforeSceneLoadMethod != null, "应该保留 BeforeSceneLoad 预加载兜底入口，避免较晚启动路径丢失热更程序集重试。");
+            EnsureTrue(sharedHelperMethod != null, "应该保留共享的热更预加载辅助方法，避免两个启动钩子的装载逻辑漂移。");
+
+            var afterAssembliesLoadedAttribute = (RuntimeInitializeOnLoadMethodAttribute)Attribute.GetCustomAttribute(
+                afterAssembliesLoadedMethod,
+                typeof(RuntimeInitializeOnLoadMethodAttribute));
+            var beforeSceneLoadAttribute = (RuntimeInitializeOnLoadMethodAttribute)Attribute.GetCustomAttribute(
+                beforeSceneLoadMethod,
+                typeof(RuntimeInitializeOnLoadMethodAttribute));
+
+            EnsureTrue(afterAssembliesLoadedAttribute != null, "AfterAssembliesLoaded 预加载入口必须声明 RuntimeInitializeOnLoadMethodAttribute。");
+            EnsureEqual(
+                RuntimeInitializeLoadType.AfterAssembliesLoaded,
+                afterAssembliesLoadedAttribute.loadType,
+                "热更预加载应优先挂在 AfterAssembliesLoaded，确保早于首场景组件恢复。");
+
+            EnsureTrue(beforeSceneLoadAttribute != null, "BeforeSceneLoad 兜底入口必须声明 RuntimeInitializeOnLoadMethodAttribute。");
+            EnsureEqual(
+                RuntimeInitializeLoadType.BeforeSceneLoad,
+                beforeSceneLoadAttribute.loadType,
+                "热更预加载兜底入口应保持 BeforeSceneLoad，兼容现有启动链后备重试。");
+        }
+
+        /// <summary>
         /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
         /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>

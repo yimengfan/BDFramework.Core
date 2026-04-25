@@ -26,14 +26,14 @@ def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None
     """
     content = WINDOW_PRECONFIG_PATH.read_text(encoding="utf-8")
 
-    assert '"-talosForceE2E"' in content
-    assert "WindowPreconfig 保持可见" in content
+    assert "RuntimeLaunchArguments.ResolveCurrentProcessArguments()" in content
+    assert "ForcedModeStartupFallback.TryLaunchFromForcedMode" in content
+    assert "当前处于 -talosForceE2E 模式" in content
     assert "typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly" in content
     assert "typeof(BDFramework.HostE2E.BaseFlowHostRuntimeTests).Assembly" in content
     assert "宿主已绑定 launch/BaseFlow 宿主测试程序集" in content
-    assert "E2E TCP 应已在 ScriptLoder.Init 阶段启动" in content
+    assert "ScriptLoder.Init 仍是首选启动入口" in content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in content
     assert "宿主已显式调用 E2EAutoInit.CheckAndLaunch" not in content
     assert "ShouldAutoLaunchForTalosE2E" not in content
     assert "跳过预配置界面并直接进入框架启动" not in content
-

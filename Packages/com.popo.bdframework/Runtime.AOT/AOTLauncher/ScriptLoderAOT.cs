@@ -21,23 +21,50 @@ namespace BDFramework
     static public class ScriptLoderAOT
     {
         /// <summary>
-        /// 标记热更程序集是否已在 BeforeSceneLoad 阶段完成加载。
-        /// Marks whether hotfix assemblies have been loaded during the BeforeSceneLoad phase.
+        /// 标记热更程序集是否已在启动早期阶段完成预加载。
+        /// Marks whether hotfix assemblies have been preloaded during the early startup stages.
         /// </summary>
         static public bool HasLoadedHotfixAssembliesBeforeSceneLoad => hasLoadedHotfixAssembliesBeforeSceneLoad;
 
         static private bool hasLoadedHotfixAssembliesBeforeSceneLoad;
 
         /// <summary>
-        /// 在场景加载前预先加载热更程序集。
-        /// Pre-load hotfix assemblies before scene loading.
-        /// 该方法通过 <c>RuntimeInitializeOnLoadMethod</c> 在 Unity 反序列化场景前执行,
-        /// 确保热更程序集已加载，避免场景中的 MonoBehaviour 组件因程序集未加载而变成 missing script placeholder。
-        /// This method runs via <c>RuntimeInitializeOnLoadMethod</c> before Unity deserializes the scene,
-        /// ensuring hotfix assemblies are loaded so MonoBehaviour components in the scene do not become missing-script placeholders.
+        /// 在程序集装载完成后立刻预加载热更程序集。
+        /// Pre-load hotfix assemblies immediately after Unity finishes loading assemblies.
+        /// 该阶段早于首场景反序列化，可避免启动场景里的热更 MonoBehaviour 在组件恢复前就被降级成 missing script placeholder。
+        /// This stage runs earlier than first-scene deserialization and avoids startup-scene hotfix MonoBehaviours degrading into missing-script placeholders before their components can be restored.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        static private void PreLoadHotfixAssembliesAfterAssembliesLoaded()
+        {
+            TryPreLoadHotfixAssembliesAtRuntime("AfterAssembliesLoaded");
+        }
+
+        /// <summary>
+        /// 在场景加载前再次兜底预加载热更程序集。
+        /// Perform a fallback hotfix preload right before scene loading.
+        /// 某些平台或启动路径可能没有走到更早的钩子，这里保留 BeforeSceneLoad 兜底，
+        /// 但若早期阶段已成功预加载，则不会重复执行真正的 DLL 装载。
+        /// Some platforms or startup paths may miss the earlier hook, so this keeps a BeforeSceneLoad fallback;
+        /// if an earlier stage already succeeded, it skips the actual DLL load.
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static private void PreLoadHotfixAssembliesBeforeSceneLoad()
+        {
+            TryPreLoadHotfixAssembliesAtRuntime("BeforeSceneLoad");
+        }
+
+        /// <summary>
+        /// 在受控的启动阶段尝试预加载热更程序集。
+        /// Attempt to preload hotfix assemblies during a controlled startup stage.
+        /// 该辅助方法统一承载 `AfterAssembliesLoaded` 与 `BeforeSceneLoad` 两个钩子的逻辑，
+        /// 让首场景组件恢复优先依赖更早的时机，同时保留现有启动链对后续重试的兼容性。
+        /// This helper centralizes the logic shared by the `AfterAssembliesLoaded` and `BeforeSceneLoad` hooks,
+        /// letting first-scene component restoration prefer the earlier timing while preserving compatibility with the existing later retry path.
+        /// </summary>
+        /// <param name="stageName">当前触发预加载的启动阶段名称。</param>
+        /// <param name="stageName">Name of the startup stage that triggered this preload attempt.</param>
+        static private void TryPreLoadHotfixAssembliesAtRuntime(string stageName)
         {
             // Editor 模式下不需要提前加载，Unity 编辑器已加载所有程序集。
             // In Editor mode, early loading is not needed; Unity Editor has already loaded all assemblies.
@@ -46,11 +73,17 @@ namespace BDFramework
                 return;
             }
 
+            if (hasLoadedHotfixAssembliesBeforeSceneLoad)
+            {
+                Debug.Log($"[AOT.Load] {stageName} 阶段检测到热更程序集已预加载，跳过重复执行");
+                return;
+            }
+
             // 从 StreamingAssets 的 package_build.info 读取版本号。
             // Read version number from package_build.info in StreamingAssets.
             var clientVersion = GetClientVersionFromPackageBuildInfo();
 
-            Debug.Log($"[AOT.Load] BeforeSceneLoad 阶段开始加载热更程序集，版本: {(string.IsNullOrEmpty(clientVersion) ? "(母包内置)" : clientVersion)}");
+            Debug.Log($"[AOT.Load] {stageName} 阶段开始加载热更程序集，版本: {(string.IsNullOrEmpty(clientVersion) ? "(母包内置)" : clientVersion)}");
 
             try
             {
@@ -58,7 +91,7 @@ namespace BDFramework
                 // Load hotfix DLLs using the version number.
                 LoadHotfixDLL(clientVersion);
                 hasLoadedHotfixAssembliesBeforeSceneLoad = true;
-                Debug.Log("[AOT.Load] BeforeSceneLoad 阶段热更程序集加载完成");
+                Debug.Log($"[AOT.Load] {stageName} 阶段热更程序集加载完成");
             }
             catch (Exception ex)
             {
@@ -66,7 +99,7 @@ namespace BDFramework
                 // If early loading fails, log the error but do not block startup.
                 // BDLauncher.Awake() 会在后续阶段重试。
                 // BDLauncher.Awake() will retry in a later phase.
-                Debug.LogError($"[AOT.Load] BeforeSceneLoad 阶段加载失败: {ex.Message}；等待 BDLauncher.Awake() 重试");
+                Debug.LogError($"[AOT.Load] {stageName} 阶段加载失败: {ex.Message}；等待 BDLauncher.Awake() 重试");
             }
         }
 
