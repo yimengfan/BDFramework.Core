@@ -88,6 +88,12 @@ namespace BDFramework.RuntimeTests.Contracts
         /// </summary>
         public static void VerifyScriptLoderAOTEarlyPreloadHooks()
         {
+            var launcherAfterAssembliesLoadedMethod = typeof(BDFramework.BDLauncher).GetMethod(
+                "PreLoadHotfixAssembliesAfterAssembliesLoadedFromLauncher",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            var launcherBeforeSceneLoadMethod = typeof(BDFramework.BDLauncher).GetMethod(
+                "PreLoadHotfixAssembliesBeforeSceneLoadFromLauncher",
+                BindingFlags.NonPublic | BindingFlags.Static);
             var afterAssembliesLoadedMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
                 "PreLoadHotfixAssembliesAfterAssembliesLoaded",
                 BindingFlags.NonPublic | BindingFlags.Static);
@@ -101,12 +107,20 @@ namespace BDFramework.RuntimeTests.Contracts
             EnsureTrue(afterAssembliesLoadedMethod != null, "应该保留 AfterAssembliesLoaded 预加载入口，避免首场景热更组件在反序列化前变成 missing script。");
             EnsureTrue(beforeSceneLoadMethod != null, "应该保留 BeforeSceneLoad 预加载兜底入口，避免较晚启动路径丢失热更程序集重试。");
             EnsureTrue(sharedHelperMethod != null, "应该保留共享的热更预加载辅助方法，避免两个启动钩子的装载逻辑漂移。");
+            EnsureTrue(launcherAfterAssembliesLoadedMethod != null, "BDLauncher 应保留 AfterAssembliesLoaded 代理入口，确保玩家构建能稳定保留并执行热更预加载钩子。");
+            EnsureTrue(launcherBeforeSceneLoadMethod != null, "BDLauncher 应保留 BeforeSceneLoad 代理入口，确保玩家构建里仍有兜底预加载链路。");
 
             var afterAssembliesLoadedAttribute = (RuntimeInitializeOnLoadMethodAttribute)Attribute.GetCustomAttribute(
                 afterAssembliesLoadedMethod,
                 typeof(RuntimeInitializeOnLoadMethodAttribute));
             var beforeSceneLoadAttribute = (RuntimeInitializeOnLoadMethodAttribute)Attribute.GetCustomAttribute(
                 beforeSceneLoadMethod,
+                typeof(RuntimeInitializeOnLoadMethodAttribute));
+            var launcherAfterAssembliesLoadedAttribute = (RuntimeInitializeOnLoadMethodAttribute)Attribute.GetCustomAttribute(
+                launcherAfterAssembliesLoadedMethod,
+                typeof(RuntimeInitializeOnLoadMethodAttribute));
+            var launcherBeforeSceneLoadAttribute = (RuntimeInitializeOnLoadMethodAttribute)Attribute.GetCustomAttribute(
+                launcherBeforeSceneLoadMethod,
                 typeof(RuntimeInitializeOnLoadMethodAttribute));
 
             EnsureTrue(afterAssembliesLoadedAttribute != null, "AfterAssembliesLoaded 预加载入口必须声明 RuntimeInitializeOnLoadMethodAttribute。");
@@ -120,6 +134,36 @@ namespace BDFramework.RuntimeTests.Contracts
                 RuntimeInitializeLoadType.BeforeSceneLoad,
                 beforeSceneLoadAttribute.loadType,
                 "热更预加载兜底入口应保持 BeforeSceneLoad，兼容现有启动链后备重试。");
+
+            EnsureTrue(launcherAfterAssembliesLoadedAttribute != null, "BDLauncher 的 AfterAssembliesLoaded 代理入口必须声明 RuntimeInitializeOnLoadMethodAttribute。");
+            EnsureEqual(
+                RuntimeInitializeLoadType.AfterAssembliesLoaded,
+                launcherAfterAssembliesLoadedAttribute.loadType,
+                "BDLauncher 的热更预加载代理入口应保持 AfterAssembliesLoaded。");
+
+            EnsureTrue(launcherBeforeSceneLoadAttribute != null, "BDLauncher 的 BeforeSceneLoad 代理入口必须声明 RuntimeInitializeOnLoadMethodAttribute。");
+            EnsureEqual(
+                RuntimeInitializeLoadType.BeforeSceneLoad,
+                launcherBeforeSceneLoadAttribute.loadType,
+                "BDLauncher 的热更预加载兜底代理入口应保持 BeforeSceneLoad。");
+        }
+
+        /// <summary>
+        /// 验证 WindowPreconfig 宿主测试使用的 GameConfigManager.Inst 反射契约可以跨基类解析。
+        /// Verify that the GameConfigManager.Inst reflection contract used by the WindowPreconfig host test resolves across the base type.
+        /// 宿主测试通过反射访问 `GameConfigManager.Inst`，但该静态属性定义在泛型基类 `ManagerBase<T, V>` 上，
+        /// 因此这里要固定 `FlattenHierarchy` 的反射契约，避免把继承静态属性误判成运行时缺失。
+        /// The host test accesses `GameConfigManager.Inst` through reflection, but the static property is declared on the generic base type `ManagerBase<T, V>`,
+        /// so this assertion locks in the `FlattenHierarchy` reflection contract and avoids misclassifying inherited static properties as runtime regressions.
+        /// </summary>
+        public static void VerifyWindowPreconfigHostReflectionCanResolveGameConfigManagerInst()
+        {
+            var instProperty = typeof(BDFramework.Configure.GameConfigManager).GetProperty(
+                "Inst",
+                BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+
+            EnsureTrue(instProperty != null, "GameConfigManager.Inst 应可通过 FlattenHierarchy 反射解析到继承的静态属性。");
+            EnsureTrue(instProperty.PropertyType == typeof(BDFramework.Configure.GameConfigManager), "GameConfigManager.Inst 反射返回的属性类型应保持为 GameConfigManager。");
         }
 
         /// <summary>

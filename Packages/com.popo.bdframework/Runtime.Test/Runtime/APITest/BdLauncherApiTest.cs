@@ -80,6 +80,15 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
+        /// 验证 WindowPreconfig 宿主测试可以反射解析继承的 GameConfigManager.Inst 静态属性。
+        /// Verify that the WindowPreconfig host test can resolve the inherited GameConfigManager.Inst static property through reflection.
+        /// </summary>
+        public void WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty()
+        {
+            FrameworkContractAssertions.VerifyWindowPreconfigHostReflectionCanResolveGameConfigManagerInst();
+        }
+
+        /// <summary>
         /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
         /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>

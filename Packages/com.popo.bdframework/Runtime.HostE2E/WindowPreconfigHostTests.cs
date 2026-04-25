@@ -85,7 +85,9 @@ namespace BDFramework.HostE2E
                 throw new Exception($"未发现 GameConfigManager 类型: {GameConfigManagerTypeName}");
             }
 
-            var instProperty = gameConfigManagerType.GetProperty("Inst", BindingFlags.Public | BindingFlags.Static);
+            var instProperty = gameConfigManagerType.GetProperty(
+                "Inst",
+                BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
             if (instProperty == null)
             {
                 throw new Exception("未发现 GameConfigManager.Inst 属性");

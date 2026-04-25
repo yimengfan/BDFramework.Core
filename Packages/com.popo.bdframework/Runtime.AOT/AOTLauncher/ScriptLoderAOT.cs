@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using HybridCLR;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 
 namespace BDFramework
@@ -18,6 +19,7 @@ namespace BDFramework
     /// 典型调用点是启动场景里的 <c>BDLauncher.Start()</c>；它只负责装载程序集，不负责资源和管理器初始化。
     /// The typical caller is <c>BDLauncher.Start()</c> in the startup scene; it only handles assembly loading and does not initialize resources or managers.
     /// </remarks>
+    [Preserve]
     static public class ScriptLoderAOT
     {
         /// <summary>
@@ -34,6 +36,7 @@ namespace BDFramework
         /// 该阶段早于首场景反序列化，可避免启动场景里的热更 MonoBehaviour 在组件恢复前就被降级成 missing script placeholder。
         /// This stage runs earlier than first-scene deserialization and avoids startup-scene hotfix MonoBehaviours degrading into missing-script placeholders before their components can be restored.
         /// </summary>
+        [Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         static private void PreLoadHotfixAssembliesAfterAssembliesLoaded()
         {
@@ -48,6 +51,7 @@ namespace BDFramework
         /// Some platforms or startup paths may miss the earlier hook, so this keeps a BeforeSceneLoad fallback;
         /// if an earlier stage already succeeded, it skips the actual DLL load.
         /// </summary>
+        [Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static private void PreLoadHotfixAssembliesBeforeSceneLoad()
         {
@@ -64,7 +68,8 @@ namespace BDFramework
         /// </summary>
         /// <param name="stageName">当前触发预加载的启动阶段名称。</param>
         /// <param name="stageName">Name of the startup stage that triggered this preload attempt.</param>
-        static private void TryPreLoadHotfixAssembliesAtRuntime(string stageName)
+        [Preserve]
+        static internal void TryPreLoadHotfixAssembliesAtRuntime(string stageName)
         {
             // Editor 模式下不需要提前加载，Unity 编辑器已加载所有程序集。
             // In Editor mode, early loading is not needed; Unity Editor has already loaded all assemblies.

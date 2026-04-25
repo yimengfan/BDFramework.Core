@@ -80,6 +80,13 @@ namespace Runtime.Test.Editor
                         runtimeTest.ScriptLoderAOT_ShouldKeepEarlyPreloadHooks)
                 ),
                 (
+                    nameof(BdLauncherApiTest.WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty),
+                    () => ExecuteWithSetUp(
+                        runtimeTest,
+                        nameof(BdLauncherApiTest.WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty),
+                        runtimeTest.WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty)
+                ),
+                (
                     nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldRemainRuntimeReachable),
                     () => ExecuteWithSetUp(
                         runtimeTest,

@@ -88,10 +88,22 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
+        /// 验证 WindowPreconfig 宿主测试可以解析继承的 GameConfigManager.Inst 静态属性。
+        /// Verify that the WindowPreconfig host test can resolve the inherited GameConfigManager.Inst static property.
+        /// </summary>
+        [E2ETest(suite: "framework-contract", order: 7, des: "window-preconfig-host-reflection-contract")]
+        public static void WindowPreconfigHostReflectionContract()
+        {
+            var test = new BdLauncherApiTest();
+            test.SetUp(nameof(WindowPreconfigHostReflectionContract));
+            test.WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty();
+        }
+
+        /// <summary>
         /// 验证基础配置处理器会补挂缺失的 BDebug 组件。
         /// Verify that the base-config processor restores a missing BDebug component.
         /// </summary>
-        [E2ETest(suite: "framework-contract", order: 7, des: "config-restore-bdebug-contract")]
+        [E2ETest(suite: "framework-contract", order: 8, des: "config-restore-bdebug-contract")]
         public static void ConfigRestoreBDebugContract()
         {
             var test = new BdLauncherApiTest();

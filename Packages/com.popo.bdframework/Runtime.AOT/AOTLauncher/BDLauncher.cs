@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Scripting;
 using Debug = UnityEngine.Debug;
 
 
@@ -21,6 +22,36 @@ namespace BDFramework
     [DefaultExecutionOrder(int.MinValue)]
     public partial class BDLauncher : MonoBehaviour
     {
+        /// <summary>
+        /// 在程序集装载完成后尽早触发 AOT 热更预加载。
+        /// Trigger AOT hotfix preloading as early as possible after assemblies are loaded.
+        /// 该入口放在启动器类型上，是为了让 Unity 在玩家构建里更稳定地保留并执行这条 runtime initialize 链路，
+        /// 避免静态辅助类上的初始化方法被裁剪或漏调后，首场景里的热更脚本重新退化成 missing script。
+        /// This entrypoint lives on the launcher type so Unity keeps and executes the runtime-initialize chain more reliably in player builds,
+        /// avoiding cases where static-helper initialize methods are stripped or skipped and first-scene hotfix scripts regress into missing-script placeholders again.
+        /// </summary>
+        [Preserve]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        static private void PreLoadHotfixAssembliesAfterAssembliesLoadedFromLauncher()
+        {
+            ScriptLoderAOT.TryPreLoadHotfixAssembliesAtRuntime("AfterAssembliesLoaded");
+        }
+
+        /// <summary>
+        /// 在场景加载前再次兜底触发 AOT 热更预加载。
+        /// Trigger a fallback AOT hotfix preload right before scene loading.
+        /// 启动器代理与 `ScriptLoderAOT` 自身的 runtime initialize 钩子共享同一个幂等 helper，
+        /// 即使 Unity 在不同构建模式下保留了两边入口，也只会真正加载一次热更程序集。
+        /// The launcher proxy and the `ScriptLoderAOT` runtime-initialize hooks share the same idempotent helper,
+        /// so even if Unity keeps both entrypoints in different build modes the hotfix assemblies still load only once.
+        /// </summary>
+        [Preserve]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static private void PreLoadHotfixAssembliesBeforeSceneLoadFromLauncher()
+        {
+            ScriptLoderAOT.TryPreLoadHotfixAssembliesAtRuntime("BeforeSceneLoad");
+        }
+
         private static readonly string Tag = "Launch";
         /// <summary>
         /// 框架版本号
