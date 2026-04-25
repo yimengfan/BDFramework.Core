@@ -80,6 +80,15 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
+        /// 验证 AOT 运行时加载器会跳过已由 Player 预加载的 preserved 热更程序集。
+        /// Verify that the AOT runtime loader skips preserved hot-update assemblies already loaded by the player.
+        /// </summary>
+        public void ScriptLoderAOT_ShouldSkipAssembliesAlreadyLoadedByPlayer()
+        {
+            FrameworkContractAssertions.VerifyScriptLoderAOTSkipsAssembliesAlreadyLoadedByPlayer();
+        }
+
+        /// <summary>
         /// 验证 WindowPreconfig 宿主测试可以反射解析继承的 GameConfigManager.Inst 静态属性。
         /// Verify that the WindowPreconfig host test can resolve the inherited GameConfigManager.Inst static property through reflection.
         /// </summary>

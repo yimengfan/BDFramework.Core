@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.ResourceMgr;
+using HybridCLR.Editor.Settings;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -95,6 +97,12 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
                     testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
+                (nameof(BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldSkipPreservedAssemblies),
+                    testInstance.BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldSkipPreservedAssemblies),
+                (nameof(HyCLREditorTools_SetBDFramework2HCLRConfig_ShouldPreserveStartupAssemblies),
+                    testInstance.HyCLREditorTools_SetBDFramework2HCLRConfig_ShouldPreserveStartupAssemblies),
+                (nameof(HyCLREditorTools_GetHotfixDLLPaths_ShouldIncludePreservedAssemblies),
+                    testInstance.HyCLREditorTools_GetHotfixDLLPaths_ShouldIncludePreservedAssemblies),
                 (nameof(HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                     testInstance.HyCLREditorTools_GetAotMetadataOutputRoots_ShouldIncludeDevOpsPublishAssetsBeforeStreamingAssets),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
@@ -603,6 +611,124 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
+        /// 验证包体后处理只会补齐非 preserved 的热更 DLL，不会覆盖 Player 已自带的启动程序集。
+        /// Verify that package post-processing copies only non-preserved hotfix DLLs and does not overwrite startup assemblies already shipped with the player.
+        /// 这把“首场景依赖的程序集需要保留在 Player 内，同时又不能被后置 copy 用 ScriptAssemblies 版本覆盖掉”的约束固定下来。
+        /// This locks in the rule that startup-scene assemblies must stay inside the player and must not be overwritten later by ScriptAssemblies copies.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldSkipPreservedAssemblies()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "EnsureHybridClrHotUpdateAssembliesCopiedToManaged",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var originalHotUpdateAssemblies = HybridCLRSettings.Instance.hotUpdateAssemblies;
+            var originalPreserveAssemblies = HybridCLRSettings.Instance.preserveHotUpdateAssemblies;
+            var tempRoot = CreateTempDirectory();
+            var originalProjectRoot = BApplication.ProjectRoot;
+
+            try
+            {
+                HybridCLRSettings.Instance.hotUpdateAssemblies = new[] { "BDFramework.Test" };
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = new[] { "Assembly-CSharp", "BDFramework.Core" };
+
+                var playerDir = Path.Combine(tempRoot, "windows", "com.demo.game");
+                var playerOutputPath = Path.Combine(playerDir, "Launcher.exe");
+                var managedDirectory = Path.Combine(playerDir, "Launcher_Data", "Managed");
+                var libraryDir = Path.Combine(tempRoot, "Library", "ScriptAssemblies");
+                Directory.CreateDirectory(managedDirectory);
+                Directory.CreateDirectory(libraryDir);
+                File.WriteAllText(playerOutputPath, string.Empty);
+                File.WriteAllText(Path.Combine(managedDirectory, "Assembly-CSharp.dll"), "player-assembly-csharp");
+                File.WriteAllText(Path.Combine(managedDirectory, "BDFramework.Core.dll"), "player-bdframework-core");
+                File.WriteAllText(Path.Combine(libraryDir, "BDFramework.Test.dll"), "test-dll");
+
+                SetBApplicationProjectRoot(tempRoot);
+                helperMethod.Invoke(null, new object[] { playerOutputPath });
+
+                Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "Assembly-CSharp.dll")), Is.EqualTo("player-assembly-csharp"));
+                Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "BDFramework.Core.dll")), Is.EqualTo("player-bdframework-core"));
+                Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "BDFramework.Test.dll")), Is.EqualTo("test-dll"));
+            }
+            finally
+            {
+                HybridCLRSettings.Instance.hotUpdateAssemblies = originalHotUpdateAssemblies;
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = originalPreserveAssemblies;
+                SetBApplicationProjectRoot(originalProjectRoot);
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 BDFramework 默认会把首场景依赖的程序集归入 preserved hot update 列表，而不是继续留在可过滤列表中。
+        /// Verify that BDFramework defaults move startup-scene assemblies into the preserved hot-update list instead of leaving them filterable.
+        /// 这样 `FilterHotFixAssemblies` 就不会把这些首包必需程序集从 Player 里剔掉。
+        /// This ensures `FilterHotFixAssemblies` no longer strips those base-player-required assemblies from the player.
+        /// </summary>
+        [Test]
+        public void HyCLREditorTools_SetBDFramework2HCLRConfig_ShouldPreserveStartupAssemblies()
+        {
+            var originalHotUpdateAssemblies = HybridCLRSettings.Instance.hotUpdateAssemblies;
+            var originalPreserveAssemblies = HybridCLRSettings.Instance.preserveHotUpdateAssemblies;
+            var originalPatchAotAssemblies = HybridCLRSettings.Instance.patchAOTAssemblies;
+
+            try
+            {
+                HybridCLRSettings.Instance.hotUpdateAssemblies = new[] { "Assembly-CSharp", "Assembly-CSharp-firstpass", "BDFramework.Core", "BDFramework.Test" };
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = Array.Empty<string>();
+                HybridCLRSettings.Instance.patchAOTAssemblies = Array.Empty<string>();
+
+                BDFramework.Editor.HotfixScript.HyCLREditorTools.SetBDFramework2HCLRConfig();
+
+                CollectionAssert.DoesNotContain(HybridCLRSettings.Instance.hotUpdateAssemblies, "Assembly-CSharp");
+                CollectionAssert.DoesNotContain(HybridCLRSettings.Instance.hotUpdateAssemblies, "Assembly-CSharp-firstpass");
+                CollectionAssert.DoesNotContain(HybridCLRSettings.Instance.hotUpdateAssemblies, "BDFramework.Core");
+                CollectionAssert.Contains(HybridCLRSettings.Instance.hotUpdateAssemblies, "BDFramework.Test");
+
+                CollectionAssert.Contains(HybridCLRSettings.Instance.preserveHotUpdateAssemblies, "Assembly-CSharp");
+                CollectionAssert.Contains(HybridCLRSettings.Instance.preserveHotUpdateAssemblies, "Assembly-CSharp-firstpass");
+                CollectionAssert.Contains(HybridCLRSettings.Instance.preserveHotUpdateAssemblies, "BDFramework.Core");
+            }
+            finally
+            {
+                HybridCLRSettings.Instance.hotUpdateAssemblies = originalHotUpdateAssemblies;
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = originalPreserveAssemblies;
+                HybridCLRSettings.Instance.patchAOTAssemblies = originalPatchAotAssemblies;
+            }
+        }
+
+        /// <summary>
+        /// 验证热更 DLL 路径集合仍会包含 preserved 程序集，确保后续版本更新依然能为这些程序集生成 `.zlua.bytes`。
+        /// Verify that the hotfix DLL path list still includes preserved assemblies so updates can continue generating `.zlua.bytes` for them.
+        /// </summary>
+        [Test]
+        public void HyCLREditorTools_GetHotfixDLLPaths_ShouldIncludePreservedAssemblies()
+        {
+            var originalHotUpdateAssemblies = HybridCLRSettings.Instance.hotUpdateAssemblies;
+            var originalPreserveAssemblies = HybridCLRSettings.Instance.preserveHotUpdateAssemblies;
+
+            try
+            {
+                HybridCLRSettings.Instance.hotUpdateAssemblies = new[] { "BDFramework.Test" };
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = new[] { "Assembly-CSharp", "BDFramework.Core" };
+
+                var hotfixPaths = BDFramework.Editor.HotfixScript.HyCLREditorTools.GetHotfixDLLPaths();
+
+                CollectionAssert.Contains(hotfixPaths, $"{ScriptLoder.HOTFIX_DLL_PATH}/BDFramework.Test.dll.bytes");
+                CollectionAssert.Contains(hotfixPaths, $"{ScriptLoder.HOTFIX_DLL_PATH}/Assembly-CSharp.dll.bytes");
+                CollectionAssert.Contains(hotfixPaths, $"{ScriptLoder.HOTFIX_DLL_PATH}/BDFramework.Core.dll.bytes");
+            }
+            finally
+            {
+                HybridCLRSettings.Instance.hotUpdateAssemblies = originalHotUpdateAssemblies;
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = originalPreserveAssemblies;
+            }
+        }
+
+        /// <summary>
         /// 验证 AOT patch 输出根目录会同时包含 DevOpsPublishAssets 与 StreamingAssets，且保持去重与稳定顺序。
         /// Verify that AOT patch output roots include both DevOpsPublishAssets and StreamingAssets while remaining deduplicated and stable in order.
         /// 这覆盖 Android 母包构建先执行 HybridCLR PreBuild、再用 DevOpsPublishAssets 覆盖 StreamingAssets 的回归场景，
@@ -778,6 +904,22 @@ namespace BDFramework.EditorTest.DevOps
             {
                 Directory.Delete(directoryPath, true);
             }
+        }
+
+        /// <summary>
+        /// 通过反射临时覆盖 BApplication.ProjectRoot，便于纯文件系统测试重定向 Library/ScriptAssemblies。
+        /// Temporarily override BApplication.ProjectRoot via reflection so pure filesystem tests can redirect Library/ScriptAssemblies.
+        /// </summary>
+        private static void SetBApplicationProjectRoot(string projectRoot)
+        {
+            var property = typeof(BApplication).GetProperty(
+                nameof(BApplication.ProjectRoot),
+                BindingFlags.Public | BindingFlags.Static);
+
+            Assert.That(property, Is.Not.Null);
+            var setter = property.GetSetMethod(true);
+            Assert.That(setter, Is.Not.Null);
+            setter.Invoke(null, new object[] { projectRoot });
         }
     }
 }

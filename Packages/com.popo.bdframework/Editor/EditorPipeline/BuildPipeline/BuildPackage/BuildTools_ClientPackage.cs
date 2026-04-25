@@ -12,6 +12,7 @@ using BDFramework.Editor.Inspector.Config;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.RuntimeEditor;
 using BDFramework.ResourceMgr;
+using HybridCLR.Editor;
 using HybridCLR.Editor.Settings;
 using UnityEditor.SceneManagement;
 using Debug = UnityEngine.Debug;
@@ -1049,11 +1050,12 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="playerOutputPath">Player output path, such as Launcher.exe on Windows.</param>
         static private void EnsureHybridClrHotUpdateAssembliesCopiedToManaged(string playerOutputPath)
         {
-            var hybridClrSettings = HybridCLRSettings.Instance;
-            var hotUpdateAssemblies = hybridClrSettings?.hotUpdateAssemblies ?? Array.Empty<string>();
+            var hotUpdateAssemblies = SettingsUtil.HotUpdateAssemblyNamesExcludePreserved
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
             if (hotUpdateAssemblies.Length == 0)
             {
-                Debug.Log("[BuildPackage] 当前没有配置 HybridCLR 热更程序集，跳过 Managed DLL 补齐");
+                Debug.Log("[BuildPackage] 当前没有非 preserved 的 HybridCLR 热更程序集，跳过 Managed DLL 补齐");
                 return;
             }
 

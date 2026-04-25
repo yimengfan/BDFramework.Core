@@ -80,6 +80,13 @@ namespace Runtime.Test.Editor
                         runtimeTest.ScriptLoderAOT_ShouldKeepEarlyPreloadHooks)
                 ),
                 (
+                    nameof(BdLauncherApiTest.ScriptLoderAOT_ShouldSkipAssembliesAlreadyLoadedByPlayer),
+                    () => ExecuteWithSetUp(
+                        runtimeTest,
+                        nameof(BdLauncherApiTest.ScriptLoderAOT_ShouldSkipAssembliesAlreadyLoadedByPlayer),
+                        runtimeTest.ScriptLoderAOT_ShouldSkipAssembliesAlreadyLoadedByPlayer)
+                ),
+                (
                     nameof(BdLauncherApiTest.WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty),
                     () => ExecuteWithSetUp(
                         runtimeTest,

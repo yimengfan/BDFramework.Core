@@ -278,7 +278,7 @@ namespace BDFramework.Editor.HotfixScript
             Directory.CreateDirectory(destDLLRootDir);
          
             //
-            var hotfixDlls = HybridCLRSettings.Instance.hotUpdateAssemblies;
+            var hotfixDlls = GetConfiguredHotfixAssemblyNames();
             foreach (var hd in hotfixDlls)
             {
                 var source = IPath.Combine(sourceDir, hd + ".dll");
@@ -339,6 +339,7 @@ namespace BDFramework.Editor.HotfixScript
             //BD的hotfix dll
             {
                 var list = new List<string>(HybridCLRSettings.Instance.hotUpdateAssemblies ?? Array.Empty<string>());
+                var preserveList = new List<string>(HybridCLRSettings.Instance.preserveHotUpdateAssemblies ?? Array.Empty<string>());
 
                 string[] hotfixAssemblies = new string[]
                 {
@@ -349,13 +350,15 @@ namespace BDFramework.Editor.HotfixScript
 
                 foreach (var hotfix in hotfixAssemblies)
                 {
-                    if (!list.Contains(hotfix))
+                    list.RemoveAll(item => string.Equals(item, hotfix, StringComparison.Ordinal));
+                    if (!preserveList.Contains(hotfix))
                     {
-                        list.Add(hotfix);
+                        preserveList.Add(hotfix);
                     }
                 }
 
                 HybridCLRSettings.Instance.hotUpdateAssemblies = list.ToArray();
+                HybridCLRSettings.Instance.preserveHotUpdateAssemblies = preserveList.ToArray();
             }
 
 
@@ -393,12 +396,27 @@ namespace BDFramework.Editor.HotfixScript
         static public string[] GetHotfixDLLPaths()
         {
             List<string> retlist = new List<string>();
-            foreach (var hotfix in   HybridCLRSettings.Instance.hotUpdateAssemblies)
+            foreach (var hotfix in GetConfiguredHotfixAssemblyNames())
             {
                 var path = $"{ScriptLoder.HOTFIX_DLL_PATH}/{hotfix}.dll.bytes";
                 retlist.Add(path);
             }
             return retlist.ToArray();
+        }
+
+        /// <summary>
+        /// 获取当前应参与热更 DLL 产出与复制的程序集列表。
+        /// Resolve the assemblies that should still participate in hotfix DLL output and copying.
+        /// 保留型热更程序集虽然不再从 Player 里滤掉，但仍然需要产出 `.zlua.bytes`，
+        /// 这样后续版本更新仍能下载并覆盖这些程序集。
+        /// Preserved hot-update assemblies are no longer filtered out of the player,
+        /// but they still need `.zlua.bytes` outputs so later updates can download and replace them.
+        /// </summary>
+        static private string[] GetConfiguredHotfixAssemblyNames()
+        {
+            return SettingsUtil.HotUpdateAssemblyNamesIncludePreserved
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
         }
     }
 }

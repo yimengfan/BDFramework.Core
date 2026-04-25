@@ -344,6 +344,12 @@ namespace BDFramework
 
             foreach (var hotfixDll in orderedHotfixDlls)
             {
+                if (ShouldSkipAlreadyLoadedHotfixAssembly(hotfixDll, AppDomain.CurrentDomain.GetAssemblies()))
+                {
+                    Debug.Log($"【AOT.Load】程序集已由 Player 预加载，跳过重复装载:{hotfixDll}");
+                    continue;
+                }
+
                 byte[] dllBytes;
 
                 // 阶段 1：如果单个热更文件在枚举后被清理或根本未落盘，则记录告警并继续后续程序集，避免整个启动链被一个缺失文件打断。
@@ -365,6 +371,62 @@ namespace BDFramework
 
                 loadHotfixAssembly(hotfixDll, dllBytes);
             }
+        }
+
+        /// <summary>
+        /// 判断给定热更程序集是否已由 Player 预加载。
+        /// Determine whether the given hotfix assembly has already been loaded by the player.
+        /// 当程序集被放入 `preserveHotUpdateAssemblies` 后，它会保留在首包 Player 中；
+        /// 此时若继续对同名 `.zlua.bytes` 执行 `Assembly.Load(byte[])`，会把同名程序集再次加载进 AppDomain，
+        /// 造成首场景脚本与后续反射扫描看到的类型来自不同程序集副本。
+        /// Once an assembly is moved into `preserveHotUpdateAssemblies`, it stays inside the base player;
+        /// continuing to call `Assembly.Load(byte[])` on the same `.zlua.bytes` would load a duplicate assembly into the AppDomain
+        /// so first-scene scripts and later reflection scans observe types from different assembly copies.
+        /// </summary>
+        static private bool ShouldSkipAlreadyLoadedHotfixAssembly(string hotfixDllPath, IEnumerable<Assembly> loadedAssemblies)
+        {
+            if (!TryGetHotfixAssemblySimpleName(hotfixDllPath, out var assemblySimpleName))
+            {
+                return false;
+            }
+
+            foreach (var assembly in loadedAssemblies ?? Array.Empty<Assembly>())
+            {
+                if (assembly == null)
+                {
+                    continue;
+                }
+
+                if (string.Equals(assembly.GetName().Name, assemblySimpleName, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 从热更 DLL 路径中解析程序集短名。
+        /// Extract the simple assembly name from a hotfix DLL path.
+        /// </summary>
+        static private bool TryGetHotfixAssemblySimpleName(string hotfixDllPath, out string assemblySimpleName)
+        {
+            assemblySimpleName = null;
+            var fileName = Path.GetFileName(hotfixDllPath);
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                return false;
+            }
+
+            if (fileName.EndsWith(HOT_DLL_EXTENSION, StringComparison.OrdinalIgnoreCase))
+            {
+                assemblySimpleName = fileName.Substring(0, fileName.Length - HOT_DLL_EXTENSION.Length);
+                return !string.IsNullOrWhiteSpace(assemblySimpleName);
+            }
+
+            assemblySimpleName = Path.GetFileNameWithoutExtension(fileName);
+            return !string.IsNullOrWhiteSpace(assemblySimpleName);
         }
 
         /// <summary>

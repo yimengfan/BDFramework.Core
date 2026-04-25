@@ -183,6 +183,41 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证 AOT 运行时加载器会跳过已由 Player 预加载的 preserved 热更程序集。
+        /// Verify that the AOT runtime loader skips preserved hot-update assemblies already loaded by the player.
+        /// 这覆盖“程序集既保留在首包里，又仍然存在 `.zlua.bytes` 更新产物”时的重复装载风险，
+        /// 避免同名程序集被二次 `Assembly.Load(byte[])` 后在 AppDomain 中出现重复副本。
+        /// This covers the duplicate-load risk when an assembly is both preserved in the base player and still published as a `.zlua.bytes` update payload,
+        /// preventing a second `Assembly.Load(byte[])` from creating duplicate assembly copies inside the AppDomain.
+        /// </summary>
+        public static void VerifyScriptLoderAOTSkipsAssembliesAlreadyLoadedByPlayer()
+        {
+            var helperMethod = typeof(BDFramework.ScriptLoderAOT).GetMethod(
+                "ShouldSkipAlreadyLoadedHotfixAssembly",
+                BindingFlags.NonPublic | BindingFlags.Static);
+
+            EnsureTrue(helperMethod != null, "应该能够找到 ScriptLoderAOT 的重复装载跳过辅助方法。");
+
+            var shouldSkipPreservedAssembly = (bool)helperMethod.Invoke(
+                null,
+                new object[]
+                {
+                    "android/script/hotfix/BDFramework.Core.dll.bytes",
+                    new[] { typeof(BDFramework.ScriptLoder).Assembly }
+                });
+            var shouldSkipUnknownAssembly = (bool)helperMethod.Invoke(
+                null,
+                new object[]
+                {
+                    "android/script/hotfix/BDFramework.Test.dll.bytes",
+                    new[] { typeof(BDFramework.ScriptLoder).Assembly }
+                });
+
+            EnsureTrue(shouldSkipPreservedAssembly, "已由 Player 预加载的程序集应跳过重复 Assembly.Load。");
+            EnsureTrue(!shouldSkipUnknownAssembly, "未预加载的热更程序集不应被误判为已加载。");
+        }
+
+        /// <summary>
         /// 验证 AOT 启动阶段读取 StreamingAssets 时，会先初始化索引，并在可选目录缺失时回退为空集合。
         /// Verify that AOT startup reads initialize the StreamingAssets index first and fall back to an empty set when an optional directory is missing.
         /// </summary>
