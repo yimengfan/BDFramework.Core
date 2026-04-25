@@ -32,6 +32,47 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Unity3D business-layer code must not use reflection.
 - Reflection is allowed only lightly in framework or infrastructure code when needed for compatibility, platform isolation, or controlled extension points, and the reason must be documented in code comments.
 
+## Terminal Async Execution Discipline / 终端异步执行纪律
+
+// 终端异步执行纪律 —— 禁止主动轮询
+// Terminal async execution discipline — NO ACTIVE POLLING
+
+### Forbidden Pattern: Repeated get_terminal_output Polling / 禁止模式：重复调用 get_terminal_output 轮询
+
+**CRITICAL**: When `run_in_terminal` is used with `mode=async` to launch a long-running command (e.g., `run-build --wait`), Copilot **MUST NOT** repeatedly call `get_terminal_output` to poll for progress. This exhausts the context window and freezes the session.
+
+// **关键**：当 `run_in_terminal` 使用 `mode=async` 启动长时间运行的命令（如 `run-build --wait`）时，Copilot **不得** 重复调用 `get_terminal_output` 来轮询进度。这会耗尽上下文窗口并导致会话卡住。
+
+**Correct Pattern / 正确做法**:
+
+1. Use `run_in_terminal` with `mode=async` to launch the command
+   // 使用 `run_in_terminal` 的 `mode=async` 启动命令
+
+2. **WAIT** for the terminal completion notification — do NOT call `get_terminal_output` during the wait
+   // **等待** 终端完成通知 —— 在等待期间不要调用 `get_terminal_output`
+
+3. After receiving the completion notification, call `get_terminal_output` **ONCE** to read the final result
+   // 收到完成通知后，调用 `get_terminal_output` **一次** 读取最终结果
+
+**Why This Matters / 为什么这很重要**:
+
+- The terminal system is designed to notify Copilot when async commands complete
+- Polling with `get_terminal_output` creates a busy-wait loop that consumes context budget
+- A single `run-build --wait` can run for 30+ minutes; polling every few seconds exhausts context in minutes
+- This is a session-killing pattern that must be avoided at all costs
+
+// 终端系统设计为在异步命令完成时通知 Copilot
+// 用 `get_terminal_output` 轮询会创建忙等待循环，消耗上下文预算
+// 单个 `run-build --wait` 可能运行 30+ 分钟；每几秒轮询一次会在几分钟内耗尽上下文
+// 这是一个会杀死会话的模式，必须不惜一切代价避免
+
+**Enforcement / 执行**:
+
+- If you find yourself calling `get_terminal_output` more than once for the same terminal ID without receiving a completion notification, **STOP IMMEDIATELY**
+- This is a violation of workspace policy and indicates a bug in your execution pattern
+// 如果你发现自己在没有收到完成通知的情况下，对同一个终端 ID 调用 `get_terminal_output` 超过一次，**立即停止**
+// 这违反了工作区策略，表明你的执行模式有 bug
+
 
 ## Trust Boundary — Fail Fast vs Graceful Degradation
 
