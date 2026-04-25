@@ -2,6 +2,70 @@
 
 This file is the mandatory workspace instruction set for GitHub Copilot in this repository.
 
+## ⚠️ CRITICAL: TeamCity Build Execution Pattern / 关键：TeamCity 构建执行模式
+
+// ⚠️ 关键规则 —— 违反此规则会导致会话崩溃
+// ⚠️ CRITICAL RULE — Violation causes session collapse
+
+**MANDATORY PATTERN for TeamCity builds / TeamCity 构建必须遵循的模式**:
+
+When triggering TeamCity builds via `run-build --wait` or similar long-running commands:
+// 触发 TeamCity 构建时（`run-build --wait` 或其他长时间运行命令）：
+
+1. **ALWAYS use `run_in_terminal` with `mode=async`**
+   // **必须使用 `run_in_terminal` 的 `mode=async`**
+
+2. **WAIT for the terminal completion notification** — the system will notify you when done
+   // **等待终端完成通知** —— 系统会在完成时通知你
+
+3. **Call `get_terminal_output` ONCE after notification** to read the final result
+   // 收到通知后调用 `get_terminal_output` **一次** 读取最终结果
+
+**FORBIDDEN PATTERNS / 禁止模式**:
+
+- ❌ Using `mode=sync` for builds that take >5 minutes
+  // 禁止对超过 5 分钟的构建使用 `mode=sync`
+
+- ❌ Calling `get_terminal_output` multiple times without receiving completion notification
+  // 禁止在未收到完成通知时多次调用 `get_terminal_output`
+
+- ❌ Using `pylanceRunCodeSnippet` with `time.sleep()` to poll build status
+  // 禁止使用 `pylanceRunCodeSnippet` + `time.sleep()` 轮询构建状态
+
+- ❌ Running shell/python loops that poll TeamCity API every N seconds
+  // 禁止运行每 N 秒轮询 TeamCity API 的 shell/python 循环
+
+**Why This Matters / 为什么这很重要**:
+
+- TeamCity builds can run for 30+ minutes
+- Polling every few seconds exhausts context window in minutes
+- Each poll wastes tokens and creates noise in conversation
+- The terminal notification system is designed to handle this efficiently
+
+// TeamCity 构建可能运行 30+ 分钟
+// 每几秒轮询一次会在几分钟内耗尽上下文窗口
+// 每次轮询都浪费 token 并在对话中制造噪音
+// 终端通知系统设计为高效处理这种情况
+
+**Example: Correct Usage / 示例：正确用法**:
+
+```python
+# ❌ WRONG - sync mode blocks for 30 minutes
+run_in_terminal(command="run-build --wait ...", mode="sync", timeout=1800000)
+
+# ❌ WRONG - async but polls repeatedly
+terminal_id = run_in_terminal(command="run-build --wait ...", mode="async")
+while True:
+    output = get_terminal_output(id=terminal_id)  # DON'T DO THIS!
+    time.sleep(10)
+
+# ✅ CORRECT - async with notification
+terminal_id = run_in_terminal(command="run-build --wait ...", mode="async", timeout=1800000)
+# ... do other work or simply wait for notification ...
+# When notification arrives:
+output = get_terminal_output(id=terminal_id)  # Read ONCE
+```
+
 ## Module Index
 
 - Copilot mandatory rules file: `.github/copilot-instructions.md`
