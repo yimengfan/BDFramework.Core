@@ -52,6 +52,32 @@ namespace BDFramework
             ScriptLoderAOT.TryPreLoadHotfixAssembliesAtRuntime("BeforeSceneLoad");
         }
 
+        /// <summary>
+        /// 无条件保留 Talos.E2E.Runtime 程序集在 IL2CPP 原生二进制中的引用。
+        /// Unconditionally preserve a reference to Talos.E2E.Runtime in the IL2CPP native binary.
+        /// 这是 Layer 6 修复的核心机制：通过在 BDFramework.AOT（一定会被包含在 IL2CPP 构建中）
+        /// 的启动器类型上添加 [RuntimeInitializeOnLoadMethod] 钩子，直接引用 Talos.E2E.E2EAutoInit 类型，
+        /// 确保 IL2CPP 代码生成阶段将 Talos.E2E.Runtime 程序集编译进原生二进制。
+        /// This is the core mechanism of the Layer 6 fix: by adding a [RuntimeInitializeOnLoadMethod] hook
+        /// on the launcher type in BDFramework.AOT (which is always included in IL2CPP builds),
+        /// we directly reference the Talos.E2E.E2EAutoInit type, ensuring IL2CPP code generation
+        /// includes the Talos.E2E.Runtime assembly in the native binary.
+        /// 此方法在所有构建配置（Debug 和 Release）中都生效，
+        /// 不受 [Conditional("DEBUG")] 裁剪影响。
+        /// This method is effective in all build configurations (Debug and Release),
+        /// unaffected by [Conditional("DEBUG")] trimming.
+        /// </summary>
+        [Preserve]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        static private void PreserveE2EAssemblyReferenceForIL2CPP()
+        {
+            // 直接引用 typeof(E2EAutoInit) 确保 IL2CPP 编译器将 Talos.E2E.Runtime
+            // 程序集包含在原生二进制中。方法体故意为空——仅 typeof 引用本身就够了。
+            // Direct typeof reference ensures the IL2CPP compiler includes Talos.E2E.Runtime
+            // assembly in the native binary. Method body intentionally empty — just the typeof reference is sufficient.
+            _ = typeof(Talos.E2E.E2EAutoInit);
+        }
+
         private static readonly string Tag = "Launch";
         /// <summary>
         /// 框架版本号
@@ -214,75 +240,43 @@ namespace BDFramework
         /// 避免 app 启动再依赖 `-talosPort` / `-talosForceE2E` 这类外部传参。
         /// This keeps the startup entrypoint inside BDLauncher instead of hotfix scripts or external launch arguments,
         /// so app startup no longer depends on `-talosPort` / `-talosForceE2E` style external parameters.
-        /// IL2CPP 保留说明：
-        /// E2EAutoInit 自身带有 [RuntimeInitializeOnLoadMethod] 保活入口，
-        /// Unity 引擎在初始化阶段直接调用该方法，从而强制 IL2CPP 将整个类编译到原生二进制。
-        /// 因此在 BDLauncher.Awake() 执行时，E2EAutoInit 类型一定已在 AppDomain 中可被发现。
-        /// IL2CPP preservation note:
-        /// E2EAutoInit itself has a [RuntimeInitializeOnLoadMethod] keep-alive entrypoint,
-        /// so Unity's initialization system calls it directly, forcing IL2CPP to compile the entire class into the native binary.
-        /// Therefore, when BDLauncher.Awake() executes, the E2EAutoInit type is guaranteed to be discoverable in the AppDomain.
+        /// IL2CPP 保留说明（Layer 6 修复）：
+        /// 之前使用 [RuntimeInitializeOnLoadMethod] + 反射查找 E2EAutoInit，
+        /// 但在 IL2CPP 构建中整个 Talos.E2E.Runtime 程序集被裁剪出原生二进制，
+        /// 因为 BDFramework.AOT 没有任何直接代码引用到 Talos.E2E.Runtime 的类型。
+        /// 修复方案：反转程序集依赖方向——
+        /// Talos.E2E.Runtime 不再引用 BDFramework.AOT（实际上没有编译期用到），
+        /// 改为 BDFramework.AOT 引用 Talos.E2E.Runtime，
+        /// 然后在此处使用 typeof(E2EAutoInit) 创建直接编译期引用，
+        /// 确保 IL2CPP 代码生成阶段将 Talos.E2E.Runtime 包含进原生二进制。
+        /// IL2CPP preservation note (Layer 6 fix):
+        /// Previously used [RuntimeInitializeOnLoadMethod] + reflection to find E2EAutoInit,
+        /// but in IL2CPP builds the entire Talos.E2E.Runtime assembly was stripped from the native binary
+        /// because BDFramework.AOT had no direct code reference to any type in Talos.E2E.Runtime.
+        /// Fix: reverse the assembly dependency direction —
+        /// Talos.E2E.Runtime no longer references BDFramework.AOT (it never used it at compile time),
+        /// instead BDFramework.AOT references Talos.E2E.Runtime,
+        /// and here we use typeof(E2EAutoInit) to create a direct compile-time reference,
+        /// ensuring IL2CPP code generation includes Talos.E2E.Runtime in the native binary.
         /// </summary>
         [Conditional("DEBUG")]
         private void TryLaunchTalosE2EInDebugBuild()
         {
             try
             {
-                // E2EAutoInit 有 [RuntimeInitializeOnLoadMethod] 保活入口，
-                // IL2CPP 构建中该类型一定已在 AppDomain 中可被发现。
-                // E2EAutoInit has a [RuntimeInitializeOnLoadMethod] keep-alive entrypoint,
-                // so in IL2CPP builds the type is guaranteed to be discoverable in the AppDomain.
-                var foundType = FindE2EAutoInitType();
+                // 直接引用 typeof(E2EAutoInit) 创建编译期依赖，保证 IL2CPP 不会裁剪该程序集。
+                // Direct typeof reference creates a compile-time dependency, ensuring IL2CPP won't strip the assembly.
+                var e2eType = typeof(Talos.E2E.E2EAutoInit);
 
-                if (foundType == null)
-                {
-                    // 兜底诊断：列出所有含 Talos 的已加载程序集。
-                    // Fallback diagnostic: list all loaded assemblies containing "Talos".
-                    Debug.LogWarning("[TalosE2E] 当前进程未发现 E2EAutoInit（理论上不应到达此处），列出含 Talos 的程序集:");
-                    foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-                    {
-                        if (asm.GetName().Name.Contains("Talos"))
-                        {
-                            var typeCheck = asm.GetType("Talos.E2E.E2EAutoInit");
-                            Debug.Log($"[TalosE2E]   程序集={asm.GetName().Name}, E2EAutoInit类型={(typeCheck != null ? "找到" : "未找到")}");
-                        }
-                    }
-
-                    return;
-                }
-
-                var method = foundType.GetMethod("CheckAndLaunch", BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null);
-                if (method == null)
-                {
-                    Debug.LogWarning("[TalosE2E] 找到 E2EAutoInit 但未找到无参 CheckAndLaunch 入口");
-                    return;
-                }
-
-                method.Invoke(null, null);
-                Debug.Log($"[TalosE2E] BDLauncher 已触发 Debug E2E 自动启动 assembly={foundType.Assembly.GetName().Name}");
+                // 直接调用静态方法，无需反射。
+                // Direct static method call — no reflection needed.
+                Talos.E2E.E2EAutoInit.CheckAndLaunch();
+                Debug.Log($"[TalosE2E] BDLauncher 已触发 Debug E2E 自动启动 assembly={e2eType.Assembly.GetName().Name}");
             }
             catch (Exception ex)
             {
                 Debug.LogWarning($"[TalosE2E] BDLauncher 触发 Debug E2E 自动启动失败（不影响启动）: {ex.Message}");
             }
-        }
-
-        /// <summary>
-        /// 在当前 AppDomain 已加载的程序集中查找 Talos.E2E.E2EAutoInit 类型。
-        /// Search for the Talos.E2E.E2EAutoInit type in currently loaded assemblies of the AppDomain.
-        /// </summary>
-        static private Type FindE2EAutoInitType()
-        {
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                var type = assembly.GetType("Talos.E2E.E2EAutoInit");
-                if (type != null)
-                {
-                    return type;
-                }
-            }
-
-            return null;
         }
         
         

@@ -107,12 +107,12 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
-        /// 验证 E2EAutoInit 具有 IL2CPP 保活入口，防止 IL2CPP 构建中类型被裁剪。
-        /// Verify that E2EAutoInit has an IL2CPP keep-alive entrypoint to prevent type stripping in IL2CPP builds.
+        /// 验证 BDLauncher 持有无条件的 IL2CPP 保活引用，确保 Talos.E2E.Runtime 程序集在所有构建配置中都被包含在原生二进制。
+        /// Verify that BDLauncher holds an unconditional IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary across all build configurations.
         /// </summary>
-        public void E2EAutoInit_ShouldHaveRuntimeInitializeKeepAliveForIL2CPP()
+        public void BDLauncher_ShouldPreserveE2EAssemblyForIL2CPP()
         {
-            FrameworkContractAssertions.VerifyE2EAutoInitHasRuntimeInitializeKeepAliveForIL2CPP();
+            FrameworkContractAssertions.VerifyBDLauncherPreservesE2EAssemblyForIL2CPP();
         }
 
     }

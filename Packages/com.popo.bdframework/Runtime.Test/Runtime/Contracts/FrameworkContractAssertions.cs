@@ -195,28 +195,44 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
-        /// 验证 E2EAutoInit 具有 [RuntimeInitializeOnLoadMethod] 保活入口，确保 IL2CPP 构建中类型不会被裁剪。
-        /// Verify that E2EAutoInit has a [RuntimeInitializeOnLoadMethod] keep-alive entrypoint so IL2CPP builds do not strip the type.
-        /// 在 IL2CPP 构建中，Assembly.Load() 无法工作（没有托管 DLL），
-        /// link.xml 只防止元数据裁剪但不保证代码被编译到原生二进制。
-        /// [RuntimeInitializeOnLoadMethod] 让 Unity 引擎直接引用本类型，强制 IL2CPP 保留整个类。
-        /// In IL2CPP builds, Assembly.Load() does not work (no managed DLLs),
-        /// link.xml only prevents metadata stripping but does not guarantee code is compiled into the native binary.
-        /// [RuntimeInitializeOnLoadMethod] causes Unity's engine to directly reference this type, forcing IL2CPP to preserve the entire class.
+        /// 验证 BDLauncher 持有无条件的 IL2CPP 保活引用，确保 Talos.E2E.Runtime 程序集在所有构建配置中都被包含在原生二进制。
+        /// Verify that BDLauncher holds an unconditional IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary across all build configurations.
+        /// 这是 Layer 6 修复的核心契约：之前使用 [RuntimeInitializeOnLoadMethod] 在 E2EAutoInit 自身保活，
+        /// 但 IL2CPP 代码生成阶段如果整个程序集都没有直接引用，则该属性永远不会被发现。
+        /// 修复方案是在 BDFramework.AOT（一定在 IL2CPP 构建中）的 BDLauncher 上添加
+        /// [RuntimeInitializeOnLoadMethod] 钩子，直接 typeof(E2EAutoInit) 创建编译期引用。
+        /// This is the core contract of the Layer 6 fix: previously used [RuntimeInitializeOnLoadMethod] on E2EAutoInit itself,
+        /// but if the entire assembly has no direct references, IL2CPP code generation never discovers that attribute.
+        /// The fix adds a [RuntimeInitializeOnLoadMethod] hook on BDLauncher in BDFramework.AOT (always in IL2CPP builds),
+        /// using typeof(E2EAutoInit) to create a compile-time reference.
         /// </summary>
-        public static void VerifyE2EAutoInitHasRuntimeInitializeKeepAliveForIL2CPP()
+        public static void VerifyBDLauncherPreservesE2EAssemblyForIL2CPP()
         {
-            var keepAliveMethod = typeof(Talos.E2E.E2EAutoInit).GetMethod(
-                "EnsureTypePreservedInIL2CPP",
+            var preserveMethod = typeof(BDFramework.BDLauncher).GetMethod(
+                "PreserveE2EAssemblyReferenceForIL2CPP",
                 BindingFlags.NonPublic | BindingFlags.Static);
 
-            EnsureTrue(keepAliveMethod != null, "应该能够找到 E2EAutoInit.EnsureTypePreservedInIL2CPP 保活方法。");
+            EnsureTrue(preserveMethod != null, "应该能够找到 BDLauncher.PreserveE2EAssemblyReferenceForIL2CPP 保活方法。");
             EnsureTrue(
-                keepAliveMethod.GetCustomAttributes(typeof(UnityEngine.RuntimeInitializeOnLoadMethodAttribute), false).Any(),
-                "E2EAutoInit.EnsureTypePreservedInIL2CPP 必须带有 [RuntimeInitializeOnLoadMethod] 属性，确保 IL2CPP 构建中类型不被裁剪。");
+                preserveMethod.GetCustomAttributes(typeof(UnityEngine.RuntimeInitializeOnLoadMethodAttribute), false).Any(),
+                "PreserveE2EAssemblyReferenceForIL2CPP 必须带有 [RuntimeInitializeOnLoadMethod] 属性，确保 Unity 初始化系统调用该方法。");
             EnsureTrue(
-                keepAliveMethod.GetCustomAttributes(typeof(UnityEngine.Scripting.PreserveAttribute), false).Any(),
-                "E2EAutoInit.EnsureTypePreservedInIL2CPP 必须带有 [Preserve] 属性，防止 IL2CPP 链接器裁剪本方法。");
+                preserveMethod.GetCustomAttributes(typeof(UnityEngine.Scripting.PreserveAttribute), false).Any(),
+                "PreserveE2EAssemblyReferenceForIL2CPP 必须带有 [Preserve] 属性，防止 IL2CPP 链接器裁剪本方法。");
+
+            // 验证 BDFramework.AOT 引用了 Talos.E2E.Runtime 程序集（反转后的依赖方向）。
+            // Verify BDFramework.AOT references Talos.E2E.Runtime assembly (reversed dependency direction).
+            var aotAssembly = typeof(BDFramework.BDLauncher).Assembly;
+            var talosE2EFound = false;
+            foreach (var refName in aotAssembly.GetReferencedAssemblies())
+            {
+                if (string.Equals(refName.Name, "Talos.E2E.Runtime", StringComparison.Ordinal))
+                {
+                    talosE2EFound = true;
+                    break;
+                }
+            }
+            EnsureTrue(talosE2EFound, "BDFramework.AOT 必须引用 Talos.E2E.Runtime 程序集（Layer 6 修复：反转依赖方向）。");
         }
 
         /// <summary>
