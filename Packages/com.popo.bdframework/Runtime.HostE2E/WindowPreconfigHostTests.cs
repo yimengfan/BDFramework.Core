@@ -313,6 +313,12 @@ namespace BDFramework.HostE2E
                 var property = currentType.GetProperty(
                     propertyName,
                     BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                if (property == null)
+                {
+                    property = currentType
+                        .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                        .FirstOrDefault(candidate => string.Equals(candidate.Name, propertyName, StringComparison.Ordinal));
+                }
                 if (property != null)
                 {
                     return property;

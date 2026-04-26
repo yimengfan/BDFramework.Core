@@ -96,8 +96,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
                     testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
-                (nameof(BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldSkipPreservedAssemblies),
-                    testInstance.BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldSkipPreservedAssemblies),
+                (nameof(BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldBackfillMissingPreservedAssembliesWithoutOverwritingExistingOnes),
+                    testInstance.BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldBackfillMissingPreservedAssembliesWithoutOverwritingExistingOnes),
                 (nameof(HyCLREditorTools_SetBDFramework2HCLRConfig_ShouldPreserveStartupAssemblies),
                     testInstance.HyCLREditorTools_SetBDFramework2HCLRConfig_ShouldPreserveStartupAssemblies),
                 (nameof(HyCLREditorTools_GetHotfixDLLPaths_ShouldIncludePreservedAssemblies),
@@ -610,13 +610,13 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
-        /// 验证包体后处理只会补齐非 preserved 的热更 DLL，不会覆盖 Player 已自带的启动程序集。
-        /// Verify that package post-processing copies only non-preserved hotfix DLLs and does not overwrite startup assemblies already shipped with the player.
-        /// 这把“首场景依赖的程序集需要保留在 Player 内，同时又不能被后置 copy 用 ScriptAssemblies 版本覆盖掉”的约束固定下来。
-        /// This locks in the rule that startup-scene assemblies must stay inside the player and must not be overwritten later by ScriptAssemblies copies.
+        /// 验证包体后处理会在 preserved DLL 缺失时补齐，但不会覆盖 Player 已自带的启动程序集。
+        /// Verify that package post-processing backfills missing preserved DLLs but does not overwrite startup assemblies already shipped with the player.
+        /// 这把“首场景依赖的程序集需要保留在 Player 内，同时又要在保留失败时有 Managed 目录兜底”的约束固定下来。
+        /// This locks in the rule that startup-scene assemblies should stay inside the player while still getting a Managed-directory fallback when preservation fails.
         /// </summary>
         [Test]
-        public void BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldSkipPreservedAssemblies()
+        public void BuildTools_ClientPackage_EnsureHybridClrHotUpdateAssembliesCopiedToManaged_ShouldBackfillMissingPreservedAssembliesWithoutOverwritingExistingOnes()
         {
             var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
                 "EnsureHybridClrHotUpdateAssembliesCopiedToManaged",
@@ -642,14 +642,15 @@ namespace BDFramework.EditorTest.DevOps
                 Directory.CreateDirectory(libraryDir);
                 File.WriteAllText(playerOutputPath, string.Empty);
                 File.WriteAllText(Path.Combine(managedDirectory, "Assembly-CSharp.dll"), "player-assembly-csharp");
-                File.WriteAllText(Path.Combine(managedDirectory, "BDFramework.Core.dll"), "player-bdframework-core");
+                File.WriteAllText(Path.Combine(libraryDir, "Assembly-CSharp.dll"), "script-assembly-csharp");
+                File.WriteAllText(Path.Combine(libraryDir, "BDFramework.Core.dll"), "script-bdframework-core");
                 File.WriteAllText(Path.Combine(libraryDir, "BDFramework.Test.dll"), "test-dll");
 
                 SetBApplicationProjectRoot(tempRoot);
                 helperMethod.Invoke(null, new object[] { playerOutputPath });
 
                 Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "Assembly-CSharp.dll")), Is.EqualTo("player-assembly-csharp"));
-                Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "BDFramework.Core.dll")), Is.EqualTo("player-bdframework-core"));
+                Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "BDFramework.Core.dll")), Is.EqualTo("script-bdframework-core"));
                 Assert.That(File.ReadAllText(Path.Combine(managedDirectory, "BDFramework.Test.dll")), Is.EqualTo("test-dll"));
             }
             finally

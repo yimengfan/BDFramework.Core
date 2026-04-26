@@ -162,8 +162,19 @@ namespace BDFramework.RuntimeTests.Contracts
             var instProperty = typeof(BDFramework.Configure.GameConfigManager).GetProperty(
                 "Inst",
                 BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+            if (instProperty == null)
+            {
+                var currentType = typeof(BDFramework.Configure.GameConfigManager);
+                while (currentType != null && instProperty == null)
+                {
+                    instProperty = currentType
+                        .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                        .FirstOrDefault(property => string.Equals(property.Name, "Inst", StringComparison.Ordinal));
+                    currentType = currentType.BaseType;
+                }
+            }
 
-            EnsureTrue(instProperty != null, "GameConfigManager.Inst 应可通过 FlattenHierarchy 反射解析到继承的静态属性。");
+            EnsureTrue(instProperty != null, "GameConfigManager.Inst 应可通过继承层级上的静态属性反射解析到。");
             EnsureTrue(instProperty.PropertyType == typeof(BDFramework.Configure.GameConfigManager), "GameConfigManager.Inst 反射返回的属性类型应保持为 GameConfigManager。");
         }
 

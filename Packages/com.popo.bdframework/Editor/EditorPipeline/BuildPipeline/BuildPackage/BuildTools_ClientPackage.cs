@@ -1050,17 +1050,24 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="playerOutputPath">Player output path, such as Launcher.exe on Windows.</param>
         static private void EnsureHybridClrHotUpdateAssembliesCopiedToManaged(string playerOutputPath)
         {
-            var hotUpdateAssemblies = SettingsUtil.HotUpdateAssemblyNamesExcludePreserved
+            var allConfiguredHotUpdateAssemblies = SettingsUtil.HotUpdateAssemblyNamesIncludePreserved
                 .Distinct(StringComparer.Ordinal)
                 .ToArray();
-            if (hotUpdateAssemblies.Length == 0)
+            if (allConfiguredHotUpdateAssemblies.Length == 0)
             {
-                Debug.Log("[BuildPackage] 当前没有非 preserved 的 HybridCLR 热更程序集，跳过 Managed DLL 补齐");
+                Debug.Log("[BuildPackage] 当前没有可补齐到 Managed 的 HybridCLR 热更程序集");
                 return;
             }
 
+            var nonPreservedHotUpdateAssemblies = SettingsUtil.HotUpdateAssemblyNamesExcludePreserved
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+            var preservedHotUpdateAssemblies = allConfiguredHotUpdateAssemblies
+                .Except(nonPreservedHotUpdateAssemblies, StringComparer.Ordinal)
+                .ToArray();
             var scriptAssembliesRoot = Path.GetFullPath(Path.Combine(BApplication.ProjectRoot, "Library", "ScriptAssemblies"));
-            CopyHybridClrHotUpdateAssembliesToManagedDirectory(playerOutputPath, hotUpdateAssemblies, scriptAssembliesRoot);
+            CopyHybridClrHotUpdateAssembliesToManagedDirectory(playerOutputPath, nonPreservedHotUpdateAssemblies, scriptAssembliesRoot);
+            EnsurePreservedHybridClrHotUpdateAssembliesExistInManaged(playerOutputPath, preservedHotUpdateAssemblies, scriptAssembliesRoot);
         }
 
         /// <summary>
@@ -1111,6 +1118,49 @@ namespace BDFramework.Editor.BuildPipeline
                 var destinationPath = Path.Combine(managedDirectory, $"{assemblyName}.dll");
                 FileHelper.Copy(sourcePath, destinationPath, true);
                 Debug.Log($"[BuildPackage] 已补齐 HybridCLR 热更 DLL 到 Managed: {sourcePath} => {destinationPath}");
+            }
+        }
+
+        /// <summary>
+        /// 确保 preserved 热更程序集至少在 Managed 目录中存在一份可解析的 DLL 实体。
+        /// Ensure preserved hot-update assemblies still have a resolvable DLL present in the Managed directory.
+        /// 某些 Windows 构建链路虽然声明了 preserved hot update assemblies，
+        /// 但实际产物仍可能缺少对应的 Managed DLL，导致首场景脚本在 Unity 启动时直接退化成 missing script。
+        /// Some Windows build paths declare preserved hot-update assemblies,
+        /// but the actual player output can still miss the matching Managed DLL and cause startup-scene scripts to degrade into missing scripts during Unity boot.
+        /// 这里仅在目标 DLL 缺失时补齐，不覆盖 Player 已自带的 preserved 程序集副本。
+        /// This only backfills missing DLLs and does not overwrite preserved assemblies already shipped with the player.
+        /// </summary>
+        static private void EnsurePreservedHybridClrHotUpdateAssembliesExistInManaged(
+            string playerOutputPath,
+            IEnumerable<string> preservedHotUpdateAssemblies,
+            string scriptAssembliesRoot)
+        {
+            if (preservedHotUpdateAssemblies == null)
+            {
+                return;
+            }
+
+            var managedDirectory = ResolveManagedDirectoryForPlayer(playerOutputPath);
+            Directory.CreateDirectory(managedDirectory);
+
+            foreach (var assemblyName in preservedHotUpdateAssemblies.Where(name => !string.IsNullOrWhiteSpace(name)).Distinct(StringComparer.Ordinal))
+            {
+                var destinationPath = Path.Combine(managedDirectory, $"{assemblyName}.dll");
+                if (File.Exists(destinationPath))
+                {
+                    Debug.Log($"[BuildPackage] preserved HybridCLR 热更 DLL 已存在，跳过回填: {destinationPath}");
+                    continue;
+                }
+
+                var sourcePath = Path.Combine(scriptAssembliesRoot, $"{assemblyName}.dll");
+                if (!File.Exists(sourcePath))
+                {
+                    throw new FileNotFoundException($"缺少 preserved 热更程序集源文件: {sourcePath}", sourcePath);
+                }
+
+                FileHelper.Copy(sourcePath, destinationPath, true);
+                Debug.Log($"[BuildPackage] 已回填 preserved HybridCLR 热更 DLL 到 Managed: {sourcePath} => {destinationPath}");
             }
         }
 
