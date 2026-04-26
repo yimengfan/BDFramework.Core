@@ -10,4 +10,16 @@
     to fail when looking up the type via reflection.
   -->
   <assembly fullname="Talos.E2E.Runtime" preserve="all"/>
+  <!--
+    BDFramework.Test 程序集包含宿主侧 E2E 测试用例（LaunchTests、AssetTraversalTests 等），
+    这些测试用例仅通过 E2ETestRunner 反射扫描发现，无直接代码引用。
+    IL2CPP linker 在无 preserve 声明时会裁剪 E2ETestAttribute 自定义属性元数据，
+    导致 GetCustomAttribute<E2ETestAttribute>() 返回 null，测试发现结果为 0。
+    
+    BDFramework.Test assembly contains host-side E2E test cases (LaunchTests, AssetTraversalTests, etc.)
+    that are discovered exclusively via E2ETestRunner reflection scanning with no direct code references.
+    Without a preserve declaration, the IL2CPP linker strips E2ETestAttribute custom attribute metadata,
+    causing GetCustomAttribute<E2ETestAttribute>() to return null and test discovery to yield 0 results.
+  -->
+  <assembly fullname="BDFramework.Test" preserve="all"/>
 </linker>

@@ -149,6 +149,7 @@ namespace Talos.E2E
         static private void ScanHotfixAssemblies()
         {
             int beforeCount = DiscoveredTests.Count;
+            var candidateNames = new List<string>();
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
@@ -157,9 +158,10 @@ namespace Talos.E2E
                 if (ShouldSkipAssemblyScan(name)) continue;
                 if (string.Equals(name, selfAssemblyName, StringComparison.Ordinal)) continue;
 
+                candidateNames.Add(name);
                 ScanAssembly(assembly);
             }
-            UnityEngine.Debug.Log($"[TalosE2E] AppDomain 宿主程序集扫描完成: 新增 {DiscoveredTests.Count - beforeCount} 个测试用例");
+            UnityEngine.Debug.Log($"[TalosE2E] AppDomain 宿主程序集扫描完成: 扫描了 {candidateNames.Count} 个候选程序集 [{string.Join(", ", candidateNames)}]，新增 {DiscoveredTests.Count - beforeCount} 个测试用例");
 
             if (DiscoveredTests.Count == beforeCount)
             {
@@ -272,7 +274,9 @@ namespace Talos.E2E
 
         static private void ScanAssembly(Assembly assembly)
         {
+            var asmName = assembly.GetName().Name;
             var scannedTypeNames = new HashSet<string>(StringComparer.Ordinal);
+            int beforeCount = DiscoveredTests.Count;
             try
             {
                 ScanCandidateTypes(assembly.GetTypes(), scannedTypeNames);
@@ -280,12 +284,12 @@ namespace Talos.E2E
             catch (ReflectionTypeLoadException ex)
             {
                 // 某些类型加载失败时，处理已成功加载的类型
-                UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {assembly.GetName().Name} 部分类型加载失败，跳过失败类型");
+                UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {asmName} 部分类型加载失败，跳过失败类型");
                 if (ex.LoaderExceptions != null)
                 {
                     foreach (var loaderException in ex.LoaderExceptions.Where(item => item != null).Take(3))
                     {
-                        UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {assembly.GetName().Name} 类型加载异常: {loaderException.Message}");
+                        UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {asmName} 类型加载异常: {loaderException.Message}");
                     }
                 }
 
@@ -298,7 +302,13 @@ namespace Talos.E2E
             }
             catch (Exception ex)
             {
-                UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {assembly.GetName().Name} 公共类型补扫失败: {ex.Message}");
+                UnityEngine.Debug.LogWarning($"[TalosE2E] 程序集 {asmName} 公共类型补扫失败: {ex.Message}");
+            }
+
+            var found = DiscoveredTests.Count - beforeCount;
+            if (found > 0)
+            {
+                UnityEngine.Debug.Log($"[TalosE2E] 程序集 {asmName} 发现 {found} 个测试用例（共扫描 {scannedTypeNames.Count} 个类型）");
             }
         }
 
