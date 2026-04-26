@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Talos.E2E.Transport;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -110,6 +111,24 @@ namespace Talos.E2E
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 解析当前参数快照里的 Talos TCP 端口。
+        /// Resolve the Talos TCP port from the current argument snapshot.
+        /// 若启动参数中提供了合法的 `-talosPort`，则返回该值；否则回退到调用方提供的默认端口。
+        /// If a valid `-talosPort` is present, return it; otherwise fall back to the caller-provided default port.
+        /// </summary>
+        public static int ResolveTalosPort(IEnumerable<string> args, int defaultPort = Protocol.DefaultPort)
+        {
+            if (TryGetArgumentValue(args, "-talosPort", out var customPortText) &&
+                int.TryParse(customPortText, out var customPort) &&
+                customPort > 0)
+            {
+                return customPort;
+            }
+
+            return defaultPort;
         }
 
         /// <summary>

@@ -66,6 +66,10 @@ DEFAULT_GET_RETRY_MAX_DELAY_SECONDS = 5
 DEFAULT_NODE_VERSION = "20.18.0"
 DEFAULT_NODE_DOWNLOAD_TIMEOUT_SECONDS = 300
 PREPARED_PACKAGE_PATH_PARAMETER = "talos.e2e.local.package.path"
+UNITY_PORT_PARAMETER = "talos.e2e.unity.port"
+DEFAULT_UNITY_PORT = 10002
+TEAMCITY_ISOLATED_UNITY_PORT_BASE = 20000
+TEAMCITY_ISOLATED_UNITY_PORT_RANGE = 20000
 WINDOWS_SKIPPED_PACKAGE_MARKERS = (
     "_BurstDebugInformation_DoNotShip",
     "不要发布",
@@ -867,6 +871,26 @@ def emit_teamcity_parameter(name: str, value: str) -> None:
     )
 
 
+def resolve_effective_unity_port(raw_unity_port: int, current_build_id: str | None) -> int:
+    """为当前 TeamCity build 选择隔离后的 Unity TCP 端口。
+
+    Resolve an isolated Unity TCP port for the current TeamCity build.
+    当调用方已经显式传入非默认端口时保持原值；仅在沿用默认 10002 且存在当前 build id 时，
+    才派生一个按 build 隔离的端口，避免旧 Player 残留的 Talos TCP 服务继续复用共享端口。
+    Keep the caller-provided port when it is already non-default; only derive a build-specific port when
+    the run still uses the shared default 10002 and a current build id is available, preventing stale Player
+    Talos TCP services from reusing the shared port.
+    """
+    if raw_unity_port != DEFAULT_UNITY_PORT:
+        return raw_unity_port
+
+    normalized_build_id = normalize_optional_value(current_build_id)
+    if not normalized_build_id or not normalized_build_id.isdigit():
+        return raw_unity_port
+
+    return TEAMCITY_ISOLATED_UNITY_PORT_BASE + (int(normalized_build_id) % TEAMCITY_ISOLATED_UNITY_PORT_RANGE)
+
+
 def load_teamcity_build_properties() -> dict[str, str]:
     """读取 TeamCity 当前构建的 properties 文件，提取生成 artifact 链接所需字段。"""
     properties_path = normalize_optional_value(os.environ.get("TEAMCITY_BUILD_PROPERTIES_FILE"))
@@ -1408,6 +1432,7 @@ def main() -> int:
     args.build_debug = normalize_bool_flag(args.build_debug)
     selected_phase = normalize_optional_value(getattr(args, "phase", None)) or "all"
     current_build_id = normalize_optional_value(resolve_current_teamcity_build_context().build_id)
+    args.unity_port = resolve_effective_unity_port(int(args.unity_port), current_build_id)
 
     print(f"{LOG_PREFIX} 测试目的=验证 Talos 远端母包构建、包体下载与 Playwright E2E 工具链闭环")
     print(f"{LOG_PREFIX} 实现手段=复用或排队 TeamCity 母包构建 -> 下载文件服务器包体 -> 调用 tools/{profile.tool_script_name}")
@@ -1424,6 +1449,7 @@ def main() -> int:
         print(f"{LOG_PREFIX} adbConnectTargets={adb_connect_targets_log}")
     if current_build_id:
         print(f"{LOG_PREFIX} currentBuildId={current_build_id}")
+    print(f"{LOG_PREFIX} unityPort={args.unity_port}")
     print(f"{LOG_PREFIX} testFile={normalize_optional_value(args.test_file) or '<all>'}")
 
     if selected_phase == "run" and not normalize_optional_value(args.package_path):
@@ -1444,6 +1470,7 @@ def main() -> int:
     print(f"{LOG_PREFIX} ===== Phase 3/6: resolve package source =====")
     package_path = resolve_local_package_path(args, profile, current_build_id=current_build_id)
     emit_teamcity_parameter(PREPARED_PACKAGE_PATH_PARAMETER, str(package_path))
+    emit_teamcity_parameter(UNITY_PORT_PARAMETER, str(args.unity_port))
 
     if selected_phase == "prepare":
         print(f"{LOG_PREFIX} ===== Phase 6/6: finish =====")

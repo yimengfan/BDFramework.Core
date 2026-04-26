@@ -500,6 +500,16 @@ def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch:
     ]
 
 
+def test_resolve_effective_unity_port_uses_build_isolated_port_for_default_value() -> None:
+    """验证默认 Unity 端口会按当前 TeamCity build id 派生隔离端口。"""
+    assert runner.resolve_effective_unity_port(10002, "1130") == 21130
+
+
+def test_resolve_effective_unity_port_keeps_explicit_non_default_port() -> None:
+    """验证调用方显式指定非默认端口时，runner 保持原值不改写。"""
+    assert runner.resolve_effective_unity_port(13002, "1130") == 13002
+
+
 def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """验证 TeamCity runner 会逐行转发平台工具输出，避免长时间等待时主日志空白。"""
 
@@ -1068,8 +1078,94 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
     assert exit_code == 0
     assert calls == ["reset_package_workspace"]
     assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
+    assert emitted_parameters[runner.UNITY_PORT_PARAMETER] == "20901"
     assert "run_test_tool" not in calls
     assert "emit_playwright_report_metadata" not in calls
+
+
+def test_main_run_phase_uses_build_isolated_unity_port_for_platform_tool(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """验证 run 阶段会把按 build 隔离后的 Unity 端口传给平台工具并回写 TeamCity 参数。"""
+    prepared_path = tmp_path / "prepared" / "Launcher.exe"
+    prepared_path.parent.mkdir(parents=True)
+    prepared_path.write_text("stub", encoding="utf-8")
+    emitted_parameters: dict[str, str] = {}
+    captured: dict[str, object] = {}
+
+    class FakeArgs:
+        """模拟 run 阶段的最小参数集合。"""
+
+        phase = "run"
+        platform = "windows"
+        client_version = "0.1"
+        build_debug = "true"
+        package_build_id = ""
+        package_build_number = ""
+        package_build_extra_args = ""
+        package_build_type_id = ""
+        package_path = str(prepared_path)
+        branch = "v4/v-4.0.0"
+        config = None
+        file_server_url = None
+        file_server_token = None
+        test_file = "tests/testFrameworkBusiness-e2e.spec.ts"
+        unity_host = "127.0.0.1"
+        unity_port = 10002
+        adb_serial = ""
+        adb_connect_targets = ""
+        start_mumu = ""
+        mumu_exe_path = ""
+        emulator_type = ""
+        timeout_seconds = 5400
+        poll_interval_seconds = 10
+        download_timeout_seconds = 600
+
+    monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
+    monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(runner, "reset_report_outputs", lambda: None)
+    monkeypatch.setattr(runner, "reset_package_workspace", lambda: None)
+    monkeypatch.setattr(
+        runner,
+        "resolve_current_teamcity_build_context",
+        lambda: runner.TeamCityCurrentBuildContext(
+            base_url="http://teamcity.local",
+            build_id="1130",
+            build_type_id="BDFrameworkCore_TalosAIStep02FrameworkBusinessTest",
+            build_url=None,
+        ),
+    )
+    monkeypatch.setattr(
+        runner,
+        "resolve_local_package_path",
+        lambda _args, _profile, current_build_id=None: prepared_path,
+    )
+    monkeypatch.setattr(
+        runner,
+        "emit_teamcity_parameter",
+        lambda name, value: emitted_parameters.__setitem__(name, value),
+    )
+    monkeypatch.setattr(
+        runner,
+        "run_test_tool",
+        lambda _profile, _package_path, args: captured.update(
+            {
+                "package_path": _package_path,
+                "unity_port": args.unity_port,
+                "test_file": args.test_file,
+            }
+        ) or 0,
+    )
+    monkeypatch.setattr(runner, "emit_playwright_report_metadata", lambda **_kwargs: None)
+
+    exit_code = runner.main()
+
+    assert exit_code == 0
+    assert captured["package_path"] == prepared_path
+    assert captured["unity_port"] == 21130
+    assert captured["test_file"] == "tests/testFrameworkBusiness-e2e.spec.ts"
+    assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
+    assert emitted_parameters[runner.UNITY_PORT_PARAMETER] == "21130"
 
 
 def test_main_run_phase_requires_prepared_package_path(monkeypatch: pytest.MonkeyPatch) -> None:

@@ -88,7 +88,8 @@ def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
     assert '[System.Diagnostics.Conditional("DEBUG")]' not in script_loader_content
     assert '[Conditional("ENABLE_E2ETEST")]' not in script_loader_content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in script_loader_content
-    assert "method.Invoke(null, new object[] { 10002 });" in script_loader_content
+    assert "Talos.E2E.RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs)" in script_loader_content
+    assert "method.Invoke(null, new object[] { talosPort });" in script_loader_content
 
 
 def test_bdframework_script_loader_prewarms_bapplication_on_main_thread() -> None:
@@ -165,10 +166,10 @@ def test_policy_docs_forbid_host_and_business_workflow_composition_inside_talos(
     rules_content = E2E_PACKAGE_RULES.read_text(encoding="utf-8")
     instructions_content = E2E_PACKAGE_INSTRUCTIONS.read_text(encoding="utf-8")
 
-    assert "Talos E2E is a capability package, not a host workflow package." in rules_content
-    assert "Do not compose host-owned startup, initialization, scene sequencing, executeMethod wrappers, or fallback recovery workflows inside this package." in rules_content
-    assert "Do not add business-party multi-step scenario scripts, launch recipes, or one-off recovery logic under `Playwright~/`, `Editor/`, or `Runtime/` just to make a single project pass." in rules_content
+    assert "Talos E2E 是能力包，不是宿主工作流包。" in rules_content
+    assert "不要在该包内编排宿主启动、框架初始化、资源/数据库准备、场景顺序、executeMethod wrapper 或兜底恢复流程。" in rules_content
+    assert "不要在这里加入业务方专属测试、配置、启动配方或硬编码逻辑。" in rules_content
 
-    assert "Talos E2E is a capability package, not a host workflow package." in instructions_content
-    assert "If a scenario depends on project or business scenes, config, assets, manager initialization, or launch order, define that flow in the host or business package" in instructions_content
-    assert "Do not add business-party scenario scripts, one-project launch recipes, or host-only acceptance choreography under `Playwright~/` just to help another package pass." in instructions_content
+    assert "本文件只作为 `Packages/com.talosai.e2e/**` 的 Copilot applyTo 触发入口。" in instructions_content
+    assert "Packages/com.talosai.e2e/AGENTS.md" in instructions_content
+    assert "不要在本文件重复 Talos 模块规则。" in instructions_content

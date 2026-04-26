@@ -65,7 +65,8 @@ public class WindowPreconfig : MonoBehaviour
         Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
 
         var commandLineArgs = RuntimeLaunchArguments.ResolveCurrentProcessArguments();
-        if (ForcedModeStartupFallback.TryLaunchFromForcedMode(commandLineArgs, 10002, E2EAutoInit.CheckAndLaunch))
+        var talosPort = RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs);
+        if (ForcedModeStartupFallback.TryLaunchFromForcedMode(commandLineArgs, talosPort, E2EAutoInit.CheckAndLaunch))
         {
             // 显式根引用宿主侧 launch 与 BaseFlow 套件类型，避免 Player 端只保留 launch 类型而裁剪新增的基础系统入口。
             // Explicitly root the host launch and BaseFlow suite types so player builds do not keep only the launch type while stripping the added foundational entrypoints.

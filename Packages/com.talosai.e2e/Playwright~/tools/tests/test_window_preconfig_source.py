@@ -9,8 +9,10 @@ Coverage:
 2. Host code must explicitly root the host-owned launch/BaseFlow test assemblies, but it must not invoke E2EAutoInit.CheckAndLaunch again from WindowPreconfig, otherwise it races with the real ScriptLoder.Init startup path and reuses the same port.
 3. 该界面不能再因为 Talos 参数自动跳过，否则无法覆盖预配置界面的 UI 测试内容。
 3. The screen must not auto-skip because of Talos flags, otherwise the preconfiguration UI tests lose coverage.
-4. 宿主侧 WindowPreconfig 测试需要对 Player 启动竞态保持稳健，包含场景对象补扫、继承静态属性回退和正确的 ServerConfigProcessor 类型名。
-4. The host-side WindowPreconfig tests must stay robust against Player startup races, including scene-object fallback discovery, inherited static-property fallback, and the correct ServerConfigProcessor type name.
+4. WindowPreconfig 强制模式桥接必须复用运行时解析出的 Talos 端口，不能再硬编码共享默认端口。
+4. The WindowPreconfig forced-mode bridge must reuse the runtime-resolved Talos port instead of hardcoding the shared default port.
+5. 宿主侧 WindowPreconfig 测试需要对 Player 启动竞态保持稳健，包含场景对象补扫、继承静态属性回退和正确的 ServerConfigProcessor 类型名。
+5. The host-side WindowPreconfig tests must stay robust against Player startup races, including scene-object fallback discovery, inherited static-property fallback, and the correct ServerConfigProcessor type name.
 """
 
 from __future__ import annotations
@@ -30,6 +32,7 @@ def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None
     content = WINDOW_PRECONFIG_PATH.read_text(encoding="utf-8")
 
     assert "RuntimeLaunchArguments.ResolveCurrentProcessArguments()" in content
+    assert "RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs)" in content
     assert "ForcedModeStartupFallback.TryLaunchFromForcedMode" in content
     assert "当前处于 -talosForceE2E 模式" in content
     assert "typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly" in content
@@ -38,6 +41,7 @@ def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None
     assert "ScriptLoder.Init 仍是首选启动入口" in content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in content
     assert "宿主已显式调用 E2EAutoInit.CheckAndLaunch" not in content
+    assert "ForcedModeStartupFallback.TryLaunchFromForcedMode(commandLineArgs, 10002" not in content
     assert "ShouldAutoLaunchForTalosE2E" not in content
     assert "跳过预配置界面并直接进入框架启动" not in content
 

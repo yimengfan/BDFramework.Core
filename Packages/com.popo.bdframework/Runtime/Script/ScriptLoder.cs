@@ -197,6 +197,8 @@ namespace BDFramework
             try
             {
                 UnityEngine.Debug.Log("[TalosE2E] ScriptLoder.Init 阶段开始检测 E2E 自动启动入口");
+                var commandLineArgs = Talos.E2E.RuntimeLaunchArguments.ResolveCurrentProcessArguments();
+                var talosPort = Talos.E2E.RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs);
 
                 // 查找 Talos.E2E 程序集中的 E2EAutoInit 类型
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -215,8 +217,8 @@ namespace BDFramework
                         return;
                     }
 
-                    UnityEngine.Debug.Log($"[TalosE2E] 已解析自动启动入口 assembly={assembly.GetName().Name} port=10002");
-                    method.Invoke(null, new object[] { 10002 });
+                    UnityEngine.Debug.Log($"[TalosE2E] 已解析自动启动入口 assembly={assembly.GetName().Name} port={talosPort}");
+                    method.Invoke(null, new object[] { talosPort });
                     UnityEngine.Debug.Log("[TalosE2E] ScriptLoder.Init 阶段已触发 E2E 自动检测");
                     return;
                 }
