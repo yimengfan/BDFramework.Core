@@ -7,15 +7,12 @@ using System.Net;
 using System.Threading.Tasks;
 using BDFramework.Asset;
 using BDFramework.ResourceMgr;
-
 using BDFramework.Core.Tools;
-using BDFramework.ResourceMgr;
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
 using LitJson;
 using MurmurHash.Net;
 using ServiceStack.Text;
-using Telepathy;
 using UnityEngine;
 using UnityEngine.Networking;
 

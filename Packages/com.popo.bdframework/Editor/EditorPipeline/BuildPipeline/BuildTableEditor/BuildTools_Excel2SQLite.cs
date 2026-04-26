@@ -8,7 +8,6 @@ using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.Environment;
 using LitJson;
 using BDFramework.Sql;
-using Telepathy;
 using UnityEditor;
 using UnityEngine;
 
