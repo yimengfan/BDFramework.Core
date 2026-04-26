@@ -8,16 +8,18 @@ BuildClientPackage artifact preparation and upload helper tests.
 3. HybridCLR 残留清理：验证遗留生成文件和 meta 文件被一起删除。
 4. 发布摘要构建：验证使用 CI 构建号作为远端标签。
 5. iOS 产物打包：验证 iOS 发布产物被重新打包为 Xcode 项目 ZIP。
-6. Windows 产物过滤：验证运行时 ZIP 会彻底排除禁止发布目录，不再额外上传 DoNotShip ZIP。
-7. 发布上传：验证回退到 clientVersion、透传文件服务器覆盖地址并发出进度日志。
+6. Windows 产物过滤：验证运行时 ZIP 会彻底排除禁止发布目录，并把这些目录拆成独立 ZIP 上传。
+7. Android 根目录过滤：验证根目录级的禁止发布目录会被拆出主发布物并单独打包上传。
+8. 发布上传：验证回退到 clientVersion、透传文件服务器覆盖地址并发出进度日志。
 Coverage includes:
 1. CI log-root naming for TeamCity defaults and explicit overrides.
 2. Publish-directory cleanup recreating an empty upload root.
 3. HybridCLR legacy-output cleanup removing generated files and meta files together.
 4. Publish-summary construction preferring CI build numbers as remote labels.
 5. iOS packaging repacking the Xcode project into a ZIP archive.
-6. Windows packaging excluding do-not-publish payloads from the final upload set.
-7. Publish uploads falling back to clientVersion, forwarding file-server overrides, and emitting progress logs.
+6. Windows packaging excluding do-not-publish payloads from the final runtime ZIP while splitting them into standalone upload ZIPs.
+7. Android packaging splitting root-level do-not-publish directories away from the main upload payload.
+8. Publish uploads falling back to clientVersion, forwarding file-server overrides, and emitting progress logs.
 """
 
 from __future__ import annotations
@@ -84,6 +86,36 @@ def create_publish_output(
         (app_dir / dir_name).mkdir(parents=True)
         (app_dir / dir_name / "notes.txt").write_text(
             f"debug-only payload for {dir_name}",
+            encoding="utf-8",
+        )
+
+    return output_dir
+
+
+def create_android_publish_output(
+    project_dir: Path,
+    *,
+    include_do_not_publish: bool = False,
+    additional_do_not_publish_dir_names: tuple[str, ...] = (),
+) -> Path:
+    """创建模拟的 Android 发布输出目录树。"""
+    output_dir = project_dir / "DevOps" / "PublishPackages" / "android"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "Launcher.apk").write_bytes(b"apk payload")
+    (output_dir / "symbols").mkdir(parents=True, exist_ok=True)
+    (output_dir / "symbols" / "mapping.txt").write_text("mapping payload", encoding="utf-8")
+
+    if include_do_not_publish:
+        (output_dir / "不要发布").mkdir(parents=True)
+        (output_dir / "不要发布" / "notes.txt").write_text(
+            "debug-only android payload",
+            encoding="utf-8",
+        )
+
+    for dir_name in additional_do_not_publish_dir_names:
+        (output_dir / dir_name).mkdir(parents=True)
+        (output_dir / dir_name / "notes.txt").write_text(
+            f"android debug-only payload for {dir_name}",
             encoding="utf-8",
         )
 
@@ -213,12 +245,13 @@ def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
 def test_prepare_publish_package_upload_source_for_windows_excludes_do_not_publish_payloads(
     tmp_path: Path,
 ) -> None:
-    """验证 Windows 发布产物会排除禁止发布目录，只保留主运行时 ZIP。"""
+    """验证 Windows 发布产物会排除禁止发布目录，并把这些目录拆成独立 ZIP。"""
     output_dir = create_publish_output(
         tmp_path,
         include_do_not_publish=True,
         additional_do_not_publish_dir_names=(
             f"{APP_DIR_NAME}_BurstDebugInformation_DoNotShip",
+            "ButDontShipItWithYourGame_Data",
         ),
     )
 
@@ -230,11 +263,57 @@ def test_prepare_publish_package_upload_source_for_windows_excludes_do_not_publi
 
     prepared_files = {file_path.name: file_path for file_path in list_publish_package_files(prepared_dir)}
 
-    assert set(prepared_files) == {f"{APP_DIR_NAME}.zip"}
+    assert set(prepared_files) == {
+        f"{APP_DIR_NAME}.zip",
+        "ButDontShipItWithYourGame_Data.zip",
+        f"{APP_DIR_NAME}_BurstDebugInformation_DoNotShip.zip",
+        "不要发布.zip",
+    }
     assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}.zip"]) == [
         f"{APP_DIR_NAME}/BuildReport/summary.json",
         f"{APP_DIR_NAME}/Game_Data/globalgamemanagers",
         f"{APP_DIR_NAME}/Launcher.exe",
+    ]
+    assert read_zip_entries(prepared_files["不要发布.zip"]) == [
+        f"{APP_DIR_NAME}/不要发布/notes.txt",
+    ]
+    assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}_BurstDebugInformation_DoNotShip.zip"]) == [
+        f"{APP_DIR_NAME}/{APP_DIR_NAME}_BurstDebugInformation_DoNotShip/notes.txt",
+    ]
+    assert read_zip_entries(prepared_files["ButDontShipItWithYourGame_Data.zip"]) == [
+        f"{APP_DIR_NAME}/ButDontShipItWithYourGame_Data/notes.txt",
+    ]
+
+
+def test_prepare_publish_package_upload_source_for_android_splits_root_do_not_publish_dirs(
+    tmp_path: Path,
+) -> None:
+    """验证 Android 根目录级的禁止发布目录会被拆出主发布物并单独打包。"""
+    output_dir = create_android_publish_output(
+        tmp_path,
+        include_do_not_publish=True,
+        additional_do_not_publish_dir_names=("ButDontShipItWithYourGame",),
+    )
+
+    prepared_dir = prepare_publish_package_upload_source(
+        "android",
+        source_dir=output_dir,
+        staging_dir=tmp_path / "staging",
+    )
+
+    prepared_files = {file_path.relative_to(prepared_dir).as_posix(): file_path for file_path in list_publish_package_files(prepared_dir)}
+
+    assert set(prepared_files) == {
+        "ButDontShipItWithYourGame.zip",
+        "Launcher.apk",
+        "symbols/mapping.txt",
+        "不要发布.zip",
+    }
+    assert read_zip_entries(prepared_files["不要发布.zip"]) == [
+        "不要发布/notes.txt",
+    ]
+    assert read_zip_entries(prepared_files["ButDontShipItWithYourGame.zip"]) == [
+        "ButDontShipItWithYourGame/notes.txt",
     ]
 
 
@@ -272,7 +351,10 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
         assert prepared_dir.is_dir()
 
         files = list_publish_package_files(prepared_dir)
-        assert {file_path.name for file_path in files} == {f"{APP_DIR_NAME}.zip"}
+        assert {file_path.name for file_path in files} == {
+            f"{APP_DIR_NAME}.zip",
+            "不要发布.zip",
+        }
 
         results = []
         total_files = len(files)
@@ -317,7 +399,7 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     )
     output = capsys.readouterr().out
 
-    assert len(results) == 1
+    assert len(results) == 2
     assert captured_resolve_kwargs == {"server_url": "https://files.example.com/fileserver"}
     assert f"[TestUpload] uploadSourceDir={output_dir}" in output
     assert "[TestUpload] uploadPreparedSource=" in output
@@ -325,7 +407,11 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     assert "[TestUpload] uploadRemoteRoot=ClientPackage_windows/0.1.238" in output
     assert "[TestUpload] uploadServerUrlOverride=https://files.example.com/fileserver" in output
     assert "[TestUpload] uploadServerUrl=https://files.example.com/fileserver" in output
-    assert "[TestUpload] uploadFileCount=1" in output
-    assert "[TestUpload] uploadProgress=1/1 state=uploading" in output
-    assert "[TestUpload] uploadProgress=1/1 state=uploaded" in output
-    assert "[TestUpload] uploadedFiles=1" in output
+    assert "[TestUpload] uploadFileCount=2" in output
+    assert "[TestUpload] uploadProgress=1/2 state=uploading" in output
+    assert "[TestUpload] uploadProgress=1/2 state=uploaded" in output
+    assert "[TestUpload] uploadProgress=2/2 state=uploading" in output
+    assert "[TestUpload] uploadProgress=2/2 state=uploaded" in output
+    assert "[TestUpload] uploadedFiles=2" in output
+    assert "ClientPackage_windows/0.1.238/com.popo.bdframework.demo.zip" in output
+    assert "ClientPackage_windows/0.1.238/不要发布.zip" in output

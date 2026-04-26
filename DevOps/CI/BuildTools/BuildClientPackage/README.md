@@ -231,7 +231,8 @@ DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell \
 - 构建成功后，脚本会直接调用 `DevOps/CI/BuildTools/Common/artifact_uploader.py` 对应模块接口上传母包
 - 上传目录优先使用 `buildNumber` 作为远端版本段；如果没有 `buildNumber`，则回退到 `clientVersion`
 - iOS 上传前会把 `DevOps/PublishPackages/ios/` 下的 Xcode 工程目录压成单个 zip，只上传 zip，不上传 `.ipa`
-- Windows 上传前会把可运行目录压成单个 zip；如果输出里存在名为 `不要发布` 的目录，或 Unity Burst 自动生成的 `*_BurstDebugInformation_DoNotShip` 目录，会再分别单独压成 zip 一起上传
+- Windows 上传前会把可运行目录压成单个 zip；如果输出里存在名为 `不要发布`、包含 `ButDontShipItWithYourGame` 的目录，或 Unity Burst 自动生成的 `*_BurstDebugInformation_DoNotShip` 目录，这些目录会从主运行时 zip 中拆出，并分别压成独立 zip 一起上传
+- Android 等直接上传目录的平台，如果根目录下存在上述“可提交但不可混入主发布物”的目录，也会在上传前从主发布物中拆出，并分别压成独立 zip 一起上传
 - dry-run 只验证参数和 Unity 命令拼接，不会清空输出目录，也不会触发上传
 
 ## 文件服务器上传
@@ -399,4 +400,3 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 强制要求：只要修改了 TeamCity DSL、脚本参数入口、BuildTools 上传配置、上传远端目录规则或 TeamCity 相关环境参数，就必须重新触发受影响的 TeamCity 任务，并确认最终任务状态、日志中的上传进度以及远端母包目录都与预期一致；不能只看 DSL 已加载或本地 dry-run 通过。
 
 补充提醒：`.test-DevOps/.teamcity/settings.kts` 是 Kotlin Script，脚本级常量请使用普通 `val`，不要使用脚本级 `const val`；如果某个 TeamCity 实例会引用脚本级成员，也优先写成 `val xxx = BuildType({ ... })`，不要写成命名 `object`，否则 TeamCity 服务端可能回退到 last known good settings。
-

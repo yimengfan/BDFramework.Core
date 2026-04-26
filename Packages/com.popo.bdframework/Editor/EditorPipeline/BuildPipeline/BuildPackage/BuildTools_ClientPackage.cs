@@ -111,6 +111,12 @@ namespace BDFramework.Editor.BuildPipeline
             readonly bool previousAllowDebugging;
             readonly bool previousConnectProfiler;
             readonly bool previousDeepProfilingSupport;
+            readonly bool previousDefaultIsNativeResolution;
+            readonly int previousDefaultScreenWidth;
+            readonly int previousDefaultScreenHeight;
+            readonly bool previousResizableWindow;
+            readonly FullScreenMode previousFullScreenMode;
+            readonly bool shouldRestoreWindowsDisplaySettings;
 
             /// <summary>
             /// 根据目标平台与构建模式覆盖 EditorUserBuildSettings。
@@ -126,6 +132,13 @@ namespace BDFramework.Editor.BuildPipeline
                 this.previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
                 this.previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
                 this.previousDeepProfilingSupport = EditorUserBuildSettings.buildWithDeepProfilingSupport;
+                this.previousDefaultIsNativeResolution = PlayerSettings.defaultIsNativeResolution;
+                this.previousDefaultScreenWidth = PlayerSettings.defaultScreenWidth;
+                this.previousDefaultScreenHeight = PlayerSettings.defaultScreenHeight;
+                this.previousResizableWindow = PlayerSettings.resizableWindow;
+                this.previousFullScreenMode = PlayerSettings.fullScreenMode;
+                this.shouldRestoreWindowsDisplaySettings =
+                    buildTarget == BuildTarget.StandaloneWindows || buildTarget == BuildTarget.StandaloneWindows64;
 
                 var isDebugBuild = buildMode == BuildMode.Debug;
                 var enableProfiler = ShouldEnableProfilerForPackageBuild(buildMode, buildTarget);
@@ -133,8 +146,26 @@ namespace BDFramework.Editor.BuildPipeline
                 EditorUserBuildSettings.allowDebugging = isDebugBuild;
                 EditorUserBuildSettings.connectProfiler = enableProfiler;
                 EditorUserBuildSettings.buildWithDeepProfilingSupport = enableProfiler;
+                ApplyWindowsPlayerDisplaySettings(buildMode, buildTarget);
 
                 Debug.Log($"【BuildPackage】 同步 EditorUserBuildSettings => target:{buildTarget} mode:{buildMode} development:{EditorUserBuildSettings.development} allowDebugging:{EditorUserBuildSettings.allowDebugging} connectProfiler:{EditorUserBuildSettings.connectProfiler} deepProfiling:{EditorUserBuildSettings.buildWithDeepProfilingSupport}");
+            }
+
+            void ApplyWindowsPlayerDisplaySettings(BuildMode buildMode, BuildTarget buildTarget)
+            {
+                if (!this.shouldRestoreWindowsDisplaySettings)
+                {
+                    return;
+                }
+
+                var windowsSetting = ResolveWindowsPlayerSetting(buildMode);
+                PlayerSettings.defaultIsNativeResolution = false;
+                PlayerSettings.defaultScreenWidth = Mathf.Max(1, windowsSetting.DefaultScreenWidth);
+                PlayerSettings.defaultScreenHeight = Mathf.Max(1, windowsSetting.DefaultScreenHeight);
+                PlayerSettings.resizableWindow = windowsSetting.ResizableWindow;
+                PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
+
+                Debug.Log($"【BuildPackage】 同步 Windows 默认窗口 => mode:{buildMode} width:{PlayerSettings.defaultScreenWidth} height:{PlayerSettings.defaultScreenHeight} resizable:{PlayerSettings.resizableWindow} fullscreenMode:{PlayerSettings.fullScreenMode}");
             }
 
             public void Dispose()
@@ -143,6 +174,34 @@ namespace BDFramework.Editor.BuildPipeline
                 EditorUserBuildSettings.allowDebugging = this.previousAllowDebugging;
                 EditorUserBuildSettings.connectProfiler = this.previousConnectProfiler;
                 EditorUserBuildSettings.buildWithDeepProfilingSupport = this.previousDeepProfilingSupport;
+
+                if (this.shouldRestoreWindowsDisplaySettings)
+                {
+                    PlayerSettings.defaultIsNativeResolution = this.previousDefaultIsNativeResolution;
+                    PlayerSettings.defaultScreenWidth = this.previousDefaultScreenWidth;
+                    PlayerSettings.defaultScreenHeight = this.previousDefaultScreenHeight;
+                    PlayerSettings.resizableWindow = this.previousResizableWindow;
+                    PlayerSettings.fullScreenMode = this.previousFullScreenMode;
+                }
+            }
+        }
+
+        static WindowsPlayerSetting ResolveWindowsPlayerSetting(BuildMode buildMode)
+        {
+            var editorSetting = BDEditorApplication.EditorSetting;
+            if (editorSetting == null)
+            {
+                return new WindowsPlayerSetting();
+            }
+
+            switch (buildMode)
+            {
+                case BuildMode.Debug:
+                    return editorSetting.WindowsPlayerDebug ?? new WindowsPlayerSetting();
+                case BuildMode.Release:
+                case BuildMode.Profiler:
+                default:
+                    return editorSetting.WindowsPlayer ?? new WindowsPlayerSetting();
             }
         }
 

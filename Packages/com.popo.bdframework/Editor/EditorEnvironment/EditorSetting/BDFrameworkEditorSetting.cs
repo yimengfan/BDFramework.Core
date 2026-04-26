@@ -353,7 +353,17 @@ namespace BDFramework.Editor
     [Serializable]
     public class WindowsPlayerSetting
     {
-        public string NULL;
+        [LabelText("默认窗口宽")]
+        [LabelWidth(100)]
+        public int DefaultScreenWidth = 1080;
+
+        [LabelText("默认窗口高")]
+        [LabelWidth(100)]
+        public int DefaultScreenHeight = 1920;
+
+        [LabelText("窗口可调整大小")]
+        [LabelWidth(100)]
+        public bool ResizableWindow = false;
 
         [Space(10)]
         [LabelText("包体仓库")]

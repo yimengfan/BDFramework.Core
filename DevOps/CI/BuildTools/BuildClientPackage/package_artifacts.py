@@ -35,6 +35,7 @@ IOS_INFO_PLIST_FILENAME = "Info.plist"
 WINDOWS_LAUNCHER_FILENAME = "Launcher.exe"
 WINDOWS_DO_NOT_PUBLISH_DIRNAME = "不要发布"
 WINDOWS_BURST_DO_NOT_SHIP_SUFFIX = "_BurstDebugInformation_DoNotShip"
+WINDOWS_BUT_DONT_SHIP_FRAGMENT = "butdontshipitwithyourgame"
 
 
 @dataclass(frozen=True)
@@ -136,20 +137,75 @@ def find_windows_runtime_dir(source_dir: Path) -> Path:
     )
 
 
-def find_windows_do_not_publish_dirs(runtime_dir: Path) -> list[Path]:
-    """收集 Windows 输出中需要从最终上传产物彻底排除的目录。"""
+def is_do_not_publish_dir_name(dir_name: str) -> bool:
+    """判断目录名是否属于“可提交但不可混入主发布物”的保留目录。"""
     normalized_chinese_dirname = WINDOWS_DO_NOT_PUBLISH_DIRNAME.casefold()
     normalized_burst_suffix = WINDOWS_BURST_DO_NOT_SHIP_SUFFIX.casefold()
+    normalized_but_dont_ship_fragment = WINDOWS_BUT_DONT_SHIP_FRAGMENT.casefold()
+    normalized_dir_name = dir_name.casefold()
+
+    return (
+        normalized_dir_name == normalized_chinese_dirname
+        or normalized_dir_name.endswith(normalized_burst_suffix)
+        or normalized_but_dont_ship_fragment in normalized_dir_name
+    )
+
+
+def find_do_not_publish_dirs(source_root: Path) -> list[Path]:
+    """收集输出中需要从主发布物里拆分出来、单独上传保留的目录。"""
+    if not source_root.exists() or not source_root.is_dir():
+        return []
 
     return [
         candidate
-        for candidate in sorted(runtime_dir.rglob("*"))
+        for candidate in sorted(source_root.rglob("*"))
         if candidate.is_dir()
-        and (
-            candidate.name.casefold() == normalized_chinese_dirname
-            or candidate.name.casefold().endswith(normalized_burst_suffix)
-        )
+        and is_do_not_publish_dir_name(candidate.name)
     ]
+
+
+def build_split_publish_zip_filename(source_root: Path, split_dir: Path) -> str:
+    """为拆分上传目录生成稳定且可读的 zip 文件名。"""
+    relative_dir = split_dir.relative_to(source_root)
+    if not relative_dir.parts:
+        return f"{split_dir.name}.zip"
+
+    normalized_relative_name = "__".join(relative_dir.parts)
+    return f"{normalized_relative_name}.zip"
+
+
+def copy_publish_files_to_staging(
+    source_root: Path,
+    *,
+    destination_root: Path,
+    skipped_dirs: list[Path],
+) -> None:
+    """把主发布物文件复制到 staging，并排除需要拆分上传的目录。"""
+    for file_path in list_publish_package_files(source_root):
+        if any(_is_relative_to(file_path, skipped_dir) for skipped_dir in skipped_dirs):
+            continue
+
+        relative_path = file_path.relative_to(source_root)
+        destination_path = destination_root / relative_path
+        destination_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(file_path, destination_path)
+
+
+def append_split_publish_archives(
+    prepared_dir: Path,
+    *,
+    source_root: Path,
+    split_dirs: list[Path],
+    archive_root: PurePosixPath,
+) -> None:
+    """把拆分目录分别打成独立 zip，供 CI 上传但不混入主发布物。"""
+    for split_dir in split_dirs:
+        create_zip_archive(
+            prepared_dir / build_split_publish_zip_filename(source_root, split_dir),
+            source_root=source_root,
+            file_paths=list_publish_package_files(split_dir),
+            archive_root=archive_root,
+        )
 
 
 def create_zip_archive(
@@ -202,7 +258,7 @@ def prepare_publish_package_upload_source(
     if platform_key == "windows":
         prepared_dir = staging_dir / platform_key
         runtime_dir = find_windows_runtime_dir(source_dir)
-        do_not_publish_dirs = find_windows_do_not_publish_dirs(runtime_dir)
+        do_not_publish_dirs = find_do_not_publish_dirs(runtime_dir)
 
         runtime_files = [
             file_path
@@ -215,7 +271,29 @@ def prepare_publish_package_upload_source(
             file_paths=runtime_files,
             archive_root=PurePosixPath(runtime_dir.name),
         )
+        append_split_publish_archives(
+            prepared_dir,
+            source_root=runtime_dir,
+            split_dirs=do_not_publish_dirs,
+            archive_root=PurePosixPath(runtime_dir.name),
+        )
 
+        return prepared_dir
+
+    do_not_publish_dirs = find_do_not_publish_dirs(source_dir)
+    if do_not_publish_dirs:
+        prepared_dir = staging_dir / platform_key
+        copy_publish_files_to_staging(
+            source_dir,
+            destination_root=prepared_dir,
+            skipped_dirs=do_not_publish_dirs,
+        )
+        append_split_publish_archives(
+            prepared_dir,
+            source_root=source_dir,
+            split_dirs=do_not_publish_dirs,
+            archive_root=PurePosixPath(),
+        )
         return prepared_dir
 
     return source_dir

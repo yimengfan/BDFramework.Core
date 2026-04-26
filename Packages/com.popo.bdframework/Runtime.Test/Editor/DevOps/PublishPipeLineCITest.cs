@@ -92,6 +92,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
                 (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
+                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForcePortraitWindowDefaultsForWindowsBuild),
+                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForcePortraitWindowDefaultsForWindowsBuild),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
                     testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
@@ -510,6 +512,71 @@ namespace BDFramework.EditorTest.DevOps
                 EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
                 EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
                 EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
+        }
+
+        /// <summary>
+        /// 验证 Windows 母包在正式 BuildPlayer 作用域中会强制使用 1080x1920 的竖屏窗口默认值。
+        /// Verify that Windows package builds force a 1080x1920 portrait-style default window inside the final BuildPlayer scope.
+        /// 这把“测试脚本临时传了分辨率，但真实双击包仍沿用旧默认窗口尺寸”的回归锁定在真正的 Unity PlayerSettings 层。
+        /// This locks the regression where the test launcher passed a resolution override but the real packaged player still booted with the old default window size.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForcePortraitWindowDefaultsForWindowsBuild()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var previousDefaultIsNativeResolution = PlayerSettings.defaultIsNativeResolution;
+            var previousDefaultScreenWidth = PlayerSettings.defaultScreenWidth;
+            var previousDefaultScreenHeight = PlayerSettings.defaultScreenHeight;
+            var previousResizableWindow = PlayerSettings.resizableWindow;
+            var previousFullScreenMode = PlayerSettings.fullScreenMode;
+
+            try
+            {
+                PlayerSettings.defaultIsNativeResolution = true;
+                PlayerSettings.defaultScreenWidth = 800;
+                PlayerSettings.defaultScreenHeight = 600;
+                PlayerSettings.resizableWindow = true;
+                PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
+
+                var scope = (IDisposable)helperMethod.Invoke(
+                    null,
+                    new object[]
+                    {
+                        BuildTools_ClientPackage.BuildMode.Debug,
+                        false,
+                        "test-windows-portrait-defaults",
+                        BuildTarget.StandaloneWindows64,
+                        null
+                    });
+
+                using (scope)
+                {
+                    Assert.That(PlayerSettings.defaultIsNativeResolution, Is.False);
+                    Assert.That(PlayerSettings.defaultScreenWidth, Is.EqualTo(1080));
+                    Assert.That(PlayerSettings.defaultScreenHeight, Is.EqualTo(1920));
+                    Assert.That(PlayerSettings.resizableWindow, Is.False);
+                    Assert.That(PlayerSettings.fullScreenMode, Is.EqualTo(FullScreenMode.Windowed));
+                }
+
+                Assert.That(PlayerSettings.defaultIsNativeResolution, Is.EqualTo(previousDefaultIsNativeResolution));
+                Assert.That(PlayerSettings.defaultScreenWidth, Is.EqualTo(previousDefaultScreenWidth));
+                Assert.That(PlayerSettings.defaultScreenHeight, Is.EqualTo(previousDefaultScreenHeight));
+                Assert.That(PlayerSettings.resizableWindow, Is.EqualTo(previousResizableWindow));
+                Assert.That(PlayerSettings.fullScreenMode, Is.EqualTo(previousFullScreenMode));
+            }
+            finally
+            {
+                PlayerSettings.defaultIsNativeResolution = previousDefaultIsNativeResolution;
+                PlayerSettings.defaultScreenWidth = previousDefaultScreenWidth;
+                PlayerSettings.defaultScreenHeight = previousDefaultScreenHeight;
+                PlayerSettings.resizableWindow = previousResizableWindow;
+                PlayerSettings.fullScreenMode = previousFullScreenMode;
             }
         }
 
