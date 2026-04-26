@@ -5,7 +5,6 @@ using System.Linq;
 using BDFramework.Core.Tools;
 using HybridCLR.Editor.Settings;
 using UnityEditor;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace BDFramework.Editor.HotfixScript
@@ -170,7 +169,9 @@ namespace BDFramework.Editor.HotfixScript
         static public bool IsCurrentBuildDebug()
         {
             // 检查命令行参数
-            var commandLineArgs = Environment.GetCommandLineArgs();
+            // 使用完全限定名避免与 BDFramework.Core.Tools.Environment 命名冲突。
+            // Use fully qualified name to avoid collision with BDFramework.Core.Tools.Environment.
+            var commandLineArgs = System.Environment.GetCommandLineArgs();
             for (int i = 0; i < commandLineArgs.Length - 1; i++)
             {
                 if (string.Equals(commandLineArgs[i], "-buildDebug", StringComparison.OrdinalIgnoreCase))
