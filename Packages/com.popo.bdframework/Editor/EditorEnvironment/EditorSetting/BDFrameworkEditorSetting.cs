@@ -350,25 +350,23 @@ namespace BDFramework.Editor
     /// <summary>
     /// Windows 平台 Player 窗口设置。
     /// Windows Player window settings.
-    /// 默认使用横屏 1920×1080 分辨率并允许调整窗口大小，
-    /// 避免 Windows Standalone Player 在 DX11 窗口模式下尝试设置竖屏分辨率而失败。
-    /// Defaults to landscape 1920×1080 with a resizable window so the Windows standalone player
-    /// does not attempt a portrait resolution that DX11 windowed mode cannot switch to.
+    /// 默认使用竖屏 1080×1920 分辨率，与移动端竖屏方向保持一致。
+    /// Defaults to portrait 1080×1920 to match the mobile portrait orientation.
     /// </summary>
     [Serializable]
     public class WindowsPlayerSetting
     {
         [LabelText("默认窗口宽")]
         [LabelWidth(100)]
-        public int DefaultScreenWidth = 1920;
+        public int DefaultScreenWidth = 1080;
 
         [LabelText("默认窗口高")]
         [LabelWidth(100)]
-        public int DefaultScreenHeight = 1080;
+        public int DefaultScreenHeight = 1920;
 
         [LabelText("窗口可调整大小")]
         [LabelWidth(100)]
-        public bool ResizableWindow = true;
+        public bool ResizableWindow = false;
 
         [Space(10)]
         [LabelText("包体仓库")]

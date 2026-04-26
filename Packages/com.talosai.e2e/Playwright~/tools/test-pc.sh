@@ -35,6 +35,7 @@ UNITY_PORT="${UNITY_PORT:-10002}"
 IS_MACOS=false
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 IS_WINDOWS_GIT_BASH=false
+IS_WINDOWS_TEAMCITY=false
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -67,6 +68,9 @@ fi
 case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*) IS_WINDOWS_GIT_BASH=true ;;
 esac
+if ${IS_WINDOWS_GIT_BASH} && [[ -n "${TEAMCITY_VERSION:-}" ]]; then
+    IS_WINDOWS_TEAMCITY=true
+fi
 
 echo "============================================"
 echo "  Talos E2E — PC 模式测试"
@@ -107,6 +111,15 @@ PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 # 默认仍把 Unity 日志写到标准输出，便于本地直接观察启动链路。
 # Keep Unity logging on stdout by default so local runs can inspect the startup chain directly.
 PLAYER_LAUNCH_ARGS=()
+if ${IS_WINDOWS_TEAMCITY}; then
+    # Windows TeamCity agent 以 Session 0 服务运行，没有交互式桌面。
+    # Unity Player 在无桌面环境下尝试创建 DX11 窗口会失败并卡住，导致首场景无法加载、TCP 服务无法启动。
+    # 使用 -batchmode -nographics 让 Player 跳过窗口与图形初始化（Unity 文档确认 Player 支持这两个参数）。
+    # The Windows TeamCity agent runs as a Session 0 service with no interactive desktop.
+    # Unity Player stalls when DX11 window creation fails in a headless environment, preventing the first scene from loading and the TCP server from starting.
+    # Pass -batchmode -nographics to skip window and graphics init (Unity docs confirm these flags work on Players).
+    PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")
+fi
 PLAYER_LAUNCH_ARGS+=("-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
 
@@ -290,7 +303,11 @@ else
         PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player-${PLAYER_LOG_FILE_SUFFIX}.log"
         : > "${PLAYER_LOG_FILE}"
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
-        POWERSHELL_ARGUMENT_LIST_LITERAL="@('-logFile','${PLAYER_LOG_FILE_WIN}')"
+        if ${IS_WINDOWS_TEAMCITY}; then
+            POWERSHELL_ARGUMENT_LIST_LITERAL="@('-batchmode','-nographics','-logFile','${PLAYER_LOG_FILE_WIN}')"
+        else
+            POWERSHELL_ARGUMENT_LIST_LITERAL="@('-logFile','${PLAYER_LOG_FILE_WIN}')"
+        fi
         # 使用子 shell + set +e 避免 PowerShell 错误导致整个脚本退出
         # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
         APP_PID="$(set +e; {

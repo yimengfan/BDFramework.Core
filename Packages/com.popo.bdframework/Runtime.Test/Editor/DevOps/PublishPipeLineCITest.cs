@@ -92,8 +92,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
                 (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild),
-                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForceLandscapeWindowDefaultsForWindowsBuild),
-                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForceLandscapeWindowDefaultsForWindowsBuild),
+                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForcePortraitWindowDefaultsForWindowsBuild),
+                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForcePortraitWindowDefaultsForWindowsBuild),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
                     testInstance.BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldRejectMissingSourceDll),
@@ -517,14 +517,14 @@ namespace BDFramework.EditorTest.DevOps
 
         /// <summary>
         /// 验证 Windows 母包在正式 BuildPlayer 作用域中会强制使用 1080x1920 的竖屏窗口默认值。
-        /// Verify that Windows package builds force a landscape 1920×1080 default window inside the final BuildPlayer scope.
-        /// 这把"测试脚本临时传了分辨率，但真实双击包仍沿用竖屏默认窗口尺寸"的回归锁定在真正的 Unity PlayerSettings 层。
-        /// Windows 桌面 Player 使用横屏 1920×1080 并允许调整窗口大小，避免 DX11 窗口模式下切换竖屏分辨率失败。
-        /// This locks the regression where the test launcher passed a resolution override but the real packaged player still booted with the old portrait default window size.
-        /// Windows desktop players use landscape 1920×1080 with a resizable window so DX11 windowed mode does not fail on portrait resolutions.
+        /// Verify that Windows package builds force a portrait 1080×1920 default window inside the final BuildPlayer scope.
+        /// 这把"测试脚本临时传了分辨率，但真实双击包仍沿用默认窗口尺寸"的回归锁定在真正的 Unity PlayerSettings 层。
+        /// Windows 桌面 Player 使用竖屏 1080×1920 与移动端竖屏方向保持一致。
+        /// This locks the regression where the test launcher passed a resolution override but the real packaged player still booted with wrong default window size.
+        /// Windows desktop players use portrait 1080×1920 to match the mobile portrait orientation.
         /// </summary>
         [Test]
-        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForceLandscapeWindowDefaultsForWindowsBuild()
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldForcePortraitWindowDefaultsForWindowsBuild()
         {
             var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
                 "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
@@ -552,7 +552,7 @@ namespace BDFramework.EditorTest.DevOps
                     {
                         BuildTools_ClientPackage.BuildMode.Debug,
                         false,
-                        "test-windows-landscape-defaults",
+                        "test-windows-portrait-defaults",
                         BuildTarget.StandaloneWindows64,
                         null
                     });
@@ -560,9 +560,9 @@ namespace BDFramework.EditorTest.DevOps
                 using (scope)
                 {
                     Assert.That(PlayerSettings.defaultIsNativeResolution, Is.False);
-                    Assert.That(PlayerSettings.defaultScreenWidth, Is.EqualTo(1920));
-                    Assert.That(PlayerSettings.defaultScreenHeight, Is.EqualTo(1080));
-                    Assert.That(PlayerSettings.resizableWindow, Is.True);
+                    Assert.That(PlayerSettings.defaultScreenWidth, Is.EqualTo(1080));
+                    Assert.That(PlayerSettings.defaultScreenHeight, Is.EqualTo(1920));
+                    Assert.That(PlayerSettings.resizableWindow, Is.False);
                     Assert.That(PlayerSettings.fullScreenMode, Is.EqualTo(FullScreenMode.Windowed));
                 }
 

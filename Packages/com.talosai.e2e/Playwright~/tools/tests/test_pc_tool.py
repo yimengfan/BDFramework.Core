@@ -3,14 +3,14 @@ Talos PC launcher script tests.
 
 覆盖范围：
 1. Windows/macOS 共用桌面脚本不再向 player 注入 Talos 或窗口尺寸外部启动参数，桌面窗口表现统一回到包体默认设置。
-2. Windows TeamCity 分支会改用 batchmode + nographics + 最小参数集，避免远端无头 agent 在图形初始化阶段卡死。
+2. Windows TeamCity 分支会改用 batchmode + nographics + 最小参数集，避免远端无头 agent 在图形初始化阶段卡死；本地 Windows 运行仍使用有头模式。
 3. 启动脚本会复用解析后的 Node CLI 执行 Playwright，而不是依赖外部 npx。
 4. 桌面脚本允许通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限，并会在候选端口池里自动探测当前可用端口。
 5. 桌面脚本会把 BDebug playerlogs 归档到 test-results/playerlogs，便于 TeamCity artifact 回传平台日志。
 
 Coverage:
 1. The shared desktop launcher script no longer injects external Talos or window-size startup arguments and now leaves desktop window behavior to the packaged defaults.
-2. The Windows TeamCity branch switches to batchmode plus nographics with a minimal launch contract so remote headless agents do not stall during graphics initialization.
+2. The Windows TeamCity branch switches to batchmode plus nographics with a minimal launch contract so remote headless agents do not stall during graphics initialization; local Windows runs still use headed mode.
 3. The launcher script reuses the resolved Node CLI to run Playwright instead of relying on external npx.
 4. The desktop launcher allows overriding the TCP readiness timeout through TALOS_UNITY_TCP_TIMEOUT.
 5. The desktop launcher archives BDebug playerlogs into test-results/playerlogs so TeamCity artifacts can bring back platform logs.
@@ -287,17 +287,24 @@ def test_test_pc_honours_unity_tcp_timeout_override(tmp_path: Path) -> None:
     assert "等待 TCP 服务超时 (2s)" in result.stdout
 
 
-def test_test_pc_source_avoids_headless_window_suppression_and_external_talos_args() -> None:
-    """验证 PC 脚本不再启用 batchmode + nographics，并且不再向 player 注入外部 Talos 参数。
-    Verify that the PC script no longer enables batchmode plus nographics and does not inject external Talos arguments into the player.
+def test_test_pc_source_enables_batchmode_nographics_for_windows_teamcity_only() -> None:
+    """验证 PC 脚本仅在 Windows TeamCity 环境下注入 batchmode + nographics，本地运行不注入。
+    Verify that the PC script injects batchmode + nographics only on Windows TeamCity, not on local runs.
     """
 
     content = SOURCE_TEST_PC.read_text(encoding="utf-8")
 
-    assert 'PLAYER_LAUNCH_ARGS=()' in content
-    assert 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' not in content
+    assert 'IS_WINDOWS_TEAMCITY=false' in content
+    assert 'IS_WINDOWS_TEAMCITY=true' in content
+    assert 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' in content
+    # 仅在 IS_WINDOWS_TEAMCITY 条件分支内注入，不是无条件注入
+    # Only injected inside the IS_WINDOWS_TEAMCITY conditional, not unconditionally
+    assert 'if ${IS_WINDOWS_TEAMCITY}; then' in content
+    # PowerShell 参数列表也有对应的 TeamCity 条件分支
+    # PowerShell argument list also has a matching TeamCity conditional
+    assert "POWERSHELL_ARGUMENT_LIST_LITERAL=\"@('-batchmode','-nographics','-logFile','${PLAYER_LOG_FILE_WIN}')\"" in content
+    assert "POWERSHELL_ARGUMENT_LIST_LITERAL=\"@('-logFile','${PLAYER_LOG_FILE_WIN}')\"" in content
     assert 'Start-Process -FilePath' in content
-    assert 'POWERSHELL_ARGUMENT_LIST_LITERAL="@(\'-logFile\',\'${PLAYER_LOG_FILE_WIN}\')"' in content
     assert '"-talosPort"' not in content
     assert '"-talosForceE2E"' not in content
 
@@ -312,6 +319,8 @@ def test_test_pc_source_scans_candidate_ports_without_window_override_args() -> 
     assert 'resolve_talos_port_candidates() {' in content
     assert 'PORT_CANDIDATES=()' in content
     assert '候选端口:' in content
+    # 不注入任何屏幕分辨率参数——桌面窗口由包体默认设置控制
+    # No screen-resolution arguments are injected — desktop window size is governed by the packaged defaults
     assert '"-screen-fullscreen"' not in content
     assert '"-screen-width"' not in content
     assert '"-screen-height"' not in content
