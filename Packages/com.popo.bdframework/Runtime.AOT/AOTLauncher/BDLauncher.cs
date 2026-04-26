@@ -232,7 +232,8 @@ namespace BDFramework
                     Debug.Log("[TalosE2E] 首次扫描未发现 E2EAutoInit，尝试显式加载 Talos.E2E.Runtime 程序集...");
                     try
                     {
-                        System.Reflection.Assembly.Load("Talos.E2E.Runtime");
+                        var loadedAssembly = System.Reflection.Assembly.Load("Talos.E2E.Runtime");
+                        Debug.Log($"[TalosE2E] Assembly.Load 返回: {loadedAssembly?.GetName().FullName ?? "null"}");
                     }
                     catch (Exception loadEx)
                     {
@@ -244,7 +245,18 @@ namespace BDFramework
 
                 if (foundType == null)
                 {
-                    Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，跳过 Debug E2E 自动启动");
+                    // 诊断：列出所有包含 Talos 的已加载程序集，帮助判断 IL2CPP 是否裁剪了类型元数据。
+                    // Diagnostic: list all loaded assemblies containing "Talos" to help determine if IL2CPP stripped type metadata.
+                    Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，列出含 Talos 的程序集:");
+                    foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+                    {
+                        if (asm.GetName().Name.Contains("Talos"))
+                        {
+                            var typeCheck = asm.GetType("Talos.E2E.E2EAutoInit");
+                            Debug.Log($"[TalosE2E]   程序集={asm.GetName().Name}, E2EAutoInit类型={(typeCheck != null ? "找到" : "未找到")}");
+                        }
+                    }
+
                     return;
                 }
 

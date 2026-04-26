@@ -1,0 +1,13 @@
+<linker>
+  <!--
+    Talos E2E 运行时程序集在 IL2CPP 构建中必须保留核心反射入口，
+    否则 IL2CPP linker 会因缺少直接代码引用而裁剪 E2EAutoInit 及其依赖的类型元数据，
+    导致 BDLauncher.TryLaunchTalosE2EInDebugBuild() 通过反射查找类型失败。
+    
+    Talos E2E runtime assemblies must preserve core reflection entrypoints in IL2CPP builds;
+    otherwise the IL2CPP linker strips type metadata for E2EAutoInit and its dependencies
+    due to the absence of direct code references, causing BDLauncher.TryLaunchTalosE2EInDebugBuild()
+    to fail when looking up the type via reflection.
+  -->
+  <assembly fullname="Talos.E2E.Runtime" preserve="all"/>
+</linker>
