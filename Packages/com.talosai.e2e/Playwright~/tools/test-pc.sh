@@ -434,7 +434,7 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
             # PID 验证：确认响应端口的进程确实是本脚本启动的新 Player，而非上次构建的残留进程。
             # PID verification: confirm the process responding on the port is the new Player launched by this script, not a stale process from a previous build.
             if [[ -n "${APP_PID}" ]] && ${IS_WINDOWS_GIT_BASH} && command -v powershell.exe >/dev/null 2>&1; then
-                local port_owner_pid
+                port_owner_pid=""
                 port_owner_pid="$(set +e; {
                     powershell.exe -NoProfile -Command "\
                         if (Get-Command Get-NetTCPConnection -ErrorAction SilentlyContinue) { \
