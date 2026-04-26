@@ -197,8 +197,7 @@ namespace BDFramework
             try
             {
                 UnityEngine.Debug.Log("[TalosE2E] ScriptLoder.Init 阶段开始检测 E2E 自动启动入口");
-                var commandLineArgs = Talos.E2E.RuntimeLaunchArguments.ResolveCurrentProcessArguments();
-                var talosPort = Talos.E2E.RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs);
+                var talosPort = ResolveTalosPortFromCommandLine();
 
                 // 查找 Talos.E2E 程序集中的 E2EAutoInit 类型
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -231,6 +230,33 @@ namespace BDFramework
                 // E2E 自动检测失败不影响框架正常启动
                 UnityEngine.Debug.LogWarning($"[TalosE2E] E2E 自动检测失败（不影响启动）: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// 从当前进程命令行里解析 Talos TCP 端口。
+        /// Resolve the Talos TCP port from the current process command line.
+        /// ScriptLoder 不能静态依赖 Talos.E2E 程序集，因此这里只做最小的 `-talosPort` 扫描；
+        /// 若参数缺失或非法，则继续回退到 Talos 默认端口 10002。
+        /// ScriptLoder cannot take a static dependency on the Talos.E2E assembly, so it performs only a minimal
+        /// `-talosPort` scan here and otherwise falls back to the Talos default port 10002.
+        /// </summary>
+        private static int ResolveTalosPortFromCommandLine()
+        {
+            var commandLineArgs = Environment.GetCommandLineArgs();
+            for (var index = 0; index < commandLineArgs.Length - 1; index++)
+            {
+                if (!string.Equals(commandLineArgs[index], "-talosPort", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (int.TryParse(commandLineArgs[index + 1], out var customPort) && customPort > 0)
+                {
+                    return customPort;
+                }
+            }
+
+            return 10002;
         }
 
         #endregion

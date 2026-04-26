@@ -88,7 +88,7 @@ def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
     assert '[System.Diagnostics.Conditional("DEBUG")]' not in script_loader_content
     assert '[Conditional("ENABLE_E2ETEST")]' not in script_loader_content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in script_loader_content
-    assert "Talos.E2E.RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs)" in script_loader_content
+    assert "ResolveTalosPortFromCommandLine()" in script_loader_content
     assert "method.Invoke(null, new object[] { talosPort });" in script_loader_content
 
 
