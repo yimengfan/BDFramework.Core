@@ -199,11 +199,13 @@ namespace BDFramework.RuntimeTests.Contracts
         /// Verify that BDLauncher holds an unconditional IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary across all build configurations.
         /// 这是 Layer 6 修复的核心契约：之前使用 [RuntimeInitializeOnLoadMethod] 在 E2EAutoInit 自身保活，
         /// 但 IL2CPP 代码生成阶段如果整个程序集都没有直接引用，则该属性永远不会被发现。
-        /// 修复方案是在 BDFramework.AOT（一定在 IL2CPP 构建中）的 BDLauncher 上添加
+        /// 修复方案是将 LitJson 从 BDFramework.AOT 提取为独立程序集（解除循环依赖），
+        /// 然后在 BDFramework.AOT（一定在 IL2CPP 构建中）的 BDLauncher 上添加
         /// [RuntimeInitializeOnLoadMethod] 钩子，直接 typeof(E2EAutoInit) 创建编译期引用。
         /// This is the core contract of the Layer 6 fix: previously used [RuntimeInitializeOnLoadMethod] on E2EAutoInit itself,
         /// but if the entire assembly has no direct references, IL2CPP code generation never discovers that attribute.
-        /// The fix adds a [RuntimeInitializeOnLoadMethod] hook on BDLauncher in BDFramework.AOT (always in IL2CPP builds),
+        /// The fix extracts LitJson from BDFramework.AOT into its own assembly (breaking the circular dependency),
+        /// then adds a [RuntimeInitializeOnLoadMethod] hook on BDLauncher in BDFramework.AOT (always in IL2CPP builds),
         /// using typeof(E2EAutoInit) to create a compile-time reference.
         /// </summary>
         public static void VerifyBDLauncherPreservesE2EAssemblyForIL2CPP()
@@ -232,7 +234,7 @@ namespace BDFramework.RuntimeTests.Contracts
                     break;
                 }
             }
-            EnsureTrue(talosE2EFound, "BDFramework.AOT 必须引用 Talos.E2E.Runtime 程序集（Layer 6 修复：反转依赖方向）。");
+            EnsureTrue(talosE2EFound, "BDFramework.AOT 必须引用 Talos.E2E.Runtime 程序集（Layer 6 修复：LitJson 提取后解除循环依赖，BDFramework.AOT → Talos.E2E.Runtime 单向依赖）。");
         }
 
         /// <summary>

@@ -1,9 +1,7 @@
 {
-    "name": "Talos.E2E.Runtime",
-    "rootNamespace": "Talos.E2E",
-    "references": [
-        "GUID:1d057b9e27b346f783a102b54b04152d"
-    ],
+    "name": "LitJson",
+    "rootNamespace": "LitJson",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

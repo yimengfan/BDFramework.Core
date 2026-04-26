@@ -3,6 +3,7 @@
     "rootNamespace": "Talos.E2E.Editor",
     "references": [
         "GUID:38782fc8e87cac14f9cb740af8b2232a",
+        "GUID:1d057b9e27b346f783a102b54b04152d",
         "Talos.E2E.Runtime"
     ],
     "includePlatforms": [

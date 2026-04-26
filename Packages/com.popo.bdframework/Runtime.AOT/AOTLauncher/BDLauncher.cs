@@ -62,6 +62,12 @@ namespace BDFramework
         /// on the launcher type in BDFramework.AOT (which is always included in IL2CPP builds),
         /// we directly reference the Talos.E2E.E2EAutoInit type, ensuring IL2CPP code generation
         /// includes the Talos.E2E.Runtime assembly in the native binary.
+        /// 为解除循环依赖（Talos.E2E.Runtime 需要 LitJson，而 LitJson 原来在 BDFramework.AOT 内），
+        /// 已将 LitJson 提取为独立程序集。现在依赖方向为：
+        /// BDFramework.AOT → Talos.E2E.Runtime（单向，无循环）。
+        /// To break the circular dependency (Talos.E2E.Runtime needs LitJson which was inside BDFramework.AOT),
+        /// LitJson has been extracted into its own assembly. The dependency direction is now:
+        /// BDFramework.AOT → Talos.E2E.Runtime (one-way, no cycle).
         /// 此方法在所有构建配置（Debug 和 Release）中都生效，
         /// 不受 [Conditional("DEBUG")] 裁剪影响。
         /// This method is effective in all build configurations (Debug and Release),
@@ -244,18 +250,18 @@ namespace BDFramework
         /// 之前使用 [RuntimeInitializeOnLoadMethod] + 反射查找 E2EAutoInit，
         /// 但在 IL2CPP 构建中整个 Talos.E2E.Runtime 程序集被裁剪出原生二进制，
         /// 因为 BDFramework.AOT 没有任何直接代码引用到 Talos.E2E.Runtime 的类型。
-        /// 修复方案：反转程序集依赖方向——
-        /// Talos.E2E.Runtime 不再引用 BDFramework.AOT（实际上没有编译期用到），
-        /// 改为 BDFramework.AOT 引用 Talos.E2E.Runtime，
-        /// 然后在此处使用 typeof(E2EAutoInit) 创建直接编译期引用，
+        /// 修复方案：将 LitJson 从 BDFramework.AOT 提取为独立程序集，
+        /// 使 Talos.E2E.Runtime 只依赖 LitJson 而非 BDFramework.AOT，
+        /// 然后由 BDFramework.AOT 引用 Talos.E2E.Runtime，
+        /// 在此处使用 typeof(E2EAutoInit) 创建直接编译期引用，
         /// 确保 IL2CPP 代码生成阶段将 Talos.E2E.Runtime 包含进原生二进制。
         /// IL2CPP preservation note (Layer 6 fix):
         /// Previously used [RuntimeInitializeOnLoadMethod] + reflection to find E2EAutoInit,
         /// but in IL2CPP builds the entire Talos.E2E.Runtime assembly was stripped from the native binary
         /// because BDFramework.AOT had no direct code reference to any type in Talos.E2E.Runtime.
-        /// Fix: reverse the assembly dependency direction —
-        /// Talos.E2E.Runtime no longer references BDFramework.AOT (it never used it at compile time),
-        /// instead BDFramework.AOT references Talos.E2E.Runtime,
+        /// Fix: extract LitJson from BDFramework.AOT into its own assembly,
+        /// so Talos.E2E.Runtime only depends on LitJson (not BDFramework.AOT),
+        /// then BDFramework.AOT references Talos.E2E.Runtime,
         /// and here we use typeof(E2EAutoInit) to create a direct compile-time reference,
         /// ensuring IL2CPP code generation includes Talos.E2E.Runtime in the native binary.
         /// </summary>
