@@ -1,5 +1,4 @@
 using System;
-using System.Management.Instrumentation;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx.PluginsEx.Odin.Attribute;
@@ -12,7 +11,12 @@ using UnityEngine.Serialization;
 namespace BDFramework.Editor.BuildPipeline
 {
     /// <summary>
-    /// 构建Android面板
+    /// 构建Windows面板
+    /// Build Windows panel.
+    /// 窗口分辨率、全屏模式等显示设置由 Unity ProjectSettings/ProjectSettings.asset 统一控制，
+    /// 不再在此面板或构建流程中强制覆盖。
+    /// Window display settings (resolution, fullscreen mode, etc.) are controlled exclusively
+    /// via Unity ProjectSettings/ProjectSettings.asset and are no longer overridden during build.
     /// </summary>
     [Serializable]
     public class BuildWindowsPlayer

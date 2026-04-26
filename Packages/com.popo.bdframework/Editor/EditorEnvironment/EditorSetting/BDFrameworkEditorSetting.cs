@@ -108,7 +108,6 @@ namespace BDFramework.Editor
         [InlineProperty]
         public WindowsPlayerSetting WindowsPlayerDebug = new WindowsPlayerSetting();
 
-
         [ShowIf(nameof(pageType), PageType.BuildPackage)]
         [BoxGroup("Mac OSX设置[Release]")]
         [HideLabel]
@@ -348,26 +347,16 @@ namespace BDFramework.Editor
     }
 
     /// <summary>
-    /// Windows 平台 Player 窗口设置。
-    /// Windows Player window settings.
-    /// 默认使用竖屏 1080×1920 分辨率，与移动端竖屏方向保持一致。
-    /// Defaults to portrait 1080×1920 to match the mobile portrait orientation.
+    /// Windows 平台 Player 设置。
+    /// Windows Player settings.
+    /// 窗口分辨率、全屏模式等显示设置由 Unity ProjectSettings/ProjectSettings.asset 统一控制，
+    /// 不再在此处配置。
+    /// Window resolution, fullscreen mode and other display settings are controlled exclusively
+    /// via Unity ProjectSettings/ProjectSettings.asset and are no longer configured here.
     /// </summary>
     [Serializable]
     public class WindowsPlayerSetting
     {
-        [LabelText("默认窗口宽")]
-        [LabelWidth(100)]
-        public int DefaultScreenWidth = 1080;
-
-        [LabelText("默认窗口高")]
-        [LabelWidth(100)]
-        public int DefaultScreenHeight = 1920;
-
-        [LabelText("窗口可调整大小")]
-        [LabelWidth(100)]
-        public bool ResizableWindow = false;
-
         [Space(10)]
         [LabelText("包体仓库")]
         [LabelWidth(100)]
