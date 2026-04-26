@@ -170,6 +170,13 @@ namespace BDFramework.Editor.DevOps
         /// <summary>
         /// 执行指定平台的母包 BatchMode 构建。
         /// 当显式开启 Debug 时，沿用现有母包 Debug 模式，并额外补齐 Talos E2E 编译宏。
+        /// Debug 模式下同时注入测试程序集到 HybridCLR hotUpdateAssemblies，
+        /// 确保 BDFramework.Test / BDFramework.HostE2E 作为热更 DLL 被包含在母包的 StreamingAssets 中，
+        /// 并在运行时由 ScriptLoderAOT 加载到 AppDomain，使 E2E 测试发现能扫描到测试用例。
+        /// In Debug mode, also inject test assemblies into HybridCLR hotUpdateAssemblies,
+        /// so that BDFramework.Test / BDFramework.HostE2E are included as hot-update DLLs
+        /// in the package's StreamingAssets and loaded into the AppDomain by ScriptLoderAOT at runtime,
+        /// enabling E2E test discovery to find test cases.
         /// </summary>
         static private void BuildClientPackageForBatchMode(BuildTarget buildTarget)
         {
@@ -177,6 +184,26 @@ namespace BDFramework.Editor.DevOps
             var enableTalosDebug = buildMode == BuildTools_ClientPackage.BuildMode.Debug;
             var includeDebugSymbol = ShouldIncludeDebugSymbolForTalosClientPackageBuild(buildMode);
             Debug.Log($"【CI】BuildClientPackage Target:{buildTarget} BuildMode:{buildMode} TalosDebug:{enableTalosDebug} IncludeDebugSymbol:{includeDebugSymbol}");
+
+            // Debug 构建时注入测试程序集到 HybridCLR 配置
+            // Inject test assemblies into HybridCLR config for Debug builds
+            // 这一步必须在母包构建之前完成，因为 BuildTools_ClientPackage.Build() 会在
+            // HybridCLR 预处理阶段读取 hotUpdateAssemblies 来决定哪些 DLL 属于热更程序集，
+            // 并在 BuildExe 后由 EnsureHybridClrHotUpdateAssembliesCopiedToManaged() 将它们
+            // 复制到 Player 的 Managed 目录中。
+            // This must happen before the package build starts, because BuildTools_ClientPackage.Build()
+            // reads hotUpdateAssemblies during HybridCLR prebuild to determine which DLLs are hot-update
+            // assemblies, and after BuildExe, EnsureHybridClrHotUpdateAssembliesCopiedToManaged() copies
+            // them into the Player's Managed directory.
+            if (enableTalosDebug)
+            {
+                HotfixScript.HotfixTestAssemblyInjector.ResetInjectionState();
+                HotfixScript.HotfixTestAssemblyInjector.InjectTestAssemblies();
+            }
+            else
+            {
+                HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
+            }
 
             if (enableTalosDebug)
             {
