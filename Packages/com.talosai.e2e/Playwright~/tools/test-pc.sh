@@ -241,8 +241,8 @@ cleanup_stale_windows_player_processes() {
     executable_name="$(basename "${EXE_PATH}")"
     executable_stem="${executable_name%.*}"
 
-    # 使用子 shell + set +e 避免 PowerShell 错误导致整个脚本退出
-    # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
+    # 第一轮：定向清理——按 TCP 端口和路径查找并关闭旧进程。
+    # Phase 1: targeted cleanup — find and stop stale processes by TCP port and by path.
     cleanup_summary="$(set +e; {
         powershell.exe -NoProfile -Command "\
             \$unityPorts = @($(resolve_talos_port_candidates "${UNITY_PORT}" | paste -sd, -)); \
@@ -282,7 +282,56 @@ cleanup_stale_windows_player_processes() {
     } 2>/dev/null | tr -d '\r')" || true
 
     if [[ -n "${cleanup_summary}" ]]; then
-        echo ">>> 已清理 Windows 残留进程: ${cleanup_summary}"
+        echo ">>> 已清理 Windows 残留进程（定向）: ${cleanup_summary}"
+    fi
+
+    # 第二轮：兜底——通过 taskkill /F /IM 强制终止所有同名可执行进程。
+    # Phase 2: fallback — force-kill all processes with the same executable name via taskkill.
+    # TeamCity CI 环境中同一台 agent 同一时间只跑一个 E2E 测试，因此杀全名是安全的。
+    # In TeamCity CI, a given agent runs at most one E2E test at a time, so killing by name is safe.
+    local taskkill_output
+    taskkill_output="$(taskkill.exe //F //IM "${executable_name}" 2>&1)" || true
+    if echo "${taskkill_output}" | grep -qi "SUCCESS\|terminated\|已终止"; then
+        echo ">>> 已通过 taskkill 终止残留 ${executable_name} 进程"
+    fi
+
+    # 第三轮：等待进程真正退出——最多重试 5 次，每次间隔 1 秒。
+    # Phase 3: wait for processes to fully exit — up to 5 retries, 1 second apart.
+    local retry=0
+    while [[ ${retry} -lt 5 ]]; do
+        local remaining
+        remaining="$(powershell.exe -NoProfile -Command "\
+            \$p = Get-Process -Name '${executable_stem}' -ErrorAction SilentlyContinue; \
+            if (\$p) { \$p.Count } else { 0 }\
+        " 2>/dev/null | tr -d '\r')" || true
+        if [[ -z "${remaining}" || "${remaining}" == "0" ]]; then
+            break
+        fi
+        sleep 1
+        retry=$((retry + 1))
+    done
+
+    # 第四轮：验证候选端口不再被占用。
+    # Phase 4: verify that none of the candidate ports are still occupied.
+    local occupied_ports
+    occupied_ports="$(set +e; {
+        powershell.exe -NoProfile -Command "\
+            \$unityPorts = @($(resolve_talos_port_candidates "${UNITY_PORT}" | paste -sd, -)); \
+            \$occupied = @(); \
+            foreach (\$p in \$unityPorts) { \
+                try { \
+                    \$listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, \$p); \
+                    \$listener.Start(); \
+                    \$listener.Stop(); \
+                } catch { \
+                    \$occupied += \$p; \
+                } \
+            } \
+            if (\$occupied.Count -gt 0) { [Console]::Out.Write([string]::Join(',', \$occupied)) }\
+        "
+    } 2>/dev/null | tr -d '\r')" || true
+    if [[ -n "${occupied_ports}" ]]; then
+        echo "⚠️  清理后仍有端口被占用: ${occupied_ports}（可能被非 Player 进程占用）"
     fi
 }
 
@@ -382,6 +431,27 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
 
     for candidate_port in "${PORT_CANDIDATES[@]}"; do
         if probe_talos_unity_ready "${UNITY_HOST}" "${candidate_port}" 1000; then
+            # PID 验证：确认响应端口的进程确实是本脚本启动的新 Player，而非上次构建的残留进程。
+            # PID verification: confirm the process responding on the port is the new Player launched by this script, not a stale process from a previous build.
+            if [[ -n "${APP_PID}" ]] && ${IS_WINDOWS_GIT_BASH} && command -v powershell.exe >/dev/null 2>&1; then
+                local port_owner_pid
+                port_owner_pid="$(set +e; {
+                    powershell.exe -NoProfile -Command "\
+                        if (Get-Command Get-NetTCPConnection -ErrorAction SilentlyContinue) { \
+                            \$conn = Get-NetTCPConnection -State Listen -LocalPort ${candidate_port} -ErrorAction SilentlyContinue | \
+                                Select-Object -First 1 -ExpandProperty OwningProcess; \
+                            if (\$conn) { [Console]::Out.Write(\$conn) } \
+                        }\
+                    "
+                } 2>/dev/null | tr -d '\r')" || true
+                if [[ -n "${port_owner_pid}" && "${port_owner_pid}" != "${APP_PID}" ]]; then
+                    echo ""
+                    echo "⚠️  端口 ${candidate_port} 被残留进程 (PID: ${port_owner_pid}) 占用，已强制终止"
+                    taskkill.exe //F //PID "${port_owner_pid}" //T >/dev/null 2>&1 || true
+                    sleep 2
+                    continue
+                fi
+            fi
             RESOLVED_UNITY_PORT="${candidate_port}"
             UNITY_PORT="${candidate_port}"
             echo "    ✅ TCP 服务已就绪 (${WAITED}s) 端口=${UNITY_PORT}"
