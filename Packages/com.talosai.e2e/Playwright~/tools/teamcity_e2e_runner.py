@@ -122,6 +122,12 @@ class BuildHandle:
         return self.state.lower() == "finished" and self.status.upper() == "SUCCESS"
 
 
+SUCCESSFUL_UPSTREAM_BUILD_LOG_MARKERS = (
+    "[BuildClientPackage][Windows] build finished successfully",
+    "Process exited with code 0",
+)
+
+
 @dataclass(frozen=True)
 class PlatformProfile:
     """描述一个平台在 TeamCity 构建、文件下载和工具脚本层面的约定。"""
@@ -766,6 +772,24 @@ def read_build_log_tail(config: TeamCityRuntimeConfig, build_id: int, *, line_co
     return "\n".join(lines[-line_count:])
 
 
+def is_soft_successful_upstream_build(handle: BuildHandle, log_tail: str) -> bool:
+    """判断上游构建是否属于 TeamCity 状态残留导致的“软失败”。
+
+    Determine whether the upstream build is a "soft failure" caused by stale TeamCity status metadata.
+    某些 TeamCity 构建在 Versioned Settings 或前置校验阶段曾短暂报错后，
+    即使后续真实构建与上传步骤全部成功，REST `status/statusText` 仍可能保留旧失败文案。
+    当日志尾已经明确出现包体构建成功与进程正常退出标记时，
+    prepare 阶段应继续消费该构建产物，而不是被旧状态文本误拦截。
+    """
+    if handle.state.lower() != "finished":
+        return False
+    if handle.status.upper() == "SUCCESS":
+        return True
+    if not log_tail:
+        return False
+    return all(marker in log_tail for marker in SUCCESSFUL_UPSTREAM_BUILD_LOG_MARKERS)
+
+
 def build_queue_properties(client_version: str, build_debug: str, build_extra_args: str) -> list[dict[str, str]]:
     """构造远端母包构建排队时需要透传的 TeamCity 参数。"""
     properties = [
@@ -833,9 +857,16 @@ def wait_for_build_success(
             return handle
 
         if handle.state.lower() == "finished":
+            log_tail = read_build_log_tail(config, build_id)
+            if is_soft_successful_upstream_build(handle, log_tail):
+                print(
+                    f"{LOG_PREFIX} softSuccessDetected buildId={handle.build_id} "
+                    f"status={handle.status or 'unknown'} statusText={handle.status_text or '<empty>'}"
+                )
+                return handle
             raise TalosTeamCityE2EError(
                 "Upstream TeamCity build failed. "
-                f"{summary}\n{read_build_log_tail(config, build_id)}"
+                f"{summary}\n{log_tail}"
             )
 
         if time.monotonic() >= deadline:

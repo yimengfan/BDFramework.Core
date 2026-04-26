@@ -189,6 +189,74 @@ def test_select_remote_package_entry_requires_android_apk() -> None:
     assert selected.file_name == "Launcher.apk"
 
 
+def test_is_soft_successful_upstream_build_accepts_finished_failure_with_success_markers() -> None:
+    """验证 TeamCity 状态残留为 FAILURE 时，只要日志尾明确标记构建成功，仍应允许继续消费上游包体。
+    Verify that a finished TeamCity build with stale FAILURE metadata is still accepted when the log tail explicitly marks package-build success.
+    """
+    handle = runner.BuildHandle(
+        build_id=1154,
+        build_type_id="BDFrameworkCore_BuildClientPackageWindows",
+        number="122",
+        state="finished",
+        status="FAILURE",
+        status_text="Failed to load build settings from VCS (new)",
+        branch_name="v4/v-4.0.0",
+        web_url="http://teamcity/build/1154",
+    )
+    log_tail = "\n".join(
+        [
+            "[BuildClientPackage][Windows] build finished successfully",
+            "Process exited with code 0",
+        ]
+    )
+
+    assert runner.is_soft_successful_upstream_build(handle, log_tail) is True
+
+
+def test_wait_for_build_success_tolerates_soft_successful_finished_build(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证 finished+FAILURE 但日志尾有成功标记时，wait_for_build_success 会按成功返回。
+    Verify that wait_for_build_success returns successfully when a finished FAILURE build has explicit success markers in the log tail.
+    """
+    handle = runner.BuildHandle(
+        build_id=1154,
+        build_type_id="BDFrameworkCore_BuildClientPackageWindows",
+        number="122",
+        state="finished",
+        status="FAILURE",
+        status_text="Failed to load build settings from VCS (new)",
+        branch_name="v4/v-4.0.0",
+        web_url="http://teamcity/build/1154",
+    )
+    monkeypatch.setattr(runner, "get_build", lambda _config, _build_id: handle)
+    monkeypatch.setattr(
+        runner,
+        "read_build_log_tail",
+        lambda _config, _build_id, line_count=80: "\n".join(
+            [
+                "[BuildClientPackage][Windows] build finished successfully",
+                "Process exited with code 0",
+            ]
+        ),
+    )
+
+    result = runner.wait_for_build_success(
+        runner.TeamCityRuntimeConfig(
+            base_url="http://teamcity.local",
+            token="token",
+            username=None,
+            password=None,
+            config_path=None,
+        ),
+        build_id=1154,
+        timeout_seconds=30,
+        poll_interval_seconds=1,
+    )
+
+    assert result == handle
+
+
 def test_resolve_teamcity_runtime_config_falls_back_to_repo_env_file(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
