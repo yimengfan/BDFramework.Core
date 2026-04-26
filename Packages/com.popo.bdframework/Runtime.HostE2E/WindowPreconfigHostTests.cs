@@ -81,7 +81,7 @@ namespace BDFramework.HostE2E
                 throw new Exception($"未发现热更程序集: {HotfixFrameworkAssemblyName}");
             }
 
-            var gameConfigManagerType = hotfixAssembly.GetType(GameConfigManagerTypeName);
+            var gameConfigManagerType = FindLoadedType(GameConfigManagerTypeName);
             if (gameConfigManagerType == null)
             {
                 throw new Exception($"未发现 GameConfigManager 类型: {GameConfigManagerTypeName}");
@@ -105,7 +105,9 @@ namespace BDFramework.HostE2E
                 throw new Exception("未发现 GameConfigManager.GetConfig 方法");
             }
 
-            var serverConfigProcessorType = hotfixAssembly.GetType(ServerConfigProcessorTypeName);
+            // ServerConfigProcessor 定义在业务主程序集而不是 BDFramework.Core，
+            // 因此这里不能再把它绑定到单一热更程序集上查找。
+            var serverConfigProcessorType = FindLoadedType(ServerConfigProcessorTypeName);
             if (serverConfigProcessorType == null)
             {
                 throw new Exception($"未发现 ServerConfigProcessor 类型: {ServerConfigProcessorTypeName}");
