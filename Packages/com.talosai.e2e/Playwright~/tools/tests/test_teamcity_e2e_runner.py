@@ -163,6 +163,7 @@ def test_select_remote_package_entry_prefers_main_windows_zip() -> None:
     selected = runner.select_remote_package_entry(
         profile,
         [
+            {"type": "file", "path": "ClientPackage_windows/123/ButDontShipItWithYourGame_Data.zip"},
             {"type": "file", "path": "ClientPackage_windows/123/Game_BurstDebugInformation_DoNotShip.zip"},
             {"type": "file", "path": "ClientPackage_windows/123/GameRuntime.zip"},
             {"type": "file", "path": "ClientPackage_windows/123/Game_不要发布.zip"},

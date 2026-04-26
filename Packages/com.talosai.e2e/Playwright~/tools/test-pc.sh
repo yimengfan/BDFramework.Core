@@ -35,6 +35,7 @@ UNITY_PORT="${UNITY_PORT:-10002}"
 IS_MACOS=false
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 IS_WINDOWS_GIT_BASH=false
+IS_WINDOWS_TEAMCITY=false
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -67,6 +68,9 @@ fi
 case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*) IS_WINDOWS_GIT_BASH=true ;;
 esac
+if ${IS_WINDOWS_GIT_BASH} && [[ -n "${TEAMCITY_VERSION:-}" ]]; then
+    IS_WINDOWS_TEAMCITY=true
+fi
 
 echo "============================================"
 echo "  Talos E2E — PC 模式测试"
@@ -105,24 +109,15 @@ APP_PID=""
 PLAYER_LOG_FILE=""
 PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-${BUILD_ID:-local-$$}}"
 PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
-# 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
-# Keep Unity logging on stdout by default so macOS/Linux local runs can inspect the startup chain directly.
-PLAYER_LAUNCH_ARGS=("-screen-fullscreen" "0")
-# Windows Git Bash + TeamCity Server 2022 上，固定分辨率与 popupwindow 会把 Player 卡在图形初始化前，
-# 因此该分支只保留窗口化标记，把分辨率交回给系统默认值。
-# On Windows Git Bash + TeamCity Server 2022, fixed resolution plus popupwindow can stall the player before managed startup,
-# so that branch keeps only the windowed flag and lets the system default resolution win.
-if ${IS_WINDOWS_GIT_BASH}; then
+# 默认仍把 Unity 日志写到标准输出，便于本地直接观察启动链路。
+# Keep Unity logging on stdout by default so local runs can inspect the startup chain directly.
+PLAYER_LAUNCH_ARGS=()
+if ${IS_WINDOWS_TEAMCITY}; then
     # Windows TeamCity agent 不需要桌面输入，也不需要真实图形设备，
     # 这里改用 batchmode + nographics 让 standalone player 跳过窗口与图形初始化。
     # The Windows TeamCity agent does not need desktop input or a real graphics device,
     # so batchmode plus nographics lets the standalone player bypass window and graphics initialization.
-    PLAYER_LAUNCH_ARGS=("-batchmode" "-nographics" "${PLAYER_LAUNCH_ARGS[@]}")
-fi
-if ${IS_MACOS}; then
-    PLAYER_LAUNCH_ARGS+=("-screen-width" "1080" "-screen-height" "1920")
-elif ! ${IS_WINDOWS_GIT_BASH}; then
-    PLAYER_LAUNCH_ARGS+=("-screen-width" "1080" "-screen-height" "1920" "-popupwindow")
+    PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")
 fi
 PLAYER_LAUNCH_ARGS+=("-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
@@ -259,12 +254,17 @@ else
         PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player-${PLAYER_LOG_FILE_SUFFIX}.log"
         : > "${PLAYER_LOG_FILE}"
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
+        if ${IS_WINDOWS_TEAMCITY}; then
+            POWERSHELL_ARGUMENT_LIST_LITERAL="@('-batchmode','-nographics','-logFile','${PLAYER_LOG_FILE_WIN}')"
+        else
+            POWERSHELL_ARGUMENT_LIST_LITERAL="@('-logFile','${PLAYER_LOG_FILE_WIN}')"
+        fi
         # 使用子 shell + set +e 避免 PowerShell 错误导致整个脚本退出
         # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
         APP_PID="$(set +e; {
             powershell.exe -NoProfile -Command "\
                 try { \
-                    \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-batchmode','-nographics','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru -ErrorAction Stop; \
+                    \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList ${POWERSHELL_ARGUMENT_LIST_LITERAL} -PassThru -ErrorAction Stop; \
                     [Console]::Out.Write(\$proc.Id); \
                 } catch { \
                     [Console]::Error.Write(\"PowerShell Start-Process failed: \$_\"); \

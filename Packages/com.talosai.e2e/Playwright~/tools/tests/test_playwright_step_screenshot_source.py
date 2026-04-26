@@ -5,7 +5,7 @@ Talos Playwright step screenshot source regression tests.
 1. 公共 fixture 必须暴露 talosStep 包装器，用于统一记录步骤并在结束后截图。
 2. UnityConnector 必须提供 captureScreenshot 能力，确保 Playwright 不需要感知底层 action 细节。
 3. Windows BaseFlow 规范测试必须通过 talosStep 执行关键步骤，确保截图进入标准 Playwright 报告。
-4. PC 启动脚本必须保留桌面窗口模式覆盖参数，并恢复竖屏窗口尺寸。
+4. PC 启动脚本不得再注入桌面窗口覆盖参数，而应回退到包体默认窗口设置。
 5. Windows BaseFlow 规范测试必须覆盖热更 DLL、AB 资源系统与 SQLite 三条基础链路。
 6. BaseFlow TeamCity buildType 必须拆分为 prepare / run 两个步骤，并通过本地包体参数交接。
 
@@ -13,7 +13,7 @@ Coverage:
 1. Shared fixtures must expose the talosStep wrapper so steps are recorded uniformly and screenshots are attached afterwards.
 2. UnityConnector must provide captureScreenshot so Playwright does not need to know lower-level action details.
 3. The Windows BaseFlow spec must execute key steps through talosStep so screenshots land in the standard Playwright report.
-4. The PC launcher script must keep desktop window-mode override arguments so remote players do not fall back to unstable default resolutions.
+4. The PC launcher script must no longer inject desktop window override arguments and should defer to the packaged default window settings.
 5. The Windows BaseFlow spec must cover the hotfix-DLL, AssetBundle resource, and SQLite foundational paths.
 6. The BaseFlow TeamCity buildType must be split into prepare and run steps and hand off the local package path explicitly.
 """
@@ -50,21 +50,20 @@ def test_playwright_step_screenshot_contract_is_wired() -> None:
     assert "await talosStep(" in baseflow_content
 
 
-def test_pc_tool_keeps_portrait_window_args_and_windows_player_log_capture() -> None:
-    """验证 PC 工具脚本会保留桌面竖屏窗口参数，并让 Windows 分支把 Unity 日志写入文件后在失败路径回吐。
-    Verify that the PC tool script keeps portrait desktop window arguments and lets the Windows branch dump Unity logs on failure.
+def test_pc_tool_defers_window_shape_to_package_defaults_and_keeps_windows_player_log_capture() -> None:
+    """验证 PC 工具脚本不再覆写桌面窗口参数，并让 Windows 分支把 Unity 日志写入文件后在失败路径回吐。
+    Verify that the PC tool script no longer overrides desktop window arguments and lets the Windows branch dump Unity logs on failure.
     """
     tool_content = PC_TOOL_PATH.read_text(encoding="utf-8")
 
-    assert '"-screen-fullscreen"' in tool_content
-    assert '"-screen-width"' in tool_content
-    assert '"-screen-height"' in tool_content
-    assert '"-popupwindow"' in tool_content
-    assert '"1080"' in tool_content
-    assert '"1920"' in tool_content
+    assert '"-screen-fullscreen"' not in tool_content
+    assert '"-screen-width"' not in tool_content
+    assert '"-screen-height"' not in tool_content
+    assert '"-popupwindow"' not in tool_content
     assert '"-logFile"' in tool_content
     assert '"-"' in tool_content
     assert 'IS_WINDOWS_GIT_BASH=false' in tool_content
+    assert 'IS_WINDOWS_TEAMCITY=false' in tool_content
     assert 'Start-Process -FilePath' in tool_content
     assert '-WorkingDirectory' in tool_content
     assert '-RedirectStandardOutput' not in tool_content

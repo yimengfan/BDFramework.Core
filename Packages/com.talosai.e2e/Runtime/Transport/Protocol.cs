@@ -12,7 +12,8 @@ namespace Talos.E2E.Transport
     static public class Protocol
     {
         /// <summary>
-        /// 默认测试服务监听端口，可通过命令行参数 -talosPort 覆盖。
+        /// 默认测试服务监听端口。
+        /// 真机启动不再依赖外部命令行覆盖，而是由平台隔离端口池提供候选端口。
         /// </summary>
         public const int DefaultPort = 10002;
 

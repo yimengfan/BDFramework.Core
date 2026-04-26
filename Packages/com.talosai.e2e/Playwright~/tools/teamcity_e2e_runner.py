@@ -72,6 +72,7 @@ TEAMCITY_ISOLATED_UNITY_PORT_BASE = 20000
 TEAMCITY_ISOLATED_UNITY_PORT_RANGE = 20000
 WINDOWS_SKIPPED_PACKAGE_MARKERS = (
     "_BurstDebugInformation_DoNotShip",
+    "ButDontShipItWithYourGame",
     "不要发布",
 )
 NODE_TOOLCACHE_DIR = PLAYWRIGHT_DIR / ".toolcache" / "node"
