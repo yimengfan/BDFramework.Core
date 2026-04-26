@@ -106,5 +106,14 @@ namespace BDFramework.RuntimeTests.ApiTest
             FrameworkContractAssertions.VerifyBDLauncherOwnsDebugTalosStartupBridge();
         }
 
+        /// <summary>
+        /// 验证 E2EAutoInit 具有 IL2CPP 保活入口，防止 IL2CPP 构建中类型被裁剪。
+        /// Verify that E2EAutoInit has an IL2CPP keep-alive entrypoint to prevent type stripping in IL2CPP builds.
+        /// </summary>
+        public void E2EAutoInit_ShouldHaveRuntimeInitializeKeepAliveForIL2CPP()
+        {
+            FrameworkContractAssertions.VerifyE2EAutoInitHasRuntimeInitializeKeepAliveForIL2CPP();
+        }
+
     }
 }

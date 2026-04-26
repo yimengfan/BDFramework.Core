@@ -214,40 +214,31 @@ namespace BDFramework
         /// 避免 app 启动再依赖 `-talosPort` / `-talosForceE2E` 这类外部传参。
         /// This keeps the startup entrypoint inside BDLauncher instead of hotfix scripts or external launch arguments,
         /// so app startup no longer depends on `-talosPort` / `-talosForceE2E` style external parameters.
+        /// IL2CPP 保留说明：
+        /// E2EAutoInit 自身带有 [RuntimeInitializeOnLoadMethod] 保活入口，
+        /// Unity 引擎在初始化阶段直接调用该方法，从而强制 IL2CPP 将整个类编译到原生二进制。
+        /// 因此在 BDLauncher.Awake() 执行时，E2EAutoInit 类型一定已在 AppDomain 中可被发现。
+        /// IL2CPP preservation note:
+        /// E2EAutoInit itself has a [RuntimeInitializeOnLoadMethod] keep-alive entrypoint,
+        /// so Unity's initialization system calls it directly, forcing IL2CPP to compile the entire class into the native binary.
+        /// Therefore, when BDLauncher.Awake() executes, the E2EAutoInit type is guaranteed to be discoverable in the AppDomain.
         /// </summary>
         [Conditional("DEBUG")]
         private void TryLaunchTalosE2EInDebugBuild()
         {
             try
             {
-                // 先在已加载的程序集中查找；如果找不到，尝试显式加载 Talos.E2E.Runtime。
-                // Search loaded assemblies first; if not found, try to explicitly load Talos.E2E.Runtime.
-                // Talos.E2E.Runtime 是 autoReferenced=true 的 AOT 程序集，但 Unity 可能延迟加载它
-                // （没有代码路径直接引用该程序集中的类型时，CLR 不会自动加载）。
-                // Talos.E2E.Runtime is an autoReferenced=true AOT assembly, but Unity may delay-load it
-                // (the CLR won't load it automatically when no code path directly references a type from it).
+                // E2EAutoInit 有 [RuntimeInitializeOnLoadMethod] 保活入口，
+                // IL2CPP 构建中该类型一定已在 AppDomain 中可被发现。
+                // E2EAutoInit has a [RuntimeInitializeOnLoadMethod] keep-alive entrypoint,
+                // so in IL2CPP builds the type is guaranteed to be discoverable in the AppDomain.
                 var foundType = FindE2EAutoInitType();
-                if (foundType == null)
-                {
-                    Debug.Log("[TalosE2E] 首次扫描未发现 E2EAutoInit，尝试显式加载 Talos.E2E.Runtime 程序集...");
-                    try
-                    {
-                        var loadedAssembly = System.Reflection.Assembly.Load("Talos.E2E.Runtime");
-                        Debug.Log($"[TalosE2E] Assembly.Load 返回: {loadedAssembly?.GetName().FullName ?? "null"}");
-                    }
-                    catch (Exception loadEx)
-                    {
-                        Debug.LogWarning($"[TalosE2E] 显式加载 Talos.E2E.Runtime 失败: {loadEx.Message}");
-                    }
-
-                    foundType = FindE2EAutoInitType();
-                }
 
                 if (foundType == null)
                 {
-                    // 诊断：列出所有包含 Talos 的已加载程序集，帮助判断 IL2CPP 是否裁剪了类型元数据。
-                    // Diagnostic: list all loaded assemblies containing "Talos" to help determine if IL2CPP stripped type metadata.
-                    Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，列出含 Talos 的程序集:");
+                    // 兜底诊断：列出所有含 Talos 的已加载程序集。
+                    // Fallback diagnostic: list all loaded assemblies containing "Talos".
+                    Debug.LogWarning("[TalosE2E] 当前进程未发现 E2EAutoInit（理论上不应到达此处），列出含 Talos 的程序集:");
                     foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
                     {
                         if (asm.GetName().Name.Contains("Talos"))

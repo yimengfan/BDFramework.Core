@@ -14,6 +14,12 @@ namespace Talos.E2E
     /// - 如果是 Debug 构建，自动启动 E2E 测试 TCP 服务。
     /// - 如果是 Release 构建，跳过不执行任何操作。
     /// 
+    /// IL2CPP 保留策略：
+    /// 在 IL2CPP 构建中，Assembly.Load() 无法工作（没有托管 DLL），
+    /// link.xml 只防止元数据裁剪但不保证代码被编译到原生二进制。
+    /// 本类使用 [RuntimeInitializeOnLoadMethod] 确保 Unity 初始化系统直接引用本类型，
+    /// 从而强制 IL2CPP 将整个类（包括 CheckAndLaunch）编译进原生二进制。
+    /// 
     /// 集成方式：
     /// 在游戏的热更入口（如 IHotfixGameStart 实现）中调用 CheckAndLaunch()。
     /// 也可以在框架启动完成后由业务代码手动调用。
@@ -45,6 +51,29 @@ namespace Talos.E2E
         /// so Android and similar platforms can retry from a later host-visible entrypoint instead of being locked out forever by the first probe.
         /// </summary>
         static private bool hasLaunched = false;
+
+        /// <summary>
+        /// IL2CPP 保活入口——在程序集加载后立即执行，确保本类型被编译到原生二进制。
+        /// IL2CPP keep-alive entrypoint — executes immediately after assemblies are loaded,
+        /// ensuring this type is compiled into the native binary.
+        /// 在 IL2CPP 构建中，没有托管 DLL 文件，Assembly.Load() 无法工作。
+        /// 只有被代码直接引用的类型才会被 IL2CPP 编译进原生二进制。
+        /// [RuntimeInitializeOnLoadMethod] 让 Unity 的初始化系统直接调用本方法，
+        /// 这创建了从 Unity 引擎到本类型的直接代码引用，强制 IL2CPP 保留整个类。
+        /// In IL2CPP builds, there are no managed DLL files and Assembly.Load() does not work.
+        /// Only types with direct code references get compiled into the native binary.
+        /// [RuntimeInitializeOnLoadMethod] causes Unity's initialization system to call this method directly,
+        /// creating a direct code reference from the Unity engine to this type, forcing IL2CPP to preserve the entire class.
+        /// </summary>
+        [Preserve]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        static private void EnsureTypePreservedInIL2CPP()
+        {
+            // 此方法体故意为空——其唯一目的是通过 [RuntimeInitializeOnLoadMethod]
+            // 让 Unity 引擎持有对本类型的直接代码引用，从而防止 IL2CPP 裁剪本类。
+            // This method body is intentionally empty — its sole purpose is to create a direct code reference
+            // from the Unity engine to this type via [RuntimeInitializeOnLoadMethod], preventing IL2CPP from stripping this class.
+        }
 
         /// <summary>
         /// 自动检测 Talos 启动条件，并在条件满足时启动 E2E 测试系统。

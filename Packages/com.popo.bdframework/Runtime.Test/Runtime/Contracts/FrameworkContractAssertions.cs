@@ -195,6 +195,31 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 验证 E2EAutoInit 具有 [RuntimeInitializeOnLoadMethod] 保活入口，确保 IL2CPP 构建中类型不会被裁剪。
+        /// Verify that E2EAutoInit has a [RuntimeInitializeOnLoadMethod] keep-alive entrypoint so IL2CPP builds do not strip the type.
+        /// 在 IL2CPP 构建中，Assembly.Load() 无法工作（没有托管 DLL），
+        /// link.xml 只防止元数据裁剪但不保证代码被编译到原生二进制。
+        /// [RuntimeInitializeOnLoadMethod] 让 Unity 引擎直接引用本类型，强制 IL2CPP 保留整个类。
+        /// In IL2CPP builds, Assembly.Load() does not work (no managed DLLs),
+        /// link.xml only prevents metadata stripping but does not guarantee code is compiled into the native binary.
+        /// [RuntimeInitializeOnLoadMethod] causes Unity's engine to directly reference this type, forcing IL2CPP to preserve the entire class.
+        /// </summary>
+        public static void VerifyE2EAutoInitHasRuntimeInitializeKeepAliveForIL2CPP()
+        {
+            var keepAliveMethod = typeof(Talos.E2E.E2EAutoInit).GetMethod(
+                "EnsureTypePreservedInIL2CPP",
+                BindingFlags.NonPublic | BindingFlags.Static);
+
+            EnsureTrue(keepAliveMethod != null, "应该能够找到 E2EAutoInit.EnsureTypePreservedInIL2CPP 保活方法。");
+            EnsureTrue(
+                keepAliveMethod.GetCustomAttributes(typeof(UnityEngine.RuntimeInitializeOnLoadMethodAttribute), false).Any(),
+                "E2EAutoInit.EnsureTypePreservedInIL2CPP 必须带有 [RuntimeInitializeOnLoadMethod] 属性，确保 IL2CPP 构建中类型不被裁剪。");
+            EnsureTrue(
+                keepAliveMethod.GetCustomAttributes(typeof(UnityEngine.Scripting.PreserveAttribute), false).Any(),
+                "E2EAutoInit.EnsureTypePreservedInIL2CPP 必须带有 [Preserve] 属性，防止 IL2CPP 链接器裁剪本方法。");
+        }
+
+        /// <summary>
         /// 验证 AOT 运行时加载器会跳过已由 Player 预加载的 preserved 热更程序集。
         /// Verify that the AOT runtime loader skips preserved hot-update assemblies already loaded by the player.
         /// 这覆盖“程序集既保留在首包里，又仍然存在 `.zlua.bytes` 更新产物”时的重复装载风险，
