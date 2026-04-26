@@ -220,32 +220,66 @@ namespace BDFramework
         {
             try
             {
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                // 先在已加载的程序集中查找；如果找不到，尝试显式加载 Talos.E2E.Runtime。
+                // Search loaded assemblies first; if not found, try to explicitly load Talos.E2E.Runtime.
+                // Talos.E2E.Runtime 是 autoReferenced=true 的 AOT 程序集，但 Unity 可能延迟加载它
+                // （没有代码路径直接引用该程序集中的类型时，CLR 不会自动加载）。
+                // Talos.E2E.Runtime is an autoReferenced=true AOT assembly, but Unity may delay-load it
+                // (the CLR won't load it automatically when no code path directly references a type from it).
+                var foundType = FindE2EAutoInitType();
+                if (foundType == null)
                 {
-                    var type = assembly.GetType("Talos.E2E.E2EAutoInit");
-                    if (type == null)
+                    Debug.Log("[TalosE2E] 首次扫描未发现 E2EAutoInit，尝试显式加载 Talos.E2E.Runtime 程序集...");
+                    try
                     {
-                        continue;
+                        System.Reflection.Assembly.Load("Talos.E2E.Runtime");
+                    }
+                    catch (Exception loadEx)
+                    {
+                        Debug.LogWarning($"[TalosE2E] 显式加载 Talos.E2E.Runtime 失败: {loadEx.Message}");
                     }
 
-                    var method = type.GetMethod("CheckAndLaunch", BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null);
-                    if (method == null)
-                    {
-                        Debug.LogWarning("[TalosE2E] 找到 E2EAutoInit 但未找到无参 CheckAndLaunch 入口");
-                        return;
-                    }
+                    foundType = FindE2EAutoInitType();
+                }
 
-                    method.Invoke(null, null);
-                    Debug.Log($"[TalosE2E] BDLauncher 已触发 Debug E2E 自动启动 assembly={assembly.GetName().Name}");
+                if (foundType == null)
+                {
+                    Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，跳过 Debug E2E 自动启动");
                     return;
                 }
 
-                Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，跳过 Debug E2E 自动启动");
+                var method = foundType.GetMethod("CheckAndLaunch", BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null);
+                if (method == null)
+                {
+                    Debug.LogWarning("[TalosE2E] 找到 E2EAutoInit 但未找到无参 CheckAndLaunch 入口");
+                    return;
+                }
+
+                method.Invoke(null, null);
+                Debug.Log($"[TalosE2E] BDLauncher 已触发 Debug E2E 自动启动 assembly={foundType.Assembly.GetName().Name}");
             }
             catch (Exception ex)
             {
                 Debug.LogWarning($"[TalosE2E] BDLauncher 触发 Debug E2E 自动启动失败（不影响启动）: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// 在当前 AppDomain 已加载的程序集中查找 Talos.E2E.E2EAutoInit 类型。
+        /// Search for the Talos.E2E.E2EAutoInit type in currently loaded assemblies of the AppDomain.
+        /// </summary>
+        static private Type FindE2EAutoInitType()
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var type = assembly.GetType("Talos.E2E.E2EAutoInit");
+                if (type != null)
+                {
+                    return type;
+                }
+            }
+
+            return null;
         }
         
         

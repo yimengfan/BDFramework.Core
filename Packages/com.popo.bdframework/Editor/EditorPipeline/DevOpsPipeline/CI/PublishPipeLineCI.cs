@@ -194,11 +194,24 @@ namespace BDFramework.Editor.DevOps
         /// <summary>
         /// 执行指定平台的热更代码 BatchMode 构建。
         /// Debug 模式下会临时注入 DEBUG 与 ENABLE_E2ETEST，确保 Talos E2E 注册代码参与编译。
+        /// 同时会自动注入测试程序集到 HybridCLR 的 hotUpdateAssemblies 列表。
         /// </summary>
         static private void BuildClientResHotfixCodeForBatchMode(BuildTarget buildTarget)
         {
             var enableDebugBuild = IsDebugBuildRequested();
             Debug.Log($"【CI】BuildClientResHotfixCode Target:{buildTarget} TalosDebug:{enableDebugBuild}");
+
+            // Debug 构建时注入测试程序集
+            // Inject test assemblies when building in Debug mode
+            if (enableDebugBuild)
+            {
+                HotfixScript.HotfixTestAssemblyInjector.ResetInjectionState();
+                HotfixScript.HotfixTestAssemblyInjector.InjectTestAssemblies();
+            }
+            else
+            {
+                HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
+            }
 
             if (enableDebugBuild)
             {
