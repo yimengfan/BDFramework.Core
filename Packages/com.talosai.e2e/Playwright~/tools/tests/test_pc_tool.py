@@ -287,18 +287,16 @@ def test_test_pc_honours_unity_tcp_timeout_override(tmp_path: Path) -> None:
     assert "等待 TCP 服务超时 (2s)" in result.stdout
 
 
-def test_test_pc_source_uses_headless_batchmode_only_on_windows_teamcity() -> None:
-    """验证 Windows TeamCity 分支才会开启 batchmode + nographics，并且不再向 player 注入外部 Talos 参数。
-    Verify that only the Windows TeamCity branch enables batchmode plus nographics and that no external Talos arguments are injected into the player.
+def test_test_pc_source_avoids_headless_window_suppression_and_external_talos_args() -> None:
+    """验证 PC 脚本不再启用 batchmode + nographics，并且不再向 player 注入外部 Talos 参数。
+    Verify that the PC script no longer enables batchmode plus nographics and does not inject external Talos arguments into the player.
     """
 
     content = SOURCE_TEST_PC.read_text(encoding="utf-8")
 
-    assert 'IS_WINDOWS_TEAMCITY=false' in content
-    assert 'if ${IS_WINDOWS_GIT_BASH} && [[ -n "${TEAMCITY_VERSION:-}" ]]; then' in content
-    assert 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' in content
+    assert 'PLAYER_LAUNCH_ARGS=()' in content
+    assert 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' not in content
     assert 'Start-Process -FilePath' in content
-    assert 'POWERSHELL_ARGUMENT_LIST_LITERAL="@(\'-batchmode\',\'-nographics\',\'-logFile\',\'${PLAYER_LOG_FILE_WIN}\')"' in content
     assert 'POWERSHELL_ARGUMENT_LIST_LITERAL="@(\'-logFile\',\'${PLAYER_LOG_FILE_WIN}\')"' in content
     assert '"-talosPort"' not in content
     assert '"-talosForceE2E"' not in content
@@ -335,13 +333,27 @@ def test_test_pc_source_archives_persistent_player_logs_for_teamcity() -> None:
 
 
 def test_test_pc_source_prefers_teamcity_build_id_for_player_log_suffix() -> None:
-    """验证桌面脚本会优先用 TeamCity build id 生成本次 player log 文件名，避免复用 local-PID 日志。
-    Verify that the desktop launcher prefers the TeamCity build id for player-log file names so local-PID logs do not get reused.
+    """验证桌面脚本会优先解析当前 TeamCity build id 生成本次 player log 文件名，避免复用 local-PID 日志。
+    Verify that the desktop launcher resolves the current TeamCity build id for player-log file names so local-PID logs do not get reused.
     """
 
     content = SOURCE_TEST_PC.read_text(encoding="utf-8")
 
-    assert 'PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-${BUILD_ID:-local-$$}}"' in content
+    assert 'resolve_current_build_id() {' in content
+    assert 'TEAMCITY_BUILD_PROPERTIES_FILE' in content
+    assert 'PLAYER_LOG_FILE_SUFFIX="$(resolve_current_build_id)"' in content
+
+
+def test_test_pc_source_cleans_stale_test_result_player_logs_before_launch() -> None:
+    """验证桌面脚本会在启动前清掉 test-results 下旧的 unity-player 日志，避免 TeamCity 上传历史残留。
+    Verify that the desktop launcher removes stale unity-player logs under test-results before launch so TeamCity does not upload historical leftovers.
+    """
+
+    content = SOURCE_TEST_PC.read_text(encoding="utf-8")
+
+    assert 'cleanup_stale_test_result_player_logs() {' in content
+    assert "find \"${PLAYWRIGHT_DIR}/test-results\" -maxdepth 1 -type f -name 'unity-player*.log' -print -delete" in content
+    assert 'cleanup_stale_test_result_player_logs' in content
 
 
 def test_test_pc_source_cleans_stale_windows_players_before_launch() -> None:

@@ -63,7 +63,6 @@ def test_pc_tool_defers_window_shape_to_package_defaults_and_keeps_windows_playe
     assert '"-logFile"' in tool_content
     assert '"-"' in tool_content
     assert 'IS_WINDOWS_GIT_BASH=false' in tool_content
-    assert 'IS_WINDOWS_TEAMCITY=false' in tool_content
     assert 'Start-Process -FilePath' in tool_content
     assert '-WorkingDirectory' in tool_content
     assert '-RedirectStandardOutput' not in tool_content
@@ -71,6 +70,9 @@ def test_pc_tool_defers_window_shape_to_package_defaults_and_keeps_windows_playe
     assert 'unity-player-${PLAYER_LOG_FILE_SUFFIX}.log' in tool_content
     assert 'print_windows_player_logs' in tool_content
     assert 'taskkill.exe //PID ${APP_PID}' in tool_content
+    assert 'resolve_current_build_id() {' in tool_content
+    assert 'cleanup_stale_test_result_player_logs' in tool_content
+    assert 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' not in tool_content
 
 
 def test_baseflow_spec_covers_foundational_runtime_suites() -> None:

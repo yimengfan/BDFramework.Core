@@ -35,7 +35,6 @@ UNITY_PORT="${UNITY_PORT:-10002}"
 IS_MACOS=false
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
 IS_WINDOWS_GIT_BASH=false
-IS_WINDOWS_TEAMCITY=false
 
 # ======== 参数解析 ========
 while [[ $# -gt 0 ]]; do
@@ -68,9 +67,6 @@ fi
 case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*) IS_WINDOWS_GIT_BASH=true ;;
 esac
-if ${IS_WINDOWS_GIT_BASH} && [[ -n "${TEAMCITY_VERSION:-}" ]]; then
-    IS_WINDOWS_TEAMCITY=true
-fi
 
 echo "============================================"
 echo "  Talos E2E — PC 模式测试"
@@ -107,24 +103,63 @@ echo ""
 echo ">>> 启动应用..."
 APP_PID=""
 PLAYER_LOG_FILE=""
-PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-${BUILD_ID:-local-$$}}"
 PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 # 默认仍把 Unity 日志写到标准输出，便于本地直接观察启动链路。
 # Keep Unity logging on stdout by default so local runs can inspect the startup chain directly.
 PLAYER_LAUNCH_ARGS=()
-if ${IS_WINDOWS_TEAMCITY}; then
-    # Windows TeamCity agent 不需要桌面输入，也不需要真实图形设备，
-    # 这里改用 batchmode + nographics 让 standalone player 跳过窗口与图形初始化。
-    # The Windows TeamCity agent does not need desktop input or a real graphics device,
-    # so batchmode plus nographics lets the standalone player bypass window and graphics initialization.
-    PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")
-fi
 PLAYER_LAUNCH_ARGS+=("-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
+
+resolve_current_build_id() {
+    # 优先从显式环境变量读取当前 TeamCity build id；如果 agent 没注入，再回退到 properties 文件或 build URL 末尾数字。
+    # Prefer the explicit TeamCity build-id env vars; if the agent does not inject them, fall back to the properties file or the numeric tail of the build URL.
+    local candidate properties_file
+    for candidate in "${TEAMCITY_BUILD_ID:-}" "${BUILD_ID:-}"; do
+        if [[ -n "${candidate}" ]]; then
+            printf '%s\n' "${candidate}"
+            return 0
+        fi
+    done
+
+    properties_file="${TEAMCITY_BUILD_PROPERTIES_FILE:-}"
+    if [[ -f "${properties_file}" ]]; then
+        while IFS='=' read -r raw_name raw_value; do
+            case "${raw_name}" in
+                teamcity.build.id)
+                    if [[ -n "${raw_value}" ]]; then
+                        printf '%s\n' "${raw_value}"
+                        return 0
+                    fi
+                    ;;
+                teamcity.build.url)
+                    if [[ "${raw_value}" =~ /([0-9]+)$ ]]; then
+                        printf '%s\n' "${BASH_REMATCH[1]}"
+                        return 0
+                    fi
+                    ;;
+            esac
+        done < "${properties_file}"
+    fi
+
+    if [[ -n "${BUILD_URL:-}" && "${BUILD_URL}" =~ /([0-9]+)$ ]]; then
+        printf '%s\n' "${BASH_REMATCH[1]}"
+        return 0
+    fi
+
+    printf 'local-%s\n' "$$"
+}
+
+PLAYER_LOG_FILE_SUFFIX="$(resolve_current_build_id)"
 
 resolve_talos_port_candidates() {
     local base_port="${1}"
     printf '%s\n' "${base_port}" "$((base_port + 10))" "$((base_port + 20))"
+}
+
+cleanup_stale_test_result_player_logs() {
+    # 每次运行前先清掉 test-results 下旧的 unity-player 日志，避免 TeamCity 上传历史残留并误判最新日志。
+    # Remove stale unity-player logs under test-results before each run so TeamCity does not upload historical leftovers and misidentify the newest log.
+    find "${PLAYWRIGHT_DIR}/test-results" -maxdepth 1 -type f -name 'unity-player*.log' -print -delete 2>/dev/null || true
 }
 
 print_windows_player_logs() {
@@ -239,6 +274,7 @@ cleanup_stale_windows_player_processes() {
 }
 
 cleanup_stale_windows_player_processes
+cleanup_stale_test_result_player_logs
 
 if ${IS_MACOS}; then
     # macOS: 使用 open 命令启动 .app
@@ -254,11 +290,7 @@ else
         PLAYER_LOG_FILE="${PLAYWRIGHT_DIR}/test-results/unity-player-${PLAYER_LOG_FILE_SUFFIX}.log"
         : > "${PLAYER_LOG_FILE}"
         PLAYER_LOG_FILE_WIN="$(cygpath -w "${PLAYER_LOG_FILE}")"
-        if ${IS_WINDOWS_TEAMCITY}; then
-            POWERSHELL_ARGUMENT_LIST_LITERAL="@('-batchmode','-nographics','-logFile','${PLAYER_LOG_FILE_WIN}')"
-        else
-            POWERSHELL_ARGUMENT_LIST_LITERAL="@('-logFile','${PLAYER_LOG_FILE_WIN}')"
-        fi
+        POWERSHELL_ARGUMENT_LIST_LITERAL="@('-logFile','${PLAYER_LOG_FILE_WIN}')"
         # 使用子 shell + set +e 避免 PowerShell 错误导致整个脚本退出
         # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
         APP_PID="$(set +e; {
