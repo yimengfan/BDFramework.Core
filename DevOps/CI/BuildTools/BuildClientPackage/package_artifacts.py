@@ -137,7 +137,7 @@ def find_windows_runtime_dir(source_dir: Path) -> Path:
 
 
 def find_windows_do_not_publish_dirs(runtime_dir: Path) -> list[Path]:
-    """收集 Windows 输出中需要单独归档的“不要发布”目录。"""
+    """收集 Windows 输出中需要从最终上传产物彻底排除的目录。"""
     normalized_chinese_dirname = WINDOWS_DO_NOT_PUBLISH_DIRNAME.casefold()
     normalized_burst_suffix = WINDOWS_BURST_DO_NOT_SHIP_SUFFIX.casefold()
 
@@ -215,15 +215,6 @@ def prepare_publish_package_upload_source(
             file_paths=runtime_files,
             archive_root=PurePosixPath(runtime_dir.name),
         )
-
-        for skipped_dir in do_not_publish_dirs:
-            zip_suffix = skipped_dir.relative_to(runtime_dir).as_posix().replace("/", "_")
-            create_zip_archive(
-                prepared_dir / f"{runtime_dir.name}_{zip_suffix}.zip",
-                source_root=runtime_dir,
-                file_paths=list_publish_package_files(skipped_dir),
-                archive_root=PurePosixPath(runtime_dir.name),
-            )
 
         return prepared_dir
 

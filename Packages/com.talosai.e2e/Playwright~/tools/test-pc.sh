@@ -16,7 +16,7 @@
 # 环境变量：
 #   EXE_PATH    — 可执行文件路径（或通过 --exe 参数）
 #   UNITY_HOST  — 应用 IP 地址，默认 127.0.0.1
-#   UNITY_PORT  — TCP 端口，默认 10002
+#   UNITY_PORT  — Unity 候选 TCP 端口基值，默认 10002
 #   TALOS_UNITY_TCP_TIMEOUT — TCP 就绪等待秒数，默认 180
 #   NODE_BIN / NPM_BIN / TALOS_NODEJS_HOME — 可选：显式指定 Node/npm 安装位置
 # ============================================================================
@@ -107,7 +107,7 @@ PLAYER_LOG_FILE_SUFFIX="${TEAMCITY_BUILD_ID:-${BUILD_ID:-local-$$}}"
 PLAYER_LOG_ARCHIVE_DIR="${PLAYWRIGHT_DIR}/test-results/playerlogs"
 # 默认仍把 Unity 日志写到标准输出，便于 macOS/Linux 本地直接观察启动链路。
 # Keep Unity logging on stdout by default so macOS/Linux local runs can inspect the startup chain directly.
-PLAYER_LAUNCH_ARGS=("-talosPort" "${UNITY_PORT}" "-talosForceE2E" "-screen-fullscreen" "0")
+PLAYER_LAUNCH_ARGS=("-screen-fullscreen" "0")
 # Windows Git Bash + TeamCity Server 2022 上，固定分辨率与 popupwindow 会把 Player 卡在图形初始化前，
 # 因此该分支只保留窗口化标记，把分辨率交回给系统默认值。
 # On Windows Git Bash + TeamCity Server 2022, fixed resolution plus popupwindow can stall the player before managed startup,
@@ -120,12 +120,17 @@ if ${IS_WINDOWS_GIT_BASH}; then
     PLAYER_LAUNCH_ARGS=("-batchmode" "-nographics" "${PLAYER_LAUNCH_ARGS[@]}")
 fi
 if ${IS_MACOS}; then
-    PLAYER_LAUNCH_ARGS+=("-screen-width" "1280" "-screen-height" "720")
+    PLAYER_LAUNCH_ARGS+=("-screen-width" "1080" "-screen-height" "1920")
 elif ! ${IS_WINDOWS_GIT_BASH}; then
-    PLAYER_LAUNCH_ARGS+=("-screen-width" "1280" "-screen-height" "720" "-popupwindow")
+    PLAYER_LAUNCH_ARGS+=("-screen-width" "1080" "-screen-height" "1920" "-popupwindow")
 fi
 PLAYER_LAUNCH_ARGS+=("-logFile" "-")
 echo "    启动参数: ${PLAYER_LAUNCH_ARGS[*]}"
+
+resolve_talos_port_candidates() {
+    local base_port="${1}"
+    printf '%s\n' "${base_port}" "$((base_port + 10))" "$((base_port + 20))"
+}
 
 print_windows_player_logs() {
     # Windows PowerShell 分支改用 Unity 自身的 -logFile，避免 Start-Process 重定向卡住 GUI 进程启动。
@@ -197,21 +202,23 @@ cleanup_stale_windows_player_processes() {
     # Use subshell + set +e to prevent PowerShell errors from exiting the entire script
     cleanup_summary="$(set +e; {
         powershell.exe -NoProfile -Command "\
-            \$unityPort = ${UNITY_PORT}; \
+            \$unityPorts = @($(resolve_talos_port_candidates "${UNITY_PORT}" | paste -sd, -)); \
             \$preparedRoot = '${prepared_package_root_win}'.ToLowerInvariant(); \
             \$targetName = '${executable_stem}'.ToLowerInvariant(); \
             \$stopped = New-Object System.Collections.Generic.List[string]; \
             \$seen = New-Object System.Collections.Generic.HashSet[int]; \
             if (Get-Command Get-NetTCPConnection -ErrorAction SilentlyContinue) { \
-                Get-NetTCPConnection -State Listen -LocalPort \$unityPort -ErrorAction SilentlyContinue | \
-                    Select-Object -ExpandProperty OwningProcess -Unique | \
-                    ForEach-Object { \
-                        \$processId = [int]\$_; \
-                        if (\$seen.Add(\$processId)) { \
-                            Stop-Process -Id \$processId -Force -ErrorAction SilentlyContinue; \
-                            [void]\$stopped.Add(\"port:\$processId\"); \
-                        } \
-                    }; \
+                foreach (\$unityPort in \$unityPorts) { \
+                    Get-NetTCPConnection -State Listen -LocalPort \$unityPort -ErrorAction SilentlyContinue | \
+                        Select-Object -ExpandProperty OwningProcess -Unique | \
+                        ForEach-Object { \
+                            \$processId = [int]\$_; \
+                            if (\$seen.Add(\$processId)) { \
+                                Stop-Process -Id \$processId -Force -ErrorAction SilentlyContinue; \
+                                [void]\$stopped.Add(\"port:\$unityPort:\$processId\"); \
+                            } \
+                        }; \
+                } \
             } \
             Get-Process -Name '${executable_stem}' -ErrorAction SilentlyContinue | \
                 Where-Object { \
@@ -257,7 +264,7 @@ else
         APP_PID="$(set +e; {
             powershell.exe -NoProfile -Command "\
                 try { \
-                    \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-batchmode','-nographics','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru -ErrorAction Stop; \
+                    \$proc = Start-Process -FilePath '${EXE_PATH_WIN}' -WorkingDirectory '${EXE_DIR_WIN}' -ArgumentList @('-batchmode','-nographics','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}') -PassThru -ErrorAction Stop; \
                     [Console]::Out.Write(\$proc.Id); \
                 } catch { \
                     [Console]::Error.Write(\"PowerShell Start-Process failed: \$_\"); \
@@ -298,6 +305,12 @@ echo ">>> 等待 Unity E2E TCP 服务就绪..."
 # Cold starts on TeamCity Windows agents are often slower than local runs; default to 180s like Android and allow an environment override.
 MAX_WAIT="${TALOS_UNITY_TCP_TIMEOUT:-180}"
 WAITED=0
+RESOLVED_UNITY_PORT=""
+PORT_CANDIDATES=()
+while IFS= read -r candidate_port; do
+    PORT_CANDIDATES+=("${candidate_port}")
+done < <(resolve_talos_port_candidates "${UNITY_PORT}")
+echo "    候选端口: ${PORT_CANDIDATES[*]}"
 
 while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
     # 检查进程（如果知道 PID）
@@ -318,10 +331,14 @@ while [[ ${WAITED} -lt ${MAX_WAIT} ]]; do
         fi
     fi
 
-    if probe_talos_unity_ready "${UNITY_HOST}" "${UNITY_PORT}" 1000; then
-        echo "    ✅ TCP 服务已就绪 (${WAITED}s)"
-        break
-    fi
+    for candidate_port in "${PORT_CANDIDATES[@]}"; do
+        if probe_talos_unity_ready "${UNITY_HOST}" "${candidate_port}" 1000; then
+            RESOLVED_UNITY_PORT="${candidate_port}"
+            UNITY_PORT="${candidate_port}"
+            echo "    ✅ TCP 服务已就绪 (${WAITED}s) 端口=${UNITY_PORT}"
+            break 2
+        fi
+    done
     sleep 2
     WAITED=$((WAITED + 2))
     echo -n "."

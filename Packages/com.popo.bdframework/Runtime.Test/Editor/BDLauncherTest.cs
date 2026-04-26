@@ -94,11 +94,11 @@ namespace Runtime.Test.Editor
                         runtimeTest.WindowPreconfigHostTest_ShouldResolveInheritedGameConfigManagerInstProperty)
                 ),
                 (
-                    nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldRemainRuntimeReachable),
+                    nameof(BdLauncherApiTest.BDLauncher_ShouldOwnDebugTalosStartupBridge),
                     () => ExecuteWithSetUp(
                         runtimeTest,
-                        nameof(BdLauncherApiTest.TryStartE2EFramework_ShouldRemainRuntimeReachable),
-                        runtimeTest.TryStartE2EFramework_ShouldRemainRuntimeReachable)
+                        nameof(BdLauncherApiTest.BDLauncher_ShouldOwnDebugTalosStartupBridge),
+                        runtimeTest.BDLauncher_ShouldOwnDebugTalosStartupBridge)
                 ),
             };
 

@@ -8,7 +8,7 @@ BuildClientPackage artifact preparation and upload helper tests.
 3. HybridCLR 残留清理：验证遗留生成文件和 meta 文件被一起删除。
 4. 发布摘要构建：验证使用 CI 构建号作为远端标签。
 5. iOS 产物打包：验证 iOS 发布产物被重新打包为 Xcode 项目 ZIP。
-6. Windows 产物拆分：验证运行时负载和禁止发布负载被拆分为独立 ZIP。
+6. Windows 产物过滤：验证运行时 ZIP 会彻底排除禁止发布目录，不再额外上传 DoNotShip ZIP。
 7. 发布上传：验证回退到 clientVersion、透传文件服务器覆盖地址并发出进度日志。
 Coverage includes:
 1. CI log-root naming for TeamCity defaults and explicit overrides.
@@ -16,7 +16,7 @@ Coverage includes:
 3. HybridCLR legacy-output cleanup removing generated files and meta files together.
 4. Publish-summary construction preferring CI build numbers as remote labels.
 5. iOS packaging repacking the Xcode project into a ZIP archive.
-6. Windows packaging splitting runtime payloads and do-not-publish payloads.
+6. Windows packaging excluding do-not-publish payloads from the final upload set.
 7. Publish uploads falling back to clientVersion, forwarding file-server overrides, and emitting progress logs.
 """
 
@@ -210,10 +210,10 @@ def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
     ]
 
 
-def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do_not_publish(
+def test_prepare_publish_package_upload_source_for_windows_excludes_do_not_publish_payloads(
     tmp_path: Path,
 ) -> None:
-    """验证 Windows 发布产物被拆分为运行时负载和禁止发布负载两个独立 ZIP 文件。"""
+    """验证 Windows 发布产物会排除禁止发布目录，只保留主运行时 ZIP。"""
     output_dir = create_publish_output(
         tmp_path,
         include_do_not_publish=True,
@@ -230,23 +230,11 @@ def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do
 
     prepared_files = {file_path.name: file_path for file_path in list_publish_package_files(prepared_dir)}
 
-    assert set(prepared_files) == {
-        f"{APP_DIR_NAME}.zip",
-        f"{APP_DIR_NAME}_不要发布.zip",
-        f"{APP_DIR_NAME}_{APP_DIR_NAME}_BurstDebugInformation_DoNotShip.zip",
-    }
+    assert set(prepared_files) == {f"{APP_DIR_NAME}.zip"}
     assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}.zip"]) == [
         f"{APP_DIR_NAME}/BuildReport/summary.json",
         f"{APP_DIR_NAME}/Game_Data/globalgamemanagers",
         f"{APP_DIR_NAME}/Launcher.exe",
-    ]
-    assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}_不要发布.zip"]) == [
-        f"{APP_DIR_NAME}/不要发布/notes.txt",
-    ]
-    assert read_zip_entries(
-        prepared_files[f"{APP_DIR_NAME}_{APP_DIR_NAME}_BurstDebugInformation_DoNotShip.zip"]
-    ) == [
-        f"{APP_DIR_NAME}/{APP_DIR_NAME}_BurstDebugInformation_DoNotShip/notes.txt",
     ]
 
 
@@ -284,10 +272,7 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
         assert prepared_dir.is_dir()
 
         files = list_publish_package_files(prepared_dir)
-        assert {file_path.name for file_path in files} == {
-            f"{APP_DIR_NAME}.zip",
-            f"{APP_DIR_NAME}_不要发布.zip",
-        }
+        assert {file_path.name for file_path in files} == {f"{APP_DIR_NAME}.zip"}
 
         results = []
         total_files = len(files)
@@ -332,7 +317,7 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     )
     output = capsys.readouterr().out
 
-    assert len(results) == 2
+    assert len(results) == 1
     assert captured_resolve_kwargs == {"server_url": "https://files.example.com/fileserver"}
     assert f"[TestUpload] uploadSourceDir={output_dir}" in output
     assert "[TestUpload] uploadPreparedSource=" in output
@@ -340,7 +325,7 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     assert "[TestUpload] uploadRemoteRoot=ClientPackage_windows/0.1.238" in output
     assert "[TestUpload] uploadServerUrlOverride=https://files.example.com/fileserver" in output
     assert "[TestUpload] uploadServerUrl=https://files.example.com/fileserver" in output
-    assert "[TestUpload] uploadFileCount=2" in output
-    assert "[TestUpload] uploadProgress=1/2 state=uploading" in output
-    assert "[TestUpload] uploadProgress=2/2 state=uploaded" in output
-    assert "[TestUpload] uploadedFiles=2" in output
+    assert "[TestUpload] uploadFileCount=1" in output
+    assert "[TestUpload] uploadProgress=1/1 state=uploading" in output
+    assert "[TestUpload] uploadProgress=1/1 state=uploaded" in output
+    assert "[TestUpload] uploadedFiles=1" in output

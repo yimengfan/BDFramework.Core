@@ -48,7 +48,7 @@ namespace BDFramework.Test.E2E
         {
             var test = new BdLauncherApiTest();
             test.SetUp(nameof(LauncherE2EEntryContract));
-            test.TryStartE2EFramework_ShouldRemainRuntimeReachable();
+            test.BDLauncher_ShouldOwnDebugTalosStartupBridge();
         }
 
         /// <summary>

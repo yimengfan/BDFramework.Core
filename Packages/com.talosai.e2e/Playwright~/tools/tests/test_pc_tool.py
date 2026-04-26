@@ -2,14 +2,14 @@
 Talos PC launcher script tests.
 
 覆盖范围：
-1. Windows/macOS 共用桌面脚本会为 player 注入 Talos E2E 参数，并在非 Windows Git Bash 桌面路径上附带窗口模式参数。
+1. Windows/macOS 共用桌面脚本不再向 player 注入 Talos 外部启动参数，并在非 Windows Git Bash 桌面路径上附带竖屏窗口参数。
 2. Windows Git Bash 分支会改用 batchmode + nographics + 更保守的启动参数，避免远端无头 agent 在图形初始化阶段卡死。
 3. 启动脚本会复用解析后的 Node CLI 执行 Playwright，而不是依赖外部 npx。
-4. 桌面脚本允许通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限。
+4. 桌面脚本允许通过 TALOS_UNITY_TCP_TIMEOUT 覆盖 TCP 就绪等待上限，并会在候选端口池里自动探测当前可用端口。
 5. 桌面脚本会把 BDebug playerlogs 归档到 test-results/playerlogs，便于 TeamCity artifact 回传平台日志。
 
 Coverage:
-1. The shared desktop launcher script injects Talos E2E arguments and keeps window-mode arguments on non-Windows-Git-Bash desktop launches.
+1. The shared desktop launcher script no longer injects external Talos startup arguments and keeps portrait window arguments on non-Windows-Git-Bash desktop launches.
 2. The Windows Git Bash branch switches to batchmode plus nographics and a more conservative launch contract so remote headless agents do not stall during graphics initialization.
 3. The launcher script reuses the resolved Node CLI to run Playwright instead of relying on external npx.
 4. The desktop launcher allows overriding the TCP readiness timeout through TALOS_UNITY_TCP_TIMEOUT.
@@ -46,9 +46,9 @@ def copy_tool_script(source_path: Path, target_path: Path) -> None:
     target_path.chmod(target_path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 
-def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
-    """验证桌面包启动时会强制附带 Talos E2E 与窗口模式参数，并走解析后的 Node CLI。
-    Verify that desktop package startup forces Talos E2E and window-mode arguments and uses the resolved Node CLI.
+def test_test_pc_launches_player_with_portrait_window_args(tmp_path: Path) -> None:
+    """验证桌面包启动时不再附带 Talos 外部启动参数，并走解析后的 Node CLI。
+    Verify that desktop package startup no longer injects external Talos startup arguments and still uses the resolved Node CLI.
     """
     playwright_root = tmp_path / "PlaywrightRoot"
     tools_dir = playwright_root / "tools"
@@ -161,15 +161,12 @@ def test_test_pc_launches_player_with_force_e2e_args(tmp_path: Path) -> None:
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert launcher_args_path.read_text(encoding="utf-8").splitlines() == [
-        "-talosPort",
-        "12345",
-        "-talosForceE2E",
         "-screen-fullscreen",
         "0",
         "-screen-width",
-        "1280",
+        "1080",
         "-screen-height",
-        "720",
+        "1920",
         "-popupwindow",
         "-logFile",
         "-",
@@ -298,8 +295,8 @@ def test_test_pc_honours_unity_tcp_timeout_override(tmp_path: Path) -> None:
 
 
 def test_test_pc_source_uses_headless_batchmode_on_windows_git_bash() -> None:
-    """验证 Windows Git Bash 分支会开启 batchmode + nographics，并且不再强制固定分辨率与 popupwindow。
-    Verify that the Windows Git Bash branch enables batchmode plus nographics and no longer forces fixed resolution or popupwindow.
+    """验证 Windows Git Bash 分支会开启 batchmode + nographics，并且不再向 player 注入外部 Talos 参数。
+    Verify that the Windows Git Bash branch enables batchmode plus nographics and no longer injects external Talos arguments into the player.
     """
 
     content = SOURCE_TEST_PC.read_text(encoding="utf-8")
@@ -307,8 +304,23 @@ def test_test_pc_source_uses_headless_batchmode_on_windows_git_bash() -> None:
     assert 'PLAYER_LAUNCH_ARGS=("-batchmode" "-nographics" "${PLAYER_LAUNCH_ARGS[@]}")' in content
     assert "elif ! ${IS_WINDOWS_GIT_BASH}; then" in content
     assert 'Start-Process -FilePath' in content
-    assert "@('-batchmode','-nographics','-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}')" in content
-    assert "@('-talosPort','${UNITY_PORT}','-talosForceE2E','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-popupwindow','-logFile','${PLAYER_LOG_FILE_WIN}')" not in content
+    assert "@('-batchmode','-nographics','-screen-fullscreen','0','-logFile','${PLAYER_LOG_FILE_WIN}')" in content
+    assert '"-talosPort"' not in content
+    assert '"-talosForceE2E"' not in content
+
+
+def test_test_pc_source_scans_candidate_ports_and_keeps_portrait_window_defaults() -> None:
+    """验证 PC 脚本会在候选端口池中探测，并维持 1080x1920 竖屏窗口参数。
+    Verify that the PC script probes a candidate port pool and keeps the 1080x1920 portrait window arguments.
+    """
+
+    content = SOURCE_TEST_PC.read_text(encoding="utf-8")
+
+    assert 'resolve_talos_port_candidates() {' in content
+    assert 'PORT_CANDIDATES=()' in content
+    assert '候选端口:' in content
+    assert '"1080"' in content
+    assert '"1920"' in content
 
 
 def test_test_pc_source_archives_persistent_player_logs_for_teamcity() -> None:

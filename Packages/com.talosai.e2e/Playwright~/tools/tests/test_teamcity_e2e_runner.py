@@ -1078,7 +1078,7 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
     assert exit_code == 0
     assert calls == ["reset_package_workspace"]
     assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
-    assert emitted_parameters[runner.UNITY_PORT_PARAMETER] == "20901"
+    assert emitted_parameters[runner.UNITY_PORT_PARAMETER] == "10002"
     assert "run_test_tool" not in calls
     assert "emit_playwright_report_metadata" not in calls
 
@@ -1162,10 +1162,10 @@ def test_main_run_phase_uses_build_isolated_unity_port_for_platform_tool(
 
     assert exit_code == 0
     assert captured["package_path"] == prepared_path
-    assert captured["unity_port"] == 21130
+    assert captured["unity_port"] == 10002
     assert captured["test_file"] == "tests/testFrameworkBusiness-e2e.spec.ts"
     assert emitted_parameters[runner.PREPARED_PACKAGE_PATH_PARAMETER] == str(prepared_path)
-    assert emitted_parameters[runner.UNITY_PORT_PARAMETER] == "21130"
+    assert emitted_parameters[runner.UNITY_PORT_PARAMETER] == "10002"
 
 
 def test_main_run_phase_requires_prepared_package_path(monkeypatch: pytest.MonkeyPatch) -> None:

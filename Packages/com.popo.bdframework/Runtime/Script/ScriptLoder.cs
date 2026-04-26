@@ -58,10 +58,6 @@ namespace BDFramework
             // 在主线程预热 BApplication，避免后台线程先触发静态构造时访问 Application.dataPath 并把资源/SQLite 相关路径状态永久污染。
             // Warm up BApplication on the main thread so a background thread cannot trigger its static constructor first, touch Application.dataPath, and permanently poison later resource and SQLite path state.
             _ = BDFramework.Core.Tools.BApplication.persistentDataPath;
-
-            // 桥接 E2E 自动检测入口；如果 Talos.E2E 包不存在，则该调用会在方法内部静默退出。
-            // Bridge the E2E auto-detection entry; if the Talos.E2E package is absent, the method exits quietly from inside.
-            TryStartE2EFramework();
         }
 
         /// <summary>
@@ -173,92 +169,5 @@ namespace BDFramework
 
         #endregion
 
-
-        #region E2E 测试自动集成
-
-        /// <summary>
-        /// 尝试桥接 Talos E2E 自动检测入口。
-        /// Try to bridge the Talos E2E auto-detection entrypoint.
-        /// 该入口必须在 Player 与真机场景中保持运行时可达，不能再依赖 Conditional(DEBUG) 的编译期裁剪；
-        /// 否则像 Windows 这样直接经由 ScriptLoder 启动的母包会静默丢失 Talos TCP 启动桥接。
-        /// This entry must remain runtime-reachable in player and packaged-device scenarios and can no longer rely on Conditional(DEBUG) compile-time stripping;
-        /// otherwise packaged players that boot directly through ScriptLoder, such as Windows, silently lose the Talos TCP startup bridge.
-        /// ScriptLoder 只负责桥接 Talos 通用框架入口，不负责指定宿主侧 suite、场景或业务流程编排；
-        /// 具体执行内容必须留给 Playwright 和宿主包自己的入口决定。
-        /// ScriptLoder only bridges the generic Talos framework entry and must not choose host suites, scenes, or business-flow choreography;
-        /// concrete execution content must remain owned by Playwright and host-package entrypoints.
-        /// 是否真正启动 E2E 仍由 Talos.E2E.E2EAutoInit 在运行时根据标记文件或 -talosForceE2E 参数继续判定。
-        /// Whether E2E actually starts is still decided at runtime by Talos.E2E.E2EAutoInit based on marker files or the -talosForceE2E argument.
-        /// 如果 Talos.E2E 包不存在，则静默跳过。
-        /// If the Talos.E2E package is not present, the method exits quietly.
-        /// </summary>
-        static private void TryStartE2EFramework()
-        {
-            try
-            {
-                UnityEngine.Debug.Log("[TalosE2E] ScriptLoder.Init 阶段开始检测 E2E 自动启动入口");
-                var talosPort = ResolveTalosPortFromCommandLine();
-
-                // 查找 Talos.E2E 程序集中的 E2EAutoInit 类型
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    var type = assembly.GetType("Talos.E2E.E2EAutoInit");
-                    if (type == null)
-                    {
-                        continue;
-                    }
-
-                    var method = type.GetMethod("CheckAndLaunch",
-                        BindingFlags.Public | BindingFlags.Static);
-                    if (method == null)
-                    {
-                        UnityEngine.Debug.LogWarning("[TalosE2E] 找到 E2EAutoInit 但无 CheckAndLaunch 方法");
-                        return;
-                    }
-
-                    UnityEngine.Debug.Log($"[TalosE2E] 已解析自动启动入口 assembly={assembly.GetName().Name} port={talosPort}");
-                    method.Invoke(null, new object[] { talosPort });
-                    UnityEngine.Debug.Log("[TalosE2E] ScriptLoder.Init 阶段已触发 E2E 自动检测");
-                    return;
-                }
-
-                // Talos.E2E 包未安装，正常跳过
-                UnityEngine.Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，跳过自动启动入口检测");
-            }
-            catch (System.Exception ex)
-            {
-                // E2E 自动检测失败不影响框架正常启动
-                UnityEngine.Debug.LogWarning($"[TalosE2E] E2E 自动检测失败（不影响启动）: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// 从当前进程命令行里解析 Talos TCP 端口。
-        /// Resolve the Talos TCP port from the current process command line.
-        /// ScriptLoder 不能静态依赖 Talos.E2E 程序集，因此这里只做最小的 `-talosPort` 扫描；
-        /// 若参数缺失或非法，则继续回退到 Talos 默认端口 10002。
-        /// ScriptLoder cannot take a static dependency on the Talos.E2E assembly, so it performs only a minimal
-        /// `-talosPort` scan here and otherwise falls back to the Talos default port 10002.
-        /// </summary>
-        private static int ResolveTalosPortFromCommandLine()
-        {
-            var commandLineArgs = Environment.GetCommandLineArgs();
-            for (var index = 0; index < commandLineArgs.Length - 1; index++)
-            {
-                if (!string.Equals(commandLineArgs[index], "-talosPort", StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                if (int.TryParse(commandLineArgs[index + 1], out var customPort) && customPort > 0)
-                {
-                    return customPort;
-                }
-            }
-
-            return 10002;
-        }
-
-        #endregion
     }
 }

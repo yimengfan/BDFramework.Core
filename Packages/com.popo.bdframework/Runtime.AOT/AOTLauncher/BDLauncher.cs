@@ -130,6 +130,7 @@ namespace BDFramework
             }
             Debug.Log("<color=yellow>执行反射：ScriptLoder.Init()，装载热更代码 </color>");
             InitHotfixScriptLoder();
+            TryLaunchTalosE2EInDebugBuild();
             Debug.Log("------------------AOT Complete！ -----------------------");
         }
 
@@ -204,6 +205,47 @@ namespace BDFramework
             }
 
             Debug.LogException(new Exception("未找到 ScriptLoder.Init"));
+        }
+
+        /// <summary>
+        /// 仅在 Debug 宏生效时，从框架层启动 Talos E2E。
+        /// Launch Talos E2E only from the framework layer when the DEBUG symbol is active.
+        /// 这里固定把启动入口收敛到 BDLauncher，而不是热更脚本或外部启动参数，
+        /// 避免 app 启动再依赖 `-talosPort` / `-talosForceE2E` 这类外部传参。
+        /// This keeps the startup entrypoint inside BDLauncher instead of hotfix scripts or external launch arguments,
+        /// so app startup no longer depends on `-talosPort` / `-talosForceE2E` style external parameters.
+        /// </summary>
+        [Conditional("DEBUG")]
+        private void TryLaunchTalosE2EInDebugBuild()
+        {
+            try
+            {
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    var type = assembly.GetType("Talos.E2E.E2EAutoInit");
+                    if (type == null)
+                    {
+                        continue;
+                    }
+
+                    var method = type.GetMethod("CheckAndLaunch", BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null);
+                    if (method == null)
+                    {
+                        Debug.LogWarning("[TalosE2E] 找到 E2EAutoInit 但未找到无参 CheckAndLaunch 入口");
+                        return;
+                    }
+
+                    method.Invoke(null, null);
+                    Debug.Log($"[TalosE2E] BDLauncher 已触发 Debug E2E 自动启动 assembly={assembly.GetName().Name}");
+                    return;
+                }
+
+                Debug.Log("[TalosE2E] 当前进程未发现 E2EAutoInit，跳过 Debug E2E 自动启动");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[TalosE2E] BDLauncher 触发 Debug E2E 自动启动失败（不影响启动）: {ex.Message}");
+            }
         }
         
         

@@ -170,16 +170,16 @@ namespace BDFramework.RuntimeTests.Contracts
         /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
         /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>
-        public static void VerifyTryStartE2EFrameworkRemainsRuntimeReachable()
+        public static void VerifyBDLauncherOwnsDebugTalosStartupBridge()
         {
-            var method = typeof(BDFramework.ScriptLoder).GetMethod(
-                "TryStartE2EFramework",
-                BindingFlags.NonPublic | BindingFlags.Static);
+            var method = typeof(BDFramework.BDLauncher).GetMethod(
+                "TryLaunchTalosE2EInDebugBuild",
+                BindingFlags.NonPublic | BindingFlags.Instance);
 
-            EnsureTrue(method != null, "应该能够找到 ScriptLoder.TryStartE2EFramework 私有静态方法。");
+            EnsureTrue(method != null, "应该能够找到 BDLauncher.TryLaunchTalosE2EInDebugBuild 私有实例方法。");
             EnsureTrue(
-                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Length == 0,
-                "TryStartE2EFramework 不能再依赖 Conditional(DEBUG)；Windows 等直接经由 ScriptLoder 启动的 Player 母包需要在运行时保留 Talos E2E 启动桥接。");
+                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Any(attribute => ((ConditionalAttribute)attribute).ConditionString == "DEBUG"),
+                "BDLauncher 的 Talos 启动桥接必须只在 DEBUG 宏生效时参与编译。");
         }
 
         /// <summary>

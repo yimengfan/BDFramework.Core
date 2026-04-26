@@ -101,9 +101,9 @@ namespace BDFramework.RuntimeTests.ApiTest
         /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
         /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
         /// </summary>
-        public void TryStartE2EFramework_ShouldRemainRuntimeReachable()
+        public void BDLauncher_ShouldOwnDebugTalosStartupBridge()
         {
-            FrameworkContractAssertions.VerifyTryStartE2EFrameworkRemainsRuntimeReachable();
+            FrameworkContractAssertions.VerifyBDLauncherOwnsDebugTalosStartupBridge();
         }
 
     }

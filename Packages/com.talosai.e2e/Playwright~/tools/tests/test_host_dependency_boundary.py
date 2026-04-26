@@ -26,6 +26,7 @@ E2E_EDITOR_ASMDEF = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "Tal
 E2E_RUNTIME_ASMDEF = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "Talos.E2E.Runtime.asmdef"
 BD_EDITOR_BRIDGE = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Editor" / "EditorEnvironment" / "TalosE2EBatchBridge.cs"
 BD_SCRIPT_LODER = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Runtime" / "Script" / "ScriptLoder.cs"
+BD_LAUNCHER = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Runtime.AOT" / "AOTLauncher" / "BDLauncher.cs"
 EDITOR_PLAYER_SCRIPT = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tools" / "test-editorplayer.sh"
 BATCHMODE_SCRIPT = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tools" / "test-batchmode.sh"
 PLAYWRIGHT_CONFIG = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "playwright.config.ts"
@@ -77,19 +78,19 @@ def test_bdframework_owns_talos_e2e_execute_method_entries() -> None:
     assert "AdditionalMarkerDirectoriesProvider" not in script_loader_content
 
 
-def test_bdframework_script_loader_keeps_runtime_talos_bridge() -> None:
-    """验证 ScriptLoder 保持 Talos 运行时桥接且不再依赖 Conditional(DEBUG) 裁剪。
-    Verify that ScriptLoder keeps the Talos runtime bridge and no longer relies on Conditional(DEBUG) stripping.
+def test_bdframework_launcher_owns_debug_talos_bridge() -> None:
+    """验证 BDLauncher 持有 Debug 模式 Talos 启动桥接，而 ScriptLoder 不再承担 app 启动入口。
+    Verify that BDLauncher owns the Debug-mode Talos startup bridge while ScriptLoder no longer carries the app startup entry.
     """
 
     script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
+    launcher_content = BD_LAUNCHER.read_text(encoding="utf-8")
 
-    assert "TryStartE2EFramework();" in script_loader_content
-    assert '[System.Diagnostics.Conditional("DEBUG")]' not in script_loader_content
-    assert '[Conditional("ENABLE_E2ETEST")]' not in script_loader_content
+    assert "TryStartE2EFramework" not in script_loader_content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in script_loader_content
-    assert "ResolveTalosPortFromCommandLine()" in script_loader_content
-    assert "method.Invoke(null, new object[] { talosPort });" in script_loader_content
+    assert '[Conditional("DEBUG")]' in launcher_content
+    assert "TryLaunchTalosE2EInDebugBuild()" in launcher_content
+    assert 'GetMethod("CheckAndLaunch", BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null)' in launcher_content
 
 
 def test_bdframework_script_loader_prewarms_bapplication_on_main_thread() -> None:
@@ -114,7 +115,7 @@ def test_bdframework_script_loader_does_not_compose_host_suite_execution() -> No
     assert '"BDFramework.HostE2E.LaunchFlowHostTests"' not in script_loader_content
     assert '"BDFramework.HostE2E.BaseFlowHostRuntimeTests"' not in script_loader_content
     assert 'Type.GetType($"{typeName}, BDFramework.HostE2E", false)' not in script_loader_content
-    assert "ScriptLoder only bridges the generic Talos framework entry" in script_loader_content
+    assert "BDFramework.Core.Tools.BApplication.persistentDataPath" in script_loader_content
 
 
 def test_talos_e2e_runner_keeps_public_type_fallback_for_player_discovery() -> None:

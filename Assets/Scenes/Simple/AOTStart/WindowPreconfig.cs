@@ -8,7 +8,6 @@ using BDFramework.ResourceMgr;
 using Cysharp.Threading.Tasks;
 using Game.Config;
 using LitJson;
-using Talos.E2E;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,8 +30,8 @@ public class WindowPreconfig : MonoBehaviour
     /// <summary>
     /// 预配置界面启动入口。
     /// Startup entry for the preconfiguration screen.
-    /// 负责绑定 UI、加载服务器配置，并在 `-talosForceE2E` 模式下显式根引用宿主侧 launch/BaseFlow 测试入口后再触发 Talos E2E 自动启动入口。
-    /// It binds UI, loads server configuration, explicitly roots the host-owned launch/BaseFlow test entrypoints under `-talosForceE2E`, and then triggers the Talos E2E auto-start entry.
+    /// 负责绑定 UI、加载服务器配置，并保持宿主预配置界面对业务启动前链路可见。
+    /// It binds the UI, loads the server configuration, and keeps the host preconfiguration screen visible before the business launch chain proceeds.
     /// </summary>
     void Start()
     {
@@ -64,20 +63,6 @@ public class WindowPreconfig : MonoBehaviour
         }
         Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
 
-        var commandLineArgs = RuntimeLaunchArguments.ResolveCurrentProcessArguments();
-        var talosPort = RuntimeLaunchArguments.ResolveTalosPort(commandLineArgs);
-        if (ForcedModeStartupFallback.TryLaunchFromForcedMode(commandLineArgs, talosPort, E2EAutoInit.CheckAndLaunch))
-        {
-            // 显式根引用宿主侧 launch 与 BaseFlow 套件类型，避免 Player 端只保留 launch 类型而裁剪新增的基础系统入口。
-            // Explicitly root the host launch and BaseFlow suite types so player builds do not keep only the launch type while stripping the added foundational entrypoints.
-            // ScriptLoder.Init 仍是首选启动入口；这里追加一次显式补偿触发，只为覆盖 Android 上更早阶段未成功拉起 Talos TCP 的场景。
-            // ScriptLoder.Init remains the preferred startup entrypoint; this branch adds one explicit compensating replay only for Android cases where the earlier stage failed to bring up the Talos TCP service.
-            var hostLaunchSuiteAssembly = typeof(BDFramework.HostE2E.LaunchFlowHostTests).Assembly;
-            var hostBaseFlowSuiteAssembly = typeof(BDFramework.HostE2E.BaseFlowHostRuntimeTests).Assembly;
-            Debug.Log(
-                $"[TalosE2E] 宿主已绑定 launch/BaseFlow 宿主测试程序集: launch={hostLaunchSuiteAssembly.GetName().Name} baseflow={hostBaseFlowSuiteAssembly.GetName().Name}");
-            Debug.Log("[TalosE2E] 当前处于 -talosForceE2E 模式，WindowPreconfig 已显式补触发 E2E 自动检测；若 ScriptLoder.Init 已启动，该调用会被安全忽略");
-        }
     }
 
 

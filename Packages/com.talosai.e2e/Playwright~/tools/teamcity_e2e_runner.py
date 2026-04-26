@@ -1432,7 +1432,6 @@ def main() -> int:
     args.build_debug = normalize_bool_flag(args.build_debug)
     selected_phase = normalize_optional_value(getattr(args, "phase", None)) or "all"
     current_build_id = normalize_optional_value(resolve_current_teamcity_build_context().build_id)
-    args.unity_port = resolve_effective_unity_port(int(args.unity_port), current_build_id)
 
     print(f"{LOG_PREFIX} 测试目的=验证 Talos 远端母包构建、包体下载与 Playwright E2E 工具链闭环")
     print(f"{LOG_PREFIX} 实现手段=复用或排队 TeamCity 母包构建 -> 下载文件服务器包体 -> 调用 tools/{profile.tool_script_name}")
