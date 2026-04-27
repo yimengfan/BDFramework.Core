@@ -39,7 +39,9 @@ import zipfile
 TOOL_DIR = Path(__file__).resolve().parent
 PLAYWRIGHT_DIR = TOOL_DIR.parent
 REPO_ROOT = Path(__file__).resolve().parents[4]
-BUILD_TOOLS_ROOT = REPO_ROOT / "DevOps" / "CI" / "BuildTools"
+# BuildTools 已迁移到 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools。
+# BuildTools has been migrated to Packages/com.popo.bdframework/Editor.DevOps~/BuildTools.
+BUILD_TOOLS_ROOT = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Editor.DevOps~" / "BuildTools"
 
 if str(BUILD_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(BUILD_TOOLS_ROOT))
