@@ -137,7 +137,7 @@ def test_run_platform_resource_verify_executes_expected_flow(
             "-buildTarget",
             "Android",
             "-fileServerUrl",
-            "http://192.168.0.240:20001",
+            "http://192.168.0.240:20001/files",
             "-expectedCodeVersion",
             "101",
             "-expectedAssetbundleVersion",
@@ -164,7 +164,7 @@ def test_run_platform_resource_verify_executes_expected_flow(
 
     output = capsys.readouterr().out
     assert "unityBuildTarget=Android" in output
-    assert "fileServerUrl=http://192.168.0.240:20001" in output
+    assert "fileServerUrl=http://192.168.0.240:20001/files" in output
     assert "expectedVersionInfo=101.202.303" in output
     assert "ciProjectIsolation=skipped" in output
     assert "ciProjectIsolationReason=assetbundle_build_only" in output
@@ -232,7 +232,7 @@ def test_run_platform_resource_verify_dry_run_uses_override_server_url(
             "-buildTarget",
             "Win64",
             "-fileServerUrl",
-            "http://127.0.0.1:20001",
+            "http://127.0.0.1:20001/files",
             "-expectedCodeVersion",
             "101",
             "-expectedAssetbundleVersion",

@@ -744,7 +744,12 @@ def run_platform_resource_verify(
         server_url=args.server_url,
         config_path=args.config,
     )
-    resolved_server_url = resolved_settings.base_url.rstrip("/")
+    # 文件服务器下载路径需要 /files 前缀；Python 侧 base_url 不含前缀（用于上传 API），
+    # 传给 Unity 时需要追加 /files，使 Unity 侧所有下载请求都走 /files/{path} 路由。
+    # The file server download paths require a /files prefix; the Python-side base_url does not include
+    # the prefix (used for upload API), so we append /files when passing to Unity to ensure all Unity-side
+    # download requests go through the /files/{path} route.
+    resolved_server_url = resolved_settings.base_url.rstrip("/") + "/files"
 
     print(f"{log_prefix} host_os={host_os}")
     print(f"{log_prefix} unityBuildTarget={unity_build_target}")

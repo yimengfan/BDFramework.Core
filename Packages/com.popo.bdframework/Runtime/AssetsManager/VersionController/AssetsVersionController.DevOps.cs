@@ -1628,9 +1628,12 @@ namespace BDFramework.ResourceMgr
             Directory.CreateDirectory(cacheDir);
 
             var state = LoadFileServerState(cacheDir);
-            var versionUrl = (serverUrl);
+            var versionUrl = CombineUrl(serverUrl, FileServerVersionManifestFileName);
 
             // Phase 1: 优先请求远端共享版控文件，确认当前服务器是否启用了文件服务器协议。
+            // serverUrl 由 Python 侧传入，已包含 /files 前缀；这里追加 global_version.info 文件名组成完整下载路径。
+            // The serverUrl is passed from the Python side and already includes the /files prefix;
+            // here we append the global_version.info filename to form the complete download path.
             LogFileServerFlow($"开始请求共享版控文件 url={versionUrl}", Color.cyan);
 
             var manifestDownloadResult = await DownloadTextWithRetry(versionUrl);
