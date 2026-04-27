@@ -11,6 +11,7 @@ import sys
 
 from Common.client_resource_artifacts import (
     ClientResourceArtifactsError,
+    get_ci_output_root,
     prepare_clean_ci_output_root,
     upload_client_res_assetbundle,
     upload_client_res_code,
@@ -202,6 +203,15 @@ def parse_platform_args(description: str) -> argparse.Namespace:
         help="Whether to request debug-capable Unity build flow and Talos E2E compilation symbols.",
     )
     parser.add_argument(
+        "--phase",
+        default="all",
+        choices=["all", "build", "upload"],
+        help=(
+            "执行阶段：all=构建并上传，build=仅构建不上传，upload=仅上传不构建。"
+            " Execution phase: all=build and upload, build=build only, upload=upload only."
+        ),
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Only print the final Unity command, do not execute Unity or upload files.",
@@ -238,6 +248,15 @@ def parse_table_args(description: str) -> argparse.Namespace:
         "--project-dir",
         default=None,
         help="Optional Unity project directory. If omitted, infer the current repo root.",
+    )
+    parser.add_argument(
+        "--phase",
+        default="all",
+        choices=["all", "build", "upload"],
+        help=(
+            "执行阶段：all=构建并上传，build=仅构建不上传，upload=仅上传不构建。"
+            " Execution phase: all=build and upload, build=build only, upload=upload only."
+        ),
     )
     parser.add_argument(
         "--dry-run",
@@ -583,15 +602,31 @@ def run_platform_resource_build(
     )
 
     print(f"{log_prefix} ===== Step 7/8: execute =====")
-    return_code = run_batchmode(command, dry_run=args.dry_run)
-    if return_code != 0:
-        print(read_log_tail(log_path))
-        raise UnityBatchModeError(
-            f"{artifact_kind} build failed. exit_code={return_code}, log={log_path}"
+    selected_phase = getattr(args, "phase", "all")
+    if selected_phase == "upload":
+        # upload 阶段重新推导 ci_output_root，不执行 Unity 构建。
+        # Upload phase re-derives ci_output_root without executing Unity build.
+        ci_output_root = get_ci_output_root(
+            project_dir,
+            build_kind=build_kind,
+            build_name=build_name,
+            build_number=build_number,
+            platform=platform_key,
         )
+        print(f"{log_prefix} phase=upload, skip Unity build")
+        print(f"{log_prefix} ciOutputRoot={ci_output_root}")
+    else:
+        return_code = run_batchmode(command, dry_run=args.dry_run)
+        if return_code != 0:
+            print(read_log_tail(log_path))
+            raise UnityBatchModeError(
+                f"{artifact_kind} build failed. exit_code={return_code}, log={log_path}"
+            )
 
     print(f"{log_prefix} ===== Step 8/8: upload =====")
-    if args.dry_run:
+    if selected_phase == "build":
+        print(f"{log_prefix} phase=build, skip artifact upload")
+    elif args.dry_run:
         print(f"{log_prefix} dry-run enabled, skip artifact upload")
     elif artifact_kind == "code":
         upload_client_res_code(
@@ -683,15 +718,30 @@ def run_table_resource_build(
     )
 
     print(f"{log_prefix} ===== Step 6/7: execute =====")
-    return_code = run_batchmode(command, dry_run=args.dry_run)
-    if return_code != 0:
-        print(read_log_tail(log_path))
-        raise UnityBatchModeError(
-            f"table build failed. exit_code={return_code}, log={log_path}"
+    selected_phase = getattr(args, "phase", "all")
+    if selected_phase == "upload":
+        # upload 阶段重新推导 ci_output_root，不执行 Unity 构建。
+        # Upload phase re-derives ci_output_root without executing Unity build.
+        ci_output_root = get_ci_output_root(
+            project_dir,
+            build_kind=build_kind,
+            build_name=build_name,
+            build_number=build_number,
         )
+        print(f"{log_prefix} phase=upload, skip Unity build")
+        print(f"{log_prefix} ciOutputRoot={ci_output_root}")
+    else:
+        return_code = run_batchmode(command, dry_run=args.dry_run)
+        if return_code != 0:
+            print(read_log_tail(log_path))
+            raise UnityBatchModeError(
+                f"table build failed. exit_code={return_code}, log={log_path}"
+            )
 
     print(f"{log_prefix} ===== Step 7/7: upload =====")
-    if args.dry_run:
+    if selected_phase == "build":
+        print(f"{log_prefix} phase=build, skip artifact upload")
+    elif args.dry_run:
         print(f"{log_prefix} dry-run enabled, skip artifact upload")
     else:
         upload_client_res_table(

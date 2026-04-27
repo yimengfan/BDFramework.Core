@@ -1292,6 +1292,157 @@ def test_main_run_phase_requires_prepared_package_path(monkeypatch: pytest.Monke
         runner.main()
 
 
+def test_main_cleanup_pre_phase_runs_pre_cleanup_and_returns(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """验证 cleanup-pre 阶段只执行测试前清理并立即返回，不进入主流程。
+    Verify that the cleanup-pre phase only runs pre-test cleanup and returns immediately, bypassing the main flow.
+    """
+    calls: list[str] = []
+
+    class FakeArgs:
+        """模拟 cleanup-pre 阶段的最小参数集合。"""
+        phase = "cleanup-pre"
+        platform = "windows"
+        client_version = "0.1"
+        build_debug = "true"
+
+    monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
+    monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(runner, "resolve_platform_profile", lambda _platform: runner.PLATFORM_PROFILE_BY_KEY["windows"])
+    monkeypatch.setattr(runner, "run_cleanup_pre", lambda: calls.append("run_cleanup_pre") or 0)
+    monkeypatch.setattr(runner, "run_cleanup_post", lambda: calls.append("run_cleanup_post") or 0)
+
+    exit_code = runner.main()
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert calls == ["run_cleanup_pre"]
+    assert "run_cleanup_post" not in calls
+    # 验证没有进入主流程的 Phase 标记。
+    # Verify that no main-flow Phase markers appear.
+    assert "Phase 1/6" not in captured.out
+
+
+def test_main_cleanup_post_phase_runs_post_cleanup_and_returns(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """验证 cleanup-post 阶段只执行测试后清理并立即返回，不进入主流程。
+    Verify that the cleanup-post phase only runs post-test cleanup and returns immediately, bypassing the main flow.
+    """
+    calls: list[str] = []
+
+    class FakeArgs:
+        """模拟 cleanup-post 阶段的最小参数集合。"""
+        phase = "cleanup-post"
+        platform = "android"
+        client_version = "0.1"
+        build_debug = "true"
+
+    monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
+    monkeypatch.setattr(runner, "configure_console_streams", lambda: None)
+    monkeypatch.setattr(runner, "resolve_platform_profile", lambda _platform: runner.PLATFORM_PROFILE_BY_KEY["android"])
+    monkeypatch.setattr(runner, "run_cleanup_pre", lambda: calls.append("run_cleanup_pre") or 0)
+    monkeypatch.setattr(runner, "run_cleanup_post", lambda: calls.append("run_cleanup_post") or 0)
+
+    exit_code = runner.main()
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert calls == ["run_cleanup_post"]
+    assert "run_cleanup_pre" not in calls
+    assert "Phase 1/6" not in captured.out
+
+
+def test_run_cleanup_pre_calls_all_sub_steps(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """验证 run_cleanup_pre 会依次调用杀进程、清临时目录和清旧报告三个子步骤。
+    Verify that run_cleanup_pre calls kill_stale_processes, remove_temp_directories, and reset_report_outputs in order.
+    """
+    calls: list[str] = []
+
+    monkeypatch.setattr(runner, "kill_stale_processes", lambda: calls.append("kill_stale_processes"))
+    monkeypatch.setattr(runner, "remove_temp_directories", lambda: calls.append("remove_temp_directories"))
+    monkeypatch.setattr(runner, "reset_report_outputs", lambda: calls.append("reset_report_outputs"))
+
+    exit_code = runner.run_cleanup_pre()
+
+    assert exit_code == 0
+    assert calls == ["kill_stale_processes", "remove_temp_directories", "reset_report_outputs"]
+    captured = capsys.readouterr()
+    assert "cleanup-pre=done" in captured.out
+
+
+def test_run_cleanup_post_calls_kill_and_remove_temp(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """验证 run_cleanup_post 会调用杀进程和清临时目录，但不清理报告。
+    Verify that run_cleanup_post calls kill_stale_processes and remove_temp_directories, but not reset_report_outputs.
+    """
+    calls: list[str] = []
+
+    monkeypatch.setattr(runner, "kill_stale_processes", lambda: calls.append("kill_stale_processes"))
+    monkeypatch.setattr(runner, "remove_temp_directories", lambda: calls.append("remove_temp_directories"))
+    monkeypatch.setattr(runner, "reset_report_outputs", lambda: calls.append("reset_report_outputs"))
+
+    exit_code = runner.run_cleanup_post()
+
+    assert exit_code == 0
+    assert calls == ["kill_stale_processes", "remove_temp_directories"]
+    assert "reset_report_outputs" not in calls
+    captured = capsys.readouterr()
+    assert "cleanup-post=done" in captured.out
+
+
+def test_load_e2e_config_defaults_returns_config_values(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证 load_e2e_config_defaults 从 buildtools.toml [talos.e2e] 读取默认参数。
+    Verify that load_e2e_config_defaults reads default parameters from buildtools.toml [talos.e2e].
+    """
+    fake_talos_config = SimpleNamespace(
+        client_version="0.3",
+        build_debug="false",
+        timeout_seconds=7200,
+        poll_interval_seconds=15,
+        download_timeout_seconds=900,
+        unity_host="10.0.0.1",
+        unity_port=30002,
+    )
+    fake_external_config = SimpleNamespace(
+        talos_e2e=fake_talos_config,
+    )
+
+    monkeypatch.setattr(runner, "load_buildtools_external_config", lambda **_kwargs: fake_external_config)
+
+    defaults = runner.load_e2e_config_defaults()
+
+    assert defaults["client_version"] == "0.3"
+    assert defaults["build_debug"] == "false"
+    assert defaults["timeout_seconds"] == 7200
+    assert defaults["poll_interval_seconds"] == 15
+    assert defaults["download_timeout_seconds"] == 900
+    assert defaults["unity_host"] == "10.0.0.1"
+    assert defaults["unity_port"] == 30002
+
+
+def test_load_e2e_config_defaults_returns_empty_on_config_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证 buildtools.toml 不存在或 [talos.e2e] 段缺失时，load_e2e_config_defaults 返回空字典。
+    Verify that load_e2e_config_defaults returns an empty dict when buildtools.toml is missing or has no [talos.e2e] section.
+    """
+    monkeypatch.setattr(
+        runner, "load_buildtools_external_config",
+        lambda **_kwargs: (_ for _ in ()).throw(runner.BuildToolsConfigError("not found")),
+    )
+
+    defaults = runner.load_e2e_config_defaults()
+
+    assert defaults == {}
+
+
 def test_build_test_tool_environment_sets_mumu_auto_start_when_true(
     tmp_path: Path,
 ) -> None:

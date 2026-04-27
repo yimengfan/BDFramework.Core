@@ -109,6 +109,7 @@ def test_run_platform_resource_build_executes_expected_flow(
         unity_version="2022.3.74f1",
         project_dir="/tmp/BDFramework.Core",
         debug_build="true",
+        phase="all",
         dry_run=False,
     )
     base_project_dir = Path("/tmp/BDFramework.Core")
@@ -229,6 +230,7 @@ def test_run_platform_resource_build_dry_run_skips_upload(
         unity_version=None,
         project_dir="/tmp/BDFramework.Core",
         debug_build="false",
+        phase="all",
         dry_run=True,
     )
     monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
@@ -289,6 +291,286 @@ def test_run_platform_resource_build_dry_run_skips_upload(
     assert "debugBuild=false" in output
     assert "dry-run enabled, skip artifact upload" in output
     assert uploaded is False
+
+
+def test_run_platform_resource_build_phase_build_skips_upload(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证 phase=build 时只执行 Unity 构建，跳过产物上传。
+    Verify that phase=build only runs Unity build and skips artifact upload.
+    """
+    events: list[str] = []
+    args = SimpleNamespace(
+        client_version="0.1",
+        build_name="Nightly Build",
+        build_number="238",
+        unity_version="2022.3.74f1",
+        project_dir="/tmp/BDFramework.Core",
+        debug_build="true",
+        phase="build",
+        dry_run=False,
+    )
+    monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
+    monkeypatch.setattr(resource_flow, "parse_platform_args", lambda _description: args)
+    monkeypatch.setattr(resource_flow, "resolve_build_metadata", lambda build_name, build_number: ("Nightly Build", "238"))
+    monkeypatch.setattr(resource_flow, "detect_host_os", lambda: "mac")
+    monkeypatch.setattr(resource_flow, "ensure_platform_allowed", lambda platform_key: None)
+    monkeypatch.setattr(
+        resource_flow,
+        "resolve_unity_executable",
+        lambda unity_version, *, allow_missing: (Path("/Applications/Unity"), "2022.3.74f1"),
+    )
+    monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
+    monkeypatch.setattr(
+        resource_flow,
+        "prepare_platform_ci_project_dir",
+        lambda **kwargs: Path("/tmp/BDFramework.Core"),
+    )
+    monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
+    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
+    monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
+    monkeypatch.setattr(resource_flow, "run_batchmode", lambda command, *, dry_run: events.append("run_batchmode") or 0)
+    monkeypatch.setattr(resource_flow, "read_log_tail", lambda _log_path: "tail")
+    monkeypatch.setattr(resource_flow, "revert_and_snapshot_changes", lambda **kwargs: None)
+
+    uploaded = False
+
+    def fake_upload(*args, **kwargs):
+        nonlocal uploaded
+        uploaded = True
+
+    monkeypatch.setattr(resource_flow, "upload_client_res_code", fake_upload)
+
+    assert (
+        resource_flow.run_platform_resource_build(
+            platform_key="android",
+            log_prefix="[BuildCode][Android]",
+            description="build",
+            execute_method="BDFramework.Editor.DevOps.PublishPipeLineCI.BuildCodeAndroid",
+            build_kind="clientres_code",
+            artifact_kind="code",
+        )
+        == 0
+    )
+
+    output = capsys.readouterr().out
+    assert "phase=build, skip artifact upload" in output
+    assert uploaded is False
+    assert "run_batchmode" in events
+
+
+def test_run_platform_resource_build_phase_upload_skips_build_and_uploads(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证 phase=upload 时跳过 Unity 构建，重新推导 ci_output_root 并执行上传。
+    Verify that phase=upload skips Unity build, re-derives ci_output_root, and performs upload.
+    """
+    events: list[str] = []
+    args = SimpleNamespace(
+        client_version="0.1",
+        build_name="Nightly Build",
+        build_number="238",
+        unity_version="2022.3.74f1",
+        project_dir="/tmp/BDFramework.Core",
+        debug_build="true",
+        phase="upload",
+        dry_run=False,
+    )
+    re_derived_root = Path("/tmp/BDFramework.Core/Library/CIOutputs/code/Nightly_Build/238/android")
+
+    monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
+    monkeypatch.setattr(resource_flow, "parse_platform_args", lambda _description: args)
+    monkeypatch.setattr(resource_flow, "resolve_build_metadata", lambda build_name, build_number: ("Nightly Build", "238"))
+    monkeypatch.setattr(resource_flow, "detect_host_os", lambda: "mac")
+    monkeypatch.setattr(resource_flow, "ensure_platform_allowed", lambda platform_key: None)
+    monkeypatch.setattr(
+        resource_flow,
+        "resolve_unity_executable",
+        lambda unity_version, *, allow_missing: (Path("/Applications/Unity"), "2022.3.74f1"),
+    )
+    monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
+    monkeypatch.setattr(
+        resource_flow,
+        "prepare_platform_ci_project_dir",
+        lambda **kwargs: Path("/tmp/BDFramework.Core"),
+    )
+    monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
+    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
+    monkeypatch.setattr(
+        resource_flow,
+        "get_ci_output_root",
+        lambda *args, **kwargs: events.append("get_ci_output_root") or re_derived_root,
+    )
+    monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
+    monkeypatch.setattr(resource_flow, "revert_and_snapshot_changes", lambda **kwargs: None)
+
+    def fake_run_batchmode(command, *, dry_run):
+        events.append("run_batchmode")
+        return 0
+
+    monkeypatch.setattr(resource_flow, "run_batchmode", fake_run_batchmode)
+    monkeypatch.setattr(resource_flow, "read_log_tail", lambda _log_path: "tail")
+
+    uploaded_output_root = None
+
+    def fake_upload(platform_key, *, output_root, build_number, fallback_build_label, log_prefix):
+        nonlocal uploaded_output_root
+        uploaded_output_root = output_root
+        events.append("upload_client_res_code")
+        return ["uploaded"]
+
+    monkeypatch.setattr(resource_flow, "upload_client_res_code", fake_upload)
+
+    assert (
+        resource_flow.run_platform_resource_build(
+            platform_key="android",
+            log_prefix="[BuildCode][Android]",
+            description="build",
+            execute_method="BDFramework.Editor.DevOps.PublishPipeLineCI.BuildCodeAndroid",
+            build_kind="clientres_code",
+            artifact_kind="code",
+        )
+        == 0
+    )
+
+    output = capsys.readouterr().out
+    assert "phase=upload, skip Unity build" in output
+    assert "run_batchmode" not in events, "Unity build should be skipped in upload phase"
+    assert "get_ci_output_root" in events, "ci_output_root should be re-derived in upload phase"
+    assert "upload_client_res_code" in events
+    assert uploaded_output_root == re_derived_root
+
+
+def test_run_table_resource_build_phase_build_skips_upload(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证表格构建 phase=build 时只执行 Unity 构建，跳过产物上传。
+    Verify that table build phase=build only runs Unity build and skips artifact upload.
+    """
+    events: list[str] = []
+    args = SimpleNamespace(
+        client_version=None,
+        build_name="BuildTable",
+        build_number="77",
+        unity_version="2022.3.74f1",
+        project_dir="/tmp/BDFramework.Core",
+        phase="build",
+        dry_run=False,
+    )
+    monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
+    monkeypatch.setattr(resource_flow, "parse_table_args", lambda _description: args)
+    monkeypatch.setattr(resource_flow, "resolve_build_metadata", lambda build_name, build_number: ("BuildTable", "77"))
+    monkeypatch.setattr(resource_flow, "detect_host_os", lambda: "mac")
+    monkeypatch.setattr(
+        resource_flow,
+        "resolve_unity_executable",
+        lambda unity_version, *, allow_missing: (Path("/Applications/Unity"), "2022.3.74f1"),
+    )
+    monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
+    monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
+    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
+    monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
+    monkeypatch.setattr(resource_flow, "run_batchmode", lambda command, *, dry_run: events.append("run_batchmode") or 0)
+    monkeypatch.setattr(resource_flow, "read_log_tail", lambda _log_path: "tail")
+
+    uploaded = False
+
+    def fake_upload(*args, **kwargs):
+        nonlocal uploaded
+        uploaded = True
+
+    monkeypatch.setattr(resource_flow, "upload_client_res_table", fake_upload)
+
+    assert (
+        resource_flow.run_table_resource_build(
+            log_prefix="[BuildTable]",
+            description="build table",
+            execute_method="BDFramework.Editor.DevOps.PublishPipeLineCI.BuildTable",
+            build_kind="clientres_table",
+        )
+        == 0
+    )
+
+    output = capsys.readouterr().out
+    assert "phase=build, skip artifact upload" in output
+    assert uploaded is False
+    assert "run_batchmode" in events
+
+
+def test_run_table_resource_build_phase_upload_skips_build_and_uploads(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证表格构建 phase=upload 时跳过 Unity 构建，重新推导 ci_output_root 并执行上传。
+    Verify that table build phase=upload skips Unity build, re-derives ci_output_root, and performs upload.
+    """
+    events: list[str] = []
+    args = SimpleNamespace(
+        client_version=None,
+        build_name="BuildTable",
+        build_number="77",
+        unity_version="2022.3.74f1",
+        project_dir="/tmp/BDFramework.Core",
+        phase="upload",
+        dry_run=False,
+    )
+    re_derived_root = Path("/tmp/BDFramework.Core/Library/CIOutputs/clientres_table/BuildTable/77")
+
+    monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
+    monkeypatch.setattr(resource_flow, "parse_table_args", lambda _description: args)
+    monkeypatch.setattr(resource_flow, "resolve_build_metadata", lambda build_name, build_number: ("BuildTable", "77"))
+    monkeypatch.setattr(resource_flow, "detect_host_os", lambda: "mac")
+    monkeypatch.setattr(
+        resource_flow,
+        "resolve_unity_executable",
+        lambda unity_version, *, allow_missing: (Path("/Applications/Unity"), "2022.3.74f1"),
+    )
+    monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
+    monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
+    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
+    monkeypatch.setattr(
+        resource_flow,
+        "get_ci_output_root",
+        lambda *args, **kwargs: events.append("get_ci_output_root") or re_derived_root,
+    )
+    monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
+
+    def fake_run_batchmode(command, *, dry_run):
+        events.append("run_batchmode")
+        return 0
+
+    monkeypatch.setattr(resource_flow, "run_batchmode", fake_run_batchmode)
+    monkeypatch.setattr(resource_flow, "read_log_tail", lambda _log_path: "tail")
+
+    uploaded_output_root = None
+
+    def fake_upload(local_platform_dir, *, output_root, build_number, fallback_build_label, log_prefix):
+        nonlocal uploaded_output_root
+        uploaded_output_root = output_root
+        events.append("upload_client_res_table")
+        return ["uploaded"]
+
+    monkeypatch.setattr(resource_flow, "upload_client_res_table", fake_upload)
+
+    assert (
+        resource_flow.run_table_resource_build(
+            log_prefix="[BuildTable]",
+            description="build table",
+            execute_method="BDFramework.Editor.DevOps.PublishPipeLineCI.BuildTable",
+            build_kind="clientres_table",
+        )
+        == 0
+    )
+
+    output = capsys.readouterr().out
+    assert "phase=upload, skip Unity build" in output
+    assert "run_batchmode" not in events, "Unity build should be skipped in upload phase"
+    assert "get_ci_output_root" in events, "ci_output_root should be re-derived in upload phase"
+    assert "upload_client_res_table" in events
+    assert uploaded_output_root == re_derived_root
 
 
 def test_prepare_platform_ci_project_dir_skips_isolation_without_ci_metadata(
@@ -481,6 +763,7 @@ def test_run_table_resource_build_uploads_shared_dbs(
         build_number=" 77 ",
         unity_version="2022.3.74f1",
         project_dir="/tmp/BDFramework.Core",
+        phase="all",
         dry_run=False,
     )
     project_dir = Path("/tmp/BDFramework.Core")

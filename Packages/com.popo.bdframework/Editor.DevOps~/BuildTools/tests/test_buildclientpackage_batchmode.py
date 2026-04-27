@@ -156,11 +156,14 @@ def test_get_log_path_uses_ci_root_when_build_metadata_present(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
-    """验证 CI 构建元数据存在时，日志路径重定向到共享 CI 日志根目录。"""
+    """验证 CI 构建元数据存在时，日志路径重定向到 project_dir/Library/CIOutputs/logs/。
+
+    Verify that when CI build metadata is present, the log path is redirected
+    to project_dir/Library/CIOutputs/logs/ so TeamCity artifactRules can capture it.
+    """
     project_dir = tmp_path / "workspace"
     project_dir.mkdir()
     monkeypatch.setenv("CI_LOG_ROOT_NAME", "CI logs")
-    monkeypatch.setattr(batchmode_shared, "get_disk_root", lambda _: tmp_path)
 
     log_path = batchmode_shared.get_log_path(
         "android",
@@ -171,7 +174,7 @@ def test_get_log_path_uses_ci_root_when_build_metadata_present(
     )
 
     assert log_path == (
-        tmp_path / "CI_logs" / "Nightly_Build" / "238" / "android_0.1.238.log"
+        project_dir / "Library" / "CIOutputs" / "logs" / "Nightly_Build" / "238" / "android_0.1.238.log"
     )
 
 

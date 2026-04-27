@@ -368,25 +368,61 @@ def build_test_tool_environment(
     return environment
 
 
+def load_e2e_config_defaults() -> dict[str, object]:
+    """从 buildtools.toml [talos.e2e] 加载默认参数，供 CLI 默认值使用。
+
+    Load default parameters from buildtools.toml [talos.e2e] for CLI argument defaults.
+    CLI 显式传参始终优先于配置默认值。
+    CLI explicit arguments always take precedence over config defaults.
+    """
+    try:
+        external_config = load_buildtools_external_config()
+        talos_cfg = external_config.talos_e2e
+        return {
+            "client_version": talos_cfg.client_version,
+            "build_debug": talos_cfg.build_debug,
+            "timeout_seconds": talos_cfg.timeout_seconds,
+            "poll_interval_seconds": talos_cfg.poll_interval_seconds,
+            "download_timeout_seconds": talos_cfg.download_timeout_seconds,
+            "unity_host": talos_cfg.unity_host,
+            "unity_port": talos_cfg.unity_port,
+        }
+    except (BuildToolsConfigError, Exception):
+        return {}
+
+
 def parse_args() -> argparse.Namespace:
     """解析 TeamCity E2E 编排入口参数。
 
     Parse the TeamCity E2E orchestration entry arguments.
+    稳定默认值优先从 buildtools.toml [talos.e2e] 读取；CLI 显式传参覆盖配置默认值。
+    Stable defaults are read from buildtools.toml [talos.e2e] first; CLI explicit arguments override config defaults.
     """
+    config_defaults = load_e2e_config_defaults()
+
     parser = argparse.ArgumentParser(
         description="Resolve TeamCity package builds, download the player package, and run Talos Playwright E2E tests."
     )
     parser.add_argument(
         "--phase",
         default="all",
-        choices=["all", "prepare", "run"],
-        help="执行阶段：all=准备包体并执行测试，prepare=只准备包体，run=只运行已准备好的本地包体。",
+        choices=["all", "prepare", "run", "cleanup-pre", "cleanup-post"],
+        help=(
+            "执行阶段：all=准备包体并执行测试，prepare=只准备包体，run=只运行已准备好的本地包体，"
+            "cleanup-pre=测试前环境清理，cleanup-post=测试后环境清理。"
+            " Phase: all=prepare and run, prepare=package only, run=test only,"
+            " cleanup-pre=pre-test env cleanup, cleanup-post=post-test env cleanup."
+        ),
     )
     parser.add_argument("--platform", default="windows", help="目标平台：windows / android / macos。")
-    parser.add_argument("--client-version", default=DEFAULT_CLIENT_VERSION, help="上游母包构建使用的 major.minor 版本号。")
+    parser.add_argument(
+        "--client-version",
+        default=config_defaults.get("client_version", DEFAULT_CLIENT_VERSION),
+        help="上游母包构建使用的 major.minor 版本号。",
+    )
     parser.add_argument(
         "--build-debug",
-        default=DEFAULT_BUILD_DEBUG,
+        default=config_defaults.get("build_debug", DEFAULT_BUILD_DEBUG),
         choices=["true", "false"],
         help="是否要求上游母包以 debug 模式构建，并带上 Talos E2E 编译宏。",
     )
@@ -399,8 +435,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--file-server-url", default=None, help="可选：覆盖文件服务器访问地址。")
     parser.add_argument("--file-server-token", default=None, help="可选：覆盖文件服务器访问 token。")
     parser.add_argument("--test-file", default="", help="可选：只运行指定的 Playwright 测试文件。")
-    parser.add_argument("--unity-host", default="127.0.0.1", help="桌面平台 TCP 连接地址。")
-    parser.add_argument("--unity-port", type=int, default=10002, help="Unity E2E TCP 端口。")
+    parser.add_argument(
+        "--unity-host",
+        default=config_defaults.get("unity_host", "127.0.0.1"),
+        help="桌面平台 TCP 连接地址。",
+    )
+    parser.add_argument(
+        "--unity-port",
+        type=int,
+        default=config_defaults.get("unity_port", 10002),
+        help="Unity E2E TCP 端口。",
+    )
     parser.add_argument("--adb-serial", default="", help="Android 多设备场景下的 ADB 序列号。")
     parser.add_argument(
         "--adb-connect-targets",
@@ -452,9 +497,24 @@ def parse_args() -> argparse.Namespace:
             " 适用于 Unity 内容未变、无需重新打包时直接复用已出产的文件服务器包体。"
         ),
     )
-    parser.add_argument("--timeout-seconds", type=int, default=DEFAULT_TIMEOUT_SECONDS, help="等待上游 TeamCity 构建完成的超时时间。")
-    parser.add_argument("--poll-interval-seconds", type=int, default=DEFAULT_POLL_INTERVAL_SECONDS, help="轮询 TeamCity 构建状态的时间间隔。")
-    parser.add_argument("--download-timeout-seconds", type=int, default=DEFAULT_DOWNLOAD_TIMEOUT_SECONDS, help="下载文件服务器包体的单次请求超时时间。")
+    parser.add_argument(
+        "--timeout-seconds",
+        type=int,
+        default=config_defaults.get("timeout_seconds", DEFAULT_TIMEOUT_SECONDS),
+        help="等待上游 TeamCity 构建完成的超时时间。",
+    )
+    parser.add_argument(
+        "--poll-interval-seconds",
+        type=int,
+        default=config_defaults.get("poll_interval_seconds", DEFAULT_POLL_INTERVAL_SECONDS),
+        help="轮询 TeamCity 构建状态的时间间隔。",
+    )
+    parser.add_argument(
+        "--download-timeout-seconds",
+        type=int,
+        default=config_defaults.get("download_timeout_seconds", DEFAULT_DOWNLOAD_TIMEOUT_SECONDS),
+        help="下载文件服务器包体的单次请求超时时间。",
+    )
     return parser.parse_args()
 
 
@@ -1453,6 +1513,109 @@ def run_test_tool(profile: PlatformProfile, package_path: Path, args: argparse.N
     return int(completed.wait())
 
 
+def kill_stale_processes() -> None:
+    """清理残留的 Unity 和 ADB 进程，避免端口占用和设备冲突。
+
+    Kill stale Unity and ADB processes to avoid port conflicts and device issues.
+    """
+    print(f"{LOG_PREFIX} cleanupKillStaleProcesses=start")
+    killed_any = False
+
+    # 清理残留 Unity Player 进程
+    # Kill stale Unity Player processes
+    unity_patterns = ("Unity", "Launcher.exe")
+    for pattern in unity_patterns:
+        try:
+            if os.name == "nt":
+                result = subprocess.run(
+                    ["taskkill", "/F", "/IM", pattern],
+                    capture_output=True, text=True, timeout=10,
+                )
+                if result.returncode == 0:
+                    print(f"{LOG_PREFIX} killedProcess={pattern}")
+                    killed_any = True
+            else:
+                result = subprocess.run(
+                    ["pkill", "-f", pattern],
+                    capture_output=True, text=True, timeout=10,
+                )
+                if result.returncode == 0:
+                    print(f"{LOG_PREFIX} killedProcess={pattern}")
+                    killed_any = True
+        except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+            pass
+
+    # 清理残留 ADB server（仅在非 Windows 平台或 adb 可用时）
+    # Kill stale ADB server (only when adb is available)
+    try:
+        adb_path = shutil.which("adb")
+        if adb_path:
+            subprocess.run(
+                [adb_path, "kill-server"],
+                capture_output=True, text=True, timeout=10,
+            )
+            print(f"{LOG_PREFIX} killedAdbServer=true")
+            killed_any = True
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+
+    if not killed_any:
+        print(f"{LOG_PREFIX} noStaleProcessesFound")
+    print(f"{LOG_PREFIX} cleanupKillStaleProcesses=done")
+
+
+def remove_temp_directories() -> None:
+    """清理临时下载目录和测试结果缓存。
+
+    Remove temporary download directories and test result caches.
+    """
+    print(f"{LOG_PREFIX} cleanupRemoveTempDirs=start")
+    cleaned = []
+
+    for path in (TEST_RESULTS_PACKAGE_ROOT, TEST_RESULTS_PREPARED_PACKAGE_ROOT):
+        if path.exists():
+            size_mb = sum(f.stat().st_size for f in path.rglob("*") if f.is_file()) / (1024 * 1024)
+            remove_path_if_exists(path)
+            cleaned.append(f"{path.name} ({size_mb:.1f}MB)")
+
+    for player_log_file in TEST_RESULTS_ROOT.glob("unity-player*.log"):
+        remove_path_if_exists(player_log_file)
+        cleaned.append(player_log_file.name)
+
+    if cleaned:
+        print(f"{LOG_PREFIX} cleanedItems={', '.join(cleaned)}")
+    else:
+        print(f"{LOG_PREFIX} noTempDirsToRemove")
+    print(f"{LOG_PREFIX} cleanupRemoveTempDirs=done")
+
+
+def run_cleanup_pre() -> int:
+    """测试前环境清理：杀残留进程 + 清临时目录 + 清旧报告。
+
+    Pre-test environment cleanup: kill stale processes + remove temp dirs + clear old reports.
+    """
+    print(f"{LOG_PREFIX} 测试目的=清理测试前残留环境，避免端口占用和缓存冲突")
+    print(f"{LOG_PREFIX} 实现手段=杀残留 Unity/ADB 进程 → 清临时下载目录 → 清旧测试报告")
+    kill_stale_processes()
+    remove_temp_directories()
+    reset_report_outputs()
+    print(f"{LOG_PREFIX} cleanup-pre=done")
+    return 0
+
+
+def run_cleanup_post() -> int:
+    """测试后环境清理：杀残留进程 + 清临时目录。
+
+    Post-test environment cleanup: kill stale processes + remove temp dirs.
+    """
+    print(f"{LOG_PREFIX} 测试目的=清理测试后残留环境，释放资源")
+    print(f"{LOG_PREFIX} 实现手段=杀残留 Unity/ADB 进程 → 清临时下载目录")
+    kill_stale_processes()
+    remove_temp_directories()
+    print(f"{LOG_PREFIX} cleanup-post=done")
+    return 0
+
+
 def main() -> int:
     """执行 Talos TeamCity E2E 的完整编排流程。
 
@@ -1465,9 +1628,16 @@ def main() -> int:
     selected_phase = normalize_optional_value(getattr(args, "phase", None)) or "all"
     current_build_id = normalize_optional_value(resolve_current_teamcity_build_context().build_id)
 
+    # cleanup-pre 和 cleanup-post 是独立的清理阶段，不进入主流程。
+    # cleanup-pre and cleanup-post are standalone cleanup phases that bypass the main flow.
+    if selected_phase == "cleanup-pre":
+        return run_cleanup_pre()
+    if selected_phase == "cleanup-post":
+        return run_cleanup_post()
+
     print(f"{LOG_PREFIX} 测试目的=验证 Talos 远端母包构建、包体下载与 Playwright E2E 工具链闭环")
     print(f"{LOG_PREFIX} 实现手段=复用或排队 TeamCity 母包构建 -> 下载文件服务器包体 -> 调用 tools/{profile.tool_script_name}")
-    print(f"{LOG_PREFIX} ===== Phase 1/5: parse args =====")
+    print(f"{LOG_PREFIX} ===== Phase 1/6: parse args =====")
     print(f"{LOG_PREFIX} phase={selected_phase}")
     print(f"{LOG_PREFIX} platform={profile.platform_key}")
     print(f"{LOG_PREFIX} clientVersion={normalize_required_value(args.client_version, field_name='clientVersion')}")

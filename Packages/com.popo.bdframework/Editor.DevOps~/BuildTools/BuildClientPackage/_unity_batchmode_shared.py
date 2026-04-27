@@ -219,18 +219,31 @@ def get_log_path(
     build_name: str | None,
     build_number: str | None,
 ) -> Path:
-    """生成该次 CI 构建的日志文件路径。"""
+    """生成该次 CI 构建的日志文件路径。
+
+    在 TeamCity 上下文中，日志写入 project_dir/Library/CIOutputs/logs/，
+    使 TeamCity artifactRules 可以捕获构建日志。
+    在非 CI 上下文中，日志写入脚本目录下的本地日志目录。
+
+    In TeamCity context, logs are written under project_dir/Library/CIOutputs/logs/
+    so TeamCity artifactRules can capture build logs.
+    In non-CI context, logs are written to the local log directory under the script directory.
+    """
     safe_version = sanitize_for_filename(client_version)
     resolved_build_name, resolved_build_number = resolve_build_metadata(
         build_name,
         build_number,
     )
 
-    # 有 CI 元数据时，把日志写到共享磁盘根目录，方便 TeamCity 跨工作区收集。
+    # 有 CI 元数据时，把日志写到 project_dir/Library/CIOutputs/logs/，方便 TeamCity artifact 收集。
+    # When CI metadata is available, write logs under project_dir/Library/CIOutputs/logs/
+    # so TeamCity artifact collection can capture them.
     if resolved_build_name and resolved_build_number:
         log_dir = (
-            get_disk_root(project_dir)
-            / get_ci_log_root_name()
+            project_dir
+            / "Library"
+            / "CIOutputs"
+            / "logs"
             / sanitize_for_filename(resolved_build_name)
             / sanitize_for_filename(resolved_build_number)
         )

@@ -15,6 +15,7 @@ import pytest
 
 from Common.buildtools_config import (
     BuildToolsIosXcodeSigningConfig,
+    BuildToolsTalosE2EConfig,
     iter_ios_xcode_shell_pairs,
     load_buildtools_external_config,
     resolve_buildtools_config_path,
@@ -77,6 +78,43 @@ poll_interval_seconds = 2
     assert config.remote_artifact_test.request_timeout_seconds == 30
     assert config.remote_artifact_test.listing_timeout_seconds == 18
     assert config.remote_artifact_test.poll_interval_seconds == 2
+    # talos.e2e 段缺失时使用默认值。
+    # When [talos.e2e] section is absent, defaults are used.
+    assert config.talos_e2e == BuildToolsTalosE2EConfig()
+
+
+def test_load_buildtools_external_config_reads_talos_e2e_section(tmp_path: Path) -> None:
+    """验证共享加载器能正确读取 [talos.e2e] 配置段。
+
+    Verify that the shared loader correctly reads the [talos.e2e] config section.
+    """
+    config_path = tmp_path / "buildtools.toml"
+    config_path.write_text(
+        """
+[artifact_file_server]
+base_url = "http://127.0.0.1:20001"
+
+[talos.e2e]
+client_version = "0.2"
+build_debug = "false"
+timeout_seconds = 3600
+poll_interval_seconds = 5
+download_timeout_seconds = 300
+unity_host = "192.168.1.100"
+unity_port = 20002
+""".strip(),
+        encoding="utf-8",
+    )
+
+    config = load_buildtools_external_config(config_path=config_path)
+
+    assert config.talos_e2e.client_version == "0.2"
+    assert config.talos_e2e.build_debug == "false"
+    assert config.talos_e2e.timeout_seconds == 3600
+    assert config.talos_e2e.poll_interval_seconds == 5
+    assert config.talos_e2e.download_timeout_seconds == 300
+    assert config.talos_e2e.unity_host == "192.168.1.100"
+    assert config.talos_e2e.unity_port == 20002
 
 
 def test_resolve_buildtools_config_path_prefers_shared_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:

@@ -85,6 +85,26 @@ class BuildToolsRemoteArtifactTestConfig:
 
 
 @dataclass(frozen=True)
+class BuildToolsTalosE2EConfig:
+    """Talos E2E 编排默认参数，从 buildtools.toml [talos.e2e] 读取。
+
+    Talos E2E orchestration defaults read from buildtools.toml [talos.e2e].
+    当 TeamCity DSL 调用 teamcity_e2e_runner.py 时，
+    这些参数提供合理的默认值，减少 DSL 行长度与维护成本。
+    These parameters provide sensible defaults when TeamCity DSL invokes teamcity_e2e_runner.py,
+    reducing DSL line length and maintenance cost.
+    """
+
+    client_version: str = "0.1"
+    build_debug: str = "true"
+    timeout_seconds: int = 5400
+    poll_interval_seconds: int = 10
+    download_timeout_seconds: int = 600
+    unity_host: str = "127.0.0.1"
+    unity_port: int = 10002
+
+
+@dataclass(frozen=True)
 class BuildToolsExternalConfig:
     """Typed view over the shared BuildTools external-integration config file."""
 
@@ -93,6 +113,7 @@ class BuildToolsExternalConfig:
     ci_server: BuildToolsCiServerConfig
     ios_xcode: BuildToolsIosXcodeSigningConfig
     remote_artifact_test: BuildToolsRemoteArtifactTestConfig
+    talos_e2e: BuildToolsTalosE2EConfig
 
 
 def parse_token_values(value: Any) -> tuple[str, ...]:
@@ -396,6 +417,7 @@ def load_buildtools_external_config(
     ci_server_section = get_config_section(config_data, "ci_server")
     ios_xcode_section = get_config_section(config_data, "ios_xcode")
     remote_artifact_test_section = get_config_section(config_data, "tests.remote_artifact")
+    talos_e2e_section = get_config_section(config_data, "talos.e2e")
 
     return BuildToolsExternalConfig(
         config_path=resolved_config_path,
@@ -445,6 +467,15 @@ def load_buildtools_external_config(
             )
             or 1,
         ),
+        talos_e2e=BuildToolsTalosE2EConfig(
+            client_version=coerce_optional_string(talos_e2e_section.get("client_version")) or "0.1",
+            build_debug=coerce_optional_string(talos_e2e_section.get("build_debug")) or "true",
+            timeout_seconds=coerce_optional_int(talos_e2e_section.get("timeout_seconds")) or 5400,
+            poll_interval_seconds=coerce_optional_int(talos_e2e_section.get("poll_interval_seconds")) or 10,
+            download_timeout_seconds=coerce_optional_int(talos_e2e_section.get("download_timeout_seconds")) or 600,
+            unity_host=coerce_optional_string(talos_e2e_section.get("unity_host")) or "127.0.0.1",
+            unity_port=coerce_optional_int(talos_e2e_section.get("unity_port")) or 10002,
+        ),
     )
 
 
@@ -477,6 +508,7 @@ __all__ = [
     "BuildToolsFileServerConfig",
     "BuildToolsIosXcodeSigningConfig",
     "BuildToolsRemoteArtifactTestConfig",
+    "BuildToolsTalosE2EConfig",
     "find_toml_delimiter",
     "get_config_section",
     "iter_ios_xcode_shell_pairs",
