@@ -116,7 +116,7 @@ def test_run_platform_resource_build_executes_expected_flow(
     project_dir = Path("/tmp/android/BDFramework.Core")
     unity_path = Path("/Applications/Unity/Hub/Editor/2022.3.74f1/Unity.app/Contents/MacOS/Unity")
     log_path = Path(f"/tmp/TCLog/Nightly_Build/238/{artifact_kind}_0.1.238.log")
-    ci_output_root = Path(f"/tmp/android/BDFramework.Core/Library/CIOutputs/{artifact_kind}/Nightly_Build/238/android")
+    ci_output_root = Path(f"/tmp/android/BDFramework.Core/Library/CIOutputs/{artifact_kind}/Nightly_Build/238")
 
     monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: events.append("configure_live_console_output"))
     monkeypatch.setattr(resource_flow, "parse_platform_args", lambda _description: args)
@@ -378,7 +378,7 @@ def test_run_platform_resource_build_phase_upload_skips_build_and_uploads(
         phase="upload",
         dry_run=False,
     )
-    re_derived_root = Path("/tmp/BDFramework.Core/Library/CIOutputs/code/Nightly_Build/238/android")
+    re_derived_root = Path("/tmp/BDFramework.Core/Library/CIOutputs/code/Nightly_Build/238")
 
     monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: None)
     monkeypatch.setattr(resource_flow, "parse_platform_args", lambda _description: args)
@@ -397,7 +397,17 @@ def test_run_platform_resource_build_phase_upload_skips_build_and_uploads(
         lambda **kwargs: Path("/tmp/BDFramework.Core"),
     )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
-    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
+
+    # phase=upload 不应调用 prepare_clean_ci_output_root，应调用 get_ci_output_root 保留 Step1 产物。
+    # phase=upload must not call prepare_clean_ci_output_root; should call get_ci_output_root instead.
+    clean_called = False
+
+    def fake_prepare_clean(*args, **kwargs):
+        nonlocal clean_called
+        clean_called = True
+        return Path("/tmp/output")
+
+    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", fake_prepare_clean)
     monkeypatch.setattr(
         resource_flow,
         "get_ci_output_root",
@@ -441,6 +451,7 @@ def test_run_platform_resource_build_phase_upload_skips_build_and_uploads(
     assert "get_ci_output_root" in events, "ci_output_root should be re-derived in upload phase"
     assert "upload_client_res_code" in events
     assert uploaded_output_root == re_derived_root
+    assert clean_called is False, "prepare_clean_ci_output_root should not be called in upload phase"
 
 
 def test_run_table_resource_build_phase_build_skips_upload(
@@ -530,7 +541,17 @@ def test_run_table_resource_build_phase_upload_skips_build_and_uploads(
     )
     monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
-    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
+
+    # phase=upload 不应调用 prepare_clean_ci_output_root，应调用 get_ci_output_root 保留 Step1 产物。
+    # phase=upload must not call prepare_clean_ci_output_root; should call get_ci_output_root instead.
+    clean_called = False
+
+    def fake_prepare_clean(*args, **kwargs):
+        nonlocal clean_called
+        clean_called = True
+        return Path("/tmp/output")
+
+    monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", fake_prepare_clean)
     monkeypatch.setattr(
         resource_flow,
         "get_ci_output_root",
@@ -571,6 +592,7 @@ def test_run_table_resource_build_phase_upload_skips_build_and_uploads(
     assert "get_ci_output_root" in events, "ci_output_root should be re-derived in upload phase"
     assert "upload_client_res_table" in events
     assert uploaded_output_root == re_derived_root
+    assert clean_called is False, "prepare_clean_ci_output_root should not be called in upload phase"
 
 
 def test_prepare_platform_ci_project_dir_skips_isolation_without_ci_metadata(

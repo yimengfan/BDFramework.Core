@@ -571,13 +571,23 @@ def run_platform_resource_build(
         print(f"{log_prefix} dry-run enabled, skip revert")
 
     print(f"{log_prefix} ===== Step 5/8: prepare output dir =====")
-    ci_output_root = prepare_clean_ci_output_root(
-        project_dir,
-        build_kind=build_kind,
-        build_name=build_name,
-        build_number=build_number,
-        platform=platform_key,
-    )
+    selected_phase = getattr(args, "phase", "all")
+    if selected_phase == "upload":
+        # upload 阶段不清理输出目录，避免删除 Step1 构建的产物。
+        # Upload phase must not clean the output directory to preserve Step1 build artifacts.
+        ci_output_root = get_ci_output_root(
+            project_dir,
+            build_kind=build_kind,
+            build_name=build_name,
+            build_number=build_number,
+        )
+    else:
+        ci_output_root = prepare_clean_ci_output_root(
+            project_dir,
+            build_kind=build_kind,
+            build_name=build_name,
+            build_number=build_number,
+        )
     print(f"{log_prefix} ciOutputRoot={ci_output_root}")
 
     print(f"{log_prefix} ===== Step 6/8: build Unity command =====")
@@ -602,16 +612,14 @@ def run_platform_resource_build(
     )
 
     print(f"{log_prefix} ===== Step 7/8: execute =====")
-    selected_phase = getattr(args, "phase", "all")
     if selected_phase == "upload":
-        # upload 阶段重新推导 ci_output_root，不执行 Unity 构建。
-        # Upload phase re-derives ci_output_root without executing Unity build.
+        # upload 阶段重新推导 ci_output_root（不带 platform），不执行 Unity 构建。
+        # Upload phase re-derives ci_output_root (without platform) without executing Unity build.
         ci_output_root = get_ci_output_root(
             project_dir,
             build_kind=build_kind,
             build_name=build_name,
             build_number=build_number,
-            platform=platform_key,
         )
         print(f"{log_prefix} phase=upload, skip Unity build")
         print(f"{log_prefix} ciOutputRoot={ci_output_root}")
@@ -696,12 +704,23 @@ def run_table_resource_build(
     print(f"{log_prefix} log={log_path}")
 
     print(f"{log_prefix} ===== Step 4/7: prepare output dir =====")
-    ci_output_root = prepare_clean_ci_output_root(
-        project_dir,
-        build_kind=build_kind,
-        build_name=build_name,
-        build_number=build_number,
-    )
+    selected_phase = getattr(args, "phase", "all")
+    if selected_phase == "upload":
+        # upload 阶段不清理输出目录，避免删除 Step1 构建的产物。
+        # Upload phase must not clean the output directory to preserve Step1 build artifacts.
+        ci_output_root = get_ci_output_root(
+            project_dir,
+            build_kind=build_kind,
+            build_name=build_name,
+            build_number=build_number,
+        )
+    else:
+        ci_output_root = prepare_clean_ci_output_root(
+            project_dir,
+            build_kind=build_kind,
+            build_name=build_name,
+            build_number=build_number,
+        )
     print(f"{log_prefix} ciOutputRoot={ci_output_root}")
 
     print(f"{log_prefix} ===== Step 5/7: build Unity command =====")
@@ -718,7 +737,6 @@ def run_table_resource_build(
     )
 
     print(f"{log_prefix} ===== Step 6/7: execute =====")
-    selected_phase = getattr(args, "phase", "all")
     if selected_phase == "upload":
         # upload 阶段重新推导 ci_output_root，不执行 Unity 构建。
         # Upload phase re-derives ci_output_root without executing Unity build.
