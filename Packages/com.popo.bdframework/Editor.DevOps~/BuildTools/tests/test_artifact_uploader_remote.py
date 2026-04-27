@@ -243,7 +243,7 @@ def remote_artifact_test_config(buildtools_external_config):
     if not config.enabled:
         pytest.skip(
             "remote artifact integration tests require [tests.remote_artifact].enabled = true "
-            "in DevOps/CI/BuildTools/buildtools.toml"
+            "in Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml"
         )
     return config
 

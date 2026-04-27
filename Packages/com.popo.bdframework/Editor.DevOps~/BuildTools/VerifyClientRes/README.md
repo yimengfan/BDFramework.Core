@@ -1,6 +1,6 @@
 # VerifyClientRes
 
-三端热更文件服务器验证 CI Python 入口，位于 `DevOps/CI/BuildTools/VerifyClientRes/`。
+三端热更文件服务器验证 CI Python 入口，位于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/`。
 
 ## 设计原则
 
@@ -38,7 +38,7 @@
 ## 验证命令
 
 ```bash
-python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_verify.py DevOps/CI/BuildTools/tests/test_test_client_res.py -q
+python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_verify.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_test_client_res.py -q
 ```
 
 推荐验证顺序：
@@ -116,10 +116,10 @@ TeamCity 页签路径：`BDFramework.Core / TestPipeline / TestBuildPipeline_Cli
 ## 示例
 
 ```bash
-python3 DevOps/CI/BuildTools/VerifyClientRes/test_client_res.py resolve-builds --platform android --client-version 0.1 --branch v4/v-4.0.0 --vcs-revision abc123 --upstream-build-extra-args ""
-python3 DevOps/CI/BuildTools/VerifyClientRes/test_client_res.py wait-builds --platform android --code-build-id 101 --assetbundle-build-id 202 --table-build-id 303
-python3 DevOps/CI/BuildTools/VerifyClientRes/test_client_res.py queue-verify-build --platform android --client-version 0.1 --branch v4/v-4.0.0 --vcs-revision abc123 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303
-python3 DevOps/CI/BuildTools/VerifyClientRes/verify_android.py --client-version 0.1 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303 --server-url http://127.0.0.1:20001 --build-name local_verify_android --build-number 123 --dry-run
-python3 DevOps/CI/BuildTools/VerifyClientRes/verify_ios.py --client-version 0.1 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303 --server-url http://127.0.0.1:20001 --build-name local_verify_ios --build-number 123 --dry-run
-python3 DevOps/CI/BuildTools/VerifyClientRes/verify_windows.py --client-version 0.1 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303 --server-url http://127.0.0.1:20001 --build-name local_verify_windows --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/test_client_res.py resolve-builds --platform android --client-version 0.1 --branch v4/v-4.0.0 --vcs-revision abc123 --upstream-build-extra-args ""
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/test_client_res.py wait-builds --platform android --code-build-id 101 --assetbundle-build-id 202 --table-build-id 303
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/test_client_res.py queue-verify-build --platform android --client-version 0.1 --branch v4/v-4.0.0 --vcs-revision abc123 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/verify_android.py --client-version 0.1 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303 --server-url http://127.0.0.1:20001 --build-name local_verify_android --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/verify_ios.py --client-version 0.1 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303 --server-url http://127.0.0.1:20001 --build-name local_verify_ios --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/verify_windows.py --client-version 0.1 --expected-code-version 101 --expected-assetbundle-version 202 --expected-table-version 303 --server-url http://127.0.0.1:20001 --build-name local_verify_windows --build-number 123 --dry-run
 ```

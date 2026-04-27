@@ -45,7 +45,7 @@ cp .test-DevOps/.teamcity/.env.example .test-DevOps/.teamcity/.env
 
 重要说明：
 
-- `TEAMCITY_BASE_URL` 只控制本地 TeamCity helper 访问哪一个 TeamCity HTTP 入口，以及控制台里重写后的公开 `webUrl`；它不会自动改写 `DevOps/CI/BuildTools/buildtools.toml` 里的 `[ci_server]` 或 `[artifact_file_server]`。
+- `TEAMCITY_BASE_URL` 只控制本地 TeamCity helper 访问哪一个 TeamCity HTTP 入口，以及控制台里重写后的公开 `webUrl`；它不会自动改写 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml` 里的 `[ci_server]` 或 `[artifact_file_server]`。
 - 如果 TeamCity 服务器通过 Web API 返回的是内网 `webUrl`，helper 现在会额外按当前 `TEAMCITY_BASE_URL` 重写出一个可直接访问的 `webUrl`，并把原始服务端地址保留为 `serverWebUrl` 便于对照。
 
 默认环境文件位置：
@@ -193,7 +193,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 排障建议：
 
 - 如果构建早已结束，不要继续只盯着后台终端等待；优先直接查询 `GET /app/rest/builds/id:<buildId>`，再按 buildId 读取 `test-output.log` 或 `downloadBuildLog.html`。
-- 如果 TeamCity helper 能访问公网 TeamCity，但远端构建内部仍打印内网 `teamcityBaseUrl` 或 `uploadServerUrl`，应继续检查 `DevOps/CI/BuildTools/buildtools.toml` 和相关外部服务，而不是只改 `.test-DevOps/.teamcity/.env`。
+- 如果 TeamCity helper 能访问公网 TeamCity，但远端构建内部仍打印内网 `teamcityBaseUrl` 或 `uploadServerUrl`，应继续检查 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml` 和相关外部服务，而不是只改 `.test-DevOps/.teamcity/.env`。
 
 Guardrail for Talos BaseFlow:
 
@@ -414,4 +414,4 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 ## 关联文档
 
 - 总流程与排查方法：`/.test-DevOps/README.md`
-- Python 构建脚本说明：`/Users/naipaopao/Documents/GitHub/BDFramework.Core/DevOps/CI/BuildTools/BuildClientPackage/README.md`
+- Python 构建脚本说明：`/Users/naipaopao/Documents/GitHub/BDFramework.Core/Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/README.md`

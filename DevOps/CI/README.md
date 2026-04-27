@@ -23,9 +23,9 @@
 ### 2. 外部配置统一来源
 
 - BuildTools 里的业务无关外部配置统一称为 external integration config，按用途拆成 external service config、external signing config、external test config。
-- 文件服务器、CI 服务器、签名/证书元数据、remote smoke test 参数都必须写在 `DevOps/CI/BuildTools/buildtools.toml` 或 `buildtools.toml.example`，不能在脚本里散落新的配置源。
-- Python 与 shell 入口读取这些配置时，必须复用 `DevOps/CI/BuildTools/Common/buildtools_config.py` 或其公共封装，不要在各模块再复制一份 TOML 解析逻辑。
-- `.github/hooks/buildtools-config-guard.json` 会对 agent 的写操作做确定性拦截，禁止在 `DevOps/CI/BuildTools` 源码里重新引入 ad hoc TOML 解析或直接散读共享 config section。
+- 文件服务器、CI 服务器、签名/证书元数据、remote smoke test 参数都必须写在 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml` 或 `buildtools.toml.example`，不能在脚本里散落新的配置源。
+- Python 与 shell 入口读取这些配置时，必须复用 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/Common/buildtools_config.py` 或其公共封装，不要在各模块再复制一份 TOML 解析逻辑。
+- `.github/hooks/buildtools-config-guard.json` 会对 agent 的写操作做确定性拦截，禁止在 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools` 源码里重新引入 ad hoc TOML 解析或直接散读共享 config section。
 - 变更 section 名称、键名、优先级或默认值时，必须同时更新代码、README、`buildtools.toml(.example)` 和 pytest。
 
 ### 3. 测试分层
@@ -50,7 +50,7 @@
 ### 6. 构建管线强制规范
 
 - TeamCity DSL、Jenkinsfile、shell pipeline 之类的管线层只负责调度参数、任务依赖和执行入口，不承载业务构建逻辑。
-- 具体业务实现统一落在 `DevOps/CI/BuildTools/` 下的 Python 脚本里；如果是新的构建类型，必须新建独立目录，不要继续把不同类型流程塞进旧目录。
+- 具体业务实现统一落在 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/` 下的 Python 脚本里；如果是新的构建类型，必须新建独立目录，不要继续把不同类型流程塞进旧目录。
 - 同一种构建类型允许拆成多个平台脚本，但共享逻辑要尽量下沉到 `Common/` 或该类型目录内部的共享模块，避免复制粘贴长流程。
 - 平台相关 checkout / `--project-dir` / 缓存根目录必须通过公共参数或运行时目录名推导，统一使用 `{platform}/{project-leaf}` 这类组合协议；禁止在 DSL、脚本和 README 里写死 `ios/BDFramework.Core` 这类具体项目名路径。
 - Assetbundle 构建是当前唯一要求强制平台隔离 checkout 的任务类型：当 TeamCity 之类的宿主已经把工程 checkout 到平台目录时，Assetbundle BuildTools 必须直接复用该目录作为 Unity `-projectPath`；只有上游仍给出共享 checkout 时，才允许回退到 sibling worktree 来隔离 `Library/Temp`。其他构建或验证任务只有在任务文档明确声明缓存污染风险时才允许启用同类隔离。
@@ -63,12 +63,12 @@
 | 目录 | 职责 | 说明文档 | 必跑验证 |
 | --- | --- | --- | --- |
 | `BuildTools/` | CI Python 脚本与公共模块目录 | `BuildTools/README.md` | 按子模块 README 执行对应 pytest、smoke test 与 TeamCity 验证 |
-| `BuildTools/BuildClientPackage/` | Unity 母包构建入口 | `BuildTools/BuildClientPackage/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_batchmode.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q`；若改动影响 TeamCity，再执行受影响的 TeamCity 构建 |
-| `BuildTools/BuildClientResCode/` | 三端热更代码构建与上传入口 | `BuildTools/BuildClientResCode/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Code` 相关任务 |
-| `BuildTools/BuildClientResAssetbundle/` | 三端热更 Assetbundle 构建与上传入口 | `BuildTools/BuildClientResAssetbundle/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Assetbundle` 相关任务 |
-| `BuildTools/BuildClientResTable/` | 统一表格构建与上传入口 | `BuildTools/BuildClientResTable/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Table` 相关任务 |
-| `BuildTools/VerifyClientRes/` | 三端热更文件服务器下载验证入口 | `BuildTools/VerifyClientRes/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_verify.py -q`；若改动影响 TeamCity，再在 `BDFramework.Core / TestPipeline / TestBuildPipeline_ClientRes` 下执行 `ClientRes_Verify` / `VerifyClientRes_*` 相关任务 |
-| `BuildTools/Common/` | 公共上传模块与配置解析 | `BuildTools/Common/README.md` | `python -m pytest -q DevOps/CI/BuildTools/tests/test_artifact_uploader.py`；若改动影响真实上传链路，再执行 remote smoke test |
+| `BuildTools/BuildClientPackage/` | Unity 母包构建入口 | `BuildTools/BuildClientPackage/README.md` | `python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_buildclientpackage_helpers.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_buildclientpackage_batchmode.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_buildclientpackage_main_flow.py -q`；若改动影响 TeamCity，再执行受影响的 TeamCity 构建 |
+| `BuildTools/BuildClientResCode/` | 三端热更代码构建与上传入口 | `BuildTools/BuildClientResCode/README.md` | `python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_artifacts.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Code` 相关任务 |
+| `BuildTools/BuildClientResAssetbundle/` | 三端热更 Assetbundle 构建与上传入口 | `BuildTools/BuildClientResAssetbundle/README.md` | `python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_artifacts.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Assetbundle` 相关任务 |
+| `BuildTools/BuildClientResTable/` | 统一表格构建与上传入口 | `BuildTools/BuildClientResTable/README.md` | `python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_artifacts.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Table` 相关任务 |
+| `BuildTools/VerifyClientRes/` | 三端热更文件服务器下载验证入口 | `BuildTools/VerifyClientRes/README.md` | `python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_verify.py -q`；若改动影响 TeamCity，再在 `BDFramework.Core / TestPipeline / TestBuildPipeline_ClientRes` 下执行 `ClientRes_Verify` / `VerifyClientRes_*` 相关任务 |
+| `BuildTools/Common/` | 公共上传模块与配置解析 | `BuildTools/Common/README.md` | `python -m pytest -q Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_artifact_uploader.py`；若改动影响真实上传链路，再执行 remote smoke test |
 
 ## 变更检查清单
 

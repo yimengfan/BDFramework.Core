@@ -1,6 +1,6 @@
 # BuildClientPackage
 
-母包 CI Python 入口，当前位于 `DevOps/CI/BuildTools/BuildClientPackage/`。
+母包 CI Python 入口，当前位于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/`。
 
 ## 设计原则
 
@@ -48,7 +48,7 @@
 ## 验证命令
 
 ```bash
-python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_batchmode.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q
+python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_buildclientpackage_helpers.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_buildclientpackage_batchmode.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_buildclientpackage_main_flow.py -q
 ```
 
 推荐验证顺序：
@@ -122,24 +122,24 @@ TeamCity 侧通过 `%build.extra.args%` 透传这些可选参数，例如：
 ## 示例
 
 ```bash
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0
 
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --build-name local_android --build-number 123
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --build-name local_ios --build-number 123
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --build-name local_windows --build-number 123
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --build-name local_android --build-number 123
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --build-name local_ios --build-number 123
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --build-name local_windows --build-number 123
 
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2022.3.74f1
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --project-dir /path/to/UnityProject
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --file-server-url https://files.example.com/fileserver
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --dry-run
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --debug-build true --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2022.3.74f1
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --project-dir /path/to/UnityProject
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --file-server-url https://files.example.com/fileserver
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --debug-build true --dry-run
 ```
 
 ## iOS Xcode 后置脚本
 
-Unity 导出 iOS Xcode 工程后，会固定调用 `DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell`，并显式传入 `--project-dir <xcode_output>`；脚本完成 archive / export 后，会在 Xcode 输出目录的同级目录生成同名 `ipa`：例如 Xcode 目录是 `.../ios/com.demo.game`，则默认 ipa 是 `.../ios/com.demo.game.ipa`。
+Unity 导出 iOS Xcode 工程后，会固定调用 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_xcode.shell`，并显式传入 `--project-dir <xcode_output>`；脚本完成 archive / export 后，会在 Xcode 输出目录的同级目录生成同名 `ipa`：例如 Xcode 目录是 `.../ios/com.demo.game`，则默认 ipa 是 `.../ios/com.demo.game.ipa`。
 
 默认行为：
 
@@ -154,11 +154,11 @@ Unity 导出 iOS Xcode 工程后，会固定调用 `DevOps/CI/BuildTools/BuildCl
 配置优先级：
 
 - `build_xcode.shell` 文件头部的脚本默认值
-- `DevOps/CI/BuildTools/buildtools.toml -> [ios_xcode]`
+- `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml -> [ios_xcode]`
 - 环境变量
 - 命令行参数
 
-`[ios_xcode]` 现在归类为 external signing config，统一通过 `DevOps/CI/BuildTools/Common/buildtools_config.py` 读取；`build_xcode.shell` 不再维护独立的 TOML 解析逻辑。
+`[ios_xcode]` 现在归类为 external signing config，统一通过 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/Common/buildtools_config.py` 读取；`build_xcode.shell` 不再维护独立的 TOML 解析逻辑。
 
 如果你们团队希望把常用签名参数固化到仓库里，推荐只把签名信息写到 `buildtools.toml` 的 `[ios_xcode]` 段；其余构建行为继续使用脚本默认值，必要时再通过环境变量或命令行覆盖。例如：
 
@@ -210,9 +210,9 @@ provisioning_profile_specifier = "Demo AdHoc"
 ```bash
 BUILD_XCODE_TEAM_ID=ABCDE12345 \
 BUILD_XCODE_EXPORT_METHOD=development \
-DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell --project-dir DevOps/PublishPackages/ios/com.demo.game
+Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_xcode.shell --project-dir DevOps/PublishPackages/ios/com.demo.game
 
-DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell \
+Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_xcode.shell \
 	--project-dir DevOps/PublishPackages/ios/com.demo.game \
 	--configuration Release \
 	--signing-style manual \
@@ -228,7 +228,7 @@ DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell \
 - 为兼容已有 TeamCity/Jenkins 环境，脚本仍会兜底读取已有平台环境变量，但文档和 DSL 不再使用 `tc` 前缀参数
 - 共享日志根目录由共享层自动决定：TeamCity 下默认 `TCLog`，其他 CI 默认 `CILog`
 - 非 dry-run 构建会在 Unity 执行前清空 `DevOps/PublishPackages/<platform>/`，避免旧输出污染本次母包
-- 构建成功后，脚本会直接调用 `DevOps/CI/BuildTools/Common/artifact_uploader.py` 对应模块接口上传母包
+- 构建成功后，脚本会直接调用 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/Common/artifact_uploader.py` 对应模块接口上传母包
 - 上传目录优先使用 `buildNumber` 作为远端版本段；如果没有 `buildNumber`，则回退到 `clientVersion`
 - iOS 上传前会把 `DevOps/PublishPackages/ios/` 下的 Xcode 工程目录压成单个 zip，只上传 zip，不上传 `.ipa`
 - Windows 上传前会把可运行目录压成单个 zip；如果输出里存在名为 `不要发布`、包含 `ButDontShipItWithYourGame` 的目录，或 Unity Burst 自动生成的 `*_BurstDebugInformation_DoNotShip` 目录，这些目录会从主运行时 zip 中拆出，并分别压成独立 zip 一起上传
@@ -237,16 +237,16 @@ DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell \
 
 ## 文件服务器上传
 
-BuildTools 现在提供公共上传模块：`DevOps/CI/BuildTools/Common/artifact_uploader.py`。
+BuildTools 现在提供公共上传模块：`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/Common/artifact_uploader.py`。
 
 说明：
 
 - `build_android.py` / `build_ios.py` / `build_windows.py` 在真实构建成功后会直接调用这个模块上传母包
-- 默认读取 `DevOps/CI/BuildTools/buildtools.toml`
+- 默认读取 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml`
 - 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`ClientRes_Code_{平台}/{buildnum}`、`ClientRes_Assetbundle_{平台}/{buildnum}`、`ClientRes_Table/{buildnum}`
 - 上传接口支持进度回调，当前 BuildClientPackage 会把每个文件的上传开始/完成事件直接打到 CI 日志
 
-详细说明见：`DevOps/CI/BuildTools/Common/README.md`
+详细说明见：`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/Common/README.md`
 
 ## Unity 路径
 
@@ -298,7 +298,7 @@ BuildTools 现在提供公共上传模块：`DevOps/CI/BuildTools/Common/artifac
 例如：
 
 ```bash
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2021.3.58f1
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2021.3.58f1
 ```
 
 ### 默认 Unity 版本
@@ -318,7 +318,7 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-versio
 例如：
 
 ```bash
-python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --project-dir /data/build/BDFramework.Core
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --project-dir /data/build/BDFramework.Core
 ```
 
 如果不传：

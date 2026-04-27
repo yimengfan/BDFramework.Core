@@ -87,7 +87,7 @@ SETTINGS = {
             "method": "BDFramework.Editor.DevOps.PublishPipeLineCI.BuildClientPackageWindows",
         },
     },
-    # 日志目录名，最终位于 DevOps/CI/BuildTools/BuildClientPackage/logs 下。
+    # 日志目录名，最终位于 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/logs 下。
     "log_dir_name": "logs",
 }
 

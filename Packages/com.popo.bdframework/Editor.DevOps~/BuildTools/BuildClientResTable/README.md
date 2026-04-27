@@ -1,6 +1,6 @@
 # BuildClientResTable
 
-统一表格 CI Python 入口，位于 `DevOps/CI/BuildTools/BuildClientResTable/`。
+统一表格 CI Python 入口，位于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResTable/`。
 
 ## 设计原则
 
@@ -29,7 +29,7 @@
 ## 验证命令
 
 ```bash
-python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q
+python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_artifacts.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_flow.py -q
 ```
 
 推荐验证顺序：
@@ -79,6 +79,6 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 ## 示例
 
 ```bash
-python3 DevOps/CI/BuildTools/BuildClientResTable/build_table.py --build-name local_table --build-number 123 --dry-run
-python3 DevOps/CI/BuildTools/BuildClientResTable/build_table.py --client-version 0.1 --build-name local_table --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResTable/build_table.py --build-name local_table --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResTable/build_table.py --client-version 0.1 --build-name local_table --build-number 123 --dry-run
 ```

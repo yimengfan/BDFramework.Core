@@ -6,7 +6,7 @@
 3. 在当前 TestClientRes 父构建内直接执行平台对应的 VerifyClientRes 本地校验脚本。
 
 示例：
-    python DevOps/CI/BuildTools/VerifyClientRes/test_client_res.py resolve-builds \
+    python Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/VerifyClientRes/test_client_res.py resolve-builds \
         --platform android \
         --client-version 0.1 \
         --branch v4/v-4.0.0 \
@@ -31,7 +31,7 @@ from typing import Any
 
 
 BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
-WORKSPACE_ROOT = BUILD_TOOLS_ROOT.parents[2]
+WORKSPACE_ROOT = BUILD_TOOLS_ROOT.parents[4]
 if str(BUILD_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(BUILD_TOOLS_ROOT))
 

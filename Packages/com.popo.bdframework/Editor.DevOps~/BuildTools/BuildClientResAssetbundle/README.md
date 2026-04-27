@@ -1,6 +1,6 @@
 # BuildClientResAssetbundle
 
-三端热更 Assetbundle CI Python 入口，位于 `DevOps/CI/BuildTools/BuildClientResAssetbundle/`。
+三端热更 Assetbundle CI Python 入口，位于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResAssetbundle/`。
 
 ## 设计原则
 
@@ -20,7 +20,7 @@
 ## 验证命令
 
 ```bash
-python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q
+python -m pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_artifacts.py Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/test_client_resource_flow.py -q
 ```
 
 ## TeamCity 自动化映射
@@ -78,7 +78,7 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 ## 示例
 
 ```bash
-python3 DevOps/CI/BuildTools/BuildClientResAssetbundle/build_android.py --client-version 0.1 --build-name local_asset_android --build-number 123 --dry-run
-python3 DevOps/CI/BuildTools/BuildClientResAssetbundle/build_ios.py --client-version 0.1 --build-name local_asset_ios --build-number 123 --dry-run
-python3 DevOps/CI/BuildTools/BuildClientResAssetbundle/build_windows.py --client-version 0.1 --build-name local_asset_windows --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResAssetbundle/build_android.py --client-version 0.1 --build-name local_asset_android --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResAssetbundle/build_ios.py --client-version 0.1 --build-name local_asset_ios --build-number 123 --dry-run
+python3 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientResAssetbundle/build_windows.py --client-version 0.1 --build-name local_asset_windows --build-number 123 --dry-run
 ```

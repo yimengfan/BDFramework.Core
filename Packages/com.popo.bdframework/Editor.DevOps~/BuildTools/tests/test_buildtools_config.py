@@ -111,7 +111,7 @@ def test_iter_ios_xcode_shell_pairs_emits_supported_signing_keys() -> None:
 
 def test_buildtools_source_files_do_not_reintroduce_ad_hoc_external_config_parsers() -> None:
     """验证受保护的 BuildTools 源码文件只通过 Common/buildtools_config.py 读取共享外部配置，不会重新引入临时解析器。"""
-    workspace_root = str(BUILD_TOOLS_ROOT.parents[2])
+    workspace_root = str(BUILD_TOOLS_ROOT.parents[4])
     violations = []
 
     for path in BUILD_TOOLS_ROOT.rglob("*"):

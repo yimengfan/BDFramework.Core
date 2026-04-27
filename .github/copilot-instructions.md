@@ -88,7 +88,7 @@
 | 资源加载 | `Runtime/AssetsManager/**`、资源版本/更新/加载协议 | `.github/talos-docs/modules/resource-loading.md`、包规则 | AssetsManager 测试、资源更新 BatchMode、服务器协议变化时跑 ClientRes 验证 |
 | 构建业务 | `Editor/EditorPipeline/**`、PublishPipeline、BuildHotfix、BuildAssetBundle、BuildTable、母包构建入口 | `.github/talos-docs/modules/editor-pipeline.md`；面向 CI 时读 CI 文档 | Unity BatchMode bridge 测试；面向 CI 时跑 BuildTools pytest/dry-run |
 | 框架测试 | `Runtime.Test/**`、`Runtime.HostE2E/**`、包测试 asmdef | `.github/talos-docs/modules/testing.md`、包规则 | 目标 Unity 测试程序集；相关时跑 BatchMode |
-| DevOps CI | `DevOps/CI/**`、BuildTools Python、上传 helper、文件服务器配置、pytest | `.github/talos-docs/modules/devops-ci.md`、`DevOps/CI/README.md`、`DevOps/CI/BuildTools/README.md`、目标模块 README | 目标 pytest、dry-run/smoke test；契约/日志/上传/DSL 变化时跑 TeamCity |
+| DevOps CI | `DevOps/CI/**`、`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/**`、BuildTools Python、上传 helper、文件服务器配置、pytest | `.github/talos-docs/modules/devops-ci.md`、`DevOps/CI/README.md`、`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/README.md`、目标模块 README | 目标 pytest、dry-run/smoke test；契约/日志/上传/DSL 变化时跑 TeamCity |
 | TeamCity DSL | `.test-DevOps/.teamcity/**`、buildType 映射、Versioned Settings | `.test-DevOps/AGENTS.md`、`.github/skills/teamcity/SKILL.md` | Maven DSL 生成、TeamCity REST 检查、受影响远端构建 |
 | Talos E2E 包 | `Packages/com.talosai.e2e/**` | `Packages/com.talosai.e2e/AGENTS.md` | `Playwright~/tools/test-batchmode.sh`、`test-editorplayer.sh`、相关平台工具 |
 | TeamCity skill | `.github/skills/teamcity/**` | `.github/skills/teamcity/SKILL.md`、`.github/skills/teamcity/README.md` | skill 测试和可行的只读 TeamCity 检查 |

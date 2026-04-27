@@ -1,6 +1,6 @@
 # BuildTools
 
-`DevOps/CI/BuildTools/` 是 CI Python 脚本、公共模块和对应测试的收敛目录。
+`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/` 是 CI Python 脚本、公共模块和对应测试的收敛目录。
 
 公共规范、阅读顺序和跨模块验证要求统一维护在 [../README.md](../README.md)。本文只保留 `BuildTools/` 自身的目录索引，避免和 CI 根文档重复。
 

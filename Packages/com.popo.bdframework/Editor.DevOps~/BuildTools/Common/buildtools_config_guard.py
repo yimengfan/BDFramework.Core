@@ -24,7 +24,7 @@ SOURCE_SUFFIXES = {".py", ".sh", ".shell"}
 # 共享配置入口本身就是唯一允许建模或解析 BuildTools 外部配置的实现位置。
 # 其他 BuildTools 源文件都只能消费它暴露出来的接口或 typed model。
 ALLOWED_CONFIG_SOURCE_FILES = {
-    "DevOps/CI/BuildTools/Common/buildtools_config.py",
+    "Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/Common/buildtools_config.py",
 }
 
 # 每条规则都是 `(regex, 可读原因)` 的形式。
@@ -68,11 +68,11 @@ def is_guarded_buildtools_source(path_text: str, *, workspace_root: str | None =
     suffix = PurePosixPath(relative_path).suffix
 
     # Phase 1: guard 只作用在 BuildTools 源码范围内，不扫描整个仓库。
-    if not relative_path.startswith("DevOps/CI/BuildTools/"):
+    if not relative_path.startswith("Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/"):
         return False
 
     # Phase 2: tests 目录排除在外，允许测试代码保留故意构造的违规样例。
-    if relative_path.startswith("DevOps/CI/BuildTools/tests/"):
+    if relative_path.startswith("Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/"):
         return False
 
     # Phase 3: 只有可执行源文件才和这条规范相关。

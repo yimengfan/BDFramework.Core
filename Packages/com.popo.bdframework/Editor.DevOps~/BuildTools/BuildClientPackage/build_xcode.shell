@@ -165,7 +165,7 @@ REPO_ROOT="$(
 )"
 
 # 最低优先级脚本默认值。
-# 推荐团队共享默认值放到 DevOps/CI/BuildTools/buildtools.toml 的 [ios_xcode] 段；
+# 推荐团队共享默认值放到 Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml 的 [ios_xcode] 段；
 # 这里只保留兜底值或本机临时默认值，尽量集中维护在这个区域。
 DEFAULT_BUILDTOOLS_CONFIG_PATH="${BUILD_TOOLS_ROOT}/buildtools.toml"
 DEFAULT_BUILDTOOLS_CONFIG_EXAMPLE_PATH="${BUILD_TOOLS_ROOT}/buildtools.toml.example"

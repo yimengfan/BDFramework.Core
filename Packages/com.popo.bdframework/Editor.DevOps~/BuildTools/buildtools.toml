@@ -14,8 +14,7 @@ scheme = "http"
 
 # 如果你已经有完整访问地址，也可以直接写 base_url，优先级高于 ip/port/scheme。
 # base_url = "http://192.168.0.240:20001"
-
-# token = ""
+token = "yJ0eXAiOiAiVENWMiJ9.ZGhNaEhGOVoxMmQzN0tHZHdsNGJVaU90N2JJ.YzZhYTFiMTctZDBiMy00ZmVlLWE0NDMtZTgzZjE3NDFhMmNm"
 upload_chunk_size_kb = 1024
 hash_chunk_size_kb = 1024
 

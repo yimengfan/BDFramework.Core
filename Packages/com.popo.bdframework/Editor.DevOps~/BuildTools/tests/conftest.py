@@ -6,10 +6,10 @@
 
 使用方式：
     # 跳过远程测试（默认行为）
-    pytest DevOps/CI/BuildTools/tests/
+    pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/
 
     # 启用远程测试（需要 buildtools.toml 中 [tests.remote_artifact].enabled = true）
-    pytest DevOps/CI/BuildTools/tests/ --run-remote-artifact-tests
+    pytest Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/tests/ --run-remote-artifact-tests
 """
 
 from __future__ import annotations

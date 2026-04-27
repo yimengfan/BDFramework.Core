@@ -29,7 +29,7 @@ namespace BDFramework.Editor.BuildPipeline
     {
         public const string DefaultClientVersion = "0.1.0";
         internal const string ClientVersionBatchArgName = "-clientVersion";
-        const string IOSPostBuildShellRelativePath = "DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell";
+        const string IOSPostBuildShellRelativePath = "Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_xcode.shell";
 
         public enum BuildMode
         {

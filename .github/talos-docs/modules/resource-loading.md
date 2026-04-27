@@ -23,5 +23,5 @@
 ## 验证
 
 - 新增或更新最近的 AssetsManager 单元/集成测试。
-- 资源更新或文件服务器协议变化时，运行文档记录的 BatchMode 验证和相关 `DevOps/CI/BuildTools` pytest/dry-run。
+- 资源更新或文件服务器协议变化时，运行文档记录的 BatchMode 验证和相关 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools` pytest/dry-run。
 - ClientRes 远端上传/下载行为变化时，本地检查通过后触发受影响 TeamCity 验证。

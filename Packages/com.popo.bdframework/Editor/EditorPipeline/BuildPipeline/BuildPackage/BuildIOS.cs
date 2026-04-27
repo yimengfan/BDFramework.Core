@@ -16,8 +16,8 @@ namespace BDFramework.Editor.BuildPipeline
     public class BuildIOS
     {
         static private BuildTarget BuildTarget = BuildTarget.iOS;
-        const string IOSPostBuildShellPath = "DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell";
-        const string IOSBuildToolsConfigPath = "DevOps/CI/BuildTools/buildtools.toml";
+        const string IOSPostBuildShellPath = "Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_xcode.shell";
+        const string IOSBuildToolsConfigPath = "Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/buildtools.toml";
 
 
         #region 打包参数
