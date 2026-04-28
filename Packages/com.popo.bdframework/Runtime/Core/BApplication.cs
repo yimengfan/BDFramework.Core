@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,11 +11,20 @@ using UnityEditor;
 namespace BDFramework.Core.Tools
 {
     /// <summary>
-    /// 职责类似Unity的Application
+    /// 框架运行时应用上下文。
+    /// Framework runtime application context.
+    /// 该类型缓存 Unity 路径与平台信息，供资源、日志和构建流程共享。
+    /// This type caches Unity paths and platform information shared by resource, logging, and build flows.
     /// </summary>
     static public class BApplication
     {
         static public bool IsPlaying { get; set; }
+
+        /// <summary>
+        /// 标记路径状态是否已经在安全线程完成初始化。
+        /// Marks whether the cached path state has already been initialized on a safe thread.
+        /// </summary>
+        static private bool hasInitializedPathState;
 
         /// <summary>
         /// 定义 支持的平台
@@ -39,7 +49,31 @@ namespace BDFramework.Core.Tools
 
         static BApplication()
         {
-            Init();
+            TryInitializePathState(
+                () => Application.dataPath,
+                () => Application.persistentDataPath,
+                () => Application.streamingAssetsPath,
+                message => Debug.LogWarning(message),
+                "StaticConstructor");
+        }
+
+        /// <summary>
+        /// 在场景加载前于主线程重试一次路径初始化。
+        /// Retry path initialization once on the main thread before scene loading.
+        /// 某些 Player 启动路径会先在 loading thread 触发静态构造，导致 `Application.dataPath`
+        /// 这类 Unity API 抛出“只能在主线程调用”的异常；这里把真正的安全初始化收敛到主线程重试。
+        /// Some player startup paths hit the static constructor from the loading thread first, making Unity APIs
+        /// such as `Application.dataPath` throw “main thread only”; this hook retries the real initialization on the main thread.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static private void InitializePathStateBeforeSceneLoad()
+        {
+            TryInitializePathState(
+                () => Application.dataPath,
+                () => Application.persistentDataPath,
+                () => Application.streamingAssetsPath,
+                message => Debug.LogWarning(message),
+                "BeforeSceneLoad");
         }
 
         #region Unity3d路径重写
@@ -170,10 +204,62 @@ namespace BDFramework.Core.Tools
 
         #endregion
 
-        static private void Init()
+        /// <summary>
+        /// 尝试读取 Unity 路径快照并初始化框架路径缓存。
+        /// Try to read a Unity path snapshot and initialize the framework path cache.
+        /// 该方法在 loading thread 触发 Unity “main thread only” 异常时会吞掉异常并返回 false，
+        /// 以避免静态构造失败把整个类型永久毒化；随后由主线程重试完成真正初始化。
+        /// This method catches Unity “main thread only” exceptions raised from the loading thread and returns false,
+        /// avoiding a permanently poisoned static constructor; the main thread then retries and completes initialization.
+        /// </summary>
+        /// <param name="dataPathProvider">返回 Unity dataPath 的委托。Delegate that returns the Unity dataPath.</param>
+        /// <param name="persistentDataPathProvider">返回 Unity persistentDataPath 的委托。Delegate that returns the Unity persistentDataPath.</param>
+        /// <param name="streamingAssetsPathProvider">返回 Unity streamingAssetsPath 的委托。Delegate that returns the Unity streamingAssetsPath.</param>
+        /// <param name="logWarning">输出延迟初始化告警的委托。Delegate that emits the deferred-initialization warning.</param>
+        /// <param name="source">当前初始化尝试的来源标签。Source label of the current initialization attempt.</param>
+        /// <returns>成功返回 true；若需要延迟到主线程重试则返回 false。Returns true on success; returns false when initialization must be retried on the main thread.</returns>
+        static private bool TryInitializePathState(
+            Func<string> dataPathProvider,
+            Func<string> persistentDataPathProvider,
+            Func<string> streamingAssetsPathProvider,
+            Action<string> logWarning,
+            string source)
+        {
+            if (hasInitializedPathState)
+            {
+                return true;
+            }
+
+            try
+            {
+                ApplyPathState(
+                    dataPathProvider(),
+                    persistentDataPathProvider,
+                    streamingAssetsPathProvider);
+                hasInitializedPathState = true;
+                return true;
+            }
+            catch (UnityException ex)
+            {
+                logWarning?.Invoke($"[BApplication] {source} 阶段路径初始化延后，等待主线程重试: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 根据 Unity 路径快照应用框架路径缓存。
+        /// Apply the framework path cache from a Unity path snapshot.
+        /// </summary>
+        /// <param name="dataPath">Unity 的 dataPath。Unity dataPath.</param>
+        /// <param name="persistentDataPathProvider">返回 Unity persistentDataPath 的委托。Delegate that returns the Unity persistentDataPath.</param>
+        /// <param name="streamingAssetsPathProvider">返回 Unity streamingAssetsPath 的委托。Delegate that returns the Unity streamingAssetsPath.</param>
+        static private void ApplyPathState(
+            string dataPath,
+            Func<string> persistentDataPathProvider,
+            Func<string> streamingAssetsPathProvider)
         {
             //自定义路径
-            ProjectRoot = Application.dataPath.Replace("/Assets", "");
+            ProjectRoot = dataPath.Replace("/Assets", "");
             Library = ProjectRoot + "/Library";
             Package = ProjectRoot + "/Package";
             BDWorkSpace = ProjectRoot + "/BDWorkSpace";
@@ -193,15 +279,15 @@ namespace BDFramework.Core.Tools
 #if UNITY_EDITOR
             persistentDataPath = ProjectRoot + "/.AppData";
 #elif UNITY_STANDALONE_WIN|| UNITY_STANDALONE_OSX 
-            persistentDataPath = Application.dataPath + "/.AppData";;
+        persistentDataPath = dataPath + "/.AppData";
 #else
-            persistentDataPath = Application.persistentDataPath;
+        persistentDataPath = persistentDataPathProvider();
 #endif
          
 #if UNITY_EDITOR
             streamingAssetsPath = DevOpsPublishAssetsPath;
 #else
-            streamingAssetsPath = Application.streamingAssetsPath;
+        streamingAssetsPath = streamingAssetsPathProvider();
 #endif
         }
 

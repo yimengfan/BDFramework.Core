@@ -249,7 +249,14 @@ namespace BDFramework.Logs
                 return;
             }
 
-            var rootDir = Path.Combine(BApplication.persistentDataPath, settings.DirectoryName);
+            var persistenceRoot = BApplication.persistentDataPath;
+            if (string.IsNullOrEmpty(persistenceRoot))
+            {
+                Debug.LogWarning("[BDebug.Persistence] BApplication.persistentDataPath 尚未初始化，跳过本次日志文件创建，后续日志会重试。");
+                return;
+            }
+
+            var rootDir = Path.Combine(persistenceRoot, settings.DirectoryName);
             Directory.CreateDirectory(rootDir);
 
             currentFilePath = Path.Combine(rootDir, $"playerlog_{sessionTimestamp}.bin");
