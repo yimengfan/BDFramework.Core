@@ -112,12 +112,26 @@ namespace BDFramework.Test.E2E
         {
             // 通过反射从热更程序集中获取 GameConfigManager.Inst.GetConfig<Config>()
             // Access GameConfigManager.Inst.GetConfig<Config>() through reflection from the hotfix assembly
+            // Inst 是在 ManagerBase<T,V> 基类上声明的静态属性，IL2CPP 环境下 GetProperty 不会自动搜索基类，
+            // 因此需要用 FlattenHierarchy 或手动遍历基类链来查找。
+            // Inst is a static property declared on the ManagerBase<T,V> base class; GetProperty does not
+            // automatically search base classes in IL2CPP, so we use FlattenHierarchy or walk the base chain.
             var hotfixAssembly = RequireLoadedAssembly(HotfixFrameworkAssemblyName);
             var gameConfigManagerType = RequireType(hotfixAssembly, "BDFramework.Configure.GameConfigManager");
-            var instProperty = gameConfigManagerType.GetProperty("Inst", BindingFlags.Public | BindingFlags.Static);
+            var instProperty = gameConfigManagerType.GetProperty("Inst", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
             if (instProperty == null)
             {
-                throw new Exception("GameConfigManager.Inst property not found in hotfix assembly.");
+                // 回退：沿基类链手动查找 / Fallback: walk the base-class chain manually
+                var currentType = gameConfigManagerType;
+                while (currentType != null && instProperty == null)
+                {
+                    instProperty = currentType.GetProperty("Inst", BindingFlags.Public | BindingFlags.Static);
+                    currentType = currentType.BaseType;
+                }
+            }
+            if (instProperty == null)
+            {
+                throw new Exception("GameConfigManager.Inst property not found in hotfix assembly (searched base chain).");
             }
             var inst = instProperty.GetValue(null);
             if (inst == null)
@@ -263,20 +277,34 @@ namespace BDFramework.Test.E2E
 
             // 通过反射创建 SQLiteConnection 和 SQLiteConnectionString 实例
             // Create SQLiteConnection and SQLiteConnectionString instances through reflection
+            // SQLiteConnectionString 只暴露 2 参数、6 参数和 9 参数构造函数，
+            // 3 参数版本不存在（9 参数构造函数虽有默认参数但 GetConstructor 需精确 Type[] 匹配）。
+            // 使用 9 参数构造函数（与 BaseFlowHostRuntimeTests 相同的模式）。
+            // SQLiteConnectionString only exposes 2-param, 6-param, and 9-param constructors;
+            // the 3-param version does not exist as a standalone overload (the 9-param ctor has default
+            // parameters but GetConstructor requires an exact Type[] match).
+            // Use the 9-param constructor (same pattern as BaseFlowHostRuntimeTests).
             var sqliteConnectionType = RequireLoadedType("SQLite4Unity3d.SQLiteConnection");
             var sqliteConnectionStringType = RequireLoadedType("SQLite4Unity3d.SQLiteConnectionString");
             var sqliteOpenFlagsType = RequireLoadedType("SQLite4Unity3d.SQLiteOpenFlags");
 
             var sqliteOpenFlags = Enum.ToObject(sqliteOpenFlagsType, 2 | 4); // ReadWrite | Create
+            var sqliteConnectionActionType = typeof(Action<>).MakeGenericType(sqliteConnectionType);
             var connectionStringCtor = sqliteConnectionStringType.GetConstructor(new[]
             {
-                typeof(string), sqliteOpenFlagsType, typeof(bool)
+                typeof(string), sqliteOpenFlagsType, typeof(bool), typeof(object),
+                sqliteConnectionActionType, sqliteConnectionActionType,
+                typeof(string), typeof(string), typeof(bool),
             });
             if (connectionStringCtor == null)
             {
-                throw new Exception("SQLiteConnectionString(string, SQLiteOpenFlags, bool) constructor not found.");
+                throw new Exception("SQLiteConnectionString(string, SQLiteOpenFlags, bool, object, Action<SQLiteConnection>, Action<SQLiteConnection>, string, string, bool) constructor not found.");
             }
-            var connectionString = connectionStringCtor.Invoke(new object[] { databasePath, sqliteOpenFlags, true });
+            var connectionString = connectionStringCtor.Invoke(new object[]
+            {
+                databasePath, sqliteOpenFlags, true, null, null, null, null,
+                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff", true,
+            });
 
             var connectionCtor = sqliteConnectionType.GetConstructor(new[] { sqliteConnectionStringType });
             if (connectionCtor == null)
@@ -362,8 +390,10 @@ namespace BDFramework.Test.E2E
 
             // 通过反射读取热更程序集中的 BDebug.PlayerLogRootPath
             // Read BDebug.PlayerLogRootPath through reflection from the hotfix assembly
+            // BDebug 位于全局命名空间，不是 BDFramework.Logs 命名空间。
+            // BDebug is in the global namespace, not in the BDFramework.Logs namespace.
             var logRootPath = ReadHotfixStaticProperty<string>(
-                "BDFramework.Logs.BDebug", "PlayerLogRootPath", "");
+                "BDebug", "PlayerLogRootPath", "");
             if (string.IsNullOrWhiteSpace(logRootPath))
             {
                 throw new Exception("Player log root path is empty.");
@@ -373,7 +403,9 @@ namespace BDFramework.Test.E2E
 
             // 通过反射调用热更程序集中的 BDebug.FlushPlayerLogs()
             // Call BDebug.FlushPlayerLogs() through reflection from the hotfix assembly
-            InvokeHotfixStaticMethod("BDFramework.Logs.BDebug", "FlushPlayerLogs", null);
+            // BDebug 位于全局命名空间。
+            // BDebug is in the global namespace.
+            InvokeHotfixStaticMethod("BDebug", "FlushPlayerLogs", null);
 
             // 等待日志文件落盘 / Wait for log file to be written
             WaitFor(
@@ -381,14 +413,14 @@ namespace BDFramework.Test.E2E
                 {
                     if (!Directory.Exists(logRootPath)) return false;
                     var currentLogFilePath = ReadHotfixStaticProperty<string>(
-                        "BDFramework.Logs.BDebug", "CurrentPlayerLogFilePath", "");
+                        "BDebug", "CurrentPlayerLogFilePath", "");
                     return !string.IsNullOrWhiteSpace(currentLogFilePath) && File.Exists(currentLogFilePath);
                 },
                 PlayerLogWaitTimeoutMs,
                 $"Player log persistence did not create a log file under {logRootPath}.");
 
             var currentLogFile = ReadHotfixStaticProperty<string>(
-                "BDFramework.Logs.BDebug", "CurrentPlayerLogFilePath", "");
+                "BDebug", "CurrentPlayerLogFilePath", "");
             Debug.Log($"[E2E] Logging pipeline ready. file={currentLogFile}");
         }
 

@@ -1223,6 +1223,51 @@ namespace SQLite4Unity3d
         }
 
         /// <summary>
+        /// 执行标量查询并直接返回 int 结果，不经过泛型拆箱。
+        /// 该方法为 HybridCLR (IL2CPP) 环境提供完全非泛型的调用路径，
+        /// 避免因 ExecuteScalar&lt;int&gt; 的泛型实例化缺失 AOT 元数据而抛出 ExecutionEngineException。
+        /// Execute a scalar query and return the int result directly without generic unboxing.
+        /// This method provides a fully non-generic call path for the HybridCLR (IL2CPP) environment,
+        /// avoiding ExecutionEngineException caused by missing AOT metadata for the
+        /// ExecuteScalar&lt;int&gt; generic instantiation.
+        /// </summary>
+        /// <param name="query">
+        /// The fully escaped SQL.
+        /// </param>
+        /// <param name="args">
+        /// Arguments to substitute for the occurences of '?' in the query.
+        /// </param>
+        /// <returns>
+        /// The first column of the first row as an int, or 0 if no rows are returned.
+        /// </returns>
+        public int ExecuteScalarInt(string query, params object[] args)
+        {
+            var cmd = CreateCommand(query, args);
+
+            if (TimeExecution)
+            {
+                if (_sw == null)
+                {
+                    _sw = new Stopwatch();
+                }
+
+                _sw.Reset();
+                _sw.Start();
+            }
+
+            var r = cmd.ExecuteScalarInt();
+
+            if (TimeExecution)
+            {
+                _sw.Stop();
+                _elapsedMilliseconds += _sw.ElapsedMilliseconds;
+                Tracer?.Invoke(string.Format("Finished in {0} ms ({1:0.0} s total)", _sw.ElapsedMilliseconds, _elapsedMilliseconds / 1000.0));
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Creates a SQLiteCommand given the command text (SQL) with arguments. Place a '?'
         /// in the command text for each of the arguments and then executes that command.
         /// It returns each row of the result using the mapping automatically generated for
