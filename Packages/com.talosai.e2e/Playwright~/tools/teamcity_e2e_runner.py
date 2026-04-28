@@ -975,22 +975,6 @@ def emit_teamcity_parameter(name: str, value: str) -> None:
             teamcity_service_escape(value),
         )
     )
-
-
-def resolve_effective_unity_port(raw_unity_port: int, current_build_id: str | None) -> int:
-    """保留调用方要求的 Unity TCP 端口，不再按 TeamCity build 派生隔离端口。
-
-    Preserve the caller-requested Unity TCP port instead of deriving a TeamCity build-isolated one.
-    Player 端口由包体内的 TalosPortPolicy 在编译期写死，运行时无法通过 TeamCity build id 重映射，
-    因此旧的“按 build 派生端口”逻辑会让远端脚本等待一个永远不会监听的端口。
-    Player ports are hardcoded by TalosPortPolicy at build time and cannot be remapped from the TeamCity
-    build id at runtime, so the old build-derived port logic made remote scripts wait on a port that the
-    player would never bind.
-    """
-    _ = current_build_id
-    return raw_unity_port
-
-
 def load_teamcity_build_properties() -> dict[str, str]:
     """读取 TeamCity 当前构建的 properties 文件，提取生成 artifact 链接所需字段。"""
     properties_path = normalize_optional_value(os.environ.get("TEAMCITY_BUILD_PROPERTIES_FILE"))

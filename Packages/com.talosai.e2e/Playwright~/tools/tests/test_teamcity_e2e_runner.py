@@ -598,16 +598,6 @@ def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch:
     ]
 
 
-def test_resolve_effective_unity_port_keeps_default_port_for_players() -> None:
-    """验证旧 helper 不再按 TeamCity build id 派生端口，默认端口保持原值。"""
-    assert runner.resolve_effective_unity_port(10002, "1130") == 10002
-
-
-def test_resolve_effective_unity_port_keeps_explicit_non_default_port() -> None:
-    """验证调用方显式指定非默认端口时，runner 保持原值不改写。"""
-    assert runner.resolve_effective_unity_port(13002, "1130") == 13002
-
-
 def test_resolve_effective_unity_port_for_profile_uses_platform_base_port() -> None:
     """验证平台感知端口解析会回到 TalosPortPolicy 的平台基准端口。"""
     windows_profile = runner.resolve_platform_profile("windows")
@@ -615,6 +605,14 @@ def test_resolve_effective_unity_port_for_profile_uses_platform_base_port() -> N
 
     assert runner.resolve_effective_unity_port_for_profile(10002, windows_profile, "1268") == 10002
     assert runner.resolve_effective_unity_port_for_profile(10002, android_profile, "1268") == 11002
+
+
+def test_resolve_effective_unity_port_for_profile_keeps_explicit_non_default_port() -> None:
+    """验证调用方显式指定非默认端口时，平台感知解析保持原值不改写。
+    Verify that platform-aware port resolution keeps the caller-provided non-default port unchanged.
+    """
+    android_profile = runner.resolve_platform_profile("android")
+    assert runner.resolve_effective_unity_port_for_profile(13002, android_profile, "1268") == 13002
 
 
 def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -1190,10 +1188,12 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
     assert "emit_playwright_report_metadata" not in calls
 
 
-def test_main_run_phase_uses_build_isolated_unity_port_for_platform_tool(
+def test_main_run_phase_passes_raw_unity_port_to_platform_tool(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    """验证 run 阶段会把按 build 隔离后的 Unity 端口传给平台工具并回写 TeamCity 参数。"""
+    """验证 run 阶段会把平台感知的 Unity 端口传给平台工具并回写 TeamCity 参数。
+    Verify that the run phase passes the platform-aware Unity port to the platform tool and emits TeamCity parameters.
+    """
     prepared_path = tmp_path / "prepared" / "Launcher.exe"
     prepared_path.parent.mkdir(parents=True)
     prepared_path.write_text("stub", encoding="utf-8")
