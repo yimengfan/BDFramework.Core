@@ -9,34 +9,34 @@ using UnityEngine.Scripting;
 namespace BDFramework.Test.E2E
 {
     /// <summary>
-    /// SQLite 泛型方法 AOT 保活辅助类。
-    /// SQLite generic method AOT preservation helper.
+    /// SQLite 泛型方法 AOT 保活辅助类（已弃用，保留供参考）。
+    /// SQLite generic method AOT preservation helper (DEPRECATED, kept for reference).
     ///
-    /// IL2CPP 要求泛型方法在 AOT 阶段就被编译；如果泛型参数是值类型且
-    /// AOT 编译时没有直接代码引用，运行时会抛 ExecutionEngineException。
-    /// IL2CPP requires generic methods to be compiled at AOT time; if a generic
-    /// type parameter is a value type and there is no direct code reference at
-    /// AOT compile time, the runtime throws ExecutionEngineException.
+    /// 重要说明：本类位于 BDFramework.Test 程序集（热更 DLL），IL2CPP AOT 编译器
+    /// 不会分析热更 DLL 的代码，因此本类中的 [Preserve] 和 [RuntimeInitializeOnLoadMethod]
+    /// 属性在 Player 构建中无效。所有泛型方法调用不会触发 AOT 编译。
+    /// IMPORTANT: This class resides in the BDFramework.Test assembly (hotfix DLL).
+    /// The IL2CPP AOT compiler does NOT analyze hotfix DLL code, so the [Preserve] and
+    /// [RuntimeInitializeOnLoadMethod] attributes have no effect in Player builds.
+    /// None of the generic method calls here trigger AOT compilation.
     ///
-    /// HybridCLR 的 AOTGenericReferences.cs 只生成注释，不生成可执行代码，
-    /// 因此 E2E 测试中使用的 SQLite 泛型方法（ExecuteScalar&lt;int&gt;、
-    /// Query&lt;T&gt;、Table&lt;T&gt;、CreateTable&lt;T&gt; 等）不会自动被 AOT 编译器发现。
-    /// HybridCLR's AOTGenericReferences.cs only generates comments, not executable
-    /// code, so the SQLite generic methods used in E2E tests (ExecuteScalar&lt;int&gt;,
-    /// Query&lt;T&gt;, Table&lt;T&gt;, CreateTable&lt;T&gt;, etc.) are not automatically
-    /// discovered by the AOT compiler.
+    /// 当前解决方案：在 SQLite.cs 中修改 ExecuteScalar&lt;T&gt; 和 ExecuteQueryScalars&lt;T&gt;，
+    /// 对值类型使用 Convert.ChangeType 替代直接 (T)colval 拆箱，绕过 AOT 泛型实例化要求；
+    /// 同时添加 ExecuteScalarInt() 非泛型方法供 TableQuery&lt;T&gt;.Count() 直接调用。
+    /// Current solution: Modified ExecuteScalar&lt;T&gt; and ExecuteQueryScalars&lt;T&gt; in SQLite.cs
+    /// to use Convert.ChangeType instead of direct (T)colval unboxing for value types,
+    /// bypassing the AOT generic instantiation requirement; also added ExecuteScalarInt()
+    /// non-generic method for TableQuery&lt;T&gt;.Count() to call directly.
     ///
-    /// 本类通过 [Preserve] + [RuntimeInitializeOnLoadMethod] 确保这些泛型实例
-    /// 在 AOT 阶段被编译器看到，且不会被 IL2CPP linker 裁剪。
-    /// This class uses [Preserve] + [RuntimeInitializeOnLoadMethod] to ensure
-    /// these generic instantiations are visible to the AOT compiler and are not
-    /// stripped by the IL2CPP linker.
-    ///
-    /// 注意：本类不执行真实数据库操作，仅通过类型系统引用强制 AOT 编译。
-    /// Note: This class does not perform real database operations; it only forces
-    /// AOT compilation through type-system references.
+    /// 如未来需要为其他泛型方法（如 TableQuery&lt;T&gt;、Query&lt;T&gt;）补充 AOT 保活，
+    /// 必须将保活代码放到 BDFramework.AOT 程序集中，并通过反射引用热更类型。
+    /// If AOT preservation is needed for other generic methods (e.g., TableQuery&lt;T&gt;, Query&lt;T&gt;)
+    /// in the future, the preservation code MUST be placed in the BDFramework.AOT assembly
+    /// and reference hotfix types via reflection.
     /// </summary>
     [UnityEngine.Scripting.Preserve]
+    [Obsolete("本类位于热更 DLL 中，AOT 编译器无法看到。SQLite AOT 问题已通过 Convert.ChangeType 方案在 SQLite.cs 中修复。" +
+              "This class is in a hotfix DLL and invisible to the AOT compiler. SQLite AOT issues are now fixed via Convert.ChangeType in SQLite.cs.")]
     internal static class SqliteAotPreservation
     {
         /// <summary>

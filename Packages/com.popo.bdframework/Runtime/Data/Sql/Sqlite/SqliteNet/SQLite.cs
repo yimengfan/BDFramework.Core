@@ -3605,6 +3605,17 @@ namespace SQLite4Unity3d
             }
         }
 
+        /// <summary>
+        /// 执行标量查询并返回单行单列值。
+        /// HybridCLR (IL2CPP) 环境下对值类型的泛型拆箱 (T)colval 需要 AOT 元数据，
+        /// 若该泛型实例化未被 IL2CPP 编译则会抛出 ExecutionEngineException。
+        /// 因此对值类型改用 Convert.ChangeType，由运行时完成类型转换，绕过 AOT 限制。
+        /// Execute a scalar query and return the single row/column value.
+        /// Under HybridCLR (IL2CPP), unboxing (T)colval for value types requires AOT metadata;
+        /// if the generic instantiation was not compiled by IL2CPP, it throws ExecutionEngineException.
+        /// For value types we therefore use Convert.ChangeType, which performs the conversion at
+        /// runtime and avoids the AOT generic instantiation requirement.
+        /// </summary>
         public T ExecuteScalar<T>()
         {
             if (_conn.Trace)
@@ -3625,7 +3636,16 @@ namespace SQLite4Unity3d
                     var colval = ReadCol(stmt, 0, colType, typeof(T));
                     if (colval != null)
                     {
-                        val = (T) colval;
+                        // 对值类型使用 Convert.ChangeType 绕过 AOT 泛型拆箱限制
+                        // Use Convert.ChangeType for value types to bypass AOT generic unboxing limitation
+                        if (typeof(T).IsValueType)
+                        {
+                            val = (T) Convert.ChangeType(colval, typeof(T));
+                        }
+                        else
+                        {
+                            val = (T) colval;
+                        }
                     }
                 }
                 else if (r == SQLite3.Result.Done)
@@ -3644,6 +3664,13 @@ namespace SQLite4Unity3d
             return val;
         }
 
+        /// <summary>
+        /// 执行标量查询并返回多行单列值的枚举。
+        /// 对值类型使用 Convert.ChangeType 绕过 AOT 泛型拆箱限制，与 ExecuteScalar&lt;T&gt; 保持一致。
+        /// Execute a scalar query and return an enumerable of single-column values across multiple rows.
+        /// Uses Convert.ChangeType for value types to bypass AOT generic unboxing limitation,
+        /// consistent with ExecuteScalar&lt;T&gt;.
+        /// </summary>
         public IEnumerable<T> ExecuteQueryScalars<T>()
         {
             if (_conn.Trace)
@@ -3669,8 +3696,59 @@ namespace SQLite4Unity3d
                     }
                     else
                     {
-                        yield return (T) val;
+                        // 对值类型使用 Convert.ChangeType 绕过 AOT 泛型拆箱限制
+                        // Use Convert.ChangeType for value types to bypass AOT generic unboxing limitation
+                        if (typeof(T).IsValueType)
+                        {
+                            yield return (T) Convert.ChangeType(val, typeof(T));
+                        }
+                        else
+                        {
+                            yield return (T) val;
+                        }
                     }
+                }
+            }
+            finally
+            {
+                Finalize(stmt);
+            }
+        }
+
+        /// <summary>
+        /// 执行标量查询并直接返回 int 结果，不经过泛型拆箱。
+        /// 该方法为 HybridCLR (IL2CPP) 环境提供完全非泛型的调用路径，
+        /// 避免因 ExecuteScalar&lt;int&gt; 的泛型实例化缺失 AOT 元数据而抛出 ExecutionEngineException。
+        /// 主要供 TableQuery&lt;T&gt;.Count() 等已知返回 int 的场景使用。
+        /// Execute a scalar query and return the int result directly without generic unboxing.
+        /// This method provides a fully non-generic call path for the HybridCLR (IL2CPP) environment,
+        /// avoiding ExecutionEngineException caused by missing AOT metadata for the
+        /// ExecuteScalar&lt;int&gt; generic instantiation.
+        /// Primarily used by TableQuery&lt;T&gt;.Count() and similar scenarios known to return int.
+        /// </summary>
+        public int ExecuteScalarInt()
+        {
+            if (_conn.Trace)
+            {
+                _conn.Tracer?.Invoke("Executing Query: " + this);
+            }
+
+            var stmt = Prepare();
+
+            try
+            {
+                var r = SQLite3.Step(stmt);
+                if (r == SQLite3.Result.Row)
+                {
+                    return SQLite3.ColumnInt(stmt, 0);
+                }
+                else if (r == SQLite3.Result.Done)
+                {
+                    return 0;
+                }
+                else
+                {
+                    throw SQLiteException.New(r, SQLite3.GetErrmsg(_conn.Handle));
                 }
             }
             finally
@@ -5031,11 +5109,17 @@ namespace SQLite4Unity3d
         }
 
         /// <summary>
-        /// Execute SELECT COUNT(*) on the query
+        /// 执行 SELECT COUNT(*) 查询。
+        /// 使用非泛型 ExecuteScalarInt() 代替 ExecuteScalar&lt;int&gt;，
+        /// 避免 HybridCLR (IL2CPP) 下因泛型实例化缺失 AOT 元数据而抛出 ExecutionEngineException。
+        /// Execute SELECT COUNT(*) on the query.
+        /// Uses the non-generic ExecuteScalarInt() instead of ExecuteScalar&lt;int&gt;,
+        /// avoiding ExecutionEngineException under HybridCLR (IL2CPP) due to missing AOT metadata
+        /// for the generic instantiation.
         /// </summary>
         public int Count()
         {
-            return GenerateCommand("count(*)").ExecuteScalar<int>();
+            return GenerateCommand("count(*)").ExecuteScalarInt();
         }
 
         /// <summary>

@@ -165,29 +165,47 @@ namespace BDFramework
 
             // 在 Player 构建中，首阶段初始化完成后即标记框架为运行态，
             // 使 E2E 测试和依赖 IsPlaying 的子系统可在 Bridge.Launch 之前判断框架已启动。
-            // 使用反射设置 BApplication.IsPlaying，因为 BDFramework.AOT 不能引用 BDFramework.Core（会产生循环依赖）。
+            // 使用 AppDomain 枚举查找 BApplication.IsPlaying 并设为 true，因为：
+            //   1. BDFramework.AOT 不能引用 BDFramework.Core（会产生循环依赖）；
+            //   2. System.Type.GetType("..., BDFramework.Core") 在 IL2CPP 中返回 null，
+            //      因为 BDFramework.Core 是热更程序集，IL2CPP 不注册其类型到运行时查找表。
             // In Player builds, mark the framework as running after first-phase initialization completes,
             // so E2E tests and IsPlaying-dependent subsystems can detect the framework is up before Bridge.Launch.
-            // Uses reflection to set BApplication.IsPlaying because BDFramework.AOT cannot reference
-            // BDFramework.Core (would create a circular dependency).
+            // Uses AppDomain enumeration to find BApplication.IsPlaying and set it to true because:
+            //   1. BDFramework.AOT cannot reference BDFramework.Core (would create a circular dependency);
+            //   2. System.Type.GetType("..., BDFramework.Core") returns null in IL2CPP,
+            //      because BDFramework.Core is a hotfix assembly whose types are not registered
+            //      in the IL2CPP runtime lookup table.
             if (!Application.isEditor)
             {
-                var bappType = System.Type.GetType("BDFramework.Core.Tools.BApplication, BDFramework.Core");
-                if (bappType != null)
+                bool isPlayingSet = false;
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                foreach (var assembly in assemblies)
                 {
+                    var bappType = assembly.GetType("BDFramework.Core.Tools.BApplication");
+                    if (bappType == null)
+                    {
+                        continue;
+                    }
+
                     var prop = bappType.GetProperty("IsPlaying");
                     if (prop != null)
                     {
                         prop.SetValue(null, true);
+                        isPlayingSet = true;
+                        Debug.Log("[BDLauncher] 已通过反射设置 BApplication.IsPlaying = true");
                     }
                     else
                     {
                         Debug.LogWarning("[BDLauncher] 未找到 BApplication.IsPlaying 属性");
                     }
+
+                    break;
                 }
-                else
+
+                if (!isPlayingSet)
                 {
-                    Debug.LogWarning("[BDLauncher] 未找到 BDFramework.Core.Tools.BApplication 类型");
+                    Debug.LogWarning("[BDLauncher] 未在任何已加载程序集中找到 BDFramework.Core.Tools.BApplication 类型");
                 }
             }
 
@@ -262,6 +280,26 @@ namespace BDFramework
                 method.Invoke(null, null);
 
                 Debug.Log("[Hotfix] ScriptLoder.Init() Success!!!");
+
+                // 验证 IsRunning 状态：反射读取 ScriptLoder.IsRunning，
+                // 排查热更域静态字段在 IL2CPP + HybridCLR 环境下的可见性问题。
+                // Verify IsRunning state: reflect ScriptLoder.IsRunning to diagnose
+                // hotfix-domain static field visibility issues under IL2CPP + HybridCLR.
+                var isRunningProp = type.GetProperty("IsRunning", BindingFlags.Public | BindingFlags.Static);
+                if (isRunningProp != null)
+                {
+                    var isRunningValue = isRunningProp.GetValue(null);
+                    Debug.Log($"[Hotfix] ScriptLoder.IsRunning = {isRunningValue}");
+                    if (!(bool)isRunningValue)
+                    {
+                        Debug.LogWarning("[Hotfix] ScriptLoder.Init() 调用成功但 IsRunning 仍为 false，可能在 Init() 内部发生了 ExecutionEngineException 或 HybridCLR 静态字段同步异常");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[Hotfix] 未找到 ScriptLoder.IsRunning 属性，可能类型定义已变更");
+                }
+
                 return;
             }
 
