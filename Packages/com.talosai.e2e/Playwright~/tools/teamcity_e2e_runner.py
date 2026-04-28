@@ -142,7 +142,15 @@ class PlatformProfile:
     # 平台对应的 TalosPortPolicy 基准端口；当 CLI 未显式指定 --unity-port 且不在 TeamCity 隔离端口范围时使用。
     # Platform-specific TalosPortPolicy base port; used when --unity-port is not explicitly set and outside TeamCity isolated port range.
     default_unity_port: int
-
+    # Android 专属默认值：模拟器类型（mumu / nox / none），空字符串表示不自动启动模拟器。
+    # Android-specific default: emulator type (mumu / nox / none); empty string means no auto-launch.
+    default_emulator_type: str = ""
+    # Android 专属默认值：MuMu 自动启动开关，true 时若无 emulator-type 则视为 mumu。
+    # Android-specific default: MuMu auto-start flag; when true and no emulator-type, treated as mumu.
+    default_mumu_auto_start: str = ""
+    # Android 专属默认值：ADB connect 目标列表（逗号分隔），用于宿主机模拟器修复连接。
+    # Android-specific default: ADB connect target list (comma-separated) for host emulator fix-up.
+    default_adb_connect_targets: str = ""
 
 @dataclass(frozen=True)
 class RemotePackageEntry:
@@ -208,6 +216,13 @@ PLATFORM_PROFILE_BY_KEY = {
         tool_script_name="test-android.sh",
         package_arg_name="--apk",
         default_unity_port=11002,
+        # 默认使用 MuMu 模拟器（向后兼容），可通过 --emulator-type 覆盖为 nox 或 none。
+        # Default to MuMu emulator (backward compatible); override via --emulator-type to nox or none.
+        default_emulator_type="mumu",
+        default_mumu_auto_start="true",
+        # MuMu2 / Nox 常见 ADB connect 目标列表。
+        # Common ADB connect targets for MuMu2 / Nox emulators.
+        default_adb_connect_targets="127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555",
     ),
     "macos": PlatformProfile(
         platform_key="macos",
@@ -392,6 +407,9 @@ def load_e2e_config_defaults() -> dict[str, object]:
             "download_timeout_seconds": talos_cfg.download_timeout_seconds,
             "unity_host": talos_cfg.unity_host,
             "unity_port": talos_cfg.unity_port,
+            "emulator_type": talos_cfg.emulator_type,
+            "mumu_auto_start": talos_cfg.mumu_auto_start,
+            "adb_connect_targets": talos_cfg.adb_connect_targets,
         }
     except (BuildToolsConfigError, Exception):
         return {}
@@ -455,15 +473,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--adb-serial", default="", help="Android 多设备场景下的 ADB 序列号。")
     parser.add_argument(
         "--adb-connect-targets",
-        default="",
+        default=config_defaults.get("adb_connect_targets", ""),
         help=(
             "可选：Android 模拟器修复模式，逗号分隔的 host:port 列表，如 127.0.0.1:16384,127.0.0.1:7555。"
             " 设置后在 adb devices 检测前先执行 adb connect，专配 MuMu2 等宿主机模拟器。"
+            " 默认值从 buildtools.toml [talos.e2e] 读取；空字符串时由 PlatformProfile 提供平台默认值。"
         ),
     )
     parser.add_argument(
         "--start-mumu",
-        default="",
+        default=config_defaults.get("mumu_auto_start", ""),
         help=(
             "可选：MuMu 自动启动模式（传 true 启用）。先检测 MuMu 进程是否运行，"
             " 未运行时搜索常见安装目录，找到 exe 后后台启动并等待虚拟机初始化（默认 20s）。"
@@ -483,7 +502,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--emulator-type",
-        default="",
+        default=config_defaults.get("emulator_type", ""),
         help=(
             "可选：模拟器类型选择（mumu / nox / none）。"
             " mumu = 自动发现和启动 MuMu（默认，向后兼容）；"
@@ -1670,7 +1689,7 @@ def main() -> int:
     print(f"{LOG_PREFIX} packageBuildId={normalize_optional_value(args.package_build_id) or '<auto>'}")
     explicit_build_number = normalize_optional_value(getattr(args, "package_build_number", None))
     print(f"{LOG_PREFIX} packageBuildNumber={explicit_build_number or '<from-teamcity>'}")
-    adb_connect_targets_log = normalize_optional_value(getattr(args, "adb_connect_targets", None))
+    adb_connect_targets_log = normalize_optional_value(getattr(args, "adb_connect_targets", None)) or profile.default_adb_connect_targets
     if adb_connect_targets_log:
         print(f"{LOG_PREFIX} adbConnectTargets={adb_connect_targets_log}")
     if current_build_id:

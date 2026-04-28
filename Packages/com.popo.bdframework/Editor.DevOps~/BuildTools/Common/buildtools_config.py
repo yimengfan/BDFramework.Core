@@ -102,6 +102,11 @@ class BuildToolsTalosE2EConfig:
     download_timeout_seconds: int = 600
     unity_host: str = "127.0.0.1"
     unity_port: int = 10002
+    # Android 专属默认值：模拟器类型、MuMu 自动启动开关、ADB connect 目标列表。
+    # Android-specific defaults: emulator type, MuMu auto-start flag, ADB connect targets.
+    emulator_type: str = "mumu"
+    mumu_auto_start: str = "true"
+    adb_connect_targets: str = "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555"
 
 
 @dataclass(frozen=True)
@@ -475,6 +480,9 @@ def load_buildtools_external_config(
             download_timeout_seconds=coerce_optional_int(talos_e2e_section.get("download_timeout_seconds")) or 600,
             unity_host=coerce_optional_string(talos_e2e_section.get("unity_host")) or "127.0.0.1",
             unity_port=coerce_optional_int(talos_e2e_section.get("unity_port")) or 10002,
+            emulator_type=coerce_optional_string(talos_e2e_section.get("emulator_type")) or "mumu",
+            mumu_auto_start=coerce_optional_string(talos_e2e_section.get("mumu_auto_start")) or "true",
+            adb_connect_targets=coerce_optional_string(talos_e2e_section.get("adb_connect_targets")) or "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555",
         ),
     )
 
