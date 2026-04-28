@@ -177,7 +177,9 @@ capture_android_player_logs() {
 
     while IFS= read -r _candidate; do
         [[ -z "${_candidate}" ]] && continue
-        if talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" shell "[ -d '${_candidate}' ]" >/dev/null; then
+        # MSYS_NO_PATHCONV=1 防止 MSYS2 将 /sdcard/ 路径自动转换为 Windows 路径。
+        # MSYS_NO_PATHCONV=1 prevents MSYS2 from auto-converting /sdcard/ paths to Windows paths.
+        if MSYS_NO_PATHCONV=1 talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" shell "[ -d '${_candidate}' ]" >/dev/null; then
             _detected_dir="${_candidate}"
             break
         fi
@@ -192,7 +194,11 @@ capture_android_player_logs() {
         return 0
     fi
 
-    _pull_output="$(talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" pull "${_detected_dir}" "${_payload_dir}")" && _pull_rc=0 || _pull_rc=$?
+    # MSYS_NO_PATHCONV=1 阻止 MSYS2/Git Bash 将 /sdcard/ 等 Linux 风格路径
+    # 自动转换为 Windows 路径（如 C:/Program Files/Git/sdcard/），导致 adb pull 找不到远端文件。
+    # MSYS_NO_PATHCONV=1 prevents MSYS2/Git Bash from converting Linux-style paths like /sdcard/
+    # into Windows paths (e.g. C:/Program Files/Git/sdcard/), which would break adb pull.
+    _pull_output="$(MSYS_NO_PATHCONV=1 talos_run_adb_with_reconnect_timeout "${TALOS_ADB_LOGCAT_TIMEOUT_SECONDS}" pull "${_detected_dir}" "${_payload_dir}")" && _pull_rc=0 || _pull_rc=$?
 
     if [[ ${_pull_rc} -eq 124 ]]; then
         {

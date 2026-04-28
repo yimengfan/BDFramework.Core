@@ -8,6 +8,7 @@ using BDFramework.ResourceMgr;
 using Cysharp.Threading.Tasks;
 using Game.Config;
 using LitJson;
+using Talos.E2E;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,6 +64,13 @@ public class WindowPreconfig : MonoBehaviour
         }
         Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
 
+        // Talos E2E 自动检测与启动。
+        // 在宿主预配置界面完成基础初始化后，检测当前是否为 Debug 构建，
+        // 若是则自动拉起 E2E TCP 监听服务，供外部 Playwright 测试驱动连接。
+        // Auto-detect and launch Talos E2E. After the host preconfiguration screen
+        // finishes its basic setup, check whether the current build is a debug build;
+        // if so, automatically start the E2E TCP listener for external Playwright drivers.
+        E2EAutoInit.CheckAndLaunch();
     }
 
 
