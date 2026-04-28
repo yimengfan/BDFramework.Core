@@ -7,12 +7,15 @@ using BDFramework;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using Talos.E2E;
+using UnityEngine.Scripting;
 
 namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// SQLite 数据库 E2E 测试套件。
     /// 验证 BDFramework 的 SQLite 存储系统功能。
+    /// SQLite database E2E test suite.
+    /// Verifies the BDFramework SQLite storage system functionality.
     /// 
     /// 测试范围：
     /// - 数据库连接与初始化
@@ -20,9 +23,18 @@ namespace BDFramework.Test.E2E
     /// - CRUD 操作
     /// - 查询功能
     /// 
+    /// Coverage:
+    /// - Database connection and initialization
+    /// - Table creation
+    /// - CRUD operations
+    /// - Query functionality
+    /// 
     /// 注意：直接使用 SQLiteConnection + SQLiteService 进行测试，
     /// 避免框架 SqliteLoder 的连接池映射与测试数据库冲突。
+    /// Note: Uses SQLiteConnection + SQLiteService directly to avoid
+    /// framework SqliteLoder connection-pool mapping conflicts with the test database.
     /// </summary>
+    [Preserve]
     static public class SqliteTests
     {
         /// <summary>
@@ -55,6 +67,7 @@ namespace BDFramework.Test.E2E
         /// 验证 SQLite 数据库可被创建和打开。
         /// 直接创建 SQLiteConnection，不经过框架连接池，避免名称冲突。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "sqlite", order: 1, des: "创建并打开测试数据库")]
         static public void CreateAndOpenDatabase()
         {
@@ -75,6 +88,7 @@ namespace BDFramework.Test.E2E
         /// <summary>
         /// 验证表创建和批量插入。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "sqlite", order: 2, des: "创建表并插入数据")]
         static public void CreateTableAndInsert()
         {
@@ -110,6 +124,7 @@ namespace BDFramework.Test.E2E
         /// <summary>
         /// 验证条件查询功能。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "sqlite", order: 3, des: "条件查询数据")]
         static public void QueryWithCondition()
         {
@@ -143,6 +158,7 @@ namespace BDFramework.Test.E2E
         /// <summary>
         /// 验证全表查询功能。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "sqlite", order: 4, des: "全表查询数据")]
         static public void QueryAll()
         {
@@ -169,6 +185,7 @@ namespace BDFramework.Test.E2E
         /// <summary>
         /// 清理测试数据库。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "sqlite", order: 999, des: "清理测试数据库")]
         static public void CleanupDatabase()
         {

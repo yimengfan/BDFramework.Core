@@ -334,11 +334,14 @@ namespace BDFramework.ResourceMgr
 
 
         /// <summary>
-        /// 卸载所有的AssetBundle
+        /// 卸载所有的AssetBundle。
+        /// 资源加载器未初始化时安全跳过，不抛 NullReferenceException。
+        /// Unload all AssetBundles.
+        /// Safely skips when the resource loader is not initialized, avoiding NullReferenceException.
         /// </summary>
         public static void UnloadAll()
         {
-            ResLoader.UnloadAllAsset();
+            ResLoader?.UnloadAllAsset();
         }
 
         #endregion

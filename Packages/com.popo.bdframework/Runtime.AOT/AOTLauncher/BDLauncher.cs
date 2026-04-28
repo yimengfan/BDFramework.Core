@@ -162,6 +162,16 @@ namespace BDFramework
             }
             Debug.Log("<color=yellow>执行反射：ScriptLoder.Init()，装载热更代码 </color>");
             InitHotfixScriptLoder();
+
+            // 在 Player 构建中，首阶段初始化完成后即标记框架为运行态，
+            // 使 E2E 测试和依赖 IsPlaying 的子系统可在 Bridge.Launch 之前判断框架已启动。
+            // In Player builds, mark the framework as running after first-phase initialization completes,
+            // so E2E tests and IsPlaying-dependent subsystems can detect the framework is up before Bridge.Launch.
+            if (!Application.isEditor)
+            {
+                BDFramework.Core.Tools.BApplication.IsPlaying = true;
+            }
+
             TryLaunchTalosE2EInDebugBuild();
             Debug.Log("------------------AOT Complete！ -----------------------");
         }

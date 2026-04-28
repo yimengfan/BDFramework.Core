@@ -58,16 +58,27 @@ namespace BDFramework
             // 在主线程预热 BApplication，避免后台线程先触发静态构造时访问 Application.dataPath 并把资源/SQLite 相关路径状态永久污染。
             // Warm up BApplication on the main thread so a background thread cannot trigger its static constructor first, touch Application.dataPath, and permanently poison later resource and SQLite path state.
             _ = BDFramework.Core.Tools.BApplication.persistentDataPath;
+
+            // 标记脚本加载器为运行态，表示热更 DLL 加载和管理器注册已完成。
+            // Mark the script loader as running, indicating hotfix DLL loading and manager registration have completed.
+            IsRunning = true;
         }
 
         /// <summary>
-        /// 整个游戏的管理器
+        /// 启动框架管理器并标记脚本加载器为运行态。
+        /// Start framework managers and mark the script loader as running.
+        /// 调用此方法后 <c>IsRunning</c> 将为 <c>true</c>，表示热更 DLL 加载与管理器初始化已完成。
+        /// After calling this method <c>IsRunning</c> will be <c>true</c>, indicating that hotfix DLL loading and manager initialization have completed.
         /// </summary>
         /// <param name="mainProjectTypes"></param>
         static public void Start()
         {
-            //开始
+            // 启动管理器实例。
+            // Start manager instances.
             ManagerInstHelper.Start();
+            // 标记脚本加载器为运行态，表示热更 DLL 加载和管理器初始化已完成。
+            // Mark the script loader as running, indicating hotfix DLL loading and manager initialization have completed.
+            IsRunning = true;
         }
 
         #region 托管 type
