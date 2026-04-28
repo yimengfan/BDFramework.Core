@@ -68,8 +68,9 @@ export const test = base.extend<{
   // Fixture: 初始化设备管理器
   device: async ({}, use) => {
     const platform = (process.env.PLATFORM || 'unityplayer') as Platform;
-    const unityPort = parseInt(process.env.UNITY_PORT || '10002', 10);
-    const localPort = parseInt(process.env.LOCAL_PORT || '10002', 10);
+    const unityPortEnv = process.env.UNITY_PORT || '10002';
+    const unityPort = parseInt(unityPortEnv, 10);
+    const localPort = parseInt(process.env.LOCAL_PORT || unityPortEnv, 10);
 
     const device = new DeviceManager({
       platform,
