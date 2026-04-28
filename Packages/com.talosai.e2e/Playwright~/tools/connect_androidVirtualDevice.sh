@@ -182,7 +182,9 @@ if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
     done
 fi
 # 清理 emulator-* 格式的陈旧连接 / Clean up stale emulator-* connections
-"${ADB_CMD[@]}" devices 2>/dev/null | grep 'emulator' | while read -r _cav_em_line; do
+# 注：使用 || true 防止 grep 无匹配时在 set -e pipefail 下退出脚本。
+# Note: use || true to prevent grep no-match from killing the script under set -e pipefail.
+"${ADB_CMD[@]}" devices 2>/dev/null | (grep 'emulator' || true) | while read -r _cav_em_line; do
     _cav_em_serial="$(printf '%s' "${_cav_em_line}" | awk '{print $1}')"
     if [[ -n "${_cav_em_serial}" ]]; then
         "${ADB_CMD[@]}" disconnect "${_cav_em_serial}" 2>/dev/null || true

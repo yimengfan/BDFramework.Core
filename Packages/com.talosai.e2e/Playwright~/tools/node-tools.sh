@@ -678,11 +678,20 @@ ensure_talos_mumu_running() {
             echo "    使用 mumu-cli.exe 无头启动实例 0 (headless CI mode)"
             
             # 清理陈旧的 ADB 连接，避免误判 "already connected"。
+            # 使用已解析的 ADB 路径（TALOS_ADB_BIN），避免在 Git Bash 中 adb 不在 PATH 时失败。
             # Clean up stale ADB connections to avoid false "already connected".
+            # Use resolved ADB path (TALOS_ADB_BIN) to avoid failures when adb is not on PATH in Git Bash.
             echo "    === 清理陈旧 ADB 连接 ==="
-            adb disconnect 127.0.0.1:16384 2>/dev/null || true
-            adb disconnect 127.0.0.1:7555 2>/dev/null || true
-            adb disconnect emulator-5554 2>/dev/null || true
+            local _mumu_adb_bin="${TALOS_ADB_BIN:-}"
+            if [[ -z "${_mumu_adb_bin}" ]]; then
+                # TALOS_ADB_BIN 尚未解析时，先尝试解析 / Try resolving if not yet set
+                _mumu_adb_bin="$(resolve_talos_adb_bin 2>/dev/null || true)"
+            fi
+            if [[ -n "${_mumu_adb_bin}" ]]; then
+                "${_mumu_adb_bin}" disconnect 127.0.0.1:16384 2>/dev/null || true
+                "${_mumu_adb_bin}" disconnect 127.0.0.1:7555 2>/dev/null || true
+                "${_mumu_adb_bin}" disconnect emulator-5554 2>/dev/null || true
+            fi
             echo "    === ADB 连接已清理 ==="
             
             # 注：在 Git Bash(MINGW) 中直接执行 Windows .exe 无需通过 cmd.exe；
@@ -743,12 +752,19 @@ ensure_talos_mumu_running() {
     echo "    ✅ MuMu 启动等待完成，继续后续 ADB 连接"
 
     # 诊断：检查 ADB 连接状态和 Android 启动状态
+    # 使用已解析的 ADB 路径（TALOS_ADB_BIN），确保在 Git Bash 中 adb 不在 PATH 时仍可工作。
     # Diagnostic: check ADB connection and Android boot status
+    # Use resolved ADB path (TALOS_ADB_BIN) to ensure it works when adb is not on PATH in Git Bash.
     echo ""
     echo "    === MuMu 启动后 ADB 诊断 / Post-launch ADB diagnostics ==="
-    if command -v adb >/dev/null 2>&1; then
+    local _mumu_diag_adb="${TALOS_ADB_BIN:-}"
+    if [[ -z "${_mumu_diag_adb}" ]]; then
+        _mumu_diag_adb="$(resolve_talos_adb_bin 2>/dev/null || true)"
+    fi
+    if [[ -n "${_mumu_diag_adb}" ]]; then
+        echo "    [ADB] 使用 adb 路径: ${_mumu_diag_adb}"
         echo "    [ADB] 设备列表 / ADB devices list:"
-        adb devices -l 2>/dev/null || true
+        "${_mumu_diag_adb}" devices -l 2>/dev/null || true
         
         # 尝试连接 MuMu 默认端口
         # Try connecting to MuMu default ports
@@ -759,19 +775,19 @@ ensure_talos_mumu_running() {
         for _port in "${_adb_connect_ports[@]}"; do
             echo "        连接 ${_port}..."
             local _conn_out=""
-            _conn_out="$(adb connect "${_port}" 2>&1 || true)"
+            _conn_out="$("${_mumu_diag_adb}" connect "${_port}" 2>&1 || true)"
             echo "        结果: ${_conn_out}"
         done
         
         sleep 2
         echo ""
         echo "    [ADB] 连接后设备列表 / Post-connect device list:"
-        adb devices -l 2>/dev/null || true
+        "${_mumu_diag_adb}" devices -l 2>/dev/null || true
         
         # 如果有设备上线，尝试获取 Android 启动状态
         # If device is online, try to get Android boot status
         local _online_dev=""
-        _online_dev="$(adb devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' || true)"
+        _online_dev="$("${_mumu_diag_adb}" devices 2>/dev/null | grep 'device$' | awk 'NR==1{print $1}' || true)"
         if [[ -n "${_online_dev}" ]]; then
             echo ""
             echo "    [ADB] 设备已上线: ${_online_dev}，检查 Android 启动状态..."
@@ -783,7 +799,7 @@ ensure_talos_mumu_running() {
             local _boot_checked=0
             while [[ ${_boot_checked} -lt ${_boot_check_max} ]]; do
                 local _boot_completed=""
-                _boot_completed="$(adb -s "${_online_dev}" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r\n' || true)"
+                _boot_completed="$("${_mumu_diag_adb}" -s "${_online_dev}" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r\n' || true)"
                 if [[ "${_boot_completed}" == "1" ]]; then
                     echo "    ✅ Android 启动完成 (sys.boot_completed=1)"
                     echo "    ✅ Android boot completed (sys.boot_completed=1)"
@@ -798,20 +814,21 @@ ensure_talos_mumu_running() {
             # Print Android version and device info
             echo ""
             echo "    [Android] 设备信息 / Device info:"
-            adb -s "${_online_dev}" shell getprop ro.build.version.release 2>/dev/null | xargs echo "        Android 版本 / Android version:" || true
-            adb -s "${_online_dev}" shell getprop ro.product.model 2>/dev/null | xargs echo "        设备型号 / Device model:" || true
-            adb -s "${_online_dev}" shell getprop ro.product.brand 2>/dev/null | xargs echo "        品牌 / Brand:" || true
+            "${_mumu_diag_adb}" -s "${_online_dev}" shell getprop ro.build.version.release 2>/dev/null | xargs echo "        Android 版本 / Android version:" || true
+            "${_mumu_diag_adb}" -s "${_online_dev}" shell getprop ro.product.model 2>/dev/null | xargs echo "        设备型号 / Device model:" || true
+            "${_mumu_diag_adb}" -s "${_online_dev}" shell getprop ro.product.brand 2>/dev/null | xargs echo "        品牌 / Brand:" || true
         else
             echo ""
             echo "    ⚠️  无设备上线，检查 offline 设备..."
             echo "    ⚠️  No device online, checking offline devices..."
-            adb devices 2>/dev/null | grep 'offline' | while read -r _off_line; do
+            "${_mumu_diag_adb}" devices 2>/dev/null | (grep 'offline' || true) | while read -r _off_line; do
                 echo "        offline: ${_off_line}"
             done
         fi
     else
-        echo "    ⚠️  adb 命令不可用，跳过诊断"
-        echo "    ⚠️  adb command not available, skipping diagnostics"
+        # 无法解析 ADB 路径时的回退诊断 / Fallback diagnostic when ADB cannot be resolved
+        echo "    ⚠️  adb 命令不可用（TALOS_ADB_BIN 未设置且 resolve_talos_adb_bin 失败），跳过诊断"
+        echo "    ⚠️  adb command not available (TALOS_ADB_BIN not set and resolve_talos_adb_bin failed), skipping diagnostics"
     fi
     echo "    === ADB 诊断结束 / ADB diagnostics end ==="
     echo ""

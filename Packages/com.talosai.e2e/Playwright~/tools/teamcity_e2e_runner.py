@@ -1547,10 +1547,10 @@ def kill_stale_processes() -> None:
         except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
             pass
 
-    # 清理残留 ADB server（仅在非 Windows 平台或 adb 可用时）
-    # Kill stale ADB server (only when adb is available)
+    # 清理残留 ADB server（优先使用 TALOS_ADB_BIN 环境变量，回退到 PATH 搜索）
+    # Kill stale ADB server (prefer TALOS_ADB_BIN env var, fall back to PATH search)
     try:
-        adb_path = shutil.which("adb")
+        adb_path = os.environ.get("TALOS_ADB_BIN") or shutil.which("adb")
         if adb_path:
             subprocess.run(
                 [adb_path, "kill-server"],
