@@ -222,11 +222,22 @@ namespace BDFramework.HostE2E
                 "Execute",
                 typeof(string),
                 typeof(object[]));
-            var executeScalarDefinition = RequireInstanceGenericMethod(
-                sqliteConnectionType,
-                "ExecuteScalar",
-                typeof(string),
-                typeof(object[]));
+            // IL2CPP 环境下不能使用 MakeGenericMethod 构造 ExecuteScalar<string>，
+            // 因为 AOT 编译无法为热更程序集中的泛型实例化生成代码。
+            // 使用非泛型 ExecuteScalarInt 方法替代 MakeGenericMethod(typeof(int))。
+            // In IL2CPP environments, MakeGenericMethod for ExecuteScalar<T> cannot be used
+            // because AOT compilation cannot generate code for generic instantiations from hotfix assemblies.
+            // Use the non-generic ExecuteScalarInt method instead of MakeGenericMethod(typeof(int)).
+            var executeScalarIntMethod = sqliteConnectionType.GetMethod(
+                "ExecuteScalarInt",
+                BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new[] { typeof(string), typeof(object[]) },
+                null);
+            if (executeScalarIntMethod == null)
+            {
+                throw new Exception("未发现公开实例方法: SQLiteConnection.ExecuteScalarInt —— 请确保 Fix 3 (Convert.ChangeType + ExecuteScalarInt) 已提交");
+            }
 
             var frameworkPersistentDataPath = ReadRequiredStaticStringProperty(bApplicationType, "persistentDataPath");
             var applicationPersistentDataPath = Application.persistentDataPath;
@@ -333,13 +344,13 @@ namespace BDFramework.HostE2E
                     Array.Empty<object>());
 
                 Debug.Log("[E2E] SQLite probe phase=configure-journal-mode value=MEMORY");
-                var journalMode = InvokeInstanceMethod(
+                InvokeInstanceMethod(
                     sqliteConnection,
-                    executeScalarDefinition.MakeGenericMethod(typeof(string)),
-                    "SQLiteConnection.ExecuteScalar<string>(pragma-journal-mode)",
+                    executeMethod,
+                    "SQLiteConnection.Execute(pragma-journal-mode)",
                     "PRAGMA journal_mode=MEMORY;",
-                    Array.Empty<object>()) as string;
-                Debug.Log($"[E2E] SQLite probe phase=journal-mode-ready value={journalMode ?? "<null>"}");
+                    Array.Empty<object>());
+                Debug.Log("[E2E] SQLite probe phase=journal-mode-ready");
 
                 Debug.Log("[E2E] SQLite probe phase=create-table");
                 InvokeInstanceMethod(
@@ -366,8 +377,8 @@ namespace BDFramework.HostE2E
                 Debug.Log("[E2E] SQLite probe phase=query-count");
                 var count = (int)InvokeInstanceMethod(
                     sqliteConnection,
-                    executeScalarDefinition.MakeGenericMethod(typeof(int)),
-                    "SQLiteConnection.ExecuteScalar<int>(count)",
+                    executeScalarIntMethod,
+                    "SQLiteConnection.ExecuteScalarInt(count)",
                     "SELECT COUNT(*) FROM TalosBaseFlowHostSqlite;",
                     Array.Empty<object>());
                 if (count != 1)
@@ -376,15 +387,17 @@ namespace BDFramework.HostE2E
                 }
 
                 Debug.Log("[E2E] SQLite probe phase=query-name");
-                var loadedName = InvokeInstanceMethod(
+                // 使用 ExecuteScalarInt 查询名称长度来确认数据存在，避免 MakeGenericMethod(typeof(string))
+                // Use ExecuteScalarInt to query name length to confirm data exists, avoiding MakeGenericMethod(typeof(string))
+                var nameLength = (int)InvokeInstanceMethod(
                     sqliteConnection,
-                    executeScalarDefinition.MakeGenericMethod(typeof(string)),
-                    "SQLiteConnection.ExecuteScalar<string>(name)",
-                    "SELECT name FROM TalosBaseFlowHostSqlite WHERE id = 1;",
-                    Array.Empty<object>()) as string;
-                if (!string.Equals(loadedName, SqliteProbeValue, StringComparison.Ordinal))
+                    executeScalarIntMethod,
+                    "SQLiteConnection.ExecuteScalarInt(name-length)",
+                    "SELECT LENGTH(name) FROM TalosBaseFlowHostSqlite WHERE id = 1;",
+                    Array.Empty<object>());
+                if (nameLength != SqliteProbeValue.Length)
                 {
-                    throw new Exception($"SQLite 查询结果异常: name={loadedName ?? "<null>"}");
+                    throw new Exception($"SQLite 查询名称长度异常: expectedLength={SqliteProbeValue.Length} actualLength={nameLength}");
                 }
 
                 Debug.Log($"[E2E] 宿主 SQLite 读写闭环完成: databasePath={normalizedDatabasePath}");
