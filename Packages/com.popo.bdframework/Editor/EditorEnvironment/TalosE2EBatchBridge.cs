@@ -45,6 +45,34 @@ namespace BDFramework.Editor.Environment
         {
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+
+            // 在 editor-only E2E 会话期间，每帧强制恢复 BApplication.IsPlaying。
+            // 这比仅依赖 DidReloadScripts 更健壮，因为 DidReloadScripts 和 E2EEditorTools.OnDidReloadScripts
+            // 的执行顺序不确定——如果 Talos E2E 的恢复先跑，可能在 BDFramework 的恢复之前就执行了测试。
+            // Per-frame enforcement of BApplication.IsPlaying during editor-only E2E sessions
+            // is more robust than relying solely on DidReloadScripts, whose execution order
+            // relative to E2EEditorTools.OnDidReloadScripts is undefined—if the Talos E2E restore runs first,
+            // it may execute tests before the BDFramework restore has a chance to run.
+            EditorApplication.update -= EnsureIsPlayingDuringE2ESession;
+            EditorApplication.update += EnsureIsPlayingDuringE2ESession;
+        }
+
+        /// <summary>
+        /// 在 editor-only E2E 会话期间，每帧检查并恢复 BApplication.IsPlaying 标记。
+        /// Per-frame check and restoration of BApplication.IsPlaying during editor-only E2E sessions.
+        /// 此回调确保即使 DidReloadScripts 恢复时机不确定，测试执行时 IsPlaying 也一定是 true。
+        /// This callback ensures IsPlaying is always true when tests execute, even when
+        /// DidReloadScripts restore timing is non-deterministic.
+        /// </summary>
+        private static void EnsureIsPlayingDuringE2ESession()
+        {
+            if (!HasTalosForceE2ECommandLineFlag() || EditorApplication.isPlaying || BApplication.IsPlaying)
+            {
+                return;
+            }
+
+            BApplication.IsPlaying = true;
+            Debug.Log("[TalosE2E] BDFramework 批入口已通过 per-frame 恢复 BApplication.IsPlaying = true");
         }
 
         /// <summary>
