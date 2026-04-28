@@ -70,8 +70,6 @@ DEFAULT_NODE_DOWNLOAD_TIMEOUT_SECONDS = 300
 PREPARED_PACKAGE_PATH_PARAMETER = "talos.e2e.local.package.path"
 UNITY_PORT_PARAMETER = "talos.e2e.unity.port"
 DEFAULT_UNITY_PORT = 10002
-TEAMCITY_ISOLATED_UNITY_PORT_BASE = 20000
-TEAMCITY_ISOLATED_UNITY_PORT_RANGE = 20000
 WINDOWS_SKIPPED_PACKAGE_MARKERS = (
     "_BurstDebugInformation_DoNotShip",
     "ButDontShipItWithYourGame",
@@ -533,15 +531,23 @@ def normalize_optional_value(raw_value: object | None) -> str:
 
 def configure_console_streams() -> None:
     """为标准输出流增加编码与行缓冲兜底，避免 Windows agent 日志延迟或因编码失败中断。"""
+    prefer_utf8_for_teamcity = bool(normalize_optional_value(os.environ.get("TEAMCITY_VERSION")))
+
     for stream in (sys.stdout, sys.stderr):
         reconfigure = getattr(stream, "reconfigure", None)
         if not callable(reconfigure):
             continue
 
         current_encoding = normalize_optional_value(getattr(stream, "encoding", "")) or "utf-8"
-        candidate_encodings = [current_encoding]
-        if current_encoding.lower() != "utf-8":
+        candidate_encodings: list[str] = []
+        if prefer_utf8_for_teamcity:
             candidate_encodings.append("utf-8")
+            if current_encoding.lower() != "utf-8":
+                candidate_encodings.append(current_encoding)
+        else:
+            candidate_encodings.append(current_encoding)
+            if current_encoding.lower() != "utf-8":
+                candidate_encodings.append("utf-8")
 
         for candidate_encoding in candidate_encodings:
             try:
@@ -972,23 +978,17 @@ def emit_teamcity_parameter(name: str, value: str) -> None:
 
 
 def resolve_effective_unity_port(raw_unity_port: int, current_build_id: str | None) -> int:
-    """为当前 TeamCity build 选择隔离后的 Unity TCP 端口。
+    """保留调用方要求的 Unity TCP 端口，不再按 TeamCity build 派生隔离端口。
 
-    Resolve an isolated Unity TCP port for the current TeamCity build.
-    当调用方已经显式传入非默认端口时保持原值；仅在沿用默认 10002 且存在当前 build id 时，
-    才派生一个按 build 隔离的端口，避免旧 Player 残留的 Talos TCP 服务继续复用共享端口。
-    Keep the caller-provided port when it is already non-default; only derive a build-specific port when
-    the run still uses the shared default 10002 and a current build id is available, preventing stale Player
-    Talos TCP services from reusing the shared port.
+    Preserve the caller-requested Unity TCP port instead of deriving a TeamCity build-isolated one.
+    Player 端口由包体内的 TalosPortPolicy 在编译期写死，运行时无法通过 TeamCity build id 重映射，
+    因此旧的“按 build 派生端口”逻辑会让远端脚本等待一个永远不会监听的端口。
+    Player ports are hardcoded by TalosPortPolicy at build time and cannot be remapped from the TeamCity
+    build id at runtime, so the old build-derived port logic made remote scripts wait on a port that the
+    player would never bind.
     """
-    if raw_unity_port != DEFAULT_UNITY_PORT:
-        return raw_unity_port
-
-    normalized_build_id = normalize_optional_value(current_build_id)
-    if not normalized_build_id or not normalized_build_id.isdigit():
-        return raw_unity_port
-
-    return TEAMCITY_ISOLATED_UNITY_PORT_BASE + (int(normalized_build_id) % TEAMCITY_ISOLATED_UNITY_PORT_RANGE)
+    _ = current_build_id
+    return raw_unity_port
 
 
 def load_teamcity_build_properties() -> dict[str, str]:
@@ -1360,24 +1360,23 @@ def resolve_effective_unity_port_for_profile(
     """根据平台和 TeamCity 构建上下文确定最终 Unity TCP 端口。
 
     Resolve the final Unity TCP port based on platform and TeamCity build context.
-    当调用方显式指定了非默认端口时保持原值；否则先检查 TeamCity 隔离端口逻辑，
-    最后回退到平台 TalosPortPolicy 基准端口。
-    Keep the caller-provided port when it is explicitly non-default; otherwise apply TeamCity
-    build isolation first, then fall back to the platform-specific TalosPortPolicy base port.
+    Player 构建的端口由 TalosPortPolicy 在编译期写死到二进制中（Windows=10002,
+    Android=11002, MacOS=12002），运行时无法更改，因此 TeamCity build-id 隔离端口
+    对 Player 测试无效。本函数始终使用平台基准端口，除非调用方显式指定了非默认端口。
+    Player build ports are hardcoded at compile time via TalosPortPolicy (Windows=10002,
+    Android=11002, MacOS=12002) and cannot be changed at runtime, so TeamCity build-id
+    isolated ports do not work for Player tests. This function always uses the platform
+    base port unless the caller explicitly specifies a non-default port.
     """
     # 用户显式指定了非 DEFAULT_UNITY_PORT 的端口，保持不变
     # User explicitly specified a port different from DEFAULT_UNITY_PORT, keep it
     if raw_unity_port != DEFAULT_UNITY_PORT:
         return raw_unity_port
 
-    # 在 TeamCity 环境中使用按 build 隔离的端口
-    # In TeamCity environment use build-isolated port
-    normalized_build_id = normalize_optional_value(current_build_id)
-    if normalized_build_id and normalized_build_id.isdigit():
-        return TEAMCITY_ISOLATED_UNITY_PORT_BASE + (int(normalized_build_id) % TEAMCITY_ISOLATED_UNITY_PORT_RANGE)
-
-    # 本地运行或无 build id 时，使用平台基准端口
-    # Local run or no build id: use platform base port
+    # Player 端口由 TalosPortPolicy 在编译期写死，TeamCity build-id 隔离无法生效。
+    # 始终使用平台基准端口。
+    # Player ports are hardcoded via TalosPortPolicy; TeamCity build-id isolation cannot work.
+    # Always use the platform base port.
     return profile.default_unity_port
 
 

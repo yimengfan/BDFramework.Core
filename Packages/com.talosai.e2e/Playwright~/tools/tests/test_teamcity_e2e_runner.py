@@ -450,6 +450,35 @@ def test_configure_console_streams_enables_backslashreplace(monkeypatch: pytest.
     ]
 
 
+def test_configure_console_streams_prefers_utf8_under_teamcity(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 TeamCity 下优先使用 UTF-8 输出，避免 Windows agent 把 UTF-8 子进程日志重编码成 gbk。"""
+    stdout = FakeTextStream("gbk")
+    stderr = FakeTextStream("gbk")
+
+    monkeypatch.setenv("TEAMCITY_VERSION", "2025.07")
+    monkeypatch.setattr(runner.sys, "stdout", stdout)
+    monkeypatch.setattr(runner.sys, "stderr", stderr)
+
+    runner.configure_console_streams()
+
+    assert stdout.calls == [
+        {
+            "encoding": "utf-8",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        }
+    ]
+    assert stderr.calls == [
+        {
+            "encoding": "utf-8",
+            "errors": "backslashreplace",
+            "line_buffering": True,
+            "write_through": True,
+        }
+    ]
+
+
 def test_configure_console_streams_falls_back_to_utf8(monkeypatch: pytest.MonkeyPatch) -> None:
     """验证当前编码不可用时，会回退到 utf-8 并继续保留行缓冲与 backslashreplace。"""
     stdout = FakeTextStream("x-unknown", fail_encodings={"x-unknown"})
@@ -569,14 +598,23 @@ def test_build_test_command_uses_shell_safe_paths_and_env_test_file(monkeypatch:
     ]
 
 
-def test_resolve_effective_unity_port_uses_build_isolated_port_for_default_value() -> None:
-    """验证默认 Unity 端口会按当前 TeamCity build id 派生隔离端口。"""
-    assert runner.resolve_effective_unity_port(10002, "1130") == 21130
+def test_resolve_effective_unity_port_keeps_default_port_for_players() -> None:
+    """验证旧 helper 不再按 TeamCity build id 派生端口，默认端口保持原值。"""
+    assert runner.resolve_effective_unity_port(10002, "1130") == 10002
 
 
 def test_resolve_effective_unity_port_keeps_explicit_non_default_port() -> None:
     """验证调用方显式指定非默认端口时，runner 保持原值不改写。"""
     assert runner.resolve_effective_unity_port(13002, "1130") == 13002
+
+
+def test_resolve_effective_unity_port_for_profile_uses_platform_base_port() -> None:
+    """验证平台感知端口解析会回到 TalosPortPolicy 的平台基准端口。"""
+    windows_profile = runner.resolve_platform_profile("windows")
+    android_profile = runner.resolve_platform_profile("android")
+
+    assert runner.resolve_effective_unity_port_for_profile(10002, windows_profile, "1268") == 10002
+    assert runner.resolve_effective_unity_port_for_profile(10002, android_profile, "1268") == 11002
 
 
 def test_run_test_tool_streams_platform_output_line_by_line(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
