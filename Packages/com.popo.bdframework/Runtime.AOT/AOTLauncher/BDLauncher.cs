@@ -165,11 +165,30 @@ namespace BDFramework
 
             // 在 Player 构建中，首阶段初始化完成后即标记框架为运行态，
             // 使 E2E 测试和依赖 IsPlaying 的子系统可在 Bridge.Launch 之前判断框架已启动。
+            // 使用反射设置 BApplication.IsPlaying，因为 BDFramework.AOT 不能引用 BDFramework.Core（会产生循环依赖）。
             // In Player builds, mark the framework as running after first-phase initialization completes,
             // so E2E tests and IsPlaying-dependent subsystems can detect the framework is up before Bridge.Launch.
+            // Uses reflection to set BApplication.IsPlaying because BDFramework.AOT cannot reference
+            // BDFramework.Core (would create a circular dependency).
             if (!Application.isEditor)
             {
-                BDFramework.Core.Tools.BApplication.IsPlaying = true;
+                var bappType = System.Type.GetType("BDFramework.Core.Tools.BApplication, BDFramework.Core");
+                if (bappType != null)
+                {
+                    var prop = bappType.GetProperty("IsPlaying");
+                    if (prop != null)
+                    {
+                        prop.SetValue(null, true);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[BDLauncher] 未找到 BApplication.IsPlaying 属性");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[BDLauncher] 未找到 BDFramework.Core.Tools.BApplication 类型");
+                }
             }
 
             TryLaunchTalosE2EInDebugBuild();
