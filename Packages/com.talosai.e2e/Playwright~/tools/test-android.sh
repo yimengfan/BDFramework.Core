@@ -56,7 +56,9 @@ TALOS_APK_INSTALL_TIMEOUT_SECONDS="${TALOS_APK_INSTALL_TIMEOUT_SECONDS:-180}"
 # Unity TCP 等待阶段的 ADB/forward 自愈周期；默认每 15 秒尝试一次重连与 forward 刷新。
 # Recovery interval for ADB/forward healing during the Unity TCP wait stage; defaults to one reconnect+forward refresh attempt every 15 seconds.
 TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS="${TALOS_UNITY_TCP_RECOVERY_INTERVAL_SECONDS:-15}"
-UNITY_PORT="${UNITY_PORT:-10002}"
+# Android Player 使用 TalosPortPolicy.AndroidPlayerPorts 端口池，基准端口为 11002。
+# Android Player uses TalosPortPolicy.AndroidPlayerPorts port pool; the base port is 11002.
+UNITY_PORT="${UNITY_PORT:-11002}"
 PACKAGE="${PACKAGE:-}"
 ACTIVITY="${ACTIVITY:-}"
 PLAYWRIGHT_TEST_FILE="${PLAYWRIGHT_TEST_FILE:-}"
@@ -444,7 +446,7 @@ while [[ $# -gt 0 ]]; do
             echo "选项:"
             echo "  --apk            APK 文件路径"
             echo "  --serial         ADB 设备序列号"
-            echo "  --port           TCP 端口 (默认 10002)"
+            echo "  --port           TCP 端口 (默认 11002)"
             echo "  --package        Android 包名 (默认 com.popo.bdframework)"
             echo "  --test-file      Playwright 测试文件路径（相对 Playwright~ 根目录）"
             echo "  --connect-targets ADB TCP 目标 (逗号分隔, 如 127.0.0.1:62001)"
@@ -599,9 +601,9 @@ echo ""
 echo ">>> 准备端口转发..."
 
 # 停止目标包及其调试变体（如 com.talos.BuildTest 和 com.talos.BuildTest.debug）。
-# Unity TCP 端口 10002 可能被旧进程占用，必须确保完全终止后再启动新实例。
+# Unity TCP 端口 ${UNITY_PORT} 可能被旧进程占用，必须确保完全终止后再启动新实例。
 # Stop the target package and its debug variant (e.g. com.talos.BuildTest and com.talos.BuildTest.debug).
-# Unity TCP port 10002 may be held by an old process; we must fully terminate before launching a new instance.
+# Unity TCP port ${UNITY_PORT} may be held by an old process; we must fully terminate before launching a new instance.
 adb_with_reconnect shell am force-stop "${PACKAGE}" 2>/dev/null || true
 adb_with_reconnect shell am force-stop "${PACKAGE}.debug" 2>/dev/null || true
 

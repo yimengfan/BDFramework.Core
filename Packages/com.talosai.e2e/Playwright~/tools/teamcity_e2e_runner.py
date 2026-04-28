@@ -141,6 +141,9 @@ class PlatformProfile:
     disallowed_name_markers: tuple[str, ...]
     tool_script_name: str
     package_arg_name: str
+    # 平台对应的 TalosPortPolicy 基准端口；当 CLI 未显式指定 --unity-port 且不在 TeamCity 隔离端口范围时使用。
+    # Platform-specific TalosPortPolicy base port; used when --unity-port is not explicitly set and outside TeamCity isolated port range.
+    default_unity_port: int
 
 
 @dataclass(frozen=True)
@@ -196,6 +199,7 @@ PLATFORM_PROFILE_BY_KEY = {
         disallowed_name_markers=WINDOWS_SKIPPED_PACKAGE_MARKERS,
         tool_script_name="test-pc.sh",
         package_arg_name="--exe",
+        default_unity_port=10002,
     ),
     "android": PlatformProfile(
         platform_key="android",
@@ -205,6 +209,7 @@ PLATFORM_PROFILE_BY_KEY = {
         disallowed_name_markers=(),
         tool_script_name="test-android.sh",
         package_arg_name="--apk",
+        default_unity_port=11002,
     ),
     "macos": PlatformProfile(
         platform_key="macos",
@@ -214,6 +219,7 @@ PLATFORM_PROFILE_BY_KEY = {
         disallowed_name_markers=(),
         tool_script_name="test-pc.sh",
         package_arg_name="--exe",
+        default_unity_port=12002,
     ),
 }
 
@@ -1346,6 +1352,35 @@ def resolve_bash_command() -> str:
     raise TalosTeamCityE2EError("bash is not available. Configure BASH_COMMAND or install Bash/Git Bash.")
 
 
+def resolve_effective_unity_port_for_profile(
+    raw_unity_port: int,
+    profile: PlatformProfile,
+    current_build_id: str | None,
+) -> int:
+    """根据平台和 TeamCity 构建上下文确定最终 Unity TCP 端口。
+
+    Resolve the final Unity TCP port based on platform and TeamCity build context.
+    当调用方显式指定了非默认端口时保持原值；否则先检查 TeamCity 隔离端口逻辑，
+    最后回退到平台 TalosPortPolicy 基准端口。
+    Keep the caller-provided port when it is explicitly non-default; otherwise apply TeamCity
+    build isolation first, then fall back to the platform-specific TalosPortPolicy base port.
+    """
+    # 用户显式指定了非 DEFAULT_UNITY_PORT 的端口，保持不变
+    # User explicitly specified a port different from DEFAULT_UNITY_PORT, keep it
+    if raw_unity_port != DEFAULT_UNITY_PORT:
+        return raw_unity_port
+
+    # 在 TeamCity 环境中使用按 build 隔离的端口
+    # In TeamCity environment use build-isolated port
+    normalized_build_id = normalize_optional_value(current_build_id)
+    if normalized_build_id and normalized_build_id.isdigit():
+        return TEAMCITY_ISOLATED_UNITY_PORT_BASE + (int(normalized_build_id) % TEAMCITY_ISOLATED_UNITY_PORT_RANGE)
+
+    # 本地运行或无 build id 时，使用平台基准端口
+    # Local run or no build id: use platform base port
+    return profile.default_unity_port
+
+
 def build_test_command(profile: PlatformProfile, package_path: Path, args: argparse.Namespace) -> list[str]:
     """根据平台拼装最终的 Playwright 工具脚本调用命令。"""
     script_path = TOOL_DIR / profile.tool_script_name
@@ -1355,7 +1390,12 @@ def build_test_command(profile: PlatformProfile, package_path: Path, args: argpa
         profile.package_arg_name,
         normalize_bash_path(package_path),
     ]
-    command.extend(["--port", str(args.unity_port)])
+    # 使用平台感知的端口解析：本地运行时按 TalosPortPolicy 平台基准端口分配。
+    # Use platform-aware port resolution: local runs use TalosPortPolicy platform base ports.
+    effective_port = resolve_effective_unity_port_for_profile(
+        args.unity_port, profile, resolve_current_teamcity_build_context().build_id
+    )
+    command.extend(["--port", str(effective_port)])
 
     if profile.platform_key == "windows":
         command.extend(["--host", normalize_required_value(args.unity_host, field_name="unityHost")])
