@@ -36,7 +36,7 @@ namespace BDFramework.Test.E2E
     /// Note: This class does not perform real database operations; it only forces
     /// AOT compilation through type-system references.
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     internal static class SqliteAotPreservation
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace BDFramework.Test.E2E
         /// but the IL2CPP AOT compiler analyzes all generic calls in the method body
         /// and pre-compiles them.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static internal void ForceAotCompilation()
         {
@@ -76,7 +76,7 @@ namespace BDFramework.Test.E2E
         /// This method is only called from ForceAotCompilation in an unreachable branch,
         /// ensuring the compiler sees the generic instantiations without runtime side effects.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         static private void ForceSqliteGenericInstantiations()
         {
             // --- FrameworkIntegrationTests 使用的类型 ---
@@ -104,7 +104,7 @@ namespace BDFramework.Test.E2E
         /// 强制为指定行类型编译所有 SQLite 泛型方法。
         /// Force-compile all SQLite generic methods for the specified row type.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         static private void ForceGenericInstantiationsFor<TRow>() where TRow : new()
         {
             // 使用 :memory: 数据库避免文件系统副作用。
@@ -148,7 +148,7 @@ namespace BDFramework.Test.E2E
         /// 强制编译 ExecuteScalar 的值类型泛型实例化。
         /// Force-compile ExecuteScalar value-type generic instantiations.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         static private void ForceExecuteScalarInstantiations()
         {
             var conn = new SQLiteConnection(":memory:", SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true);
@@ -199,7 +199,7 @@ namespace BDFramework.Test.E2E
         /// Has the same property structure as FrameworkIntegrationTests.IntegrationSqliteRow,
         /// ensuring the AOT compiler generates generic code for this property signature.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         private sealed class IntegrationSqliteRowProxy
         {
             public int Id { get; set; }
@@ -214,7 +214,7 @@ namespace BDFramework.Test.E2E
         /// Has the same property structure as SqliteTests.E2ETestRow,
         /// ensuring the AOT compiler generates generic code for this property signature.
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         private sealed class E2ETestRowProxy
         {
             public int Id { get; set; }
