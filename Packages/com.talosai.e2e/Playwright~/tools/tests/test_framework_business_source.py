@@ -16,6 +16,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[5]
 FRAMEWORK_BUSINESS_SPEC_PATH = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Playwright~" / "tests" / "testFrameworkBusiness-e2e.spec.ts"
+FRAMEWORK_BUSINESS_BUILDTYPE_PATH = (
+    REPO_ROOT / ".test-DevOps" / ".teamcity" / "buildTypes" / "TalosAIStep02FrameworkBusinessTest.kt"
+)
 
 
 def test_framework_business_window_preconfig_suite_retries_startup_race() -> None:
@@ -33,3 +36,20 @@ def test_framework_business_window_preconfig_suite_retries_startup_race() -> Non
     assert "未发现 ServerConfigProcessor 类型" in content
     assert "WindowPreconfig 套件待就绪" in content
     assert "runWindowPreconfigSuiteUntilReady(connector)" in content
+
+
+def test_framework_business_buildtype_relies_on_runner_platform_defaults() -> None:
+    """验证 step_02 TeamCity buildType 不再把 Windows 包构建类型和固定端口硬编码给所有平台。
+    Verify that the step_02 TeamCity buildType no longer hardcodes the Windows package build type and fixed Unity port for every platform.
+    """
+    content = FRAMEWORK_BUSINESS_BUILDTYPE_PATH.read_text(encoding="utf-8")
+
+    assert 'param("talos.e2e.package.build.type.id"' not in content
+    assert 'param("talos.e2e.unity.host"' not in content
+    assert 'param("talos.e2e.unity.port"' not in content
+    assert '--package-build-type-id' not in content
+    assert '--unity-host' not in content
+    assert '--unity-port' not in content
+    assert '--package-build-number "%talos.e2e.package.build.number%"' in content
+    assert '--test-file "%talos.e2e.test.file%"' in content
+    assert '--adb-connect-targets "%talos.e2e.adb.connect.targets%"' in content
