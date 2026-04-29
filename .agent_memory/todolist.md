@@ -1,41 +1,35 @@
-1# SQLite Open16 Android Fallback Verification
-# SQLite Open16 Android 回退验证
+# Step1/Step2 Split + Log→Artifact + E2E Optimization — Complete
+# Step1/Step2 拆分 + 日志→Artifact + E2E 优化 — 已完成
 
-**Created**: 2026-04-25
+**Updated**: 2026-04-28
 **Branch**: `v4/v-4.0.0`
-**Commit**: `3b66d2973` (SQLite Open16 Android fallback) + `43611c784` (Terminal polling discipline)
+**Main Repo Commits**: `003834b5f` (initial), `8e14075f1` (bug fix)
+**.test-DevOps Commit**: `cd5f6d4`
 
 ---
 
-## Current Status / 当前状态
+## Current Status / 当前状态: ✅ ALL COMPLETE
 
-### ⏳ In Progress / 进行中
+### Step1/Step2 验证结果
 
-**Task**: Verify SQLite Open16() fallback fix for Android
-**任务**: 验证 SQLite Open16() Android 回退修复
+| # | BuildType | Build ID | Status |
+|---|-----------|----------|--------|
+| 1 | BuildTable | 1228 | ✅ SUCCESS |
+| 2 | BuildCodeAndroid | 1229 | ✅ SUCCESS |
+| 3 | BuildCodeIos | 1230 | ✅ SUCCESS |
+| 4 | BuildCodeWindows | 1231 | ✅ SUCCESS |
+| 5 | BuildAssetbundleAndroid | 1232 | ✅ SUCCESS |
+| 6 | BuildAssetbundleIos | 1233 | ✅ SUCCESS |
+| 7 | BuildAssetbundleWindows | 1234 | ✅ SUCCESS |
 
-- Build #1087: `BDFrameworkCore_TalosAIStep01BaseFlowTest`
-- Progress: 91%
-- Status: RUNNING (SUCCESS so far)
-- WebUrl: http://192.168.0.240:20000/buildConfiguration/BDFrameworkCore_TalosAIStep01BaseFlowTest/1087
-- Agent: TCMainAgent_03
-- Comment: "SQLite Open16 fallback for Android"
+### 修复的关键 Bug
 
-**Changes Being Verified / 正在验证的改动**:
-- Commit `3b66d2973`: Added `RuntimePlatform.Android` to Open16() UTF-16 fallback in `SQLite.cs`
-- Commit `43611c784`: Added Terminal Async Execution Discipline to `copilot-instructions.md`
-
----
-
-## Next Actions / 下一步行动
-
-1. Wait for build #1087 completion (91% progress)
-2. Check test results for `framework-integration/SqliteRoundTripReachable`
-3. If build passes, archive task to `/memories/repo/`
+1. **phase=upload 清空输出目录**: `prepare_clean_ci_output_root()` 在 upload 阶段会销毁 Step1 的输出 → 改用 `get_ci_output_root()`
+2. **双平台路径**: `platform=platform_key` 传给 `get_ci_output_root()` 导致路径如 `.../android/android` → 移除该参数
 
 ---
 
-## Pending Investigation / 待调查
+## Remaining Items (Not This Task)
 
-- User reported "window preconfig" error - need more details
-- 用户报告 "window preconfig" 错误 - 需要更多信息
+- BuildClientPackageWindows: Agent vswhere.exe pre-existing issue
+- File server global_version.info: Pre-existing data issue

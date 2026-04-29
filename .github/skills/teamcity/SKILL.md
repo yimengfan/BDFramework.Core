@@ -254,6 +254,24 @@ Key contract:
 | `BDFrameworkCore_VerifyClientResIos` | iOS ClientRes 验证（仅排查用） |
 | `BDFrameworkCore_VerifyClientResWindows` | Windows ClientRes 验证（仅排查用） |
 
+## DSL 参数防膨胀规则
+
+TeamCity Kotlin DSL 参数和 `scriptContent` 不得重复 `buildtools.toml` `[talos.e2e]` 段或 `PlatformProfile` 已提供的默认值。
+
+**原则：DSL 层只保留真正需要 TeamCity 快照依赖、手动覆盖或页面输入的参数。**
+
+具体规则：
+1. `buildtools.toml [talos.e2e]` 已定义的默认值（`build_debug`、`timeout_seconds`、`unity_host`、`unity_port`、`emulator_type`、`mumu_auto_start`、`adb_connect_targets` 等）不得再出现在 DSL `params` 块或 `scriptContent` 中。
+2. `PlatformProfile`（`teamcity_e2e_runner.py`）按平台补齐的默认值（`default_unity_port`、`default_emulator_type`、`default_adb_connect_targets`）同样不得重复声明。
+3. DSL `params` 只保留以下类型的参数：
+   - 固定值参数（如 `talos.e2e.platform = "windows"`）
+   - 需要快照依赖传递的参数（如 `talos.e2e.package.build.id`、`talos.e2e.package.build.number`）
+   - 需要人工在 TeamCity 页面覆盖的参数（如 `build.extra.args`、`ci.python.command`）
+4. `scriptContent` 只传递 DSL 层保留的参数；所有其他参数由 Python runner 从 `buildtools.toml` → `PlatformProfile` → argparse defaults 链路自动获取。
+5. 新增 E2E DSL 参数前，先确认默认值是否已在 `buildtools.toml` 或 `PlatformProfile` 中提供；如果是，不要在 DSL 层重复声明。
+
+已优化参考：`TalosAIBuildAndRunE2ETest.kt`（6 参数，3 步骤）、`TalosAIStep01BaseFlowTest.kt`（7 参数，4 步骤）、`TalosAIStep02FrameworkBusinessTest.kt`（7 参数，4 步骤）。
+
 ## 前置校验
 
 修改 `.test-DevOps/.teamcity/` Kotlin DSL 后，先本地 Maven 校验：

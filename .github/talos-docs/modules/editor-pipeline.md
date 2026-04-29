@@ -18,6 +18,7 @@
 - `PublishPipeLineCI` 入口、`CI(Des)` 描述、BuildTools 脚本、TeamCity DSL、README 文本和测试必须保持同步。
 - TeamCity DSL 和 pipeline 层只负责任务调度、参数和依赖；业务构建逻辑属于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/**` 或一方 editor pipeline 代码。
 - Debug build 行为、热更测试程序集注入、母包制品和上传路径都是公开 CI 契约；行为变化时更新测试和文档。
+- 测试程序集（`BDFramework.Test`、`BDFramework.HostE2E`）只能在 Debug 构建中被注入 HybridCLR `hotUpdateAssemblies`；Release 构建必须调用 `EnsureTestAssembliesRemoved()` 确保不包含测试 DLL。新增构建入口必须遵守此分离策略。
 - 阶段日志必须标明平台、build target、client version、输出路径、executeMethod 和关键阶段开始/完成。
 
 ## 验证
