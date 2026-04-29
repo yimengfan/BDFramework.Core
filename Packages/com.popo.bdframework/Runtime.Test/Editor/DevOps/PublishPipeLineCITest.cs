@@ -112,6 +112,20 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout),
                 (nameof(AndroidExternalToolsBatchResolver_IsValidAndroidNdkPath_RecognizesExpectedLayout),
                     testInstance.AndroidExternalToolsBatchResolver_IsValidAndroidNdkPath_RecognizesExpectedLayout),
+                (nameof(HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_ThrowsOnLeakedTestDllInReleaseBuild),
+                    testInstance.HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_ThrowsOnLeakedTestDllInReleaseBuild),
+                (nameof(HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_ThrowsOnZluaBytesInReleaseBuild),
+                    testInstance.HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_ThrowsOnZluaBytesInReleaseBuild),
+                (nameof(HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_WarnsButDoesNotThrowInDebugBuild),
+                    testInstance.HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_WarnsButDoesNotThrowInDebugBuild),
+                (nameof(HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_PassesWhenNoTestAssembliesPresent),
+                    testInstance.HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_PassesWhenNoTestAssembliesPresent),
+                (nameof(HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_SkipsWhenDirectoryDoesNotExist),
+                    testInstance.HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_SkipsWhenDirectoryDoesNotExist),
+                (nameof(HotfixTestAssemblyInjector_EnsureTestAssembliesRemoved_RemovesAllTestAssemblies),
+                    testInstance.HotfixTestAssemblyInjector_EnsureTestAssembliesRemoved_RemovesAllTestAssemblies),
+                (nameof(HotfixTestAssemblyInjector_TestAssemblyNames_ContainsKnownTestAssemblies),
+                    testInstance.HotfixTestAssemblyInjector_TestAssemblyNames_ContainsKnownTestAssemblies),
             };
 
             for (var index = 0; index < checks.Length; index++)
@@ -927,6 +941,182 @@ namespace BDFramework.EditorTest.DevOps
             {
                 DeleteDirectoryIfExists(tempRoot);
             }
+        }
+
+        /// <summary>
+        /// 验证 ValidateNoTestAssembliesInOutput 在 Release 模式下发现测试 DLL 产物时会抛出异常。
+        /// Verify that ValidateNoTestAssembliesInOutput throws when test DLL artifacts are found in Release mode.
+        /// 这覆盖 Release 构建最后一道防线的回归：即使上游遗漏了 EnsureTestAssembliesRemoved()，
+        /// 落盘后的热更产物校验也能阻止测试程序集泄漏到发布制品。
+        /// This covers the last-line-of-defense regression for Release builds: even if upstream misses EnsureTestAssembliesRemoved(),
+        /// the on-disk artifact check prevents test assemblies from leaking into release artifacts.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_ThrowsOnLeakedTestDllInReleaseBuild()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var hotfixDir = Path.Combine(tempRoot, "script", "hotfix");
+                Directory.CreateDirectory(hotfixDir);
+                // 写入一个测试程序集的 .dll.bytes 文件
+                // Write a test assembly .dll.bytes file
+                File.WriteAllText(Path.Combine(hotfixDir, "BDFramework.Test.dll.bytes"), "test-dll");
+
+                var exception = Assert.Throws<Exception>(() =>
+                    BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(
+                        hotfixDir, isReleaseBuild: true));
+
+                Assert.That(exception?.Message, Does.Contain("BDFramework.Test"));
+                Assert.That(exception?.Message, Does.Contain("Release"));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 ValidateNoTestAssembliesInOutput 在 Release 模式下发现 .zlua.bytes 测试 DLL 时也会抛出异常。
+        /// Verify that ValidateNoTestAssembliesInOutput also throws when .zlua.bytes test DLLs are found in Release mode.
+        /// 这确保发布格式（.zlua.bytes）与编辑器拷贝格式（.dll.bytes）都会被检出。
+        /// This ensures both the release format (.zlua.bytes) and editor copy format (.dll.bytes) are detected.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_ThrowsOnZluaBytesInReleaseBuild()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var hotfixDir = Path.Combine(tempRoot, "script", "hotfix");
+                Directory.CreateDirectory(hotfixDir);
+                File.WriteAllText(Path.Combine(hotfixDir, "BDFramework.HostE2E.zlua.bytes"), "e2e-dll");
+
+                var exception = Assert.Throws<Exception>(() =>
+                    BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(
+                        hotfixDir, isReleaseBuild: true));
+
+                Assert.That(exception?.Message, Does.Contain("BDFramework.HostE2E"));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 ValidateNoTestAssembliesInOutput 在 Debug 模式下发现测试 DLL 时仅输出警告，不抛异常。
+        /// Verify that ValidateNoTestAssembliesInOutput only warns in Debug mode and does not throw.
+        /// 这保证 Debug 构建允许测试程序集存在于热更输出目录中，不影响正常开发调试流程。
+        /// This ensures Debug builds allow test assemblies in the hotfix output directory without disrupting normal development.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_WarnsButDoesNotThrowInDebugBuild()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var hotfixDir = Path.Combine(tempRoot, "script", "hotfix");
+                Directory.CreateDirectory(hotfixDir);
+                File.WriteAllText(Path.Combine(hotfixDir, "BDFramework.Test.dll.bytes"), "test-dll");
+
+                // Debug 模式下不应抛异常
+                // Should not throw in Debug mode
+                Assert.DoesNotThrow(() =>
+                    BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(
+                        hotfixDir, isReleaseBuild: false));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 ValidateNoTestAssembliesInOutput 在无泄漏时正常通过。
+        /// Verify that ValidateNoTestAssembliesInOutput passes cleanly when no test assemblies are found.
+        /// 这确保干净的 Release 输出不会因为误报而中断构建。
+        /// This ensures clean Release output does not fail the build with false positives.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_PassesWhenNoTestAssembliesPresent()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var hotfixDir = Path.Combine(tempRoot, "script", "hotfix");
+                Directory.CreateDirectory(hotfixDir);
+                // 只放非测试程序集
+                // Place only non-test assemblies
+                File.WriteAllText(Path.Combine(hotfixDir, "Assembly-CSharp.zlua.bytes"), "game-dll");
+                File.WriteAllText(Path.Combine(hotfixDir, "BDFramework.Core.zlua.bytes"), "core-dll");
+
+                Assert.DoesNotThrow(() =>
+                    BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(
+                        hotfixDir, isReleaseBuild: true));
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 ValidateNoTestAssembliesInOutput 在目录不存在时不会抛异常，而是跳过验证。
+        /// Verify that ValidateNoTestAssembliesInOutput does not throw when the directory does not exist and skips validation.
+        /// 这覆盖首次构建或清理后输出目录尚未创建的场景。
+        /// This covers the scenario where the output directory has not been created yet, such as first build or after cleanup.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_ValidateNoTestAssembliesInOutput_SkipsWhenDirectoryDoesNotExist()
+        {
+            Assert.DoesNotThrow(() =>
+                BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(
+                    "/nonexistent/path/script/hotfix", isReleaseBuild: true));
+        }
+
+        /// <summary>
+        /// 验证 EnsureTestAssembliesRemoved 能从 HybridCLR 配置中移除所有测试程序集。
+        /// Verify that EnsureTestAssembliesRemoved removes all test assemblies from HybridCLR configuration.
+        /// 这覆盖 Release 构建纵深防御的核心契约：调用后 hotUpdateAssemblies 不再包含任何测试程序集。
+        /// This covers the core contract of the Release build defense-in-depth: after calling, hotUpdateAssemblies contains no test assemblies.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_EnsureTestAssembliesRemoved_RemovesAllTestAssemblies()
+        {
+            var originalHotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
+
+            try
+            {
+                SetHybridClrStringArraySetting("hotUpdateAssemblies",
+                    new[] { "Assembly-CSharp", "BDFramework.Test", "BDFramework.HostE2E" });
+
+                BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
+
+                var hotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
+                CollectionAssert.Contains(hotUpdateAssemblies, "Assembly-CSharp");
+                CollectionAssert.DoesNotContain(hotUpdateAssemblies, "BDFramework.Test");
+                CollectionAssert.DoesNotContain(hotUpdateAssemblies, "BDFramework.HostE2E");
+            }
+            finally
+            {
+                SetHybridClrStringArraySetting("hotUpdateAssemblies", originalHotUpdateAssemblies);
+            }
+        }
+
+        /// <summary>
+        /// 验证 TestAssemblyNames 列表对所有公开的测试程序集名称都有完整覆盖。
+        /// Verify that TestAssemblyNames covers all publicly known test assembly names.
+        /// 如果后续新增测试程序集但忘记更新 TestAssemblyNames，此测试会失败提醒维护者。
+        /// If a new test assembly is added but TestAssemblyNames is not updated, this test fails to alert maintainers.
+        /// </summary>
+        [Test]
+        public void HotfixTestAssemblyInjector_TestAssemblyNames_ContainsKnownTestAssemblies()
+        {
+            var names = BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.TestAssemblyNames;
+            CollectionAssert.Contains(names, "BDFramework.Test");
+            CollectionAssert.Contains(names, "BDFramework.HostE2E");
+            Assert.That(names.Length, Is.GreaterThanOrEqualTo(2), "TestAssemblyNames 应至少包含 2 个已知测试程序集");
         }
 
         /// <summary>

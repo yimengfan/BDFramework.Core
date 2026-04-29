@@ -546,6 +546,15 @@ namespace BDFramework.Editor.BuildPipeline
                     break;
             }
 
+            // 纵深防御：确保 Release/Profiler 构建不包含测试程序集。
+            // Defense-in-depth: ensure Release/Profiler builds do not contain test assemblies.
+            // 即使上游调用方遗漏了 EnsureTestAssembliesRemoved()，这里也能在母包构建的最早期拦截。
+            // Even if upstream callers miss EnsureTestAssembliesRemoved(), this catches leaks at the earliest stage of package build.
+            if (buildMode == BuildMode.Release || buildMode == BuildMode.Profiler)
+            {
+                HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
+            }
+
             AssetDatabase.Refresh();
             EnsureActiveBuildTarget(buildTarget);
             var buildTargetGroup = ResolveBuildTargetGroup(buildTarget);
@@ -671,6 +680,19 @@ namespace BDFramework.Editor.BuildPipeline
                     }
 
                     BDFrameworkPipelineHelper.OnEndBuildPackage(buildTarget, outputpath);
+
+                    // Release/Profiler 构建后验证热更产物不含测试程序集。
+                    // Post-build verification that Release/Profiler hotfix artifacts do not contain test assemblies.
+                    // 这是对 EnsureTestAssembliesRemoved() 的双重校验：即使 HybridCLR 配置已被清理，
+                    // 如果热更 DLL 输出目录仍有残留的测试程序集文件，这里会在构建结束前检出并报错。
+                    // This double-checks EnsureTestAssembliesRemoved(): even if HybridCLR settings have been cleaned,
+                    // residual test assembly files in the hotfix output directory will be caught here before the build concludes.
+                    if (buildMode == BuildMode.Release || buildMode == BuildMode.Profiler)
+                    {
+                        var hotfixOutputRoot = IPath.Combine(assetOutputPath, BApplication.GetPlatformLoadPath(buildRuntimePlatform), ScriptLoder.HOTFIX_DLL_PATH);
+                        HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(hotfixOutputRoot, isReleaseBuild: true);
+                    }
+
                     BDebug.Log("===>5.构建结束", Color.yellow );
                 }
                 catch (Exception e)

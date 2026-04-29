@@ -264,9 +264,15 @@ namespace BDFramework.Editor.HotfixScript
         
         /// <summary>
         /// 拷贝热更dll
+        /// 将编译产物复制到热更输出目录，并在拷贝完成后校验输出中是否残留测试程序集。
+        /// Copy hotfix DLLs to the output directory and validate that no test assemblies remain in the output.
         /// </summary>
-        /// <param name="sourceDir"></param>
-        /// <param name="destDir"></param>
+        /// <param name="sourceDir">编译中间产物目录。</param>
+        /// <param name="sourceDir">Intermediate compilation output directory.</param>
+        /// <param name="destDir">热更 DLL 输出根目录。</param>
+        /// <param name="destDir">Hotfix DLL output root directory.</param>
+        /// <param name="target">目标构建平台。</param>
+        /// <param name="target">Target build platform.</param>
        static public void CopyHotfixDLLs(string sourceDir, string destDir,BuildTarget target)
        {
            sourceDir = IPath.ReplaceBackSlash(sourceDir);
@@ -301,6 +307,15 @@ namespace BDFramework.Editor.HotfixScript
                     Debug.LogError("热更打包失败 =>" + destPath);
                 }
             }
+
+            // 拷贝完成后校验输出目录不含测试程序集。
+            // Post-copy validation: ensure the output directory does not contain test assemblies.
+            // 在 Release 构建中如果发现测试 DLL 文件（.dll.bytes / .zlua.bytes）会直接抛异常中断；
+            // 在 Debug 构建中仅打印警告。
+            // In Release builds, discovering test DLL files (.dll.bytes / .zlua.bytes) throws and aborts;
+            // in Debug builds only a warning is printed.
+            var isReleaseBuild = !HotfixTestAssemblyInjector.IsCurrentBuildDebug();
+            HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(destDLLRootDir, isReleaseBuild);
         }
 
 

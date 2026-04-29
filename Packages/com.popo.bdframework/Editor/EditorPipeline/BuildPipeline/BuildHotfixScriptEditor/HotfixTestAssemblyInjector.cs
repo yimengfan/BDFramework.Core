@@ -38,8 +38,12 @@ namespace BDFramework.Editor.HotfixScript
         /// Test assembly name list.
         /// 这些程序集将在 Debug 构建时被注入 hotUpdateAssemblies。
         /// These assemblies will be injected into hotUpdateAssemblies during Debug builds.
+        /// Release 构建必须确保此列表中的程序集不出现在 hotUpdateAssemblies、preserveHotUpdateAssemblies
+        /// 以及热更 DLL 输出目录中。
+        /// Release builds must ensure assemblies in this list are absent from hotUpdateAssemblies, preserveHotUpdateAssemblies,
+        /// and the hotfix DLL output directory.
         /// </summary>
-        private static readonly string[] TestAssemblyNames = new string[]
+        static public readonly string[] TestAssemblyNames = new string[]
         {
             "BDFramework.Test",
             "BDFramework.HostE2E",
@@ -233,6 +237,59 @@ namespace BDFramework.Editor.HotfixScript
         {
             EnsureTestAssembliesRemoved();
             AssetDatabase.Refresh();
+        }
+
+        /// <summary>
+        /// 验证热更 DLL 输出目录中不包含测试程序集。
+        /// Validate that the hotfix DLL output directory does not contain test assemblies.
+        /// 这是 Release 构建的最后一道防线：即使上游遗漏了 EnsureTestAssembliesRemoved() 调用，
+        /// 此方法也能在热更 DLL 已落盘后检出泄漏，阻止包含测试代码的制品流入发布流程。
+        /// This is the last line of defense for Release builds: even if upstream misses an EnsureTestAssembliesRemoved() call,
+        /// this method can detect leaks after hotfix DLLs have been written to disk and prevent test-contaminated artifacts from entering the release pipeline.
+        /// </summary>
+        /// <param name="hotfixDllOutputRoot">热更 DLL 输出根目录，通常为 DevOpsPublishAssetsPath 或 StreamingAssets 下的平台子目录。</param>
+        /// <param name="hotfixDllOutputRoot">Hotfix DLL output root directory, typically the platform subdirectory under DevOpsPublishAssetsPath or StreamingAssets.</param>
+        /// <param name="isReleaseBuild">是否为 Release 构建。为 true 时发现泄漏会抛出异常；为 false 时仅输出告警。</param>
+        /// <param name="isReleaseBuild">Whether this is a Release build. When true, a leak throws an exception; when false, only a warning is logged.</param>
+        /// <exception cref="Exception">当 isReleaseBuild 为 true 且输出目录中存在测试程序集文件时抛出。</exception>
+        /// <exception cref="Exception">Thrown when isReleaseBuild is true and test assembly files are found in the output directory.</exception>
+        static public void ValidateNoTestAssembliesInOutput(string hotfixDllOutputRoot, bool isReleaseBuild)
+        {
+            if (string.IsNullOrWhiteSpace(hotfixDllOutputRoot) || !Directory.Exists(hotfixDllOutputRoot))
+            {
+                Debug.Log("[HotfixTestInjector] 热更输出目录不存在，跳过产物验证");
+                return;
+            }
+
+            var leakedAssemblies = new List<string>();
+            foreach (var testAssemblyName in TestAssemblyNames)
+            {
+                // 检查 .dll.bytes（编辑器内拷贝格式）与 .zlua.bytes（发布格式）
+                // Check both .dll.bytes (editor copy format) and .zlua.bytes (release format)
+                var dllBytesPath = Path.Combine(hotfixDllOutputRoot, testAssemblyName + ".dll.bytes");
+                var zluaBytesPath = Path.Combine(hotfixDllOutputRoot, testAssemblyName + ".zlua.bytes");
+
+                if (File.Exists(dllBytesPath) || File.Exists(zluaBytesPath))
+                {
+                    leakedAssemblies.Add(testAssemblyName);
+                }
+            }
+
+            if (leakedAssemblies.Count == 0)
+            {
+                Debug.Log("[HotfixTestInjector] 产物验证通过：热更输出目录不含测试程序集");
+                return;
+            }
+
+            var leakedNames = string.Join(", ", leakedAssemblies);
+            var message = $"[HotfixTestInjector] 检测到热更输出目录包含测试程序集: {leakedNames}，目录: {hotfixDllOutputRoot}";
+
+            if (isReleaseBuild)
+            {
+                throw new Exception($"{message} — Release 构建禁止输出测试程序集，请检查构建流程是否正确调用了 EnsureTestAssembliesRemoved()");
+            }
+
+            Debug.LogWarning($"{message} — Debug 构建允许测试程序集存在，但如果这不是 Debug 构建请排查");
         }
 
         /// <summary>

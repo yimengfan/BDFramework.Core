@@ -18,7 +18,12 @@
 - `PublishPipeLineCI` 入口、`CI(Des)` 描述、BuildTools 脚本、TeamCity DSL、README 文本和测试必须保持同步。
 - TeamCity DSL 和 pipeline 层只负责任务调度、参数和依赖；业务构建逻辑属于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/**` 或一方 editor pipeline 代码。
 - Debug build 行为、热更测试程序集注入、母包制品和上传路径都是公开 CI 契约；行为变化时更新测试和文档。
-- 测试程序集（`BDFramework.Test`、`BDFramework.HostE2E`）只能在 Debug 构建中被注入 HybridCLR `hotUpdateAssemblies`；Release 构建必须调用 `EnsureTestAssembliesRemoved()` 确保不包含测试 DLL。新增构建入口必须遵守此分离策略。
+- 测试程序集（`BDFramework.Test`、`BDFramework.HostE2E`）只能在 Debug 构建中被注入 HybridCLR `hotUpdateAssemblies`；Release 构建必须调用 `EnsureTestAssembliesRemoved()` 确保不包含测试 DLL。新增构建入口必须遵守此分离策略。具体执行点：
+  - **PublishPipeLineCI BatchMode 入口**：`BuildClientPackageForBatchMode` 已在构建前根据模式调用 `InjectTestAssemblies()` 或 `EnsureTestAssembliesRemoved()`。
+  - **BuildTools_ClientPackage.Build() 纵深防御**：`Build()` 方法内部对 Release/Profiler 模式自动调用 `EnsureTestAssembliesRemoved()`，即使上游遗漏也能拦截。
+  - **BuildTools_ClientPackage.Build() 构建后验证**：Release/Profiler 母包构建完成后，调用 `ValidateNoTestAssembliesInOutput()` 对落盘产物做双重校验，发现泄漏立即抛异常中断。
+  - **HyCLREditorTools.CopyHotfixDLLs() 拷贝后校验**：热更 DLL 复制完成后调用 `ValidateNoTestAssembliesInOutput()` 验证输出目录不含测试程序集。
+  - **HotfixTestAssemblyInjector.TestAssemblyNames**：公开的测试程序集名称列表，新增测试程序集时必须同步更新此列表。
 - 阶段日志必须标明平台、build target、client version、输出路径、executeMethod 和关键阶段开始/完成。
 
 ## 验证
