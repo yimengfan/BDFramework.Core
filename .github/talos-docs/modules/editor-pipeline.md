@@ -24,6 +24,29 @@
   - **BuildTools_ClientPackage.Build() 构建后验证**：Release/Profiler 母包构建完成后，调用 `ValidateNoTestAssembliesInOutput()` 对落盘产物做双重校验，发现泄漏立即抛异常中断。
   - **HyCLREditorTools.CopyHotfixDLLs() 拷贝后校验**：热更 DLL 复制完成后调用 `ValidateNoTestAssembliesInOutput()` 验证输出目录不含测试程序集。
   - **HotfixTestAssemblyInjector.TestAssemblyNames**：公开的测试程序集名称列表，新增测试程序集时必须同步更新此列表。
+
+### 测试程序集分离行为矩阵 / Test Assembly Separation Behavior Matrix
+
+| 维度 | Debug | Release / Profiler |
+| --- | --- | --- |
+| `IsCurrentBuildDebug()` | `true` | `false` |
+| `InjectTestAssemblies()` | ✅ 注入测试程序集到 hotUpdateAssemblies | ❌ 不调用 |
+| `EnsureTestAssembliesRemoved()` | ❌ 不调用 | ✅ 构建前强制移除（纵深防御） |
+| `ValidateNoTestAssembliesInOutput()` `isReleaseBuild` | `false` → 仅 LogWarning | `true` → 抛异常中断构建 |
+| 热更产物含 `.dll.bytes` / `.zlua.bytes` | ⚠️ 警告继续 | ❌ 异常中断 |
+| 热更产物不含测试程序集 | ✅ 通过 | ✅ 通过 |
+
+### 测试程序集分离验收条件 / Test Assembly Separation Acceptance Criteria
+
+任何涉及测试程序集或构建模式的改动，必须同时满足以下条件才能标记完成：
+
+1. **Debug 构建热更产物包含 `BDFramework.Test` 和 `BDFramework.HostE2E`**（以 `.dll.bytes` 或 `.zlua.bytes` 形式存在于热更输出目录）。
+2. **Release/Profiler 构建热更产物不含任何 `TestAssemblyNames` 中列出的程序集**（`.dll.bytes` 和 `.zlua.bytes` 均不得存在）。
+3. **Release/Profiler 构建如果检测到测试程序集泄漏，必须抛异常中断构建**，不得降级为警告或静默跳过。
+4. **Debug 构建中测试程序集泄漏只产生 `LogWarning`**，不影响构建继续。
+5. **新增测试程序集时，必须同步更新 `HotfixTestAssemblyInjector.TestAssemblyNames` 列表和对应单元测试**。
+6. **新增构建入口时，必须对 Release/Profiler 模式调用 `EnsureTestAssembliesRemoved()` 和 `ValidateNoTestAssembliesInOutput()`**。
+7. **TeamCity 远端构建必须验证 Release 模式下热更产物不含测试程序集**。
 - 阶段日志必须标明平台、build target、client version、输出路径、executeMethod 和关键阶段开始/完成。
 
 ## 验证
