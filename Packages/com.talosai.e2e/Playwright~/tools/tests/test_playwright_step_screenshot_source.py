@@ -72,7 +72,27 @@ def test_pc_tool_defers_window_shape_to_package_defaults_and_keeps_windows_playe
     assert 'taskkill.exe //PID ${APP_PID}' in tool_content
     assert 'resolve_current_build_id() {' in tool_content
     assert 'cleanup_stale_test_result_player_logs' in tool_content
-    assert 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' not in tool_content
+    # -batchmode -nographics 必须只出现在 IS_WINDOWS_TEAMCITY 条件分支内，
+    # 非 Windows TeamCity 环境（macOS/Linux 本地、macOS CI）不应无条件传递。
+    # -batchmode -nographics must only appear inside the IS_WINDOWS_TEAMCITY conditional,
+    # non-Windows TeamCity environments (macOS/Linux local, macOS CI) must not pass them unconditionally.
+    tool_content_lines = tool_content.splitlines()
+    batchmode_lines = [i for i, line in enumerate(tool_content_lines)
+                       if 'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics")' in line]
+    for idx in batchmode_lines:
+        # 向上搜索最近的 if 语句，确认 -batchmode 在条件块内
+        # Search upward for the nearest if-statement to confirm -batchmode is inside a conditional
+        found_guard = False
+        for j in range(idx - 1, max(idx - 10, -1), -1):
+            stripped = tool_content_lines[j].strip()
+            if stripped.startswith('if '):
+                if 'IS_WINDOWS_TEAMCITY' in stripped:
+                    found_guard = True
+                break
+        assert found_guard, (
+            f'PLAYER_LAUNCH_ARGS+=("-batchmode" "-nographics") 出现在第 {idx + 1} 行，'
+            '但未检测到 IS_WINDOWS_TEAMCITY 条件保护'
+        )
 
 
 def test_baseflow_spec_covers_foundational_runtime_suites() -> None:

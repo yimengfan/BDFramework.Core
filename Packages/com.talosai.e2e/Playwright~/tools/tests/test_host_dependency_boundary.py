@@ -90,7 +90,8 @@ def test_bdframework_launcher_owns_debug_talos_bridge() -> None:
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in script_loader_content
     assert '[Conditional("DEBUG")]' in launcher_content
     assert "TryLaunchTalosE2EInDebugBuild()" in launcher_content
-    assert 'GetMethod("CheckAndLaunch", BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null)' in launcher_content
+    assert "typeof(Talos.E2E.E2EAutoInit)" in launcher_content
+    assert "Talos.E2E.E2EAutoInit.CheckAndLaunch()" in launcher_content
 
 
 def test_bdframework_script_loader_prewarms_bapplication_on_main_thread() -> None:
@@ -128,7 +129,7 @@ def test_talos_e2e_runner_keeps_public_type_fallback_for_player_discovery() -> N
     assert "ScanCandidateTypes(assembly.GetTypes(), scannedTypeNames);" in runner_content
     assert "ScanCandidateTypes(ex.Types, scannedTypeNames);" in runner_content
     assert "ScanCandidateTypes(assembly.ExportedTypes, scannedTypeNames);" in runner_content
-    assert "程序集 {assembly.GetName().Name} 类型加载异常" in runner_content
+    assert "程序集 {asmName} 类型加载异常" in runner_content
 
 
 def test_playwright_scripts_call_bdframework_owned_execute_methods() -> None:

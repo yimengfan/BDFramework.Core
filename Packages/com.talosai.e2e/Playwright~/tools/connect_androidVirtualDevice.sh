@@ -181,16 +181,6 @@ if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
         echo "    已断开: ${_cav_st}"
     done
 fi
-# 清理 emulator-* 格式的陈旧连接 / Clean up stale emulator-* connections
-# 注：使用 || true 防止 grep 无匹配时在 set -e pipefail 下退出脚本。
-# Note: use || true to prevent grep no-match from killing the script under set -e pipefail.
-"${ADB_CMD[@]}" devices 2>/dev/null | (grep 'emulator' || true) | while read -r _cav_em_line; do
-    _cav_em_serial="$(printf '%s' "${_cav_em_line}" | awk '{print $1}')"
-    if [[ -n "${_cav_em_serial}" ]]; then
-        "${ADB_CMD[@]}" disconnect "${_cav_em_serial}" 2>/dev/null || true
-        echo "    已断开陈旧模拟器连接: ${_cav_em_serial}"
-    fi
-done
 echo "    ✅ ADB 连接清理完成"
 
 # ============================================================================
@@ -203,6 +193,19 @@ if [[ -n "${TALOS_ADB_CONNECT_TARGETS:-}" ]]; then
     echo ">>> [connect_androidVirtualDevice] Initial ADB connect to TCP targets..."
     ensure_talos_adb_connect_targets "${TALOS_ADB_CONNECT_TARGETS}"
 fi
+
+# 清理 emulator-* 格式的陈旧连接 / Clean up stale emulator-* connections
+# 注：放在 adb connect 之后，保证 connect-before-devices 的调用顺序不变。
+# 使用 || true 防止 grep 无匹配时在 set -e pipefail 下退出脚本。
+# Note: placed after adb connect to preserve the connect-before-devices call ordering.
+# Use || true to prevent grep no-match from killing the script under set -e pipefail.
+"${ADB_CMD[@]}" devices 2>/dev/null | (grep 'emulator' || true) | while read -r _cav_em_line; do
+    _cav_em_serial="$(printf '%s' "${_cav_em_line}" | awk '{print $1}')"
+    if [[ -n "${_cav_em_serial}" ]]; then
+        "${ADB_CMD[@]}" disconnect "${_cav_em_serial}" 2>/dev/null || true
+        echo "    已断开陈旧模拟器连接: ${_cav_em_serial}"
+    fi
+done
 
 # ============================================================================
 # 步骤 4：等待设备上线（带超时 + 定期重连 + reconnect offline）

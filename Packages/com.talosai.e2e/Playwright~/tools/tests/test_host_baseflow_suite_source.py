@@ -78,9 +78,9 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     assert '"SQLite4Unity3d.SQLiteConnectionString"' in content
     assert '"SQLite4Unity3d.SQLiteOpenFlags"' in content
     assert "typeof(Action<>).MakeGenericType(sqliteConnectionType)" in content
-    assert "Type.Missing" in content
+    assert "ExecuteScalarInt" in content
     assert 'GetConstructor(new[] { typeof(string), sqliteOpenFlagsType, typeof(bool) })' not in content
-    assert "ResolveSqliteProbeRoot" in content
+    assert "BuildSqliteProbePathOptions" in content
     assert "windows-systemprofile-temp-fallback" in content
     assert "android-internal-cache-dir" in content
     assert "android-internal-files-dir" in content
