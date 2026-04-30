@@ -45,6 +45,8 @@ BUILD_TOOLS_ROOT = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Editor.Dev
 
 if str(BUILD_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(BUILD_TOOLS_ROOT))
+if str(TOOL_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOL_DIR))
 
 from Common.artifact_uploader import (  # noqa: E402
     ArtifactUploadError,
@@ -55,6 +57,7 @@ from Common.artifact_uploader import (  # noqa: E402
     resolve_file_server_settings,
 )
 from Common.buildtools_config import BuildToolsConfigError, load_buildtools_external_config  # noqa: E402
+from talos_e2e_config import TalosE2EConfigError, load_talos_e2e_config  # noqa: E402
 
 
 LOG_PREFIX = "[TalosTeamCityE2E]"
@@ -390,28 +393,29 @@ def build_test_tool_environment(
 
 
 def load_e2e_config_defaults() -> dict[str, object]:
-    """从 buildtools.toml [talos.e2e] 加载默认参数，供 CLI 默认值使用。
+    """从 Talos E2E 自己的配置文件加载默认参数，供 CLI 默认值使用。
 
-    Load default parameters from buildtools.toml [talos.e2e] for CLI argument defaults.
+    Load default parameters from Talos E2E's own config files for CLI argument defaults.
+    使用 fallback 规则：环境变量 → DevOps/CI 覆盖 → 包内默认 → 硬编码默认值。
+    Uses fallback rules: env var → DevOps/CI override → package defaults → hardcoded defaults.
     CLI 显式传参始终优先于配置默认值。
     CLI explicit arguments always take precedence over config defaults.
     """
     try:
-        external_config = load_buildtools_external_config()
-        talos_cfg = external_config.talos_e2e
+        config = load_talos_e2e_config()
         return {
-            "client_version": talos_cfg.client_version,
-            "build_debug": talos_cfg.build_debug,
-            "timeout_seconds": talos_cfg.timeout_seconds,
-            "poll_interval_seconds": talos_cfg.poll_interval_seconds,
-            "download_timeout_seconds": talos_cfg.download_timeout_seconds,
-            "unity_host": talos_cfg.unity_host,
-            "unity_port": talos_cfg.unity_port,
-            "emulator_type": talos_cfg.emulator_type,
-            "mumu_auto_start": talos_cfg.mumu_auto_start,
-            "adb_connect_targets": talos_cfg.adb_connect_targets,
+            "client_version": config.client_version,
+            "build_debug": config.build_debug,
+            "timeout_seconds": config.timeout_seconds,
+            "poll_interval_seconds": config.poll_interval_seconds,
+            "download_timeout_seconds": config.download_timeout_seconds,
+            "unity_host": config.unity_host,
+            "unity_port": config.unity_port,
+            "emulator_type": config.emulator_type,
+            "mumu_auto_start": config.mumu_auto_start,
+            "adb_connect_targets": config.adb_connect_targets,
         }
-    except (BuildToolsConfigError, Exception):
+    except (TalosE2EConfigError, Exception):
         return {}
 
 
@@ -477,7 +481,7 @@ def parse_args() -> argparse.Namespace:
         help=(
             "可选：Android 模拟器修复模式，逗号分隔的 host:port 列表，如 127.0.0.1:16384,127.0.0.1:7555。"
             " 设置后在 adb devices 检测前先执行 adb connect，专配 MuMu2 等宿主机模拟器。"
-            " 默认值从 buildtools.toml [talos.e2e] 读取；空字符串时由 PlatformProfile 提供平台默认值。"
+            " 默认值从 talos_e2e_config.toml [talos.e2e] 读取；空字符串时由 PlatformProfile 提供平台默认值。"
         ),
     )
     parser.add_argument(

@@ -1,0 +1,24 @@
+# Talos E2E CI 环境覆盖配置。
+# Talos E2E CI environment override config.
+#
+# 本文件用于覆盖包内默认配置（talos_e2e_config.toml）。
+# 只有在 CI 环境下需要不同于默认值的参数才需要写在这里。
+# This file overrides the package-default config (talos_e2e_config.toml).
+# Only parameters that differ from defaults need to be listed here.
+#
+# 优先级（由高到低）：
+# Priority (highest to lowest):
+# 1. CLI 显式传参
+# 2. 环境变量 TALOS_E2E_CONFIG 指定的配置文件
+# 3. 本文件（CI 环境覆盖）
+# 4. 包内 talos_e2e_config.toml（默认值）
+# 5. 代码中的硬编码默认值
+
+[talos.e2e]
+client_version = "0.1"
+build_debug = "true"
+timeout_seconds = 5400
+poll_interval_seconds = 10
+download_timeout_seconds = 600
+unity_host = "127.0.0.1"
+unity_port = 10002

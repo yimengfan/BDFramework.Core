@@ -55,19 +55,3 @@ filename = "artifact_uploader_remote_test.txt"
 request_timeout_seconds = 20
 listing_timeout_seconds = 15
 poll_interval_seconds = 1
-
-[talos.e2e]
-# external test config: Talos E2E 编排默认参数。
-# 当 TeamCity DSL 调用 teamcity_e2e_runner.py 时，稳定不变的参数从此处读取，
-# 不再在 DSL scriptContent 中逐条传递，降低 Kotlin 行长度与维护成本。
-# CLI 显式传参会覆盖此处默认值。
-# When TeamCity DSL invokes teamcity_e2e_runner.py, stable parameters are read from here
-# instead of being passed one-by-one in DSL scriptContent, reducing Kotlin line length and maintenance cost.
-# CLI explicit arguments take precedence over defaults here.
-client_version = "0.1"
-build_debug = "true"
-timeout_seconds = 5400
-poll_interval_seconds = 10
-download_timeout_seconds = 600
-unity_host = "127.0.0.1"
-unity_port = 10002

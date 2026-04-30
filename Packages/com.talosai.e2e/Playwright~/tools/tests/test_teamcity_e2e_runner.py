@@ -1436,10 +1436,12 @@ def test_run_cleanup_post_calls_kill_and_remove_temp(
 def test_load_e2e_config_defaults_returns_config_values(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """验证 load_e2e_config_defaults 从 buildtools.toml [talos.e2e] 读取默认参数。
-    Verify that load_e2e_config_defaults reads default parameters from buildtools.toml [talos.e2e].
+    """验证 load_e2e_config_defaults 从 talos_e2e_config.toml [talos.e2e] 读取默认参数。
+    Verify that load_e2e_config_defaults reads default parameters from talos_e2e_config.toml [talos.e2e].
     """
-    fake_talos_config = SimpleNamespace(
+    from talos_e2e_config import TalosE2EConfig
+
+    fake_talos_config = TalosE2EConfig(
         client_version="0.3",
         build_debug="false",
         timeout_seconds=7200,
@@ -1447,12 +1449,12 @@ def test_load_e2e_config_defaults_returns_config_values(
         download_timeout_seconds=900,
         unity_host="10.0.0.1",
         unity_port=30002,
-    )
-    fake_external_config = SimpleNamespace(
-        talos_e2e=fake_talos_config,
+        emulator_type="nox",
+        mumu_auto_start="false",
+        adb_connect_targets="127.0.0.1:5555",
     )
 
-    monkeypatch.setattr(runner, "load_buildtools_external_config", lambda **_kwargs: fake_external_config)
+    monkeypatch.setattr(runner, "load_talos_e2e_config", lambda: fake_talos_config)
 
     defaults = runner.load_e2e_config_defaults()
 
@@ -1463,17 +1465,22 @@ def test_load_e2e_config_defaults_returns_config_values(
     assert defaults["download_timeout_seconds"] == 900
     assert defaults["unity_host"] == "10.0.0.1"
     assert defaults["unity_port"] == 30002
+    assert defaults["emulator_type"] == "nox"
+    assert defaults["mumu_auto_start"] == "false"
+    assert defaults["adb_connect_targets"] == "127.0.0.1:5555"
 
 
 def test_load_e2e_config_defaults_returns_empty_on_config_error(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """验证 buildtools.toml 不存在或 [talos.e2e] 段缺失时，load_e2e_config_defaults 返回空字典。
-    Verify that load_e2e_config_defaults returns an empty dict when buildtools.toml is missing or has no [talos.e2e] section.
+    """验证 talos_e2e_config.toml 加载失败时，load_e2e_config_defaults 返回空字典。
+    Verify that load_e2e_config_defaults returns an empty dict when talos_e2e_config.toml loading fails.
     """
+    from talos_e2e_config import TalosE2EConfigError
+
     monkeypatch.setattr(
-        runner, "load_buildtools_external_config",
-        lambda **_kwargs: (_ for _ in ()).throw(runner.BuildToolsConfigError("not found")),
+        runner, "load_talos_e2e_config",
+        lambda: (_ for _ in ()).throw(TalosE2EConfigError("not found")),
     )
 
     defaults = runner.load_e2e_config_defaults()

@@ -1,0 +1,33 @@
+# Talos E2E 编排默认参数。
+# Talos E2E orchestration default parameters.
+#
+# 优先级（由高到低）：
+# Priority (highest to lowest):
+# 1. CLI 显式传参
+# 2. 环境变量 TALOS_E2E_CONFIG 指定的配置文件
+# 3. DevOps/CI/talos_e2e_config.toml（CI 环境覆盖）
+# 4. 本文件（包内默认值）
+# 5. 代码中的硬编码默认值
+#
+# 当 TeamCity DSL 调用 teamcity_e2e_runner.py 时，稳定不变的参数从此处读取，
+# 不再在 DSL scriptContent 中逐条传递，降低 Kotlin 行长度与维护成本。
+# CLI 显式传参会覆盖此处默认值。
+# When TeamCity DSL invokes teamcity_e2e_runner.py, stable parameters are read from here
+# instead of being passed one-by-one in DSL scriptContent, reducing Kotlin line length and maintenance cost.
+# CLI explicit arguments take precedence over defaults here.
+
+[talos.e2e]
+client_version = "0.1"
+build_debug = "true"
+timeout_seconds = 5400
+poll_interval_seconds = 10
+download_timeout_seconds = 600
+unity_host = "127.0.0.1"
+unity_port = 10002
+# Android 专属默认值：模拟器类型（mumu / nox / none），空字符串表示不自动启动模拟器。
+# Android-specific default: emulator type (mumu / nox / none); empty string means no auto-launch.
+emulator_type = "mumu"
+mumu_auto_start = "true"
+# MuMu2 / Nox 常见 ADB connect 目标列表。
+# Common ADB connect targets for MuMu2 / Nox emulators.
+adb_connect_targets = "127.0.0.1:62001,127.0.0.1:16384,127.0.0.1:7555"
