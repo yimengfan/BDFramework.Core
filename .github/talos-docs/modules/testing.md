@@ -1,6 +1,6 @@
 # BDFramework 测试模块规则
 
-作用域：`Packages/com.popo.bdframework/Runtime.Test/**`、`Packages/com.popo.bdframework/Runtime.HostE2E/**`、包测试 asmdef、Unity Test Framework 覆盖和框架自有 host E2E suite。
+作用域：`Packages/com.popo.bdframework/Runtime.Test/**`、包测试 asmdef、Unity Test Framework 覆盖和框架自有 host E2E suite。
 
 ## 阅读顺序
 

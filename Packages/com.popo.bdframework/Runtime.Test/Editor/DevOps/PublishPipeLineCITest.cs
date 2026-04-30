@@ -990,13 +990,13 @@ namespace BDFramework.EditorTest.DevOps
             {
                 var hotfixDir = Path.Combine(tempRoot, "script", "hotfix");
                 Directory.CreateDirectory(hotfixDir);
-                File.WriteAllText(Path.Combine(hotfixDir, "BDFramework.HostE2E.zlua.bytes"), "e2e-dll");
+                File.WriteAllText(Path.Combine(hotfixDir, "BDFramework.Test.zlua.bytes"), "test-dll");
 
                 var exception = Assert.Throws<Exception>(() =>
                     BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(
                         hotfixDir, isReleaseBuild: true));
 
-                Assert.That(exception?.Message, Does.Contain("BDFramework.HostE2E"));
+                Assert.That(exception?.Message, Does.Contain("BDFramework.Test"));
             }
             finally
             {
@@ -1089,14 +1089,13 @@ namespace BDFramework.EditorTest.DevOps
             try
             {
                 SetHybridClrStringArraySetting("hotUpdateAssemblies",
-                    new[] { "Assembly-CSharp", "BDFramework.Test", "BDFramework.HostE2E" });
+                    new[] { "Assembly-CSharp", "BDFramework.Test" });
 
                 BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
 
                 var hotUpdateAssemblies = GetHybridClrStringArraySetting("hotUpdateAssemblies");
                 CollectionAssert.Contains(hotUpdateAssemblies, "Assembly-CSharp");
                 CollectionAssert.DoesNotContain(hotUpdateAssemblies, "BDFramework.Test");
-                CollectionAssert.DoesNotContain(hotUpdateAssemblies, "BDFramework.HostE2E");
             }
             finally
             {
@@ -1115,8 +1114,7 @@ namespace BDFramework.EditorTest.DevOps
         {
             var names = BDFramework.Editor.HotfixScript.HotfixTestAssemblyInjector.TestAssemblyNames;
             CollectionAssert.Contains(names, "BDFramework.Test");
-            CollectionAssert.Contains(names, "BDFramework.HostE2E");
-            Assert.That(names.Length, Is.GreaterThanOrEqualTo(2), "TestAssemblyNames 应至少包含 2 个已知测试程序集");
+            Assert.That(names.Length, Is.GreaterThanOrEqualTo(1), "TestAssemblyNames 应至少包含 BDFramework.Test");
         }
 
         /// <summary>
