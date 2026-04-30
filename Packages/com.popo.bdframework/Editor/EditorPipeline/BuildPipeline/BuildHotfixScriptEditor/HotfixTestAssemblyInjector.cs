@@ -46,7 +46,6 @@ namespace BDFramework.Editor.HotfixScript
         static public readonly string[] TestAssemblyNames = new string[]
         {
             "BDFramework.Test",
-            "BDFramework.HostE2E",
         };
 
         /// <summary>

@@ -6,7 +6,7 @@ using Talos.E2E;
 using UnityEngine;
 using UnityEngine.Scripting;
 
-namespace BDFramework.HostE2E
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// 宿主侧基础启动流程 E2E 测试套件。
@@ -31,7 +31,7 @@ namespace BDFramework.HostE2E
         /// so the Android stripped-AOT temp project does not try to resolve the hotfix assembly again via a static dependency.
         /// </summary>
         [Preserve]
-        [E2ETest(suite: "launch", order: 1, des: "验证宿主已装载核心热更程序集")]
+        [E2ETest(suite: "host-launch", order: 1, des: "验证宿主已装载核心热更程序集")]
         public static void HotfixFrameworkAssemblyLoaded()
         {
             var hotfixAssembly = FindLoadedAssembly(HotfixFrameworkAssemblyName);
@@ -52,7 +52,7 @@ namespace BDFramework.HostE2E
         /// verifying that the hotfix script loader is visible while avoiding a static link from the host test assembly into hotfix types.
         /// </summary>
         [Preserve]
-        [E2ETest(suite: "launch", order: 2, des: "验证宿主可枚举热更托管类型")]
+        [E2ETest(suite: "host-launch", order: 2, des: "验证宿主可枚举热更托管类型")]
         public static void HostedTypesDiscoverableFromScriptLoader()
         {
             var hotfixAssembly = FindLoadedAssembly(HotfixFrameworkAssemblyName);
@@ -94,7 +94,7 @@ namespace BDFramework.HostE2E
         /// covering the minimal step_01 requirement that the base startup chain has completed.
         /// </summary>
         [Preserve]
-        [E2ETest(suite: "launch", order: 3, des: "验证宿主启动器版本信号可读")]
+        [E2ETest(suite: "host-launch", order: 3, des: "验证宿主启动器版本信号可读")]
         public static void LauncherVersionSignalReady()
         {
             Debug.Log("[E2E] 开始解析宿主启动器版本信号");

@@ -96,10 +96,10 @@ namespace Runtime.Test.Editor
         {
             var loadedType = AppDomain.CurrentDomain
                 .GetAssemblies()
-                .Select(assembly => assembly.GetType("BDFramework.HostE2E.LaunchFlowHostTests"))
+                .Select(assembly => assembly.GetType("BDFramework.Test.E2E.LaunchFlowHostTests"))
                 .FirstOrDefault(type => type != null);
 
-            Assert.That(loadedType, Is.Not.Null, "应能在当前 AppDomain 中解析到 BDFramework.HostE2E.LaunchFlowHostTests 类型。");
+            Assert.That(loadedType, Is.Not.Null, "应能在当前 AppDomain 中解析到 BDFramework.Test.E2E.LaunchFlowHostTests 类型。");
             return loadedType!;
         }
 

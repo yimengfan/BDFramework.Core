@@ -22,7 +22,9 @@ HOST_BASEFLOW_TESTS_PATH = (
     REPO_ROOT
     / "Packages"
     / "com.popo.bdframework"
-    / "Runtime.HostE2E"
+    / "Runtime.Test"
+    / "Runtime"
+    / "E2E"
     / "BaseFlowHostRuntimeTests.cs"
 )
 SQLITE_RUNTIME_PATH = (
@@ -55,7 +57,7 @@ def test_host_baseflow_suites_stay_in_host_package() -> None:
     """
     content = HOST_BASEFLOW_TESTS_PATH.read_text(encoding="utf-8")
 
-    assert "namespace BDFramework.HostE2E" in content
+    assert "namespace BDFramework.Test.E2E" in content
     assert "public static class BaseFlowHostRuntimeTests" in content
     assert "typeof(BDFramework.Test" not in content
     assert '"BDFramework.ResourceMgr.BResources"' in content
@@ -69,8 +71,8 @@ def test_host_baseflow_suites_keep_preserved_entrypoints() -> None:
     content = HOST_BASEFLOW_TESTS_PATH.read_text(encoding="utf-8")
 
     assert re.search(r"\[Preserve\]\s*public static class BaseFlowHostRuntimeTests", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"asset-load\", order: 1", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"framework-integration\", order: 1", content)
+    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"host-asset-load\", order: 1", content)
+    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"host-framework-integration\", order: 1", content)
     assert "RequireLoadedAssembly" in content
     assert "RequireLoadedType" in content
     assert "RequireInstanceGenericMethod" in content

@@ -18,7 +18,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[5]
 WINDOW_PRECONFIG_PATH = REPO_ROOT / "Assets" / "Scenes" / "Simple" / "AOTStart" / "WindowPreconfig.cs"
-WINDOW_PRECONFIG_HOST_TESTS_PATH = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Runtime.HostE2E" / "WindowPreconfigHostTests.cs"
+WINDOW_PRECONFIG_HOST_TESTS_PATH = REPO_ROOT / "Packages" / "com.popo.bdframework" / "Runtime.Test" / "Runtime" / "E2E" / "WindowPreconfigHostTests.cs"
 
 
 def test_window_preconfig_keeps_screen_visible_in_talos_force_e2e_mode() -> None:

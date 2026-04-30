@@ -18,7 +18,7 @@
 - `PublishPipeLineCI` 入口、`CI(Des)` 描述、BuildTools 脚本、TeamCity DSL、README 文本和测试必须保持同步。
 - TeamCity DSL 和 pipeline 层只负责任务调度、参数和依赖；业务构建逻辑属于 `Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/**` 或一方 editor pipeline 代码。
 - Debug build 行为、热更测试程序集注入、母包制品和上传路径都是公开 CI 契约；行为变化时更新测试和文档。
-- 测试程序集（`BDFramework.Test`、`BDFramework.HostE2E`）只能在 Debug 构建中被注入 HybridCLR `hotUpdateAssemblies`；Release 构建必须调用 `EnsureTestAssembliesRemoved()` 确保不包含测试 DLL。新增构建入口必须遵守此分离策略。具体执行点：
+- 测试程序集（`BDFramework.Test`）只能在 Debug 构建中被注入 HybridCLR `hotUpdateAssemblies`；Release 构建必须调用 `EnsureTestAssembliesRemoved()` 确保不包含测试 DLL。新增构建入口必须遵守此分离策略。具体执行点：
   - **PublishPipeLineCI BatchMode 入口**：`BuildClientPackageForBatchMode` 已在构建前根据模式调用 `InjectTestAssemblies()` 或 `EnsureTestAssembliesRemoved()`。
   - **BuildTools_ClientPackage.Build() 纵深防御**：`Build()` 方法内部对 Release/Profiler 模式自动调用 `EnsureTestAssembliesRemoved()`，即使上游遗漏也能拦截。
   - **BuildTools_ClientPackage.Build() 构建后验证**：Release/Profiler 母包构建完成后，调用 `ValidateNoTestAssembliesInOutput()` 对落盘产物做双重校验，发现泄漏立即抛异常中断。
@@ -40,8 +40,8 @@
 
 任何涉及测试程序集或构建模式的改动，必须同时满足以下条件才能标记完成：
 
-1. **Debug 构建热更产物包含 `BDFramework.Test` 和 `BDFramework.HostE2E`**（以 `.dll.bytes` 或 `.zlua.bytes` 形式存在于热更输出目录）。
-2. **Release/Profiler 构建热更产物不含任何 `TestAssemblyNames` 中列出的程序集**（`.dll.bytes` 和 `.zlua.bytes` 均不得存在）。
+1. **Debug 构建热更产物包含 `BDFramework.Test`**（以 `.dll.bytes` 或 `.zlua.bytes` 形式存在于热更输出目录）。
+2. **Release/Profiler 构建热更产物不含 `BDFramework.Test`**（`.dll.bytes` 和 `.zlua.bytes` 均不得存在）。
 3. **Release/Profiler 构建如果检测到测试程序集泄漏，必须抛异常中断构建**，不得降级为警告或静默跳过。
 4. **Debug 构建中测试程序集泄漏只产生 `LogWarning`**，不影响构建继续。
 5. **新增测试程序集时，必须同步更新 `HotfixTestAssemblyInjector.TestAssemblyNames` 列表和对应单元测试**。

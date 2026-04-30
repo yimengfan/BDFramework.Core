@@ -13,7 +13,7 @@
 
 - 框架单元测试：`Packages/com.popo.bdframework/Runtime.Test/Runtime/`。
 - 框架 editor-only 测试：`Packages/com.popo.bdframework/Runtime.Test/Editor/`。
-- 框架自有 host E2E：`Packages/com.popo.bdframework/Runtime.HostE2E/`。
+- 框架宿主 E2E（含原 HostE2E）：`Packages/com.popo.bdframework/Runtime.Test/Runtime/E2E/`。
 - 业务测试：`Assets/Code/<Module>/Tests/` 或 `Assets/Code/<Module>@hotfix/Tests/`。
 - 业务自有 E2E：`Assets/Code/<Module>/E2E/`。
 

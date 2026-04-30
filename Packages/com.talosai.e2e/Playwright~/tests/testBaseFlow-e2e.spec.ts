@@ -13,9 +13,9 @@
 import { test, expect } from './fixtures';
 
 const baseFlowSuites = [
-  { suite: 'launch', title: '执行热更启动套件', coverage: '热更 DLL 可用性' },
-  { suite: 'asset-load', title: '执行资源加载套件', coverage: 'AB 资产系统可用性' },
-  { suite: 'framework-integration', title: '执行框架集成套件', coverage: 'SQLite 可用性' },
+  { suite: 'host-launch', title: '执行宿主热更启动套件', coverage: '热更 DLL 可用性' },
+  { suite: 'host-asset-load', title: '执行宿主资源加载套件', coverage: 'AB 资产系统可用性' },
+  { suite: 'host-framework-integration', title: '执行宿主框架集成套件', coverage: 'SQLite 可用性' },
 ] as const;
 
 /**

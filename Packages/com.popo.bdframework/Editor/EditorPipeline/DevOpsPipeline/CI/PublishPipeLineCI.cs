@@ -171,10 +171,10 @@ namespace BDFramework.Editor.DevOps
         /// 执行指定平台的母包 BatchMode 构建。
         /// 当显式开启 Debug 时，沿用现有母包 Debug 模式，并额外补齐 Talos E2E 编译宏。
         /// Debug 模式下同时注入测试程序集到 HybridCLR hotUpdateAssemblies，
-        /// 确保 BDFramework.Test / BDFramework.HostE2E 作为热更 DLL 被包含在母包的 StreamingAssets 中，
+        /// 确保 BDFramework.Test 作为热更 DLL 被包含在母包的 StreamingAssets 中，
         /// 并在运行时由 ScriptLoderAOT 加载到 AppDomain，使 E2E 测试发现能扫描到测试用例。
         /// In Debug mode, also inject test assemblies into HybridCLR hotUpdateAssemblies,
-        /// so that BDFramework.Test / BDFramework.HostE2E are included as hot-update DLLs
+        /// so that BDFramework.Test is included as a hot-update DLL
         /// in the package's StreamingAssets and loaded into the AppDomain by ScriptLoderAOT at runtime,
         /// enabling E2E test discovery to find test cases.
         /// </summary>

@@ -22,21 +22,22 @@ HOST_LAUNCH_TESTS_PATH = (
     REPO_ROOT
     / "Packages"
     / "com.popo.bdframework"
-    / "Runtime.HostE2E"
+    / "Runtime.Test"
+    / "Runtime"
+    / "E2E"
     / "LaunchFlowHostTests.cs"
 )
 STATIC_LINK_XML_PATH = REPO_ROOT / "Assets" / "link.xml"
 
 
 def test_host_launch_suite_stays_in_host_package() -> None:
-    """验证 step_01 launch 套件迁移到宿主侧独立程序集。
-    Verify that the step_01 launch suite has moved into a host-owned dedicated assembly.
+    """验证 step_01 launch 套件已合并到 Runtime.Test.E2E 程序集。
+    Verify that the step_01 launch suite has been merged into the Runtime.Test.E2E assembly.
     """
     content = HOST_LAUNCH_TESTS_PATH.read_text(encoding="utf-8")
 
-    assert "namespace BDFramework.HostE2E" in content
+    assert "namespace BDFramework.Test.E2E" in content
     assert "static class LaunchFlowHostTests" in content
-    assert "BDFramework.Test.E2E" not in content
     assert "typeof(BDFramework.Test.E2E.LaunchTests).Assembly" not in content
 
 
@@ -47,9 +48,9 @@ def test_host_launch_suite_keeps_preserved_launch_entrypoints() -> None:
     content = HOST_LAUNCH_TESTS_PATH.read_text(encoding="utf-8")
 
     assert re.search(r"\[Preserve\]\s*public static class LaunchFlowHostTests", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"launch\", order: 1", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"launch\", order: 2", content)
-    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"launch\", order: 3", content)
+    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"host-launch\", order: 1", content)
+    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"host-launch\", order: 2", content)
+    assert re.search(r"\[Preserve\]\s*\[E2ETest\(suite: \"host-launch\", order: 3", content)
     assert "FindLoadedAssembly" in content
     assert "GetAppDomainHostingTypes" in content
 

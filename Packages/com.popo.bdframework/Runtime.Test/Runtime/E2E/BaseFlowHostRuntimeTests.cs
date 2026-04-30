@@ -7,7 +7,7 @@ using Talos.E2E;
 using UnityEngine;
 using UnityEngine.Scripting;
 
-namespace BDFramework.HostE2E
+namespace BDFramework.Test.E2E
 {
     /// <summary>
     /// 宿主侧基础系统 E2E 测试套件。
@@ -16,9 +16,9 @@ namespace BDFramework.HostE2E
     /// 避免为了基础系统回归重新把依赖热更层的 Runtime.Test 程序集根引用回母包。
     /// This suite exists specifically for the step_01 BaseFlow host-package validation and inspects the AssetBundle-facing resource APIs and the minimal SQLite read-write loop through host-visible reflection entrypoints,
     /// avoiding the need to root the Runtime.Test assembly that depends on the hotfix layer back into the base package.
-    /// 使用说明：Talos BaseFlow 会按 suite 名称分别执行 `asset-load` 与 `framework-integration`，
+    /// 使用说明：Talos BaseFlow 会按 suite 名称分别执行 `host-asset-load` 与 `host-framework-integration`，
     /// 因此这里的每个入口都必须保持宿主程序集可见并显式 Preserve。
-    /// Usage note: Talos BaseFlow executes `asset-load` and `framework-integration` by suite name,
+    /// Usage note: Talos BaseFlow executes `host-asset-load` and `host-framework-integration` by suite name,
     /// so each entrypoint here must stay visible from the host assembly and be explicitly preserved.
     /// </summary>
     [Preserve]
@@ -81,7 +81,7 @@ namespace BDFramework.HostE2E
         /// confirming with minimal reflection calls that the host package has the signals needed to drive the resource mainline.
         /// </summary>
         [Preserve]
-        [E2ETest(suite: "asset-load", order: 1, des: "验证宿主可联通 AB 资源基础接口")]
+        [E2ETest(suite: "host-asset-load", order: 1, des: "验证宿主可联通 AB 资源基础接口")]
         public static void AssetBundleResourceApisReachable()
         {
             Debug.Log("[E2E] 测试目的=验证宿主可联通 AB 资源基础接口 实现手段=反射调用 BResources 的资源组、版控路径与 Shader 查询公共 API");
@@ -183,7 +183,7 @@ namespace BDFramework.HostE2E
         /// avoiding a static link from the host test assembly into the SQLite types and keeping the base-package dependency boundary stable.
         /// </summary>
         [Preserve]
-        [E2ETest(suite: "framework-integration", order: 1, des: "验证宿主可完成 SQLite 最小读写闭环")]
+        [E2ETest(suite: "host-framework-integration", order: 1, des: "验证宿主可完成 SQLite 最小读写闭环")]
         public static void SqliteRoundTripReachable()
         {
             Debug.Log("[E2E] 测试目的=验证宿主可完成 SQLite 最小读写闭环 实现手段=反射创建 SQLiteConnection 并执行建表、写入、查询");

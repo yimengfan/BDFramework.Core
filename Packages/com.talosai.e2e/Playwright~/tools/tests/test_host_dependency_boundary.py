@@ -113,9 +113,9 @@ def test_bdframework_script_loader_does_not_compose_host_suite_execution() -> No
     script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
 
     assert "TryPrimeTalosHostE2ESuites" not in script_loader_content
-    assert '"BDFramework.HostE2E.LaunchFlowHostTests"' not in script_loader_content
-    assert '"BDFramework.HostE2E.BaseFlowHostRuntimeTests"' not in script_loader_content
-    assert 'Type.GetType($"{typeName}, BDFramework.HostE2E", false)' not in script_loader_content
+    assert '"BDFramework.Test.E2E.LaunchFlowHostTests"' not in script_loader_content
+    assert '"BDFramework.Test.E2E.BaseFlowHostRuntimeTests"' not in script_loader_content
+    assert 'Type.GetType($"{typeName}, BDFramework.Test.E2E", false)' not in script_loader_content
     assert "BDFramework.Core.Tools.BApplication.persistentDataPath" in script_loader_content
 
 

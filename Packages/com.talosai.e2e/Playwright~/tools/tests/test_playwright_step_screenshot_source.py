@@ -101,9 +101,9 @@ def test_baseflow_spec_covers_foundational_runtime_suites() -> None:
     """
     baseflow_content = BASEFLOW_SPEC_PATH.read_text(encoding="utf-8")
 
-    assert "suite: 'launch'" in baseflow_content
-    assert "suite: 'asset-load'" in baseflow_content
-    assert "suite: 'framework-integration'" in baseflow_content
+    assert "suite: 'host-launch'" in baseflow_content
+    assert "suite: 'host-asset-load'" in baseflow_content
+    assert "suite: 'host-framework-integration'" in baseflow_content
     assert "热更 DLL 可用性" in baseflow_content
     assert "AB 资产系统可用性" in baseflow_content
     assert "SQLite 可用性" in baseflow_content

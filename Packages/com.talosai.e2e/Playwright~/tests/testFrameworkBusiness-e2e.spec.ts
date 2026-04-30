@@ -352,4 +352,14 @@ test.describe('框架基础模块验证', () => {
       await runSuiteAndRequireAllPass(connector, 'download-prep', 'DownloadPrep');
     });
   });
+
+  /**
+   * 用例：验证框架核心业务能力。
+   * Case: verify framework core business capabilities.
+   */
+  test('框架核心业务测试', async ({ connector, talosStep }) => {
+    await talosStep('执行框架核心业务测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'framework-core-business', 'FrameworkCoreBusiness');
+    });
+  });
 });

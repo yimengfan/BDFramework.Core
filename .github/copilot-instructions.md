@@ -152,7 +152,7 @@
 - Unity3D 业务层代码不得使用反射。
 - 框架或基础设施代码只有在兼容性、平台隔离或受控扩展点需要时才可使用反射，并且必须在注释中说明原因。
 
-- 测试程序集（`BDFramework.Test`、`BDFramework.HostE2E`）的 DLL 只能走热更路径、只在 Debug 模式生效，Release/Profiler 构建中 AOT 和热更产物均不得包含。Release 构建检测到泄漏必须抛异常中断，不得降级为警告。新增测试程序集时必须同步更新 `HotfixTestAssemblyInjector.TestAssemblyNames` 列表；新增构建入口时必须对 Release/Profiler 调用 `EnsureTestAssembliesRemoved()` 和 `ValidateNoTestAssembliesInOutput()`。详细行为矩阵和验收条件见 `.github/talos-docs/modules/editor-pipeline.md`。
+- 测试程序集（`BDFramework.Test`）的 DLL 只能走热更路径、只在 Debug 模式生效，Release/Profiler 构建中 AOT 和热更产物均不得包含。Release 构建检测到泄漏必须抛异常中断，不得降级为警告。新增测试程序集时必须同步更新 `HotfixTestAssemblyInjector.TestAssemblyNames` 列表；新增构建入口时必须对 Release/Profiler 调用 `EnsureTestAssembliesRemoved()` 和 `ValidateNoTestAssembliesInOutput()`。详细行为矩阵和验收条件见 `.github/talos-docs/modules/editor-pipeline.md`。
 
 ## 6. 测试与验证策略
 

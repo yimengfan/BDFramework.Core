@@ -28,14 +28,14 @@ TeamCity Kotlin DSL 参数和 `scriptContent` 不得重复 `buildtools.toml` `[t
 
 ### Release/Debug 测试程序集分离
 
-测试程序集（`BDFramework.Test`、`BDFramework.HostE2E`）只能出现在 Debug 构建（`-buildDebug`）中，严禁进入 Release 构建的母包（AOT）或热更 DLL 产物。
+测试程序集（`BDFramework.Test`）只能出现在 Debug 构建（`-buildDebug`）中，严禁进入 Release 构建的母包（AOT）或热更 DLL 产物。
 
 - **Debug 构建**：`HotfixTestAssemblyInjector.InjectTestAssemblies()` 将测试程序集注入 HybridCLR `hotUpdateAssemblies`，`TalosDebugDefineScope` 临时注入 `ENABLE_E2ETEST` 和 `DEBUG` 宏。
 - **Release 构建**：`HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved()` 从配置中移除所有测试程序集，不注入调试宏。
 - 测试程序集作为热更 DLL 通过 HybridCLR 加载，不参与 AOT 编译。
 - `PublishPipeLineCI` 的 BatchMode 入口（`BuildClientPackageForBatchMode`、`BuildClientResHotfixCodeForBatchMode`）已内置 debug/release 守卫；新增构建入口必须遵守同一分离策略。
 - 旧的直接菜单入口（`PublishPackage_*Debug/Release`）不走 CI 守卫路径，仅限本地手动使用，CI 不得调用这些入口。
-- Release 构建结果必须验证不包含 `BDFramework.Test.dll`、`BDFramework.HostE2E.dll` 或其 `.bytes` 变体。
+- Release 构建结果必须验证不包含 `BDFramework.Test.dll` 或其 `.bytes` 变体。
 
 ## 验证
 
