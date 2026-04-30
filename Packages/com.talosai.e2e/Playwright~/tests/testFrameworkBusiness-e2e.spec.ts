@@ -10,8 +10,8 @@
  * - Verify that the hotfix DLL has completed loading and core framework types can be enumerated.
  * - 验证服务器配置已正确加载并可访问。
  * - Verify that the server configuration has been loaded and is accessible.
- * - 为后续交互测试（下载、修复模式等）做准备。
- * - Prepare for subsequent interaction tests (download, repair mode, etc.).
+ * - 验证框架基础模块：SQLite 多连接/加密/释放、AssetBundle 管理器、版本控制器、下载准备。
+ * - Verify framework foundational modules: SQLite multi-connection/encryption/disposal, AssetBundle manager, version controller, download preparation.
  *
  * 测试范围：
  * Test scope:
@@ -23,9 +23,14 @@
  * - Hotfix assembly has completed loading.
  * - 预配置界面按钮可交互。
  * - Preconfiguration screen buttons are interactive.
- *
- * TODO：后续迭代将添加下载、修复模式等交互流程测试。
- * TODO: future iterations will add interaction flow tests for download, repair mode, etc.
+ * - SQLite 多连接管理、密码加密读写、连接释放、PRAGMA 配置。
+ * - SQLite multi-connection management, password-protected read/write, connection disposal, PRAGMA configuration.
+ * - AssetBundle 资源组操作、平台版本路径解析、Shader 查找。
+ * - AssetBundle group operations, platform version path resolution, shader lookup.
+ * - 版本控制器：客户端版本号、版本路径解析、版本信息结构。
+ * - Version controller: client version number, versioned path resolution, version info structure.
+ * - 下载准备：文件服务器 URL、下载路径构造、母包基础资源。
+ * - Download preparation: file server URL, download path construction, base package resources.
  */
 
 import type { UnityConnector } from '../src';
@@ -265,6 +270,86 @@ test.describe('日志监听验证', () => {
       }
 
       expect(summary.failed).toBe(0);
+    });
+  });
+});
+
+/**
+ * 通用套件执行辅助函数。
+ * General suite execution helper.
+ * 运行指定套件并记录结果，要求全部通过。
+ * Run the specified suite, log results, and require all cases to pass.
+ */
+async function runSuiteAndRequireAllPass(
+  connector: UnityConnector,
+  suite: string,
+  tag: string,
+): Promise<void> {
+  const { results, summary } = await connector.runSuite(suite);
+
+  console.log(
+    `[${tag}] 套件结果: suite=${suite} total=${summary.total} passed=${summary.passed} failed=${summary.failed}`,
+  );
+
+  for (const result of results) {
+    console.log(
+      `[${tag}] ${result.passed ? 'PASS' : 'FAIL'} suite=${result.suite} method=${result.methodName} des=${result.description}`,
+    );
+    if (!result.passed && result.errorMessage) {
+      console.log(`[${tag}] error=${result.errorMessage}`);
+    }
+  }
+
+  expect(summary.total).toBeGreaterThan(0);
+  expect(summary.failed).toBe(0);
+}
+
+/**
+ * 测试套件：框架基础模块验证。
+ * Suite: framework foundational module verification.
+ * 验证 SQLite、AssetBundle 管理器、版本控制器和下载准备等基础能力。
+ * Verify foundational capabilities: SQLite, AssetBundle manager, version controller, and download preparation.
+ * 这些套件依赖热更已加载、配置已就绪（即 window-preconfig 套件已通过）。
+ * These suites depend on hotfix loaded and config ready (i.e., window-preconfig suite has passed).
+ */
+test.describe('框架基础模块验证', () => {
+  /**
+   * 用例：验证 SQLite 深度能力。
+   * Case: verify SQLite deep capabilities.
+   */
+  test('SQLite 深度测试', async ({ connector, talosStep }) => {
+    await talosStep('执行 SQLite 深度测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'sqlite-business', 'SqliteBusiness');
+    });
+  });
+
+  /**
+   * 用例：验证 AssetBundle 管理器能力。
+   * Case: verify AssetBundle manager capabilities.
+   */
+  test('AssetBundle 管理器测试', async ({ connector, talosStep }) => {
+    await talosStep('执行 AssetBundle 管理器测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'asset-business', 'AssetBusiness');
+    });
+  });
+
+  /**
+   * 用例：验证版本控制器能力。
+   * Case: verify version controller capabilities.
+   */
+  test('版本控制器测试', async ({ connector, talosStep }) => {
+    await talosStep('执行版本控制器测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'version-business', 'VersionBusiness');
+    });
+  });
+
+  /**
+   * 用例：验证下载准备能力。
+   * Case: verify download preparation capabilities.
+   */
+  test('下载准备测试', async ({ connector, talosStep }) => {
+    await talosStep('执行下载准备测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'download-prep', 'DownloadPrep');
     });
   });
 });

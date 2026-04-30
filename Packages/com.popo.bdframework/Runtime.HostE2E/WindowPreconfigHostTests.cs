@@ -187,8 +187,6 @@ namespace BDFramework.HostE2E
         /// This check confirms that UI components are correctly bound, preparing for subsequent interaction tests (download, etc.).
         /// 注意：此测试仅验证按钮存在且可交互，不触发实际操作。
         /// Note: This test only verifies that buttons exist and are interactive without triggering actual operations.
-        /// TODO: 后续迭代将添加下载、修复模式等交互流程测试。
-        /// TODO: Future iterations will add interaction flow tests for download, repair mode, etc.
         /// </summary>
         [Preserve]
         [E2ETest(suite: "window-preconfig", order: 4, des: "验证预配置界面按钮可交互")]
