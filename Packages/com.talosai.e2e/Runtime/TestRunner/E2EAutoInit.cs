@@ -6,38 +6,32 @@ using UnityEngine.Scripting;
 namespace Talos.E2E
 {
     /// <summary>
-    /// E2E 测试自动入口——热更代码加载完成后的自动检测和启动点。
+    /// E2E 测试自动入口（保留兼容，推荐迁移到 E2ESceneAutoStarter）。
+    /// E2E test auto-entry (kept for compatibility; prefer migrating to E2ESceneAutoStarter).
     /// 
     /// 设计角色：
-    /// - 作为热更 DLL 中的一个 Manager，在 HotfixScriptLoder.Start() 流程中被自动发现和执行。
+    /// - 作为热更 DLL 加载完成后的自动检测和启动点（遗留路径）。
     /// - 检测当前是否为 Debug 构建（通过 DEBUG 标记文件）。
     /// - 如果是 Debug 构建，自动启动 E2E 测试 TCP 服务。
     /// - 如果是 Release 构建，跳过不执行任何操作。
     /// 
-    /// IL2CPP 保留策略：
-    /// 在 IL2CPP 构建中，Assembly.Load() 无法工作（没有托管 DLL），
-    /// link.xml 只防止元数据裁剪但不保证代码被编译到原生二进制。
-    /// 本类使用 [RuntimeInitializeOnLoadMethod] 确保 Unity 初始化系统直接引用本类型，
-    /// 从而强制 IL2CPP 将整个类（包括 CheckAndLaunch）编译进原生二进制。
+    /// Design role:
+    /// - Auto-detection and startup point after hotfix DLL loading (legacy path).
+    /// - Detects whether the current build is a Debug build (via DEBUG marker file).
+    /// - If Debug build, auto-starts the E2E test TCP service.
+    /// - If Release build, skips without any action.
     /// 
-    /// 集成方式：
-    /// 在游戏的热更入口（如 IHotfixGameStart 实现）中调用 CheckAndLaunch()。
-    /// 也可以在框架启动完成后由业务代码手动调用。
+    /// 迁移说明：
+    /// E2E 启动已从宿主框架层解耦。推荐使用 E2ESceneAutoStarter MonoBehaviour 场景挂载方式：
+    /// 1. 在场景中挂载 E2ESceneAutoStarter 组件。
+    /// 2. E2ESceneAutoSetup Editor 脚本会在 Debug 模式下自动扫描场景并补挂。
+    /// 3. 如需在代码中手动触发，使用 E2ESceneAutoStarter.ManualStart()。
     /// 
-    /// 使用示例：
-    /// <code>
-    /// // 在游戏热更入口中
-    /// public class GameHotfixStart : IHotfixGameStart
-    /// {
-    ///     public void Start()
-    ///     {
-    ///         // ... 游戏初始化逻辑 ...
-    ///         
-    ///         // 自动检测并启动 E2E 测试
-    ///         E2EAutoInit.CheckAndLaunch();
-    ///     }
-    /// }
-    /// </code>
+    /// Migration note:
+    /// E2E startup has been decoupled from the host framework layer. Prefer E2ESceneAutoStarter MonoBehaviour via scene attachment:
+    /// 1. Attach E2ESceneAutoStarter component to the scene.
+    /// 2. E2ESceneAutoSetup Editor script auto-scans and attaches in Debug mode.
+    /// 3. For manual code trigger, use E2ESceneAutoStarter.ManualStart().
     /// </summary>
     [Preserve]
     static public class E2EAutoInit

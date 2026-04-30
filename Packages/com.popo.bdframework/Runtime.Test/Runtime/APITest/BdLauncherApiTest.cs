@@ -5,10 +5,12 @@ namespace BDFramework.RuntimeTests.ApiTest
     /// <summary>
     /// 启动器公开契约的 Runtime 测试主体。
     /// Runtime test body for the launcher public contracts.
-    /// 该类型把启动器反射入口、AOT 启动 StreamingAssets 读取顺序、热更程序集装载顺序、缺失 BDebug 补挂策略、默认执行顺序与 E2E 自动检测运行时可达规则固定在 Runtime.Test 的 APITest 层，
+    /// 该类型把启动器反射入口、AOT 启动 StreamingAssets 读取顺序、热更程序集装载顺序、缺失 BDebug 补挂策略、默认执行顺序与 E2E 场景自启动契约固定在 Runtime.Test 的 APITest 层，
     /// 让 Editor 包装、BatchMode 与真机 Talos 套件共享同一套启动器契约断言。
-    /// This type fixes launcher reflection entry points, AOT-startup StreamingAssets read order, hotfix-assembly load order, missing-BDebug restoration, default execution order, and the runtime-reachability rule for the E2E auto-detection bridge inside the Runtime.Test APITest layer,
+    /// E2E 启动已从 BDLauncher 解耦——现由 Talos.E2E.E2ESceneAutoStarter MonoBehaviour 场景挂载自行激活。
+    /// This type fixes launcher reflection entry points, AOT-startup StreamingAssets read order, hotfix-assembly load order, missing-BDebug restoration, default execution order, and the E2E scene-auto-start contract inside the Runtime.Test APITest layer,
     /// allowing editor wrappers, BatchMode, and packaged Talos suites to share the same launcher contract assertions.
+    /// E2E startup has been decoupled from BDLauncher — now handled by Talos.E2E.E2ESceneAutoStarter MonoBehaviour via scene attachment.
     /// </summary>
     public sealed class BdLauncherApiTest
     {
@@ -98,8 +100,9 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
-        /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
-        /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
+        /// 验证 E2E 场景自启动组件在 Talos.E2E.Runtime 中存在且具备 IL2CPP 保活机制。
+        /// Verify that the E2E scene auto-starter exists in Talos.E2E.Runtime with IL2CPP keep-alive mechanism.
+        /// 原 TryLaunchTalosE2EInDebugBuild 已从 BDLauncher 移除，E2E 启动现由 E2ESceneAutoStarter 负责。
         /// </summary>
         public void BDLauncher_ShouldOwnDebugTalosStartupBridge()
         {
@@ -107,8 +110,9 @@ namespace BDFramework.RuntimeTests.ApiTest
         }
 
         /// <summary>
-        /// 验证 BDLauncher 持有无条件的 IL2CPP 保活引用，确保 Talos.E2E.Runtime 程序集在所有构建配置中都被包含在原生二进制。
-        /// Verify that BDLauncher holds an unconditional IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary across all build configurations.
+        /// 验证 E2ESceneAutoStarter 持有 IL2CPP 保活引用，确保 Talos.E2E.Runtime 在 Debug 构建中不被裁剪。
+        /// Verify that E2ESceneAutoStarter holds an IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is not stripped in Debug builds.
+        /// 原 PreserveE2EAssemblyReferenceForIL2CPP 已从 BDLauncher 移除。
         /// </summary>
         public void BDLauncher_ShouldPreserveE2EAssemblyForIL2CPP()
         {

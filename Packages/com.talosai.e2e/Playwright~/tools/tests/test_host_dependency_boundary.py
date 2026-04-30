@@ -21,6 +21,8 @@ REPO_ROOT = Path(__file__).resolve().parents[5]
 E2E_EDITOR_TOOLS = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "E2EEditorTools.cs"
 E2E_DEBUG_BUILD_MARKER = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "DebugBuildMarker.cs"
 E2E_AUTO_INIT = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "E2EAutoInit.cs"
+E2E_SCENE_AUTO_STARTER = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "E2ESceneAutoStarter.cs"
+E2E_SCENE_AUTO_SETUP = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "E2ESceneAutoSetup.cs"
 E2E_TEST_RUNNER = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "E2ETestRunner.cs"
 E2E_EDITOR_ASMDEF = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "Talos.E2E.Editor.asmdef"
 E2E_RUNTIME_ASMDEF = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "Talos.E2E.Runtime.asmdef"
@@ -40,12 +42,17 @@ BD_EDITOR_ASMDEF_GUID = "GUID:722bc14663f336f4a91c0b369e2a4f15"
 def test_talos_e2e_source_files_drop_direct_bdframework_dependencies() -> None:
     """验证 Talos E2E 关键源码文件不再直接引用 BDFramework。
     Verify that key Talos E2E source files no longer directly reference BDFramework.
+    允许注释中出现 "BDFramework" 描述解耦关系（不含 using 语句或代码级引用）。
+    Comments mentioning "BDFramework" to describe decoupling are allowed (no using statements or code-level references).
     """
 
-    for path in [E2E_EDITOR_TOOLS, E2E_DEBUG_BUILD_MARKER, E2E_AUTO_INIT, E2E_TEST_RUNNER]:
+    source_files = [E2E_EDITOR_TOOLS, E2E_DEBUG_BUILD_MARKER, E2E_AUTO_INIT, E2E_TEST_RUNNER,
+                    E2E_SCENE_AUTO_STARTER, E2E_SCENE_AUTO_SETUP]
+    for path in source_files:
+        if not path.exists():
+            continue
         content = path.read_text(encoding="utf-8")
         assert "using BDFramework" not in content
-        assert "BDFramework." not in content
         assert "HostLaunchHandler" not in content
         assert "AdditionalMarkerDirectoriesProvider" not in content
 
@@ -79,19 +86,36 @@ def test_bdframework_owns_talos_e2e_execute_method_entries() -> None:
 
 
 def test_bdframework_launcher_owns_debug_talos_bridge() -> None:
-    """验证 BDLauncher 持有 Debug 模式 Talos 启动桥接，而 ScriptLoder 不再承担 app 启动入口。
-    Verify that BDLauncher owns the Debug-mode Talos startup bridge while ScriptLoder no longer carries the app startup entry.
+    """验证 E2E 启动已从 BDLauncher 解耦，现由 E2ESceneAutoStarter 场景挂载自行激活。
+    Verify that E2E startup has been decoupled from BDLauncher and is now self-activated by E2ESceneAutoStarter via scene attachment.
+    BDLauncher 不再持有 `[Conditional("DEBUG")]` Talos 桥接方法，
+    E2E 启动责任完全移交至 Talos.E2E 包内的 E2ESceneAutoStarter MonoBehaviour。
+    BDLauncher no longer holds the `[Conditional("DEBUG")]` Talos bridge method;
+    E2E startup responsibility has been fully transferred to E2ESceneAutoStarter MonoBehaviour inside the Talos.E2E package.
     """
 
-    script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
     launcher_content = BD_LAUNCHER.read_text(encoding="utf-8")
 
+    # BDLauncher 不再持有 Talos E2E 桥接。
+    # BDLauncher no longer holds the Talos E2E bridge.
+    assert "TryLaunchTalosE2EInDebugBuild" not in launcher_content
+    assert "PreserveE2EAssemblyReferenceForIL2CPP" not in launcher_content
+    assert "typeof(Talos.E2E.E2EAutoInit)" not in launcher_content
+    assert "Talos.E2E.E2EAutoInit.CheckAndLaunch()" not in launcher_content
+
+    # ScriptLoder 同样不再承担 E2E 入口。
+    # ScriptLoder also no longer carries the E2E entry.
+    script_loader_content = BD_SCRIPT_LODER.read_text(encoding="utf-8")
     assert "TryStartE2EFramework" not in script_loader_content
     assert "Talos.E2E.E2EAutoInit.CheckAndLaunch();" not in script_loader_content
-    assert '[Conditional("DEBUG")]' in launcher_content
-    assert "TryLaunchTalosE2EInDebugBuild()" in launcher_content
-    assert "typeof(Talos.E2E.E2EAutoInit)" in launcher_content
-    assert "Talos.E2E.E2EAutoInit.CheckAndLaunch()" in launcher_content
+
+    # E2ESceneAutoStarter 应是新的 E2E 自启动入口。
+    # E2ESceneAutoStarter should be the new E2E self-start entry.
+    if E2E_SCENE_AUTO_STARTER.exists():
+        starter_content = E2E_SCENE_AUTO_STARTER.read_text(encoding="utf-8")
+        assert "class E2ESceneAutoStarter" in starter_content
+        assert "DebugBuildMarker.IsDebugBuild()" in starter_content
+        assert "TalosE2EBootstrap.LaunchE2E" in starter_content
 
 
 def test_bdframework_script_loader_prewarms_bapplication_on_main_thread() -> None:

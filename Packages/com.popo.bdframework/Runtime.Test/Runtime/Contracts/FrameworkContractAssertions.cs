@@ -39,6 +39,35 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
+        /// 从 Talos.E2E.Runtime 程序集中获取指定类型。
+        /// Get a specified type from the Talos.E2E.Runtime assembly.
+        /// 用于解耦后的 E2E 契约验证——BDFramework.AOT 不再引用 Talos.E2E.Runtime，
+        /// 测试通过 AppDomain 枚举查找达到零依赖的目标类型发现。
+        /// Used for decoupled E2E contract verification — BDFramework.AOT no longer references Talos.E2E.Runtime,
+        /// and tests discover the target type via AppDomain enumeration with zero dependency.
+        /// </summary>
+        /// <param name="typeName">类型短名。The short type name.</param>
+        /// <returns>找到的 Type，未找到返回 null。The found Type, or null if not found.</returns>
+        private static Type GetTalosRuntimeType(string typeName)
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!string.Equals(assembly.GetName().Name, "Talos.E2E.Runtime", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var type = assembly.GetType($"Talos.E2E.{typeName}");
+                if (type != null)
+                {
+                    return type;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// 验证热更脚本初始化入口仍然可以通过静态反射发现。
         /// Verify that the hotfix script initialization entry can still be discovered through static reflection.
         /// </summary>
@@ -179,62 +208,68 @@ namespace BDFramework.RuntimeTests.Contracts
         }
 
         /// <summary>
-        /// 验证 E2E 自动检测入口在 Player 中保持运行时可达。
-        /// Verify that the E2E auto-detection entry stays runtime-reachable in player builds.
+        /// 验证 E2E 场景自启动组件在 Talos.E2E.Runtime 程序集中存在并具备 [Preserve] 保活机制。
+        /// Verify that the E2E scene auto-starter exists in Talos.E2E.Runtime with [Preserve] keep-alive mechanism.
+        /// 原 BDLauncher.TryLaunchTalosE2EInDebugBuild 已在框架解耦中移除，
+        /// E2E 启动现由 Talos.E2E.E2ESceneAutoStarter MonoBehaviour 场景挂载自行激活。
+        /// The original BDLauncher.TryLaunchTalosE2EInDebugBuild has been removed during framework decoupling;
+        /// E2E startup is now handled by Talos.E2E.E2ESceneAutoStarter MonoBehaviour via scene attachment.
         /// </summary>
         public static void VerifyBDLauncherOwnsDebugTalosStartupBridge()
         {
-            var method = typeof(BDFramework.BDLauncher).GetMethod(
-                "TryLaunchTalosE2EInDebugBuild",
-                BindingFlags.NonPublic | BindingFlags.Instance);
+            var autoStarterType = GetTalosRuntimeType("E2ESceneAutoStarter");
+            EnsureTrue(autoStarterType != null, "应该能够在 Talos.E2E.Runtime 中找到 E2ESceneAutoStarter 类型。");
 
-            EnsureTrue(method != null, "应该能够找到 BDLauncher.TryLaunchTalosE2EInDebugBuild 私有实例方法。");
+            var manualStartMethod = autoStarterType.GetMethod(
+                "ManualStart",
+                BindingFlags.Public | BindingFlags.Static);
+            EnsureTrue(manualStartMethod != null, "E2ESceneAutoStarter.ManualStart 公开静态方法应存在，供非场景挂载路径手动触发。");
+
+            var ensurePreserveMethod = autoStarterType.GetMethod(
+                "EnsureTypePreservedInIL2CPP",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            EnsureTrue(ensurePreserveMethod != null, "E2ESceneAutoStarter 应持有 IL2CPP 保活静态方法。");
             EnsureTrue(
-                method.GetCustomAttributes(typeof(ConditionalAttribute), false).Any(attribute => ((ConditionalAttribute)attribute).ConditionString == "DEBUG"),
-                "BDLauncher 的 Talos 启动桥接必须只在 DEBUG 宏生效时参与编译。");
+                ensurePreserveMethod.GetCustomAttributes(typeof(UnityEngine.RuntimeInitializeOnLoadMethodAttribute), false).Any(),
+                "E2ESceneAutoStarter 保活方法必须带有 [RuntimeInitializeOnLoadMethod] 属性。");
+            EnsureTrue(
+                ensurePreserveMethod.GetCustomAttributes(typeof(UnityEngine.Scripting.PreserveAttribute), false).Any(),
+                "E2ESceneAutoStarter 保活方法必须带有 [Preserve] 属性。");
         }
 
         /// <summary>
-        /// 验证 BDLauncher 持有无条件的 IL2CPP 保活引用，确保 Talos.E2E.Runtime 程序集在所有构建配置中都被包含在原生二进制。
-        /// Verify that BDLauncher holds an unconditional IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary across all build configurations.
-        /// 这是 Layer 6 修复的核心契约：之前使用 [RuntimeInitializeOnLoadMethod] 在 E2EAutoInit 自身保活，
-        /// 但 IL2CPP 代码生成阶段如果整个程序集都没有直接引用，则该属性永远不会被发现。
-        /// 修复方案是将 LitJson 从 BDFramework.AOT 提取为独立程序集（解除循环依赖），
-        /// 然后在 BDFramework.AOT（一定在 IL2CPP 构建中）的 BDLauncher 上添加
-        /// [RuntimeInitializeOnLoadMethod] 钩子，直接 typeof(E2EAutoInit) 创建编译期引用。
-        /// This is the core contract of the Layer 6 fix: previously used [RuntimeInitializeOnLoadMethod] on E2EAutoInit itself,
-        /// but if the entire assembly has no direct references, IL2CPP code generation never discovers that attribute.
-        /// The fix extracts LitJson from BDFramework.AOT into its own assembly (breaking the circular dependency),
-        /// then adds a [RuntimeInitializeOnLoadMethod] hook on BDLauncher in BDFramework.AOT (always in IL2CPP builds),
-        /// using typeof(E2EAutoInit) to create a compile-time reference.
+        /// 验证 E2ESceneAutoStarter 持有 IL2CPP 保活引用，确保 Talos.E2E.Runtime 程序集在 Debug 构建中被包含在原生二进制。
+        /// Verify that E2ESceneAutoStarter holds an IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary in Debug builds.
+        /// 原 BDLauncher.PreserveE2EAssemblyReferenceForIL2CPP 已在框架解耦中移除。
+        /// IL2CPP 保活现由 E2ESceneAutoStarter.EnsureTypePreservedInIL2CPP（[RuntimeInitializeOnLoadMethod]）
+        /// 与 E2ESceneAutoSetup Editor 脚本（场景自动挂载）共同保证。
+        /// The original BDLauncher.PreserveE2EAssemblyReferenceForIL2CPP has been removed during framework decoupling.
+        /// IL2CPP preservation is now ensured by E2ESceneAutoStarter.EnsureTypePreservedInIL2CPP ([RuntimeInitializeOnLoadMethod])
+        /// together with E2ESceneAutoSetup Editor script (auto scene attachment).
         /// </summary>
         public static void VerifyBDLauncherPreservesE2EAssemblyForIL2CPP()
         {
-            var preserveMethod = typeof(BDFramework.BDLauncher).GetMethod(
-                "PreserveE2EAssemblyReferenceForIL2CPP",
-                BindingFlags.NonPublic | BindingFlags.Static);
+            var autoStarterType = GetTalosRuntimeType("E2ESceneAutoStarter");
+            EnsureTrue(autoStarterType != null, "应该能够在 Talos.E2E.Runtime 中找到 E2ESceneAutoStarter 类型。");
 
-            EnsureTrue(preserveMethod != null, "应该能够找到 BDLauncher.PreserveE2EAssemblyReferenceForIL2CPP 保活方法。");
+            var preserveMethod = autoStarterType.GetMethod(
+                "EnsureTypePreservedInIL2CPP",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            EnsureTrue(preserveMethod != null, "应该能够找到 E2ESceneAutoStarter.EnsureTypePreservedInIL2CPP 保活方法。");
             EnsureTrue(
                 preserveMethod.GetCustomAttributes(typeof(UnityEngine.RuntimeInitializeOnLoadMethodAttribute), false).Any(),
-                "PreserveE2EAssemblyReferenceForIL2CPP 必须带有 [RuntimeInitializeOnLoadMethod] 属性，确保 Unity 初始化系统调用该方法。");
+                "EnsureTypePreservedInIL2CPP 必须带有 [RuntimeInitializeOnLoadMethod] 属性，确保 Unity 初始化系统调用该方法。");
             EnsureTrue(
                 preserveMethod.GetCustomAttributes(typeof(UnityEngine.Scripting.PreserveAttribute), false).Any(),
-                "PreserveE2EAssemblyReferenceForIL2CPP 必须带有 [Preserve] 属性，防止 IL2CPP 链接器裁剪本方法。");
+                "EnsureTypePreservedInIL2CPP 必须带有 [Preserve] 属性，防止 IL2CPP 链接器裁剪本方法。");
 
-            // 验证 BDFramework.AOT 引用了 Talos.E2E.Runtime 程序集（反转后的依赖方向）。
-            // Verify BDFramework.AOT references Talos.E2E.Runtime assembly (reversed dependency direction).
-            var aotAssembly = typeof(BDFramework.BDLauncher).Assembly;
-            var talosE2EFound = false;
-            foreach (var refName in aotAssembly.GetReferencedAssemblies())
-            {
-                if (string.Equals(refName.Name, "Talos.E2E.Runtime", StringComparison.Ordinal))
-                {
-                    talosE2EFound = true;
-                    break;
-                }
-            }
-            EnsureTrue(talosE2EFound, "BDFramework.AOT 必须引用 Talos.E2E.Runtime 程序集（Layer 6 修复：LitJson 提取后解除循环依赖，BDFramework.AOT → Talos.E2E.Runtime 单向依赖）。");
+            // 验证 E2ESceneAutoStarter 所在的 Talos.E2E.Runtime 程序集存在且可加载。
+            // Verify that the Talos.E2E.Runtime assembly containing E2ESceneAutoStarter exists and is loadable.
+            var talosAssembly = autoStarterType.Assembly;
+            EnsureTrue(talosAssembly != null, "Talos.E2E.Runtime 程序集应可正常加载。");
+            EnsureTrue(
+                string.Equals(talosAssembly.GetName().Name, "Talos.E2E.Runtime", StringComparison.Ordinal),
+                "E2ESceneAutoStarter 应位于 Talos.E2E.Runtime 程序集中。");
         }
 
         /// <summary>
