@@ -149,11 +149,12 @@ test.describe('框架业务流程', () => {
         );
 
         for (const result of execution.results) {
+          const icon = result.passed ? '✅' : '❌';
           console.log(
-            `[FrameworkBusiness] ${result.passed ? 'PASS' : 'FAIL'} suite=${result.suite} method=${result.methodName} durationMs=${result.durationMs}`,
+            `  [${icon}] ${result.suite}.${result.methodName}  ${result.description} (${result.durationMs}ms)`,
           );
           if (!result.passed && result.errorMessage) {
-            console.log(`[FrameworkBusiness] error=${result.errorMessage}`);
+            console.log(`      错误: ${result.errorMessage}`);
           }
         }
 
@@ -162,6 +163,18 @@ test.describe('框架业务流程', () => {
       }
 
       console.log(`[FrameworkBusiness] 预配置界面汇总: total=${total}, failed=${failed}`);
+      if (failed > 0) {
+        console.log(`  ── 失败明细 ──`);
+        for (const execution of executions) {
+          for (const result of execution.results) {
+            if (!result.passed) {
+              console.log(`  ❌ ${result.suite}.${result.methodName}  ${result.description}`);
+              console.log(`      错误: ${result.errorMessage}`);
+            }
+          }
+        }
+        console.log(`  ── 失败明细结束 ──`);
+      }
 
       console.log(`[FrameworkBusiness] 当前平台项目(校验阶段): ${projectName}`);
       expect(total).toBeGreaterThan(0);
@@ -180,11 +193,12 @@ test.describe('框架业务流程', () => {
       console.log(`[FrameworkBusiness] 热更程序集检查: total=${summary.total} passed=${summary.passed} failed=${summary.failed}`);
 
       for (const result of results) {
+        const icon = result.passed ? '✅' : '❌';
         console.log(
-          `[FrameworkBusiness] ${result.passed ? 'PASS' : 'FAIL'} suite=${result.suite} method=${result.methodName} des=${result.description}`,
+          `  [${icon}] ${result.suite}.${result.methodName}  ${result.description} (${result.durationMs}ms)`,
         );
         if (!result.passed && result.errorMessage) {
-          console.log(`[FrameworkBusiness] error=${result.errorMessage}`);
+          console.log(`      错误: ${result.errorMessage}`);
         }
       }
 
@@ -206,11 +220,12 @@ test.describe('框架业务流程', () => {
       // 找到按钮交互检查测试
       const buttonTest = results.find((r) => r.methodName.includes('ButtonsInteractive'));
       if (buttonTest) {
+        const icon = buttonTest.passed ? '✅' : '❌';
         console.log(
-          `[FrameworkBusiness] 按钮交互检查: method=${buttonTest.methodName} passed=${buttonTest.passed}`,
+          `  [${icon}] ${buttonTest.suite}.${buttonTest.methodName}  ${buttonTest.description}`,
         );
         if (!buttonTest.passed && buttonTest.errorMessage) {
-          console.log(`[FrameworkBusiness] error=${buttonTest.errorMessage}`);
+          console.log(`      错误: ${buttonTest.errorMessage}`);
         }
       }
 
@@ -240,8 +255,9 @@ test.describe('日志监听验证', () => {
       // 验证热更程序集加载日志
       const assemblyLoadTest = results.find((r) => r.methodName.includes('AssemblyLoaded'));
       if (assemblyLoadTest) {
+        const icon = assemblyLoadTest.passed ? '✅' : '❌';
         console.log(
-          `[LogMonitor] 热更程序集加载: method=${assemblyLoadTest.methodName} passed=${assemblyLoadTest.passed}`,
+          `  [${icon}] ${assemblyLoadTest.suite}.${assemblyLoadTest.methodName}  ${assemblyLoadTest.description}`,
         );
         expect(assemblyLoadTest.passed).toBe(true);
       }
@@ -263,8 +279,9 @@ test.describe('日志监听验证', () => {
       // 验证界面加载日志
       const screenLoadTest = results.find((r) => r.methodName.includes('ScreenLoaded'));
       if (screenLoadTest) {
+        const icon = screenLoadTest.passed ? '✅' : '❌';
         console.log(
-          `[LogMonitor] 界面加载: method=${screenLoadTest.methodName} passed=${screenLoadTest.passed}`,
+          `  [${icon}] ${screenLoadTest.suite}.${screenLoadTest.methodName}  ${screenLoadTest.description}`,
         );
         expect(screenLoadTest.passed).toBe(true);
       }
@@ -277,8 +294,8 @@ test.describe('日志监听验证', () => {
 /**
  * 通用套件执行辅助函数。
  * General suite execution helper.
- * 运行指定套件并记录结果，要求全部通过。
- * Run the specified suite, log results, and require all cases to pass.
+ * 运行指定套件，逐条打印 ✅/❌ 结果，最后输出汇总和失败明细。
+ * Run the specified suite, print per-case ✅/❌ results, then output summary and failure details.
  */
 async function runSuiteAndRequireAllPass(
   connector: UnityConnector,
@@ -287,17 +304,29 @@ async function runSuiteAndRequireAllPass(
 ): Promise<void> {
   const { results, summary } = await connector.runSuite(suite);
 
-  console.log(
-    `[${tag}] 套件结果: suite=${suite} total=${summary.total} passed=${summary.passed} failed=${summary.failed}`,
-  );
-
+  // 逐条输出结果 / Print per-case results
   for (const result of results) {
-    console.log(
-      `[${tag}] ${result.passed ? 'PASS' : 'FAIL'} suite=${result.suite} method=${result.methodName} des=${result.description}`,
-    );
+    const icon = result.passed ? '✅' : '❌';
+    console.log(`  [${icon}] ${result.suite}.${result.methodName}  ${result.description} (${result.durationMs}ms)`);
     if (!result.passed && result.errorMessage) {
-      console.log(`[${tag}] error=${result.errorMessage}`);
+      console.log(`      错误: ${result.errorMessage}`);
     }
+  }
+
+  // 汇总输出 / Summary output
+  const allPassed = summary.failed === 0;
+  const summaryIcon = allPassed ? '✅' : '❌';
+  console.log(`  [${summaryIcon}] [${tag}] 套件结果: suite=${suite} total=${summary.total} passed=${summary.passed} failed=${summary.failed}`);
+
+  // 失败明细 / Failure details
+  if (summary.failed > 0) {
+    const failures = results.filter((r) => !r.passed);
+    console.log(`  ── 失败明细 ──`);
+    for (const f of failures) {
+      console.log(`  ❌ ${f.suite}.${f.methodName}  ${f.description}`);
+      console.log(`      错误: ${f.errorMessage}`);
+    }
+    console.log(`  ── 失败明细结束 ──`);
   }
 
   expect(summary.total).toBeGreaterThan(0);
