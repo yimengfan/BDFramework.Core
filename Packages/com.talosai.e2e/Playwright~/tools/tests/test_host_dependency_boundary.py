@@ -22,7 +22,6 @@ E2E_EDITOR_TOOLS = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "E2EE
 E2E_DEBUG_BUILD_MARKER = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "DebugBuildMarker.cs"
 E2E_AUTO_INIT = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "E2EAutoInit.cs"
 E2E_SCENE_AUTO_STARTER = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "E2ESceneAutoStarter.cs"
-E2E_SCENE_AUTO_SETUP = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "E2ESceneAutoSetup.cs"
 E2E_TEST_RUNNER = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "TestRunner" / "E2ETestRunner.cs"
 E2E_EDITOR_ASMDEF = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Editor" / "Talos.E2E.Editor.asmdef"
 E2E_RUNTIME_ASMDEF = REPO_ROOT / "Packages" / "com.talosai.e2e" / "Runtime" / "Talos.E2E.Runtime.asmdef"
@@ -47,7 +46,7 @@ def test_talos_e2e_source_files_drop_direct_bdframework_dependencies() -> None:
     """
 
     source_files = [E2E_EDITOR_TOOLS, E2E_DEBUG_BUILD_MARKER, E2E_AUTO_INIT, E2E_TEST_RUNNER,
-                    E2E_SCENE_AUTO_STARTER, E2E_SCENE_AUTO_SETUP]
+                    E2E_SCENE_AUTO_STARTER]
     for path in source_files:
         if not path.exists():
             continue

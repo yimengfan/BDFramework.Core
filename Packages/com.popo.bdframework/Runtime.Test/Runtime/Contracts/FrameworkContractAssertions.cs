@@ -240,12 +240,11 @@ namespace BDFramework.RuntimeTests.Contracts
         /// <summary>
         /// 验证 E2ESceneAutoStarter 持有 IL2CPP 保活引用，确保 Talos.E2E.Runtime 程序集在 Debug 构建中被包含在原生二进制。
         /// Verify that E2ESceneAutoStarter holds an IL2CPP keep-alive reference, ensuring Talos.E2E.Runtime is included in the native binary in Debug builds.
-        /// 原 BDLauncher.PreserveE2EAssemblyReferenceForIL2CPP 已在框架解耦中移除。
         /// IL2CPP 保活现由 E2ESceneAutoStarter.EnsureTypePreservedInIL2CPP（[RuntimeInitializeOnLoadMethod]）
-        /// 与 E2ESceneAutoSetup Editor 脚本（场景自动挂载）共同保证。
+        /// 与场景挂载自动触发（Awake → E2EAutoInit.CheckAndLaunch）共同保证。
         /// The original BDLauncher.PreserveE2EAssemblyReferenceForIL2CPP has been removed during framework decoupling.
         /// IL2CPP preservation is now ensured by E2ESceneAutoStarter.EnsureTypePreservedInIL2CPP ([RuntimeInitializeOnLoadMethod])
-        /// together with E2ESceneAutoSetup Editor script (auto scene attachment).
+        /// together with scene-attachment auto-trigger (Awake → E2EAutoInit.CheckAndLaunch).
         /// </summary>
         public static void VerifyBDLauncherPreservesE2EAssemblyForIL2CPP()
         {
