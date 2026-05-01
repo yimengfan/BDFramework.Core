@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -9,48 +8,43 @@ namespace Talos.E2E
     /// E2E scene auto-start MonoBehaviour.
     /// 
     /// 设计角色：
-    /// - 挂载到场景中的 GameObject 上，在 Awake 时自动检测并启动 E2E 测试系统。
+    /// - 挂载到场景中的 GameObject 上，在 Awake 时触发 E2E 自动检测与启动。
     /// - 完全替代 BDFramework 中的 E2E 启动调用，实现框架层解耦。
     /// - 在 Debug 构建中自动激活；在 Release 构建中静默跳过。
-    /// 
+    /// - 不自行管理端口；端口策略由 E2EAutoInit → TalosPortPolicy 统一处理：
+    ///   按平台选择隔离端口池，候选端口逐一尝试，失败自动重试下一个。
+    ///
     /// Design role:
-    /// - Attach to a scene GameObject; auto-detects and starts the E2E test system on Awake.
+    /// - Attach to a scene GameObject; triggers E2E auto-detection and startup on Awake.
     /// - Fully replaces the E2E startup call in BDFramework, achieving framework-layer decoupling.
     /// - Auto-activates in Debug builds; silently skips in Release builds.
+    /// - Does not manage ports directly; port policy is handled uniformly by E2EAutoInit → TalosPortPolicy:
+    ///   platform-isolated port pools, sequential candidate-port probing, automatic retry on failure.
     /// 
     /// 使用方式：
     /// 1. 在场景中创建空 GameObject（推荐命名 "[TalosE2E]"）。
-    /// 2. 挂载此组件，配置端口（默认使用平台默认端口）。
-    /// 3. 进入 PlayMode 后自动启动 E2E 服务。
+    /// 2. 挂载此组件（无需配置端口，端口由 TalosPortPolicy 按平台自动决定）。
+    /// 3. 进入 PlayMode 后自动触发 E2E 启动检测。
     /// 
     /// Usage:
     /// 1. Create an empty GameObject in the scene (recommended name "[TalosE2E]").
-    /// 2. Attach this component, configure port (defaults to platform default port).
-    /// 3. E2E service auto-starts when entering PlayMode.
+    /// 2. Attach this component (no port configuration needed; TalosPortPolicy resolves ports per platform).
+    /// 3. E2E auto-detection triggers when entering PlayMode.
     /// 
-    /// Editor 辅助：
-    /// 在 Editor Debug 模式下，E2ESceneAutoSetup 会自动扫描场景并补挂此组件。
-    /// 
-    /// Editor assistance:
-    /// In Editor Debug mode, E2ESceneAutoSetup auto-scans the scene and attaches this component if missing.
+    /// 端口策略说明 / Port policy notes:
+    /// 本组件不持有端口字段，启动逻辑全部委托给 E2EAutoInit.CheckAndLaunch()：
+    /// - TalosPortPolicy 按当前平台返回隔离候选端口池（Windows/Android/macOS/Editor 各自独立）。
+    /// - CheckAndLaunch() 遍历候选端口逐一尝试启动，某端口失败则自动重试下一个候选端口。
+    /// - Editor 环境自动使用 LaunchE2EStatic()，真机使用 LaunchE2E() MonoBehaviour 模式。
+    ///
+    /// This component does not hold a port field; startup logic is fully delegated to E2EAutoInit.CheckAndLaunch():
+    /// - TalosPortPolicy returns a platform-isolated candidate-port pool for the current platform.
+    /// - CheckAndLaunch() iterates candidates, trying each port; on failure it automatically retries the next candidate.
+    /// - Editor environment auto-selects LaunchE2EStatic(); player builds use LaunchE2E() MonoBehaviour mode.
     /// </summary>
     [Preserve]
     public class E2ESceneAutoStarter : MonoBehaviour
     {
-        /// <summary>
-        /// E2E 服务 TCP 监听端口。0 表示使用平台默认端口。
-        /// TCP listen port for the E2E service. 0 means use the platform default port.
-        /// </summary>
-        [SerializeField]
-        [Tooltip("TCP 监听端口，0 表示使用平台默认端口。TCP listen port; 0 means use the platform default port.")]
-        private int port = 0;
-
-        /// <summary>
-        /// 是否已完成启动（防止 Awake 和外部重复调用）。
-        /// Whether startup has already completed (prevents duplicate calls from Awake and external callers).
-        /// </summary>
-        private static bool hasStarted = false;
-
         /// <summary>
         /// 当前场景中的自启动组件实例。
         /// The auto-starter component instance in the current scene.
@@ -74,8 +68,12 @@ namespace Talos.E2E
         }
 
         /// <summary>
-        /// Unity 生命周期：场景加载后自动检测并启动 E2E 测试系统。
-        /// Unity lifecycle: auto-detect and start the E2E test system after scene load.
+        /// Unity 生命周期：场景加载后自动触发 E2E 启动检测。
+        /// Unity lifecycle: auto-trigger E2E startup detection after scene load.
+        /// 启动逻辑委托给 E2EAutoInit.CheckAndLaunch()，由其按 TalosPortPolicy
+        /// 平台隔离端口池逐一尝试，失败自动重试下一个候选端口。
+        /// Startup logic is delegated to E2EAutoInit.CheckAndLaunch(), which follows
+        /// TalosPortPolicy platform-isolated port pools with sequential retry on failure.
         /// </summary>
         private void Awake()
         {
@@ -83,80 +81,22 @@ namespace Talos.E2E
             // Phase 1: Register singleton to prevent duplicate startup.
             Instance = this;
 
-            // Phase 2: 仅在 Debug 构建中启动 E2E。
-            // Phase 2: Start E2E only in Debug builds.
-            TryAutoStart();
-        }
-
-        /// <summary>
-        /// 尝试自动启动 E2E 服务。
-        /// Try to auto-start the E2E service.
-        /// 检测 DEBUG 标记，如果当前为 Debug 构建则启动 E2E TCP 服务。
-        /// Checks the DEBUG marker; if the current build is a Debug build, starts the E2E TCP service.
-        /// </summary>
-        private void TryAutoStart()
-        {
-            if (hasStarted)
-            {
-                Debug.Log("[TalosE2E] E2E 测试系统已启动，跳过重复启动请求");
-                return;
-            }
-
-            if (!DebugBuildMarker.IsDebugBuild())
-            {
-                Debug.Log("[TalosE2E] 非 Debug 构建，跳过 E2E 自动启动");
-                return;
-            }
-
-            Debug.Log("[TalosE2E] 场景自启动组件检测到 Debug 构建，开始启动 E2E 测试系统...");
-
-            try
-            {
-                int effectivePort = port > 0 ? port : Transport.Protocol.DefaultPort;
-                Debug.Log($"[TalosE2E] 场景自启动组件启动 E2E 服务，端口: {effectivePort}");
-                TalosE2EBootstrap.LaunchE2E(effectivePort);
-                hasStarted = true;
-                Debug.Log("[TalosE2E] 场景自启动组件已成功启动 E2E 测试系统");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[TalosE2E] 场景自启动组件启动 E2E 失败: {ex}");
-            }
+            // Phase 2: 委托给 E2EAutoInit，由其处理 Debug 检测、平台端口池、候选端口遍历和重试。
+            // Phase 2: Delegate to E2EAutoInit, which handles Debug detection, platform port pools, candidate iteration and retry.
+            Debug.Log("[TalosE2E] 场景自启动组件触发 E2E 自动检测...");
+            E2EAutoInit.CheckAndLaunch();
         }
 
         /// <summary>
         /// 手动触发启动（可供外部调用，用于非场景挂载的启动路径）。
         /// Manual startup trigger (callable externally for startup paths that don't use scene attachment).
+        /// 同样委托给 E2EAutoInit.CheckAndLaunch()，复用完整的平台端口策略和重试逻辑。
+        /// Also delegates to E2EAutoInit.CheckAndLaunch(), reusing the full platform port policy and retry logic.
         /// </summary>
-        /// <param name="customPort">自定义端口，0 表示使用默认端口。Custom port; 0 means use default.</param>
-        public static void ManualStart(int customPort = 0)
+        public static void ManualStart()
         {
-            if (hasStarted)
-            {
-                Debug.Log("[TalosE2E] E2E 测试系统已启动，跳过重复启动请求");
-                return;
-            }
-
-            if (!DebugBuildMarker.IsDebugBuild())
-            {
-                Debug.Log("[TalosE2E] 非 Debug 构建，跳过 E2E 手动启动");
-                return;
-            }
-
-            int effectivePort = customPort > 0 ? customPort : Transport.Protocol.DefaultPort;
-            Debug.Log($"[TalosE2E] 手动启动 E2E 服务，端口: {effectivePort}");
-            TalosE2EBootstrap.LaunchE2E(effectivePort);
-            hasStarted = true;
-        }
-
-        /// <summary>
-        /// 重置启动状态（仅测试用）。
-        /// Reset startup state (for testing only).
-        /// </summary>
-        internal static void ResetForTesting()
-        {
-            hasStarted = false;
-            Instance = null;
+            Debug.Log("[TalosE2E] 手动触发 E2E 自动检测...");
+            E2EAutoInit.CheckAndLaunch();
         }
 
         /// <summary>

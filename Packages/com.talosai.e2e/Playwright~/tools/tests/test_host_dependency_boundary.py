@@ -111,11 +111,14 @@ def test_bdframework_launcher_owns_debug_talos_bridge() -> None:
 
     # E2ESceneAutoStarter 应是新的 E2E 自启动入口。
     # E2ESceneAutoStarter should be the new E2E self-start entry.
+    # E2ESceneAutoStarter 不自行管理端口，启动逻辑委托给 E2EAutoInit.CheckAndLaunch()，
+    # 由后者按 TalosPortPolicy 平台隔离端口池逐一尝试，失败自动重试下一个候选端口。
+    # E2ESceneAutoStarter does not manage ports directly; startup logic is delegated to E2EAutoInit.CheckAndLaunch(),
+    # which follows TalosPortPolicy platform-isolated port pools with sequential retry on failure.
     if E2E_SCENE_AUTO_STARTER.exists():
         starter_content = E2E_SCENE_AUTO_STARTER.read_text(encoding="utf-8")
         assert "class E2ESceneAutoStarter" in starter_content
-        assert "DebugBuildMarker.IsDebugBuild()" in starter_content
-        assert "TalosE2EBootstrap.LaunchE2E" in starter_content
+        assert "E2EAutoInit.CheckAndLaunch()" in starter_content
 
 
 def test_bdframework_script_loader_prewarms_bapplication_on_main_thread() -> None:

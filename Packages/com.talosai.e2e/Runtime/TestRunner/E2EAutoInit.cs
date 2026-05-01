@@ -6,32 +6,30 @@ using UnityEngine.Scripting;
 namespace Talos.E2E
 {
     /// <summary>
-    /// E2E 测试自动入口（保留兼容，推荐迁移到 E2ESceneAutoStarter）。
-    /// E2E test auto-entry (kept for compatibility; prefer migrating to E2ESceneAutoStarter).
+    /// E2E 测试自动入口——统一启动检测与端口策略的核心实现。
+    /// E2E test auto-entry — core implementation of unified startup detection and port policy.
     /// 
     /// 设计角色：
-    /// - 作为热更 DLL 加载完成后的自动检测和启动点（遗留路径）。
-    /// - 检测当前是否为 Debug 构建（通过 DEBUG 标记文件）。
-    /// - 如果是 Debug 构建，自动启动 E2E 测试 TCP 服务。
-    /// - 如果是 Release 构建，跳过不执行任何操作。
+    /// - E2E 启动的唯一执行入口，封装 Debug 构建检测、平台隔离端口池选择和候选端口重试逻辑。
+    /// - 被 E2ESceneAutoStarter（场景挂载触发）和外部手动调用共同委托。
+    /// - Editor 环境自动使用静态模式，真机使用 MonoBehaviour 模式。
+    /// - 非 Debug 构建静默跳过。
     /// 
     /// Design role:
-    /// - Auto-detection and startup point after hotfix DLL loading (legacy path).
-    /// - Detects whether the current build is a Debug build (via DEBUG marker file).
-    /// - If Debug build, auto-starts the E2E test TCP service.
-    /// - If Release build, skips without any action.
+    /// - The sole execution entry for E2E startup, encapsulating Debug-build detection, platform-isolated port-pool selection, and candidate-port retry logic.
+    /// - Delegated to by E2ESceneAutoStarter (scene-attachment trigger) and external manual calls alike.
+    /// - Editor environment auto-selects static mode; player builds use MonoBehaviour mode.
+    /// - Silently skips in non-Debug builds.
     /// 
-    /// 迁移说明：
-    /// E2E 启动已从宿主框架层解耦。推荐使用 E2ESceneAutoStarter MonoBehaviour 场景挂载方式：
-    /// 1. 在场景中挂载 E2ESceneAutoStarter 组件。
-    /// 2. E2ESceneAutoSetup Editor 脚本会在 Debug 模式下自动扫描场景并补挂。
-    /// 3. 如需在代码中手动触发，使用 E2ESceneAutoStarter.ManualStart()。
+    /// 调用路径 / Call paths:
+    /// 1. E2ESceneAutoStarter.Awake() → E2EAutoInit.CheckAndLaunch()（场景挂载触发）
+    /// 2. E2ESceneAutoStarter.ManualStart() → E2EAutoInit.CheckAndLaunch()（代码手动触发）
+    /// 3. 任何外部代码 → E2EAutoInit.CheckAndLaunch()（直接调用）
     /// 
-    /// Migration note:
-    /// E2E startup has been decoupled from the host framework layer. Prefer E2ESceneAutoStarter MonoBehaviour via scene attachment:
-    /// 1. Attach E2ESceneAutoStarter component to the scene.
-    /// 2. E2ESceneAutoSetup Editor script auto-scans and attaches in Debug mode.
-    /// 3. For manual code trigger, use E2ESceneAutoStarter.ManualStart().
+    /// 端口策略 / Port policy:
+    /// CheckAndLaunch() 通过 TalosPortPolicy.ResolveCandidatePortsForCurrentPlatform()
+    /// 获取当前平台的隔离候选端口池（Windows/Android/macOS/Editor 各自独立），
+    /// 然后逐一尝试启动，某端口失败则自动重试下一个候选端口。
     /// </summary>
     [Preserve]
     static public class E2EAutoInit
