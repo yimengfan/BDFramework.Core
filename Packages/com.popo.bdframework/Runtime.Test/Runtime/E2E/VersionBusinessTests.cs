@@ -18,7 +18,7 @@ namespace BDFramework.Test.E2E
         private const string HotfixFrameworkAssemblyName = "BDFramework.Core";
         private const string BApplicationTypeName = "BDFramework.Core.Tools.BApplication";
         private const string GameConfigManagerTypeName = "BDFramework.Configure.GameConfigManager";
-        private const string GameBaseConfigProcessorTypeName = "BDFramework.GameBaseConfigProcessor";
+        private const string GameBaseConfigProcessorTypeName = "BDFramework.Configure.GameBaseConfigProcessor";
         private const string ClientAssetsUtilsTypeName = "BDFramework.Asset.ClientAssetsUtils";
         private const string AssetsVersionInfoTypeName = "BDFramework.ResourceMgr.AssetsVersionInfo";
 

@@ -50,7 +50,9 @@ namespace BDFramework.Test.E2E
                         paths[j] = $"talos/step02/group{i}/asset_{j}.prefab";
 
                     Debug.Log($"[E2E] Asset group phase=add group={groupName} pathCount={paths.Length}");
-                    InvokeStaticMethod(addMethod, $"BResources.AddAssetsPathToGroup({groupName})", groupName, new object[] { paths });
+                    // 直接传递 string[] 参数而非 object[] 包装，避免 IL2CPP 反射将 object[] 误传给 string[] 参数。
+                    // Pass string[] directly instead of wrapping in object[] to avoid IL2CPP reflection converting object[] when string[] is expected.
+                    InvokeStaticMethod(addMethod, $"BResources.AddAssetsPathToGroup({groupName})", groupName, paths);
                 }
 
                 for (int i = 0; i < groups.Count; i++)
