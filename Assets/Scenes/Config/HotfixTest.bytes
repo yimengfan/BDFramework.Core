@@ -18,7 +18,7 @@
   },
   {
     "IsNeedNet" : false,
-    "FileServerUrl" : "192.168.0.222",
+    "FileServerUrl" : "http://192.168.0.240:20001/files/",
     "GateServerIp"  : "",
     "Port"          : 0,
     "ClassType"     : "Game.Config.ServerConfigProcessor+Config"
