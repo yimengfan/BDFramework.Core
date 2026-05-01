@@ -70,8 +70,13 @@ namespace BDFramework.Test.E2E
             var result = getPathMethod.Invoke(null, new object[] { runtimePlatform, clientVersion });
             if (result == null) throw new Exception("GetMultiAssetsLoadPath 返回 null");
 
-            var firstPath = (result.GetType().GetProperty("Item1")?.GetValue(result) as string) ?? "";
-            var secondPath = (result.GetType().GetProperty("Item2")?.GetValue(result) as string) ?? "";
+            // ValueTuple Item1/Item2 是字段(field)而非属性(property)，
+            // IL2CPP 下 GetProperty 返回 null，必须使用 GetField。
+            // ValueTuple Item1/Item2 are fields, not properties;
+            // IL2CPP returns null from GetProperty, so GetField is required.
+            var resultType = result.GetType();
+            var firstPath = (resultType.GetField("Item1")?.GetValue(result) as string) ?? "";
+            var secondPath = (resultType.GetField("Item2")?.GetValue(result) as string) ?? "";
 
             if (string.IsNullOrEmpty(firstPath) && string.IsNullOrEmpty(secondPath))
                 throw new Exception("资源路径解析失败：主路径和备用路径均为空");
