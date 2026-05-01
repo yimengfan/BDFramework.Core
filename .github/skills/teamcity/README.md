@@ -124,7 +124,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
 
 - `.github/skills/teamcity/output/versioned-settings.before-update.json`
 
-### 触发单个构建并等待结果
+### 触发单个构建并等待结果，禁止 LLM 自行轮询
 
 ```bash
 cd /Users/naipaopao/Documents/GitHub/BDFramework.Core
