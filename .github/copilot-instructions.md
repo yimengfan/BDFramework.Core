@@ -96,7 +96,7 @@
 | 框架测试 | `Runtime.Test/**`、包测试 asmdef | `.github/talos-docs/modules/testing.md`、包规则 | 目标 Unity 测试程序集；相关时跑 BatchMode |
 | DevOps CI | `DevOps/CI/**`、`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/**`、BuildTools Python、上传 helper、文件服务器配置、pytest | `.github/talos-docs/modules/devops-ci.md`、`DevOps/CI/README.md`、`Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/README.md`、目标模块 README | 目标 pytest、dry-run/smoke test；契约/日志/上传/DSL 变化时跑 TeamCity |
 | TeamCity DSL | `.test-DevOps/.teamcity/**`、buildType 映射、Versioned Settings | `.test-DevOps/AGENTS.md`、`.github/skills/teamcity/SKILL.md` | Maven DSL 生成、TeamCity REST 检查、受影响远端构建 |
-| Talos E2E 包 | `Packages/com.talosai.e2e/**` | `Packages/com.talosai.e2e/AGENTS.md` | `Playwright~/tools/test-batchmode.sh`、`test-editorplayer.sh`、相关平台工具 |
+| Talos E2E 包 | `Packages/com.talosai.e2e/**` | `Packages/com.talosai.e2e/AGENTS.md` | `Playwright~/tools/test-batchmode.sh`、`test-editorplayer.sh`、相关平台工具；Runtime 启动链路（E2ESceneAutoStarter、E2EAutoInit、TalosPortPolicy）变化时必须跑 `BDFrameworkCore_TalosAIStep02FrameworkBusinessTest`；编排脚本或工具链变化时跑 `step_01_BaseFlowTest` |
 | TeamCity skill | `.github/skills/teamcity/**` | `.github/skills/teamcity/SKILL.md`、`.github/skills/teamcity/README.md` | skill 测试和可行的只读 TeamCity 检查 |
 | 文档维护 | `**/*.md`、`AGENTS.md`、`.github/instructions/*.md`、`.github/talos-docs/**`、skill 文档 | `.github/talos-docs/documentation-maintenance.md` | `rg` 引用检查、`git diff --check` |
 | 第三方或 vendored 代码 | `Packages/com.code-philosophy.*`、vendored plugin 目录 | 本文件的范围保护规则 | 优先从一方包或项目层解决 |

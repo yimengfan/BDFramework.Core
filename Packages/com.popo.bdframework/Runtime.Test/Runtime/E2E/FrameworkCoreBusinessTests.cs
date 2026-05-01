@@ -78,14 +78,21 @@ namespace BDFramework.Test.E2E
         /// <summary>
         /// 验证事件/数据监听系统基本能力。
         /// Verify basic event/data-listener system capabilities.
-        /// 该检查通过反射创建 StatusListenerService 实例，验证 SetData/GetData 基础操作。
-        /// This check creates a StatusListenerService instance via reflection and verifies basic SetData/GetData operations.
+        /// 该检查通过反射创建 StatusListenerService 实例，验证 SetData/ContainsKey/GetDataNames 基础操作。
+        /// 注意：AStatusListener.GetData&lt;T&gt; 是泛型方法，在 IL2CPP 下不支持对未具象化的开放泛型执行晚期绑定调用，
+        /// 因此本测试只验证非泛型 API（SetData、ContainsKey、GetDataNames），
+        /// 并确认泛型方法定义存在且参数签名符合预期。
+        /// This check creates a StatusListenerService instance via reflection and verifies
+        /// non-generic API (SetData, ContainsKey, GetDataNames).
+        /// Note: AStatusListener.GetData&lt;T&gt; is a generic method — IL2CPP cannot perform
+        /// late-bound operations on open generic definitions, so we only verify the method
+        /// definition exists and its signature is correct, without invoking it via reflection.
         /// </summary>
         [Preserve]
         [E2ETest(suite: "framework-core-business", order: 2, des: "验证事件监听系统基础读写")]
         public static void EventListenerBasicOperations()
         {
-            Debug.Log("[E2E] 测试目的=验证事件监听系统基础读写 实现手段=反射创建 StatusListenerService 并执行 SetData/GetData/AddListener");
+            Debug.Log("[E2E] 测试目的=验证事件监听系统基础读写 实现手段=反射创建 StatusListenerService 并执行 SetData/ContainsKey/GetDataNames，验证泛型方法定义存在");
 
             var statusListenerServiceType = FindLoadedType(StatusListenerServiceTypeName);
             if (statusListenerServiceType == null)
@@ -102,7 +109,8 @@ namespace BDFramework.Test.E2E
 
             try
             {
-                // SetData
+                // SetData(string, object, bool) — 非泛型，IL2CPP 反射安全
+                // SetData(string, object, bool) — non-generic, safe for IL2CPP reflection
                 var setDataMethod = statusListenerServiceType.GetMethod("SetData",
                     BindingFlags.Public | BindingFlags.Instance,
                     null,
@@ -114,25 +122,53 @@ namespace BDFramework.Test.E2E
                 setDataMethod.Invoke(service, new object[] { "talos_test_key", "talos_test_value", false });
                 Debug.Log("[E2E] Event system phase=set-data key=talos_test_key value=talos_test_value");
 
-                // GetData
-                var getDataMethod = statusListenerServiceType.GetMethod("GetData",
+                // ContainsKey(string) — 非泛型，验证写入成功
+                // ContainsKey(string) — non-generic, verify write succeeded
+                var containsKeyMethod = statusListenerServiceType.GetMethod("ContainsKey",
                     BindingFlags.Public | BindingFlags.Instance,
                     null,
                     new[] { typeof(string) },
                     null);
+                if (containsKeyMethod == null)
+                    throw new Exception("未发现 StatusListenerService.ContainsKey(string)");
+
+                var containsKey = (bool)containsKeyMethod.Invoke(service, new object[] { "talos_test_key" });
+                if (!containsKey)
+                    throw new Exception("SetData 后 ContainsKey 返回 false，数据未写入");
+                Debug.Log("[E2E] Event system phase=contains-key key=talos_test_key result=true");
+
+                // GetDataNames() — 非泛型，验证数据键可枚举
+                // GetDataNames() — non-generic, verify data keys are enumerable
+                var getDataNamesMethod = statusListenerServiceType.GetMethod("GetDataNames",
+                    BindingFlags.Public | BindingFlags.Instance,
+                    null,
+                    Type.EmptyTypes,
+                    null);
+                if (getDataNamesMethod == null)
+                    throw new Exception("未发现 StatusListenerService.GetDataNames()");
+
+                var names = getDataNamesMethod.Invoke(service, null) as IEnumerable;
+                if (names == null)
+                    throw new Exception("GetDataNames 返回 null");
+                Debug.Log("[E2E] Event system phase=get-data-names enumerable=true");
+
+                // 验证泛型方法定义存在（不调用，仅确认签名）
+                // Verify generic method definition exists (no invocation, signature check only)
+                var getDataMethod = statusListenerServiceType.GetMethod("GetData",
+                    BindingFlags.Public | BindingFlags.Instance);
                 if (getDataMethod == null)
-                    throw new Exception("未发现 StatusListenerService.GetData(string)");
+                    throw new Exception("未发现 StatusListenerService.GetData 泛型方法定义");
+                if (!getDataMethod.IsGenericMethodDefinition)
+                    throw new Exception("GetData 不是泛型方法定义，签名可能已变化");
+                Debug.Log("[E2E] Event system phase=verify-generic-getdata isGenericMethodDefinition=true");
 
-                var data = getDataMethod.Invoke(service, new object[] { "talos_test_key" });
-                Debug.Log($"[E2E] Event system phase=get-data key=talos_test_key value={data}");
-
-                // AddListener (basic callback registration)
                 var addListenerMethod = statusListenerServiceType.GetMethod("AddListener",
                     BindingFlags.Public | BindingFlags.Instance);
-                if (addListenerMethod != null)
-                {
-                    Debug.Log("[E2E] Event system phase=add-listener available");
-                }
+                if (addListenerMethod == null)
+                    throw new Exception("未发现 StatusListenerService.AddListener 泛型方法定义");
+                if (!addListenerMethod.IsGenericMethodDefinition)
+                    throw new Exception("AddListener 不是泛型方法定义，签名可能已变化");
+                Debug.Log("[E2E] Event system phase=verify-generic-addlistener isGenericMethodDefinition=true");
 
                 Debug.Log("[E2E] 事件监听系统基础操作验证完成");
             }
