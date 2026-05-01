@@ -57,6 +57,12 @@
    - 触发 TeamCity 前确认相关本地验证已通过，且 TeamCity checkout 能拿到已推送 commit。
    - TeamCity 命令和排障细节以 `.github/skills/teamcity/SKILL.md` 为准。
    - 不要假设自动触发已经足够；必须主动触发、等待完成并记录 build ID、URL 和状态。
+   - **制品验证要求**：构建 SUCCESS 不等于验证通过。必须检查以下至少一项证据，确认构建实际执行了编译/打包/测试，而非仅完成 checkout 后空跑退出：
+     - 构建日志中包含编译步骤输出（例如 Tundra/Csc 编译记录、`items updated` 大于 0、受影响程序集名称出现）。
+     - 构建日志中包含目标 ExecuteMethod 的执行记录和正常退出。
+     - 制品上传步骤完成且 `integrity=verified`，上传文件数和字节数符合预期。
+     - 构建时长明显异常（例如热更代码构建不到 30 秒）时，必须下载日志确认原因（增量编译命中缓存是正常原因，但需有 Tundra 输出佐证）。
+     - 如果 buildType 设计为只产出日志不产出部署制品（例如 BuildCode），则以日志中的编译输出和 upload 步骤的 `integrity=verified` 为准。
 
 9. **失败回环门禁**
    - 本地或远端验证失败时，先分析根因，再回到对应阶段修复。
@@ -73,7 +79,7 @@
 
 11. **完成收口门禁**
    - 逐项对照“完成前检查列表”；必需项未满足时，回到对应门禁处理。
-   - 汇报改动范围、本地测试结果、适用时的 commit SHA、远端 build ID/URL/status 和剩余风险。
+   - 汇报改动范围、本地测试结果、适用时的 commit SHA、远端 build ID/URL/status 和制品验证证据（编译输出摘要、上传文件数/字节数/integrity）、未运行项原因和剩余风险。
    - 如果某项检查不适用或无法运行，必须说明原因和已执行的替代验证。
 
 ## 2. 模块路由
@@ -189,6 +195,7 @@
 - Versioned Settings 或 DSL 变化时，确认 `.test-DevOps` 改动已推送。
 - 触发时带有意义的 comment 和最小必要 tag。
 - 汇报 build ID、状态和 URL。
+- 构建完成后执行制品验证：下载构建日志确认编译步骤实际执行，制品上传 `integrity=verified`，构建时长无异常短截。只汇报 `status=SUCCESS` 而无制品证据时，不得标记远端验证通过。
 
 ## 8. 任务追踪
 
@@ -310,6 +317,7 @@
 - [ ] 需要远端验证时，已使用 TeamCity skill 主动触发本次影响相关的最小必要构建。
 - [ ] 涉及设备、Player、E2E 或资源更新时，远端验证已覆盖对应真机或 Player 用例。
 - [ ] TeamCity 构建已等待完成并通过；已记录 build ID、URL 和状态。
+- [ ] 已执行制品验证：构建日志确认编译步骤执行、制品上传 integrity=verified、构建时长无异常短截；只汇报 status=SUCCESS 而无制品证据时不得标记通过。
 - [ ] 如果 TeamCity 失败，已回到编码/测试/本地验证/提交阶段修复并重跑；状态未知时没有标记完成。
 
 **收口与记忆**
