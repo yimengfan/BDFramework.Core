@@ -2,6 +2,7 @@ from __future__ import annotations
 
 """验证 TeamCity 主脚本的调度与重试行为。 Verify TeamCity helper dispatch and retry behavior."""
 
+import argparse
 from io import BytesIO
 from pathlib import Path
 import subprocess
@@ -61,6 +62,80 @@ def make_config() -> TeamCityConfig:
         password=None,
         output_dir=Path("/tmp/teamcityskill-tests"),
     )
+
+
+def test_load_env_file_preserves_shell_value_and_reports_override(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """验证 .env 只补缺，不覆盖现有 shell 变量，并打印覆盖提示。
+    Verify that .env only fills missing variables, keeps existing shell values, and reports preserved overrides.
+    """
+
+    env_file = tmp_path / "teamcity.env"
+    env_file.write_text(
+        "TEAMCITY_TOKEN=file-token\nTEAMCITY_BASE_URL=http://from-file\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("TEAMCITY_TOKEN", "shell-token")
+    monkeypatch.delenv("TEAMCITY_BASE_URL", raising=False)
+
+    ups.load_env_file(env_file)
+
+    output = capsys.readouterr().out
+    assert "keep existing shell env TEAMCITY_TOKEN" in output
+    assert ups.os.environ["TEAMCITY_TOKEN"] == "shell-token"
+    assert ups.os.environ["TEAMCITY_BASE_URL"] == "http://from-file"
+
+
+def test_load_env_file_rejects_invalid_line(tmp_path: Path) -> None:
+    """验证非法 .env 行会立即抛错，而不是静默忽略。
+    Verify that an invalid .env line fails fast instead of being silently ignored.
+    """
+
+    env_file = tmp_path / "teamcity.env"
+    env_file.write_text("TEAMCITY_TOKEN=file-token\nINVALID_LINE\n", encoding="utf-8")
+
+    with pytest.raises(TeamCityApiError, match="Invalid \\.env line"):
+        ups.load_env_file(env_file)
+
+
+def test_build_config_resolves_output_dir_from_env_file(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    """验证 TEAMCITY_OUTPUT_DIR 会相对 skill 目录解析，而不是相对当前工作目录。
+    Verify that TEAMCITY_OUTPUT_DIR resolves relative to the skill directory instead of the current working directory.
+    """
+
+    env_file = tmp_path / "teamcity.env"
+    env_file.write_text(
+        "TEAMCITY_BASE_URL=http://svn.funtoo.games\n"
+        "TEAMCITY_PROJECT_ID=BDFrameworkCore\n"
+        "TEAMCITY_TOKEN=file-token\n"
+        "TEAMCITY_OUTPUT_DIR=tc_output\n",
+        encoding="utf-8",
+    )
+    for key in (
+        "TEAMCITY_BASE_URL",
+        "TEAMCITY_PROJECT_ID",
+        "TEAMCITY_TOKEN",
+        "TEAMCITY_USERNAME",
+        "TEAMCITY_PASSWORD",
+        "TEAMCITY_OUTPUT_DIR",
+    ):
+        monkeypatch.delenv(key, raising=False)
+
+    config = ups.build_config(
+        argparse.Namespace(
+            env_file=str(env_file),
+            base_url=None,
+            project_id=None,
+        )
+    )
+
+    assert config.output_dir == (ups.SKILL_DIR / "tc_output").resolve()
 
 
 def test_parse_build_type_ids_supports_repeat_and_comma_separated_values() -> None:

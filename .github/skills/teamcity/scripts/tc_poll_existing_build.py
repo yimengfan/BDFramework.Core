@@ -18,21 +18,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from update_project_settings import (
+    DEFAULT_ENV_FILE,
+    DEFAULT_WAIT_HEARTBEAT_SECONDS,
     TeamCityConfig,
     TeamCityApiError,
-    api_request,
     build_config,
     get_build,
-    print_build_summary,
-    normalize_public_teamcity_url,
     get_build_log_tail,
-    DEFAULT_WAIT_HEARTBEAT_SECONDS,
+    print_build_summary,
 )
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Poll an existing TeamCity build by ID without triggering a new build."
+        description="Manual diagnostics only: poll an existing TeamCity build by ID without triggering a new build."
     )
     parser.add_argument(
         "build_id",
@@ -53,8 +52,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--env-file",
-        default=str(Path(__file__).resolve().parents[3] / ".test-DevOps" / ".teamcity" / ".env"),
-        help="TeamCity .env file path.",
+        default=str(DEFAULT_ENV_FILE),
+        help="TeamCity .env file path. Existing shell env values win over file values.",
     )
     parser.add_argument(
         "--log-tail-lines",

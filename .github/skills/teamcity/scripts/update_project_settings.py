@@ -137,7 +137,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--env-file",
         default=str(DEFAULT_ENV_FILE),
-        help="Optional .env file path. Default: %(default)s",
+        help="Optional .env file path. Existing shell env values win over file values. Default: %(default)s",
     )
     parser.add_argument(
         "--base-url",
@@ -180,7 +180,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--branch",
         default=None,
-        help="Optional branch name for run-build.",
+        help="Optional branch name for run-build, run-build-group, or run-talos-baseflow-chain.",
     )
     parser.add_argument(
         "--comment",
@@ -204,25 +204,25 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--wait",
         action="store_true",
-        help="For run-build, wait for the build to finish and print the final status.",
+        help="For run-build and run-build-group, wait for the queued builds to finish and print the final status.",
     )
     parser.add_argument(
         "--timeout-seconds",
         type=int,
         default=900,
-        help="For run-build --wait, maximum time to wait. Default: %(default)s seconds.",
+        help="For wait-capable commands, maximum time to wait. Default: %(default)s seconds.",
     )
     parser.add_argument(
         "--poll-interval-seconds",
         type=int,
         default=5,
-        help="For run-build --wait, polling interval. Default: %(default)s seconds.",
+        help="For wait-capable commands, polling interval. Default: %(default)s seconds.",
     )
     parser.add_argument(
         "--log-tail-lines",
         type=int,
         default=80,
-        help="For run-build failures, print the last N build log lines. Default: %(default)s.",
+        help="For wait-capable command failures, print the last N build log lines. Default: %(default)s.",
     )
     parser.add_argument(
         "--platform",
@@ -295,9 +295,13 @@ def parse_args() -> argparse.Namespace:
 
 
 def load_env_file(env_file: Path) -> None:
+    """从 .env 补齐缺失环境变量，并提示被 shell 值覆盖的条目。
+    Fill missing environment variables from .env and report keys that stay overridden by the current shell.
+    """
     if not env_file.exists():
         return
 
+    preserved_override_keys: list[str] = []
     for raw_line in env_file.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#"):
@@ -305,7 +309,17 @@ def load_env_file(env_file: Path) -> None:
         if "=" not in line:
             raise TeamCityApiError(f"Invalid .env line: {raw_line!r}")
         key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip())
+        normalized_key = key.strip()
+        normalized_value = value.strip()
+        existing_value = os.environ.get(normalized_key)
+        if existing_value is not None:
+            if existing_value != normalized_value:
+                preserved_override_keys.append(normalized_key)
+            continue
+        os.environ[normalized_key] = normalized_value
+
+    for key in preserved_override_keys:
+        print(f"[TeamCitySkill] keep existing shell env {key}, ignore .env value")
 
 
 def build_config(args: argparse.Namespace) -> TeamCityConfig:

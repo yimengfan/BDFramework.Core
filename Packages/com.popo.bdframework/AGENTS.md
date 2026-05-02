@@ -2,13 +2,13 @@
 
 作用域：`Packages/com.popo.bdframework/**`。
 
-本文件承载 BDFramework package 根级规则。更细的跨目录模块规则继续集中维护在 `.github/talos-docs/modules/`，例如 UI、资源加载、EditorPipeline 和测试规则。不要在本 package 更深目录下新增 `AGENTS.md`。
+本文件承载 BDFramework package 根级规则。更细的模块编码规则通过 `.github/instructions/bdframework-*.instructions.md` 的 `applyTo` 自动加载。不要在本 package 更深目录下新增 `AGENTS.md`。
 
 ## 阅读顺序
 
-1. `.github/copilot-instructions.md`
-2. 本文件
-3. 命中时读取 `.github/talos-docs/modules/` 下更具体的模块文件
+1. `.github/copilot-instructions.md`（全局工作链路和规范）
+2. 本文件（包架构）
+3. 编辑特定模块时，对应的 `.github/instructions/bdframework-*.instructions.md` 通过 `applyTo` 自动加载
 4. 附近 README、测试和实现文件
 
 ## 通用规则
