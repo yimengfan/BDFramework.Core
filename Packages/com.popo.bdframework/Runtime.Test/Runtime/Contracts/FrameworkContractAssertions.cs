@@ -470,7 +470,16 @@ namespace BDFramework.RuntimeTests.Contracts
             // 跳过的程序集按依赖排序插入到对应位置：BDFramework.Core 最先，firstpass 第二，Assembly-CSharp 第三
             // Insert skipped assemblies at their dependency-ranked positions
             var dependencyOrder = new[] { "BDFramework.Core", "Assembly-CSharp-firstpass", "Assembly-CSharp", "Game.Hotfix" };
-            foreach (var name in skipOrder)
+            // 必须按依赖顺序（rank 从小到大）插入，否则先插入高 rank 的程序集会导致后续低 rank 的 Insert 把已插入的高 rank 元素向后推移
+            // Must insert in ascending dependency-rank order; otherwise earlier high-rank insertions shift indices for later low-rank insertions
+            var sortedSkipOrder = skipOrder
+                .OrderBy(name =>
+                {
+                    var rank = Array.IndexOf(dependencyOrder, name);
+                    return rank >= 0 ? rank : int.MaxValue;
+                })
+                .ToList();
+            foreach (var name in sortedSkipOrder)
             {
                 var rank = Array.IndexOf(dependencyOrder, name);
                 if (rank >= 0 && rank < mergedOrder.Count)

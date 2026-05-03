@@ -183,12 +183,31 @@ namespace BDFramework.RuntimeTests.Contracts
 
         private static string ResolveWritableRoot()
         {
-            // 优先使用 BApplication.persistentDataPath，但验证其可写性。
-            // CI 环境中 persistentDataPath 可能指向不存在的目录（如 dataPath + "/.AppData"），
-            // 如果创建目录失败则回退到系统临时目录。
-            // Prefer BApplication.persistentDataPath but verify writability.
-            // In CI environments, persistentDataPath may point to a non-existent directory
-            // (e.g., dataPath + "/.AppData"). Fall back to the system temp directory if creation fails.
+            // 在非编辑器平台（Player 构建）上，BApplication.persistentDataPath 可能是非常深的路径
+            // （例如 CI 中的 dataPath + "/.AppData"），容易触发 Windows MAX_PATH (260) 限制。
+            // 优先使用系统临时目录，它通常路径更短且保证可写。
+            // On non-Editor platforms (Player builds), BApplication.persistentDataPath can be a very deep path
+            // (e.g., dataPath + "/.AppData" in CI), which easily hits the Windows MAX_PATH (260) limit.
+            // Prefer the system temp directory, which is typically shorter and guaranteed writable.
+#if !UNITY_EDITOR
+            try
+            {
+                var tempRoot = Path.GetTempPath();
+                if (!string.IsNullOrEmpty(tempRoot))
+                {
+                    var probeFile = Path.Combine(tempRoot, $"._write_probe_{Guid.NewGuid():N}");
+                    File.WriteAllText(probeFile, "probe");
+                    File.Delete(probeFile);
+                    return tempRoot;
+                }
+            }
+            catch
+            {
+                // 系统临时目录不可写，继续尝试后续选项
+                // System temp directory not writable, try next option
+            }
+#endif
+
             if (!string.IsNullOrEmpty(BApplication.persistentDataPath))
             {
                 try
