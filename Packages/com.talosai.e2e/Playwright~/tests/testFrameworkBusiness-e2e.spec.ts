@@ -31,6 +31,30 @@
  * - Version controller: client version number, versioned path resolution, version info structure.
  * - 下载准备：文件服务器 URL、下载路径构造、母包基础资源。
  * - Download preparation: file server URL, download path construction, base package resources.
+ * - 框架契约：启动顺序、AOT 加载、配置回退链、资源路径契约。
+ * - Framework contract: startup order, AOT loading, config fallback chain, resource path contracts.
+ * - SQLite 契约：密码回退、FastJson 数组序列化。
+ * - SQLite contract: password fallback, FastJson array serialization.
+ * - CSV 契约：加载/保存/引用/忽略列。
+ * - CSV contract: load/save/quote/ignored columns.
+ * - 日志契约：加密往返、导出、设置规范化、保留策略。
+ * - Logs contract: crypto roundtrip, export, settings normalization, retention policy.
+ * - ServiceStore API：模块隔离、单例/瞬态容器。
+ * - ServiceStore API: module isolation, singleton/transient container.
+ * - 对象池 API：预热/复用/扩容/销毁回调。
+ * - ObjectPool API: warm/reuse/grow/destroy callback.
+ * - 工具 API：路径拼接、文件写入、哈希一致性。
+ * - Utility API: path combine, file write, hash consistency.
+ * - 版本控制器 API：版本号操作、ClientAssets 路径/构建信息。
+ * - VersionController API: version number ops, ClientAssets path/build info.
+ * - 资源加载全链路：初始化/加载/卸载。
+ * - Asset load full pipeline: init/load/unload.
+ * - 资源遍历：加载/批量加载/资源组路径。
+ * - Asset traversal: load/batch load/asset group path.
+ * - 下载更新：版本号/资产路径/母包资源。
+ * - Download update: version/asset path/base package resources.
+ * - 框架集成：启动上下文/配置管线/资源管线/SQLite 管线/日志管线。
+ * - Framework integration: startup context/config/resource/SQLite/logging pipeline readiness.
  */
 
 import type { UnityConnector } from '../src';
@@ -389,6 +413,142 @@ test.describe('框架基础模块验证', () => {
   test('框架核心业务测试', async ({ connector, talosStep }) => {
     await talosStep('执行框架核心业务测试套件', async () => {
       await runSuiteAndRequireAllPass(connector, 'framework-core-business', 'FrameworkCoreBusiness');
+    });
+  });
+
+  /**
+   * 用例：验证资源加载全链路。
+   * Case: verify asset load full pipeline.
+   */
+  test('资源加载全链路测试', async ({ connector, talosStep }) => {
+    await talosStep('执行资源加载全链路测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'asset-load', 'AssetLoad');
+    });
+  });
+
+  /**
+   * 用例：验证资源遍历能力。
+   * Case: verify asset traversal capabilities.
+   */
+  test('资源遍历测试', async ({ connector, talosStep }) => {
+    await talosStep('执行资源遍历测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'asset-traversal', 'AssetTraversal');
+    });
+  });
+
+  /**
+   * 用例：验证下载更新能力。
+   * Case: verify download update capabilities.
+   */
+  test('下载更新测试', async ({ connector, talosStep }) => {
+    await talosStep('执行下载更新测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'download-update', 'DownloadUpdate');
+    });
+  });
+
+  /**
+   * 用例：验证框架集成管线就绪。
+   * Case: verify framework integration pipeline readiness.
+   */
+  test('框架集成管线测试', async ({ connector, talosStep }) => {
+    await talosStep('执行框架集成管线测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'framework-integration', 'FrameworkIntegration');
+    });
+  });
+});
+
+/**
+ * 测试套件：框架契约验证。
+ * Suite: framework contract verification.
+ * 验证框架启动契约、SQLite 契约、CSV 契约和日志契约。
+ * Verify framework startup contract, SQLite contract, CSV contract, and logs contract.
+ */
+test.describe('框架契约验证', () => {
+  /**
+   * 用例：验证框架启动与配置契约。
+   * Case: verify framework startup and configuration contracts.
+   */
+  test('框架启动契约测试', async ({ connector, talosStep }) => {
+    await talosStep('执行框架启动契约测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'framework-contract', 'FrameworkContract');
+    });
+  });
+
+  /**
+   * 用例：验证 SQLite 契约。
+   * Case: verify SQLite contracts.
+   */
+  test('SQLite 契约测试', async ({ connector, talosStep }) => {
+    await talosStep('执行 SQLite 契约测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'sqlite-contract', 'SqliteContract');
+    });
+  });
+
+  /**
+   * 用例：验证 CSV 契约。
+   * Case: verify CSV contracts.
+   */
+  test('CSV 契约测试', async ({ connector, talosStep }) => {
+    await talosStep('执行 CSV 契约测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'csv-contract', 'CsvContract');
+    });
+  });
+
+  /**
+   * 用例：验证日志契约。
+   * Case: verify logs contracts.
+   */
+  test('日志契约测试', async ({ connector, talosStep }) => {
+    await talosStep('执行日志契约测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'logs-contract', 'LogsContract');
+    });
+  });
+});
+
+/**
+ * 测试套件：框架 API 契约验证。
+ * Suite: framework API contract verification.
+ * 验证 ServiceStore、对象池、工具函数和版本控制器的 API 契约。
+ * Verify ServiceStore, object pool, utility function, and version controller API contracts.
+ */
+test.describe('框架 API 契约验证', () => {
+  /**
+   * 用例：验证 ServiceStore API 契约。
+   * Case: verify ServiceStore API contract.
+   */
+  test('ServiceStore API 测试', async ({ connector, talosStep }) => {
+    await talosStep('执行 ServiceStore API 测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'service-store-api', 'ServiceStoreApi');
+    });
+  });
+
+  /**
+   * 用例：验证对象池 API 契约。
+   * Case: verify object pool API contract.
+   */
+  test('对象池 API 测试', async ({ connector, talosStep }) => {
+    await talosStep('执行对象池 API 测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'object-pool-api', 'ObjectPoolApi');
+    });
+  });
+
+  /**
+   * 用例：验证工具函数 API 契约。
+   * Case: verify utility API contract.
+   */
+  test('工具函数 API 测试', async ({ connector, talosStep }) => {
+    await talosStep('执行工具函数 API 测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'utility-api', 'UtilityApi');
+    });
+  });
+
+  /**
+   * 用例：验证版本控制器 API 契约。
+   * Case: verify version controller API contract.
+   */
+  test('版本控制器 API 测试', async ({ connector, talosStep }) => {
+    await talosStep('执行版本控制器 API 测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'version-controller-api', 'VersionControllerApi');
     });
   });
 });
