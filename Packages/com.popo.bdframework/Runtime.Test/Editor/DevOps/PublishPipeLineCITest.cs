@@ -393,9 +393,12 @@ namespace BDFramework.EditorTest.DevOps
         /// 验证 HybridCLR 预处理会先于 Debug 母包的 EditorUserBuildSettings 覆盖执行。
         /// Verify that HybridCLR prebuild runs before the debug package overrides EditorUserBuildSettings.
         /// 这覆盖 Android stripped-AOT 临时构建的回归场景：预处理阶段应看到未污染的默认全局开关，
-        /// 而 Android 正式母包构建阶段才应启用 development、debugging、profiler 与 deep profiling。
+        /// 而 Android 正式母包构建阶段只启用 development 与 debugging，不再打开 profiler 与 deep profiling
+        /// （CI 构建一律关闭 profiler/deep profiling，避免 IL2CPP 编译从 ~10min 膨胀到 ~34min）。
         /// This covers the Android stripped-AOT regression: the prebuild phase should observe clean default global flags,
-        /// while the Android final package-build phase should enable development, debugging, profiler, and deep profiling only afterwards.
+        /// while the Android final package-build phase only enables development and debugging;
+        /// profiler and deep profiling are no longer enabled for CI builds
+        /// (CI builds always skip profiler/deep profiling to avoid IL2CPP compilation bloat from ~10min to ~34min).
         /// </summary>
         [Test]
         public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild()
@@ -447,8 +450,8 @@ namespace BDFramework.EditorTest.DevOps
                 {
                     Assert.That(EditorUserBuildSettings.development, Is.True);
                     Assert.That(EditorUserBuildSettings.allowDebugging, Is.True);
-                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.True);
-                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.True);
+                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.False);
+                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False);
                 }
 
                 Assert.That(EditorUserBuildSettings.development, Is.False);
@@ -466,17 +469,21 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
-        /// 验证 Windows 调试母包在进入正式 BuildPlayer 作用域后，仍保留 development 与 debugging，
-        /// 但不会再打开 connectProfiler 与 deepProfiling。
-        /// Verify that Windows debug packages still enable development and debugging inside the final BuildPlayer scope,
-        /// but no longer turn on connectProfiler or deepProfiling.
+        /// 验证所有平台（Android、iOS、Windows）的调试母包在进入正式 BuildPlayer 作用域后，
+        /// 仍保留 development 与 debugging，但不会打开 connectProfiler 与 deepProfiling。
+        /// Verify that all-platform (Android, iOS, Windows) debug packages still enable development and debugging
+        /// inside the final BuildPlayer scope, but no longer turn on connectProfiler or deepProfiling.
+        /// CI 构建一律关闭 profiler 和 deep profiling，避免 IL2CPP 编译膨胀
+        /// （Android 从 ~10min 膨胀到 ~34min）和无头 agent 上 Player 在 profiler 连接阶段卡死。
+        /// CI builds always skip profiler and deep profiling to avoid IL2CPP compilation bloat
+        /// (Android grows from ~10min to ~34min) and headless agent stalls during profiler connection.
         /// 这把 profiler 关闭策略锁定在 EditorUserBuildSettings 层，避免即使 BuildOptions 已收紧，
-        /// 全局编辑器开关仍把 Windows Talos Player 带回 profiler 握手路径。
-        /// This locks the profiler-disabled policy at the EditorUserBuildSettings layer so Windows Talos players do not fall
+        /// 全局编辑器开关仍把 Player 带回 profiler 握手路径。
+        /// This locks the profiler-disabled policy at the EditorUserBuildSettings layer so players do not fall
         /// back into the profiler handshake path even if BuildOptions have already been tightened.
         /// </summary>
         [Test]
-        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForWindowsDebugBuild()
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForAllPlatformDebugBuilds()
         {
             var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
                 "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
@@ -491,34 +498,46 @@ namespace BDFramework.EditorTest.DevOps
 
             try
             {
-                EditorUserBuildSettings.development = false;
-                EditorUserBuildSettings.allowDebugging = false;
-                EditorUserBuildSettings.connectProfiler = false;
-                EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
-
-                var scope = (IDisposable)helperMethod.Invoke(
-                    null,
-                    new object[]
-                    {
-                        BuildTools_ClientPackage.BuildMode.Debug,
-                        false,
-                        "test-windows-profiler-flags",
-                        BuildTarget.StandaloneWindows64,
-                        null
-                    });
-
-                using (scope)
+                // 验证所有平台：Android、iOS、Windows 在 Debug 模式下都应关闭 profiler 和 deep profiling
+                // Verify all platforms: Android, iOS, Windows should all disable profiler and deep profiling in Debug mode
+                var platformTestCases = new[]
                 {
-                    Assert.That(EditorUserBuildSettings.development, Is.True);
-                    Assert.That(EditorUserBuildSettings.allowDebugging, Is.True);
-                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.False);
-                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False);
-                }
+                    (target: BuildTarget.Android, label: "Android"),
+                    (target: BuildTarget.iOS, label: "iOS"),
+                    (target: BuildTarget.StandaloneWindows64, label: "Windows"),
+                };
 
-                Assert.That(EditorUserBuildSettings.development, Is.False);
-                Assert.That(EditorUserBuildSettings.allowDebugging, Is.False);
-                Assert.That(EditorUserBuildSettings.connectProfiler, Is.False);
-                Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False);
+                foreach (var (target, label) in platformTestCases)
+                {
+                    EditorUserBuildSettings.development = false;
+                    EditorUserBuildSettings.allowDebugging = false;
+                    EditorUserBuildSettings.connectProfiler = false;
+                    EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
+
+                    var scope = (IDisposable)helperMethod.Invoke(
+                        null,
+                        new object[]
+                        {
+                            BuildTools_ClientPackage.BuildMode.Debug,
+                            false,
+                            $"test-{label.ToLower()}-profiler-flags",
+                            target,
+                            null
+                        });
+
+                    using (scope)
+                    {
+                        Assert.That(EditorUserBuildSettings.development, Is.True, $"{label} development 应为 True");
+                        Assert.That(EditorUserBuildSettings.allowDebugging, Is.True, $"{label} allowDebugging 应为 True");
+                        Assert.That(EditorUserBuildSettings.connectProfiler, Is.False, $"{label} connectProfiler 应为 False");
+                        Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False, $"{label} deepProfiling 应为 False");
+                    }
+
+                    Assert.That(EditorUserBuildSettings.development, Is.False, $"{label} development 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.allowDebugging, Is.False, $"{label} allowDebugging 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.False, $"{label} connectProfiler 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False, $"{label} deepProfiling 应恢复为 False");
+                }
             }
             finally
             {
@@ -526,6 +545,41 @@ namespace BDFramework.EditorTest.DevOps
                 EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
                 EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
                 EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
+        }
+
+        /// <summary>
+        /// 验证 ShouldEnableProfilerForPackageBuild 在所有平台 Debug 模式下都返回 false。
+        /// Verify that ShouldEnableProfilerForPackageBuild returns false for all platforms in Debug mode.
+        /// CI 构建一律关闭 profiler 和 deep profiling，避免 IL2CPP 编译膨胀
+        /// （Android 从 ~10min 膨胀到 ~34min）和无头 agent 上 Player 在 profiler 连接阶段卡死。
+        /// CI builds always skip profiler and deep profiling to avoid IL2CPP compilation bloat
+        /// (Android grows from ~10min to ~34min) and headless agent stalls during profiler connection.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_ReturnsFalseForAllPlatformsInDebugMode()
+        {
+            var method = typeof(BuildTools_ClientPackage).GetMethod(
+                "ShouldEnableProfilerForPackageBuild",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(method, Is.Not.Null);
+
+            // Debug 模式下所有平台都应返回 false
+            // All platforms should return false in Debug mode
+            var platforms = new[] { BuildTarget.Android, BuildTarget.iOS, BuildTarget.StandaloneWindows64 };
+            foreach (var platform in platforms)
+            {
+                var result = (bool)method.Invoke(null, new object[] { BuildTools_ClientPackage.BuildMode.Debug, platform });
+                Assert.That(result, Is.False, $"ShouldEnableProfilerForPackageBuild(Debug, {platform}) 应返回 false");
+            }
+
+            // Release 模式也应返回 false
+            // Release mode should also return false
+            foreach (var platform in platforms)
+            {
+                var result = (bool)method.Invoke(null, new object[] { BuildTools_ClientPackage.BuildMode.Release, platform });
+                Assert.That(result, Is.False, $"ShouldEnableProfilerForPackageBuild(Release, {platform}) 应返回 false");
             }
         }
 

@@ -153,10 +153,11 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// 判断当前母包构建是否应该开启 profiler 与 deep profiling。
         /// Determine whether the current package build should enable profiler and deep-profiling flags.
-        /// Windows Talos 调试母包在 CI 上只需要脚本调试，不需要 profiler 握手；
-        /// 其余 Debug 包继续沿用现有 profiler 行为，避免误改 Android 等已稳定链路。
-        /// Windows Talos debug packages on CI only need script debugging and should skip profiler handshakes;
-        /// other debug packages keep the existing profiler behavior so stable Android and other flows do not change unexpectedly.
+        /// CI 调试母包只需要脚本调试能力；profiler 握手与 deep profiling 会显著拖慢 IL2CPP 编译
+        /// （Android 从 ~10min 膨胀到 ~34min），且在无头 agent 上可能导致 Player 在 profiler 连接阶段卡住。
+        /// CI debug packages only need script debugging; profiler handshake and deep profiling significantly
+        /// slow down IL2CPP compilation (Android grows from ~10min to ~34min) and can stall the player
+        /// on headless agents during profiler connection.
         /// </summary>
         static bool ShouldEnableProfilerForPackageBuild(BuildMode buildMode, BuildTarget buildTarget)
         {
@@ -165,7 +166,9 @@ namespace BDFramework.Editor.BuildPipeline
                 return false;
             }
 
-            return buildTarget != BuildTarget.StandaloneWindows64;
+            // CI 构建一律不开启 profiler 和 deep profiling，避免 IL2CPP 编译膨胀和无头 agent 卡死
+            // CI builds always skip profiler and deep profiling to avoid IL2CPP compilation bloat and headless agent stalls
+            return false;
         }
 
         /// <summary>
@@ -816,7 +819,11 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 case BuildMode.Debug:
                 {
-                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging;
+                    if (ShouldEnableProfilerForPackageBuild(mode, BuildTarget.Android))
+                    {
+                        opa |= BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    }
                 }
                     break;
                 case BuildMode.Release:
@@ -826,6 +833,7 @@ namespace BDFramework.Editor.BuildPipeline
                     break;
             }
 
+            Debug.Log($"【BuildPackage】 Android BuildOptions => mode:{mode} options:{opa}");
 
             //构建包体
             Debug.Log("------------->Begin build game client:<------------");
@@ -897,7 +905,11 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 case BuildMode.Debug:
                 {
-                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging;
+                    if (ShouldEnableProfilerForPackageBuild(mode, BuildTarget.iOS))
+                    {
+                        opa |= BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    }
                 }
                     break;
                 case BuildMode.Release:
@@ -907,6 +919,7 @@ namespace BDFramework.Editor.BuildPipeline
                     break;
             }
 
+            Debug.Log($"【BuildPackage】 iOS BuildOptions => mode:{mode} options:{opa}");
 
             var plist = outputPath + "/Info.plist";
             Debug.Log("plist:" + plist);
