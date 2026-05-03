@@ -27,6 +27,46 @@ applyTo: "Packages/com.popo.bdframework/**"
 - 修改公共 API 前，检查调用链、序列化字段、Inspector 和反射使用点
 - 涉及线程、文件 IO、持久化或生命周期的代码，必须考虑并发、重入、异常和释放
 
+## 测试覆盖率要求
+
+修改本包下任何源码时，须满足以下测试要求：
+
+- 受影响编译链内可测代码的自动化测试覆盖率须 ≥ 90%
+  - "可测代码"排除：纯 POCO/DTO 无逻辑属性、Unity 序列化行为、第三方框架自身行为、纯 getter/setter
+  - 覆盖率 = 被测代码路径数 / 总可测代码路径数，按方法维度计算
+- Bug 修复必须附带复现用例 + 修复验证用例，至少覆盖：触发条件、修复前行为、修复后预期行为
+- C1 条件门判定：覆盖率不足 90% 时视为未通过，须补充测试或说明不可测原因及替代验证
+
+## 测试覆盖缺口（按优先级）
+
+### P0 零覆盖关键模块
+
+| 模块 | 源文件数 | 缺失测试要点 |
+|------|---------|-------------|
+| UI/State（Store/Reducer/StateFactory） | 8+ | 状态创建/订阅/取消生命周期、Reducer 方法解析（IL2CPP）、并发 dispatch |
+| UI/Component（绑定/适配器） | 12+ | AutoAssign/ButtonOnclick 属性解析失败路径、适配器查找缺失、IL2CPP 反射 |
+| Event/DataListener | 8 | 监听器注册/注销/内存泄漏、dispatch 中异常传播、并发修改 |
+| ScreenNavigation | 3 | 导航栈状态机转换、非法转换拒绝 |
+
+### P1 薄覆盖核心模块
+
+| 模块 | 现有测试 | 缺失测试要点 |
+|------|---------|-------------|
+| AssetsManager/ArtAsset | E2E only | LoaderFactory 未知类型、LoadTask 超时/并发、manifest 损坏、依赖追踪卸载 |
+| Config | 纯逻辑 | 文件 IO 失败、Processor 加载、配置合并冲突 |
+| Data/Sql | 单元+基准 | 事务回滚、并发访问、表结构迁移 |
+| EditorPipeline/BuildHotfix | 无 | 适配器生成边界、代码剥离过度、AOT 注册失败 |
+| EditorPipeline/BuildTable | 极少 | Excel 解析异常、Schema 迁移、代码生成保留字冲突 |
+
+### P2 需加固模块
+
+| 模块 | 缺失测试要点 |
+|------|-------------|
+| Utils/Logs | 日志轮转边界、磁盘写满、并发写入安全 |
+| EditorPipeline/BuildAssetBundle | 资源图节点链路、粒度规则冲突 |
+| Utils/ObjectPool | 获取/释放生命周期、池耗尽 |
+| Utils/Extensions | 边界输入、空值处理 |
+
 ## 测试策略归属
 
 本包覆盖全部测试层：单元层（Runtime 核心契约）、集成层（Editor pipeline + 资源加载 + 启动链路）、E2E 层（Host E2E）、门禁层（Debug/Release 行为矩阵）。具体子模块归属见各 instruction。

@@ -1,14 +1,27 @@
 # BDFramework Agent 强制规范
 
-本文件是仓库唯一的全局 Agent 入口，负责强制工作链路和全局公共规范。文件/模块级编码规范通过 `.github/instructions/*.instructions.md` 的 `applyTo` 自动加载；包架构理解见各 package 根 `AGENTS.md`；文档维护标准见 `.github/instructions/docs.instructions.md`。
+本文件是仓库唯一的全局 Agent 入口，负责强制工作链路、全局公共规范、文档治理和自进化规则。文件/模块级编码规范通过 `.github/instructions/*.instructions.md` 的 `applyTo` 自动加载；包架构理解见各 package 根 `AGENTS.md`。
+
+## 0. 控制范式
+所有任务先套用范式，再读取命中的 instruction、AGENTS.md 和附近实现/测试。范式只解决跨模块共性；模块偏差写在最近的规则文件里。
+
+| 范式 | 控制对象 | 强制要求 |
+|------|---------|---------|
+| Phase Gate | 工作流程 | A 分析 → B 实现 → C 验证 → D 收口；前一阶段退出条件未满足不得进入后一阶段 |
+| Condition Gate | 质量门禁 | C1-C7 按触发条件嵌入阶段；未触发或无法执行必须说明原因 |
+| Single Responsibility | 包、类、目录、文档 | 通用能力、业务流程、测试、CI、文档入口各守边界，不用一个文件承担多种职责 |
+| Contract Design | 输入、状态、错误处理 | 可信路径断言快速失败；不可信路径防御校验 + 有意义错误日志 |
+| Test Pyramid | 测试设计 | 单元测契约、集成测交互、E2E 测流程、CI 测门禁矩阵 |
+| Compiler Following | 改动范围 | 从目标文件沿编译/测试错误扩展；边界内修复，边界外记录 |
+| SSOT + DRY | 规则维护 | 全局规则声明一次；同一规则跨 3+ 文件出现时提升到唯一声明点 |
+| PDCA Evolution | 用户纠正、复盘、沉淀 | 可复用、高风险、易重复、现有规则未覆盖时才沉淀，同时合并或退役旧规则 |
 
 ## 1. 工作链路
-
 除非用户明确要求只读分析，所有实现类任务按 4 阶段推进。每阶段 = 前置条件 + 动作 + 退出条件 + 失败回环。前阶段退出条件未满足，不得跳到后阶段。
 
 **阶段 A 分析**
 - 前置：用户已描述任务目标
-- 动作：明确交付物、限制条件、验收方式、不应触碰范围；检查工作树保护无关脏文件；判断任务类型（决策树见下），确定激活哪些条件门 C1-C7；发现编译链外代码异味时记录到 `code_smells.md`，不扩大改动
+- 动作：明确交付物、限制条件、验收方式、不应触碰范围；检查工作树保护无关脏文件；判断任务类型（决策树见下），确定激活哪些条件门 C1-C7；发现编译链外代码异味时记录到 `.agent_memory/code_smells.md`，不扩大改动
 - 退出：最小实现路径已确定、需补测试已识别、需跑本地验证已列出
 - 回环：高风险歧义 → 用最少问题确认后再继续
 
@@ -31,23 +44,20 @@
 - 回环：未通过 → 回到对应阶段处理
 
 ### 条件门 C1-C7
-
 | 条件门 | 触发条件 | 嵌入阶段 | 不触发时 |
 |--------|---------|---------|---------|
 | C1 补全测试 | 改动包含代码（非纯文档） | B 退出前 | 说明为什么不需要测试 |
 | C2 本地测试 | 改动包含可测试代码 | C 动作 | 说明无法运行原因 + 替代验证 |
 | C3 commit/push | 实现类任务且用户未禁止 | C 动作 | 在收口中说明 |
 | C4 TeamCity | 改动影响 BuildTools/TC DSL/资源上传/母包构建/Talos E2E/CI 日志/启动链路/设备 Player | C 动作 | 在收口中说明不需要 |
-| C5 todolist | 多步骤/CI 耗时长/跨会话/用户要求 | A 动作 | 不创建 |
-| C6 .test-DevOps | TC DSL 或 Versioned Settings 变化 | C 动作（嵌入 C3） | 不涉及 |
+| C5 todolist | 多步骤/CI 耗时长/失败需根因追踪/跨会话/用户要求 | A 动作 | 不创建 |
+| C6 `.test-DevOps` | TC DSL 或 Versioned Settings 变化 | C 动作（嵌入 C3） | 不涉及 |
 | C7 文档同步 | 行为/入口/日志/契约/配置变化 | B 退出条件 | 不涉及 |
 
 任务类型决策树：只读分析 → 直接回答；纯文档 → A→B→C(lint)→D（不激活 C1/C2/C4）；纯配置 → A→B→C(dry-run)→D；代码 → 完整 A→B→C→D；CI/构建管线 → 全部激活。
 
 ## 2. 全局规范
-
 ### 范围与包边界
-
 - 不修改第三方包或 vendored 插件代码，尤其是 `Packages/com.code-philosophy.*`
 - 一方包代码改动只允许在 `Packages/com.popo.bdframework` 和 `Packages/com.talosai.e2e`
 - 业务方代码属于 `Assets/Code/**`，不属于通用包
@@ -57,7 +67,6 @@
 - 测试程序集（`BDFramework.Test`）只在 Debug 构建生效，Release/Profiler 构建必须排除。详细行为矩阵见 `.github/instructions/bdframework-editor-pipeline.instructions.md`
 
 ### 信任边界（契约式设计）
-
 可信路径 = 上游已保证前置条件 → 断言快速失败。不可信路径 = 前置条件未保证 → 防御性校验 + 有意义错误日志。
 
 **可信路径**：构建时生成的配置文件、导入阶段已校验的 SQLite 表格数据、内部序列化/反序列化、框架状态（manager 注册、导航栈）。**不可信路径**：网络/服务器响应、用户输入、校验前的下载 manifest 或 CDN 资源。
@@ -74,7 +83,6 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 ```
 
 ### 注释与命名（声明一次原则）
-
 全局规则声明一次，各 instruction 只写与该模块的偏差（无偏差不重复）。
 
 - 代码注释和 docstring 必须中英双语，中文在前
@@ -86,7 +94,6 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 - 不为纯措辞或格式噪音更新文档
 
 ### 测试策略（金字塔 + 取舍指南）
-
 单元层验证函数/类契约 → 集成层验证模块间交互 → E2E 层验证用户流程 → 门禁层 Release/Debug 行为矩阵。各模块 instruction 只声明归属层，不重复通用策略。
 
 值得测：信任边界的校验逻辑、资源加载降级/回退路径、构建管线配置解析和验证、状态机/导航栈转换、有分支或计算的业务逻辑。不值得测：纯 POCO/DTO 无逻辑属性、Unity 序列化行为本身、第三方框架自身行为、纯 getter/setter。
@@ -94,57 +101,76 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 测试覆盖具体行为和失败路径，不能只验证"不抛异常"。确实无法补自动化测试时，说明原因并给出最接近的替代验证。
 
 ### 编译链与改动范围
-
 **编译器跟随**：从目标文件开始，修改→编译→编译错误指向的文件 = 编译链扩展→编译通过 = 边界确定。边界外只记录不改。
 
-**触碰即迁移**：编译链内触碰文件时，修复该文件中发现的代码异味，不犹豫。编译链外阅读时发现违规 → 记录到 `code_smells.md`。
+**触碰即迁移**：编译链内触碰文件时，修复该文件中发现的代码异味，不犹豫。编译链外阅读时发现违规 → 记录到 `.agent_memory/code_smells.md`。
 
 **最小改动 ≠ 最少文件**：编译器/测试链路要求修改 N 个文件才能正确完成 → N 个文件就是最小改动。不为了减少文件数而跳过必要的签名/引用更新。
 
 ### 工具选择
-
 语义搜索（不确定关键词时优先）、grep/正则（知道精确标识符时）、符号引用（需要编译器级精确引用时）。切换信号：grep 返回 10+ 候选且无法消歧 → 换用语义搜索或符号引用。
 
-## 3. 文档职责体系
+## 3. 文档治理
+### 层级与边界
+| 层级 | 类型 | 文件名 | 位置/触发 | 唯一职责 | 预算 | 退役条件 |
+|------|------|--------|-----------|---------|------|---------|
+| L0 | Agent 全局入口 | `copilot-instructions.md` | `.github/`，始终加载 | 范式、门禁、跨模块约束 | ≤200 行 | — |
+| L1 | Instruction | `*.instructions.md` | `.github/instructions/`，`applyTo` 自动匹配 | 被命中文件的编码约束、模块偏差 | ≤150 行 | 对应模块移除 |
+| L2 | Agent 轻入口 | `AGENTS.md` | 仓库根、package 根、独立子仓库根 | 包架构理解、模块划分 | ≤50 行 | package 移除 |
+| L3 | Skill | `SKILL.md` | `.github/skills/<name>/`，description + 斜杠命令 | 可执行步骤、命令、脚本 | ≤200 行 | 工具弃用 |
+| L4 | README | `README.md` | 任意目录，人工按需读取 | 用法、示例、排障 | — | — |
+| — | 模块深度 | `*.md` | `.github/talos-docs/modules/`，instruction 引用 | 行为矩阵、验收条件 | — | 模块移除 |
+| L5 | 临时记忆 | `*.md` | `.agent_memory/`，任务触发 | todolist、code smells | — | 任务结束 |
 
-### 分层与预算
+### 创建决策
+```
+要创建文档 →
+├─ 全局工作链路/规范/完成检查？ → copilot-instructions.md
+├─ 包架构理解？ → AGENTS.md（根/package 根/子仓库根）
+├─ 编辑某类文件的编码规范？ → .instructions.md（必须含 applyTo/description + 实质规则）
+├─ 可执行步骤 + 脚本？ → SKILL.md（skills/<name>/ 目录）
+├─ 深度模块规则/矩阵？ → talos-docs/modules/<module>.md
+├─ 用法/示例/排障？ → README.md（就近放置）
+├─ 临时状态/代码异味？ → .agent_memory/
+└─ 以上都不是 → 不创建
+```
 
-| 层级 | 文档类型 | 唯一职责 | 预算 |
-|------|---------|---------|------|
-| L0 | `copilot-instructions.md` | 全局策略入口（范式、门禁、跨模块约束） | ≤1000 行 |
-| L1 | `*.instructions.md` | 被 applyTo 命中文件的编码约束 | ≤150 行 |
-| L2 | `AGENTS.md` | 包架构理解、模块划分 | ≤50 行 |
-| L3 | `SKILL.md` | 可执行步骤、命令、脚本 | 快速参考 ≤200 行 |
-| L4 | `README.md` | 人类可读的用法、示例、排障 | — |
-| L5 | `.agent_memory/*` | 临时任务状态（todolist、code smells） | 任务结束清理 |
+### 放置与引用
+**放置**：全局→`copilot-instructions.md`；按文件路径触发→`.github/instructions/<name>.instructions.md`；按包架构→`Packages/<name>/AGENTS.md`；按任务/workflow→`.github/skills/<name>/SKILL.md`；按模块深度→`.github/talos-docs/modules/<module>.md`；按目录用法→该目录`README.md`；临时→`.agent_memory/`。
 
-详细引用规则、放置规则和命名约定见 `.github/instructions/docs.instructions.md`。
+**禁止创建**：package 更深子目录的 `AGENTS.md`；业务代码目录的 `AGENTS.md` 或 `*.instructions.md`；`.github/` 根目录新 `.md`（除 copilot-instructions.md）。
+
+**允许引用**：L0→L1；L1→L0 和模块深度文档；AGENTS.md→L0 和模块深度文档。**禁止引用**：模块深度→AGENTS.md；skill→instruction；`.agent_memory/`→永久文档；README→instruction。
+
+### 内容约束
+- Instruction 每条必须可直接执行，不是"去别处找答案"；引用其他文档时本文件须包含足够规则独立工作
+- 禁止：纯阅读顺序列表无实质规则；长命令手册复制进全局规则；临时任务写进永久文档；新增模块规则不更新引用它的 instruction
+- 语言：一方规则文档中文为主；代码注释/docstring 中文在前、中英双语；运行时和 CI 日志可用中文
+- 变更同步：入口、命令参数、BuildType ID、输出布局、上传协议、测试命令、CI 日志或模块归属变化时，同一改动中更新所有受影响文档
+- 验证：文档迁移后 `rg` 检查废弃路径/术语；文档类改动结束前 `git diff --check`
 
 ### DRY 原则
-
-全局规则声明一次。各 instruction 只写偏差。同一规则跨文件出现 3+ 次 → 合并到声明点。instruction 超预算 → 拆分子模块或提取范式到 L0。
+全局规则声明一次。各 instruction 只写偏差。同一规则跨文件出现 3+ 次 → 合并到声明点。instruction 内容膨胀 → 拆分子模块或提取范式到 L0。
 
 ## 4. 自进化范式
-
 ### 知识沉淀（PDCA）
-
-用户纠正 → 分类 → 决策 → 执行：
+用户纠正 → 分类 → 决策 → 执行 → 复查旧规则：
 
 - **A 需求误解**：不沉淀，当场修正
 - **B 漏读已有规则**：不沉淀，引用规则执行
-- **C 文档缺口（可复用）**：沉淀到最近 instruction
+- **C 文档缺口（模块可复用）**：沉淀到最近 instruction、AGENTS.md 或 README
 - **D 跨模块缺口**：沉淀到本文件
+- **E 可执行流程缺口**：沉淀到 skill
+- **F 临时任务事实**：写入 `.agent_memory/`，任务结束清理
 
 过滤器（任一为否则不沉淀）：可复用？高风险？容易重复？已有规则未覆盖？
 
-模块专属行为优先更新最接近的 instruction；跨模块工作流才更新本文件。不要把一次性偏好、临时任务细节或很窄的单次事故写成永久规范。
+模块专属行为优先更新最接近的 instruction；跨模块工作流才更新本文件。不要把一次性偏好、临时任务细节、个人解释、临时路径或很窄的单次事故写成永久规范。
 
 ### 膨胀控制
-
-每次新增规则时检查：是否有可合并或过时的旧规则？被废弃的路径/术语用 `rg` 检查后删除。同一主题规则超 5 条 → 考虑抽象为范式。
+每次新增规则时检查：是否有可合并、冲突或过时的旧规则？被废弃的路径/术语用 `rg` 检查后删除。同一主题规则超 5 条 → 考虑抽象为范式、边界或决策树；无法简洁表达时，把深度细节下沉到对应 instruction、README、skill 或模块文档。
 
 ## 5. 任务追踪（Todolist）
-
 文件位置：`.agent_memory/todolist.md`。创建条件见 C5。
 
 创建/更新时机：多依赖步骤、CI 耗时长、失败需根因追踪、用户要求持续处理；子任务完成/失败、构建完成、根因确认或计划变化时立即更新。
@@ -154,7 +180,6 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 禁止：不为常规读文件或立即解决的临时失败更新；临时状态不写入长期文档；只有改变未来行为的经验才沉淀。
 
 ## 6. 代码异味追踪
-
 文件位置：`.agent_memory/code_smells.md`。核心原则：发现问题 ≠ 立刻修复。编译链内（阻塞编译/测试或属于改动范围）→ 修复；编译链外 → 记录，不扩大 PR。
 
 追踪格式：`| # | 文件路径 | 行号 | 违反规则 | 简述 |`，最多 10 条，按严重度排序，修复后删除。任务结束前仍有条目时说明剩余数量。
@@ -162,7 +187,6 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 严重度参考：**高**（静默 catch、可信路径优雅降级、用默认值隐藏数据损坏）> **中**（命名误导、Editor/Runtime 职责泄漏）> **低**（死代码、未使用 using、局部风格漂移）。
 
 ## 7. 完成前检查列表
-
 每个实现类任务在最终回复前逐项确认。
 
 **阶段 A 分析**
