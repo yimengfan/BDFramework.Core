@@ -183,14 +183,44 @@ namespace BDFramework.RuntimeTests.Contracts
 
         private static string ResolveWritableRoot()
         {
+            // 优先使用 BApplication.persistentDataPath，但验证其可写性。
+            // CI 环境中 persistentDataPath 可能指向不存在的目录（如 dataPath + "/.AppData"），
+            // 如果创建目录失败则回退到系统临时目录。
+            // Prefer BApplication.persistentDataPath but verify writability.
+            // In CI environments, persistentDataPath may point to a non-existent directory
+            // (e.g., dataPath + "/.AppData"). Fall back to the system temp directory if creation fails.
             if (!string.IsNullOrEmpty(BApplication.persistentDataPath))
             {
-                return BApplication.persistentDataPath;
+                try
+                {
+                    Directory.CreateDirectory(BApplication.persistentDataPath);
+                    var probeFile = Path.Combine(BApplication.persistentDataPath, $"._write_probe_{Guid.NewGuid():N}");
+                    File.WriteAllText(probeFile, "probe");
+                    File.Delete(probeFile);
+                    return BApplication.persistentDataPath;
+                }
+                catch
+                {
+                    // persistentDataPath 不可写，继续尝试后续选项
+                    // persistentDataPath not writable, try next option
+                }
             }
 
             if (!string.IsNullOrEmpty(Application.persistentDataPath))
             {
-                return Application.persistentDataPath;
+                try
+                {
+                    Directory.CreateDirectory(Application.persistentDataPath);
+                    var probeFile = Path.Combine(Application.persistentDataPath, $"._write_probe_{Guid.NewGuid():N}");
+                    File.WriteAllText(probeFile, "probe");
+                    File.Delete(probeFile);
+                    return Application.persistentDataPath;
+                }
+                catch
+                {
+                    // Unity persistentDataPath 不可写，继续尝试后续选项
+                    // Unity persistentDataPath not writable, try next option
+                }
             }
 
             return Path.GetTempPath();
