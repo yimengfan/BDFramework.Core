@@ -198,6 +198,5 @@ def test_policy_docs_forbid_host_and_business_workflow_composition_inside_talos(
     assert "不要在该包内编排宿主启动、框架初始化、资源/数据库准备、场景顺序、executeMethod wrapper 或兜底恢复流程。" in rules_content
     assert "不要在这里加入业务方专属测试、配置、启动配方或硬编码逻辑。" in rules_content
 
-    assert "本文件只作为 `Packages/com.talosai.e2e/**` 的 Copilot applyTo 触发入口。" in instructions_content
+    assert "本文件包含编辑 `Packages/com.talosai.e2e/**` 下任何文件时自动生效的规则" in instructions_content
     assert "Packages/com.talosai.e2e/AGENTS.md" in instructions_content
-    assert "不要在本文件重复 Talos 模块规则。" in instructions_content

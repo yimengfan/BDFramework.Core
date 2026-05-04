@@ -63,6 +63,8 @@ from talos_e2e_config import TalosE2EConfigError, load_talos_e2e_config  # noqa:
 LOG_PREFIX = "[TalosTeamCityE2E]"
 DEFAULT_CLIENT_VERSION = "0.1"
 DEFAULT_BUILD_DEBUG = "true"
+DEFAULT_BUILD_MODE = "Debug"
+VALID_BUILD_MODES = {"Debug", "DebugForProfiler", "Release", "ReleaseForTest"}
 DEFAULT_TIMEOUT_SECONDS = 5400
 DEFAULT_POLL_INTERVAL_SECONDS = 10
 DEFAULT_DOWNLOAD_TIMEOUT_SECONDS = 600
@@ -406,6 +408,7 @@ def load_e2e_config_defaults() -> dict[str, object]:
         return {
             "client_version": config.client_version,
             "build_debug": config.build_debug,
+            "build_mode": config.build_mode,
             "timeout_seconds": config.timeout_seconds,
             "poll_interval_seconds": config.poll_interval_seconds,
             "download_timeout_seconds": config.download_timeout_seconds,
@@ -449,10 +452,26 @@ def parse_args() -> argparse.Namespace:
         help="上游母包构建使用的 major.minor 版本号。",
     )
     parser.add_argument(
+        "--build-mode",
+        default=None,
+        choices=sorted(VALID_BUILD_MODES),
+        help=(
+            "上游母包构建模式：Debug / DebugForProfiler / Release / ReleaseForTest。"
+            " 优先级高于 --build-debug；未传时由 --build-debug 或默认值决定。"
+            " Upstream package build mode. Takes precedence over --build-debug;"
+            " when omitted, the value is derived from --build-debug or the default."
+        ),
+    )
+    parser.add_argument(
         "--build-debug",
         default=config_defaults.get("build_debug", DEFAULT_BUILD_DEBUG),
         choices=["true", "false"],
-        help="是否要求上游母包以 debug 模式构建，并带上 Talos E2E 编译宏。",
+        help=(
+            "（已弃用）是否要求上游母包以 debug 模式构建，并带上 Talos E2E 编译宏。"
+            " 推荐使用 --build-mode 代替；本参数仅做向后兼容。"
+            " (Deprecated) Whether to request a debug-mode upstream player build with Talos E2E scripting defines."
+            " Prefer --build-mode; this flag remains for backward compatibility only."
+        ),
     )
     parser.add_argument("--package-build-id", default=None, help="可选：直接复用已存在的 TeamCity 母包构建 id。")
     parser.add_argument("--package-build-type-id", default=None, help="可选：覆盖平台默认母包 buildTypeId。")
@@ -651,6 +670,28 @@ def normalize_bool_flag(raw_value: object | None, *, field_name: str = "buildDeb
     if normalized in {"0", "false", "no", "off", ""}:
         return "false"
     raise TalosTeamCityE2EError(f"{field_name} contains unsupported value: {raw_value!r}")
+
+
+def resolve_build_mode(build_mode: str | None, legacy_build_debug: str | None) -> str:
+    """解析构建模式参数，支持 --build-mode 新参数和 --build-debug 旧参数向后兼容。
+    Resolve the build mode parameter, supporting --build-mode as the new parameter and --build-debug for backward compatibility.
+    """
+    normalized_build_mode = normalize_optional_value(build_mode)
+    if normalized_build_mode:
+        if normalized_build_mode not in VALID_BUILD_MODES:
+            raise TalosTeamCityE2EError(
+                f"Invalid --build-mode value: {normalized_build_mode!r}. Valid options: {sorted(VALID_BUILD_MODES)}"
+            )
+        return normalized_build_mode
+
+    # 向后兼容：旧 --build-debug 参数转换。 Backward compat: translate legacy --build-debug to build mode.
+    normalized_legacy = normalize_optional_value(legacy_build_debug).lower()
+    if normalized_legacy in {"true", "yes", "1", "enabled", "on"}:
+        return "Debug"
+    if normalized_legacy in {"false", "no", "0", "disabled", "off"}:
+        return "Release"
+
+    return DEFAULT_BUILD_MODE
 
 
 def normalize_branch_name(raw_value: object | None) -> str:
@@ -887,11 +928,11 @@ def is_soft_successful_upstream_build(handle: BuildHandle, log_tail: str) -> boo
     return all(marker in log_tail for marker in SUCCESSFUL_UPSTREAM_BUILD_LOG_MARKERS)
 
 
-def build_queue_properties(client_version: str, build_debug: str, build_extra_args: str) -> list[dict[str, str]]:
+def build_queue_properties(client_version: str, build_mode: str, build_extra_args: str) -> list[dict[str, str]]:
     """构造远端母包构建排队时需要透传的 TeamCity 参数。"""
     properties = [
         {"name": "build.client.version", "value": normalize_required_value(client_version, field_name="clientVersion")},
-        {"name": "build.debugBuild", "value": normalize_bool_flag(build_debug)},
+        {"name": "build.build.mode", "value": normalize_required_value(build_mode, field_name="buildMode")},
     ]
     normalized_extra_args = normalize_optional_value(build_extra_args)
     if normalized_extra_args:
@@ -1486,7 +1527,7 @@ def resolve_or_queue_package_build(args: argparse.Namespace, profile: PlatformPr
             raise TalosTeamCityE2EError(
                 f"Platform does not provide a default package buildTypeId, please pass --package-build-type-id: {profile.platform_key}"
             )
-        properties = build_queue_properties(args.client_version, args.build_debug, args.package_build_extra_args)
+        properties = build_queue_properties(args.client_version, args.build_mode, args.package_build_extra_args)
         build_handle = queue_build(
             config,
             build_type_id=build_type_id,
@@ -1673,6 +1714,7 @@ def main() -> int:
     args = parse_args()
     profile = resolve_platform_profile(args.platform)
     args.build_debug = normalize_bool_flag(args.build_debug)
+    args.build_mode = resolve_build_mode(args.build_mode, args.build_debug)
     selected_phase = normalize_optional_value(getattr(args, "phase", None)) or "all"
     current_build_id = normalize_optional_value(resolve_current_teamcity_build_context().build_id)
 
@@ -1690,6 +1732,7 @@ def main() -> int:
     print(f"{LOG_PREFIX} platform={profile.platform_key}")
     print(f"{LOG_PREFIX} clientVersion={normalize_required_value(args.client_version, field_name='clientVersion')}")
     print(f"{LOG_PREFIX} buildDebug={args.build_debug}")
+    print(f"{LOG_PREFIX} buildMode={args.build_mode}")
     print(f"{LOG_PREFIX} packageBuildId={normalize_optional_value(args.package_build_id) or '<auto>'}")
     explicit_build_number = normalize_optional_value(getattr(args, "package_build_number", None))
     print(f"{LOG_PREFIX} packageBuildNumber={explicit_build_number or '<from-teamcity>'}")

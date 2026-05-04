@@ -19,6 +19,7 @@
 [talos.e2e]
 client_version = "0.1"
 build_debug = "true"
+build_mode = "Debug"
 timeout_seconds = 5400
 poll_interval_seconds = 10
 download_timeout_seconds = 600

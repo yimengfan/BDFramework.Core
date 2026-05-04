@@ -146,13 +146,13 @@ def test_resolve_platform_profile_returns_windows_defaults() -> None:
     assert profile.package_arg_name == "--exe"
 
 
-def test_build_queue_properties_includes_debug_flag_and_extra_args() -> None:
-    """验证远端排队参数会稳定透传 clientVersion、debug 开关与额外参数。"""
-    properties = runner.build_queue_properties("0.1", "true", "--dry-run --foo bar")
+def test_build_queue_properties_includes_build_mode_and_extra_args() -> None:
+    """验证远端排队参数会稳定透传 clientVersion、构建模式与额外参数。"""
+    properties = runner.build_queue_properties("0.1", "Debug", "--dry-run --foo bar")
 
     assert properties == [
         {"name": "build.client.version", "value": "0.1"},
-        {"name": "build.debugBuild", "value": "true"},
+        {"name": "build.build.mode", "value": "Debug"},
         {"name": "build.extra.args", "value": "--dry-run --foo bar"},
     ]
 
@@ -1066,6 +1066,7 @@ def test_main_skip_build_mode_uses_package_build_number_directly(
         platform = "android"
         phase = "all"
         client_version = "0.1"
+        build_mode = None
         build_debug = "true"
         package_build_id = ""
         package_build_number = "60"
@@ -1121,6 +1122,7 @@ def test_main_prepare_phase_emits_prepared_package_path_and_skips_run(
         phase = "prepare"
         platform = "windows"
         client_version = "0.1"
+        build_mode = None
         build_debug = "true"
         package_build_id = ""
         package_build_number = ""
@@ -1206,6 +1208,7 @@ def test_main_run_phase_passes_raw_unity_port_to_platform_tool(
         phase = "run"
         platform = "windows"
         client_version = "0.1"
+        build_mode = None
         build_debug = "true"
         package_build_id = ""
         package_build_number = ""
@@ -1288,6 +1291,7 @@ def test_main_run_phase_requires_prepared_package_path(monkeypatch: pytest.Monke
         phase = "run"
         platform = "windows"
         client_version = "0.1"
+        build_mode = None
         build_debug = "true"
         package_build_id = ""
         package_build_number = ""
@@ -1343,6 +1347,7 @@ def test_main_cleanup_pre_phase_runs_pre_cleanup_and_returns(
         phase = "cleanup-pre"
         platform = "windows"
         client_version = "0.1"
+        build_mode = None
         build_debug = "true"
 
     monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
@@ -1375,6 +1380,7 @@ def test_main_cleanup_post_phase_runs_post_cleanup_and_returns(
         phase = "cleanup-post"
         platform = "android"
         client_version = "0.1"
+        build_mode = None
         build_debug = "true"
 
     monkeypatch.setattr(runner, "parse_args", lambda: FakeArgs())
@@ -1444,6 +1450,7 @@ def test_load_e2e_config_defaults_returns_config_values(
     fake_talos_config = TalosE2EConfig(
         client_version="0.3",
         build_debug="false",
+        build_mode="Release",
         timeout_seconds=7200,
         poll_interval_seconds=15,
         download_timeout_seconds=900,
@@ -1460,6 +1467,7 @@ def test_load_e2e_config_defaults_returns_config_values(
 
     assert defaults["client_version"] == "0.3"
     assert defaults["build_debug"] == "false"
+    assert defaults["build_mode"] == "Release"
     assert defaults["timeout_seconds"] == 7200
     assert defaults["poll_interval_seconds"] == 15
     assert defaults["download_timeout_seconds"] == 900

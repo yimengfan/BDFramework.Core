@@ -68,6 +68,7 @@ class TalosE2EConfig:
 
     client_version: str = "0.1"
     build_debug: str = "true"
+    build_mode: str = "Debug"
     timeout_seconds: int = 5400
     poll_interval_seconds: int = 10
     download_timeout_seconds: int = 600
@@ -164,6 +165,7 @@ def _merge_config_from_toml(
     field_map: dict[str, type] = {
         "client_version": str,
         "build_debug": str,
+        "build_mode": str,
         "timeout_seconds": int,
         "poll_interval_seconds": int,
         "download_timeout_seconds": int,
@@ -191,6 +193,7 @@ def _merge_config_from_toml(
     return TalosE2EConfig(
         client_version=overrides.get("client_version", base.client_version),
         build_debug=overrides.get("build_debug", base.build_debug),
+        build_mode=overrides.get("build_mode", base.build_mode),
         timeout_seconds=overrides.get("timeout_seconds", base.timeout_seconds),
         poll_interval_seconds=overrides.get("poll_interval_seconds", base.poll_interval_seconds),
         download_timeout_seconds=overrides.get("download_timeout_seconds", base.download_timeout_seconds),
@@ -299,6 +302,7 @@ def load_talos_e2e_config() -> TalosE2EConfig:
         f"finalConfig: "
         f"client_version={config.client_version}, "
         f"build_debug={config.build_debug}, "
+        f"build_mode={config.build_mode}, "
         f"timeout_seconds={config.timeout_seconds}, "
         f"poll_interval_seconds={config.poll_interval_seconds}, "
         f"download_timeout_seconds={config.download_timeout_seconds}, "
