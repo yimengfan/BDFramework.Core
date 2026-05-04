@@ -246,7 +246,7 @@ setopt allexport && source .test-DevOps/.teamcity/.env && setopt noallexport
   --comment "Talos BaseFlow on rebuilt Windows package" \
   --tag windows \
   --property build.client.version=0.1 \
-  --property build.debugBuild=true \
+  --property build.build.mode=Debug \
   --property talos.e2e.package.build.id=<packageBuildId> \
   --property talos.e2e.test.file=tests/testBaseFlow-e2e.spec.ts \
   --property env.TEAMCITY_TOKEN="$TEAMCITY_TOKEN" \
