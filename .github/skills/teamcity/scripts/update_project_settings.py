@@ -42,7 +42,7 @@ DEFAULT_WAIT_HEARTBEAT_SECONDS = 60
 DEFAULT_TALOS_BASEFLOW_BUILD_TYPE_ID = "BDFrameworkCore_TalosAIStep01BaseFlowTest"
 DEFAULT_TALOS_BASEFLOW_TEST_FILE = "tests/testBaseFlow-e2e.spec.ts"
 DEFAULT_TALOS_CLIENT_VERSION = "0.1"
-DEFAULT_TALOS_BUILD_DEBUG = "true"
+DEFAULT_TALOS_BUILD_MODE = "Debug"
 CPOLAR_TRANSIENT_404_MARKERS = (
     "cpolar.com",
     "domain doesn't exist",
@@ -262,9 +262,14 @@ def parse_args() -> argparse.Namespace:
         help="For run-talos-baseflow-chain, build.client.version override. Default: %(default)s.",
     )
     parser.add_argument(
+        "--build-mode",
+        default=DEFAULT_TALOS_BUILD_MODE,
+        help="For run-talos-baseflow-chain, build.build.mode override (Debug/DebugForProfiler/Release/ReleaseForTest). Default: %(default)s.",
+    )
+    parser.add_argument(
         "--build-debug",
-        default=DEFAULT_TALOS_BUILD_DEBUG,
-        help="For run-talos-baseflow-chain, build.debugBuild override. Default: %(default)s.",
+        default=None,
+        help="[DEPRECATED] For run-talos-baseflow-chain, legacy build.debugBuild override. Use --build-mode instead.",
     )
     parser.add_argument(
         "--adb-serial",
@@ -1616,7 +1621,7 @@ def command_run_talos_baseflow_chain(
     allow_local_sync_fallback: bool,
     test_file: str | None,
     client_version: str,
-    build_debug: str,
+    build_mode: str,
     branch: str | None,
     comment: str | None,
     tags: list[str],
@@ -1668,7 +1673,7 @@ def command_run_talos_baseflow_chain(
     package_properties = merge_named_properties(
         [
             {"name": "build.client.version", "value": client_version},
-            {"name": "build.debugBuild", "value": build_debug},
+            {"name": "build.build.mode", "value": build_mode},
         ],
         extra_properties,
     )
@@ -1689,7 +1694,7 @@ def command_run_talos_baseflow_chain(
 
     baseflow_defaults = [
         {"name": "build.client.version", "value": client_version},
-        {"name": "build.debugBuild", "value": build_debug},
+        {"name": "build.build.mode", "value": build_mode},
         {"name": "talos.e2e.platform", "value": normalized_platform},
         {"name": "talos.e2e.package.build.id", "value": str(queued_package.build_id)},
         {"name": "talos.e2e.package.build.type.id", "value": resolved_package_build_type_id},
@@ -1908,6 +1913,29 @@ def command_run_build_group(
     return final_result
 
 
+def resolve_build_mode(build_mode: str | None, legacy_build_debug: str | None) -> str:
+    """解析构建模式参数，支持 --build-mode 新参数和 --build-debug 旧参数向后兼容。
+    Resolve the build mode parameter, supporting --build-mode as the new parameter and --build-debug for backward compatibility.
+    """
+    valid_modes = {"Debug", "DebugForProfiler", "Release", "ReleaseForTest"}
+    normalized_build_mode = (build_mode or "").strip()
+    if normalized_build_mode:
+        if normalized_build_mode not in valid_modes:
+            raise TeamCityApiError(
+                f"Invalid --build-mode value: {normalized_build_mode!r}. Valid options: {sorted(valid_modes)}"
+            )
+        return normalized_build_mode
+
+    # 向后兼容：旧 --build-debug 参数转换。 Backward compat: translate legacy --build-debug to build mode.
+    normalized_legacy = (legacy_build_debug or "").strip().lower()
+    if normalized_legacy in {"true", "yes", "1", "enabled", "on"}:
+        return "Debug"
+    if normalized_legacy in {"false", "no", "0", "disabled", "off"}:
+        return "Release"
+
+    return DEFAULT_TALOS_BUILD_MODE
+
+
 def default_export_path(config: TeamCityConfig) -> Path:
     return config.output_dir / "current-versioned-settings.json"
 
@@ -1995,7 +2023,7 @@ def main() -> int:
             allow_local_sync_fallback=args.allow_local_sync_fallback,
             test_file=(args.test_file or "").strip() or DEFAULT_TALOS_BASEFLOW_TEST_FILE,
             client_version=(args.client_version or "").strip() or DEFAULT_TALOS_CLIENT_VERSION,
-            build_debug=(args.build_debug or "").strip() or DEFAULT_TALOS_BUILD_DEBUG,
+            build_mode=resolve_build_mode(args.build_mode, args.build_debug),
             branch=(args.branch or "").strip() or None,
             comment=(args.comment or "").strip() or None,
             tags=parse_build_tags(args.tags),

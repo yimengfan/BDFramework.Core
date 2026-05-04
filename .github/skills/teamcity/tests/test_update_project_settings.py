@@ -709,7 +709,7 @@ def test_command_run_talos_baseflow_chain_reuses_package_build_for_remote_basefl
         allow_local_sync_fallback=False,
         test_file="tests/testBaseFlow-e2e.spec.ts",
         client_version="0.1",
-        build_debug="true",
+        build_mode="Debug",
         branch="v4/v-4.0.0",
         comment="Android BaseFlow sqlite probe validation",
         tags=["android", "baseflow-sqlite"],
@@ -731,7 +731,7 @@ def test_command_run_talos_baseflow_chain_reuses_package_build_for_remote_basefl
     assert ordered_calls[2][1]["build_type_id"] == "BDFrameworkCore_TalosAIStep01BaseFlowTest"
     assert ordered_calls[2][1]["properties"] == [
         {"name": "build.client.version", "value": "0.1"},
-        {"name": "build.debugBuild", "value": "true"},
+        {"name": "build.build.mode", "value": "Debug"},
         {"name": "talos.e2e.platform", "value": "android"},
         {"name": "talos.e2e.package.build.id", "value": "1038"},
         {"name": "talos.e2e.package.build.type.id", "value": "BDFrameworkCore_BuildClientPackageAndroid"},
@@ -757,7 +757,7 @@ def test_command_run_talos_baseflow_chain_requires_explicit_sync_fallback_opt_in
             allow_local_sync_fallback=False,
             test_file="tests/testBaseFlow-e2e.spec.ts",
             client_version="0.1",
-            build_debug="true",
+            build_mode="Debug",
             branch="v4/v-4.0.0",
             comment="Android BaseFlow sqlite probe validation",
             tags=["android"],
