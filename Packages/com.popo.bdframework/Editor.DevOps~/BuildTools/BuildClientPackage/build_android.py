@@ -90,6 +90,16 @@ def parse_args() -> argparse.Namespace:
         help="Whether to request debug-capable Unity build flow and Talos E2E compilation symbols.",
     )
     parser.add_argument(
+        "--build-mode",
+        default=None,
+        choices=["Debug", "DebugForProfiler", "Release", "ReleaseForTest"],
+        help=(
+            "BuildMode for the client package. When provided, takes priority over --debug-build. "
+            "If omitted, falls back to --debug-build for backward compatibility "
+            "(true=Debug, false=Release)."
+        ),
+    )
+    parser.add_argument(
         "--file-server-url",
         default=None,
         help="Optional file-server base URL override used during artifact upload.",
@@ -131,6 +141,7 @@ def main() -> int:
     )
     client_version = compose_client_version(client_version_prefix, build_number)
     debug_build = str(getattr(args, "debug_build", "false")).strip().lower()
+    build_mode = getattr(args, "build_mode", None)
     file_server_url = str(getattr(args, "file_server_url", "") or "").strip() or None
 
     print(f"{LOG_PREFIX} ===== Step 2/7: validate host =====")
@@ -140,6 +151,8 @@ def main() -> int:
     print(f"{LOG_PREFIX} clientVersionPrefix={client_version_prefix}")
     print(f"{LOG_PREFIX} clientVersion={client_version}")
     print(f"{LOG_PREFIX} debugBuild={debug_build}")
+    if build_mode:
+        print(f"{LOG_PREFIX} buildMode={build_mode}")
     if build_name:
         print(f"{LOG_PREFIX} buildName={build_name}")
     if build_number:
@@ -182,7 +195,15 @@ def main() -> int:
         client_version=client_version,
         log_path=log_path,
     )
-    command = insert_command_argument(command, flag="-buildDebug", value=debug_build)
+    # --build-mode 优先：显式指定 4 级构建模式时，直接传 -buildMode 给 Unity，
+    # 不再传 -buildDebug，让 C# 端 ResolveClientPackageBuildModeForBatchMode 按 -buildMode 解析。
+    # --build-mode takes priority: when the 4-level build mode is explicitly specified,
+    # pass -buildMode to Unity directly instead of -buildDebug,
+    # so the C# side ResolveClientPackageBuildModeForBatchMode resolves via -buildMode.
+    if build_mode:
+        command = insert_command_argument(command, flag="-buildMode", value=build_mode)
+    else:
+        command = insert_command_argument(command, flag="-buildDebug", value=debug_build)
 
     print(f"{LOG_PREFIX} ===== Step 6/7: execute =====")
     return_code = run_batchmode(command, dry_run=args.dry_run)
