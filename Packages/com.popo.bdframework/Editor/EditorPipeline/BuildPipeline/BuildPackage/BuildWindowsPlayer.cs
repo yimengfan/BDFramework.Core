@@ -69,15 +69,15 @@ namespace BDFramework.Editor.BuildPipeline
                 BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
             }
         }
-        
+
         [HorizontalGroup("a/a1")]
-        [Button("Release for profiling", ButtonSizes.Large)]
+        [Button("Debug for Profiler", ButtonSizes.Large)]
         [GUIColor(1, 1, 0)]
-        public void Btn_ReleaseForProfiling()
+        public void Btn_DebugForProfiler()
         {
-            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
+            if (EditorUtility.DisplayDialog("提示", "是否构建DebugForProfiler包体（Debug + Profiler + Deep Profiling）", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Profiler, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.DebugForProfiler, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
             }
         }
 
@@ -86,9 +86,20 @@ namespace BDFramework.Editor.BuildPipeline
         [GUIColor(0, 1, 0)]
         public void Btn_ReleaseBuild()
         {
-            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
+            if (EditorUtility.DisplayDialog("提示", "是否构建Release版本包体？", "OK", "Cancel"))
             {
                 BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
+            }
+        }
+
+        [HorizontalGroup("a/a2")]
+        [Button("Release for Test", ButtonSizes.Large)]
+        [GUIColor(0, 0.8f, 1)]
+        public void Btn_ReleaseForTest()
+        {
+            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForTest包体（Release + 测试程序集，用于自动化测试）", "OK", "Cancel"))
+            {
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.ReleaseForTest, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
             }
         }
 
@@ -154,21 +165,29 @@ namespace BDFramework.Editor.BuildPipeline
         {
             CustomBuild(BuildTools_ClientPackage.BuildMode.Debug);
         }
-        
+
         [HorizontalGroup("b/a7")]
         [GUIColor(1, 1, 0.5f)]
-        [Button("自定义构建（ReleaseForProfiling）", ButtonSizes.Large, ButtonStyle.CompactBox)]
-        public void Btn_CustomBuildReleaseForProfiling()
+        [Button("自定义构建（DebugForProfiler）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_CustomBuildDebugForProfiler()
         {
-            CustomBuild(BuildTools_ClientPackage.BuildMode.Profiler);
+            CustomBuild(BuildTools_ClientPackage.BuildMode.DebugForProfiler);
         }
 
         [HorizontalGroup("b/a8")]
         [GUIColor(0, 1, 0.5f)]
-        [Button("自定义构建（构建发布版本）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        [Button("自定义构建（Release）", ButtonSizes.Large, ButtonStyle.CompactBox)]
         public void Btn_CustomBuildReleaseForPublish()
         {
             CustomBuild(BuildTools_ClientPackage.BuildMode.Release);
+        }
+
+        [HorizontalGroup("b/a8")]
+        [GUIColor(0, 0.8f, 1)]
+        [Button("自定义构建（ReleaseForTest）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_CustomBuildReleaseForTest()
+        {
+            CustomBuild(BuildTools_ClientPackage.BuildMode.ReleaseForTest);
         }
         
         #endregion

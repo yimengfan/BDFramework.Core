@@ -31,23 +31,72 @@ namespace BDFramework.Editor.BuildPipeline
         internal const string ClientVersionBatchArgName = "-clientVersion";
         const string IOSPostBuildShellRelativePath = "Packages/com.popo.bdframework/Editor.DevOps~/BuildTools/BuildClientPackage/build_xcode.shell";
 
+        /// <summary>
+        /// 母包构建模式。
+        /// Package build mode.
+        /// 四级分类：
+        /// Four-level classification:
+        /// <list type="bullet">
+        ///   <item><description>Debug — 开发调试，Development 构建 + 测试程序集</description></item>
+        ///   <item><description>DebugForProfiler — Debug 基础上开启 profiler 与 deep profiling，用于性能剖析</description></item>
+        ///   <item><description>Release — 对外发布，无调试能力、无测试程序集</description></item>
+        ///   <item><description>ReleaseForTest — Release 构建 + 测试程序集，用于自动化测试等场景</description></item>
+        /// </list>
+        /// </summary>
         public enum BuildMode
         {
             /// <summary>
-            /// 标准构建，使用Debug配置,Debug构建
+            /// 标准调试构建，Development + AllowDebugging + 测试程序集。
+            /// Standard debug build with Development + AllowDebugging + test assemblies.
             /// </summary>
             Debug = 0,
 
             /// <summary>
-            /// Release 发布
+            /// Debug 基础上开启 profiler 与 deep profiling，用于性能剖析。
+            /// Debug build with profiler and deep profiling enabled, for performance profiling.
             /// </summary>
-            Release,
+            DebugForProfiler = 1,
 
             /// <summary>
-            /// Release for profiler，
-            /// Release编译但是开启
+            /// Release 发布构建，无调试能力、无测试程序集。
+            /// Release build for publishing, no debugging, no test assemblies.
             /// </summary>
-            Profiler,
+            Release = 2,
+
+            /// <summary>
+            /// Release 构建 + 测试程序集，用于自动化测试等场景。
+            /// Release build with test assemblies, for automated testing and similar scenarios.
+            /// </summary>
+            ReleaseForTest = 3,
+        }
+
+        /// <summary>
+        /// 判断构建模式是否为 Debug 类（Debug 或 DebugForProfiler）。
+        /// Determine whether the build mode is a Debug variant (Debug or DebugForProfiler).
+        /// </summary>
+        static public bool IsDebugBuildMode(BuildMode mode)
+        {
+            return mode == BuildMode.Debug || mode == BuildMode.DebugForProfiler;
+        }
+
+        /// <summary>
+        /// 判断构建模式是否为 Release 类（Release 或 ReleaseForTest）。
+        /// Determine whether the build mode is a Release variant (Release or ReleaseForTest).
+        /// </summary>
+        static public bool IsReleaseBuildMode(BuildMode mode)
+        {
+            return mode == BuildMode.Release || mode == BuildMode.ReleaseForTest;
+        }
+
+        /// <summary>
+        /// 判断构建模式是否需要注入测试程序集。
+        /// Determine whether the build mode requires test assemblies to be injected.
+        /// Debug 和 ReleaseForTest 需要测试程序集；Release 和 DebugForProfiler 不需要。
+        /// Debug and ReleaseForTest require test assemblies; Release and DebugForProfiler do not.
+        /// </summary>
+        static public bool ShouldInjectTestAssemblies(BuildMode mode)
+        {
+            return mode == BuildMode.Debug || mode == BuildMode.ReleaseForTest;
         }
 
         //打包场景
@@ -131,7 +180,7 @@ namespace BDFramework.Editor.BuildPipeline
                 this.previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
                 this.previousDeepProfilingSupport = EditorUserBuildSettings.buildWithDeepProfilingSupport;
 
-                var isDebugBuild = buildMode == BuildMode.Debug;
+                var isDebugBuild = IsDebugBuildMode(buildMode);
                 var enableProfiler = ShouldEnableProfilerForPackageBuild(buildMode, buildTarget);
                 EditorUserBuildSettings.development = isDebugBuild;
                 EditorUserBuildSettings.allowDebugging = isDebugBuild;
@@ -161,14 +210,11 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static bool ShouldEnableProfilerForPackageBuild(BuildMode buildMode, BuildTarget buildTarget)
         {
-            if (buildMode != BuildMode.Debug)
-            {
-                return false;
-            }
-
-            // CI 构建一律不开启 profiler 和 deep profiling，避免 IL2CPP 编译膨胀和无头 agent 卡死
-            // CI builds always skip profiler and deep profiling to avoid IL2CPP compilation bloat and headless agent stalls
-            return false;
+            // 仅 DebugForProfiler 模式开启 profiler 与 deep profiling，
+            // Debug 模式在 CI 无头 agent 上不开启（避免卡死），Release/ReleaseForTest 无 Development 标记不需要。
+            // Only DebugForProfiler enables profiler and deep profiling;
+            // Debug mode skips them on CI headless agents (avoid stalls), Release/ReleaseForTest have no Development flag.
+            return buildMode == BuildMode.DebugForProfiler;
         }
 
         /// <summary>
@@ -194,7 +240,17 @@ namespace BDFramework.Editor.BuildPipeline
                     return options;
                 }
 
+                case BuildMode.DebugForProfiler:
+                {
+                    return BuildOptions.CompressWithLz4HC
+                           | BuildOptions.Development
+                           | BuildOptions.AllowDebugging
+                           | BuildOptions.ConnectWithProfiler
+                           | BuildOptions.EnableDeepProfilingSupport;
+                }
+
                 case BuildMode.Release:
+                case BuildMode.ReleaseForTest:
                 {
                     return BuildOptions.CompressWithLz4HC;
                 }
@@ -442,7 +498,9 @@ namespace BDFramework.Editor.BuildPipeline
 
         static string BuildIOSPostBuildShellArgs(string xcodeProjectDir, BuildMode mode)
         {
-            var configuration = mode == BuildMode.Debug ? "Debug" : "Release";
+            // Debug 类构建传 Debug 配置，Release 类构建传 Release 配置
+            // Debug-variant builds pass Debug configuration, Release-variant builds pass Release configuration
+            var configuration = IsDebugBuildMode(mode) ? "Debug" : "Release";
             return $"--project-dir \"{xcodeProjectDir}\" --configuration {configuration}";
         }
 
@@ -518,12 +576,13 @@ namespace BDFramework.Editor.BuildPipeline
             switch (buildMode)
             {
                 case BuildMode.Debug:
-                case BuildMode.Profiler:
+                case BuildMode.DebugForProfiler:
                 {
                     buildConfig = SceneConfigs[0];
                 }
                     break;
                 case BuildMode.Release:
+                case BuildMode.ReleaseForTest:
                 {
                     buildConfig = SceneConfigs[1];
                 }
@@ -563,23 +622,26 @@ namespace BDFramework.Editor.BuildPipeline
             switch (buildMode)
             {
                 case BuildMode.Debug:
-                case BuildMode.Profiler:
+                case BuildMode.DebugForProfiler:
                 {
                     BDebugEditor.EnableDebug();
                 }
                     break;
                 case BuildMode.Release:
+                case BuildMode.ReleaseForTest:
                 {
                     BDebugEditor.DisableDebug();
                 }
                     break;
             }
 
-            // 纵深防御：确保 Release/Profiler 构建不包含测试程序集。
-            // Defense-in-depth: ensure Release/Profiler builds do not contain test assemblies.
+            // 纵深防御：确保 Release 构建不包含测试程序集。
+            // Defense-in-depth: ensure Release builds do not contain test assemblies.
+            // Debug 和 ReleaseForTest 保留测试程序集；仅 Release 和 DebugForProfiler 需要移除。
+            // Debug and ReleaseForTest keep test assemblies; only Release and DebugForProfiler need them removed.
             // 即使上游调用方遗漏了 EnsureTestAssembliesRemoved()，这里也能在母包构建的最早期拦截。
             // Even if upstream callers miss EnsureTestAssembliesRemoved(), this catches leaks at the earliest stage of package build.
-            if (buildMode == BuildMode.Release || buildMode == BuildMode.Profiler)
+            if (!ShouldInjectTestAssemblies(buildMode))
             {
                 HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
             }
@@ -598,8 +660,20 @@ namespace BDFramework.Editor.BuildPipeline
                 PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 6);
             }
 
+            if (PlayerSettings.productName.EndsWith(".DebugForProfiler") || PlayerSettings.productName.EndsWith(".debugforprofiler"))
+            {
+                PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 16);
+            }
+
+            if (PlayerSettings.productName.EndsWith(".ReleaseForTest") || PlayerSettings.productName.EndsWith(".releasefortest"))
+            {
+                PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 15);
+            }
+
             if (PlayerSettings.productName.EndsWith(".Profiler") || PlayerSettings.productName.EndsWith(".profiler"))
             {
+                // 兼容旧版 Profiler 后缀清理
+                // Backward-compatible cleanup for the legacy Profiler suffix
                 PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 9);
             }
 
@@ -610,8 +684,20 @@ namespace BDFramework.Editor.BuildPipeline
                 applicationIdentifier = applicationIdentifier.Substring(0, applicationIdentifier.Length - 6);
             }
 
+            if (applicationIdentifier.EndsWith(".DebugForProfiler") || applicationIdentifier.EndsWith(".debugforprofiler"))
+            {
+                applicationIdentifier = applicationIdentifier.Substring(0, applicationIdentifier.Length - 16);
+            }
+
+            if (applicationIdentifier.EndsWith(".ReleaseForTest") || applicationIdentifier.EndsWith(".releasefortest"))
+            {
+                applicationIdentifier = applicationIdentifier.Substring(0, applicationIdentifier.Length - 15);
+            }
+
             if (applicationIdentifier.EndsWith(".Profiler") || applicationIdentifier.EndsWith(".profiler"))
             {
+                // 兼容旧版 Profiler 后缀清理
+                // Backward-compatible cleanup for the legacy Profiler suffix
                 applicationIdentifier = applicationIdentifier.Substring(0, applicationIdentifier.Length - 9);
             }
 
@@ -710,13 +796,13 @@ namespace BDFramework.Editor.BuildPipeline
 
                     BDFrameworkPipelineHelper.OnEndBuildPackage(buildTarget, outputpath);
 
-                    // Release/Profiler 构建后验证热更产物不含测试程序集。
-                    // Post-build verification that Release/Profiler hotfix artifacts do not contain test assemblies.
+                    // Release 构建后验证热更产物不含测试程序集。
+                    // Post-build verification that Release hotfix artifacts do not contain test assemblies.
                     // 这是对 EnsureTestAssembliesRemoved() 的双重校验：即使 HybridCLR 配置已被清理，
                     // 如果热更 DLL 输出目录仍有残留的测试程序集文件，这里会在构建结束前检出并报错。
                     // This double-checks EnsureTestAssembliesRemoved(): even if HybridCLR settings have been cleaned,
                     // residual test assembly files in the hotfix output directory will be caught here before the build concludes.
-                    if (buildMode == BuildMode.Release || buildMode == BuildMode.Profiler)
+                    if (!ShouldInjectTestAssemblies(buildMode))
                     {
                         var hotfixOutputRoot = IPath.Combine(assetOutputPath, BApplication.GetPlatformLoadPath(buildRuntimePlatform), ScriptLoder.HOTFIX_DLL_PATH);
                         HotfixScript.HotfixTestAssemblyInjector.ValidateNoTestAssembliesInOutput(hotfixOutputRoot, isReleaseBuild: true);
@@ -780,12 +866,13 @@ namespace BDFramework.Editor.BuildPipeline
             switch (mode)
             {
                 case BuildMode.Debug:
+                case BuildMode.DebugForProfiler:
                 {
                     androidConfig = BDEditorApplication.EditorSetting.AndroidDebug;
                 }
                     break;
                 case BuildMode.Release:
-                case BuildMode.Profiler:
+                case BuildMode.ReleaseForTest:
                 {
                     androidConfig = BDEditorApplication.EditorSetting.Android;
                 }
@@ -852,7 +939,17 @@ namespace BDFramework.Editor.BuildPipeline
                     }
                 }
                     break;
+                case BuildMode.DebugForProfiler:
+                {
+                    opa = BuildOptions.CompressWithLz4HC
+                           | BuildOptions.Development
+                           | BuildOptions.AllowDebugging
+                           | BuildOptions.ConnectWithProfiler
+                           | BuildOptions.EnableDeepProfilingSupport;
+                }
+                    break;
                 case BuildMode.Release:
+                case BuildMode.ReleaseForTest:
                 {
                     opa = BuildOptions.CompressWithLz4HC;
                 }
@@ -938,7 +1035,17 @@ namespace BDFramework.Editor.BuildPipeline
                     }
                 }
                     break;
+                case BuildMode.DebugForProfiler:
+                {
+                    opa = BuildOptions.CompressWithLz4HC
+                           | BuildOptions.Development
+                           | BuildOptions.AllowDebugging
+                           | BuildOptions.ConnectWithProfiler
+                           | BuildOptions.EnableDeepProfilingSupport;
+                }
+                    break;
                 case BuildMode.Release:
+                case BuildMode.ReleaseForTest:
                 {
                     opa = BuildOptions.CompressWithLz4HC;
                 }

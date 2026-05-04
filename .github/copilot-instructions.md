@@ -82,7 +82,7 @@ BAD:  var id = int.Parse(userInput);               // 假设外部输入合法
 OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 ```
 
-### 注释与命名（声明一次原则）
+### 注释、命名、日志（声明一次原则）
 全局规则声明一次，各 instruction 只写与该模块的偏差（无偏差不重复）。
 
 - 代码注释和 docstring 必须中英双语，中文在前

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.BuildPipeline;
 using HybridCLR.Editor.Settings;
 using UnityEditor;
 using UnityEngine;
@@ -12,17 +13,17 @@ namespace BDFramework.Editor.HotfixScript
     /// <summary>
     /// 热更测试程序集注入器。
     /// Hotfix test assembly injector.
-    /// 该类型负责在 Debug 构建时，将测试程序集动态注入 HybridCLR 的 hotUpdateAssemblies 列表。
-    /// This type is responsible for dynamically injecting test assemblies into HybridCLR's hotUpdateAssemblies list during Debug builds.
+    /// 该类型负责在需要测试的构建模式（Debug、ReleaseForTest）下，
+    /// 将测试程序集动态注入 HybridCLR 的 hotUpdateAssemblies 列表。
+    /// This type is responsible for dynamically injecting test assemblies into HybridCLR's hotUpdateAssemblies list
+    /// under build modes that require tests (Debug, ReleaseForTest).
     /// 
-    /// 设计目的：
-    /// Design purpose:
-    /// - Test DLLs must be hotfix assemblies to run on packaged players.
-    /// - 测试 DLL 必须是热更程序集才能在打包后的 Player 上运行。
-    /// - Release builds must NOT include test assemblies for security and performance.
-    /// - Release 构建不得包含测试程序集，以保证安全性和性能。
-    /// - Debug builds automatically include test assemblies for validation.
-    /// - Debug 构建自动包含测试程序集以进行验证。
+    /// 构建模式与测试程序集矩阵：
+    /// Build mode vs test assembly matrix:
+    /// - Debug: ✓ 注入 / injected
+    /// - DebugForProfiler: ✗ 不注入 / not injected
+    /// - Release: ✗ 不注入 / not injected
+    /// - ReleaseForTest: ✓ 注入 / injected
     /// 
     /// 使用方式：
     /// Usage:
@@ -165,16 +166,35 @@ namespace BDFramework.Editor.HotfixScript
         }
 
         /// <summary>
-        /// 检测当前构建是否为 Debug 构建。
-        /// Detect whether the current build is a Debug build.
+        /// 检测当前构建是否为需要测试程序集的构建模式（Debug 或 ReleaseForTest）。
+        /// Detect whether the current build requires test assemblies (Debug or ReleaseForTest).
+        /// 优先检查 <c>-buildMode</c> 参数，回退到 <c>-buildDebug</c> 参数兼容旧 CI，
+        /// 最后检查 EditorUserBuildSettings.development。
+        /// Prioritizes the <c>-buildMode</c> parameter, falls back to <c>-buildDebug</c> for legacy CI compatibility,
+        /// then checks EditorUserBuildSettings.development.
         /// </summary>
-        /// <returns>如果是 Debug 构建返回 true。Returns true if this is a Debug build.</returns>
+        /// <returns>如果是需要测试程序集的构建模式返回 true。Returns true if the build mode requires test assemblies.</returns>
         static public bool IsCurrentBuildDebug()
         {
-            // 检查命令行参数
+            // 优先检查 -buildMode 参数
             // 使用完全限定名避免与 BDFramework.Core.Tools.Environment 命名冲突。
             // Use fully qualified name to avoid collision with BDFramework.Core.Tools.Environment.
             var commandLineArgs = System.Environment.GetCommandLineArgs();
+
+            for (int i = 0; i < commandLineArgs.Length - 1; i++)
+            {
+                if (string.Equals(commandLineArgs[i], "-buildMode", StringComparison.OrdinalIgnoreCase))
+                {
+                    var value = commandLineArgs[i + 1];
+                    if (Enum.TryParse<BuildTools_ClientPackage.BuildMode>(value, true, out var parsed))
+                    {
+                        return BuildTools_ClientPackage.ShouldInjectTestAssemblies(parsed);
+                    }
+                }
+            }
+
+            // 回退到 -buildDebug 兼容旧 CI
+            // Fall back to -buildDebug for legacy CI compatibility
             for (int i = 0; i < commandLineArgs.Length - 1; i++)
             {
                 if (string.Equals(commandLineArgs[i], "-buildDebug", StringComparison.OrdinalIgnoreCase))

@@ -80,8 +80,8 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.PublishPipeLineCI_IsDebugBuildRequested_ResolvesSharedFlag),
                 (nameof(PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
                     testInstance.PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode),
-                (nameof(PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugOnly),
-                    testInstance.PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugOnly),
+                (nameof(PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugBuildModes),
+                    testInstance.PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugBuildModes),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                     testInstance.BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrEnabledButCurrentConfigWouldSkip_Prepares),
                 (nameof(BuildTools_ClientPackage_ShouldPrepareHybridClrForPackageBuild_WhenHybridClrDisabledOrUsesGlobalIl2cpp_Skips),
@@ -92,8 +92,18 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDelayDebugFlagsUntilAfterPreBuild),
                 (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForAllPlatformDebugBuilds),
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldDisableProfilerFlagsForAllPlatformDebugBuilds),
-                (nameof(BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_ReturnsFalseForAllPlatformsInDebugMode),
-                    testInstance.BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_ReturnsFalseForAllPlatformsInDebugMode),
+                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldEnableProfilerFlagsForDebugForProfilerBuilds),
+                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldEnableProfilerFlagsForDebugForProfilerBuilds),
+                (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldKeepReleaseFlagsForReleaseForTestBuilds),
+                    testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldKeepReleaseFlagsForReleaseForTestBuilds),
+                (nameof(BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_UsesFourLevelBuildMode),
+                    testInstance.BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_UsesFourLevelBuildMode),
+                (nameof(BuildTools_ClientPackage_ShouldInjectTestAssemblies_UsesFourLevelBuildMode),
+                    testInstance.BuildTools_ClientPackage_ShouldInjectTestAssemblies_UsesFourLevelBuildMode),
+                (nameof(BuildTools_ClientPackage_IsDebugBuildMode_UsesFourLevelBuildMode),
+                    testInstance.BuildTools_ClientPackage_IsDebugBuildMode_UsesFourLevelBuildMode),
+                (nameof(BuildTools_ClientPackage_IsReleaseBuildMode_UsesFourLevelBuildMode),
+                    testInstance.BuildTools_ClientPackage_IsReleaseBuildMode_UsesFourLevelBuildMode),
                 (nameof(BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldNotModifyPlayerSettingsDisplayProperties),
                     testInstance.BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldNotModifyPlayerSettingsDisplayProperties),
                 (nameof(BuildTools_ClientPackage_CopyHybridClrHotUpdateAssembliesToManagedDirectory_ShouldPopulateManagedDlls),
@@ -278,12 +288,40 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
-        /// 验证母包 BatchMode 构建模式会根据共享布尔参数稳定映射到 Debug 或 Release。
-        /// 这确保新增的可选 debug 参数不会破坏现有默认 Release 行为。
+        /// 验证母包 BatchMode 构建模式会根据 <c>-buildMode</c> 参数映射到正确的 BuildMode 枚举值，
+        /// 同时保留 <c>-buildDebug</c> 布尔参数的向后兼容。
+        /// 这确保新增的 4 级构建模式（Debug / DebugForProfiler / Release / ReleaseForTest）
+        /// 不会破坏现有 CI 任务的默认 Release 行为。
         /// </summary>
         [Test]
         public void PublishPipeLineCI_ResolveClientPackageBuildModeForBatchMode_MapsToExpectedMode()
         {
+            // -buildMode 命名参数优先
+            // Named -buildMode parameter takes priority
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildMode", "Debug" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.Debug));
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildMode", "DebugForProfiler" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.DebugForProfiler));
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildMode", "Release" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.Release));
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildMode", "ReleaseForTest" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.ReleaseForTest));
+
+            // -buildMode 大小写不敏感
+            // Case-insensitive
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildMode", "debugforprofiler" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.DebugForProfiler));
+            Assert.That(
+                PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildmode", "ReleaseForTest" }),
+                Is.EqualTo(BuildTools_ClientPackage.BuildMode.ReleaseForTest));
+
+            // -buildDebug 向后兼容
+            // Backward compatibility via -buildDebug
             Assert.That(
                 PublishPipeLineCI.ResolveClientPackageBuildModeForBatchMode(new[] { "-buildDebug", "true" }),
                 Is.EqualTo(BuildTools_ClientPackage.BuildMode.Debug));
@@ -297,16 +335,23 @@ namespace BDFramework.EditorTest.DevOps
 
         /// <summary>
         /// 验证 Talos 调试母包会同时注入 DEBUG 宏，避免运行时桥接层的 Conditional("DEBUG") 入口被编译期裁掉。
-        /// Release 包则必须保持现状，避免把 E2E 启动入口带进非调试包体。
+        /// Debug 类构建模式（Debug、DebugForProfiler）必须包含 DEBUG 宏；
+        /// Release 类构建模式（Release、ReleaseForTest）则必须保持现状，避免把 E2E 启动入口带进非调试包体。
         /// </summary>
         [Test]
-        public void PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugOnly()
+        public void PublishPipeLineCI_ShouldIncludeDebugSymbolForTalosClientPackageBuild_UsesDebugBuildModes()
         {
             Assert.That(
                 PublishPipeLineCI.ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode.Debug),
                 Is.True);
             Assert.That(
+                PublishPipeLineCI.ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode.DebugForProfiler),
+                Is.True);
+            Assert.That(
                 PublishPipeLineCI.ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode.Release),
+                Is.False);
+            Assert.That(
+                PublishPipeLineCI.ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode.ReleaseForTest),
                 Is.False);
         }
 
@@ -359,12 +404,16 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
-        /// 验证 Windows 调试母包会保留脚本调试能力，但不会再把 profiler 与 deep profiling 打进 BuildOptions。
-        /// Verify that Windows debug packages keep script-debugging support but no longer carry profiler or deep-profiling flags in BuildOptions.
-        /// 这覆盖 TeamCity Windows agent 上的 Talos Player 回归场景：若继续自动连接 profiler，
-        /// Standalone Player 可能在进入托管启动前卡住，导致 TCP 就绪检测永远超时。
-        /// This covers the Talos Player regression on TeamCity Windows agents: if profiler auto-connect remains enabled,
-        /// the standalone player can stall before managed startup and the TCP readiness probe never succeeds.
+        /// 验证 Windows 构建选项按 4 级 BuildMode 正确配置：
+        /// - Debug: Development + AllowDebugging, 无 Profiler/DeepProfiling
+        /// - DebugForProfiler: Development + AllowDebugging + ConnectWithProfiler + EnableDeepProfilingSupport
+        /// - Release: 仅 CompressWithLz4HC
+        /// - ReleaseForTest: 仅 CompressWithLz4HC
+        /// Verify that Windows build options are correctly configured per 4-level BuildMode:
+        /// - Debug: Development + AllowDebugging, no Profiler/DeepProfiling
+        /// - DebugForProfiler: Development + AllowDebugging + ConnectWithProfiler + EnableDeepProfilingSupport
+        /// - Release: CompressWithLz4HC only
+        /// - ReleaseForTest: CompressWithLz4HC only
         /// </summary>
         [Test]
         public void BuildTools_ClientPackage_ResolveWindowsBuildOptions_ShouldKeepDebuggingWithoutProfilerFlags()
@@ -375,20 +424,37 @@ namespace BDFramework.EditorTest.DevOps
 
             Assert.That(helperMethod, Is.Not.Null);
 
+            // Debug: Development + AllowDebugging, 无 Profiler/DeepProfiling
             var debugOptions = (BuildOptions)helperMethod.Invoke(
                 null,
                 new object[] { BuildTools_ClientPackage.BuildMode.Debug });
-            var releaseOptions = (BuildOptions)helperMethod.Invoke(
-                null,
-                new object[] { BuildTools_ClientPackage.BuildMode.Release });
-
             Assert.That(debugOptions.HasFlag(BuildOptions.CompressWithLz4HC), Is.True);
             Assert.That(debugOptions.HasFlag(BuildOptions.Development), Is.True);
             Assert.That(debugOptions.HasFlag(BuildOptions.AllowDebugging), Is.True);
             Assert.That(debugOptions.HasFlag(BuildOptions.ConnectWithProfiler), Is.False);
             Assert.That(debugOptions.HasFlag(BuildOptions.EnableDeepProfilingSupport), Is.False);
 
+            // DebugForProfiler: Development + AllowDebugging + Profiler + DeepProfiling
+            var debugForProfilerOptions = (BuildOptions)helperMethod.Invoke(
+                null,
+                new object[] { BuildTools_ClientPackage.BuildMode.DebugForProfiler });
+            Assert.That(debugForProfilerOptions.HasFlag(BuildOptions.CompressWithLz4HC), Is.True);
+            Assert.That(debugForProfilerOptions.HasFlag(BuildOptions.Development), Is.True);
+            Assert.That(debugForProfilerOptions.HasFlag(BuildOptions.AllowDebugging), Is.True);
+            Assert.That(debugForProfilerOptions.HasFlag(BuildOptions.ConnectWithProfiler), Is.True);
+            Assert.That(debugForProfilerOptions.HasFlag(BuildOptions.EnableDeepProfilingSupport), Is.True);
+
+            // Release: 仅 CompressWithLz4HC
+            var releaseOptions = (BuildOptions)helperMethod.Invoke(
+                null,
+                new object[] { BuildTools_ClientPackage.BuildMode.Release });
             Assert.That(releaseOptions, Is.EqualTo(BuildOptions.CompressWithLz4HC));
+
+            // ReleaseForTest: 仅 CompressWithLz4HC（无 Development 标记）
+            var releaseForTestOptions = (BuildOptions)helperMethod.Invoke(
+                null,
+                new object[] { BuildTools_ClientPackage.BuildMode.ReleaseForTest });
+            Assert.That(releaseForTestOptions, Is.EqualTo(BuildOptions.CompressWithLz4HC));
         }
 
         /// <summary>
@@ -551,15 +617,168 @@ namespace BDFramework.EditorTest.DevOps
         }
 
         /// <summary>
-        /// 验证 ShouldEnableProfilerForPackageBuild 在所有平台 Debug 模式下都返回 false。
-        /// Verify that ShouldEnableProfilerForPackageBuild returns false for all platforms in Debug mode.
-        /// CI 构建一律关闭 profiler 和 deep profiling，避免 IL2CPP 编译膨胀
-        /// （Android 从 ~10min 膨胀到 ~34min）和无头 agent 上 Player 在 profiler 连接阶段卡死。
-        /// CI builds always skip profiler and deep profiling to avoid IL2CPP compilation bloat
-        /// (Android grows from ~10min to ~34min) and headless agent stalls during profiler connection.
+        /// 验证 DebugForProfiler 模式在所有平台（Android、iOS、Windows）的 BuildPlayer 作用域中
+        /// 正确启用 development、debugging、connectProfiler 和 deepProfiling。
+        /// Verify that DebugForProfiler mode correctly enables development, debugging, connectProfiler and deepProfiling
+        /// inside the BuildPlayer scope for all platforms (Android, iOS, Windows).
+        /// DebugForProfiler 是显式性能剖析模式，必须把 profiler 标记全部打开，才能在 Unity Profiler 中看到
+        /// 每帧每函数级别的耗时分布。
+        /// DebugForProfiler is the explicit profiling mode that must enable all profiler flags
+        /// so the Unity Profiler can show per-frame per-function timing breakdowns.
         /// </summary>
         [Test]
-        public void BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_ReturnsFalseForAllPlatformsInDebugMode()
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldEnableProfilerFlagsForDebugForProfilerBuilds()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var previousDevelopment = EditorUserBuildSettings.development;
+            var previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
+            var previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
+            var previousDeepProfiling = EditorUserBuildSettings.buildWithDeepProfilingSupport;
+
+            try
+            {
+                var platformTestCases = new[]
+                {
+                    (target: BuildTarget.Android, label: "Android"),
+                    (target: BuildTarget.iOS, label: "iOS"),
+                    (target: BuildTarget.StandaloneWindows64, label: "Windows"),
+                };
+
+                foreach (var (target, label) in platformTestCases)
+                {
+                    EditorUserBuildSettings.development = false;
+                    EditorUserBuildSettings.allowDebugging = false;
+                    EditorUserBuildSettings.connectProfiler = false;
+                    EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
+
+                    var scope = (IDisposable)helperMethod.Invoke(
+                        null,
+                        new object[]
+                        {
+                            BuildTools_ClientPackage.BuildMode.DebugForProfiler,
+                            false,
+                            $"test-{label.ToLower()}-profiler-flags",
+                            target,
+                            null
+                        });
+
+                    using (scope)
+                    {
+                        Assert.That(EditorUserBuildSettings.development, Is.True, $"{label} development 应为 True");
+                        Assert.That(EditorUserBuildSettings.allowDebugging, Is.True, $"{label} allowDebugging 应为 True");
+                        Assert.That(EditorUserBuildSettings.connectProfiler, Is.True, $"{label} connectProfiler 应为 True");
+                        Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.True, $"{label} deepProfiling 应为 True");
+                    }
+
+                    Assert.That(EditorUserBuildSettings.development, Is.False, $"{label} development 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.allowDebugging, Is.False, $"{label} allowDebugging 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.False, $"{label} connectProfiler 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False, $"{label} deepProfiling 应恢复为 False");
+                }
+            }
+            finally
+            {
+                EditorUserBuildSettings.development = previousDevelopment;
+                EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
+                EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
+        }
+
+        /// <summary>
+        /// 验证 ReleaseForTest 模式在所有平台（Android、iOS、Windows）的 BuildPlayer 作用域中
+        /// 不启用 development、allowDebugging、connectProfiler 和 deepProfiling。
+        /// Verify that ReleaseForTest mode does NOT enable development, allowDebugging, connectProfiler or deepProfiling
+        /// inside the BuildPlayer scope for all platforms (Android, iOS, Windows).
+        /// ReleaseForTest 是 Release 构建变体，用于自动化测试，不应带有 Development 标记
+        /// （避免 IL2CPP 编译膨胀和 Development Splash Screen），但通过注入测试程序集来实现自动化测试能力。
+        /// ReleaseForTest is a Release-variant for automated testing that must not carry Development flags
+        /// (to avoid IL2CPP compilation bloat and Development Splash Screen), but gains test capability
+        /// through test assembly injection instead.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_PrepareHybridClrAndCreateBuildPlayerSettingsScope_ShouldKeepReleaseFlagsForReleaseForTestBuilds()
+        {
+            var helperMethod = typeof(BuildTools_ClientPackage).GetMethod(
+                "PrepareHybridClrAndCreateBuildPlayerSettingsScope",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            Assert.That(helperMethod, Is.Not.Null);
+
+            var previousDevelopment = EditorUserBuildSettings.development;
+            var previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
+            var previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
+            var previousDeepProfiling = EditorUserBuildSettings.buildWithDeepProfilingSupport;
+
+            try
+            {
+                var platformTestCases = new[]
+                {
+                    (target: BuildTarget.Android, label: "Android"),
+                    (target: BuildTarget.iOS, label: "iOS"),
+                    (target: BuildTarget.StandaloneWindows64, label: "Windows"),
+                };
+
+                foreach (var (target, label) in platformTestCases)
+                {
+                    EditorUserBuildSettings.development = false;
+                    EditorUserBuildSettings.allowDebugging = false;
+                    EditorUserBuildSettings.connectProfiler = false;
+                    EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
+
+                    var scope = (IDisposable)helperMethod.Invoke(
+                        null,
+                        new object[]
+                        {
+                            BuildTools_ClientPackage.BuildMode.ReleaseForTest,
+                            false,
+                            $"test-{label.ToLower()}-release-fortest-flags",
+                            target,
+                            null
+                        });
+
+                    using (scope)
+                    {
+                        Assert.That(EditorUserBuildSettings.development, Is.False, $"{label} development 应为 False");
+                        Assert.That(EditorUserBuildSettings.allowDebugging, Is.False, $"{label} allowDebugging 应为 False");
+                        Assert.That(EditorUserBuildSettings.connectProfiler, Is.False, $"{label} connectProfiler 应为 False");
+                        Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False, $"{label} deepProfiling 应为 False");
+                    }
+
+                    Assert.That(EditorUserBuildSettings.development, Is.False, $"{label} development 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.allowDebugging, Is.False, $"{label} allowDebugging 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.connectProfiler, Is.False, $"{label} connectProfiler 应恢复为 False");
+                    Assert.That(EditorUserBuildSettings.buildWithDeepProfilingSupport, Is.False, $"{label} deepProfiling 应恢复为 False");
+                }
+            }
+            finally
+            {
+                EditorUserBuildSettings.development = previousDevelopment;
+                EditorUserBuildSettings.allowDebugging = previousAllowDebugging;
+                EditorUserBuildSettings.connectProfiler = previousConnectProfiler;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = previousDeepProfiling;
+            }
+        }
+
+        /// <summary>
+        /// 验证 ShouldEnableProfilerForPackageBuild 按 4 级 BuildMode 正确返回：
+        /// - Debug: false（CI 构建一律关闭 profiler）
+        /// - DebugForProfiler: true（显式性能剖析模式）
+        /// - Release: false
+        /// - ReleaseForTest: false
+        /// Verify that ShouldEnableProfilerForPackageBuild returns correct values per 4-level BuildMode:
+        /// - Debug: false (CI builds always skip profiler by default)
+        /// - DebugForProfiler: true (explicit profiling mode)
+        /// - Release: false
+        /// - ReleaseForTest: false
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_ShouldEnableProfilerForPackageBuild_UsesFourLevelBuildMode()
         {
             var method = typeof(BuildTools_ClientPackage).GetMethod(
                 "ShouldEnableProfilerForPackageBuild",
@@ -567,13 +786,22 @@ namespace BDFramework.EditorTest.DevOps
 
             Assert.That(method, Is.Not.Null);
 
+            var platforms = new[] { BuildTarget.Android, BuildTarget.iOS, BuildTarget.StandaloneWindows64 };
+
             // Debug 模式下所有平台都应返回 false
             // All platforms should return false in Debug mode
-            var platforms = new[] { BuildTarget.Android, BuildTarget.iOS, BuildTarget.StandaloneWindows64 };
             foreach (var platform in platforms)
             {
                 var result = (bool)method.Invoke(null, new object[] { BuildTools_ClientPackage.BuildMode.Debug, platform });
                 Assert.That(result, Is.False, $"ShouldEnableProfilerForPackageBuild(Debug, {platform}) 应返回 false");
+            }
+
+            // DebugForProfiler 模式下所有平台都应返回 true
+            // All platforms should return true in DebugForProfiler mode
+            foreach (var platform in platforms)
+            {
+                var result = (bool)method.Invoke(null, new object[] { BuildTools_ClientPackage.BuildMode.DebugForProfiler, platform });
+                Assert.That(result, Is.True, $"ShouldEnableProfilerForPackageBuild(DebugForProfiler, {platform}) 应返回 true");
             }
 
             // Release 模式也应返回 false
@@ -582,6 +810,14 @@ namespace BDFramework.EditorTest.DevOps
             {
                 var result = (bool)method.Invoke(null, new object[] { BuildTools_ClientPackage.BuildMode.Release, platform });
                 Assert.That(result, Is.False, $"ShouldEnableProfilerForPackageBuild(Release, {platform}) 应返回 false");
+            }
+
+            // ReleaseForTest 模式也应返回 false
+            // ReleaseForTest mode should also return false
+            foreach (var platform in platforms)
+            {
+                var result = (bool)method.Invoke(null, new object[] { BuildTools_ClientPackage.BuildMode.ReleaseForTest, platform });
+                Assert.That(result, Is.False, $"ShouldEnableProfilerForPackageBuild(ReleaseForTest, {platform}) 应返回 false");
             }
         }
 
@@ -997,6 +1233,57 @@ namespace BDFramework.EditorTest.DevOps
             {
                 DeleteDirectoryIfExists(tempRoot);
             }
+        }
+
+        /// <summary>
+        /// 验证 ShouldInjectTestAssemblies 按 4 级 BuildMode 正确判断测试程序集注入：
+        /// - Debug: true
+        /// - DebugForProfiler: false（性能剖析不应引入测试噪声）
+        /// - Release: false
+        /// - ReleaseForTest: true（自动化测试需要测试程序集）
+        /// Verify that ShouldInjectTestAssemblies correctly determines test assembly injection per 4-level BuildMode.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_ShouldInjectTestAssemblies_UsesFourLevelBuildMode()
+        {
+            Assert.That(BuildTools_ClientPackage.ShouldInjectTestAssemblies(BuildTools_ClientPackage.BuildMode.Debug), Is.True);
+            Assert.That(BuildTools_ClientPackage.ShouldInjectTestAssemblies(BuildTools_ClientPackage.BuildMode.DebugForProfiler), Is.False);
+            Assert.That(BuildTools_ClientPackage.ShouldInjectTestAssemblies(BuildTools_ClientPackage.BuildMode.Release), Is.False);
+            Assert.That(BuildTools_ClientPackage.ShouldInjectTestAssemblies(BuildTools_ClientPackage.BuildMode.ReleaseForTest), Is.True);
+        }
+
+        /// <summary>
+        /// 验证 IsDebugBuildMode 按 4 级 BuildMode 正确判断 Debug 类构建：
+        /// - Debug: true
+        /// - DebugForProfiler: true
+        /// - Release: false
+        /// - ReleaseForTest: false
+        /// Verify that IsDebugBuildMode correctly identifies debug-variant builds per 4-level BuildMode.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_IsDebugBuildMode_UsesFourLevelBuildMode()
+        {
+            Assert.That(BuildTools_ClientPackage.IsDebugBuildMode(BuildTools_ClientPackage.BuildMode.Debug), Is.True);
+            Assert.That(BuildTools_ClientPackage.IsDebugBuildMode(BuildTools_ClientPackage.BuildMode.DebugForProfiler), Is.True);
+            Assert.That(BuildTools_ClientPackage.IsDebugBuildMode(BuildTools_ClientPackage.BuildMode.Release), Is.False);
+            Assert.That(BuildTools_ClientPackage.IsDebugBuildMode(BuildTools_ClientPackage.BuildMode.ReleaseForTest), Is.False);
+        }
+
+        /// <summary>
+        /// 验证 IsReleaseBuildMode 按 4 级 BuildMode 正确判断 Release 类构建：
+        /// - Debug: false
+        /// - DebugForProfiler: false
+        /// - Release: true
+        /// - ReleaseForTest: true
+        /// Verify that IsReleaseBuildMode correctly identifies release-variant builds per 4-level BuildMode.
+        /// </summary>
+        [Test]
+        public void BuildTools_ClientPackage_IsReleaseBuildMode_UsesFourLevelBuildMode()
+        {
+            Assert.That(BuildTools_ClientPackage.IsReleaseBuildMode(BuildTools_ClientPackage.BuildMode.Debug), Is.False);
+            Assert.That(BuildTools_ClientPackage.IsReleaseBuildMode(BuildTools_ClientPackage.BuildMode.DebugForProfiler), Is.False);
+            Assert.That(BuildTools_ClientPackage.IsReleaseBuildMode(BuildTools_ClientPackage.BuildMode.Release), Is.True);
+            Assert.That(BuildTools_ClientPackage.IsReleaseBuildMode(BuildTools_ClientPackage.BuildMode.ReleaseForTest), Is.True);
         }
 
         /// <summary>

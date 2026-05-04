@@ -26,6 +26,7 @@ namespace BDFramework.Editor.DevOps
     static public partial class PublishPipeLineCI
     {
         const string BuildDebugBatchArgName = "-buildDebug";
+        const string BuildModeBatchArgName = "-buildMode";
         const string EnableE2ETestSymbol = "ENABLE_E2ETEST";
 
         /// <summary>
@@ -148,11 +149,30 @@ namespace BDFramework.Editor.DevOps
         }
 
         /// <summary>
-        /// 根据显式参数列表解析母包构建模式。
-        /// 该重载主要供测试验证参数路由使用。
+        /// 根据给定参数列表解析母包构建模式。
+        /// 优先使用 <c>-buildMode</c> 参数（可指定 Debug / DebugForProfiler / Release / ReleaseForTest），
+        /// 如果未提供则回退到 <c>-buildDebug</c> 布尔参数以保持向后兼容。
+        /// Resolve the package build mode from the given argument list.
+        /// Prioritizes the <c>-buildMode</c> parameter (which can specify Debug / DebugForProfiler / Release / ReleaseForTest),
+        /// falling back to the legacy <c>-buildDebug</c> boolean parameter for backward compatibility.
         /// </summary>
         static public BuildTools_ClientPackage.BuildMode ResolveClientPackageBuildModeForBatchMode(IReadOnlyList<string> args)
         {
+            // 优先读取 -buildMode 命名值
+            // Prioritize the -buildMode named value
+            var buildModeStr = BatchModeCommandLine.GetArg(args, BuildModeBatchArgName);
+            if (!string.IsNullOrWhiteSpace(buildModeStr))
+            {
+                if (Enum.TryParse<BuildTools_ClientPackage.BuildMode>(buildModeStr, true, out var parsed))
+                {
+                    return parsed;
+                }
+
+                Debug.LogWarning($"【CI】无法解析 -buildMode 值 '{buildModeStr}'，回退到 -buildDebug 兼容逻辑 | Cannot parse -buildMode value '{buildModeStr}', falling back to -buildDebug compatibility logic");
+            }
+
+            // 向后兼容：-buildDebug true → Debug，-buildDebug false / 未提供 → Release
+            // Backward compatibility: -buildDebug true → Debug, -buildDebug false / absent → Release
             return IsDebugBuildRequested(args)
                 ? BuildTools_ClientPackage.BuildMode.Debug
                 : BuildTools_ClientPackage.BuildMode.Release;
@@ -164,7 +184,10 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         static public bool ShouldIncludeDebugSymbolForTalosClientPackageBuild(BuildTools_ClientPackage.BuildMode buildMode)
         {
-            return buildMode == BuildTools_ClientPackage.BuildMode.Debug;
+            // Debug 类构建需要 DEBUG 宏，否则运行时桥接层上的 Conditional("DEBUG") E2E 启动入口会在编译期被裁掉。
+            // Debug-variant builds require the DEBUG macro, otherwise the Conditional("DEBUG") E2E entry points
+            // on the runtime bridge layer will be stripped at compile time.
+            return BuildTools_ClientPackage.IsDebugBuildMode(buildMode);
         }
 
         /// <summary>
@@ -181,12 +204,12 @@ namespace BDFramework.Editor.DevOps
         static private void BuildClientPackageForBatchMode(BuildTarget buildTarget)
         {
             var buildMode = ResolveClientPackageBuildModeForBatchMode();
-            var enableTalosDebug = buildMode == BuildTools_ClientPackage.BuildMode.Debug;
+            var shouldInjectTests = BuildTools_ClientPackage.ShouldInjectTestAssemblies(buildMode);
             var includeDebugSymbol = ShouldIncludeDebugSymbolForTalosClientPackageBuild(buildMode);
-            Debug.Log($"【CI】BuildClientPackage Target:{buildTarget} BuildMode:{buildMode} TalosDebug:{enableTalosDebug} IncludeDebugSymbol:{includeDebugSymbol}");
+            Debug.Log($"【CI】BuildClientPackage Target:{buildTarget} BuildMode:{buildMode} ShouldInjectTests:{shouldInjectTests} IncludeDebugSymbol:{includeDebugSymbol}");
 
-            // Debug 构建时注入测试程序集到 HybridCLR 配置
-            // Inject test assemblies into HybridCLR config for Debug builds
+            // 需要测试程序集的构建模式（Debug、ReleaseForTest）注入测试程序集到 HybridCLR 配置
+            // Inject test assemblies into HybridCLR config for modes that require them (Debug, ReleaseForTest)
             // 这一步必须在母包构建之前完成，因为 BuildTools_ClientPackage.Build() 会在
             // HybridCLR 预处理阶段读取 hotUpdateAssemblies 来决定哪些 DLL 属于热更程序集，
             // 并在 BuildExe 后由 EnsureHybridClrHotUpdateAssembliesCopiedToManaged() 将它们
@@ -195,7 +218,7 @@ namespace BDFramework.Editor.DevOps
             // reads hotUpdateAssemblies during HybridCLR prebuild to determine which DLLs are hot-update
             // assemblies, and after BuildExe, EnsureHybridClrHotUpdateAssembliesCopiedToManaged() copies
             // them into the Player's Managed directory.
-            if (enableTalosDebug)
+            if (shouldInjectTests)
             {
                 HotfixScript.HotfixTestAssemblyInjector.ResetInjectionState();
                 HotfixScript.HotfixTestAssemblyInjector.InjectTestAssemblies();
@@ -205,7 +228,7 @@ namespace BDFramework.Editor.DevOps
                 HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
             }
 
-            if (enableTalosDebug)
+            if (shouldInjectTests)
             {
                 using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: includeDebugSymbol))
                 {
@@ -225,12 +248,13 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         static private void BuildClientResHotfixCodeForBatchMode(BuildTarget buildTarget)
         {
-            var enableDebugBuild = IsDebugBuildRequested();
-            Debug.Log($"【CI】BuildClientResHotfixCode Target:{buildTarget} TalosDebug:{enableDebugBuild}");
+            var buildMode = ResolveClientPackageBuildModeForBatchMode();
+            var shouldInjectTests = BuildTools_ClientPackage.ShouldInjectTestAssemblies(buildMode);
+            Debug.Log($"【CI】BuildClientResHotfixCode Target:{buildTarget} BuildMode:{buildMode} ShouldInjectTests:{shouldInjectTests}");
 
-            // Debug 构建时注入测试程序集
-            // Inject test assemblies when building in Debug mode
-            if (enableDebugBuild)
+            // 需要测试程序集的构建模式注入测试程序集
+            // Inject test assemblies for modes that require them
+            if (shouldInjectTests)
             {
                 HotfixScript.HotfixTestAssemblyInjector.ResetInjectionState();
                 HotfixScript.HotfixTestAssemblyInjector.InjectTestAssemblies();
@@ -240,9 +264,9 @@ namespace BDFramework.Editor.DevOps
                 HotfixScript.HotfixTestAssemblyInjector.EnsureTestAssembliesRemoved();
             }
 
-            if (enableDebugBuild)
+            if (shouldInjectTests)
             {
-                using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: true))
+                using (new TalosDebugDefineScope(buildTarget, includeDebugSymbol: BuildTools_ClientPackage.IsDebugBuildMode(buildMode)))
                 {
                     BuildTools_Assets.BuildClientResForBatchMode(buildTarget,
                         BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
@@ -296,6 +320,26 @@ namespace BDFramework.Editor.DevOps
         }
 
         /// <summary>
+        /// 发布包体 Android DebugForProfiler
+        /// </summary>
+        [CI(Des = "发布母包Android-DebugForProfiler")]
+        static public void PublishPackage_AndroidDebugForProfiler()
+        {
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.Android,
+                BuildTools_ClientPackage.BuildMode.DebugForProfiler);
+        }
+
+        /// <summary>
+        /// 发布包体 Android ReleaseForTest
+        /// </summary>
+        [CI(Des = "发布母包Android-ReleaseForTest")]
+        static public void PublishPackage_AndroidReleaseForTest()
+        {
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.Android,
+                BuildTools_ClientPackage.BuildMode.ReleaseForTest);
+        }
+
+        /// <summary>
         /// 发布包体 iOSDebug
         /// </summary>
         [CI(Des = "发布母包iOS-Debug")]
@@ -316,6 +360,26 @@ namespace BDFramework.Editor.DevOps
         }
 
         /// <summary>
+        /// 发布包体 iOS DebugForProfiler
+        /// </summary>
+        [CI(Des = "发布母包iOS-DebugForProfiler")]
+        static public void PublishPackage_iOSDebugForProfiler()
+        {
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.iOS,
+                BuildTools_ClientPackage.BuildMode.DebugForProfiler);
+        }
+
+        /// <summary>
+        /// 发布包体 iOS ReleaseForTest
+        /// </summary>
+        [CI(Des = "发布母包iOS-ReleaseForTest")]
+        static public void PublishPackage_iOSReleaseForTest()
+        {
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.iOS,
+                BuildTools_ClientPackage.BuildMode.ReleaseForTest);
+        }
+
+        /// <summary>
         /// 发布包体 WindowsDebug
         /// </summary>
         [CI(Des = "发布母包Windows-Debug")]
@@ -333,6 +397,26 @@ namespace BDFramework.Editor.DevOps
         {
             BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.StandaloneWindows64,
                 BuildTools_ClientPackage.BuildMode.Release);
+        }
+
+        /// <summary>
+        /// 发布包体 Windows DebugForProfiler
+        /// </summary>
+        [CI(Des = "发布母包Windows-DebugForProfiler")]
+        static public void PublishPackage_WindowsDebugForProfiler()
+        {
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.StandaloneWindows64,
+                BuildTools_ClientPackage.BuildMode.DebugForProfiler);
+        }
+
+        /// <summary>
+        /// 发布包体 Windows ReleaseForTest
+        /// </summary>
+        [CI(Des = "发布母包Windows-ReleaseForTest")]
+        static public void PublishPackage_WindowsReleaseForTest()
+        {
+            BuildTools_ClientPackage.BuildClientPackageForBatchMode(BuildTarget.StandaloneWindows64,
+                BuildTools_ClientPackage.BuildMode.ReleaseForTest);
         }
 
         /// <summary>
