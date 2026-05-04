@@ -262,13 +262,17 @@ namespace BDFramework.Editor.BuildPipeline
         }
 
         /// <summary>
-        /// 先执行 HybridCLR 预处理，再创建正式母包构建阶段需要的 EditorUserBuildSettings 覆盖作用域。
-        /// Run HybridCLR prebuild first, then create the EditorUserBuildSettings override scope required by the real package build phase.
-        /// HybridCLR 的临时 stripped-AOT 构建依赖稳定的默认 EditorUserBuildSettings；
-        /// 如果过早把 Debug 包的 profiler、debugging 与 deep profiling 开关写入全局状态，第三方内部 BuildPlayer 会继承这些调试标记并在 CI 上失败。
-        /// HybridCLR's temporary stripped-AOT build depends on stable default EditorUserBuildSettings;
-        /// if debug-package profiler, debugging, and deep-profiling flags are written into the global state too early,
-        /// the third-party internal BuildPlayer inherits those debug markers and can fail on CI.
+        /// 先清除 deep profiling 标记，再执行 HybridCLR 预处理，最后创建正式母包构建阶段需要的 EditorUserBuildSettings 覆盖作用域。
+        /// Clear deep-profiling flags first, then run HybridCLR prebuild, and finally create the EditorUserBuildSettings override scope for the real package build phase.
+        /// 必须在 HybridCLR PreBuild 之前将 deepProfiling 关闭，否则 HybridCLR 内部的 GenerateStripedAOTDlls
+        /// 会继承 EditorUserBuildSettings 中残留的 deepProfiling=true（来自上次手动构建），导致中间 AOT 构建带
+        /// EnableDeepProfilingSupport 标记，Tundra 增量缓存被深度剖析产物污染，最终 BuildPlayer 仍需
+        /// 重编译这些膨胀过的 IL2CPP 单元，Android IL2CPP 耗时从 ~10min 膨胀到 ~34min。
+        /// Deep-profiling must be disabled BEFORE HybridCLR PreBuild; otherwise GenerateStripedAOTDlls inherits
+        /// the residual deepProfiling=true from EditorUserBuildSettings (left by a prior manual build), causing
+        /// the intermediate AOT build to run with EnableDeepProfilingSupport. Tundra's incremental cache gets
+        /// polluted with deep-profiling artifacts, and the final BuildPlayer still has to re-compile those
+        /// bloated IL2CPP units, inflating Android IL2CPP from ~10min to ~34min.
         /// </summary>
         /// <param name="buildMode">正式母包构建模式。</param>
         /// <param name="buildMode">Final package build mode.</param>
@@ -290,6 +294,28 @@ namespace BDFramework.Editor.BuildPipeline
             Action<BuildTarget> hybridClrPreBuildAction = null)
         {
             Debug.Log($"【BuildPackage】 HybridCLR 预处理判定 => shouldPrepare:{shouldPrepareHybridClr} reason:{hybridClrPrepareReason}");
+
+            // 提前将 deep profiling 和 profiler 连接标记关闭，防止 HybridCLR PreBuild 内部的
+            // GenerateStripedAOTDlls 继承残留的 deepProfiling=true，污染 IL2CPP Tundra 缓存。
+            // Pre-emptively clear deep-profiling and profiler-connection flags so HybridCLR PreBuild's
+            // GenerateStripedAOTDlls does not inherit residual deepProfiling=true from a prior manual
+            // build, which would pollute the IL2CPP Tundra cache.
+            var enableProfiler = ShouldEnableProfilerForPackageBuild(buildMode, buildTarget);
+            if (!enableProfiler)
+            {
+                if (EditorUserBuildSettings.buildWithDeepProfilingSupport)
+                {
+                    Debug.Log("【BuildPackage】 预清除 buildWithDeepProfilingSupport（HybridCLR PreBuild 前），防止中间 AOT 构建污染 IL2CPP 缓存");
+                    EditorUserBuildSettings.buildWithDeepProfilingSupport = false;
+                }
+
+                if (EditorUserBuildSettings.connectProfiler)
+                {
+                    Debug.Log("【BuildPackage】 预清除 connectProfiler（HybridCLR PreBuild 前），防止中间 AOT 构建继承 profiler 标记");
+                    EditorUserBuildSettings.connectProfiler = false;
+                }
+            }
+
             if (shouldPrepareHybridClr)
             {
                 Debug.Log($"【BuildPackage】 开始执行 HybridCLR 预处理: {hybridClrPrepareReason}");
