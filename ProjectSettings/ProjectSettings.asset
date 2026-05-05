@@ -786,7 +786,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
     Standalone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG;BDEBUG
-    iPhone: ENABLE_IL2CPP;ENABLE_HYCLR
+    iPhone: ENABLE_IL2CPP;ENABLE_HYCLR;ENABLE_BDEBUG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
