@@ -3637,10 +3637,13 @@ namespace SQLite4Unity3d
 
         public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map, bool isILRuntime = false)
         {
-            // ─── 分步计时：细粒度性能剖析 ───
-            // Step-by-step timing for fine-grained performance profiling
-            var sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
+            // ─── 分步计时：BDebugPerformanceProfiler 输出结构化流水线报告 ───
+            // Step-by-step timing: BDebugPerformanceProfiler outputs structured pipeline report
+            var perfTag = ZString.Format("SQL_{0}", map.TableName);
+#if ENABLE_BDEBUG
+            BDebugPerformanceProfiler.BeginStepTimer(perfTag, "SQLite");
+            BDebugPerformanceProfiler.BeginStep(perfTag, "Prepare");
+#endif
 
             if (_conn.Trace)
             {
@@ -3650,14 +3653,15 @@ namespace SQLite4Unity3d
             // 步骤1: Prepare（编译 SQL 或复用缓存语句 + 绑定参数）
             // Step 1: Prepare (compile SQL or reuse cached statement + bind parameters)
             var stmt = Prepare();
-            sw.Stop();
-            var prepareTimeMs = sw.ElapsedTicks / 10000f;
+#if ENABLE_BDEBUG
+            BDebugPerformanceProfiler.EndStep(perfTag, "Prepare");
+            BDebugPerformanceProfiler.BeginStep(perfTag, "ColumnMapping");
+#endif
 
             try
             {
                 // 步骤2: 列映射（构建 fastColumnSetters 委托）
                 // Step 2: Column mapping (build fastColumnSetter delegates)
-                sw.Restart();
                 var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
                 Action<object, Sqlite3Statement, int>[] fastColumnSetters = null;
 
@@ -3697,17 +3701,20 @@ namespace SQLite4Unity3d
                     }
                 }
 
-                sw.Stop();
-                var columnMappingTimeMs = sw.ElapsedTicks / 10000f;
+#if ENABLE_BDEBUG
+                BDebugPerformanceProfiler.EndStep(perfTag, "ColumnMapping");
+#endif
 
-                // ─── 行级计时累加器 ───
-                // Row-level timing accumulators
+                // ─── 行级计时累加器（热循环中使用 Stopwatch 避免字典查找开销）───
+                // Row-level timing accumulators (use Stopwatch in hot loop to avoid dictionary lookup overhead)
                 float stepTimeMs = 0f;          // SQLite3.Step 总耗时
                 float createObjTimeMs = 0f;     // 对象实例化总耗时
                 float fastSetTimeMs = 0f;       // fastColumnSetter 赋值总耗时
                 float readColTimeMs = 0f;       // ReadCol 反射赋值总耗时（含 FastJsonConvert）
 
                 var count = 0;
+                var sw = new System.Diagnostics.Stopwatch();
+
                 //反序列化
                 // 步骤3: 逐行 Step + 反序列化
                 // Step 3: Per-row Step + deserialization
@@ -3773,12 +3780,34 @@ namespace SQLite4Unity3d
                     stepTimeMs += sw.ElapsedTicks / 10000f;
                 }
 
-                // 汇总：兼容旧接口 serchSqlTime + deSerializeTime
-                // Summary: compatible with legacy serchSqlTime + deSerializeTime interface
+#if ENABLE_BDEBUG
+                // 构建完整流水线报告：从分步计时器提取 Prepare/ColumnMapping，加上行级累加数据
+                // Build complete pipeline report: extract Prepare/ColumnMapping from step timer, add row-level accumulated data
+                var stepData = BDebugPerformanceProfiler.EndStepTimerGetData(perfTag);
+                if (stepData != null)
+                {
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "Step", TimeMs = stepTimeMs });
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "CreateObj", TimeMs = createObjTimeMs });
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "FastSet", TimeMs = fastSetTimeMs });
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "ReadCol", TimeMs = readColTimeMs });
+                    BDebugPerformanceProfiler.PrintPipelineReport(perfTag, stepData, count, CommandText);
+                }
+
+                // 从 stepData 中提取 Prepare/ColumnMapping 耗时，兼容旧接口
+                // Extract Prepare/ColumnMapping timing from stepData for legacy interface compatibility
+                float prepareTimeMs = 0f;
+                float columnMappingTimeMs = 0f;
+                if (stepData != null)
+                {
+                    foreach (var s in stepData)
+                    {
+                        if (s.StepName == "Prepare") prepareTimeMs = s.TimeMs;
+                        else if (s.StepName == "ColumnMapping") columnMappingTimeMs = s.TimeMs;
+                    }
+                }
                 var serchSqlTime = prepareTimeMs + columnMappingTimeMs;
                 var deSerializeTime = stepTimeMs + createObjTimeMs + fastSetTimeMs + readColTimeMs;
 
-#if ENABLE_BDEBUG
                 SqlitePerformanceMonitor.RecordQuery(CommandText, serchSqlTime, deSerializeTime, count,
                     prepareTimeMs, columnMappingTimeMs, stepTimeMs, createObjTimeMs, fastSetTimeMs, readColTimeMs);
 #endif

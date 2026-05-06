@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using BDFramework.Sql;
+using BDFramework.Test;
 using LitJson;
 using NUnit.Framework;
 using Unity.PerformanceTesting;

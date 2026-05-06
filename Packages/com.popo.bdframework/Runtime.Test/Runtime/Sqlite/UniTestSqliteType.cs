@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using SQLite4Unity3d;
-using UnityEngine;
 
-namespace BDFramework.EditorTest
+namespace BDFramework.Test
 {
 
     public class UniTestSqliteType

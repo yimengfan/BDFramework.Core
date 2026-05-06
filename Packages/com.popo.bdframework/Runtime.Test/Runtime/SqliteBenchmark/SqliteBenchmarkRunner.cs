@@ -1,0 +1,811 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using AssetsManager.Sql;
+using BDFramework.Sql;
+using SQLite4Unity3d;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
+
+// Sqlite3Statement 在 SQLite.cs 中是 using 别名（= System.IntPtr），
+// 不能跨文件可见，在此定义同名类型别名供基准测试使用。
+// Sqlite3Statement is a using alias (= System.IntPtr) in SQLite.cs,
+// not visible across files; define a local type alias for benchmark use.
+using Sqlite3Statement = System.IntPtr;
+
+namespace BDFramework.Test.SqliteBenchmark
+{
+    /// <summary>
+    /// SQLite 性能基准测试运行器 — Runtime 兼容，支持真机和 Editor 运行。
+    /// 使用 BDebugPerformanceProfiler 输出结构化流水线报告，
+    /// 支持 6 步分步计时（Prepare → ColumnMapping → Step → CreateObj → FastSet → ReadCol）。
+    ///
+    /// SQLite performance benchmark runner — Runtime compatible, supports device and Editor.
+    /// Uses BDebugPerformanceProfiler for structured pipeline reports,
+    /// supports 6-step timing (Prepare → ColumnMapping → Step → CreateObj → FastSet → ReadCol).
+    /// </summary>
+    static public class SqliteBenchmarkRunner
+    {
+        /// <summary>
+        /// 基准测试数据库临时目录。
+        /// Benchmark database temporary directory.
+        /// </summary>
+        static public readonly string BenchmarkDbDir = Path.Combine(Path.GetTempPath(), "BDFramework_SqliteBenchmark");
+
+        /// <summary>
+        /// 运行全部基准测试，输出结构化报告。
+        /// 测试目的=验证 SQLite 查询管线各步骤性能，识别瓶颈。
+        /// 实现手段=使用 BDebugPerformanceProfiler 分步计时 + SqlitePerformanceMonitor 汇总。
+        /// Run all benchmark tests, output structured report.
+        /// Test purpose=verify SQLite query pipeline step performance, identify bottlenecks.
+        /// Method=use BDebugPerformanceProfiler step timing + SqlitePerformanceMonitor aggregation.
+        /// </summary>
+        static public SqliteBenchmarkReport RunAll(string customDbDir = null)
+        {
+            var dbDir = customDbDir ?? BenchmarkDbDir;
+
+            Debug.Log("<color=cyan>═══════════════════════════════════════════════</color>");
+            Debug.Log("<color=cyan>   SQLite 性能基准测试 — 开始</color>");
+            Debug.Log("<color=cyan>═══════════════════════════════════════════════</color>");
+
+            // 关闭 TableQueryForILRuntime 的编辑器 SQL 日志，避免日志开销干扰基准计时
+            // Disable TableQueryForILRuntime editor SQL logs to avoid log overhead affecting benchmark timing
+            TableQueryForILRuntime.EnableEditorSqlLog = false;
+
+            var report = new SqliteBenchmarkReport();
+            var totalSw = Stopwatch.StartNew();
+
+            try
+            {
+                PrepareBenchmarkDirectory(dbDir);
+
+                // ─── 测试 1: FastJsonConvert 正确性验证 ───
+                Test_FastJsonConvert_Correctness(report);
+
+                // ─── 测试 2: 批量 InsertAll vs 逐行 Insert ───
+                Test_InsertAll_Vs_RowByRow(report, dbDir);
+
+                // ─── 测试 3: PRAGMA 只读优化 vs 默认配置 ───
+                Test_PragmaOptimization_Vs_Default(report, dbDir);
+
+                // ─── 测试 4: 真实 Schema 瓶颈分析（6步分步计时）───
+                Test_RealSchema_BottleneckAnalysis(report, dbDir);
+
+                // ─── 汇总报告 ──
+                Debug.Log(report.FormatReport());
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"基准测试异常: {e}\n{e.StackTrace}");
+            }
+            finally
+            {
+                totalSw.Stop();
+                Debug.Log($"<color=cyan>基准测试总耗时: {totalSw.ElapsedMilliseconds}ms</color>");
+                TableQueryForILRuntime.EnableEditorSqlLog = true;
+                CleanupBenchmarkDirectory(dbDir);
+            }
+
+            return report;
+        }
+
+        /// <summary>
+        /// 仅运行真实 Schema 瓶颈分析测试 — 输出 200 行对象的每步耗时。
+        /// 测试目的=量化查询 200 行时各步骤（SQL、反序列化等）的时间分布。
+        /// 实现手段=使用 BDebugPerformanceProfiler + Stopwatch 分步计时。
+        /// Run only real Schema bottleneck analysis — output per-step timing for 200-row queries.
+        /// Test purpose=quantify time distribution across query steps (SQL, deserialization, etc.) for 200 rows.
+        /// Method=use BDebugPerformanceProfiler + Stopwatch step timing.
+        /// </summary>
+        static public Dictionary<string, StepTimingResult> RunBottleneckAnalysis(string customDbDir = null)
+        {
+            var dbDir = customDbDir ?? BenchmarkDbDir;
+            var report = new SqliteBenchmarkReport();
+
+            try
+            {
+                PrepareBenchmarkDirectory(dbDir);
+                Test_RealSchema_BottleneckAnalysis(report, dbDir);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"瓶颈分析异常: {e}\n{e.StackTrace}");
+            }
+            finally
+            {
+                CleanupBenchmarkDirectory(dbDir);
+            }
+
+            return report.RealSchemaStepTimings;
+        }
+
+        #region 准备 & 清理
+
+        static void PrepareBenchmarkDirectory(string dbDir)
+        {
+            if (!Directory.Exists(dbDir))
+            {
+                Directory.CreateDirectory(dbDir);
+            }
+        }
+
+        static void CleanupBenchmarkDirectory(string dbDir)
+        {
+            try
+            {
+                if (Directory.Exists(dbDir))
+                {
+                    Directory.Delete(dbDir, true);
+                }
+            }
+            catch
+            {
+                // 忽略清理失败 / Ignore cleanup failure
+            }
+        }
+
+        static void ApplyBenchmarkPragmas(SQLiteConnection conn)
+        {
+            try
+            {
+                conn.Execute("PRAGMA cache_size=-20000");
+                conn.Execute("PRAGMA mmap_size=268435456");
+                conn.Execute("PRAGMA journal_mode=OFF");
+                conn.Execute("PRAGMA synchronous=OFF");
+                conn.Execute("PRAGMA temp_store=MEMORY");
+                conn.Execute("PRAGMA locking_mode=NORMAL");
+            }
+            catch
+            {
+                // 某些 PRAGMA 在只读模式下可能失败，忽略
+                // Some PRAGMAs may fail in read-only mode, ignore
+            }
+        }
+
+        #endregion
+
+        #region 测试 1: FastJsonConvert 正确性验证
+
+        static void Test_FastJsonConvert_Correctness(SqliteBenchmarkReport report)
+        {
+            Debug.Log("<color=yellow>── 测试 1: FastJsonConvert 正确性验证 ──</color>");
+            int passCount = 0;
+            int failCount = 0;
+
+            // int[]
+            {
+                var original = new int[] {1, 2, 3, 100, -5, 0, 999999};
+                var json = SqliteFastJsonConvert.Serialize(original);
+                var deserialized = SqliteFastJsonConvert.DeserializeArrayInt(json);
+                if (SqliteBenchmarkDataGenerator.ArraysEqual(original, deserialized))
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ int[] 正确: {json}");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ int[] 不匹配!");
+                }
+            }
+
+            // float[]
+            {
+                var original = new float[] {1.1f, 2.5f, -3.14f, 0f, 999.999f};
+                var json = SqliteFastJsonConvert.Serialize(original);
+                var deserialized = SqliteFastJsonConvert.DeserializeArrayFloat(json);
+                if (SqliteBenchmarkDataGenerator.ArraysEqual(original, deserialized))
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ float[] 正确: {json}");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ float[] 不匹配!");
+                }
+            }
+
+            // double[]
+            {
+                var original = new double[] {1.12345678d, 2.0d, -3.14d, 0d};
+                var json = SqliteFastJsonConvert.Serialize(original);
+                var deserialized = SqliteFastJsonConvert.DeserializeArrayDouble(json);
+                if (SqliteBenchmarkDataGenerator.ArraysEqual(original, deserialized))
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ double[] 正确: {json}");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ double[] 不匹配!");
+                }
+            }
+
+            // string[]
+            {
+                var original = new string[] {"hello", "world", "", "with,comma", "spaces here"};
+                var json = SqliteFastJsonConvert.Serialize(original);
+                var deserialized = SqliteFastJsonConvert.DeserializeArrayString(json);
+                if (SqliteBenchmarkDataGenerator.ArraysEqual(original, deserialized))
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ string[] 正确(简单): {json}");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ string[] 不匹配(简单)!");
+                }
+            }
+
+            // bool[]
+            {
+                var original = new bool[] {true, false, true, false, true};
+                var json = SqliteFastJsonConvert.Serialize(original);
+                var deserialized = SqliteFastJsonConvert.DeserializeArrayBool(json);
+                if (SqliteBenchmarkDataGenerator.ArraysEqual(original, deserialized))
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ bool[] 正确: {json}");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ bool[] 不匹配!");
+                }
+            }
+
+            // long[]
+            {
+                var original = new long[] {1L, 9999999999L, -123456789L, 0L};
+                var json = SqliteFastJsonConvert.Serialize(original);
+                var deserialized = SqliteFastJsonConvert.DeserializeArrayLong(json);
+                if (SqliteBenchmarkDataGenerator.ArraysEqual(original, deserialized))
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ long[] 正确: {json}");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ long[] 不匹配!");
+                }
+            }
+
+            // 空数组
+            {
+                var intArr = SqliteFastJsonConvert.DeserializeArrayInt("[]");
+                if (intArr.Length == 0)
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ 空数组正确");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ 空数组不匹配!");
+                }
+            }
+
+            // null/空字符串
+            {
+                var intArr = SqliteFastJsonConvert.DeserializeArrayInt(null);
+                var strArr = SqliteFastJsonConvert.DeserializeArrayString("");
+                if (intArr.Length == 0 && strArr.Length == 0)
+                {
+                    passCount++;
+                    Debug.Log($"  ✅ null/空字符串正确");
+                }
+                else
+                {
+                    failCount++;
+                    Debug.LogError($"  ❌ null/空字符串不匹配!");
+                }
+            }
+
+            Debug.Log($"<color=yellow>FastJsonConvert 正确性: {passCount}通过 / {failCount}失败</color>");
+            report.FastJsonCorrectnessPass = passCount;
+            report.FastJsonCorrectnessFail = failCount;
+        }
+
+        #endregion
+
+        #region 测试 2: 批量 InsertAll vs 逐行 Insert
+
+        static void Test_InsertAll_Vs_RowByRow(SqliteBenchmarkReport report, string dbDir)
+        {
+            Debug.Log("<color=yellow>── 测试 2: 批量 InsertAll vs 逐行 Insert ──</color>");
+
+            const int rowCount = 5000;
+            var rows = SqliteBenchmarkDataGenerator.GenerateBenchmarkRows(rowCount);
+
+            // ── 方式 A: 逐行 Insert（无事务） ──
+            {
+                var dbPath = Path.Combine(dbDir, "insert_rowbyrow.db");
+                if (File.Exists(dbPath)) File.Delete(dbPath);
+
+                using (var conn = new SQLiteConnection(dbPath))
+                {
+                    conn.CreateTable<BenchmarkRow>();
+                    var sw = Stopwatch.StartNew();
+                    var gc0 = GC.CollectionCount(0);
+
+                    foreach (var row in rows)
+                    {
+                        conn.Insert(row);
+                    }
+
+                    sw.Stop();
+                    var gc0After = GC.CollectionCount(0);
+                    report.InsertRowByRowMs = sw.ElapsedMilliseconds;
+                    report.InsertRowByRowGC = gc0After - gc0;
+                    Debug.Log($"  逐行Insert: {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
+                }
+
+                if (File.Exists(dbPath)) File.Delete(dbPath);
+            }
+
+            // ── 方式 B: InsertAll with transaction ──
+            {
+                var dbPath = Path.Combine(dbDir, "insert_batch.db");
+                if (File.Exists(dbPath)) File.Delete(dbPath);
+
+                using (var conn = new SQLiteConnection(dbPath))
+                {
+                    conn.CreateTable<BenchmarkRow>();
+                    var sw = Stopwatch.StartNew();
+                    var gc0 = GC.CollectionCount(0);
+
+                    conn.InsertAll(rows, typeof(BenchmarkRow), runInTransaction: true);
+
+                    sw.Stop();
+                    var gc0After = GC.CollectionCount(0);
+                    report.InsertBatchMs = sw.ElapsedMilliseconds;
+                    report.InsertBatchGC = gc0After - gc0;
+                    Debug.Log($"  批量InsertAll: {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
+                }
+
+                if (File.Exists(dbPath)) File.Delete(dbPath);
+            }
+
+            var speedup = report.InsertRowByRowMs > 0
+                ? (float)report.InsertRowByRowMs / Math.Max(1, report.InsertBatchMs)
+                : 0;
+            Debug.Log($"  <color=green>批量Insert加速比: {speedup:F2}x</color>");
+            report.InsertSpeedup = speedup;
+        }
+
+        #endregion
+
+        #region 测试 3: PRAGMA 只读优化 vs 默认配置
+
+        static void Test_PragmaOptimization_Vs_Default(SqliteBenchmarkReport report, string dbDir)
+        {
+            Debug.Log("<color=yellow>── 测试 3: PRAGMA 只读优化 vs 默认配置 ──</color>");
+
+            var readOnlyDbPath = Path.Combine(dbDir, "benchmark_readonly.db");
+            const int rowCount = 20000;
+            var rows = SqliteBenchmarkDataGenerator.GenerateSimpleRows(rowCount);
+
+            // 创建只读数据库
+            {
+                if (File.Exists(readOnlyDbPath)) File.Delete(readOnlyDbPath);
+                using (var conn = new SQLiteConnection(readOnlyDbPath))
+                {
+                    conn.CreateTable<SimpleRow>();
+                    conn.InsertAll(rows, typeof(SimpleRow), runInTransaction: true);
+                }
+            }
+
+            const int queryIterations = 100;
+
+            // ── 方式 A: 默认配置 ──
+            {
+                using (var conn = new SQLiteConnection(readOnlyDbPath, SQLiteOpenFlags.ReadOnly))
+                {
+                    var sw = Stopwatch.StartNew();
+                    var gc0 = GC.CollectionCount(0);
+
+                    for (int i = 0; i < queryIterations; i++)
+                    {
+                        conn.Query<SimpleRow>("SELECT * FROM SimpleRow WHERE Value1 > ?", 5000);
+                    }
+
+                    sw.Stop();
+                    var gc0After = GC.CollectionCount(0);
+                    report.QueryDefaultMs = sw.ElapsedMilliseconds;
+                    report.QueryDefaultGC = gc0After - gc0;
+                    Debug.Log($"  默认配置查询({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
+                }
+            }
+
+            // ── 方式 B: PRAGMA 优化 ──
+            {
+                using (var conn = new SQLiteConnection(readOnlyDbPath, SQLiteOpenFlags.ReadOnly))
+                {
+                    ApplyBenchmarkPragmas(conn);
+                    var sw = Stopwatch.StartNew();
+                    var gc0 = GC.CollectionCount(0);
+
+                    for (int i = 0; i < queryIterations; i++)
+                    {
+                        conn.Query<SimpleRow>("SELECT * FROM SimpleRow WHERE Value1 > ?", 5000);
+                    }
+
+                    sw.Stop();
+                    var gc0After = GC.CollectionCount(0);
+                    report.QueryPragmaMs = sw.ElapsedMilliseconds;
+                    report.QueryPragmaGC = gc0After - gc0;
+                    Debug.Log($"  PRAGMA优化查询({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
+                }
+            }
+
+            var speedup = report.QueryDefaultMs > 0
+                ? (float)report.QueryDefaultMs / Math.Max(1, report.QueryPragmaMs)
+                : 0;
+            Debug.Log($"  <color=green>PRAGMA优化加速比: {speedup:F2}x</color>");
+            report.QueryPragmaSpeedup = speedup;
+        }
+
+        #endregion
+
+        #region 测试 4: 真实 Schema 瓶颈分析（6步分步计时）
+
+        /// <summary>
+        /// 使用匹配真实游戏 Schema 的 POCO 类，
+        /// 对比纯标量表、少量数组表、密集数组表的 6 步分步计时，
+        /// 识别 ReadCol → FastJsonConvert 路径是否为瓶颈。
+        /// Uses POCO classes matching real game schemas to compare 6-step timing
+        /// across scalar-only, few-array, and array-heavy tables,
+        /// identifying whether the ReadCol → FastJsonConvert path is the bottleneck.
+        /// </summary>
+        static void Test_RealSchema_BottleneckAnalysis(SqliteBenchmarkReport report, string dbDir)
+        {
+            Debug.Log("<color=yellow>── 测试 4: 真实 Schema 瓶颈分析（6步分步计时）──</color>");
+
+            var dbPath = Path.Combine(dbDir, "real_schema.db");
+            if (File.Exists(dbPath)) File.Delete(dbPath);
+
+            SqlitePerformanceMonitor.Reset();
+
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                // ── 创建表 ──
+                conn.CreateTable<HeroSkillParameterRow>();
+                conn.CreateTable<ItemRow>();
+                conn.CreateTable<GoodsBaseRow>();
+                conn.CreateTable<ScalarOnlyRow>();
+
+                // ── 插入数据 ──
+                var heroRows = SqliteBenchmarkDataGenerator.GenerateHeroSkillParameterRows(295);
+                var itemRows = SqliteBenchmarkDataGenerator.GenerateItemRows(337);
+                var goodsRows = SqliteBenchmarkDataGenerator.GenerateGoodsBaseRows(170);
+                var scalarRows = SqliteBenchmarkDataGenerator.GenerateScalarOnlyRows(295);
+
+                conn.InsertAll(heroRows, typeof(HeroSkillParameterRow), runInTransaction: true);
+                conn.InsertAll(itemRows, typeof(ItemRow), runInTransaction: true);
+                conn.InsertAll(goodsRows, typeof(GoodsBaseRow), runInTransaction: true);
+                conn.InsertAll(scalarRows, typeof(ScalarOnlyRow), runInTransaction: true);
+
+                Debug.Log($"  数据插入完成: HeroSkillParameter={heroRows.Count}行, " +
+                          $"Item={itemRows.Count}行, GoodsBase={goodsRows.Count}行, ScalarOnly={scalarRows.Count}行");
+            }
+
+            // ── PRAGMA 优化后查询 + 6 步分步计时 ──
+            const int queryRepetitions = 5;
+            var stepTimings = new Dictionary<string, StepTimingResult>();
+
+            using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
+            {
+                ApplyBenchmarkPragmas(conn);
+
+                // ── 1. 纯标量表（对照组） ──
+                {
+                    var timing = MeasureQuerySteps<ScalarOnlyRow>(conn, queryRepetitions);
+                    stepTimings["ScalarOnly(17标量0数组)"] = timing;
+                    Debug.Log($"  <color=cyan>{timing.ToLogString("纯标量表(对照组)")}</color>");
+                }
+
+                // ── 2. Item 表（15标量+2数组） ──
+                {
+                    var timing = MeasureQuerySteps<ItemRow>(conn, queryRepetitions);
+                    stepTimings["Item(15标量+2数组)"] = timing;
+                    Debug.Log($"  <color=cyan>{timing.ToLogString("Item表(15标量+2数组)")}</color>");
+                }
+
+                // ── 3. GoodsBase 表（18标量+7数组） ──
+                {
+                    var timing = MeasureQuerySteps<GoodsBaseRow>(conn, queryRepetitions);
+                    stepTimings["GoodsBase(18标量+7数组)"] = timing;
+                    Debug.Log($"  <color=cyan>{timing.ToLogString("GoodsBase表(18标量+7数组)")}</color>");
+                }
+
+                // ── 4. HeroSkillParameter 表（12标量+21数组）—— 最极端 ──
+                {
+                    var timing = MeasureQuerySteps<HeroSkillParameterRow>(conn, queryRepetitions);
+                    stepTimings["HeroSkillParameter(12标量+21数组)"] = timing;
+                    Debug.Log($"  <color=cyan>{timing.ToLogString("HeroSkillParameter表(12标量+21数组)")}</color>");
+                }
+            }
+
+            // ── 瓶颈分析报告 ──
+            PrintBottleneckReport(stepTimings);
+            report.RealSchemaStepTimings = stepTimings;
+
+            if (File.Exists(dbPath)) File.Delete(dbPath);
+        }
+
+        /// <summary>
+        /// 对指定 POCO 类型的全表查询执行多次，取 6 步计时的平均值。
+        /// 使用 BDebugPerformanceProfiler 记录 Prepare/ColumnMapping，
+        /// 使用 Stopwatch 累加行级计时（Step/CreateObj/FastSet/ReadCol）。
+        /// Executes full-table queries for the given POCO type multiple times,
+        /// returning the average of 6-step timing measurements.
+        /// Uses BDebugPerformanceProfiler for Prepare/ColumnMapping,
+        /// uses Stopwatch for row-level timing (Step/CreateObj/FastSet/ReadCol).
+        /// </summary>
+        static StepTimingResult MeasureQuerySteps<T>(SQLiteConnection conn, int repetitions)
+            where T : new()
+        {
+            var result = new StepTimingResult();
+            var map = conn.GetMapping(typeof(T));
+            var tableName = map.TableName;
+            result.TableName = tableName;
+
+            // 预热：首次查询建立 column mapping 缓存
+            // Warmup: first query establishes column mapping cache
+            var warmupResults = conn.Query<T>("SELECT * FROM " + tableName);
+            result.RowCount = warmupResults.Count;
+
+            SqlitePerformanceMonitor.Reset();
+
+            // ── 手动分步计时 ──
+            // Manual step-by-step timing
+            float totalPrepareMs = 0f;
+            float totalColumnMappingMs = 0f;
+            float totalStepMs = 0f;
+            float totalCreateObjMs = 0f;
+            float totalFastSetMs = 0f;
+            float totalReadColMs = 0f;
+
+            var sw = new Stopwatch();
+
+            for (int i = 0; i < repetitions; i++)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                // 使用 BDebugPerformanceProfiler 记录 Prepare + ColumnMapping
+                // Use BDebugPerformanceProfiler for Prepare + ColumnMapping
+                var perfTag = ZString.Format("Bench_{0}_{1}", tableName, i);
+                BDebugPerformanceProfiler.BeginStepTimer(perfTag, "Benchmark");
+
+                BDebugPerformanceProfiler.BeginStep(perfTag, "Prepare");
+                var cmd = conn.CreateCommand("SELECT * FROM " + tableName);
+
+                sw.Restart();
+                var stmt = SQLiteCommandHelper.Prepare(cmd);
+                sw.Stop();
+                totalPrepareMs += sw.ElapsedTicks / 10000f;
+                BDebugPerformanceProfiler.EndStep(perfTag, "Prepare");
+
+                BDebugPerformanceProfiler.BeginStep(perfTag, "ColumnMapping");
+                try
+                {
+                    sw.Restart();
+                    var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
+                    var fastColumnSetters = new Action<object, Sqlite3Statement, int>[cols.Length];
+                    int scalarCount = 0, arrayCount = 0;
+                    for (int ci = 0; ci < cols.Length; ci++)
+                    {
+                        var name = SQLite3.ColumnName16(stmt, ci);
+                        cols[ci] = map.FindColumn(name);
+                        if (cols[ci] != null)
+                        {
+                            fastColumnSetters[ci] = FastColumnSetterHelper.GetFastSetter<T>(conn, cols[ci]);
+                            var propType = cols[ci].PropertyInfo.PropertyType;
+                            if (propType.IsArray || (propType.IsGenericType && propType.GetGenericTypeDefinition() == typeof(List<>)))
+                                arrayCount++;
+                            else
+                                scalarCount++;
+                        }
+                    }
+                    sw.Stop();
+                    totalColumnMappingMs += sw.ElapsedTicks / 10000f;
+                    BDebugPerformanceProfiler.EndStep(perfTag, "ColumnMapping");
+                    result.ScalarFields = scalarCount;
+                    result.ArrayFields = arrayCount;
+
+                    // ── 行级计时累加器（热循环） ──
+                    // Row-level timing accumulators (hot loop)
+                    float stepTimeMs = 0f;
+                    float createObjTimeMs = 0f;
+                    float fastSetTimeMs = 0f;
+                    float readColTimeMs = 0f;
+
+                    sw.Restart();
+                    var hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
+                    sw.Stop();
+                    stepTimeMs += sw.ElapsedTicks / 10000f;
+
+                    while (hasRow)
+                    {
+                        // Step 4: Create Object
+                        sw.Restart();
+                        var obj = Activator.CreateInstance(typeof(T));
+                        sw.Stop();
+                        createObjTimeMs += sw.ElapsedTicks / 10000f;
+
+                        // Step 5: Set Fields
+                        for (int ci = 0; ci < cols.Length; ci++)
+                        {
+                            if (cols[ci] == null) continue;
+
+                            if (fastColumnSetters[ci] != null)
+                            {
+                                sw.Restart();
+                                fastColumnSetters[ci].Invoke(obj, stmt, ci);
+                                sw.Stop();
+                                fastSetTimeMs += sw.ElapsedTicks / 10000f;
+                            }
+                            else
+                            {
+                                sw.Restart();
+                                var colType = SQLite3.ColumnType(stmt, ci);
+                                var val = SQLiteCommandHelper.ReadCol(cmd, stmt, ci, colType, cols[ci].ColumnType);
+                                cols[ci].SetValue(obj, val);
+                                sw.Stop();
+                                readColTimeMs += sw.ElapsedTicks / 10000f;
+                            }
+                        }
+
+                        sw.Restart();
+                        hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
+                        sw.Stop();
+                        stepTimeMs += sw.ElapsedTicks / 10000f;
+                    }
+
+                    totalStepMs += stepTimeMs;
+                    totalCreateObjMs += createObjTimeMs;
+                    totalFastSetMs += fastSetTimeMs;
+                    totalReadColMs += readColTimeMs;
+                }
+                finally
+                {
+                    SQLite3.Finalize(stmt);
+                }
+
+                // 从 BDebugPerformanceProfiler 提取 Prepare/ColumnMapping 数据并输出流水线报告
+                // Extract Prepare/ColumnMapping from BDebugPerformanceProfiler and output pipeline report
+                var stepData = BDebugPerformanceProfiler.EndStepTimerGetData(perfTag);
+                if (stepData != null)
+                {
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "Step", TimeMs = totalStepMs / repetitions });
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "CreateObj", TimeMs = totalCreateObjMs / repetitions });
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "FastSet", TimeMs = totalFastSetMs / repetitions });
+                    stepData.Add(new BDebugPerformanceProfiler.StepResult { StepName = "ReadCol", TimeMs = totalReadColMs / repetitions });
+                    BDebugPerformanceProfiler.PrintPipelineReport(perfTag, stepData, result.RowCount, "SELECT * FROM " + tableName);
+                }
+            }
+
+            result.PrepareMs = totalPrepareMs / repetitions;
+            result.ColumnMappingMs = totalColumnMappingMs / repetitions;
+            result.StepMs = totalStepMs / repetitions;
+            result.CreateObjMs = totalCreateObjMs / repetitions;
+            result.FastSetMs = totalFastSetMs / repetitions;
+            result.ReadColMs = totalReadColMs / repetitions;
+
+            return result;
+        }
+
+        /// <summary>
+        /// 打印瓶颈分析报告。
+        /// Print bottleneck analysis report.
+        /// </summary>
+        static void PrintBottleneckReport(Dictionary<string, StepTimingResult> timings)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine();
+            sb.AppendLine("╔══════════════════════════════════════════════════════════════════════╗");
+            sb.AppendLine("║         真实游戏 Schema 性能瓶颈分析 — 6 步分步计时报告          ║");
+            sb.AppendLine("╠══════════════════════════════════════════════════════════════════════╣");
+
+            sb.AppendLine($"║ {"表名",-35} {"行数",5} {"Prepare",9} {"ColMap",9} {"Step",9} {"CreateObj",9} {"FastSet",9} {"ReadCol",9} {"总计",9} {"RC%",6} ║");
+            sb.AppendLine("╠══════════════════════════════════════════════════════════════════════╣");
+
+            foreach (var kv in timings)
+            {
+                var r = kv.Value;
+                sb.AppendLine($"║ {kv.Key,-35} {r.RowCount,5} {r.PrepareMs,8:F2}ms {r.ColumnMappingMs,8:F2}ms {r.StepMs,8:F2}ms {r.CreateObjMs,8:F2}ms {r.FastSetMs,8:F2}ms {r.ReadColMs,8:F2}ms {r.TotalMs,8:F2}ms {r.ReadColPercent,5:F1}% ║");
+            }
+
+            sb.AppendLine("╠══════════════════════════════════════════════════════════════════════╣");
+
+            var heroTiming = timings.Values.FirstOrDefault(t => t.ArrayFields >= 20);
+            if (heroTiming != null && heroTiming.ReadColPercent > 50f)
+            {
+                sb.AppendLine($"║                                                                    ║");
+                sb.AppendLine($"║  🔴 瓶颈识别: ReadCol(反射+FastJsonConvert) 在数组密集型表中     ║");
+                sb.AppendLine($"║     占比 {heroTiming.ReadColPercent:F1}%，是主要性能瓶颈。                      ║");
+                sb.AppendLine($"║                                                                    ║");
+                sb.AppendLine($"║  💡 优化方案:                                                      ║");
+                sb.AppendLine($"║     • 为 int[] 添加 FastColumnSetter 支持，避免反射路径             ║");
+                sb.AppendLine($"║     • 直接调用 DeserializeArrayInt，跳过类型分发                   ║");
+                sb.AppendLine($"║     • 预期加速: ReadCol 时间减少 30-50%                           ║");
+            }
+            else if (heroTiming != null)
+            {
+                sb.AppendLine($"║                                                                    ║");
+                sb.AppendLine($"║  🟢 ReadCol 不是主要瓶颈 (占比 {heroTiming.ReadColPercent:F1}%)                         ║");
+            }
+
+            sb.AppendLine("╚══════════════════════════════════════════════════════════════════════╝");
+
+            Debug.Log(sb.ToString());
+        }
+
+        #endregion
+
+        #region 内部辅助类
+
+        /// <summary>
+        /// SQLiteCommand 辅助类 — 暴露内部 Prepare/ReadCol 方法供基准测试使用。
+        /// SQLiteCommand helper — exposes internal Prepare/ReadCol methods for benchmark use.
+        /// </summary>
+        static class SQLiteCommandHelper
+        {
+            static readonly System.Reflection.MethodInfo PrepareMethod =
+                typeof(SQLiteCommand).GetMethod("Prepare",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+            static readonly System.Reflection.MethodInfo ReadColMethod =
+                typeof(SQLiteCommand).GetMethod("ReadCol",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+            public static Sqlite3Statement Prepare(SQLiteCommand cmd)
+            {
+                return (Sqlite3Statement)PrepareMethod.Invoke(cmd, null);
+            }
+
+            public static object ReadCol(SQLiteCommand cmd, Sqlite3Statement stmt, int index, SQLite3.ColType colType, Type clrType)
+            {
+                return ReadColMethod.Invoke(cmd, new object[] { stmt, index, colType, clrType });
+            }
+        }
+
+        /// <summary>
+        /// FastColumnSetter 辅助类 — 通过反射访问 internal GetFastSetter 方法。
+        /// 框架基础设施代码使用反射，在注释中说明原因：FastColumnSetter.GetFastSetter 是 internal，
+        /// 无法从测试程序集直接调用，只能通过反射访问。
+        /// FastColumnSetter helper — accesses internal GetFastSetter method via reflection.
+        /// Framework infrastructure code uses reflection with documented reason:
+        /// FastColumnSetter.GetFastSetter is internal and cannot be called directly
+        /// from the test assembly, requiring reflection access.
+        /// </summary>
+        static class FastColumnSetterHelper
+        {
+            static readonly Type FastColumnSetterType =
+                typeof(SQLiteConnection).Assembly.GetType("SQLite4Unity3d.FastColumnSetter");
+
+            static readonly System.Reflection.MethodInfo GetFastSetterMethod =
+                FastColumnSetterType?.GetMethod("GetFastSetter",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+
+            /// <summary>
+            /// 通过反射调用 FastColumnSetter.GetFastSetter&lt;T&gt;，返回 null 表示无 fast setter。
+            /// Invokes FastColumnSetter.GetFastSetter&lt;T&gt; via reflection; returns null if no fast setter available.
+            /// </summary>
+            public static Action<object, Sqlite3Statement, int> GetFastSetter<T>(SQLiteConnection conn, TableMapping.Column column)
+            {
+                if (GetFastSetterMethod == null) return null;
+                var genericMethod = GetFastSetterMethod.MakeGenericMethod(typeof(T));
+                return genericMethod.Invoke(null, new object[] { conn, column }) as Action<object, Sqlite3Statement, int>;
+            }
+        }
+
+        #endregion
+    }
+}

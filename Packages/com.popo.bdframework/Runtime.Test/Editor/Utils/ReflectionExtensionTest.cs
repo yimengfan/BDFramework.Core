@@ -93,7 +93,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntime 能从类上获取正确类型的 Attribute。
         /// Verify that GetAttributeInILRuntime retrieves the correct Attribute from a class.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntime_OnClass_ReturnsAttribute()
         {
             var memberInfo = typeof(DecoratedClass);
@@ -107,7 +107,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntime 在目标 Attribute 不存在时返回 null。
         /// Verify that GetAttributeInILRuntime returns null when the target Attribute is not present.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntime_OnUndecoratedClass_ReturnsNull()
         {
             var memberInfo = typeof(UndecoratedClass);
@@ -120,7 +120,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntime 在多个同类型 Attribute 时返回第一个匹配。
         /// Verify that GetAttributeInILRuntime returns the first matching Attribute when multiple exist.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntime_MultipleAttributes_ReturnsFirstMatch()
         {
             var memberInfo = typeof(MultiDecoratedClass);
@@ -136,7 +136,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntimes 能获取所有同类型 Attribute。
         /// Verify that GetAttributeInILRuntimes retrieves all Attributes of the target type.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntimes_MultipleAttributes_ReturnsAll()
         {
             var memberInfo = typeof(MultiDecoratedClass);
@@ -158,7 +158,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntimes 在目标 Attribute 不存在时返回全 null 数组。
         /// Verify that GetAttributeInILRuntimes returns an all-null array when the target Attribute is not present.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntimes_OnUndecoratedClass_ReturnsArrayWithNulls()
         {
             var memberInfo = typeof(UndecoratedClass);
@@ -177,7 +177,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntime 在字段上也能正常工作。
         /// Verify that GetAttributeInILRuntime works correctly on fields.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntime_OnField_ReturnsAttribute()
         {
             var fieldInfo = typeof(DecoratedClass).GetField("TestField");
@@ -192,7 +192,7 @@ namespace BDFramework.EditorTest.Utils
         /// 验证 GetAttributeInILRuntime 在方法上也能正常工作。
         /// Verify that GetAttributeInILRuntime works correctly on methods.
         /// </summary>
-        [Test]
+        [NUnit.Framework.Test]
         public void GetAttributeInILRuntime_OnMethod_ReturnsAttribute()
         {
             var methodInfo = typeof(DecoratedClass).GetMethod("TestMethod");
