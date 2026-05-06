@@ -19,7 +19,7 @@ namespace AssetsManager.Sql
             sb.Append("[");
             for (int i = 0; i < array.Length; i++)
             {
-                sb.Append("\"").Append(array[i]).Append("\"");
+                sb.Append("\"").Append(array[i]?.Replace("\"", "\"\"") ?? "").Append("\"");
                 if (i < array.Length - 1)
                 {
                     sb.Append(",");
@@ -57,155 +57,216 @@ namespace AssetsManager.Sql
         #endregion
 
 
-        #region 反序列化
+        #region 反序列化 — 零GC Span版本
 
-        public static int[] DeserializeArrayInt(string json)
+        /// <summary>
+        /// 去除 Span 首尾的方括号。
+        /// .NET Standard 2.0 / Unity 2021 不支持 ReadOnlySpan&lt;char&gt;.Trim(char, char)，
+        /// 因此手动跳过前导 '[' 和尾部 ']'。
+        /// Trim leading '[' and trailing ']' from Span.
+        /// .NET Standard 2.0 / Unity 2021 does not support ReadOnlySpan&lt;char&gt;.Trim(char, char),
+        /// so we manually skip leading '[' and trailing ']'.
+        /// </summary>
+        private static ReadOnlySpan<char> TrimBrackets(ReadOnlySpan<char> span)
         {
-            json = json.Trim('[', ']');
-            if (string.IsNullOrEmpty(json))
+            int start = 0, end = span.Length;
+            while (start < end && span[start] == '[') start++;
+            while (end > start && span[end - 1] == ']') end--;
+            return span.Slice(start, end - start);
+        }
+
+        /// <summary>
+        /// 解析方括号内的元素数量（预分配数组用）。
+        /// Parse the number of elements inside brackets for pre-allocation.
+        /// </summary>
+        private static int CountElements(ReadOnlySpan<char> content)
+        {
+            if (content.IsEmpty || content.IsWhiteSpace()) return 0;
+            int count = 1;
+            for (int i = 0; i < content.Length; i++)
             {
-                return Array.Empty<int>();
+                if (content[i] == ',') count++;
             }
+            return count;
+        }
 
-            var items = json.Split(',');
-            int[] result = new int[items.Length];
-            int index = 0;
-
-            for (int i = 0; i < items.Length; i++)
+        /// <summary>
+        /// 跳过字符串字面量（引号内的内容，含转义）。
+        /// Skip a string literal inside quotes, handling escape sequences.
+        /// </summary>
+        private static void SkipStringLiteral(ReadOnlySpan<char> span, ref int i)
+        {
+            i++; // skip opening quote
+            while (i < span.Length)
             {
-                string trimmedItem = items[i];
-                if (int.TryParse(trimmedItem, out int intValue))
+                if (span[i] == '"' && (i + 1 >= span.Length || span[i + 1] != '"'))
                 {
-                    result[index++] = intValue;
+                    i++; // skip closing quote
+                    return;
+                }
+                if (span[i] == '"') i++; // escaped quote ""
+                i++;
+            }
+        }
+
+        /// <summary>
+        /// 从 [a,b,c] 格式的 JSON 字符串中提取 string[] 元素。
+        /// 使用 Span 逐字符扫描，避免 string.Split 产生的 string[] GC 分配。
+        /// Extract string[] elements from [a,b,c] JSON format.
+        /// Uses Span character-by-character scanning to avoid string.Split GC allocation.
+        /// </summary>
+        private static string[] ParseStringElements(ReadOnlySpan<char> content)
+        {
+            if (content.IsEmpty) return Array.Empty<string>();
+            int estimated = CountElements(content);
+            var results = new string[estimated];
+            int index = 0;
+            int start = 0;
+            bool inString = false;
+
+            for (int i = 0; i < content.Length; i++)
+            {
+                if (content[i] == '"')
+                {
+                    if (!inString)
+                    {
+                        start = i + 1;
+                        inString = true;
+                        // 跳过字符串内容
+                        SkipStringLiteral(content, ref i);
+                        // SkipStringLiteral 跳过整个字符串(含闭合引号), i 现在指向闭合引号之后
+                        // 闭合引号在 i-1 位置, 元素内容在 [start, i-1-start)
+                        var element = content.Slice(start, i - 1 - start).ToString();
+                        if (index < results.Length)
+                        {
+                            results[index++] = element.Replace("\"\"", "\"");
+                        }
+                        else
+                        {
+                            Array.Resize(ref results, results.Length * 2);
+                            results[index++] = element.Replace("\"\"", "\"");
+                        }
+                        inString = false;
+                        // i 已经在闭合引号之后, 回退以让循环的 i++ 正确推进
+                        i--;
+                    }
+                    else
+                    {
+                        // 此分支在修复后不再需要到达
+                        // 但保留以兼容边界情况
+                        var element = content.Slice(start, i - start).ToString();
+                        if (index < results.Length)
+                        {
+                            results[index++] = element.Replace("\"\"", "\"");
+                        }
+                        else
+                        {
+                            Array.Resize(ref results, results.Length * 2);
+                            results[index++] = element.Replace("\"\"", "\"");
+                        }
+                        inString = false;
+                    }
+                }
+                else if (!inString && content[i] == ',')
+                {
+                    // 非字符串元素之间的逗号 — 忽略
                 }
             }
 
+            if (index == 0) return Array.Empty<string>();
+            if (index != results.Length)
+            {
+                Array.Resize(ref results, index);
+            }
+            return results;
+        }
 
-            return result;
+        /// <summary>
+        /// 通用值类型数组解析。逐段扫描逗号分隔的值，避免 Split 分配。
+        /// Generic value-type array parser. Scans comma-separated segments without Split allocation.
+        /// </summary>
+        private static T[] ParseValueElements<T>(ReadOnlySpan<char> content, Func<string, T> parser)
+        {
+            if (content.IsEmpty || content.IsWhiteSpace()) return Array.Empty<T>();
+            int estimated = CountElements(content);
+            var results = new T[estimated];
+            int index = 0;
+            int segStart = 0;
+
+            for (int i = 0; i <= content.Length; i++)
+            {
+                bool isEnd = (i == content.Length);
+                bool isComma = !isEnd && content[i] == ',';
+                // 逗号在引号内不作为分隔符
+                if (isComma || isEnd)
+                {
+                    var segment = content.Slice(segStart, i - segStart).Trim();
+                    if (!segment.IsEmpty)
+                    {
+                        T val = parser(segment.ToString());
+                        if (index < results.Length)
+                        {
+                            results[index++] = val;
+                        }
+                        else
+                        {
+                            Array.Resize(ref results, results.Length * 2);
+                            results[index++] = val;
+                        }
+                    }
+                    segStart = i + 1;
+                }
+            }
+
+            if (index == 0) return Array.Empty<T>();
+            if (index != results.Length)
+            {
+                Array.Resize(ref results, index);
+            }
+            return results;
+        }
+
+        public static int[] DeserializeArrayInt(string json)
+        {
+            if (string.IsNullOrEmpty(json)) return Array.Empty<int>();
+            var content = TrimBrackets(json.AsSpan());
+            return ParseValueElements(content, s => int.Parse(s));
         }
 
         public static long[] DeserializeArrayLong(string json)
         {
-            json = json.Trim('[', ']');
-            if (string.IsNullOrEmpty(json))
-            {
-                return Array.Empty<long>();
-            }
-
-            var items = json.Split(',');
-            long[] result = new long[items.Length];
-            int index = 0;
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                string trimmedItem = items[i];
-                if (long.TryParse(trimmedItem, out long longValue))
-                {
-                    result[index++] = longValue;
-                }
-            }
-
-
-            return result;
+            if (string.IsNullOrEmpty(json)) return Array.Empty<long>();
+            var content = TrimBrackets(json.AsSpan());
+            return ParseValueElements(content, s => long.Parse(s));
         }
 
         public static float[] DeserializeArrayFloat(string json)
         {
-            json = json.Trim('[', ']');
-            if (string.IsNullOrEmpty(json))
-            {
-                return Array.Empty<float>();
-            }
-
-            var items = json.Split(',');
-            float[] result = new float[items.Length];
-            int index = 0;
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                string trimmedItem = items[i];
-                if (float.TryParse(trimmedItem, out float floatValue))
-                {
-                    result[index++] = floatValue;
-                }
-            }
-
-
-            return result;
+            if (string.IsNullOrEmpty(json)) return Array.Empty<float>();
+            var content = TrimBrackets(json.AsSpan());
+            return ParseValueElements(content, s => float.Parse(s));
         }
 
         public static double[] DeserializeArrayDouble(string json)
         {
-            json = json.Trim('[', ']');
-            if (string.IsNullOrEmpty(json))
-            {
-                return Array.Empty<double>();
-            }
-
-            var items = json.Split(',');
-            double[] result = new double[items.Length];
-            int index = 0;
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                string trimmedItem = items[i];
-                if (double.TryParse(trimmedItem, out double doubleValue))
-                {
-                    result[index++] = doubleValue;
-                }
-            }
-
-
-            return result;
+            if (string.IsNullOrEmpty(json)) return Array.Empty<double>();
+            var content = TrimBrackets(json.AsSpan());
+            return ParseValueElements(content, s => double.Parse(s));
         }
 
         public static bool[] DeserializeArrayBool(string json)
         {
-            json = json.Trim('[', ']');
-            if (string.IsNullOrEmpty(json))
-            {
-                return Array.Empty<bool>();
-            }
-
-            var items = json.Split(',');
-            bool[] result = new bool[items.Length];
-            int index = 0;
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                string trimmedItem = items[i];
-                if (bool.TryParse(trimmedItem, out bool boolValue))
-                {
-                    result[index++] = boolValue;
-                }
-            }
-
-
-            return result;
+            if (string.IsNullOrEmpty(json)) return Array.Empty<bool>();
+            var content = TrimBrackets(json.AsSpan());
+            return ParseValueElements(content, s => bool.Parse(s));
         }
 
         public static string[] DeserializeArrayString(string json)
         {
-            json = json.Trim('[', ']');
-            if (string.IsNullOrEmpty(json))
-            {
-                return Array.Empty<string>();
-            }
-
-            var items = json.Split(',');
-            string[] result = new string[items.Length];
-            int index = 0;
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                string trimmedItem = items[i];
-                result[index++] = trimmedItem.Trim('"'); // 去掉引号
-            }
-
-
-            return result;
+            if (string.IsNullOrEmpty(json)) return Array.Empty<string>();
+            var content = TrimBrackets(json.AsSpan());
+            return ParseStringElements(content);
         }
-
 
         #endregion
 

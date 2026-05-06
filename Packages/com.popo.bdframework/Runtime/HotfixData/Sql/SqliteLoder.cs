@@ -90,6 +90,7 @@ namespace BDFramework.Sql
                 BDebug.Log(Tag, $"加载路径:{path} psw:{Password}", Color.green);
                 SQLiteConnectionString cs = new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
                 var con = new SQLiteConnection(cs);
+                ApplyReadOnlyPragmas(con);
                 SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
                 return con;
             }
@@ -201,6 +202,69 @@ namespace BDFramework.Sql
         {
         }
 #endif
+
+        #region 只读 PRAGMA 极端优化
+
+        /// <summary>
+        /// 为只读连接应用极端优化 PRAGMA。
+        /// Runtime 下 local.db 不发生写入，因此可以关闭所有与写入安全相关的机制。
+        /// Apply extreme optimization PRAGMAs for read-only connections.
+        /// Since local.db is never written at runtime, all write-safety mechanisms can be disabled.
+        ///
+        /// 优化项说明：
+        /// - cache_size=-20000: 页缓存 20MB（负值表示 KB），减少磁盘 IO
+        /// - mmap_size=268435456: 内存映射 256MB，操作系统自动管理页面换入换出
+        /// - journal_mode=OFF: 关闭回滚日志，只读无需事务恢复
+        /// - synchronous=OFF: 关闭同步写入，只读无需确保数据落盘
+        /// - temp_store=MEMORY: 临时表和排序操作在内存中执行
+        /// - locking_mode=NORMAL: 允许其他进程读取（不使用 EXCLUSIVE 锁）
+        /// </summary>
+        static public void ApplyReadOnlyPragmas(SQLiteConnection con)
+        {
+            if (con == null) return;
+
+            // 启动性能监控
+            SqlitePerformanceMonitor.BeginStartupPhase();
+
+            try
+            {
+                // 页缓存：20MB（负值表示 KB 数）
+                con.Execute("PRAGMA cache_size=-20000");
+
+                // 内存映射：256MB — 操作系统按需换入页面，零拷贝读取
+                con.Execute("PRAGMA mmap_size=268435456");
+
+                // 关闭回滚日志 — 只读模式下无事务恢复需求
+                con.Execute("PRAGMA journal_mode=OFF");
+
+                // 关闭同步写入 — 只读模式下无需确保数据落盘
+                con.Execute("PRAGMA synchronous=OFF");
+
+                // 临时表和排序在内存中执行
+                con.Execute("PRAGMA temp_store=MEMORY");
+
+                // 使用 NORMAL 锁定模式 — 允许其他进程并发读取
+                con.Execute("PRAGMA locking_mode=NORMAL");
+
+                // 读取当前 PRAGMA 配置值用于监控报告
+                var pageSize = con.ExecuteScalarInt("PRAGMA page_size");
+                var cacheSize = con.ExecuteScalarInt("PRAGMA cache_size");
+                var mmapSize = con.ExecuteScalar<long>("PRAGMA mmap_size");
+
+                SqlitePerformanceMonitor.RecordPragmaConfig(mmapSize, cacheSize, pageSize);
+
+                BDebug.Log(Tag,
+                    $"只读优化PRAGMA已应用 — page_size:{pageSize}, cache_size:{cacheSize}, mmap_size:{mmapSize}",
+                    Color.cyan);
+            }
+            catch (Exception e)
+            {
+                // PRAGMA 设置失败不应阻断数据库加载，仅记录告警
+                Debug.LogWarning($"SqliteLoder: PRAGMA优化设置失败（不影响正常使用）: {e.Message}");
+            }
+        }
+
+        #endregion
 
         #region Editor下加载
 

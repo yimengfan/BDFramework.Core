@@ -42,6 +42,7 @@ using BDFramework.Core.Tools;
 using LitJson;
 using UnityEngine;
 using BDFramework.Utils.mslibEx;
+using BDFramework.Sql;
 using Debug = System.Diagnostics.Debug;
 using Random = System.Random;
 
@@ -2128,6 +2129,58 @@ namespace SQLite4Unity3d
 
         readonly Dictionary<Tuple<string, string>, PreparedSqlLiteInsertCommand> _insertCommandMap = new Dictionary<Tuple<string, string>, PreparedSqlLiteInsertCommand>();
 
+		/// <summary>
+		/// 缓存 SELECT 语句的 prepared statement，避免重复编译。
+		/// Key: SQL 文本, Value: 编译后的 sqlite3_stmt 指针。
+		/// Cache for SELECT prepared statements, avoiding repeated compilation.
+		/// Key: SQL text, Value: compiled sqlite3_stmt pointer.
+		/// </summary>
+		readonly Dictionary<string, Sqlite3Statement> _preparedStatementCache = new Dictionary<string, Sqlite3Statement>();
+
+		/// <summary>
+		/// 存储一个 prepared statement 到连接级缓存中。
+		/// 缓存的语句在连接 Dispose 时自动 Finalize 释放。
+		/// Store a prepared statement into the connection-level cache.
+		/// Cached statements are automatically finalized when the connection is disposed.
+		/// </summary>
+		/// <param name="sql">SQL 文本 / SQL text</param>
+		/// <param name="stmt">已编译的 sqlite3_stmt 指针 / Compiled sqlite3_stmt pointer</param>
+		public void SetPreparedStatement(string sql, Sqlite3Statement stmt)
+		{
+			if (string.IsNullOrEmpty(sql) || stmt == default(Sqlite3Statement)) return;
+			lock (_preparedStatementCache)
+			{
+				// 如果已有旧语句，先释放
+				// If an old statement exists, finalize it first
+				if (_preparedStatementCache.TryGetValue(sql, out var oldStmt) && oldStmt != default(Sqlite3Statement))
+				{
+					SQLite3.Finalize(oldStmt);
+				}
+				_preparedStatementCache[sql] = stmt;
+			}
+		}
+
+		/// <summary>
+		/// 从连接级缓存中获取已编译的 prepared statement。
+		/// 如果未缓存则返回 default(Sqlite3Statement)。
+		/// Retrieve a cached prepared statement from the connection-level cache.
+		/// Returns default(Sqlite3Statement) if not cached.
+		/// </summary>
+		/// <param name="sql">SQL 文本 / SQL text</param>
+		/// <returns>已编译的 sqlite3_stmt 指针，或 default / Compiled stmt pointer, or default</returns>
+		public Sqlite3Statement GetPreparedStatement(string sql)
+		{
+			if (string.IsNullOrEmpty(sql)) return default(Sqlite3Statement);
+			lock (_preparedStatementCache)
+			{
+				Sqlite3Statement stmt;
+				if (_preparedStatementCache.TryGetValue(sql, out stmt))
+				{
+					return stmt;
+				}
+				return default(Sqlite3Statement);
+			}
+		}
         PreparedSqlLiteInsertCommand GetInsertCommand(TableMapping map, string extra)
         {
             PreparedSqlLiteInsertCommand prepCmd;
@@ -2496,6 +2549,19 @@ namespace SQLite4Unity3d
                             }
 
                             _insertCommandMap.Clear();
+                        }
+
+                        lock (_preparedStatementCache)
+                        {
+                            foreach (var stmt in _preparedStatementCache.Values)
+                            {
+                                if (stmt != default(Sqlite3Statement))
+                                {
+                                    SQLite3.Finalize(stmt);
+                                }
+                            }
+
+                            _preparedStatementCache.Clear();
                         }
 
                         var r = useClose2 ? SQLite3.Close2(Handle) : SQLite3.Close(Handle);
@@ -3420,6 +3486,40 @@ namespace SQLite4Unity3d
 
         public string CommandText { get; set; }
 
+        /// <summary>
+        /// 外部传入的已缓存 prepared statement，设置后 Prepare() 将跳过编译直接使用。
+        /// A cached prepared statement supplied externally; when set, Prepare() skips compilation and reuses it.
+        /// </summary>
+        Sqlite3Statement _preparedStatement;
+
+        /// <summary>
+        /// 标记当前语句是否来自连接级缓存，若为 true 则 Finalize 时只 Reset 不 Finalize。
+        /// Indicates whether the current statement came from the connection-level cache;
+        /// if true, Finalize() only Resets without destroying the statement.
+        /// </summary>
+        bool _isCachedStatement;
+
+        /// <summary>
+        /// 设置外部缓存的 prepared statement，使下次 Execute 跳过 Prepare2 编译。
+        /// Set an externally cached prepared statement so the next Execute skips Prepare2 compilation.
+        /// </summary>
+        /// <param name="stmt">已编译的 sqlite3_stmt 指针</param>
+        public void SetPreparedStatement(Sqlite3Statement stmt)
+        {
+            _preparedStatement = stmt;
+            _isCachedStatement = true;
+        }
+
+        /// <summary>
+        /// 获取当前命令已编译的 prepared statement 指针，用于外部缓存。
+        /// Get the current command's compiled prepared statement pointer for external caching.
+        /// </summary>
+        /// <returns>sqlite3_stmt 指针，若尚未 Prepare 则返回 default</returns>
+        public Sqlite3Statement GetPreparedStatement()
+        {
+            return _preparedStatement;
+        }
+
         public SQLiteCommand(SQLiteConnection conn)
         {
             _conn = conn;
@@ -3537,18 +3637,27 @@ namespace SQLite4Unity3d
 
         public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map, bool isILRuntime = false)
         {
-#if ENABLE_BDEBUG
-            Stopwatch sw = new Stopwatch();
+            // ─── 分步计时：细粒度性能剖析 ───
+            // Step-by-step timing for fine-grained performance profiling
+            var sw = new System.Diagnostics.Stopwatch();
             sw.Start();
-#endif
+
             if (_conn.Trace)
             {
                 _conn.Tracer?.Invoke("Executing Query: " + this);
             }
 
+            // 步骤1: Prepare（编译 SQL 或复用缓存语句 + 绑定参数）
+            // Step 1: Prepare (compile SQL or reuse cached statement + bind parameters)
             var stmt = Prepare();
+            sw.Stop();
+            var prepareTimeMs = sw.ElapsedTicks / 10000f;
+
             try
             {
+                // 步骤2: 列映射（构建 fastColumnSetters 委托）
+                // Step 2: Column mapping (build fastColumnSetter delegates)
+                sw.Restart();
                 var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
                 Action<object, Sqlite3Statement, int>[] fastColumnSetters = null;
 
@@ -3588,17 +3697,33 @@ namespace SQLite4Unity3d
                     }
                 }
 
-
-#if ENABLE_BDEBUG
                 sw.Stop();
-                var serchSqlTime = sw.ElapsedTicks / 10000f;
-                sw.Restart();
-#endif
+                var columnMappingTimeMs = sw.ElapsedTicks / 10000f;
+
+                // ─── 行级计时累加器 ───
+                // Row-level timing accumulators
+                float stepTimeMs = 0f;          // SQLite3.Step 总耗时
+                float createObjTimeMs = 0f;     // 对象实例化总耗时
+                float fastSetTimeMs = 0f;       // fastColumnSetter 赋值总耗时
+                float readColTimeMs = 0f;       // ReadCol 反射赋值总耗时（含 FastJsonConvert）
+
                 var count = 0;
                 //反序列化
-                while (SQLite3.Step(stmt) == SQLite3.Result.Row)
+                // 步骤3: 逐行 Step + 反序列化
+                // Step 3: Per-row Step + deserialization
+                bool hasRow;
+                sw.Restart();
+                hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
+                sw.Stop();
+                stepTimeMs += sw.ElapsedTicks / 10000f;
+
+                while (hasRow)
                 {
                     count++;
+
+                    // 步骤4: 对象实例化
+                    // Step 4: Object instantiation
+                    sw.Restart();
                     object obj = null;
                     //For ILR
                     if (isILRuntime)
@@ -3609,7 +3734,11 @@ namespace SQLite4Unity3d
                     {
                         obj = Activator.CreateInstance(map.MappedType);
                     }
+                    sw.Stop();
+                    createObjTimeMs += sw.ElapsedTicks / 10000f;
 
+                    // 步骤5: 字段赋值（fastSetter vs ReadCol 反射路径）
+                    // Step 5: Field setting (fastSetter vs ReadCol reflection path)
                     for (int i = 0; i < cols.Length; i++)
                     {
                         if (cols[i] == null)
@@ -3617,36 +3746,46 @@ namespace SQLite4Unity3d
 
                         if (fastColumnSetters != null && fastColumnSetters[i] != null)
                         {
+                            sw.Restart();
                             fastColumnSetters[i].Invoke(obj, stmt, i);
+                            sw.Stop();
+                            fastSetTimeMs += sw.ElapsedTicks / 10000f;
                         }
                         else
                         {
+                            sw.Restart();
                             var colType = SQLite3.ColumnType(stmt, i);
                             var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
                             cols[i].SetValue(obj, val);
+                            sw.Stop();
+                            readColTimeMs += sw.ElapsedTicks / 10000f;
                         }
                     }
 
-
                     OnInstanceCreated(obj);
                     yield return (T) obj;
+
+                    // 预取下一行并计入 Step 耗时
+                    // Prefetch next row and account Step time
+                    sw.Restart();
+                    hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
+                    sw.Stop();
+                    stepTimeMs += sw.ElapsedTicks / 10000f;
                 }
+
+                // 汇总：兼容旧接口 serchSqlTime + deSerializeTime
+                // Summary: compatible with legacy serchSqlTime + deSerializeTime interface
+                var serchSqlTime = prepareTimeMs + columnMappingTimeMs;
+                var deSerializeTime = stepTimeMs + createObjTimeMs + fastSetTimeMs + readColTimeMs;
+
 #if ENABLE_BDEBUG
-                sw.Stop();
-                var deSerializeTime = sw.ElapsedTicks / 10000f;
-                var total = serchSqlTime + deSerializeTime;
-                if (total > 10)
-                {
-                    if (BApplication.IsPlaying)
-                    {
-                        UnityEngine.Debug.LogError($"<color=white>sql消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
-                    }
-                }
+                SqlitePerformanceMonitor.RecordQuery(CommandText, serchSqlTime, deSerializeTime, count,
+                    prepareTimeMs, columnMappingTimeMs, stepTimeMs, createObjTimeMs, fastSetTimeMs, readColTimeMs);
 #endif
             }
             finally
             {
-                SQLite3.Finalize(stmt);
+                Finalize(stmt);
             }
         }
 
@@ -3832,14 +3971,38 @@ namespace SQLite4Unity3d
 
         Sqlite3Statement Prepare()
         {
+            // 若外部已通过 SetPreparedStatement 注入缓存语句，直接复用并重新绑定参数
+            // If an external cached statement was injected via SetPreparedStatement, reuse it and rebind parameters
+            if (_isCachedStatement && _preparedStatement != default(Sqlite3Statement))
+            {
+                SQLite3.Reset(_preparedStatement);
+                BindAll(_preparedStatement);
+                return _preparedStatement;
+            }
+
             var stmt = SQLite3.Prepare2(_conn.Handle, CommandText);
             BindAll(stmt);
+            _preparedStatement = stmt;
             return stmt;
         }
 
         void Finalize(Sqlite3Statement stmt)
         {
+            // 来自缓存的语句只 Reset 不 Finalize，由连接级缓存统一管理生命周期
+            // Cached statements are only Reset, not Finalized; their lifetime is managed by the connection-level cache
+            if (_isCachedStatement)
+            {
+                if (stmt != default(Sqlite3Statement))
+                {
+                    SQLite3.Reset(stmt);
+                }
+                _isCachedStatement = false;
+                _preparedStatement = default(Sqlite3Statement);
+                return;
+            }
+
             SQLite3.Finalize(stmt);
+            _preparedStatement = default(Sqlite3Statement);
         }
 
         void BindAll(Sqlite3Statement stmt)
@@ -4300,6 +4463,56 @@ namespace SQLite4Unity3d
                 {
                     var text = SQLite3.ColumnString(stmt, index);
                     return new UriBuilder(text);
+                });
+            }
+            // 数组类型 FastSetter：直接调用类型化的 DeserializeArray* 方法，
+            // 绕过 ReadCol 的反射路径（ReadCol → DeserializeArray(Type, string) + SetValue 反射）。
+            // 数组是引用类型，使用 CreateTypedSetterDelegate（无 struct 约束），
+            // 而非 CreateNullableTypedSetterDelegate（有 where ColumnMemberType : struct 约束）。
+            // Array type FastSetter: directly calls typed DeserializeArray* methods,
+            // bypassing the ReadCol reflection path (ReadCol → DeserializeArray(Type, string) + SetValue reflection).
+            // Arrays are reference types, so use CreateTypedSetterDelegate (no struct constraint),
+            // not CreateNullableTypedSetterDelegate (which has where ColumnMemberType : struct constraint).
+            else if (clrType == typeof(int[]))
+            {
+                fastSetter = CreateTypedSetterDelegate<T, int[]>(column, (stmt, index) =>
+                {
+                    return SqliteFastJsonConvert.DeserializeArrayInt(SQLite3.ColumnString(stmt, index));
+                });
+            }
+            else if (clrType == typeof(long[]))
+            {
+                fastSetter = CreateTypedSetterDelegate<T, long[]>(column, (stmt, index) =>
+                {
+                    return SqliteFastJsonConvert.DeserializeArrayLong(SQLite3.ColumnString(stmt, index));
+                });
+            }
+            else if (clrType == typeof(float[]))
+            {
+                fastSetter = CreateTypedSetterDelegate<T, float[]>(column, (stmt, index) =>
+                {
+                    return SqliteFastJsonConvert.DeserializeArrayFloat(SQLite3.ColumnString(stmt, index));
+                });
+            }
+            else if (clrType == typeof(double[]))
+            {
+                fastSetter = CreateTypedSetterDelegate<T, double[]>(column, (stmt, index) =>
+                {
+                    return SqliteFastJsonConvert.DeserializeArrayDouble(SQLite3.ColumnString(stmt, index));
+                });
+            }
+            else if (clrType == typeof(bool[]))
+            {
+                fastSetter = CreateTypedSetterDelegate<T, bool[]>(column, (stmt, index) =>
+                {
+                    return SqliteFastJsonConvert.DeserializeArrayBool(SQLite3.ColumnString(stmt, index));
+                });
+            }
+            else if (clrType == typeof(string[]))
+            {
+                fastSetter = CreateTypedSetterDelegate<T, string[]>(column, (stmt, index) =>
+                {
+                    return SqliteFastJsonConvert.DeserializeArrayString(SQLite3.ColumnString(stmt, index));
                 });
             }
             else
