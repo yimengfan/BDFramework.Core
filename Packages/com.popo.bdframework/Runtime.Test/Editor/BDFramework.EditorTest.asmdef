@@ -7,8 +7,7 @@
         "GUID:90a5d688c87639542bc27aac9d4173c1",
         "GUID:8793139a1ecbbc54da29f209bd3ec2bc",
         "GUID:38782fc8e87cac14f9cb740af8b2232a",
-        "GUID:1d057b9e27b346f783a102b54b04152d",
-        "BDFramework.Test.SqliteEditorBenchmark"
+        "GUID:1d057b9e27b346f783a102b54b04152d"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

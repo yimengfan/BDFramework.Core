@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -85,6 +86,25 @@ namespace BDFramework.Test.SqliteBenchmark
             sb.AppendLine($"║  默认配置查询: {QueryDefaultMs}ms  GC:{QueryDefaultGC}次".PadRight(60) + "║");
             sb.AppendLine($"║  PRAGMA优化查询: {QueryPragmaMs}ms  GC:{QueryPragmaGC}次".PadRight(60) + "║");
             sb.AppendLine($"║  加速比: {QueryPragmaSpeedup:F2}x".PadRight(60) + "║");
+            sb.AppendLine($"║  全表扫描(默认): {QueryFullTableDefaultMs}ms ({QueryFullTableDefaultRows}行)".PadRight(60) + "║");
+            sb.AppendLine($"║  全表扫描(PRAGMA): {QueryFullTablePragmaMs}ms".PadRight(60) + "║");
+            sb.AppendLine("║                                                            ║");
+            sb.AppendLine("║  ── Prepared Statement 缓存 ──".PadRight(60) + "║");
+            sb.AppendLine($"║  无缓存查询: {QueryNoCacheMs}ms  GC:{QueryNoCacheGC}次".PadRight(60) + "║");
+            sb.AppendLine($"║  缓存查询: {QueryWithCacheMs}ms  GC:{QueryWithCacheGC}次".PadRight(60) + "║");
+            sb.AppendLine($"║  直接API缓存: {QueryDirectCacheMs}ms  GC:{QueryDirectCacheGC}次".PadRight(60) + "║");
+            sb.AppendLine($"║  加速比: {PreparedStatementSpeedup:F2}x".PadRight(60) + "║");
+            sb.AppendLine("║                                                            ║");
+            sb.AppendLine("║  ── FastJson Span vs string.Split ──".PadRight(60) + "║");
+            sb.AppendLine($"║  Span解析: {FastJsonSpanMs}ms  GC:{FastJsonSpanGC}次  内存:{FastJsonSpanMemKB:F1}KB".PadRight(60) + "║");
+            sb.AppendLine($"║  string.Split: {FastJsonLegacyMs}ms  GC:{FastJsonLegacyGC}次  内存:{FastJsonLegacyMemKB:F1}KB".PadRight(60) + "║");
+            sb.AppendLine($"║  加速比: {FastJsonSpeedup:F2}x".PadRight(60) + "║");
+            sb.AppendLine("║                                                            ║");
+            sb.AppendLine("║  ── 真实数据模拟 ──".PadRight(60) + "║");
+            sb.AppendLine($"║  真实表数量: {RealTableCount}个xlsx".PadRight(60) + "║");
+            sb.AppendLine($"║  大数据导入: {RealDataInsertMs}ms".PadRight(60) + "║");
+            sb.AppendLine($"║  大数据条件查询: {RealDataQueryMs}ms ({RealDataQueryRows}行)".PadRight(60) + "║");
+            sb.AppendLine($"║  大数据全表扫描: {RealDataFullScanMs}ms".PadRight(60) + "║");
             sb.AppendLine("║                                                            ║");
             sb.AppendLine("║  ── 真实 Schema 瓶颈分析 ──".PadRight(60) + "║");
             if (RealSchemaStepTimings != null && RealSchemaStepTimings.Count > 0)
