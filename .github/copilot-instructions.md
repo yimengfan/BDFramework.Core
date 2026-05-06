@@ -130,8 +130,8 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 | 层级 | 类型 | 文件名 | 位置/触发 | 唯一职责 | 预算 | 退役条件 |
 |------|------|--------|-----------|---------|------|---------|
 | L0 | 全局根规范 | `copilot-instructions.md` | `.github/`，始终加载 | 编码流程、门禁、跨模块约束 | ≤1000 行 | — |
-| L1 | 文件级编码约束 | `*.instructions.md` | `.github/instructions/`，`applyTo` 自动匹配 | 被命中文件的编码规则、模块偏差 | ≤150 行 | 对应模块移除 |
-| L2 | 包架构入口 | `AGENTS.md` | 仓库根、package 根、业务模块根（`Assets/Code/<Module>/`） | 架构理解、模块划分、用法排障 | ≤50 行 | 模块移除 |
+| L1 | 文件级编码约束 | `*.instructions.md` | `.github/instructions/`，`applyTo` 自动匹配 | 被命中文件的编码规则、模块偏差 | ≤3000 行 | 对应模块移除 |
+| L2 | 包架构入口 | `AGENTS.md` | 仓库根、package 根、业务模块根（`Assets/Code/<Module>/`） | 架构理解、模块划分、用法排障 | ≤3000 行 | 模块移除 |
 | — | 模块深度 | `*.md` | `.github/talos-docs/modules/`，instruction 引用 | 行为矩阵、验收条件 | — | 模块移除 |
 | L3 | 临时记忆 | `*.md` | `.agent_memory/`，任务触发 | 追踪、代码异味 | — | 任务结束 |
 

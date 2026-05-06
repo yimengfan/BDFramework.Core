@@ -58,7 +58,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.38",
+      "version": "3.0.39",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -90,14 +90,14 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.mobile.android-logcat": {
-      "version": "1.4.6",
+      "version": "1.4.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "12.1.16",
+      "version": "14.0.12",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
@@ -107,7 +107,7 @@
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "12.1.16",
+      "version": "14.0.12",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
@@ -118,7 +118,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.23.1",
+      "version": "1.23.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -155,11 +155,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework.performance": {
-      "version": "2.8.1-preview",
+      "version": "3.4.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.0",
+        "com.unity.test-framework": "1.1.33",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"

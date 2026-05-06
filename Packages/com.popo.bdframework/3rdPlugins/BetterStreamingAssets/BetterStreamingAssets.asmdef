@@ -1,12 +1,7 @@
 {
-    "name": "BDFramework.AOT",
+    "name": "BetterStreamingAssets",
     "rootNamespace": "",
-    "references": [
-        "GUID:13ba8ce62aa80c74598530029cb2d649",
-        "GUID:3743e71edcd5bd8499007797ef02cbfb",
-        "GUID:1d057b9e27b346f783a102b54b04152d",
-        "GUID:559e11f20140448f8a1b81172e83196f"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
