@@ -43,6 +43,7 @@ using LitJson;
 using UnityEngine;
 using BDFramework.Utils.mslibEx;
 using BDFramework.Sql;
+using Cysharp.Text;
 using Debug = System.Diagnostics.Debug;
 using Random = System.Random;
 

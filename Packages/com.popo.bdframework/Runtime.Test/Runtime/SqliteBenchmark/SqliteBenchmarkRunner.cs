@@ -805,306 +805,6 @@ namespace BDFramework.Test.SqliteBenchmark
         #region 测试 5: Prepared Statement 缓存 vs 无缓存
 
         /// <summary>
-        /// 对比无缓存查询、TableQueryForILRuntime 缓存查询、连接级直接缓存查询的性能。
-        /// Compare no-cache query, TableQueryForILRuntime cached query, and connection-level direct cache query.
-        /// </summary>
-        static void Test_PreparedStatementCache_Vs_NoCache(SqliteBenchmarkReport report, string dbDir)
-        {
-            Debug.Log("<color=yellow>── 测试 5: Prepared Statement 缓存 vs 无缓存 ──</color>");
-
-            const int rowCount = 10000;
-            var rows = SqliteBenchmarkDataGenerator.GenerateSimpleRows(rowCount);
-
-            var dbPath = Path.Combine(dbDir, "pstmt_cache.db");
-            if (File.Exists(dbPath)) File.Delete(dbPath);
-
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                conn.CreateTable<SimpleRow>();
-                conn.InsertAll(rows, typeof(SimpleRow), runInTransaction: true);
-            }
-
-            const int queryIterations = 200;
-            var sql = "SELECT * FROM SimpleRow WHERE Id = ?";
-
-            // ── 方式 A: 无缓存（每次 Prepare + Finalize） ──
-            {
-                using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
-                {
-                    ApplyBenchmarkPragmas(conn);
-                    var sw = Stopwatch.StartNew();
-                    var gc0 = GC.CollectionCount(0);
-
-                    for (int i = 0; i < queryIterations; i++)
-                    {
-                        var results = conn.Query<SimpleRow>(sql, (i % rowCount) + 1);
-                    }
-
-                    sw.Stop();
-                    var gc0After = GC.CollectionCount(0);
-                    report.QueryNoCacheMs = sw.ElapsedMilliseconds;
-                    report.QueryNoCacheGC = gc0After - gc0;
-                    Debug.Log($"  无缓存查询({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
-                }
-            }
-
-            // ── 方式 B: 使用 TableQueryForILRuntime 缓存 ──
-            {
-                using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
-                {
-                    ApplyBenchmarkPragmas(conn);
-                    var tq = new TableQueryForILRuntime(conn);
-                    tq.EnableSqlCahce(triggerCacheNum: 1); // 第1次即触发缓存
-
-                    // 预热：让 SQL 执行计数达到缓存阈值
-                    for (int i = 0; i < 2; i++)
-                    {
-                        tq.WhereEqual("Id", 1).FromAll(typeof(SimpleRow));
-                    }
-
-                    var sw = Stopwatch.StartNew();
-                    var gc0 = GC.CollectionCount(0);
-
-                    for (int i = 0; i < queryIterations; i++)
-                    {
-                        var results = tq.WhereEqual("Id", (i % rowCount) + 1).FromAll(typeof(SimpleRow));
-                    }
-
-                    sw.Stop();
-                    var gc0After = GC.CollectionCount(0);
-                    report.QueryWithCacheMs = sw.ElapsedMilliseconds;
-                    report.QueryWithCacheGC = gc0After - gc0;
-                    Debug.Log($"  缓存查询({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
-                }
-            }
-
-            // ── 方式 C: 直接使用连接级缓存 API ──
-            {
-                using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
-                {
-                    ApplyBenchmarkPragmas(conn);
-
-                    // 预热：首次执行并缓存
-                    var warmupCmd = conn.CreateCommand(sql, 1);
-                    warmupCmd.ExecuteQuery<SimpleRow>();
-                    var warmupStmt = warmupCmd.GetPreparedStatement();
-                    if (warmupStmt != IntPtr.Zero)
-                    {
-                        conn.SetPreparedStatement(sql, warmupStmt);
-                    }
-
-                    var sw = Stopwatch.StartNew();
-                    var gc0 = GC.CollectionCount(0);
-
-                    for (int i = 0; i < queryIterations; i++)
-                    {
-                        var cachedStmt = conn.GetPreparedStatement(sql);
-                        var cmd = conn.CreateCommand(sql, (i % rowCount) + 1);
-                        if (cachedStmt != IntPtr.Zero)
-                        {
-                            cmd.SetPreparedStatement(cachedStmt);
-                        }
-                        cmd.ExecuteQuery<SimpleRow>();
-
-                        // 执行后更新缓存
-                        var newStmt = cmd.GetPreparedStatement();
-                        if (newStmt != IntPtr.Zero && newStmt != cachedStmt)
-                        {
-                            conn.SetPreparedStatement(sql, newStmt);
-                        }
-                    }
-
-                    sw.Stop();
-                    var gc0After = GC.CollectionCount(0);
-                    report.QueryDirectCacheMs = sw.ElapsedMilliseconds;
-                    report.QueryDirectCacheGC = gc0After - gc0;
-                    Debug.Log($"  直接缓存API({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
-                }
-            }
-
-            var speedup = report.QueryNoCacheMs > 0
-                ? (float)report.QueryNoCacheMs / Math.Max(1, report.QueryWithCacheMs)
-                : 0;
-            Debug.Log($"  <color=green>PreparedStmt缓存加速比: {speedup:F2}x</color>");
-            report.PreparedStatementSpeedup = speedup;
-
-            if (File.Exists(dbPath)) File.Delete(dbPath);
-        }
-
-        #endregion
-
-        #region 测试 6: GC 压力测量（FastJson Span vs string.Split）
-
-        /// <summary>
-        /// 对比 FastJsonConvert Span 解析和传统 string.Split 解析的 GC 压力。
-        /// Compare GC pressure between FastJsonConvert Span parsing and legacy string.Split parsing.
-        /// </summary>
-        static void Test_GC_Pressure(SqliteBenchmarkReport report)
-        {
-            Debug.Log("<color=yellow>── 测试 6: GC 压力测量（FastJson Span vs string.Split）──</color>");
-
-            // Span 方式
-            {
-                var testJson = "[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]";
-                const int iterations = 10000;
-
-                GC.Collect();
-                var gc0Before = GC.CollectionCount(0);
-                long memBefore = GC.GetTotalMemory(true);
-                var sw = Stopwatch.StartNew();
-
-                for (int i = 0; i < iterations; i++)
-                {
-                    SqliteFastJsonConvert.DeserializeArrayInt(testJson);
-                }
-
-                sw.Stop();
-                var gc0After = GC.CollectionCount(0);
-                long memAfter = GC.GetTotalMemory(false);
-                report.FastJsonSpanMs = sw.ElapsedMilliseconds;
-                report.FastJsonSpanGC = gc0After - gc0Before;
-                report.FastJsonSpanMemKB = (memAfter - memBefore) / 1024f;
-
-                Debug.Log($"  Span解析({iterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0Before}, 内存增量:{(memAfter - memBefore) / 1024f:F1}KB");
-            }
-
-            // string.Split 旧方式模拟
-            {
-                var testJson = "[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]";
-                const int iterations = 10000;
-
-                GC.Collect();
-                var gc0Before = GC.CollectionCount(0);
-                long memBefore = GC.GetTotalMemory(true);
-                var sw = Stopwatch.StartNew();
-
-                for (int i = 0; i < iterations; i++)
-                {
-                    LegacyStringSplitDeserialize(testJson);
-                }
-
-                sw.Stop();
-                var gc0After = GC.CollectionCount(0);
-                long memAfter = GC.GetTotalMemory(false);
-                report.FastJsonLegacyMs = sw.ElapsedMilliseconds;
-                report.FastJsonLegacyGC = gc0After - gc0Before;
-                report.FastJsonLegacyMemKB = (memAfter - memBefore) / 1024f;
-
-                Debug.Log($"  string.Split({iterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0Before}, 内存增量:{(memAfter - memBefore) / 1024f:F1}KB");
-            }
-
-            var speedup = report.FastJsonLegacyMs > 0
-                ? (float)report.FastJsonLegacyMs / Math.Max(1, report.FastJsonSpanMs)
-                : 0;
-            Debug.Log($"  <color=green>Span解析加速比: {speedup:F2}x, GC减少: {report.FastJsonLegacyGC - report.FastJsonSpanGC}次</color>");
-            report.FastJsonSpeedup = speedup;
-        }
-
-        /// <summary>
-        /// 模拟旧版 string.Split 反序列化，用于对比 GC 压力。
-        /// Simulate legacy string.Split deserialization for GC pressure comparison.
-        /// </summary>
-        static int[] LegacyStringSplitDeserialize(string json)
-        {
-            if (string.IsNullOrEmpty(json)) return Array.Empty<int>();
-            var trimmed = json.Trim('[', ']');
-            var parts = trimmed.Split(',');
-            var result = new int[parts.Length];
-            for (int i = 0; i < parts.Length; i++)
-            {
-                int.TryParse(parts[i].Trim(), out result[i]);
-            }
-            return result;
-        }
-
-        #endregion
-
-        #region 测试 7: 真实表数据导入测试
-
-        /// <summary>
-        /// 使用大数据量模拟真实表导入场景，测试批量导入和查询性能。
-        /// realTableDir 为可选的真实 xlsx 目录路径，为空则跳过 xlsx 扫描只做模拟。
-        /// Uses large data volumes to simulate real table import, testing batch import and query performance.
-        /// realTableDir is an optional real xlsx directory path; empty to skip xlsx scanning and only simulate.
-        /// </summary>
-        static void Test_RealTableDataImport(SqliteBenchmarkReport report, string dbDir, string realTableDir)
-        {
-            Debug.Log("<color=yellow>── 测试 7: 真实表数据导入测试 ──</color>");
-
-            // 扫描真实 xlsx 文件（如果目录存在）
-            // Scan real xlsx files (if directory exists)
-            if (Directory.Exists(realTableDir))
-            {
-                var xlsxFiles = Directory.GetFiles(realTableDir, "*.xlsx")
-                    .Where(f => !Path.GetFileName(f).StartsWith("~$")) // 跳过临时文件
-                    .OrderByDescending(f => new FileInfo(f).Length)
-                    .ToArray();
-
-                Debug.Log($"  发现 {xlsxFiles.Length} 个 xlsx 文件");
-                report.RealTableCount = xlsxFiles.Length;
-
-                // 列出最大的5个文件
-                for (int i = 0; i < Math.Min(5, xlsxFiles.Length); i++)
-                {
-                    var fi = new FileInfo(xlsxFiles[i]);
-                    Debug.Log($"    Top{i + 1}: {Path.GetFileName(xlsxFiles[i])} ({fi.Length / 1024}KB)");
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"  真实表数据目录不存在: {realTableDir}, 仅执行模拟测试");
-                report.RealTableCount = 0;
-            }
-
-            // 使用一个简化的真实数据模拟：创建含大数据行的表并测试查询性能
-            // 由于 xlsx 无法直接在 SQLite 中使用，我们用模拟大数据来验证
-            var dbPath = Path.Combine(dbDir, "realdata_sim.db");
-            if (File.Exists(dbPath)) File.Delete(dbPath);
-
-            const int simRows = 50000; // 模拟大型表
-            var simRowsList = SqliteBenchmarkDataGenerator.GenerateSimpleRows(simRows);
-
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                conn.CreateTable<SimpleRow>();
-                var sw = Stopwatch.StartNew();
-                conn.InsertAll(simRowsList, typeof(SimpleRow), runInTransaction: true);
-                sw.Stop();
-                report.RealDataInsertMs = sw.ElapsedMilliseconds;
-                Debug.Log($"  模拟大数据导入({simRows}行): {sw.ElapsedMilliseconds}ms");
-            }
-
-            // 使用 PRAGMA 优化后查询
-            using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
-            {
-                ApplyBenchmarkPragmas(conn);
-                var sw = Stopwatch.StartNew();
-                var results = conn.Query<SimpleRow>("SELECT * FROM SimpleRow WHERE Value1 > ? AND Value2 < ?", 25000, 500.0f);
-                sw.Stop();
-                report.RealDataQueryMs = sw.ElapsedMilliseconds;
-                report.RealDataQueryRows = results.Count;
-                Debug.Log($"  大数据条件查询: {sw.ElapsedMilliseconds}ms, 结果:{results.Count}行");
-            }
-
-            // 全表扫描
-            using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
-            {
-                ApplyBenchmarkPragmas(conn);
-                var sw = Stopwatch.StartNew();
-                var results = conn.Query<SimpleRow>("SELECT * FROM SimpleRow");
-                sw.Stop();
-                report.RealDataFullScanMs = sw.ElapsedMilliseconds;
-                Debug.Log($"  大数据全表扫描({simRows}行): {sw.ElapsedMilliseconds}ms");
-            }
-
-            if (File.Exists(dbPath)) File.Delete(dbPath);
-        }
-
-        #endregion
-
-        #region 测试 5: Prepared Statement 缓存 vs 无缓存
-
-        /// <summary>
         /// 对比三种查询模式：无缓存（每次创建新连接）、LruTableQuery 缓存、
         /// 直接 API 调用（绕过 TableQuery 层），测量 Prepared Statement 缓存的加速效果。
         /// 测试目的=量化 Prepared Statement 缓存对查询性能和 GC 的影响。
@@ -1154,7 +854,7 @@ namespace BDFramework.Test.SqliteBenchmark
                 }
             }
 
-            // ── 方式 B: 缓存 — 复用同一命令，仅更新参数 ──
+            // ── 方式 B: 缓存 — 使用连接级 Prepared Statement 缓存，仅更新参数 ──
             {
                 using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
                 {
@@ -1162,13 +862,19 @@ namespace BDFramework.Test.SqliteBenchmark
                     var sw = Stopwatch.StartNew();
                     var gc0 = GC.CollectionCount(0);
 
-                    // 创建一次命令并缓存
-                    var cmd = conn.CreateCommand("SELECT * FROM SimpleRow WHERE Value1 > ?", 0);
+                    // 首次执行获取 prepared statement 缓存
+                    var sql = "SELECT * FROM SimpleRow WHERE Value1 > ?";
+                    conn.Query<SimpleRow>(sql, 0);
+                    var cachedStmt = conn.GetPreparedStatement(sql);
+
                     for (int i = 0; i < queryIterations; i++)
                     {
-                        // 更新参数值，复用 Prepared Statement
-                        cmd.BindParameter(1, i % 1000);
+                        // 复用缓存的 prepared statement，仅重新绑定参数
+                        var cmd = conn.CreateCommand(sql, i % 1000);
+                        cmd.SetPreparedStatement(cachedStmt);
                         var results = cmd.ExecuteQuery<SimpleRow>();
+                        // 更新缓存语句指针（cmd 执行后可能更新）
+                        cachedStmt = cmd.GetPreparedStatement();
                     }
 
                     sw.Stop();
@@ -1179,7 +885,7 @@ namespace BDFramework.Test.SqliteBenchmark
                 }
             }
 
-            // ── 方式 C: 直接 API — 使用最低层 API 调用 ──
+            // ── 方式 C: 直接 API — 使用 SQLite3 原生 API 绕过 SQLiteCommand 层 ──
             {
                 using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
                 {
@@ -1187,24 +893,26 @@ namespace BDFramework.Test.SqliteBenchmark
                     var sw = Stopwatch.StartNew();
                     var gc0 = GC.CollectionCount(0);
 
-                    var cmd = conn.CreateCommand("SELECT * FROM SimpleRow WHERE Value1 > ?", 0);
-                    for (int i = 0; i < queryIterations; i++)
+                    // 直接使用 SQLite3 原生 API，绕过 SQLiteCommand 的参数绑定和反射层
+                    var sql = "SELECT * FROM SimpleRow WHERE Value1 > ?";
+                    var stmt = SQLite3.Prepare2(conn.Handle, sql);
+                    try
                     {
-                        cmd.BindParameter(1, i % 1000);
-                        // 直接执行底层 Step，跳过 TableQuery 反射层
-                        var stmt = SQLiteCommandHelper.Prepare(cmd);
-                        try
+                        for (int i = 0; i < queryIterations; i++)
                         {
+                            // 直接绑定 int 参数，复用 prepared statement
+                            SQLite3.BindInt(stmt, 1, i % 1000);
                             while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                             {
                                 // 仅读取第一列，测量纯 SQLite 层开销
                                 var val = SQLite3.ColumnInt(stmt, 0);
                             }
-                        }
-                        finally
-                        {
                             SQLite3.Reset(stmt);
                         }
+                    }
+                    finally
+                    {
+                        SQLite3.Finalize(stmt);
                     }
 
                     sw.Stop();
@@ -1244,7 +952,7 @@ namespace BDFramework.Test.SqliteBenchmark
             // 生成测试 JSON 数据 — 模拟典型 int[] 配置数据
             const int arrayCount = 1000;
             const int elementCount = 10;
-            var rng = new Random(42);
+            var rng = new System.Random(42);
             var testData = new string[arrayCount];
             var sb = new StringBuilder();
             for (int i = 0; i < arrayCount; i++)
