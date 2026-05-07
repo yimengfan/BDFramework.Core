@@ -206,13 +206,64 @@ namespace BDFramework.Sql
         #region 只读 PRAGMA 极端优化
 
         /// <summary>
+        /// 页缓存上限（KB）。动态 cache_size 不会超过此值。
+        /// Upper limit for page cache in KB. Dynamic cache_size will not exceed this value.
+        /// </summary>
+        const int MaxCacheSizeKB = 20000; // 20MB
+
+        /// <summary>
+        /// 页缓存下限（KB）。动态 cache_size 不会低于此值。
+        /// Lower limit for page cache in KB. Dynamic cache_size will not go below this value.
+        /// </summary>
+        const int MinCacheSizeKB = 2000; // 2MB
+
+        /// <summary>
+        /// 页缓存相对数据库文件大小的倍数。
+        /// 缓存 = fileSize * CacheSizeMultiplier，然后 clamp 到 [MinCacheSizeKB, MaxCacheSizeKB]。
+        /// Multiplier of page cache relative to database file size.
+        /// cache = fileSize * CacheSizeMultiplier, then clamped to [MinCacheSizeKB, MaxCacheSizeKB].
+        /// </summary>
+        const float CacheSizeMultiplier = 2.0f;
+
+        /// <summary>
+        /// 根据数据库文件大小计算合理的页缓存大小（KB）。
+        /// 小数据库（&lt;2MB）使用最小缓存 2MB；大数据库按文件大小 ×2 计算，上限 20MB。
+        /// Calculate a reasonable page cache size (KB) based on database file size.
+        /// Small databases (&lt;2MB) use minimum 2MB cache; larger databases use fileSize×2, capped at 20MB.
+        /// </summary>
+        /// <param name="dbFilePath">数据库文件路径 / Database file path</param>
+        /// <returns>cache_size 值（负数，单位 KB） / cache_size value (negative, in KB)</returns>
+        static int CalculateCacheSizeKB(string dbFilePath)
+        {
+            long fileSizeBytes = 0;
+            try
+            {
+                var fi = new FileInfo(dbFilePath);
+                if (fi.Exists) fileSizeBytes = fi.Length;
+            }
+            catch
+            {
+                // 文件信息获取失败，使用默认值
+                // File info retrieval failed, use default
+            }
+
+            // 文件大小转 KB，乘以倍数，然后 clamp 到 [Min, Max]
+            // Convert file size to KB, multiply by multiplier, then clamp to [Min, Max]
+            var fileSizeKB = fileSizeBytes / 1024L;
+            var cacheSizeKB = (int)(fileSizeKB * CacheSizeMultiplier);
+            cacheSizeKB = Math.Max(MinCacheSizeKB, Math.Min(MaxCacheSizeKB, cacheSizeKB));
+
+            return cacheSizeKB;
+        }
+
+        /// <summary>
         /// 为只读连接应用极端优化 PRAGMA。
         /// Runtime 下 local.db 不发生写入，因此可以关闭所有与写入安全相关的机制。
         /// Apply extreme optimization PRAGMAs for read-only connections.
         /// Since local.db is never written at runtime, all write-safety mechanisms can be disabled.
         ///
         /// 优化项说明：
-        /// - cache_size=-20000: 页缓存 20MB（负值表示 KB），减少磁盘 IO
+        /// - cache_size: 根据数据库文件大小动态计算（2MB~20MB），减少磁盘 IO 且不浪费内存
         /// - mmap_size=268435456: 内存映射 256MB，操作系统自动管理页面换入换出
         /// - journal_mode=OFF: 关闭回滚日志，只读无需事务恢复
         /// - synchronous=OFF: 关闭同步写入，只读无需确保数据落盘
@@ -228,8 +279,10 @@ namespace BDFramework.Sql
 
             try
             {
-                // 页缓存：20MB（负值表示 KB 数）
-                con.Execute("PRAGMA cache_size=-20000");
+                // 页缓存：根据数据库文件大小动态计算（2MB~20MB）
+                // Page cache: dynamically calculated based on DB file size (2MB~20MB)
+                var cacheSizeKB = CalculateCacheSizeKB(con.DatabasePath);
+                con.Execute($"PRAGMA cache_size=-{cacheSizeKB}");
 
                 // 内存映射：256MB — 操作系统按需换入页面，零拷贝读取
                 con.Execute("PRAGMA mmap_size=268435456");
@@ -254,7 +307,7 @@ namespace BDFramework.Sql
                 SqlitePerformanceMonitor.RecordPragmaConfig(mmapSize, cacheSize, pageSize);
 
                 BDebug.Log(Tag,
-                    $"只读优化PRAGMA已应用 — page_size:{pageSize}, cache_size:{cacheSize}, mmap_size:{mmapSize}",
+                    $"只读优化PRAGMA已应用 — page_size:{pageSize}, cache_size:{cacheSize}({cacheSizeKB}KB), mmap_size:{mmapSize}",
                     Color.cyan);
             }
             catch (Exception e)

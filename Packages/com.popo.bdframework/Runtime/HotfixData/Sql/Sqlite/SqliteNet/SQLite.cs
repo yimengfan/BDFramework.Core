@@ -2129,15 +2129,17 @@ namespace SQLite4Unity3d
             return count;
         }
 
-        readonly Dictionary<(string, string), PreparedSqlLiteInsertCommand> _insertCommandMap = new Dictionary<(string, string), PreparedSqlLiteInsertCommand>();
+        Dictionary<(string, string), PreparedSqlLiteInsertCommand> _insertCommandMap;
 
 		/// <summary>
 		/// 缓存 SELECT 语句的 prepared statement，避免重复编译。
 		/// Key: SQL 文本, Value: 编译后的 sqlite3_stmt 指针。
+		/// 惰性初始化：首次使用时才分配，减少连接构造时的内存开销。
 		/// Cache for SELECT prepared statements, avoiding repeated compilation.
 		/// Key: SQL text, Value: compiled sqlite3_stmt pointer.
+		/// Lazy-init: allocated on first use to reduce connection construction memory overhead.
 		/// </summary>
-		readonly Dictionary<string, Sqlite3Statement> _preparedStatementCache = new Dictionary<string, Sqlite3Statement>();
+		Dictionary<string, Sqlite3Statement> _preparedStatementCache;
 
 		/// <summary>
 		/// 存储一个 prepared statement 到连接级缓存中。
@@ -2150,7 +2152,7 @@ namespace SQLite4Unity3d
 		public void SetPreparedStatement(string sql, Sqlite3Statement stmt)
 		{
 			if (string.IsNullOrEmpty(sql) || stmt == default(Sqlite3Statement)) return;
-			lock (_preparedStatementCache)
+			lock (PreparedStatementCache)
 			{
 				// 如果已有旧语句，先释放
 				// If an old statement exists, finalize it first
@@ -2173,7 +2175,7 @@ namespace SQLite4Unity3d
 		public Sqlite3Statement GetPreparedStatement(string sql)
 		{
 			if (string.IsNullOrEmpty(sql)) return default(Sqlite3Statement);
-			lock (_preparedStatementCache)
+			lock (PreparedStatementCache)
 			{
 				Sqlite3Statement stmt;
 				if (_preparedStatementCache.TryGetValue(sql, out stmt))
@@ -2183,15 +2185,47 @@ namespace SQLite4Unity3d
 				return default(Sqlite3Statement);
 			}
 		}
+        /// <summary>
+        /// 获取 InsertCommand 缓存字典（惰性初始化）。
+        /// Lazy-init insert command cache dictionary, allocated on first use.
+        /// </summary>
+        Dictionary<(string, string), PreparedSqlLiteInsertCommand> InsertCommandMap
+        {
+            get
+            {
+                if (_insertCommandMap == null)
+                {
+                    _insertCommandMap = new Dictionary<(string, string), PreparedSqlLiteInsertCommand>();
+                }
+                return _insertCommandMap;
+            }
+        }
+
+        /// <summary>
+        /// 获取 Prepared Statement 缓存字典（惰性初始化）。
+        /// Lazy-init prepared statement cache dictionary, allocated on first use.
+        /// </summary>
+        Dictionary<string, Sqlite3Statement> PreparedStatementCache
+        {
+            get
+            {
+                if (_preparedStatementCache == null)
+                {
+                    _preparedStatementCache = new Dictionary<string, Sqlite3Statement>();
+                }
+                return _preparedStatementCache;
+            }
+        }
+
         PreparedSqlLiteInsertCommand GetInsertCommand(TableMapping map, string extra)
         {
             PreparedSqlLiteInsertCommand prepCmd;
 
             var key = (map.MappedType.FullName, extra);
 
-            lock (_insertCommandMap)
+            lock (InsertCommandMap)
             {
-                if (_insertCommandMap.TryGetValue(key, out prepCmd))
+                if (InsertCommandMap.TryGetValue(key, out prepCmd))
                 {
                     return prepCmd;
                 }
@@ -2199,15 +2233,15 @@ namespace SQLite4Unity3d
 
             prepCmd = CreateInsertCommand(map, extra);
 
-            lock (_insertCommandMap)
+            lock (InsertCommandMap)
             {
-                if (_insertCommandMap.TryGetValue(key, out var existing))
+                if (InsertCommandMap.TryGetValue(key, out var existing))
                 {
                     prepCmd.Dispose();
                     return existing;
                 }
 
-                _insertCommandMap.Add(key, prepCmd);
+                InsertCommandMap.Add(key, prepCmd);
             }
 
             return prepCmd;
@@ -2546,27 +2580,32 @@ namespace SQLite4Unity3d
                 {
                     if (disposing)
                     {
-                        lock (_insertCommandMap)
+                        lock (InsertCommandMap)
                         {
-                            foreach (var sqlInsertCommand in _insertCommandMap.Values)
+                            foreach (var sqlInsertCommand in InsertCommandMap.Values)
                             {
                                 sqlInsertCommand.Dispose();
                             }
 
-                            _insertCommandMap.Clear();
+                            InsertCommandMap.Clear();
                         }
 
-                        lock (_preparedStatementCache)
+                        // 只有实际使用过 PS 缓存时才清理（避免惰性初始化在 Dispose 时意外分配）
+                        // Only clean up if PS cache was actually used (avoid lazy-init allocation during Dispose)
+                        if (_preparedStatementCache != null)
                         {
-                            foreach (var stmt in _preparedStatementCache.Values)
+                            lock (PreparedStatementCache)
                             {
-                                if (stmt != default(Sqlite3Statement))
+                                foreach (var stmt in PreparedStatementCache.Values)
                                 {
-                                    SQLite3.Finalize(stmt);
+                                    if (stmt != default(Sqlite3Statement))
+                                    {
+                                        SQLite3.Finalize(stmt);
+                                    }
                                 }
-                            }
 
-                            _preparedStatementCache.Clear();
+                                PreparedStatementCache.Clear();
+                            }
                         }
 
                         var r = useClose2 ? SQLite3.Close2(Handle) : SQLite3.Close(Handle);
