@@ -27,9 +27,12 @@ namespace BDFramework.Editor.SqliteBenchmark
         [MenuItem(MENU_PATH)]
         static public void RunBenchmark()
         {
-            // 委托给 Runtime 兼容的 SqliteBenchmarkRunner
-            // Delegate to Runtime-compatible SqliteBenchmarkRunner
-            SqliteBenchmarkRunner.RunAll(realTableDir: DefaultRealTableDir);
+            // 委托给 Runtime 兼容的 SqliteBenchmarkRunner，并保存报告到文件
+            // Delegate to Runtime-compatible SqliteBenchmarkRunner and save report to file
+            var report = SqliteBenchmarkRunner.RunAll(realTableDir: DefaultRealTableDir);
+            var outputPath = Path.Combine(Application.persistentDataPath,
+                $"SqliteBenchmark_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+            report.SaveToFile(outputPath);
         }
     }
 }

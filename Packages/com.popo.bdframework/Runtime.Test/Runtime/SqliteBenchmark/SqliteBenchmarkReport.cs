@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -125,6 +126,35 @@ namespace BDFramework.Test.SqliteBenchmark
             sb.AppendLine("║                                                            ║");
             sb.AppendLine("╚══════════════════════════════════════════════════════════════╝");
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// 将格式化报告写入指定文件路径。
+        /// 自动创建目录，并在日志中输出文件位置。
+        /// Write the formatted report to the specified file path.
+        /// Automatically creates the directory and logs the file location.
+        /// </summary>
+        /// <param name="filePath">输出文件绝对路径。若为 null 则使用 Application.persistentDataPath 下的默认路径。
+        /// Absolute output file path. If null, uses a default path under Application.persistentDataPath.</param>
+        /// <returns>实际写入的文件路径。The actual file path written to.</returns>
+        public string SaveToFile(string filePath = null)
+        {
+            if (filePath == null)
+            {
+                filePath = Path.Combine(Application.persistentDataPath,
+                    $"SqliteBenchmark_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+            }
+
+            var dir = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            var content = FormatReport();
+            File.WriteAllText(filePath, content, Encoding.UTF8);
+            Debug.Log($"[SqliteBenchmark] 报告已写入: {filePath}");
+            return filePath;
         }
     }
 

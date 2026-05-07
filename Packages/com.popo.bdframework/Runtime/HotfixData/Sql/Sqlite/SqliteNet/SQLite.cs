@@ -3706,20 +3706,20 @@ namespace SQLite4Unity3d
                 BDebugPerformanceProfiler.EndStep(perfTag, "ColumnMapping");
 #endif
 
+                //反序列化
+                // 步骤3: 逐行 Step + 反序列化
+                // Step 3: Per-row Step + deserialization
+                bool hasRow;
+#if ENABLE_BDEBUG
                 // ─── 行级计时累加器（热循环中使用 Stopwatch 避免字典查找开销）───
                 // Row-level timing accumulators (use Stopwatch in hot loop to avoid dictionary lookup overhead)
                 float stepTimeMs = 0f;          // SQLite3.Step 总耗时
                 float createObjTimeMs = 0f;     // 对象实例化总耗时
                 float fastSetTimeMs = 0f;       // fastColumnSetter 赋值总耗时
                 float readColTimeMs = 0f;       // ReadCol 反射赋值总耗时（含 FastJsonConvert）
-
                 var count = 0;
                 var sw = new System.Diagnostics.Stopwatch();
 
-                //反序列化
-                // 步骤3: 逐行 Step + 反序列化
-                // Step 3: Per-row Step + deserialization
-                bool hasRow;
                 sw.Restart();
                 hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
                 sw.Stop();
@@ -3780,6 +3780,47 @@ namespace SQLite4Unity3d
                     sw.Stop();
                     stepTimeMs += sw.ElapsedTicks / 10000f;
                 }
+#else
+                // 非性能分析路径：无 Stopwatch 开销的精简执行
+                // Non-profiling path: lean execution without Stopwatch overhead
+                hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
+
+                while (hasRow)
+                {
+                    object obj = null;
+                    //For ILR
+                    if (isILRuntime)
+                    {
+                        obj = ScriptLoder.CreateHotfixInstance(map.MappedType);
+                    }
+                    else
+                    {
+                        obj = Activator.CreateInstance(map.MappedType);
+                    }
+
+                    for (int i = 0; i < cols.Length; i++)
+                    {
+                        if (cols[i] == null)
+                            continue;
+
+                        if (fastColumnSetters != null && fastColumnSetters[i] != null)
+                        {
+                            fastColumnSetters[i].Invoke(obj, stmt, i);
+                        }
+                        else
+                        {
+                            var colType = SQLite3.ColumnType(stmt, i);
+                            var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
+                            cols[i].SetValue(obj, val);
+                        }
+                    }
+
+                    OnInstanceCreated(obj);
+                    yield return (T) obj;
+
+                    hasRow = SQLite3.Step(stmt) == SQLite3.Result.Row;
+                }
+#endif
 
 #if ENABLE_BDEBUG
                 // 构建完整流水线报告：从分步计时器提取 Prepare/ColumnMapping，加上行级累加数据
