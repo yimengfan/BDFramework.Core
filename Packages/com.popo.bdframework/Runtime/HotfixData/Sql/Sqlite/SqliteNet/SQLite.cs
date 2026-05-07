@@ -2129,7 +2129,7 @@ namespace SQLite4Unity3d
             return count;
         }
 
-        readonly Dictionary<Tuple<string, string>, PreparedSqlLiteInsertCommand> _insertCommandMap = new Dictionary<Tuple<string, string>, PreparedSqlLiteInsertCommand>();
+        readonly Dictionary<(string, string), PreparedSqlLiteInsertCommand> _insertCommandMap = new Dictionary<(string, string), PreparedSqlLiteInsertCommand>();
 
 		/// <summary>
 		/// 缓存 SELECT 语句的 prepared statement，避免重复编译。
@@ -2187,7 +2187,7 @@ namespace SQLite4Unity3d
         {
             PreparedSqlLiteInsertCommand prepCmd;
 
-            var key = Tuple.Create(map.MappedType.FullName, extra);
+            var key = (map.MappedType.FullName, extra);
 
             lock (_insertCommandMap)
             {
@@ -2293,29 +2293,28 @@ namespace SQLite4Unity3d
                 throw new NotSupportedException("Cannot update " + map.TableName + ": it has no PK");
             }
 
-            var cols = from p in map.Columns
-                where p != pk
-                select p;
-            var vals = from c in cols
-                select c.GetValue(obj);
-            var ps = new List<object>(vals);
-            if (ps.Count == 0)
+            // 使用预计算的 UpdateSql 和优化的参数构建，避免每次调用重复 LINQ + string.Format
+            // Use pre-computed UpdateSql and optimized parameter building, avoiding repeated LINQ + string.Format per call
+            IEnumerable<TableMapping.Column> cols;
+            if (map.IsUpdateAllColumns)
             {
-                // There is a PK but no accompanying data,
-                // so reset the PK to make the UPDATE work.
                 cols = map.Columns;
-                vals = from c in cols
-                    select c.GetValue(obj);
-                ps = new List<object>(vals);
+            }
+            else
+            {
+                cols = from p in map.Columns where p != pk select p;
             }
 
+            var ps = new List<object>();
+            foreach (var c in cols)
+            {
+                ps.Add(c.GetValue(obj));
+            }
             ps.Add(pk.GetValue(obj));
-            var q = string.Format("update \"{0}\" set {1} where \"{2}\" = ? ", map.TableName, string.Join(",", (from c in cols
-                select "\"" + c.Name + "\" = ? ").ToArray()), pk.Name);
 
             try
             {
-                rowsAffected = Execute(q, ps.ToArray());
+                rowsAffected = Execute(map.UpdateSql, ps.ToArray());
             }
             catch (SQLiteException ex)
             {
@@ -2387,8 +2386,9 @@ namespace SQLite4Unity3d
                 throw new NotSupportedException("Cannot delete " + map.TableName + ": it has no PK");
             }
 
-            var q = string.Format("delete from \"{0}\" where \"{1}\" = ?", map.TableName, pk.Name);
-            var count = Execute(q, pk.GetValue(objectToDelete));
+            // 使用预计算的 DeleteSql，避免每次调用重复 string.Format
+            // Use pre-computed DeleteSql, avoiding repeated string.Format per call
+            var count = Execute(map.DeleteSql, pk.GetValue(objectToDelete));
             if (count > 0)
                 OnTableChanged(map, NotifyTableChangedAction.Delete);
             return count;
@@ -2431,8 +2431,9 @@ namespace SQLite4Unity3d
                 throw new NotSupportedException("Cannot delete " + map.TableName + ": it has no PK");
             }
 
-            var q = string.Format("delete from \"{0}\" where \"{1}\" = ?", map.TableName, pk.Name);
-            var count = Execute(q, primaryKey);
+            // 使用预计算的 DeleteSql，避免每次调用重复 string.Format
+            // Use pre-computed DeleteSql, avoiding repeated string.Format per call
+            var count = Execute(map.DeleteSql, primaryKey);
             if (count > 0)
                 OnTableChanged(map, NotifyTableChangedAction.Delete);
             return count;
@@ -2468,6 +2469,8 @@ namespace SQLite4Unity3d
         /// </returns>
         public int DeleteAll(TableMapping map)
         {
+            // 使用预计算的 DeleteSql 所在的 TableName，但 DeleteAll 不需要 WHERE 子句
+            // Use TableName from mapping, but DeleteAll doesn't need WHERE clause
             var query = string.Format("delete from \"{0}\"", map.TableName);
             var count = Execute(query);
             if (count > 0)
@@ -2982,6 +2985,13 @@ namespace SQLite4Unity3d
             _insertColumns = Columns.Where(c => !c.IsAutoInc).ToArray();
             _insertOrReplaceColumns = Columns.ToArray();
 
+            // 预计算 Update/Delete SQL，避免每次调用重复 string.Format + LINQ
+            // Pre-compute Update/Delete SQL to avoid repeated string.Format + LINQ per call
+            UpdateSql = BuildUpdateSql();
+            DeleteSql = PK != null
+                ? string.Format("delete from \"{0}\" where \"{1}\" = ?", TableName, PK.Name)
+                : null;
+
             // 构建列名查找字典，O(1) 替代 FindColumn 的 O(n) 线性扫描
             // Build column name lookup dictionary for O(1) lookup instead of O(n) linear scan in FindColumn
             _columnNameMap = new Dictionary<string, Column>(Columns.Length, StringComparer.OrdinalIgnoreCase);
@@ -3086,6 +3096,53 @@ namespace SQLite4Unity3d
             if (_autoPk != null)
             {
                 _autoPk.SetValue(obj, Convert.ChangeType(id, _autoPk.ColumnType, null));
+            }
+        }
+
+        /// <summary>
+        /// 预计算的 UPDATE SQL，避免每次 Update 调用重复 string.Format + LINQ。
+        /// Pre-computed UPDATE SQL, avoiding repeated string.Format + LINQ per Update call.
+        /// </summary>
+        internal string UpdateSql { get; private set; }
+
+        /// <summary>
+        /// 预计算的 DELETE SQL，避免每次 Delete 调用重复 string.Format。
+        /// Pre-computed DELETE SQL, avoiding repeated string.Format per Delete call.
+        /// </summary>
+        internal string DeleteSql { get; private set; }
+
+        /// <summary>
+        /// 构建 UPDATE SQL 语句。
+        /// Build the UPDATE SQL statement.
+        /// </summary>
+        string BuildUpdateSql()
+        {
+            if (PK == null) return null;
+            var cols = from p in Columns where p != PK select p;
+            var colList = cols.ToList();
+            if (colList.Count == 0)
+            {
+                // PK only table: update all columns including PK
+                colList = Columns.ToList();
+            }
+            return string.Format("update \"{0}\" set {1} where \"{2}\" = ? ",
+                TableName,
+                string.Join(",", from c in colList select "\"" + c.Name + "\" = ? "),
+                PK.Name);
+        }
+
+        /// <summary>
+        /// 获取 Update 操作的非自增列（不含 PK），返回列数和是否回退到全列更新。
+        /// Get the non-auto-increment columns for Update (excluding PK), returns column count
+        /// and whether it falls back to all-columns update.
+        /// </summary>
+        internal bool IsUpdateAllColumns
+        {
+            get
+            {
+                if (PK == null) return false;
+                var nonPkCols = Columns.Count(c => c != PK);
+                return nonPkCols == 0;
             }
         }
 
@@ -3277,9 +3334,17 @@ namespace SQLite4Unity3d
                 if (StoreAsText)
                 {
                     EnumValues = new Dictionary<int, string>();
+                    // 同时构建 text→value 反向映射，替代运行时 Enum.Parse 反射调用。
+                    // Enum.Parse 每次调用都遍历所有枚举名做比较，EnumTextToValue 只构建一次 O(1) 查找。
+                    // Also build text→value reverse mapping, replacing runtime Enum.Parse reflection call.
+                    // Enum.Parse iterates all enum names each time; EnumTextToValue is built once for O(1) lookup.
+                    EnumTextToValue = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
                     foreach (object e in Enum.GetValues(type))
                     {
-                        EnumValues[Convert.ToInt32(e)] = e.ToString();
+                        var intVal = Convert.ToInt32(e);
+                        var name = e.ToString();
+                        EnumValues[intVal] = name;
+                        EnumTextToValue[name] = e;
                     }
                 }
             }
@@ -3290,6 +3355,14 @@ namespace SQLite4Unity3d
         public bool StoreAsText { get; private set; }
 
         public Dictionary<int, string> EnumValues { get; private set; }
+
+        /// <summary>
+        /// 文本→枚举值 反向映射，用于替代 ReadColObject 中的 Enum.Parse 反射调用。
+        /// Key 使用 OrdinalIgnoreCase 以匹配 Enum.Parse 的忽略大小写行为。
+        /// Text→enum value reverse mapping, replacing Enum.Parse reflection call in ReadColObject.
+        /// Key uses OrdinalIgnoreCase to match Enum.Parse's case-insensitive behavior.
+        /// </summary>
+        public Dictionary<string, object> EnumTextToValue { get; private set; }
     }
 
     static class EnumCache
@@ -4379,6 +4452,18 @@ namespace SQLite4Unity3d
                 if (type == SQLite3.ColType.Text)
                 {
                     var value = SQLite3.ColumnString(stmt, index);
+                    // 使用 EnumCache 缓存的 text→enum 反向映射替代 Enum.Parse 反射调用。
+                    // Enum.Parse 内部遍历所有名字做比较，每次调用都重新查找；
+                    // EnumCacheInfo.EnumTextToValue 在首次构建后 O(1) 查找。
+                    // Use EnumCache's text→enum reverse mapping instead of Enum.Parse reflection call.
+                    // Enum.Parse iterates all names each time; EnumCacheInfo.EnumTextToValue is O(1) after first build.
+                    var enumInfo = EnumCache.GetInfo(clrType);
+                    if (enumInfo.EnumTextToValue != null && enumInfo.EnumTextToValue.TryGetValue(value, out var enumVal))
+                    {
+                        return enumVal;
+                    }
+                    // 缓存未命中时回退到 Enum.Parse（处理非标准名称）
+                    // Fall back to Enum.Parse for non-standard names not in cache
                     return Enum.Parse(clrType, value.ToString(), true);
                 }
                 else
@@ -4429,10 +4514,26 @@ namespace SQLite4Unity3d
     internal class FastColumnSetter
     {
         /// <summary>
+        /// fastColumnSetter 委托缓存，避免每次查询重复调用 Delegate.CreateDelegate。
+        /// 缓存键：(对象类型, 列, StoreDateTimeAsTicks, StoreTimeSpanAsTicks)。
+        /// 同一列在同一连接配置下产生的 setter 委托完全相同，只需创建一次。
+        /// Cache for fastColumnSetter delegates, avoiding repeated Delegate.CreateDelegate per query.
+        /// Cache key: (object type, column, StoreDateTimeAsTicks, StoreTimeSpanAsTicks).
+        /// Same column under same connection settings produces identical setter; only needs to be created once.
+        /// </summary>
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<ValueTuple<Type, TableMapping.Column, bool, bool>, Action<object, Sqlite3Statement, int>> _setterCache
+            = new System.Collections.Concurrent.ConcurrentDictionary<ValueTuple<Type, TableMapping.Column, bool, bool>, Action<object, Sqlite3Statement, int>>();
+
+        /// <summary>
         /// Creates a delegate that can be used to quickly set object members from query columns.
         ///
         /// Note that this frontloads the slow reflection-based type checking for columns to only happen once at the beginning of a query,
         /// and then afterwards each row of the query can invoke the delegate returned by this function to get much better performance (up to 10x speed boost, depending on query size and platform).
+        ///
+        /// 委托结果按 (ObjectType, Column, StoreDateTimeAsTicks, StoreTimeSpanAsTicks) 缓存，
+        /// 同一列在同一连接配置下不会重复创建。
+        /// Delegate results are cached by (ObjectType, Column, StoreDateTimeAsTicks, StoreTimeSpanAsTicks);
+        /// same column under same connection settings is not recreated.
         /// </summary>
         /// <typeparam name="T">The type of the destination object that the query will read into</typeparam>
         /// <param name="conn">The active connection.  Note that this is primarily needed in order to read preferences regarding how certain data types (such as TimeSpan / DateTime) should be encoded in the database.</param>
@@ -4443,6 +4544,36 @@ namespace SQLite4Unity3d
         /// If no fast setter is available for the requested column (enums in particular cause headache), then this function returns null.
         /// </returns>
         internal static Action<object, Sqlite3Statement, int> GetFastSetter<T>(SQLiteConnection conn, TableMapping.Column column)
+        {
+            var key = (typeof(T), column, conn.StoreDateTimeAsTicks, conn.StoreTimeSpanAsTicks);
+            if (_setterCache.TryGetValue(key, out var cached))
+            {
+                return cached;
+            }
+
+            var setter = CreateFastSetter<T>(conn, column);
+            // null 结果也缓存（避免反复尝试无法创建的委托类型），
+            // 使用空委托标记替代 null（ConcurrentDictionary 不支持 null value）
+            // Cache null results too (avoid repeated attempts for types that can't create delegates),
+            // using a no-op sentinel instead of null (ConcurrentDictionary doesn't support null values)
+            var toCache = setter ?? _nullSentinel;
+            _setterCache[key] = toCache;
+            return toCache == _nullSentinel ? null : toCache;
+        }
+
+        /// <summary>
+        /// null 哨兵委托，用于缓存 "无法创建 fastSetter" 的结果，
+        /// 避免每次查询都重新尝试 Delegate.CreateDelegate。
+        /// Null sentinel delegate for caching "cannot create fastSetter" results,
+        /// avoiding repeated Delegate.CreateDelegate attempts per query.
+        /// </summary>
+        static readonly Action<object, Sqlite3Statement, int> _nullSentinel = (_, __, ___) => { };
+
+        /// <summary>
+        /// 实际创建 fastSetter 委托的内部方法，仅缓存未命中时调用。
+        /// Internal method that actually creates the fastSetter delegate; only called on cache miss.
+        /// </summary>
+        private static Action<object, Sqlite3Statement, int> CreateFastSetter<T>(SQLiteConnection conn, TableMapping.Column column)
         {
             Action<object, Sqlite3Statement, int> fastSetter = null;
 

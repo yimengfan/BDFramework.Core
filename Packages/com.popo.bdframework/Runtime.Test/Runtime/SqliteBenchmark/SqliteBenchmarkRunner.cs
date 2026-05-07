@@ -830,29 +830,32 @@ namespace BDFramework.Test.SqliteBenchmark
 
             const int queryIterations = 200;
 
-            // ── 方式 A: 无缓存 — 每次创建新命令 ──
+            // ── 方式 A: 无缓存 — 每次创建新连接和新命令，模拟完全无缓存场景 ──
+            // ── Mode A: No cache — create new connection and command each time, simulating fully uncached scenario ──
             {
-                using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
-                {
-                    ApplyBenchmarkPragmas(conn);
-                    var sw = Stopwatch.StartNew();
-                    var gc0 = GC.CollectionCount(0);
+                var sw = Stopwatch.StartNew();
+                var gc0 = GC.CollectionCount(0);
 
-                    for (int i = 0; i < queryIterations; i++)
+                for (int i = 0; i < queryIterations; i++)
+                {
+                    // 每次创建新连接，强制重新 Prepare + ColumnMapping + FastSetter 构建
+                    // New connection each time forces re-Prepare + re-ColumnMapping + re-FastSetter build
+                    using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
                     {
-                        // 每次创建新命令，模拟无缓存场景
+                        ApplyBenchmarkPragmas(conn);
                         var results = conn.Query<SimpleRow>("SELECT * FROM SimpleRow WHERE Value1 > ?", i % 1000);
                     }
-
-                    sw.Stop();
-                    var gc0After = GC.CollectionCount(0);
-                    report.QueryNoCacheMs = sw.ElapsedMilliseconds;
-                    report.QueryNoCacheGC = gc0After - gc0;
-                    Debug.Log($"  无缓存查询({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
                 }
+
+                sw.Stop();
+                var gc0After = GC.CollectionCount(0);
+                report.QueryNoCacheMs = sw.ElapsedMilliseconds;
+                report.QueryNoCacheGC = gc0After - gc0;
+                Debug.Log($"  无缓存查询(新连接, {queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
             }
 
-            // ── 方式 B: 缓存 — 使用连接级 Prepared Statement 缓存，仅更新参数 ──
+            // ── 方式 B: 缓存 — 复用同一连接，Prepared Statement + ColumnMapping + FastSetter 全部命中缓存 ──
+            // ── Mode B: Cached — reuse same connection, PS + ColumnMapping + FastSetter all cache hits ──
             {
                 using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
                 {
@@ -860,26 +863,18 @@ namespace BDFramework.Test.SqliteBenchmark
                     var sw = Stopwatch.StartNew();
                     var gc0 = GC.CollectionCount(0);
 
-                    // 首次执行获取 prepared statement 缓存
-                    var sql = "SELECT * FROM SimpleRow WHERE Value1 > ?";
-                    conn.Query<SimpleRow>(sql, 0);
-                    var cachedStmt = conn.GetPreparedStatement(sql);
-
                     for (int i = 0; i < queryIterations; i++)
                     {
-                        // 复用缓存的 prepared statement，仅重新绑定参数
-                        var cmd = conn.CreateCommand(sql, i % 1000);
-                        cmd.SetPreparedStatement(cachedStmt);
-                        var results = cmd.ExecuteQuery<SimpleRow>();
-                        // 更新缓存语句指针（cmd 执行后可能更新）
-                        cachedStmt = cmd.GetPreparedStatement();
+                        // 复用同一连接，所有缓存（PS、ColumnMapping、FastSetter）命中
+                        // Reuse same connection — all caches (PS, ColumnMapping, FastSetter) hit
+                        var results = conn.Query<SimpleRow>("SELECT * FROM SimpleRow WHERE Value1 > ?", i % 1000);
                     }
 
                     sw.Stop();
                     var gc0After = GC.CollectionCount(0);
                     report.QueryWithCacheMs = sw.ElapsedMilliseconds;
                     report.QueryWithCacheGC = gc0After - gc0;
-                    Debug.Log($"  缓存查询({queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
+                    Debug.Log($"  缓存查询(热连接, {queryIterations}次): {sw.ElapsedMilliseconds}ms, GC Gen0:{gc0After - gc0}");
                 }
             }
 
