@@ -18,7 +18,7 @@ namespace BDFramework.EditorTest.SQLite
     /// and assertion gates only. Normally runs via Unity Test Runner; BatchMode via RunBatchVerification().
     /// </summary>
     [TestFixture]
-    public class SqliteBenchmarkTest
+    public class SqliteBenchmarkGateTest
     {
         /// <summary>
         /// 基准测试报告 — 所有测试方法共享，由 RunAllBenchmarkTests 一次性填充。
@@ -40,7 +40,7 @@ namespace BDFramework.EditorTest.SQLite
         /// </summary>
         public static void RunBatchVerification()
         {
-            SqliteBenchmarkBatchVerification.RunBatchVerification();
+            SqliteBenchmarkGateBatchVerification.RunBatchVerification();
         }
 
         [SetUp]
@@ -58,12 +58,12 @@ namespace BDFramework.EditorTest.SQLite
         [OneTimeSetUp]
         public void RunAllBenchmarkTests()
         {
-            Debug.Log("[SqliteBenchmarkTest] 开始运行全部基准测试...");
+            Debug.Log("[SqliteBenchmarkGateTest] 开始运行全部基准测试...");
             _report = SqliteBenchmarkRunner.RunAll();
             _reportPath = Path.Combine(Application.persistentDataPath,
                 $"SqliteBenchmark_NUnit_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
             _report.SaveToFile(_reportPath);
-            Debug.Log($"[SqliteBenchmarkTest] 基准测试完成，报告已写入: {_reportPath}");
+            Debug.Log($"[SqliteBenchmarkGateTest] 基准测试完成，报告已写入: {_reportPath}");
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace BDFramework.EditorTest.SQLite
         {
             if (_report != null)
             {
-                Debug.Log($"[SqliteBenchmarkTest] 报告摘要: " +
+                Debug.Log($"[SqliteBenchmarkGateTest] 报告摘要: " +
                           $"FastJson={_report.FastJsonCorrectnessPass}通过/{_report.FastJsonCorrectnessFail}失败, " +
                           $"Insert加速={_report.InsertSpeedup:F2}x, " +
                           $"PRAGMA加速={_report.QueryPragmaSpeedup:F2}x, " +
@@ -194,7 +194,7 @@ namespace BDFramework.EditorTest.SQLite
                           $"Span加速={_report.FastJsonSpeedup:F2}x");
             }
 
-            Debug.Log($"[SqliteBenchmarkTest] 报告文件: {_reportPath}");
+            Debug.Log($"[SqliteBenchmarkGateTest] 报告文件: {_reportPath}");
         }
     }
 
@@ -206,7 +206,7 @@ namespace BDFramework.EditorTest.SQLite
     /// Used when Unity Test Runner is interfered with by project initialization,
     /// ensuring stable verification of benchmark key metrics.
     /// </summary>
-    public static class SqliteBenchmarkBatchVerification
+    public static class SqliteBenchmarkGateBatchVerification
     {
         /// <summary>
         /// 顺序执行基准测试断言，写出批验证报告，并用退出码反馈结果。
@@ -214,7 +214,7 @@ namespace BDFramework.EditorTest.SQLite
         /// </summary>
         public static void RunBatchVerification()
         {
-            Debug.Log("[测试开始] name=SqliteBenchmarkBatchVerification " +
+            Debug.Log("[测试开始] name=SqliteBenchmarkGateBatchVerification " +
                       "测试目的=验证 SQLite 性能基准测试关键指标在 BatchMode 下符合预期门禁。 " +
                       "实现手段=委托 SqliteBenchmarkRunner.RunAll 并断言报告关键字段，写出批验证报告。");
 
