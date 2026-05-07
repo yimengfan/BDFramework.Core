@@ -64,6 +64,9 @@ namespace BDFramework.Test.SqliteBenchmark
         // 真实 Schema 瓶颈分析 / Real Schema bottleneck analysis
         public Dictionary<string, StepTimingResult> RealSchemaStepTimings;
 
+        // 查询+反序列化 端到端基准 / Query+Deserialize E2E benchmark
+        public List<E2EQueryResult> E2EQueryResults;
+
         /// <summary>
         /// 输出格式化的汇总报告到日志。
         /// Output formatted summary report to log.
@@ -203,5 +206,49 @@ namespace BDFramework.Test.SqliteBenchmark
                    $"FastSet占比={FastSetPercent:F1}%  " +
                    $"ReadCol占比={ReadColPercent:F1}%";
         }
+    }
+
+    /// <summary>
+    /// 查询+反序列化 端到端分步计时结果（单条路径）。
+    /// E2E query+deserialize step timing result (single path).
+    /// </summary>
+    public class E2EStepTiming
+    {
+        public int ScalarFields;
+        public int ArrayFields;
+        public int RowCount;
+        public float PrepareMs;
+        public float ColumnMappingMs;
+        public float StepMs;
+        public float CreateObjMs;
+        public float FastSetMs;
+        public float ReadColMs;
+    }
+
+    /// <summary>
+    /// 查询+反序列化 端到端基准结果 — 包含完整的分步计时数据。
+    /// E2E query+deserialize benchmark result — contains full step timing data.
+    /// </summary>
+    public class E2EQueryResult
+    {
+        public string Label;
+        public string TableName;
+        public int RowCount;
+        public int ScalarFields;
+        public int ArrayFields;
+
+        // 冷/热查询 / Cold/warm query
+        public float ColdMs;
+        public float WarmAvgMs;
+        public int ColdGC;
+        public int WarmGC;
+
+        // 分步计时（热查询平均） / Step timing (warm query average)
+        public float PrepareMs;
+        public float ColumnMappingMs;
+        public float StepMs;
+        public float CreateObjMs;
+        public float FastSetMs;
+        public float ReadColMs;
     }
 }

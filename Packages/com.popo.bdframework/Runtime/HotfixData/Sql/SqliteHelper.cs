@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BDFramework.Core.Tools;
 using SQLite4Unity3d;
 using UnityEngine;
@@ -21,6 +22,12 @@ namespace BDFramework.Sql
         {
             //db connect
             public SQLiteConnection Connection { get; private set; }
+
+            /// <summary>
+            /// 旧运行时查询包装器实例。
+            /// Legacy runtime query wrapper instance.
+            /// </summary>
+            private readonly TableQueryForILRuntime _ilRuntimeTable;
 
 
             /// <summary>
@@ -108,17 +115,12 @@ namespace BDFramework.Sql
                 return new TableQuery<T>(Connection);
             }
 
-            #endregion
-
-            #region for ILRuntime
-
             /// <summary>
-            /// ILRuntime的table
-            /// </summary>
-            private TableQueryForILRuntime _ilRuntimeTable;
-
-            /// <summary>
-            /// 获取TableRuntime
+            /// 获取运行时查询构建器（兼容旧 TableQueryForILRuntime API）。
+            /// 返回独立的兼容包装层，保留旧链式查询接口并映射到当前 sqlite 查询实现。
+            /// Get the runtime query builder compatible with the legacy TableQueryForILRuntime API.
+            /// Returns a standalone compatibility wrapper that preserves the legacy fluent API
+            /// and maps it onto the current sqlite query implementation.
             /// </summary>
             public TableQueryForILRuntime ILRuntimeTable
             {
@@ -126,10 +128,11 @@ namespace BDFramework.Sql
             }
 
             /// <summary>
-            /// 获取TableRuntime
+            /// 获取运行时查询构建器（兼容旧 TableQueryForILRuntime API）。
+            /// 返回缓存的兼容包装器实例，保持旧属性/方法两种访问方式都可用。
+            /// Get the runtime query builder compatible with the legacy TableQueryForILRuntime API.
+            /// Returns the cached compatibility wrapper so both legacy property and method access stay valid.
             /// </summary>
-            /// <typeparam name="T"></typeparam>
-            /// <returns></returns>
             public TableQueryForILRuntime GetTableRuntime()
             {
                 return _ilRuntimeTable;

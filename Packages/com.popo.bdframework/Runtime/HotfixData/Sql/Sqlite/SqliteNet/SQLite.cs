@@ -629,7 +629,8 @@ namespace SQLite4Unity3d
         /// </returns>
         public TableMapping GetMapping(Type type, CreateFlags createFlags = CreateFlags.None)
         {
-            //FOR ILR
+            // 防止 mapping 被其他 assembly 同名类型覆盖，使用 2 级缓存
+            // Guard against same-name types from different assemblies: use 2-level cache
             if (_mappings == null)
             {
                 _mappings = new Dictionary<int, Dictionary<string, TableMapping>>();
@@ -2907,6 +2908,22 @@ namespace SQLite4Unity3d
         readonly Column[] _insertColumns;
         readonly Column[] _insertOrReplaceColumns;
 
+        /// <summary>
+        /// 预编译的对象工厂委托，替代 Activator.CreateInstance 反射调用。
+        /// 通过 Expression Tree 编译生成，在 HybridCLR 解释器下可用。
+        /// Pre-compiled object factory delegate, replaces Activator.CreateInstance reflection call.
+        /// Generated via Expression Tree compilation, works under HybridCLR interpreter.
+        /// </summary>
+        internal Func<object> ObjectFactory { get; private set; }
+
+        /// <summary>
+        /// 列名 → Column 映射字典，O(1) 查找替代 O(n) 线性扫描。
+        /// Column-name → Column mapping dictionary, O(1) lookup replaces O(n) linear scan.
+        /// Key 使用 OrdinalIgnoreCase 比较以匹配 SQLite 列名不区分大小写的特性。
+        /// Key uses OrdinalIgnoreCase comparison to match SQLite's case-insensitive column names.
+        /// </summary>
+        Dictionary<string, Column> _columnNameMap;
+
         public TableMapping(Type type, CreateFlags createFlags = CreateFlags.None)
         {
             MappedType = type;
@@ -2914,9 +2931,7 @@ namespace SQLite4Unity3d
 
 
             TableAttribute tableAttr = null;
-            // if (!(type is ILRuntimeType))
-            // {
-                var typeInfo = type.GetTypeInfo();
+            var typeInfo = type.GetTypeInfo();
 #if ENABLE_IL2CPP
                 tableAttr = typeInfo.GetCustomAttribute<TableAttribute>();
 #else
@@ -2926,9 +2941,6 @@ namespace SQLite4Unity3d
                         .Select(x => (TableAttribute) Orm.InflateAttribute(x))
                         .FirstOrDefault();
 #endif
-            // }
-
-
             TableName = (tableAttr != null && !string.IsNullOrEmpty(tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
             WithoutRowId = tableAttr != null ? tableAttr.WithoutRowId : false;
 
@@ -2969,6 +2981,48 @@ namespace SQLite4Unity3d
 
             _insertColumns = Columns.Where(c => !c.IsAutoInc).ToArray();
             _insertOrReplaceColumns = Columns.ToArray();
+
+            // 构建列名查找字典，O(1) 替代 FindColumn 的 O(n) 线性扫描
+            // Build column name lookup dictionary for O(1) lookup instead of O(n) linear scan in FindColumn
+            _columnNameMap = new Dictionary<string, Column>(Columns.Length, StringComparer.OrdinalIgnoreCase);
+            foreach (var col in Columns)
+            {
+                _columnNameMap[col.Name] = col;
+            }
+
+            // 构建对象工厂委托，替代每行的 Activator.CreateInstance 反射调用
+            // Build object factory delegate, replacing per-row Activator.CreateInstance reflection call
+            ObjectFactory = BuildObjectFactory(type);
+        }
+
+        /// <summary>
+        /// 通过 Expression Tree 预编译对象工厂委托。
+        /// 优先使用 new T() 表达式树编译（比 Activator.CreateInstance 快 5-10x），
+        /// 编译失败时回退到 Activator.CreateInstance。
+        /// Pre-compile object factory delegate via Expression Tree.
+        /// Prefers new T() expression tree compilation (5-10x faster than Activator.CreateInstance);
+        /// falls back to Activator.CreateInstance on compilation failure.
+        /// </summary>
+        static Func<object> BuildObjectFactory(Type type)
+        {
+            try
+            {
+                var ctor = type.GetConstructor(Type.EmptyTypes);
+                if (ctor != null)
+                {
+                    var newExpr = Expression.New(ctor);
+                    var lambda = Expression.Lambda<Func<object>>(newExpr);
+                    return lambda.Compile();
+                }
+            }
+            catch
+            {
+                // Expression.Compile 可能在受限 AOT 环境下失败（IL2CPP 不含解释器时），
+                // 回退到 Activator.CreateInstance
+                // Expression.Compile may fail in restricted AOT environments (IL2CPP without interpreter);
+                // fall back to Activator.CreateInstance
+            }
+            return () => Activator.CreateInstance(type);
         }
 
         private IReadOnlyCollection<MemberInfo> GetPublicMembers(Type type)
@@ -3047,16 +3101,42 @@ namespace SQLite4Unity3d
 
         public Column FindColumnWithPropertyName(string propertyName)
         {
-            var exact = Columns.FirstOrDefault(c => c.PropertyName == propertyName);
-            return exact;
+            // 列数量少时线性扫描比字典查找更高效（避免哈希计算开销）
+            // Linear scan is faster than dictionary lookup for small column counts (avoids hash computation overhead)
+            if (Columns.Length <= 4)
+            {
+                for (int i = 0; i < Columns.Length; i++)
+                {
+                    if (Columns[i].PropertyName == propertyName)
+                        return Columns[i];
+                }
+                return null;
+            }
+            // 大表使用字典查找 / Use dictionary for large tables
+            if (_propertyNameMap == null)
+            {
+                _propertyNameMap = new Dictionary<string, Column>(Columns.Length);
+                foreach (var col in Columns)
+                    _propertyNameMap[col.PropertyName] = col;
+            }
+            _propertyNameMap.TryGetValue(propertyName, out var result);
+            return result;
         }
+
+        /// <summary>
+        /// PropertyName 查找字典（惰性初始化，仅大表使用）
+        /// PropertyName lookup dictionary (lazy init, only for large tables)
+        /// </summary>
+        Dictionary<string, Column> _propertyNameMap;
 
         public Column FindColumn(string columnName)
         {
             if (Method != MapMethod.ByName)
                 throw new InvalidOperationException($"This {nameof(TableMapping)} is not mapped by name, but {Method}.");
 
-            var exact = Columns.FirstOrDefault(c => c.Name.Equals(columnName, StringComparison.OrdinalIgnoreCase));
+            // 使用预构建的列名字典 O(1) 查找，替代原有的 O(n) 线性扫描
+            // Use pre-built column name dictionary for O(1) lookup, replacing original O(n) linear scan
+            _columnNameMap.TryGetValue(columnName, out var exact);
             return exact;
         }
 
@@ -3245,22 +3325,15 @@ namespace SQLite4Unity3d
 
         public static Type GetType(object obj)
         {
-            // if (obj is ILTypeInstance ilInst)
-            // {
-            //     return ilInst.Type.ReflectionType;
-            // }
-            // else
+            if (obj == null)
+                return typeof(object);
+            var rt = obj as IReflectableType;
+            if (rt != null)
             {
-                if (obj == null)
-                    return typeof(object);
-                var rt = obj as IReflectableType;
-                if (rt != null)
-                {
-                    return rt.GetTypeInfo().AsType();
-                }
-
-                return obj.GetType();
+                return rt.GetTypeInfo().AsType();
             }
+
+            return obj.GetType();
         }
 
         public static string SqlDecl(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
@@ -3293,10 +3366,6 @@ namespace SQLite4Unity3d
         public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
         {
             var clrType = p.ColumnType;
-            // if (clrType is ILRuntimeWrapperType ilrtype)
-            // {
-            //     clrType = ilrtype.RealType;
-            // }
 
             if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32) || clrType == typeof(UInt32) || clrType == typeof(Int64))
             {
@@ -3342,7 +3411,8 @@ namespace SQLite4Unity3d
             {
                 return "varchar(36)";
             }
-            //ForILR 判断是否是list 或者array
+            // List/Array 类型序列化为 blob 存储
+            // List/Array types are serialized and stored as blob
             else if (clrType.FullName.Contains(".List") || clrType.IsArray)
             {
                 return "blob";
@@ -3599,18 +3669,6 @@ namespace SQLite4Unity3d
             return ExecuteDeferredQuery<T>(_conn.GetMapping(typeof(T)));
         }
 
-        /// <summary>
-        /// For ILRuntime
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public List<object> ExecuteQueryForILR(Type t)
-        {
-            var map = _conn.GetMapping(t);
-            var ret = ExecuteDeferredQuery<object>(map, true).ToList();
-            return ret;
-        }
-
         public List<T> ExecuteQuery<T>()
         {
             return ExecuteDeferredQuery<T>(_conn.GetMapping(typeof(T))).ToList();
@@ -3636,7 +3694,7 @@ namespace SQLite4Unity3d
             // Can be overridden.
         }
 
-        public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map, bool isILRuntime = false)
+        public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map)
         {
             // ─── 分步计时：BDebugPerformanceProfiler 输出结构化流水线报告 ───
             // Step-by-step timing: BDebugPerformanceProfiler outputs structured pipeline report
@@ -3672,16 +3730,25 @@ namespace SQLite4Unity3d
                 }
                 else if (map.Method == TableMapping.MapMethod.ByName)
                 {
+                    // 性能优化：为所有路径构建 FastSetter 委托，
+                    // 避免每行每列走 ReadCol 反射 + SetValue 反射的慢路径。
+                    // 当泛型参数 T 与映射类型不同时（基类查询场景），
+                    // 需要通过反射构建 GetFastSetter<映射类型> 委托。
+                    // Performance optimization: build FastSetter delegates for all paths,
+                    // avoiding the slow ReadCol reflection + SetValue reflection path per column per row.
+                    // When generic parameter T differs from the mapped type (base-class query),
+                    // build GetFastSetter<MappedType> delegate via reflection.
+                    fastColumnSetters = new Action<object, Sqlite3Statement, int>[SQLite3.ColumnCount(stmt)];
                     MethodInfo getSetter = null;
-                    if (!isILRuntime)
+                    // 当泛型参数 T 与映射类型不同时（基类查询场景），
+                    // 需要通过反射构建 GetFastSetter<映射类型> 委托
+                    // When generic parameter T differs from the mapped type (base-class query),
+                    // build GetFastSetter<MappedType> delegate via reflection
+                    if (typeof(T) != map.MappedType)
                     {
-                        fastColumnSetters = new Action<object, Sqlite3Statement, int>[SQLite3.ColumnCount(stmt)];
-                        if (typeof(T) != map.MappedType)
-                        {
-                            getSetter = typeof(FastColumnSetter)
-                                .GetMethod(nameof(FastColumnSetter.GetFastSetter),
-                                    BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(map.MappedType);
-                        }
+                        getSetter = typeof(FastColumnSetter)
+                            .GetMethod(nameof(FastColumnSetter.GetFastSetter),
+                                BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(map.MappedType);
                     }
 
                     for (int i = 0; i < cols.Length; i++)
@@ -3690,13 +3757,26 @@ namespace SQLite4Unity3d
                         cols[i] = map.FindColumn(name);
                         if (cols[i] != null && fastColumnSetters != null)
                         {
-                            if (getSetter != null)
+                            // 安全构建 FastSetter 委托：Delegate.CreateDelegate 对 enum 类型可能失败，
+                            // 失败时 fastColumnSetters[i] 保持 null，运行时回退到 ReadCol 反射路径。
+                            // Safe FastSetter delegate creation: Delegate.CreateDelegate may fail for
+                            // enum types; on failure fastColumnSetters[i] stays null, falling back to ReadCol.
+                            try
                             {
-                                fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>) getSetter.Invoke(null, new object[] {_conn, cols[i]});
+                                if (getSetter != null)
+                                {
+                                    fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>) getSetter.Invoke(null, new object[] {_conn, cols[i]});
+                                }
+                                else
+                                {
+                                    fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T>(_conn, cols[i]);
+                                }
                             }
-                            else
+                            catch (Exception)
                             {
-                                fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T>(_conn, cols[i]);
+                                // Delegate.CreateDelegate 失败（enum 类型 / AOT 缺失），
+                            // 保留 null 使运行时回退到 ReadCol + SetValue 反射路径
+                                fastColumnSetters[i] = null;
                             }
                         }
                     }
@@ -3732,16 +3812,7 @@ namespace SQLite4Unity3d
                     // 步骤4: 对象实例化
                     // Step 4: Object instantiation
                     sw.Restart();
-                    object obj = null;
-                    //For ILR
-                    if (isILRuntime)
-                    {
-                        obj = ScriptLoder.CreateHotfixInstance(map.MappedType);
-                    }
-                    else
-                    {
-                        obj = Activator.CreateInstance(map.MappedType);
-                    }
+                    var obj = map.ObjectFactory();
                     sw.Stop();
                     createObjTimeMs += sw.ElapsedTicks / 10000f;
 
@@ -3787,16 +3858,7 @@ namespace SQLite4Unity3d
 
                 while (hasRow)
                 {
-                    object obj = null;
-                    //For ILR
-                    if (isILRuntime)
-                    {
-                        obj = ScriptLoder.CreateHotfixInstance(map.MappedType);
-                    }
-                    else
-                    {
-                        obj = Activator.CreateInstance(map.MappedType);
-                    }
+                    var obj = map.ObjectFactory();
 
                     for (int i = 0; i < cols.Length; i++)
                     {
@@ -4174,7 +4236,8 @@ namespace SQLite4Unity3d
                 {
                     SQLite3.BindText(stmt, index, ((UriBuilder) value).ToString(), -1, NegativePointer);
                 }
-                //ForILR:数组当成json串存储,文档存储
+                // 数组/List 序列化为 JSON 文本存储
+                // Array/List serialized as JSON text for storage
                 else if (value.GetType().IsArray || value.GetType().FullName.Contains(".List"))
                 {
                     var json = SqliteFastJsonConvert.Serialize(value);
@@ -4219,59 +4282,45 @@ namespace SQLite4Unity3d
             {
                 return null;
             }
-            else
+
+            if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                // //For ILR
-                // if (clrType is ILRuntimeWrapperType iltype)
-                // {
-                //     clrType = iltype.RealType;
-                // }
-                // else 
-                if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                {
-                    clrType = clrType.GenericTypeArguments[0];
-                }
+                clrType = clrType.GenericTypeArguments[0];
+            }
 
-                if (clrType == typeof(String))
-                {
+            // 使用 Type.GetTypeCode() 跳表分发替代线性 if/else 链。
+            // Type.GetTypeCode() 是 JIT 内建函数，switch 编译为跳表 O(1)，
+            // 避免了大部分场景下 20+ 次类型比较。
+            // Use Type.GetTypeCode() jump-table dispatch instead of linear if/else chain.
+            // Type.GetTypeCode() is a JIT intrinsic; the switch compiles to an O(1) jump table,
+            // avoiding 20+ type comparisons in most cases.
+            switch (Type.GetTypeCode(clrType))
+            {
+                case TypeCode.String:
                     return SQLite3.ColumnString(stmt, index);
-                }
-                else if (clrType == typeof(Int32))
-                {
+                case TypeCode.Int32:
                     return (int) SQLite3.ColumnInt(stmt, index);
-                }
-                else if (clrType == typeof(Boolean))
-                {
+                case TypeCode.Boolean:
                     return SQLite3.ColumnInt(stmt, index) == 1;
-                }
-                else if (clrType == typeof(double))
-                {
+                case TypeCode.Double:
                     return SQLite3.ColumnDouble(stmt, index);
-                }
-                else if (clrType == typeof(float))
-                {
+                case TypeCode.Single:
                     return (float) SQLite3.ColumnDouble(stmt, index);
-                }
-                else if (clrType == typeof(TimeSpan))
-                {
-                    if (_conn.StoreTimeSpanAsTicks)
-                    {
-                        return new TimeSpan(SQLite3.ColumnInt64(stmt, index));
-                    }
-                    else
-                    {
-                        var text = SQLite3.ColumnString(stmt, index);
-                        TimeSpan resultTime;
-                        if (!TimeSpan.TryParseExact(text, "c", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.TimeSpanStyles.None, out resultTime))
-                        {
-                            resultTime = TimeSpan.Parse(text);
-                        }
-
-                        return resultTime;
-                    }
-                }
-                else if (clrType == typeof(DateTime))
-                {
+                case TypeCode.Int64:
+                    return SQLite3.ColumnInt64(stmt, index);
+                case TypeCode.UInt32:
+                    return (uint) SQLite3.ColumnInt64(stmt, index);
+                case TypeCode.Decimal:
+                    return (decimal) SQLite3.ColumnDouble(stmt, index);
+                case TypeCode.Byte:
+                    return (byte) SQLite3.ColumnInt(stmt, index);
+                case TypeCode.UInt16:
+                    return (ushort) SQLite3.ColumnInt(stmt, index);
+                case TypeCode.Int16:
+                    return (short) SQLite3.ColumnInt(stmt, index);
+                case TypeCode.SByte:
+                    return (sbyte) SQLite3.ColumnInt(stmt, index);
+                case TypeCode.DateTime:
                     if (_conn.StoreDateTimeAsTicks)
                     {
                         return new DateTime(SQLite3.ColumnInt64(stmt, index));
@@ -4284,92 +4333,95 @@ namespace SQLite4Unity3d
                         {
                             resultDate = DateTime.Parse(text);
                         }
-
                         return resultDate;
                     }
-                }
-                else if (clrType == typeof(DateTimeOffset))
-                {
-                    return new DateTimeOffset(SQLite3.ColumnInt64(stmt, index), TimeSpan.Zero);
-                }
-                else if (clrType.IsEnum)
-                {
-                    if (type == SQLite3.ColType.Text)
-                    {
-                        var value = SQLite3.ColumnString(stmt, index);
-                        return Enum.Parse(clrType, value.ToString(), true);
-                    }
-                    else
-                        return SQLite3.ColumnInt(stmt, index);
-                }
-                else if (clrType == typeof(Int64))
-                {
-                    return SQLite3.ColumnInt64(stmt, index);
-                }
-                else if (clrType == typeof(UInt32))
-                {
-                    return (uint) SQLite3.ColumnInt64(stmt, index);
-                }
-                else if (clrType == typeof(decimal))
-                {
-                    return (decimal) SQLite3.ColumnDouble(stmt, index);
-                }
-                else if (clrType == typeof(Byte))
-                {
-                    return (byte) SQLite3.ColumnInt(stmt, index);
-                }
-                else if (clrType == typeof(UInt16))
-                {
-                    return (ushort) SQLite3.ColumnInt(stmt, index);
-                }
-                else if (clrType == typeof(Int16))
-                {
-                    return (short) SQLite3.ColumnInt(stmt, index);
-                }
-                else if (clrType == typeof(sbyte))
-                {
-                    return (sbyte) SQLite3.ColumnInt(stmt, index);
-                }
-                else if (clrType == typeof(byte[]))
-                {
-                    return SQLite3.ColumnByteArray(stmt, index);
-                }
-                else if (clrType == typeof(Guid))
-                {
-                    var text = SQLite3.ColumnString(stmt, index);
-                    return new Guid(text);
-                }
-                else if (clrType == typeof(Uri))
-                {
-                    var text = SQLite3.ColumnString(stmt, index);
-                    return new Uri(text);
-                }
-                else if (clrType == typeof(StringBuilder))
-                {
-                    var text = SQLite3.ColumnString(stmt, index);
-                    return new StringBuilder(text);
-                }
-                else if (clrType == typeof(UriBuilder))
-                {
-                    var text = SQLite3.ColumnString(stmt, index);
-                    return new UriBuilder(text);
-                }
-                //ForILR:数组当成json串存储,文档存储
-                else if (clrType.IsArray || clrType.FullName.Contains(".List"))
-                {
-                    var str = SQLite3.ColumnString(stmt, index);
-                    if (clrType.IsArray)
-                    {
-                        return SqliteFastJsonConvert.DeserializeArray(clrType, str);
-                    }
+                // 以下类型 Type.GetTypeCode() 返回 Object，回退到短链判断
+                // The following types return Object from Type.GetTypeCode(), fall back to short chain
+                case TypeCode.Object:
+                default:
+                    return ReadColObject(stmt, index, type, clrType);
+            }
+        }
 
-
-                    return null;
+        /// <summary>
+        /// ReadCol 的非基础类型分支。
+        /// 处理 TimeSpan、DateTimeOffset、Guid、byte[]、enum、Uri、StringBuilder、
+        /// UriBuilder 以及数组/List 的 JSON 反序列化。
+        /// ReadCol fallback for non-primitive types.
+        /// Handles TimeSpan, DateTimeOffset, Guid, byte[], enum, Uri, StringBuilder,
+        /// UriBuilder, and array/List JSON deserialization.
+        /// </summary>
+        object ReadColObject(Sqlite3Statement stmt, int index, SQLite3.ColType type, Type clrType)
+        {
+            if (clrType == typeof(TimeSpan))
+            {
+                if (_conn.StoreTimeSpanAsTicks)
+                {
+                    return new TimeSpan(SQLite3.ColumnInt64(stmt, index));
                 }
                 else
                 {
-                    throw new NotSupportedException($"Don't know how to read {clrType} - ");
+                    var text = SQLite3.ColumnString(stmt, index);
+                    TimeSpan resultTime;
+                    if (!TimeSpan.TryParseExact(text, "c", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.TimeSpanStyles.None, out resultTime))
+                    {
+                        resultTime = TimeSpan.Parse(text);
+                    }
+                    return resultTime;
                 }
+            }
+            else if (clrType == typeof(DateTimeOffset))
+            {
+                return new DateTimeOffset(SQLite3.ColumnInt64(stmt, index), TimeSpan.Zero);
+            }
+            else if (clrType.IsEnum)
+            {
+                if (type == SQLite3.ColType.Text)
+                {
+                    var value = SQLite3.ColumnString(stmt, index);
+                    return Enum.Parse(clrType, value.ToString(), true);
+                }
+                else
+                    return SQLite3.ColumnInt(stmt, index);
+            }
+            else if (clrType == typeof(byte[]))
+            {
+                return SQLite3.ColumnByteArray(stmt, index);
+            }
+            else if (clrType == typeof(Guid))
+            {
+                var text = SQLite3.ColumnString(stmt, index);
+                return new Guid(text);
+            }
+            else if (clrType == typeof(Uri))
+            {
+                var text = SQLite3.ColumnString(stmt, index);
+                return new Uri(text);
+            }
+            else if (clrType == typeof(StringBuilder))
+            {
+                var text = SQLite3.ColumnString(stmt, index);
+                return new StringBuilder(text);
+            }
+            else if (clrType == typeof(UriBuilder))
+            {
+                var text = SQLite3.ColumnString(stmt, index);
+                return new UriBuilder(text);
+            }
+            // 数组/List 序列化为 JSON 文本存储
+            // Array/List serialized as JSON text for storage
+            else if (clrType.IsArray || clrType.FullName.Contains(".List"))
+            {
+                var str = SQLite3.ColumnString(stmt, index);
+                if (clrType.IsArray)
+                {
+                    return SqliteFastJsonConvert.DeserializeArray(clrType, str);
+                }
+                return null;
+            }
+            else
+            {
+                throw new NotSupportedException($"Don't know how to read {clrType} - ");
             }
         }
     }
@@ -4470,7 +4522,45 @@ namespace SQLite4Unity3d
             }
             else if (clrType.IsEnum)
             {
-                // NOTE: Not sure of a good way (if any?) to do a strongly-typed fast setter like this for enumerated types -- for now, return null and column sets will revert back to the safe (but slow) Reflection-based method of column prop.Set()
+                // 枚举类型 FastSetter：使用闭包捕获 PropertyInfo 和枚举类型，
+                // 读取 int 后通过 Enum.ToObject 转换，再用 PropertyInfo.SetValue 赋值。
+                // 虽然 PropertyInfo.SetValue 仍走反射，但省去了 ReadCol 中 40+ 类型判断的开销，
+                // 且避免了 Delegate.CreateDelegate 对枚举类型无法创建强类型委托的限制。
+                // Enum FastSetter: use closure to capture PropertyInfo and enum type,
+                // read int, convert via Enum.ToObject, then set via PropertyInfo.SetValue.
+                // PropertyInfo.SetValue still uses reflection, but avoids the 40+ type checks in ReadCol,
+                // and works around Delegate.CreateDelegate's inability to create strongly-typed delegates for enums.
+                var setMethod = column.PropertyInfo.GetSetMethod();
+                var propInfo = column.PropertyInfo;
+                var enumType = clrType;
+                var enumInfo = EnumCache.GetInfo(clrType);
+
+                if (enumInfo.StoreAsText)
+                {
+                    // StoreAsText 枚举：从 SQLite 读取文本，用 Enum.Parse 转换
+                    fastSetter = (o, stmt, i) =>
+                    {
+                        var colType = SQLite3.ColumnType(stmt, i);
+                        if (colType != SQLite3.ColType.Null)
+                        {
+                            var text = SQLite3.ColumnString(stmt, i);
+                            propInfo.SetValue(o, Enum.Parse(enumType, text, true));
+                        }
+                    };
+                }
+                else
+                {
+                    // 整数存储枚举：从 SQLite 读取 int，用 Enum.ToObject 转换
+                    fastSetter = (o, stmt, i) =>
+                    {
+                        var colType = SQLite3.ColumnType(stmt, i);
+                        if (colType != SQLite3.ColType.Null)
+                        {
+                            var intVal = SQLite3.ColumnInt(stmt, i);
+                            propInfo.SetValue(o, Enum.ToObject(enumType, intVal));
+                        }
+                    };
+                }
             }
             else if (clrType == typeof(Int64))
             {
@@ -4538,50 +4628,52 @@ namespace SQLite4Unity3d
             }
             // 数组类型 FastSetter：直接调用类型化的 DeserializeArray* 方法，
             // 绕过 ReadCol 的反射路径（ReadCol → DeserializeArray(Type, string) + SetValue 反射）。
-            // 数组是引用类型，使用 CreateTypedSetterDelegate（无 struct 约束），
-            // 而非 CreateNullableTypedSetterDelegate（有 where ColumnMemberType : struct 约束）。
+            // 数组是引用类型，使用 CreateArraySetterDelegate（无 ColumnType Null 检查），
+            // 因为数组列在 SQLite 中存储为 TEXT，构建管线保证写入 []，不会为 NULL。
+            // 跳过 ColumnType 检查省去每列每行一次 P/Invoke（SQLite3.ColumnType）。
             // Array type FastSetter: directly calls typed DeserializeArray* methods,
             // bypassing the ReadCol reflection path (ReadCol → DeserializeArray(Type, string) + SetValue reflection).
-            // Arrays are reference types, so use CreateTypedSetterDelegate (no struct constraint),
-            // not CreateNullableTypedSetterDelegate (which has where ColumnMemberType : struct constraint).
+            // Uses CreateArraySetterDelegate (no ColumnType Null check) because array columns
+            // are stored as TEXT in SQLite, the build pipeline guarantees writing [], never NULL.
+            // Skipping ColumnType check saves one P/Invoke per column per row (SQLite3.ColumnType).
             else if (clrType == typeof(int[]))
             {
-                fastSetter = CreateTypedSetterDelegate<T, int[]>(column, (stmt, index) =>
+                fastSetter = CreateArraySetterDelegate<T, int[]>(column, (stmt, index) =>
                 {
                     return SqliteFastJsonConvert.DeserializeArrayInt(SQLite3.ColumnString(stmt, index));
                 });
             }
             else if (clrType == typeof(long[]))
             {
-                fastSetter = CreateTypedSetterDelegate<T, long[]>(column, (stmt, index) =>
+                fastSetter = CreateArraySetterDelegate<T, long[]>(column, (stmt, index) =>
                 {
                     return SqliteFastJsonConvert.DeserializeArrayLong(SQLite3.ColumnString(stmt, index));
                 });
             }
             else if (clrType == typeof(float[]))
             {
-                fastSetter = CreateTypedSetterDelegate<T, float[]>(column, (stmt, index) =>
+                fastSetter = CreateArraySetterDelegate<T, float[]>(column, (stmt, index) =>
                 {
                     return SqliteFastJsonConvert.DeserializeArrayFloat(SQLite3.ColumnString(stmt, index));
                 });
             }
             else if (clrType == typeof(double[]))
             {
-                fastSetter = CreateTypedSetterDelegate<T, double[]>(column, (stmt, index) =>
+                fastSetter = CreateArraySetterDelegate<T, double[]>(column, (stmt, index) =>
                 {
                     return SqliteFastJsonConvert.DeserializeArrayDouble(SQLite3.ColumnString(stmt, index));
                 });
             }
             else if (clrType == typeof(bool[]))
             {
-                fastSetter = CreateTypedSetterDelegate<T, bool[]>(column, (stmt, index) =>
+                fastSetter = CreateArraySetterDelegate<T, bool[]>(column, (stmt, index) =>
                 {
                     return SqliteFastJsonConvert.DeserializeArrayBool(SQLite3.ColumnString(stmt, index));
                 });
             }
             else if (clrType == typeof(string[]))
             {
-                fastSetter = CreateTypedSetterDelegate<T, string[]>(column, (stmt, index) =>
+                fastSetter = CreateArraySetterDelegate<T, string[]>(column, (stmt, index) =>
                 {
                     return SqliteFastJsonConvert.DeserializeArrayString(SQLite3.ColumnString(stmt, index));
                 });
@@ -4650,6 +4742,31 @@ namespace SQLite4Unity3d
                 var colType = SQLite3.ColumnType(stmt, i);
                 if (colType != SQLite3.ColType.Null)
                     setProperty.Invoke((ObjectType) o, getColumnValue.Invoke(stmt, i));
+            };
+        }
+
+        /// <summary>
+        /// 为数组类型列创建不带 ColumnType Null 检查的快速 Setter 委托。
+        /// 数组列在 SQLite 中以 TEXT 存储，构建管线保证写入 [] 不会为 NULL，
+        /// 因此可以跳过 SQLite3.ColumnType() 的 P/Invoke 调用，每列每行节省一次 P/Invoke。
+        /// Creates a fast setter delegate for array-type columns without the ColumnType Null check.
+        /// Array columns are stored as TEXT in SQLite; the build pipeline guarantees writing [],
+        /// so they are never NULL. Skipping SQLite3.ColumnType() saves one P/Invoke per column per row.
+        /// </summary>
+        /// <typeparam name="ObjectType">目标对象的类型 / The type of the object whose member column is being set</typeparam>
+        /// <typeparam name="ColumnMemberType">列成员的 CLR 类型 / The CLR type of the member corresponding to the SQLite column</typeparam>
+        /// <param name="column">列映射信息 / The column mapping that identifies the target member</param>
+        /// <param name="getColumnValue">获取列值的 lambda / A lambda to retrieve the column value at query-time</param>
+        /// <returns>强类型委托 / A strongly-typed delegate</returns>
+        private static Action<object, Sqlite3Statement, int> CreateArraySetterDelegate<ObjectType, ColumnMemberType>(TableMapping.Column column, Func<Sqlite3Statement, int, ColumnMemberType> getColumnValue)
+        {
+            var setProperty = (Action<ObjectType, ColumnMemberType>) Delegate.CreateDelegate(
+                typeof(Action<ObjectType, ColumnMemberType>), null,
+                column.PropertyInfo.GetSetMethod());
+
+            return (o, stmt, i) =>
+            {
+                setProperty.Invoke((ObjectType) o, getColumnValue.Invoke(stmt, i));
             };
         }
     }

@@ -26,7 +26,7 @@
 
 ### SQLite 管理 — `Runtime/HotfixData/Sql/`
 
-`SqliteLoder`（静态）为入口，支持加密（`Password` / `PasswordFallback` 解耦）和双库模型：`local.db`（只读，母包内置）+ `server.db`（读写，热更下载）。`SqliteHelper.SQLiteService` 封装 CRUD；`TableQueryForILRuntime` 兼容 HybridCLR。Editor 有独立 `LoadLocalDBOnEditor` / `LoadServerDBOnEditor` 入口。
+`SqliteLoder`（静态）为入口，支持加密（`Password` / `PasswordFallback` 解耦）和双库模型：`local.db`（只读，母包内置）+ `server.db`（读写，热更下载）。`SqliteHelper.SQLiteService` 封装 CRUD，并保留 `TableQueryForILRuntime` / `GetTableRuntime()` / `ILRuntimeTable` 兼容查询接口；底层统一映射到当前 `SQLiteCommand` / `TableMapping` FastSetter 查询路径。Editor 有独立 `LoadLocalDBOnEditor` / `LoadServerDBOnEditor` 入口。
 
 ### 热更脚本 — `Runtime/HotfixScript/`
 

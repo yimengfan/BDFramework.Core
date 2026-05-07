@@ -6,19 +6,20 @@ using BDFramework.Sql;
 using Cysharp.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3Statement = System.IntPtr;
-
 
 namespace SQLite4Unity3d
 {
     /// <summary>
-    /// ILRuntime版本的TableQuery
+    /// 旧运行时查询接口兼容层。
+    /// 保留 TableQueryForILRuntime 的链式 API，内部映射到当前 SQLiteCommand/SQLiteConnection 查询管线。
+    /// Legacy runtime query API compatibility layer.
+    /// Preserves the TableQueryForILRuntime fluent API while mapping internally to the current
+    /// SQLiteCommand/SQLiteConnection query pipeline.
     /// </summary>
     public class TableQueryForILRuntime : BaseTableQuery
     {
         public SQLiteConnection Connection { get; private set; }
-
 
         #region 语句缓存
 
@@ -34,47 +35,48 @@ namespace SQLite4Unity3d
         private string @limit = "";
 
         /// <summary>
-        /// SQL 语句执行计数器，用于判断是否触发 prepared statement 缓存
-        /// 同时用于编辑器下的高频 SQL 告警
-        /// SQL execution counter, used to determine whether to trigger prepared statement caching
-        /// and for editor high-frequency SQL warnings
+        /// SQL 语句执行计数器，用于判断是否触发 prepared statement 缓存，
+        /// 同时用于编辑器下的高频 SQL 告警。
+        /// SQL execution counter used to determine whether prepared statement caching should kick in,
+        /// and to warn about high-frequency SQL in the editor.
         /// </summary>
-        Dictionary<string, int> sqlCmdCache = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> sqlCmdCache = new Dictionary<string, int>();
 
         /// <summary>
-        /// 是否启用 SQL 缓存
+        /// 是否启用 SQL 缓存。
+        /// Whether prepared statement caching is enabled.
         /// </summary>
-        private bool _sqlCacheEnabled = false;
+        private bool _sqlCacheEnabled;
 
         /// <summary>
-        /// 触发缓存的最低执行次数
+        /// 触发缓存的最低执行次数。
+        /// Minimum execution count required before caching a prepared statement.
         /// </summary>
         private int _triggerCacheNum = 5;
 
         #endregion
 
-
         /// <summary>
-        /// 构造函数
+        /// 构造函数。
+        /// Constructor.
         /// </summary>
-        /// <param name="connection">sql连接器</param>
-        /// <param name="triggerCacheNum">触发缓存次数</param>
+        /// <param name="connection">sql连接器 / SQL connection</param>
         public TableQueryForILRuntime(SQLiteConnection connection)
         {
-            this.Connection = connection;
+            Connection = connection;
         }
 
         /// <summary>
-        /// 设置sql 缓存触发参数
+        /// 设置 sql 缓存触发参数。
         /// 当同一 SQL 语句执行次数超过 triggerCacheNum 时，自动缓存 prepared statement，
-        /// 后续执行直接复用已编译的语句，跳过 Prepare 阶段（通常节省 30-50% 查询时间）。
-        /// Set SQL cache trigger parameters.
+        /// 后续执行直接复用已编译语句，跳过 Prepare 阶段。
+        /// Set sql cache trigger parameters.
         /// When the same SQL statement is executed more than triggerCacheNum times,
-        /// the prepared statement is automatically cached for reuse, skipping Prepare phase
-        /// (typically saving 30-50% query time).
+        /// the prepared statement is cached automatically and reused on later executions,
+        /// skipping the Prepare phase.
         /// </summary>
         /// <param name="triggerCacheNum">触发缓存的最低执行次数 / Minimum execution count to trigger caching</param>
-        /// <param name="triggerChacheTimer">（保留参数）触发缓存的时间阈值 / Reserved: time threshold for cache trigger</param>
+        /// <param name="triggerChacheTimer">保留参数 / Reserved parameter</param>
         public void EnableSqlCahce(int triggerCacheNum = 5, float triggerChacheTimer = 0.05f)
         {
             _sqlCacheEnabled = true;
@@ -85,39 +87,31 @@ namespace SQLite4Unity3d
 
         private string GenerateCommand(string @select, string tablename)
         {
-            string sqlCmdText = "";
-
-            //select where语句
+            string sqlCmdText;
 
             if (string.IsNullOrEmpty(@sql))
             {
-                //基本语句
                 sqlCmdText = ZString.Format("select {0} from {1}", @select, tablename);
 
-                //Where语句
                 if (!string.IsNullOrEmpty(@where))
                 {
                     sqlCmdText = ZString.Concat(sqlCmdText, " where", @where);
                 }
 
-                //limit语句
-                if (!string.IsNullOrEmpty(this.limit))
+                if (!string.IsNullOrEmpty(@limit))
                 {
-                    sqlCmdText = ZString.Concat(sqlCmdText, " Limit ", limit);
+                    sqlCmdText = ZString.Concat(sqlCmdText, " Limit ", @limit);
                 }
             }
             else
             {
-                //直接执行sql
                 sqlCmdText = @sql;
             }
 
-            //重置状态
-            this.@sql = "";
-            this.@limit = "";
-            this.@where = "";
+            @sql = "";
+            @limit = "";
+            @where = "";
 
-            // SQL 执行频率追踪 — 编辑器和运行时均生效（ENABLE_BDEBUG 下零开销）
 #if ENABLE_BDEBUG
             SqlitePerformanceMonitor.RecordQuery(sqlCmdText, 0, 0, 0);
 #endif
@@ -125,18 +119,18 @@ namespace SQLite4Unity3d
 #if UNITY_EDITOR
             if (BApplication.IsPlaying)
             {
-                if (sqlCmdCache.ContainsKey(sqlCmdText))
+                if (sqlCmdCache.TryGetValue(sqlCmdText, out var count))
                 {
-                    sqlCmdCache[sqlCmdText]++;
+                    sqlCmdCache[sqlCmdText] = count + 1;
                 }
                 else
                 {
                     sqlCmdCache.Add(sqlCmdText, 1);
                 }
-                var count = sqlCmdCache[sqlCmdText];
-                if (count > 10)
+
+                if (sqlCmdCache[sqlCmdText] > 10)
                 {
-                    Debug.LogError($"Sql执行次数过多:<color=yellow>{count}</color>次,sql:" + sqlCmdText);
+                    Debug.LogError($"Sql执行次数过多:<color=yellow>{sqlCmdCache[sqlCmdText]}</color>次,sql:{sqlCmdText}");
                 }
             }
 #endif
@@ -146,26 +140,22 @@ namespace SQLite4Unity3d
 
         #endregion
 
-
         /// <summary>
-        /// 直接执行sql
+        /// 直接执行 sql。
+        /// Set raw sql text directly.
         /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
         public TableQueryForILRuntime Exec(string sql)
         {
-            this.@sql = sql;
+            @sql = sql;
             return this;
         }
 
-
-        #region Where、or、And 、Limit
+        #region Where、Or、And、Limit
 
         /// <summary>
-        /// Where语句
+        /// Where 语句。
+        /// Append a formatted WHERE clause fragment.
         /// </summary>
-        /// <param name="where"></param>
-        /// <returns></returns>
         public TableQueryForILRuntime Where(string where, object value)
         {
             if (value is string)
@@ -173,88 +163,82 @@ namespace SQLite4Unity3d
                 value = ZString.Format("'{0}'", value);
             }
 
-            this.@where = ZString.Concat(this.@where, " ", ZString.Format(where, value));
+            @where = ZString.Concat(@where, " ", ZString.Format(where, value));
             return this;
         }
 
         /// <summary>
-        /// Where语句
+        /// Where 语句。
+        /// Append a raw WHERE clause fragment.
         /// </summary>
-        /// <param name="where"></param>
-        /// <returns></returns>
         public TableQueryForILRuntime Where(string where)
         {
-            this.@where = ZString.Concat(this.@where, " ", where); 
+            @where = ZString.Concat(@where, " ", where);
             return this;
         }
 
         /// <summary>
-        /// and语句
+        /// and 语句。
+        /// Append an AND operator.
         /// </summary>
-        /// <param name="where"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public TableQueryForILRuntime And
         {
             get
             {
-                this.@where = ZString.Concat(this.@where, " and");
+                @where = ZString.Concat(@where, " and");
                 return this;
             }
         }
 
         /// <summary>
-        /// Or 语句
+        /// Or 语句。
+        /// Append an OR operator.
         /// </summary>
-        /// <returns></returns>
         public TableQueryForILRuntime Or
         {
             get
             {
-                this.@where = ZString.Concat(this.@where, " or");
+                @where = ZString.Concat(@where, " or");
                 return this;
             }
         }
 
         /// <summary>
-        /// In语句查询
+        /// In 语句查询。
+        /// Build an IN clause from a typed collection.
         /// </summary>
         public TableQueryForILRuntime WhereIn<T>(string field, IEnumerable<T> values)
         {
-            string sqlcmd = "";
-            if (typeof(T) == typeof(string))
-            {
-                sqlcmd = string.Join(",", values.Select(v => $"'{v}'"));
-            }
-            else
-            {
-                sqlcmd = string.Join(",", values);
-            }
-            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlcmd);
+            var sqlcmd = typeof(T) == typeof(string)
+                ? string.Join(",", values.Select(v => $"'{v}'"))
+                : string.Join(",", values);
+
+            @where = ZString.Format("{0} {1} in ({2})", @where, field, sqlcmd);
             return this;
         }
 
         /// <summary>
-        /// In语句查询
+        /// In 语句查询。
+        /// Build an IN clause from object params.
         /// </summary>
         public TableQueryForILRuntime WhereIn(string field, params object[] values)
         {
-            string sqlcmd = "";
-            if (values[0] is string)
+            if (values == null || values.Length == 0)
             {
-                sqlcmd = string.Join(",", values.Select(v => $"'{v}'"));
+                return this;
             }
-            else
-            {
-                sqlcmd = string.Join(",", values);
-            }
-            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlcmd);
 
+            var sqlcmd = values[0] is string
+                ? string.Join(",", values.Select(v => $"'{v}'"))
+                : string.Join(",", values);
+
+            @where = ZString.Format("{0} {1} in ({2})", @where, field, sqlcmd);
             return this;
         }
 
         /// <summary>
-        ///  where 语句
+        /// where = value 语句。
+        /// Build an equality comparison fragment.
         /// </summary>
         public TableQueryForILRuntime WhereEqual(string where, object value)
         {
@@ -267,25 +251,26 @@ namespace SQLite4Unity3d
             {
                 query = ZString.Format("{0} = {1}", where, value);
             }
-            this.@where = ZString.Concat(this.@where, " ", query);
+
+            @where = ZString.Concat(@where, " ", query);
             return this;
         }
 
         /// <summary>
-        /// 
+        /// Where or。
+        /// Build OR-connected comparisons for the same field.
         /// </summary>
-        /// <param name="where"></param>
-        /// <returns></returns>
         public TableQueryForILRuntime WhereOr(string field, string operation = "", params object[] objs)
         {
             string sqlcmd = "";
             for (int i = 0; i < objs.Length; i++)
             {
                 var value = objs[i];
-                if(value is string)
+                if (value is string)
                 {
                     value = ZString.Format("'{0}'", value);
                 }
+
                 if (string.IsNullOrEmpty(sqlcmd))
                 {
                     sqlcmd = ZString.Format(" {0} {1} {2}", field, operation, value);
@@ -295,25 +280,26 @@ namespace SQLite4Unity3d
                     sqlcmd += ZString.Format(" or {0} {1} {2}", field, operation, value);
                 }
             }
-            this.@where = sqlcmd;
+
+            @where = sqlcmd;
             return this;
         }
 
         /// <summary>
-        /// Where and
+        /// Where and。
+        /// Build AND-connected comparisons for the same field.
         /// </summary>
-        /// <param name="where"></param>
-        /// <returns></returns>
         public TableQueryForILRuntime WhereAnd(string field, string operation = "", params object[] objs)
         {
             string sqlcmd = "";
             for (int i = 0; i < objs.Length; i++)
             {
                 var value = objs[i];
-                if(value is string)
+                if (value is string)
                 {
                     value = ZString.Format("'{0}'", value);
                 }
+
                 if (string.IsNullOrEmpty(sqlcmd))
                 {
                     sqlcmd = ZString.Format(" {0} {1} {2}", field, operation, value);
@@ -324,7 +310,7 @@ namespace SQLite4Unity3d
                 }
             }
 
-            this.@where = sqlcmd;
+            @where = sqlcmd;
             return this;
         }
 
@@ -333,13 +319,12 @@ namespace SQLite4Unity3d
         #region Limit语句
 
         /// <summary>
-        /// Limit 语句
+        /// Limit 语句。
+        /// Set the LIMIT clause.
         /// </summary>
-        /// <param name="limitValue"></param>
         public TableQueryForILRuntime Limit(int limitValue)
         {
-            this.limit = limitValue.ToString();
-
+            @limit = limitValue.ToString();
             return this;
         }
 
@@ -348,22 +333,24 @@ namespace SQLite4Unity3d
         #region 排序
 
         /// <summary>
-        /// 降序排序
+        /// 降序排序。
+        /// Append a descending ORDER BY clause.
         /// </summary>
         public TableQueryForILRuntime OrderByDesc(string field)
         {
             var query = ZString.Format(" Order By {0} Desc", field);
-            this.@where = ZString.Concat(this.@where, query);
+            @where = ZString.Concat(@where, query);
             return this;
         }
 
         /// <summary>
-        /// 升序排序
+        /// 升序排序。
+        /// Append an ascending ORDER BY clause.
         /// </summary>
         public TableQueryForILRuntime OrderBy(string field)
         {
             var query = ZString.Format(" Order By {0}", field);
-            this.@where = ZString.Concat(this.@where, query);
+            @where = ZString.Concat(@where, query);
             return this;
         }
 
@@ -372,9 +359,9 @@ namespace SQLite4Unity3d
         #region Select、From语句
 
         /// <summary>
-        /// forilruntime
+        /// 查询单条数据。
+        /// Query a single row using the current builder state.
         /// </summary>
-        /// <returns></returns>
         public T From<T>(string selection = "*")
         {
             var ret = From(typeof(T), selection);
@@ -383,7 +370,7 @@ namespace SQLite4Unity3d
 
         public object From(Type type, string selection = "*")
         {
-            var rets = this.Limit(1).FromAll(type, selection);
+            var rets = Limit(1).FromAll(type, selection);
 
             if (rets.Count > 0)
             {
@@ -394,18 +381,14 @@ namespace SQLite4Unity3d
         }
 
         /// <summary>
-        /// 查询所有的数据
+        /// 查询所有数据。
+        /// Query all rows using the current builder state.
         /// </summary>
-        /// <param name="selection"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public List<T> FromAll<T>(string selection = "*")
         {
-            //查询
-            var list = this.FromAll(typeof(T), selection);
- 
+            var list = FromAll(typeof(T), selection);
             var retList = new List<T>(list.Count);
-            //映射并返回T
+
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i] is T tObj)
@@ -416,14 +399,13 @@ namespace SQLite4Unity3d
 
             return retList;
         }
-        
+
         /// <summary>
-        /// 非泛型方法
-        /// 支持自动 prepared statement 缓存：同一 SQL 执行超过阈值后，复用已编译语句
+        /// 非泛型查询。
+        /// 保留旧兼容接口，内部复用当前 TableMapping + ExecuteQuery 路径。
+        /// Non-generic query.
+        /// Preserves the legacy compatibility API while reusing the current TableMapping + ExecuteQuery path.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="selection"></param>
-        /// <returns></returns>
         public List<object> FromAll(Type type, string selection = "*")
         {
             var sqlCmdText = GenerateCommand(selection, type.Name);
@@ -433,43 +415,40 @@ namespace SQLite4Unity3d
                 Debug.Log("sql:" + sqlCmdText);
             }
 #endif
-            // 查询：如果启用了缓存且该 SQL 已达到阈值，尝试从连接级缓存复用 prepared statement
-            // Query: if caching is enabled and this SQL has reached the threshold, try reusing prepared statement from connection-level cache
+
+            var mapping = Connection.GetMapping(type);
             SQLiteCommand cmd;
             if (_sqlCacheEnabled
                 && sqlCmdCache.TryGetValue(sqlCmdText, out var hitCount)
                 && hitCount >= _triggerCacheNum)
             {
-                var cachedStmt = this.Connection.GetPreparedStatement(sqlCmdText);
+                var cachedStmt = Connection.GetPreparedStatement(sqlCmdText);
                 if (cachedStmt != IntPtr.Zero)
                 {
-                    // 复用缓存的 prepared statement，跳过 Prepare() 编译阶段
-                    cmd = this.Connection.CreateCommand(sqlCmdText);
+                    cmd = Connection.CreateCommand(sqlCmdText);
                     cmd.SetPreparedStatement(cachedStmt);
                 }
                 else
                 {
-                    cmd = this.Connection.CreateCommand(sqlCmdText);
+                    cmd = Connection.CreateCommand(sqlCmdText);
                 }
             }
             else
             {
-                cmd = this.Connection.CreateCommand(sqlCmdText);
+                cmd = Connection.CreateCommand(sqlCmdText);
             }
 
-            var retlist = cmd.ExecuteQueryForILR(type);
+            var retlist = cmd.ExecuteQuery<object>(mapping);
 
-            // 缓存首次达到阈值的 prepared statement 到连接级缓存
-            // Cache the prepared statement to the connection-level cache when it first reaches the threshold
             if (_sqlCacheEnabled
-                && this.Connection.GetPreparedStatement(sqlCmdText) == IntPtr.Zero
-                && sqlCmdCache.TryGetValue(sqlCmdText, out var count2)
-                && count2 >= _triggerCacheNum)
+                && Connection.GetPreparedStatement(sqlCmdText) == IntPtr.Zero
+                && sqlCmdCache.TryGetValue(sqlCmdText, out var count)
+                && count >= _triggerCacheNum)
             {
-                var stmt = cmd.GetPreparedStatement();
+                Sqlite3Statement stmt = cmd.GetPreparedStatement();
                 if (stmt != IntPtr.Zero)
                 {
-                    this.Connection.SetPreparedStatement(sqlCmdText, stmt);
+                    Connection.SetPreparedStatement(sqlCmdText, stmt);
                 }
             }
 

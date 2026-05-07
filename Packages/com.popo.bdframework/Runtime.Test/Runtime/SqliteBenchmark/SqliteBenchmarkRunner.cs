@@ -59,10 +59,6 @@ namespace BDFramework.Test.SqliteBenchmark
             Debug.Log("<color=cyan>   SQLite 性能基准测试 — 开始</color>");
             Debug.Log("<color=cyan>═══════════════════════════════════════════════</color>");
 
-            // 关闭 TableQueryForILRuntime 的编辑器 SQL 日志，避免日志开销干扰基准计时
-            // Disable TableQueryForILRuntime editor SQL logs to avoid log overhead affecting benchmark timing
-            TableQueryForILRuntime.EnableEditorSqlLog = false;
-
             var report = new SqliteBenchmarkReport();
             var totalSw = Stopwatch.StartNew();
 
@@ -98,6 +94,9 @@ namespace BDFramework.Test.SqliteBenchmark
                     Debug.Log("<color=yellow>── 测试 7: 真实表数据导入 — 跳过（未提供 realTableDir）──</color>");
                 }
 
+                // ─── 测试 8: 查询+反序列化 端到端基准 ───
+                Test_QueryDeserialize_EndToEnd(report, dbDir);
+
                 // ─── 汇总报告 ──
                 Debug.Log(report.FormatReport());
             }
@@ -109,7 +108,6 @@ namespace BDFramework.Test.SqliteBenchmark
             {
                 totalSw.Stop();
                 Debug.Log($"<color=cyan>基准测试总耗时: {totalSw.ElapsedMilliseconds}ms</color>");
-                TableQueryForILRuntime.EnableEditorSqlLog = true;
                 CleanupBenchmarkDirectory(dbDir);
             }
 
@@ -1128,6 +1126,261 @@ namespace BDFramework.Test.SqliteBenchmark
             }
 
             if (File.Exists(dbPath)) File.Delete(dbPath);
+        }
+
+        #endregion
+
+        #region 测试 8: 查询+反序列化 端到端基准
+
+        /// <summary>
+        /// 用户典型场景基准测试：查询+反序列化。
+        /// 测量 ExecuteQuery&lt;T&gt; 路径的端到端性能和每步耗时：
+        ///   - 构建 FastColumnSetter 委托，标量走快速委托，数组走类型化 DeserializeArray*
+        /// 同时测量冷查询（首次，含 ColumnMapping + PS 缓存未命中）和热查询（后续，PS 缓存命中）的差异。
+        ///
+        /// End-to-end benchmark for the user's typical scenario: query + deserialize.
+        /// Measures end-to-end query + deserialize performance on the given POCO type.
+        ///
+        /// 测试目的=量化用户典型查询+反序列化场景中各步骤的耗时分布。
+        /// 实现手段=使用 Stopwatch 分步计时 + GC.CollectionCount 测量 + 手动分步计时器。
+        /// </summary>
+        static public void Test_QueryDeserialize_EndToEnd(SqliteBenchmarkReport report, string dbDir)
+        {
+            Debug.Log("<color=yellow>── 测试 8: 查询+反序列化 端到端基准 ──</color>");
+
+            var dbPath = Path.Combine(dbDir, "e2e_query.db");
+            if (File.Exists(dbPath)) File.Delete(dbPath);
+
+            // ── 创建测试数据库 ──
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                conn.CreateTable<HeroSkillParameterRow>();
+                conn.CreateTable<ItemRow>();
+                conn.CreateTable<GoodsBaseRow>();
+                conn.CreateTable<ScalarOnlyRow>();
+
+                var heroRows = SqliteBenchmarkDataGenerator.GenerateHeroSkillParameterRows(295);
+                var itemRows = SqliteBenchmarkDataGenerator.GenerateItemRows(337);
+                var goodsRows = SqliteBenchmarkDataGenerator.GenerateGoodsBaseRows(170);
+                var scalarRows = SqliteBenchmarkDataGenerator.GenerateScalarOnlyRows(295);
+
+                conn.InsertAll(heroRows, typeof(HeroSkillParameterRow), runInTransaction: true);
+                conn.InsertAll(itemRows, typeof(ItemRow), runInTransaction: true);
+                conn.InsertAll(goodsRows, typeof(GoodsBaseRow), runInTransaction: true);
+                conn.InsertAll(scalarRows, typeof(ScalarOnlyRow), runInTransaction: true);
+
+                Debug.Log($"  数据插入完成: HeroSkillParameter={heroRows.Count}行, " +
+                          $"Item={itemRows.Count}行, GoodsBase={goodsRows.Count}行, ScalarOnly={scalarRows.Count}行");
+            }
+
+            var e2eResults = new List<E2EQueryResult>();
+
+            using (var conn = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
+            {
+                ApplyBenchmarkPragmas(conn);
+
+                // ── 测试每种 POCO 类型 ──
+                MeasureE2EForTable<ScalarOnlyRow>(conn, "ScalarOnly(17标量0数组)", e2eResults);
+                MeasureE2EForTable<ItemRow>(conn, "Item(15标量+2数组)", e2eResults);
+                MeasureE2EForTable<GoodsBaseRow>(conn, "GoodsBase(18标量+7数组)", e2eResults);
+                MeasureE2EForTable<HeroSkillParameterRow>(conn, "HeroSkillParameter(12标量+21数组)", e2eResults);
+            }
+
+            // ── 打印对比报告 ──
+            PrintE2EReport(e2eResults);
+            report.E2EQueryResults = e2eResults;
+
+            if (File.Exists(dbPath)) File.Delete(dbPath);
+        }
+
+        /// <summary>
+        /// 对指定 POCO 类型测量端到端查询+反序列化性能。
+        /// Measures end-to-end query + deserialize performance on the given POCO type.
+        /// </summary>
+        static void MeasureE2EForTable<T>(SQLiteConnection conn, string label, List<E2EQueryResult> results) where T : new()
+        {
+            var map = conn.GetMapping(typeof(T));
+            var tableName = map.TableName;
+            var sql = $"SELECT * FROM {tableName}";
+
+            Debug.Log($"  ── {label} ({tableName}) ──");
+
+            // 冷查询（首次 — 含 ColumnMapping + Prepare）
+            // Cold query (first call — includes ColumnMapping + Prepare)
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            var gc0 = GC.CollectionCount(0);
+            var sw = Stopwatch.StartNew();
+            var coldResult = conn.Query<T>(sql);
+            sw.Stop();
+            var gc0After = GC.CollectionCount(0);
+            var coldMs = sw.ElapsedTicks / 10000f;
+            var coldGC = gc0After - gc0;
+            var rowCount = coldResult.Count;
+            Debug.Log($"    冷查询: {coldMs:F2}ms, {rowCount}行, GC Gen0:{coldGC}");
+
+            // 热查询（后续 — PS 缓存命中，ColumnMapping 缓存命中）
+            // Warm query (subsequent — PS cache hit, ColumnMapping cache hit)
+            const int warmIterations = 5;
+            float warmTotalMs = 0f;
+            int warmGC = 0;
+            for (int i = 0; i < warmIterations; i++)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                gc0 = GC.CollectionCount(0);
+                sw.Restart();
+                var warmResult = conn.Query<T>(sql);
+                sw.Stop();
+                gc0After = GC.CollectionCount(0);
+                warmTotalMs += sw.ElapsedTicks / 10000f;
+                warmGC += gc0After - gc0;
+            }
+            var warmAvgMs = warmTotalMs / warmIterations;
+            Debug.Log($"    热查询(avg {warmIterations}次): {warmAvgMs:F2}ms, GC Gen0:{warmGC}");
+
+            // 分步计时
+            // Step-by-step timing
+            var steps = MeasureQuerySteps<T>(conn, 3);
+
+            // ── 汇总结果 ──
+            var e2eResult = new E2EQueryResult
+            {
+                Label = label,
+                TableName = tableName,
+                RowCount = rowCount,
+                ScalarFields = steps.ScalarFields,
+                ArrayFields = steps.ArrayFields,
+                ColdMs = coldMs,
+                WarmAvgMs = warmAvgMs,
+                ColdGC = coldGC,
+                WarmGC = warmGC,
+                PrepareMs = steps.PrepareMs,
+                ColumnMappingMs = steps.ColumnMappingMs,
+                StepMs = steps.StepMs,
+                CreateObjMs = steps.CreateObjMs,
+                FastSetMs = steps.FastSetMs,
+                ReadColMs = steps.ReadColMs,
+            };
+            results.Add(e2eResult);
+        }
+
+        /// <summary>
+        /// 打印查询+反序列化端到端对比报告。
+        /// <summary>
+        /// 打印查询+反序列化端到端报告。
+        /// Print query+deserialize end-to-end report.
+        /// </summary>
+        static void PrintE2EReport(List<E2EQueryResult> results)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine();
+            sb.AppendLine("╔════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+            sb.AppendLine("║                        查询+反序列化 端到端基准                                                    ║");
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+            sb.AppendLine("║                                                                                                    ║");
+            sb.AppendLine("║  说明：                                                                                             ║");
+            sb.AppendLine("║  • 路径 = ExecuteQuery<T>：构建 FastSetter 委托，标量走快速委托，数组走类型化 DeserializeArray*        ║");
+            sb.AppendLine("║  • 冷查询 = 首次调用（含 Prepare + ColumnMapping），热查询 = 后续调用（缓存命中）                      ║");
+            sb.AppendLine("║                                                                                                    ║");
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            // ── 端到端总耗时 ──
+            sb.AppendLine("║  ── 端到端总耗时 ──".PadRight(100) + "║");
+            sb.AppendLine($"║  {"表名",-35} {"行数",5} {"冷查询",9} {"热查询",9} {"冷/热",7}".PadRight(100) + "║");
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            foreach (var r in results)
+            {
+                var coldWarmRatio = r.WarmAvgMs > 0 ? r.ColdMs / r.WarmAvgMs : 0;
+                sb.AppendLine($"║  {r.Label,-35} {r.RowCount,5} {r.ColdMs,8:F2}ms {r.WarmAvgMs,8:F2}ms {coldWarmRatio,6:F2}x".PadRight(100) + "║");
+            }
+
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            // ── 分步耗时 ──
+            sb.AppendLine("║  ── 分步耗时（热查询平均）──".PadRight(100) + "║");
+            sb.AppendLine($"║  {"表名",-35} {"Prepare",9} {"ColMap",9} {"Step",9} {"CreateObj",9} {"FastSet",9} {"ReadCol",9} {"总计",9}".PadRight(100) + "║");
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            foreach (var r in results)
+            {
+                var total = r.PrepareMs + r.ColumnMappingMs + r.StepMs + r.CreateObjMs + r.FastSetMs + r.ReadColMs;
+                sb.AppendLine($"║  {r.Label,-35} {r.PrepareMs,8:F2}ms {r.ColumnMappingMs,8:F2}ms {r.StepMs,8:F2}ms {r.CreateObjMs,8:F2}ms {r.FastSetMs,8:F2}ms {r.ReadColMs,8:F2}ms {total,8:F2}ms".PadRight(100) + "║");
+            }
+
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            // ── 分步占比分析 ──
+            sb.AppendLine("║  ── 分步占比分析（热查询）──".PadRight(100) + "║");
+            sb.AppendLine($"║  {"表名",-35} {"Prepare",8} {"ColMap",8} {"Step",8} {"CreateObj",8} {"FastSet",8} {"ReadCol",8} {"瓶颈",12}".PadRight(100) + "║");
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            foreach (var r in results)
+            {
+                var total = r.PrepareMs + r.ColumnMappingMs + r.StepMs + r.CreateObjMs + r.FastSetMs + r.ReadColMs;
+                var prepPct = total > 0 ? r.PrepareMs / total * 100f : 0f;
+                var cmPct = total > 0 ? r.ColumnMappingMs / total * 100f : 0f;
+                var stepPct = total > 0 ? r.StepMs / total * 100f : 0f;
+                var coPct = total > 0 ? r.CreateObjMs / total * 100f : 0f;
+                var fsPct = total > 0 ? r.FastSetMs / total * 100f : 0f;
+                var rcPct = total > 0 ? r.ReadColMs / total * 100f : 0f;
+                var bottleneck = rcPct > 50f ? "🔴ReadCol" :
+                                 stepPct > 50f ? "🟡Step" :
+                                 rcPct > stepPct ? "🟠RC>Step" : "🟢均衡";
+                sb.AppendLine($"║  {r.Label,-35} {prepPct,7:F1}% {cmPct,7:F1}% {stepPct,7:F1}% {coPct,7:F1}% {fsPct,7:F1}% {rcPct,7:F1}% {bottleneck,12}".PadRight(100) + "║");
+            }
+
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            // ── GC 压力 ──
+            sb.AppendLine("║  ── GC 压力 ──".PadRight(100) + "║");
+            sb.AppendLine($"║  {"表名",-35} {"冷查询GC",9} {"热查询GC",9}".PadRight(100) + "║");
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            foreach (var r in results)
+            {
+                sb.AppendLine($"║  {r.Label,-35} {r.ColdGC,8}次 {r.WarmGC,8}次".PadRight(100) + "║");
+            }
+
+            // ── 结论 ──
+            sb.AppendLine("╠════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+            sb.AppendLine("║  ── 结论 ──".PadRight(100) + "║");
+
+            var maxArrayResult = results.OrderByDescending(r => r.ArrayFields).FirstOrDefault();
+            if (maxArrayResult != null)
+            {
+                var total = maxArrayResult.PrepareMs + maxArrayResult.ColumnMappingMs + maxArrayResult.StepMs + maxArrayResult.CreateObjMs + maxArrayResult.FastSetMs + maxArrayResult.ReadColMs;
+                var rcPct = total > 0 ? maxArrayResult.ReadColMs / total * 100f : 0f;
+
+                if (rcPct > 50f)
+                {
+                    sb.AppendLine($"║  🔴 在数组密集型表({maxArrayResult.Label})中，ReadCol 占比 {rcPct:F1}%".PadRight(100) + "║");
+                    sb.AppendLine($"║     原因: FastJsonConvert 反序列化数组字段耗时较高".PadRight(100) + "║");
+                }
+                else if (rcPct > 20f)
+                {
+                    sb.AppendLine($"║  🟡 在数组密集型表({maxArrayResult.Label})中，ReadCol 占比 {rcPct:F1}%".PadRight(100) + "║");
+                    sb.AppendLine($"║     FastSetter 已覆盖大部分字段".PadRight(100) + "║");
+                }
+                else
+                {
+                    sb.AppendLine($"║  🟢 ReadCol 不是主要瓶颈 (占比 {rcPct:F1}%)，FastSetter 已覆盖大部分字段".PadRight(100) + "║");
+                }
+            }
+
+            var scalarResult = results.FirstOrDefault(r => r.ArrayFields == 0);
+            if (scalarResult != null)
+            {
+                var totalS = scalarResult.PrepareMs + scalarResult.ColumnMappingMs + scalarResult.StepMs + scalarResult.CreateObjMs + scalarResult.FastSetMs + scalarResult.ReadColMs;
+                var rcPctS = totalS > 0 ? scalarResult.ReadColMs / totalS * 100f : 0f;
+                sb.AppendLine($"║  📊 纯标量表({scalarResult.Label}): ReadCol占比={rcPctS:F1}% — 标量字段瓶颈较小".PadRight(100) + "║");
+            }
+
+            sb.AppendLine("║                                                                                                    ║");
+            sb.AppendLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+
+            Debug.Log(sb.ToString());
         }
 
         #endregion

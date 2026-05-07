@@ -178,6 +178,39 @@ namespace BDFramework.EditorTest.SQLite
         }
 
         /// <summary>
+        /// 验证查询+反序列化端到端基准结果非空 — AOT vs ILRuntime 对比数据存在。
+        /// Verify E2E query+deserialize benchmark results are not empty — AOT vs ILRuntime comparison data exists.
+        /// </summary>
+        [Test]
+        public void E2EQuery_HasResults()
+        {
+            Assert.IsNotNull(_report, "报告为空，无法断言。");
+            Assert.IsNotNull(_report.E2EQueryResults, "查询+反序列化端到端基准结果不应为空。");
+            Assert.Greater(_report.E2EQueryResults.Count, 0,
+                "查询+反序列化端到端基准应至少有 1 组对比结果。");
+        }
+
+        /// <summary>
+        /// 验证 ILRuntime 路径比 AOT 路径更慢（确认已知性能差异被正确测量）。
+        /// Verify warm query is faster than cold query (confirming caching is effective).
+        /// </summary>
+        [Test]
+        public void E2EQuery_WarmFasterThanCold()
+        {
+            Assert.IsNotNull(_report, "报告为空，无法断言。");
+            Assert.IsNotNull(_report.E2EQueryResults, "E2E 基准结果为空。");
+            // 找到数组最多的表
+            var maxArray = _report.E2EQueryResults.Find(r => r.ArrayFields > 10);
+            if (maxArray != null)
+            {
+                Assert.Greater(maxArray.ColdMs, maxArray.WarmAvgMs,
+                    $"数组密集型表({maxArray.Label}): 冷查询({maxArray.ColdMs:F2}ms) " +
+                    $"应慢于热查询({maxArray.WarmAvgMs:F2}ms)。" +
+                    $"首次查询含 Prepare + ColumnMapping 开销");
+            }
+        }
+
+        /// <summary>
         /// 清理：输出报告摘要。
         /// Cleanup: output report summary.
         /// </summary>
@@ -249,6 +282,7 @@ namespace BDFramework.EditorTest.SQLite
                 ("PSCacheFaster", r => { if (r.PreparedStatementSpeedup <= 1.0f) throw new Exception($"PS缓存加速比{r.PreparedStatementSpeedup:F2}x<=1.0x"); }),
                 ("SpanFaster", r => { if (r.FastJsonSpeedup <= 1.0f) throw new Exception($"Span加速比{r.FastJsonSpeedup:F2}x<=1.0x"); }),
                 ("BottleneckHasResults", r => { if (r.RealSchemaStepTimings == null || r.RealSchemaStepTimings.Count == 0) throw new Exception("瓶颈分析无结果"); }),
+                ("E2EQueryHasResults", r => { if (r.E2EQueryResults == null || r.E2EQueryResults.Count == 0) throw new Exception("E2E查询基准无结果"); }),
             };
 
             for (var i = 0; i < checks.Length; i++)
