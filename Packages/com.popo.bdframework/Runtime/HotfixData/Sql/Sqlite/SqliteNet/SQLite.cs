@@ -3832,66 +3832,95 @@ namespace SQLite4Unity3d
             try
             {
                 // 步骤2: 列映射（构建 fastColumnSetters 委托）
+                // 使用 ColumnMappingCache 缓存 cols[] 和 fastColumnSetters[]，
+                // 避免每次查询重复执行 ColumnName16 P/Invoke + FindColumn + GetFastSetter。
                 // Step 2: Column mapping (build fastColumnSetter delegates)
-                var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
+                // Use ColumnMappingCache to cache cols[] and fastColumnSetters[],
+                // avoiding repeated ColumnName16 P/Invoke + FindColumn + GetFastSetter per query.
+                int columnCount = SQLite3.ColumnCount(stmt);
+                TableMapping.Column[] cols;
                 Action<object, Sqlite3Statement, int>[] fastColumnSetters = null;
 
                 if (map.Method == TableMapping.MapMethod.ByPosition)
                 {
+                    cols = new TableMapping.Column[columnCount];
                     Array.Copy(map.Columns, cols, Math.Min(cols.Length, map.Columns.Length));
                 }
                 else if (map.Method == TableMapping.MapMethod.ByName)
                 {
-                    // 性能优化：为所有路径构建 FastSetter 委托，
-                    // 避免每行每列走 ReadCol 反射 + SetValue 反射的慢路径。
-                    // 当泛型参数 T 与映射类型不同时（基类查询场景），
-                    // 需要通过反射构建 GetFastSetter<映射类型> 委托。
-                    // Performance optimization: build FastSetter delegates for all paths,
-                    // avoiding the slow ReadCol reflection + SetValue reflection path per column per row.
-                    // When generic parameter T differs from the mapped type (base-class query),
-                    // build GetFastSetter<MappedType> delegate via reflection.
-                    fastColumnSetters = new Action<object, Sqlite3Statement, int>[SQLite3.ColumnCount(stmt)];
-                    MethodInfo getSetter = null;
-                    // 当泛型参数 T 与映射类型不同时（基类查询场景），
-                    // 需要通过反射构建 GetFastSetter<映射类型> 委托
-                    // When generic parameter T differs from the mapped type (base-class query),
-                    // build GetFastSetter<MappedType> delegate via reflection
-                    if (typeof(T) != map.MappedType)
+                    // 缓存命中：直接复用已构建的 cols[] 和 fastColumnSetters[]，
+                    // 省去 ColumnName16 P/Invoke + FindColumn 查找 + GetFastSetter 委托查找。
+                    // Cache hit: reuse pre-built cols[] and fastColumnSetters[],
+                    // saving ColumnName16 P/Invoke + FindColumn lookup + GetFastSetter delegate lookup.
+                    if (ColumnMappingCache.TryGet(typeof(T), map, columnCount, out cols, out fastColumnSetters))
                     {
-                        getSetter = typeof(FastColumnSetter)
-                            .GetMethod(nameof(FastColumnSetter.GetFastSetter),
-                                BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(map.MappedType);
+                        // 缓存命中，直接使用
+                        // Cache hit, use directly
                     }
-
-                    for (int i = 0; i < cols.Length; i++)
+                    else
                     {
-                        var name = SQLite3.ColumnName16(stmt, i);
-                        cols[i] = map.FindColumn(name);
-                        if (cols[i] != null && fastColumnSetters != null)
+                        // 缓存未命中：首次查询，构建 cols[] 和 fastColumnSetters[] 后缓存
+                        // Cache miss: first query, build cols[] and fastColumnSetters[] then cache
+                        cols = new TableMapping.Column[columnCount];
+                        // 性能优化：为所有路径构建 FastSetter 委托，
+                        // 避免每行每列走 ReadCol 反射 + SetValue 反射的慢路径。
+                        // 当泛型参数 T 与映射类型不同时（基类查询场景），
+                        // 需要通过反射构建 GetFastSetter<映射类型> 委托。
+                        // Performance optimization: build FastSetter delegates for all paths,
+                        // avoiding the slow ReadCol reflection + SetValue reflection path per column per row.
+                        // When generic parameter T differs from the mapped type (base-class query),
+                        // build GetFastSetter<MappedType> delegate via reflection.
+                        fastColumnSetters = new Action<object, Sqlite3Statement, int>[columnCount];
+                        MethodInfo getSetter = null;
+                        // 当泛型参数 T 与映射类型不同时（基类查询场景），
+                        // 需要通过反射构建 GetFastSetter<映射类型> 委托
+                        // When generic parameter T differs from the mapped type (base-class query),
+                        // build GetFastSetter<MappedType> delegate via reflection
+                        if (typeof(T) != map.MappedType)
                         {
-                            // 安全构建 FastSetter 委托：Delegate.CreateDelegate 对 enum 类型可能失败，
-                            // 失败时 fastColumnSetters[i] 保持 null，运行时回退到 ReadCol 反射路径。
-                            // Safe FastSetter delegate creation: Delegate.CreateDelegate may fail for
-                            // enum types; on failure fastColumnSetters[i] stays null, falling back to ReadCol.
-                            try
+                            getSetter = typeof(FastColumnSetter)
+                                .GetMethod(nameof(FastColumnSetter.GetFastSetter),
+                                    BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(map.MappedType);
+                        }
+
+                        for (int i = 0; i < columnCount; i++)
+                        {
+                            var name = SQLite3.ColumnName16(stmt, i);
+                            cols[i] = map.FindColumn(name);
+                            if (cols[i] != null && fastColumnSetters != null)
                             {
-                                if (getSetter != null)
+                                // 安全构建 FastSetter 委托：Delegate.CreateDelegate 对 enum 类型可能失败，
+                                // 失败时 fastColumnSetters[i] 保持 null，运行时回退到 ReadCol 反射路径。
+                                // Safe FastSetter delegate creation: Delegate.CreateDelegate may fail for
+                                // enum types; on failure fastColumnSetters[i] stays null, falling back to ReadCol.
+                                try
                                 {
-                                    fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>) getSetter.Invoke(null, new object[] {_conn, cols[i]});
+                                    if (getSetter != null)
+                                    {
+                                        fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>) getSetter.Invoke(null, new object[] {_conn, cols[i]});
+                                    }
+                                    else
+                                    {
+                                        fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T>(_conn, cols[i]);
+                                    }
                                 }
-                                else
+                                catch (Exception)
                                 {
-                                    fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T>(_conn, cols[i]);
+                                    // Delegate.CreateDelegate 失败（enum 类型 / AOT 缺失），
+                                // 保留 null 使运行时回退到 ReadCol + SetValue 反射路径
+                                    fastColumnSetters[i] = null;
                                 }
-                            }
-                            catch (Exception)
-                            {
-                                // Delegate.CreateDelegate 失败（enum 类型 / AOT 缺失），
-                            // 保留 null 使运行时回退到 ReadCol + SetValue 反射路径
-                                fastColumnSetters[i] = null;
                             }
                         }
+
+                        // 构建完成后缓存，后续查询直接复用
+                        // Cache after building; subsequent queries reuse directly
+                        ColumnMappingCache.Set(typeof(T), map, columnCount, cols, fastColumnSetters);
                     }
+                }
+                else
+                {
+                    cols = new TableMapping.Column[columnCount];
                 }
 
 #if ENABLE_BDEBUG
@@ -4547,6 +4576,77 @@ namespace SQLite4Unity3d
             {
                 throw new NotSupportedException($"Don't know how to read {clrType} - ");
             }
+        }
+    }
+
+    /// <summary>
+    /// 列映射缓存，避免每次查询重复构建 cols[] 和 fastColumnSetters[] 数组。
+    /// 缓存键：(泛型类型 T, TableMapping, 列数)。
+    /// 同一 TableMapping 对象是稳定的（同一类型同一程序集只创建一次），
+    /// 因此 (Type, TableMapping, columnCount) 三元组能唯一确定列映射结果。
+    /// 第一次查询构建 cols[]/fastColumnSetters[] 后缓存，后续查询直接复用，
+    /// 省去 ColumnName16 P/Invoke + FindColumn 查找 + GetFastSetter 委托查找。
+    /// Column mapping cache, avoiding repeated cols[] and fastColumnSetters[] array construction per query.
+    /// Cache key: (generic type T, TableMapping, column count).
+    /// The same TableMapping object is stable (created once per type per assembly),
+    /// so the (Type, TableMapping, columnCount) triple uniquely identifies the column mapping result.
+    /// First query builds cols[]/fastColumnSetters[] and caches; subsequent queries reuse directly,
+    /// saving ColumnName16 P/Invoke + FindColumn lookup + GetFastSetter delegate lookup.
+    /// </summary>
+    internal class ColumnMappingCache
+    {
+        /// <summary>
+        /// 缓存条目：保存一次查询的列映射结果。
+        /// Cached entry: holds the column mapping result for one query.
+        /// </summary>
+        struct CacheEntry
+        {
+            public TableMapping.Column[] Cols;
+            public Action<object, Sqlite3Statement, int>[] FastColumnSetters;
+            public int ColumnCount;
+        }
+
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<ValueTuple<Type, TableMapping, int>, CacheEntry> _cache
+            = new System.Collections.Concurrent.ConcurrentDictionary<ValueTuple<Type, TableMapping, int>, CacheEntry>();
+
+        /// <summary>
+        /// 尝试获取缓存的列映射。缓存命中时直接返回，无需任何校验。
+        /// 因为 TableMapping 是稳定对象（同一类型同一程序集只创建一次），
+        /// (Type, TableMapping, columnCount) 三元组能唯一确定列映射。
+        /// Try to get cached column mapping. On cache hit, returns directly without validation.
+        /// Because TableMapping is a stable object (created once per type per assembly),
+        /// the (Type, TableMapping, columnCount) triple uniquely identifies the column mapping.
+        /// </summary>
+        public static bool TryGet(Type genericType, TableMapping map, int columnCount,
+            out TableMapping.Column[] cols, out Action<object, Sqlite3Statement, int>[] fastColumnSetters)
+        {
+            var key = (genericType, map, columnCount);
+            if (_cache.TryGetValue(key, out var entry))
+            {
+                cols = entry.Cols;
+                fastColumnSetters = entry.FastColumnSetters;
+                return true;
+            }
+            cols = null;
+            fastColumnSetters = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 缓存列映射结果。
+        /// Cache the column mapping result.
+        /// </summary>
+        public static void Set(Type genericType, TableMapping map, int columnCount,
+            TableMapping.Column[] cols, Action<object, Sqlite3Statement, int>[] fastColumnSetters)
+        {
+            var key = (genericType, map, columnCount);
+            var entry = new CacheEntry
+            {
+                Cols = cols,
+                FastColumnSetters = fastColumnSetters,
+                ColumnCount = columnCount
+            };
+            _cache[key] = entry;
         }
     }
 
