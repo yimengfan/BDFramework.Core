@@ -165,6 +165,85 @@ namespace BDFramework.RuntimeTests.Contracts
             }
         }
 
+        /// <summary>
+        /// 验证 HotPositiveIntArray 快速路径（1~5 个正整数）能正确反序列化。
+        /// Verify that the HotPositiveIntArray fast path (1-5 positive integers) deserializes correctly.
+        /// 该路径是基准热表中最常见的紧凑 JSON 形状的优化路径。
+        /// This path is an optimization for the most common compact JSON shape in benchmark hotspot tables.
+        /// </summary>
+        public static void VerifyHotPositiveIntArrayFastPath()
+        {
+            // 单元素 / single element
+            EnsureIntArrayEqual(new[] { 42 }, SqliteFastJsonConvert.DeserializeArrayInt("[42]"),
+                "HotPositiveIntArray 单元素反序列化不匹配。");
+            // 2 元素 / 2 elements
+            EnsureIntArrayEqual(new[] { 1, 2 }, SqliteFastJsonConvert.DeserializeArrayInt("[1,2]"),
+                "HotPositiveIntArray 2元素反序列化不匹配。");
+            // 3 元素 / 3 elements
+            EnsureIntArrayEqual(new[] { 10, 20, 30 }, SqliteFastJsonConvert.DeserializeArrayInt("[10,20,30]"),
+                "HotPositiveIntArray 3元素反序列化不匹配。");
+            // 4 元素 / 4 elements
+            EnsureIntArrayEqual(new[] { 1, 2, 3, 4 }, SqliteFastJsonConvert.DeserializeArrayInt("[1,2,3,4]"),
+                "HotPositiveIntArray 4元素反序列化不匹配。");
+            // 5 元素 / 5 elements
+            EnsureIntArrayEqual(new[] { 12, 345, 6, 789, 0 }, SqliteFastJsonConvert.DeserializeArrayInt("[12,345,6,789,0]"),
+                "HotPositiveIntArray 5元素反序列化不匹配。");
+            // 含零 / contains zero
+            EnsureIntArrayEqual(new[] { 0 }, SqliteFastJsonConvert.DeserializeArrayInt("[0]"),
+                "HotPositiveIntArray 含零反序列化不匹配。");
+            // 大正整数 / large positive integer
+            EnsureIntArrayEqual(new[] { 999999 }, SqliteFastJsonConvert.DeserializeArrayInt("[999999]"),
+                "HotPositiveIntArray 大正整数反序列化不匹配。");
+        }
+
+        /// <summary>
+        /// 验证 CompactSmallIntArray 快速路径（1~8 个整数，含负数）能正确反序列化。
+        /// Verify that the CompactSmallIntArray fast path (1-8 integers, including negatives) deserializes correctly.
+        /// 该路径处理负号但不处理空白和加号。
+        /// This path handles minus signs but not whitespace or plus signs.
+        /// </summary>
+        public static void VerifyCompactSmallIntArrayFastPath()
+        {
+            // 含负数 / contains negative numbers
+            EnsureIntArrayEqual(new[] { -1, 2, -3 }, SqliteFastJsonConvert.DeserializeArrayInt("[-1,2,-3]"),
+                "CompactSmallIntArray 含负数反序列化不匹配。");
+            // 6 元素 / 6 elements
+            EnsureIntArrayEqual(new[] { 1, -2, 3, -4, 5, -6 }, SqliteFastJsonConvert.DeserializeArrayInt("[1,-2,3,-4,5,-6]"),
+                "CompactSmallIntArray 6元素反序列化不匹配。");
+            // 7 元素 / 7 elements
+            EnsureIntArrayEqual(new[] { 1, 2, 3, 4, 5, 6, 7 }, SqliteFastJsonConvert.DeserializeArrayInt("[1,2,3,4,5,6,7]"),
+                "CompactSmallIntArray 7元素反序列化不匹配。");
+            // 8 元素 / 8 elements
+            EnsureIntArrayEqual(new[] { -1, 2, -3, 4, -5, 6, -7, 8 }, SqliteFastJsonConvert.DeserializeArrayInt("[-1,2,-3,4,-5,6,-7,8]"),
+                "CompactSmallIntArray 8元素反序列化不匹配。");
+            // 全负数 / all negative
+            EnsureIntArrayEqual(new[] { -10, -20 }, SqliteFastJsonConvert.DeserializeArrayInt("[-10,-20]"),
+                "CompactSmallIntArray 全负数反序列化不匹配。");
+            // 零和负数混合 / zero and negative mix
+            EnsureIntArrayEqual(new[] { 0, -1, 0 }, SqliteFastJsonConvert.DeserializeArrayInt("[0,-1,0]"),
+                "CompactSmallIntArray 零和负数混合反序列化不匹配。");
+        }
+
+        /// <summary>
+        /// 验证快速路径在遇到不支持的格式时正确回退到通用路径。
+        /// Verify that fast paths correctly fall back to the general path when encountering unsupported formats.
+        /// </summary>
+        public static void VerifyFastPathFallbackToGeneralParser()
+        {
+            // 超过 8 元素应回退到通用路径 / more than 8 elements should fall back
+            EnsureIntArrayEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+                SqliteFastJsonConvert.DeserializeArrayInt("[1,2,3,4,5,6,7,8,9]"),
+                "超过8元素应回退到通用路径。");
+            // 含空白的 JSON 应回退 / JSON with whitespace should fall back
+            EnsureIntArrayEqual(new[] { 1, 2, 3 },
+                SqliteFastJsonConvert.DeserializeArrayInt("[1, 2, 3]"),
+                "含空白的JSON应回退到通用路径。");
+            // 含加号应回退 / JSON with plus sign should fall back
+            EnsureIntArrayEqual(new[] { 1 },
+                SqliteFastJsonConvert.DeserializeArrayInt("[+1]"),
+                "含加号的JSON应回退到通用路径。");
+        }
+
         private static void VerifyExactJsonAndRoundTrip(int[] source, string expectedJson, Func<string, int[]> deserializer)
         {
             var json = SqliteFastJsonConvert.Serialize(source);

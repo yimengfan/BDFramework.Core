@@ -447,6 +447,16 @@ test.describe('框架基础模块验证', () => {
   });
 
   /**
+   * 用例：验证 SQLite 集成能力（FastColumnSetter、RemoveDBService、PerformanceMonitor）。
+   * Case: verify SQLite integration capabilities (FastColumnSetter, RemoveDBService, PerformanceMonitor).
+   */
+  test('SQLite 集成测试', async ({ connector, talosStep }) => {
+    await talosStep('执行 SQLite 集成测试套件', async () => {
+      await runSuiteAndRequireAllPass(connector, 'sqlite-integration', 'SqliteIntegration');
+    });
+  });
+
+  /**
    * 用例：验证框架集成管线就绪。
    * Case: verify framework integration pipeline readiness.
    */
