@@ -153,6 +153,9 @@ namespace BDFramework.Sql
                 {
                     con.Dispose();
                     SqLiteConnectionMap.Remove(dbName);
+                    // 同步清理 SqliteHelper 中缓存的 DB 服务实例，避免 GetDB 返回已关闭的过期实例
+                    // Synchronize cleanup of cached DB service in SqliteHelper to prevent GetDB from returning stale closed instances
+                    SqliteHelper.RemoveDBService(dbName);
                 }
             }
         }

@@ -155,7 +155,7 @@ namespace BDFramework.Sql
             {
                 if (dbservice == null || dbservice.IsClose) //防止持有未关闭的db connect
                 {
-                    if (SqliteLoder.Connection.IsOpen)
+                    if (SqliteLoder.Connection != null && SqliteLoder.Connection.IsOpen)
                     {
                         dbservice = new SQLiteService(SqliteLoder.Connection);
                     }
@@ -181,14 +181,38 @@ namespace BDFramework.Sql
             if (!DBServiceMap.TryGetValue(dbName, out db) || db.IsClose) //防止持有未关闭的db connect
             {
                 var con = SqliteLoder.GetSqliteConnect(dbName);
-                if (con.IsOpen)
+                // 防御性空检查：SQLite 连接可能在 Close 后被移除，GetSqliteConnect 返回 null
+                // Defensive null check: SQLite connection may have been removed after Close, GetSqliteConnect returns null
+                if (con != null && con.IsOpen)
                 {
                     db = new SQLiteService(con);
                     DBServiceMap[dbName] = db;
                 }
+                else
+                {
+                    // 连接不可用时移除缓存以避免后续调用直接返回已关闭的旧实例
+                    // When connection is unavailable, remove cached entry to avoid returning stale closed instance
+                    DBServiceMap.Remove(dbName);
+                    db = null;
+                }
             }
 
             return db;
+        }
+
+        /// <summary>
+        /// 移除缓存的 DB 服务实例。
+        /// 由 SqliteLoder.Close 调用以确保连接关闭后 DBServiceMap 中不留已过期的缓存条目。
+        /// Remove a cached DB service instance.
+        /// Called by SqliteLoder.Close to ensure DBServiceMap doesn't retain stale entries after connection is closed.
+        /// </summary>
+        /// <param name="dbName">DB 名称 / DB name</param>
+        static public void RemoveDBService(string dbName)
+        {
+            if (!string.IsNullOrEmpty(dbName))
+            {
+                DBServiceMap.Remove(dbName);
+            }
         }
     }
 }

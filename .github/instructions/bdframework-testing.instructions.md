@@ -46,3 +46,32 @@ applyTo: "Packages/com.popo.bdframework/Runtime.Test/**"
 - 可行时运行目标 Unity 测试程序集
 - BatchMode bridge 或 host E2E 变化时，运行文档记录的 BatchMode 入口
 - 如果测试会在 debug package 验证中注入热更程序集，验证 debug-only 注入路径，并确认 release build 不包含测试程序集
+
+## 集成测试入口
+
+各核心模块须提供统一的集成测试入口，按单元测试/性能测试分类输出报告。
+
+### 通用规则
+
+- 入口类放在模块测试目录根下，命名为 `<Module>IntegrationTestRunner.cs`
+- 入口须支持两种调用方式：Editor Menu（`[MenuItem]`）和 BatchMode（`-executeMethod`）
+- 测试分类至少包含：**单元测试**（功能契约和边界行为验证）和 **性能测试**（性能指标和基准门禁）
+- 报告输出到 `Library/<Module>IntegrationTest/` 目录，按时间戳区分
+- BatchMode 入口须通过 `EditorApplication.Exit(exitCode)` 返回非零退出码表示失败
+- 入口类通过反射扫描 NUnit 属性（`[Test]`、`[SetUp]`、`[TearDown]`、`[OneTimeSetUp]`、`[OneTimeTearDown]`）执行各 Fixture，不依赖 Unity Test Runner
+
+### SQLite 集成测试入口
+
+- **入口类**: `Runtime.Test/Editor/Sqlite/SqliteIntegrationTestRunner.cs`
+- **Editor Menu**: `BDFramework/测试/SQLite 集成测试`
+- **BatchMode**: `-executeMethod BDFramework.EditorTest.SQLite.SqliteIntegrationTestRunner.RunBatch`
+- **单元测试 Fixtures**: `SqliteLoderPipelineTest`、`SqliteTransactionAndMigrationTest`、`SqliteTableQueryBoundaryTest`、`SqliteUnitTest`、`SqliteFastJsonConvertOptimizationTest`
+- **性能测试 Fixtures**: `SqlitePerformanceMonitorTest`、`SqliteBenchmarkGateTest`
+- **报告路径**: `Library/SqliteIntegrationTest/Sqlite_UnitTest_<timestamp>.txt`、`Library/SqliteIntegrationTest/Sqlite_PerfTest_<timestamp>.txt`
+
+### 完成前检查
+
+每个 SQLite 代码变更完成后必须：
+1. 在 Unity Editor 中通过菜单 `BDFramework/测试/SQLite 集成测试` 执行全部测试
+2. 确认单元测试和性能测试分类报告均已生成且全部通过
+3. 若无法在 Editor 中运行，通过 BatchMode 入口验证：`Unity -batchmode -executeMethod BDFramework.EditorTest.SQLite.SqliteIntegrationTestRunner.RunBatch -quit`

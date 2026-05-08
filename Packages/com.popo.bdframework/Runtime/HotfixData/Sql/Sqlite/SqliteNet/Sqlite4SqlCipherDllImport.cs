@@ -336,7 +336,16 @@ namespace SQLite4Unity3d
 		/// </summary>
 		public static string ColumnString(IntPtr stmt, int index)
 		{
-			return ReadUtf8String(SQLite3.ColumnText(stmt, index), ColumnBytes(stmt, index));
+			return ColumnStringFromUtf8(SQLite3.ColumnText(stmt, index), ColumnBytes(stmt, index));
+		}
+
+		/// <summary>
+		/// 中文：把已经读取到的 UTF-8 文本指针和字节长度转换为托管字符串，供热路径回退复用同一列缓冲区。
+		/// English: Converts an already-fetched UTF-8 text pointer and byte length into a managed string so hot-path fallbacks can reuse the same column buffer.
+		/// </summary>
+		public static string ColumnStringFromUtf8(IntPtr valuePointer, int valueByteLength)
+		{
+			return ReadUtf8String(valuePointer, valueByteLength);
 		}
 
 		/// <summary>

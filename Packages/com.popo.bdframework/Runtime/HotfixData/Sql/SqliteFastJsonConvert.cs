@@ -385,6 +385,350 @@ namespace AssetsManager.Sql
         }
 
         /// <summary>
+        /// 针对基准热表中最常见的 1~5 个正整数紧凑 JSON（如 [12,345,6]）提供更窄的快速路径。
+        /// 该路径不处理负号、空白和加号；一旦遇到非常规格式立即回退到更通用的紧凑解析或双遍扫描。
+        /// Provides an even narrower fast path for the most common benchmark hotspot shape:
+        /// compact JSON with 1-5 positive integers (for example [12,345,6]).
+        /// This path does not handle minus signs, whitespace, or plus signs; it falls back immediately
+        /// to the more general compact parser or the two-pass parser when unusual formatting is seen.
+        /// </summary>
+        private static bool TryDeserializeHotPositiveIntArray(string json, out int[] result)
+        {
+            result = null;
+
+            if (json.Length < 2 || json[0] != '[' || json[json.Length - 1] != ']')
+            {
+                return false;
+            }
+
+            if (json.Length == 2)
+            {
+                result = Array.Empty<int>();
+                return true;
+            }
+
+            int value0 = 0;
+            int value1 = 0;
+            int value2 = 0;
+            int value3 = 0;
+            int value4 = 0;
+            int value = 0;
+            int count = 0;
+            bool hasDigits = false;
+
+            for (int i = 1; i < json.Length; i++)
+            {
+                char ch = json[i];
+                int digit = ch - '0';
+                if ((uint) digit <= 9)
+                {
+                    value = value * 10 + digit;
+                    hasDigits = true;
+                    continue;
+                }
+
+                if (ch == ',' || ch == ']')
+                {
+                    if (!hasDigits)
+                    {
+                        return false;
+                    }
+
+                    switch (count)
+                    {
+                        case 0:
+                            value0 = value;
+                            break;
+                        case 1:
+                            value1 = value;
+                            break;
+                        case 2:
+                            value2 = value;
+                            break;
+                        case 3:
+                            value3 = value;
+                            break;
+                        case 4:
+                            value4 = value;
+                            break;
+                        default:
+                            return false;
+                    }
+
+                    count++;
+                    value = 0;
+                    hasDigits = false;
+                    continue;
+                }
+
+                return false;
+            }
+
+            switch (count)
+            {
+                case 1:
+                    result = new[] { value0 };
+                    return true;
+                case 2:
+                    result = new[] { value0, value1 };
+                    return true;
+                case 3:
+                    result = new[] { value0, value1, value2 };
+                    return true;
+                case 4:
+                    result = new[] { value0, value1, value2, value3 };
+                    return true;
+                case 5:
+                    result = new[] { value0, value1, value2, value3, value4 };
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// 针对 sqlite3_column_text 返回的 UTF-8 缓冲区，直接解析 1~5 个正整数紧凑 JSON。
+        /// 该路径只匹配基准热表中的 ASCII `[12,345,6]` 形态，一旦遇到负号、空白或其他格式立即回退。
+        /// Directly parses compact 1-5 positive-int JSON from the UTF-8 buffer returned by sqlite3_column_text.
+        /// This path only matches the ASCII hotspot shape such as `[12,345,6]` and falls back immediately
+        /// when it sees minus signs, whitespace, or any other unusual formatting.
+        /// </summary>
+        internal static unsafe bool TryDeserializeHotPositiveIntArrayUtf8(IntPtr jsonUtf8Pointer, int jsonUtf8Length, out int[] result)
+        {
+            result = null;
+
+            if (jsonUtf8Pointer == IntPtr.Zero || jsonUtf8Length < 2)
+            {
+                return false;
+            }
+
+            var jsonUtf8 = (byte*) jsonUtf8Pointer;
+            if (jsonUtf8[0] != (byte) '[' || jsonUtf8[jsonUtf8Length - 1] != (byte) ']')
+            {
+                return false;
+            }
+
+            if (jsonUtf8Length == 2)
+            {
+                result = Array.Empty<int>();
+                return true;
+            }
+
+            int value0 = 0;
+            int value1 = 0;
+            int value2 = 0;
+            int value3 = 0;
+            int value4 = 0;
+            int value = 0;
+            int count = 0;
+            bool hasDigits = false;
+
+            for (int i = 1; i < jsonUtf8Length; i++)
+            {
+                byte ch = jsonUtf8[i];
+                uint digit = (uint) (ch - (byte) '0');
+                if (digit <= 9)
+                {
+                    value = value * 10 + (int) digit;
+                    hasDigits = true;
+                    continue;
+                }
+
+                if (ch == (byte) ',' || ch == (byte) ']')
+                {
+                    if (!hasDigits)
+                    {
+                        return false;
+                    }
+
+                    switch (count)
+                    {
+                        case 0:
+                            value0 = value;
+                            break;
+                        case 1:
+                            value1 = value;
+                            break;
+                        case 2:
+                            value2 = value;
+                            break;
+                        case 3:
+                            value3 = value;
+                            break;
+                        case 4:
+                            value4 = value;
+                            break;
+                        default:
+                            return false;
+                    }
+
+                    count++;
+                    value = 0;
+                    hasDigits = false;
+                    continue;
+                }
+
+                return false;
+            }
+
+            switch (count)
+            {
+                case 1:
+                    result = new[] { value0 };
+                    return true;
+                case 2:
+                    result = new[] { value0, value1 };
+                    return true;
+                case 3:
+                    result = new[] { value0, value1, value2 };
+                    return true;
+                case 4:
+                    result = new[] { value0, value1, value2, value3 };
+                    return true;
+                case 5:
+                    result = new[] { value0, value1, value2, value3, value4 };
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// 针对构建管线生成的紧凑小型 int[] JSON（如 [1,2,3]）提供单遍快速解析。
+        /// 当前热点表的 int[] 字段大多是 1~5 个正整数组成的紧凑格式，
+        /// 此路径跳过 TrimSpan/CountElements/Span 切片，直接按字符流解析。
+        /// 若遇到空白、异常格式或元素数超过 8，则回退到通用解析路径以保持兼容性。
+        /// Provides a single-pass fast parser for compact small int[] JSON generated by the build pipeline
+        /// (for example [1,2,3]). The current hotspot tables mostly contain compact 1-5 element arrays,
+        /// so this path skips TrimSpan/CountElements/Span slicing and parses directly from the char stream.
+        /// If whitespace, unusual formatting, or more than 8 elements are encountered, it falls back to
+        /// the general parser to preserve compatibility.
+        /// </summary>
+        private static bool TryDeserializeCompactSmallIntArray(string json, out int[] result)
+        {
+            result = null;
+
+            if (json.Length < 2 || json[0] != '[' || json[json.Length - 1] != ']')
+            {
+                return false;
+            }
+
+            if (json.Length == 2)
+            {
+                result = Array.Empty<int>();
+                return true;
+            }
+
+            int value0 = 0;
+            int value1 = 0;
+            int value2 = 0;
+            int value3 = 0;
+            int value4 = 0;
+            int value5 = 0;
+            int value6 = 0;
+            int value7 = 0;
+            int value = 0;
+            int count = 0;
+            bool negative = false;
+            bool hasDigits = false;
+
+            for (int i = 1; i < json.Length; i++)
+            {
+                char ch = json[i];
+                int digit = ch - '0';
+                if ((uint) digit <= 9)
+                {
+                    value = value * 10 + digit;
+                    hasDigits = true;
+                    continue;
+                }
+
+                if (ch == '-' && !hasDigits && !negative)
+                {
+                    negative = true;
+                    continue;
+                }
+
+                if (ch == ',' || ch == ']')
+                {
+                    if (!hasDigits)
+                    {
+                        return false;
+                    }
+
+                    int parsedValue = negative ? -value : value;
+                    switch (count)
+                    {
+                        case 0:
+                            value0 = parsedValue;
+                            break;
+                        case 1:
+                            value1 = parsedValue;
+                            break;
+                        case 2:
+                            value2 = parsedValue;
+                            break;
+                        case 3:
+                            value3 = parsedValue;
+                            break;
+                        case 4:
+                            value4 = parsedValue;
+                            break;
+                        case 5:
+                            value5 = parsedValue;
+                            break;
+                        case 6:
+                            value6 = parsedValue;
+                            break;
+                        case 7:
+                            value7 = parsedValue;
+                            break;
+                        default:
+                            return false;
+                    }
+
+                    count++;
+                    value = 0;
+                    negative = false;
+                    hasDigits = false;
+                    continue;
+                }
+
+                return false;
+            }
+
+            switch (count)
+            {
+                case 1:
+                    result = new[] { value0 };
+                    return true;
+                case 2:
+                    result = new[] { value0, value1 };
+                    return true;
+                case 3:
+                    result = new[] { value0, value1, value2 };
+                    return true;
+                case 4:
+                    result = new[] { value0, value1, value2, value3 };
+                    return true;
+                case 5:
+                    result = new[] { value0, value1, value2, value3, value4 };
+                    return true;
+                case 6:
+                    result = new[] { value0, value1, value2, value3, value4, value5 };
+                    return true;
+                case 7:
+                    result = new[] { value0, value1, value2, value3, value4, value5, value6 };
+                    return true;
+                case 8:
+                    result = new[] { value0, value1, value2, value3, value4, value5, value6, value7 };
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// 两遍扫描解析 int[]。
         /// 第一遍：计数元素个数（逗号数+1），预分配数组，避免 List&lt;int&gt; + ToArray() 的双重分配。
         /// 第二遍：解析元素值，直接填入预分配数组。
@@ -397,6 +741,9 @@ namespace AssetsManager.Sql
         public static int[] DeserializeArrayInt(string json)
         {
             if (string.IsNullOrEmpty(json)) return Array.Empty<int>();
+            if (TryDeserializeHotPositiveIntArray(json, out var hotPositiveResult)) return hotPositiveResult;
+            if (TryDeserializeCompactSmallIntArray(json, out var compactResult)) return compactResult;
+
             var content = TrimBrackets(json.AsSpan());
             if (content.IsEmpty || content.IsWhiteSpace()) return Array.Empty<int>();
 
@@ -811,8 +1158,6 @@ namespace AssetsManager.Sql
             {
                 throw new Exception("不支持类型:" + arrayType.FullName);
             }
-
-            return null;
         }
 
     }

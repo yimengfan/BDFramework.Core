@@ -46,11 +46,11 @@ namespace BDFramework.Test.SqliteBenchmark
 
     /// <summary>
     /// 英雄技能参数表 — 37列(12标量+21数组+1字符串+3空)，295行。
-    /// 21个int[]数组字段全部走 ReadCol → FastJsonConvert 慢路径，
-    /// 是最极端的数组密集型测试用例。
+    /// 21个int[]数组字段已走 FastSetter + DeserializeArrayInt 快路径，
+    /// 但由于数组字段最密集，仍是 FastSet 热点最集中的测试用例。
     /// Hero skill parameter table — 37 cols (12 scalar + 21 array + 1 string + 3 null), 295 rows.
-    /// All 21 int[] array fields go through the ReadCol → FastJsonConvert slow path,
-    /// making this the most extreme array-heavy test case.
+    /// All 21 int[] array fields now use the FastSetter + DeserializeArrayInt fast path,
+    /// but this remains the most FastSet-heavy benchmark because it is the densest array table.
     /// </summary>
     [SQLite4Unity3d.Table("HeroSkillParameter")]
     public class HeroSkillParameterRow
@@ -75,8 +75,8 @@ namespace BDFramework.Test.SqliteBenchmark
         // ── 字符串字段 / String field ──
         public string Formula { get; set; }
 
-        // ── 数组字段 (21个int[]) — 全部走 ReadCol 慢路径 ──
-        // Array fields (21 x int[]) — all go through ReadCol slow path ──
+        // ── 数组字段 (21个int[]) — 全部走 FastSetter + 类型化 int[] 反序列化 ──
+        // Array fields (21 x int[]) — all use FastSetter + typed int[] deserialization ──
         public int[] Coefficient { get; set; }
         public int[] EffectParam1 { get; set; }
         public int[] EffectParam2 { get; set; }
@@ -139,9 +139,10 @@ namespace BDFramework.Test.SqliteBenchmark
 
     /// <summary>
     /// 商品基础表 — 29列(18标量+7数组+2字符串+2空)，170行。
-    /// 中等复杂度的混合型表，约1/4字段走 ReadCol 慢路径。
+    /// 中等复杂度的混合型表，数组字段已走 FastSetter，主要用于量化中密度数组反序列化成本。
     /// Goods base table — 29 cols (18 scalar + 7 array + 2 string + 2 null), 170 rows.
-    /// Medium-complexity mixed table; about 1/4 of fields go through ReadCol slow path.
+    /// Medium-complexity mixed table whose array fields already use FastSetter; mainly used to measure
+    /// the deserialization cost of medium-density array columns.
     /// </summary>
     [SQLite4Unity3d.Table("GoodsBase")]
     public class GoodsBaseRow
@@ -185,9 +186,10 @@ namespace BDFramework.Test.SqliteBenchmark
 
     /// <summary>
     /// 纯标量对照表 — 仅含标量字段，所有字段走 fastSetter 快路径。
-    /// 用于与数组密集型表对比，量化 ReadCol 慢路径的额外开销。
+    /// 用于与数组密集型表对比，量化数组反序列化带来的额外 FastSet 开销。
     /// Scalar-only control table — only scalar fields, all using fastSetter fast path.
-    /// Used as baseline to contrast with array-heavy tables and quantify ReadCol overhead.
+    /// Used as baseline to contrast with array-heavy tables and quantify the extra FastSet cost
+    /// introduced by array deserialization.
     /// </summary>
     [SQLite4Unity3d.Table("ScalarOnlyRow")]
     public class ScalarOnlyRow

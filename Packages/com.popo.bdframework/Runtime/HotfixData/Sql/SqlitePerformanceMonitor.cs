@@ -42,14 +42,29 @@ namespace BDFramework.Sql
         /// </summary>
         public static bool VerboseLog = true;
 
+        /// <summary>
+        /// 是否启用查询热循环的细粒度分步计时。
+        /// 默认关闭，避免 Debug/Editor 环境下每行每列 Stopwatch 采样污染大规模查询耗时；
+        /// 基准测试需要链路拆分时可临时打开。
+        /// Whether to enable fine-grained step timing inside the query hot loop.
+        /// Disabled by default to avoid per-row/per-column Stopwatch sampling polluting
+        /// large-query timings in Debug/Editor; benchmarks can enable it when pipeline breakdown is needed.
+        /// </summary>
+        public static bool EnableDetailedQueryTiming = false;
+
         // ─── 统计数据 ───
 
         /// <summary>
         /// SQL 查询统计：key=SQL 文本, value=统计条目
         /// SQL query statistics: key=SQL text, value=stats entry
+        /// 所有对 queryStatsMap 的读写都通过 _statsLock 保护，确保多线程并发调用 RecordQuery 时
+        /// Dictionary 不会因重哈希导致数据损坏。
+        /// All reads/writes to queryStatsMap are protected by _statsLock to prevent Dictionary
+        /// corruption from rehashing during concurrent RecordQuery calls from multiple threads.
         /// </summary>
         private static readonly Dictionary<string, QueryStats> queryStatsMap =
             new Dictionary<string, QueryStats>();
+        private static readonly object _statsLock = new object();
 
         /// <summary>
         /// 所有查询的总耗时（毫秒）
@@ -111,13 +126,24 @@ namespace BDFramework.Sql
             var gc1Delta = GC.CollectionCount(1) - startupGc1Before;
             var gc2Delta = GC.CollectionCount(2) - startupGc2Before;
 
+            // 锁内快照统计数据，确保并发安全 / Snapshot stats inside lock for concurrency safety
+            int queryCount;
+            float queryTimeMs;
+            long rowsDeserialized;
+            lock (_statsLock)
+            {
+                queryCount = totalQueryCount;
+                queryTimeMs = totalQueryTimeMs;
+                rowsDeserialized = totalRowsDeserialized;
+            }
+
             BDebug.Log(Tag,
                 ZString.Format(
                     "启动阶段完成 — 总耗时: <color=yellow>{0:F2}ms</color>, " +
                     "查询次数: <color=yellow>{1}</color>, 查询总耗时: <color=yellow>{2:F2}ms</color>, " +
                     "反序列化行数: <color=yellow>{3}</color>, " +
                     "GC(Gen0/1/2): <color=red>{4}/{5}/{6}</color>",
-                    totalMs, totalQueryCount, totalQueryTimeMs, totalRowsDeserialized,
+                    totalMs, queryCount, queryTimeMs, rowsDeserialized,
                     gc0Delta, gc1Delta, gc2Delta),
                 Color.green);
 
@@ -168,35 +194,42 @@ namespace BDFramework.Sql
             if (!IsEnabled) return;
 
             var totalMs = searchTimeMs + deserializeTimeMs;
-            totalQueryTimeMs += totalMs;
-            totalQueryCount++;
-            totalRowsDeserialized += rowCount;
 
-            // 查询级统计
-            QueryStats stats;
-            if (!queryStatsMap.TryGetValue(sql, out stats))
+            // 锁内完成所有统计累加，避免 Dictionary 并发写入导致数据损坏
+            // Complete all stat accumulation inside lock to prevent Dictionary corruption from concurrent writes
+            int hitCount;
+            lock (_statsLock)
             {
-                stats = new QueryStats { Sql = sql };
-                queryStatsMap[sql] = stats;
+                totalQueryTimeMs += totalMs;
+                totalQueryCount++;
+                totalRowsDeserialized += rowCount;
+
+                if (!queryStatsMap.TryGetValue(sql, out var stats))
+                {
+                    stats = new QueryStats { Sql = sql };
+                    queryStatsMap[sql] = stats;
+                }
+
+                stats.HitCount++;
+                stats.TotalTimeMs += totalMs;
+                stats.TotalSearchTimeMs += searchTimeMs;
+                stats.TotalDeserializeTimeMs += deserializeTimeMs;
+                stats.TotalRows += rowCount;
+                if (totalMs > stats.MaxTimeMs) stats.MaxTimeMs = totalMs;
+                if (totalMs < stats.MinTimeMs || stats.MinTimeMs == 0) stats.MinTimeMs = totalMs;
+
+                stats.TotalPrepareTimeMs += prepareTimeMs;
+                stats.TotalColumnMappingTimeMs += columnMappingTimeMs;
+                stats.TotalStepTimeMs += stepTimeMs;
+                stats.TotalCreateObjTimeMs += createObjTimeMs;
+                stats.TotalFastSetTimeMs += fastSetTimeMs;
+                stats.TotalReadColTimeMs += readColTimeMs;
+
+                hitCount = stats.HitCount;
             }
 
-            stats.HitCount++;
-            stats.TotalTimeMs += totalMs;
-            stats.TotalSearchTimeMs += searchTimeMs;
-            stats.TotalDeserializeTimeMs += deserializeTimeMs;
-            stats.TotalRows += rowCount;
-            if (totalMs > stats.MaxTimeMs) stats.MaxTimeMs = totalMs;
-            if (totalMs < stats.MinTimeMs || stats.MinTimeMs == 0) stats.MinTimeMs = totalMs;
-
-            // 细粒度计时累加
-            stats.TotalPrepareTimeMs += prepareTimeMs;
-            stats.TotalColumnMappingTimeMs += columnMappingTimeMs;
-            stats.TotalStepTimeMs += stepTimeMs;
-            stats.TotalCreateObjTimeMs += createObjTimeMs;
-            stats.TotalFastSetTimeMs += fastSetTimeMs;
-            stats.TotalReadColTimeMs += readColTimeMs;
-
-            // 慢查询告警（含分步耗时）
+            // 慢查询告警在锁外执行，避免日志 IO 阻塞其他线程的统计更新
+            // Slow-query alert executed outside lock to avoid log IO blocking stat updates from other threads
             if (totalMs > SlowQueryThresholdMs && VerboseLog)
             {
                 var hasDetail = prepareTimeMs + columnMappingTimeMs + stepTimeMs + createObjTimeMs + fastSetTimeMs + readColTimeMs > 0;
@@ -213,7 +246,7 @@ namespace BDFramework.Sql
                             "FastSet=<color=cyan>{7:F2}ms</color> " +
                             "ReadCol=<color=cyan>{8:F2}ms</color>\n" +
                             "SQL: {9}",
-                            totalMs, rowCount, stats.HitCount,
+                            totalMs, rowCount, hitCount,
                             prepareTimeMs, columnMappingTimeMs, stepTimeMs,
                             createObjTimeMs, fastSetTimeMs, readColTimeMs,
                             sql));
@@ -226,7 +259,7 @@ namespace BDFramework.Sql
                             "反序列化:<color=yellow>{2:F2}ms</color>), 行数: <color=red>{3}</color>, " +
                             "累计执行: <color=yellow>{4}</color>次\nSQL: {5}",
                             totalMs, searchTimeMs, deserializeTimeMs, rowCount,
-                            stats.HitCount, sql));
+                            hitCount, sql));
                 }
             }
         }
@@ -239,19 +272,22 @@ namespace BDFramework.Sql
         static public void RecordExecute(string sql, float timeMs)
         {
             if (!IsEnabled) return;
-            totalQueryTimeMs += timeMs;
-            totalQueryCount++;
 
-            QueryStats stats;
-            if (!queryStatsMap.TryGetValue(sql, out stats))
+            lock (_statsLock)
             {
-                stats = new QueryStats { Sql = sql };
-                queryStatsMap[sql] = stats;
-            }
+                totalQueryTimeMs += timeMs;
+                totalQueryCount++;
 
-            stats.HitCount++;
-            stats.TotalTimeMs += timeMs;
-            if (timeMs > stats.MaxTimeMs) stats.MaxTimeMs = timeMs;
+                if (!queryStatsMap.TryGetValue(sql, out var stats))
+                {
+                    stats = new QueryStats { Sql = sql };
+                    queryStatsMap[sql] = stats;
+                }
+
+                stats.HitCount++;
+                stats.TotalTimeMs += timeMs;
+                if (timeMs > stats.MaxTimeMs) stats.MaxTimeMs = timeMs;
+            }
         }
 
         // ─── PRAGMA 配置追踪 ───
@@ -281,7 +317,23 @@ namespace BDFramework.Sql
         [Conditional("ENABLE_BDEBUG")]
         static public void PrintSummaryReport()
         {
-            if (totalQueryCount == 0) return;
+            // 在锁内快照统计数据和查询列表，锁外执行日志输出避免 IO 阻塞统计更新
+            // Snapshot stats and query list inside lock; output logs outside lock to avoid IO blocking stat updates
+            int queryCount;
+            float queryTimeMs;
+            long rowsDeserialized;
+            List<QueryStats> sorted;
+
+            lock (_statsLock)
+            {
+                if (totalQueryCount == 0) return;
+
+                queryCount = totalQueryCount;
+                queryTimeMs = totalQueryTimeMs;
+                rowsDeserialized = totalRowsDeserialized;
+
+                sorted = new List<QueryStats>(queryStatsMap.Values);
+            }
 
             var gc0 = GC.CollectionCount(0);
             var gc1 = GC.CollectionCount(1);
@@ -293,11 +345,10 @@ namespace BDFramework.Sql
                     "总查询次数: <color=yellow>{0}</color>, 总耗时: <color=yellow>{1:F2}ms</color>, " +
                     "总行数: <color=yellow>{2}</color>\n" +
                     "GC(Gen0/1/2): <color=red>{3}/{4}/{5}</color>",
-                    totalQueryCount, totalQueryTimeMs, totalRowsDeserialized, gc0, gc1, gc2),
+                    queryCount, queryTimeMs, rowsDeserialized, gc0, gc1, gc2),
                 Color.green);
 
             // 按总耗时排序，输出 Top N 慢查询
-            var sorted = new List<QueryStats>(queryStatsMap.Values);
             sorted.Sort((a, b) => b.TotalTimeMs.CompareTo(a.TotalTimeMs));
 
             var topN = Math.Min(sorted.Count, 20);
@@ -348,11 +399,14 @@ namespace BDFramework.Sql
         /// </summary>
         static public void Reset()
         {
-            queryStatsMap.Clear();
-            totalQueryTimeMs = 0;
-            totalQueryCount = 0;
-            totalRowsDeserialized = 0;
-            gcCountDuringQueries = 0;
+            lock (_statsLock)
+            {
+                queryStatsMap.Clear();
+                totalQueryTimeMs = 0;
+                totalQueryCount = 0;
+                totalRowsDeserialized = 0;
+                gcCountDuringQueries = 0;
+            }
             startupSw = null;
         }
 

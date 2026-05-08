@@ -1,7 +1,9 @@
 using System;
+using System.IO;
 using AssetsManager.Sql;
 using NUnit.Framework;
 using SQLite4Unity3d;
+using Debug = UnityEngine.Debug;
 
 namespace BDFramework.EditorTest.SQLite
 {
@@ -20,6 +22,21 @@ namespace BDFramework.EditorTest.SQLite
     [TestFixture]
     public class SqliteFastJsonConvertOptimizationTest
     {
+        [Table("SqliteFastJsonHotIntArrayRoundtrip")]
+        private class HotIntArrayRoundtripPoco
+        {
+            [PrimaryKey]
+            public int Id { get; set; }
+
+            public int[] Values { get; set; }
+        }
+
+        [SetUp]
+        public void LogCurrentTestPurpose()
+        {
+            Debug.Log("[测试开始] 测试目的=验证 SqliteFastJsonConvert 的热点 int[] 直解路径及回退路径结果正确。 实现手段=直接调用 DeserializeArray* 或通过 SQLiteConnection 执行真实查询 roundtrip。");
+        }
+
         // ═══════════════════════════════════════════
         // int[] 测试 / int[] tests
         // ═══════════════════════════════════════════
@@ -89,6 +106,41 @@ namespace BDFramework.EditorTest.SQLite
             Assert.AreEqual(elements, result);
         }
 
+        [Test]
+        public void DeserializeArrayInt_CompactEightElements()
+        {
+            var result = SqliteFastJsonConvert.DeserializeArrayInt("[1,20,300,4000,50000,6,7,8]");
+            Assert.AreEqual(new int[] { 1, 20, 300, 4000, 50000, 6, 7, 8 }, result);
+        }
+
+        [Test]
+        public void DeserializeArrayInt_CompactPositiveFiveElements()
+        {
+            var result = SqliteFastJsonConvert.DeserializeArrayInt("[12,345,6,7890,42]");
+            Assert.AreEqual(new int[] { 12, 345, 6, 7890, 42 }, result);
+        }
+
+        [Test]
+        public void DeserializeArrayInt_PositiveSignFallsBackToGeneralParser()
+        {
+            var result = SqliteFastJsonConvert.DeserializeArrayInt("[+1,+20,+300]");
+            Assert.AreEqual(new int[] { 1, 20, 300 }, result);
+        }
+
+        [Test]
+        public void QueryIntArray_CompactPositiveValues_RoundTripsThroughUtf8HotPath()
+        {
+            var result = RoundTripIntArrayThroughQuery(new[] { 12, 345, 6, 7890, 42 });
+            CollectionAssert.AreEqual(new[] { 12, 345, 6, 7890, 42 }, result);
+        }
+
+        [Test]
+        public void QueryIntArray_NegativeValues_FallsBackAndStillRoundTrips()
+        {
+            var result = RoundTripIntArrayThroughQuery(new[] { -1, 20, -300, 0 });
+            CollectionAssert.AreEqual(new[] { -1, 20, -300, 0 }, result);
+        }
+
         // ═══════════════════════════════════════════
         // long[] 测试 / long[] tests
         // ═══════════════════════════════════════════
@@ -145,6 +197,42 @@ namespace BDFramework.EditorTest.SQLite
             var result = SqliteFastJsonConvert.DeserializeArrayFloat("[3.14]");
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual(3.14f, result[0], 0.001f);
+        }
+
+        /// <summary>
+        /// 通过真实 SQLite 查询链路验证 int[] 会经过 FastSetter 与列读取热路径。
+        /// Verifies int[] roundtrips through the real SQLite query path so FastSetter and column hot paths are exercised.
+        /// </summary>
+        private static int[] RoundTripIntArrayThroughQuery(int[] values)
+        {
+            var dbPath = Path.Combine(Path.GetTempPath(), $"sqlite-fastjson-hotpath-{Guid.NewGuid():N}.db");
+
+            try
+            {
+                using (var writeConnection = new SQLiteConnection(dbPath))
+                {
+                    writeConnection.CreateTable<HotIntArrayRoundtripPoco>();
+                    writeConnection.Insert(new HotIntArrayRoundtripPoco
+                    {
+                        Id = 1,
+                        Values = values
+                    });
+                }
+
+                using (var readConnection = new SQLiteConnection(dbPath))
+                {
+                    var rows = readConnection.Query<HotIntArrayRoundtripPoco>("SELECT * FROM SqliteFastJsonHotIntArrayRoundtrip LIMIT 1");
+                    Assert.AreEqual(1, rows.Count, "应当只查询到一条 roundtrip 测试数据。/ The roundtrip query should return exactly one row.");
+                    return rows[0].Values;
+                }
+            }
+            finally
+            {
+                if (File.Exists(dbPath))
+                {
+                    File.Delete(dbPath);
+                }
+            }
         }
 
         [Test]
