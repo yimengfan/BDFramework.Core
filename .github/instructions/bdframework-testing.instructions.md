@@ -47,6 +47,54 @@ applyTo: "Packages/com.popo.bdframework/Runtime.Test/**"
 - BatchMode bridge 或 host E2E 变化时，运行文档记录的 BatchMode 入口
 - 如果测试会在 debug package 验证中注入热更程序集，验证 debug-only 注入路径，并确认 release build 不包含测试程序集
 
+## E2E 测试组织架构
+
+### 模块归属与套件命名
+
+所有 E2E 测试套件必须归属于一个模块，套件命名遵循 `<module>[-tier]` 模式：
+
+| 模块 | 套件前缀 | 覆盖范围 |
+|------|---------|---------|
+| sqlite | `sqlite`, `sqlite-contract`, `sqlite-business`, `sqlite-integration` | SQLite 数据存储 |
+| asset | `asset-load`, `asset-business`, `asset-traversal`, `version-controller-api`, `version-business`, `download-prep`, `download-update` | 资源加载与版本控制 |
+| framework | `framework-contract`, `framework-core-business`, `framework-integration` | 框架核心启动与配置 |
+| service-store | `service-store-api` | 服务容器与依赖注入 |
+| utility | `utility-api`, `object-pool-api`, `logs-contract`, `csv-contract` | 工具函数与基础设施 |
+| launch | `launch`, `host-launch`, `host-asset-load`, `host-framework-integration` | 启动流程与宿主集成 |
+| ui | `window-preconfig` | UI 窗口预配置 |
+| meta | `module-integration` | 模块集成入口与目录验证 |
+
+测试层级后缀约定：`-contract`（API 契约）、`-business`（业务逻辑）、`-integration`（跨模块集成）、`-api`（公共 API 接口）。无后缀表示基础操作或综合测试。
+
+### E2ESuiteCatalog 目录注册表
+
+`Runtime.Test/Runtime/E2E/E2ESuiteCatalog.cs` 是所有 E2E 套件的中央注册表，提供：
+
+- **声明式目录**：所有套件的模块归属、测试层级和描述集中维护在 `AllSuites` 数组
+- **运行时验证**：`VerifyCatalogIntegrity()` 通过反射扫描 `[E2ETest]` 属性，与目录双向比对
+- **查询 API**：`GetSuitesByModule(module)`、`GetSuitesByTier(tier)`、`GetAllModules()`
+
+**新增套件时必须**：在 `E2ESuiteCatalog.AllSuites` 中添加对应条目。`VerifyCatalogIntegrity()` 会在 E2E 执行时自动检测遗漏。
+
+### 模块集成测试入口
+
+`Runtime.Test/Runtime/E2E/ModuleIntegrationEntry.cs` 是按模块维度聚合的集成测试入口，套件名 `module-integration`：
+
+- 每个模块一个 `[E2ETest]` 方法，按 contract → business → integration 顺序引用该模块的所有子套件
+- `RunSubSuite(suiteName, displayName)` 验证子套件入口可达
+- `AllModulesSummary()` 汇总所有模块的测试覆盖范围
+- `E2ESuiteCatalog.VerifyCatalogIntegrity()` 验证目录与运行时套件同步
+
+**Playwright 层双重覆盖**：`testModuleIntegration-e2e.spec.ts` 按模块维度执行每个子套件，确保独立子套件和模块聚合入口都得到验证。
+
+### 新增 E2E 套件检查清单
+
+1. 创建测试文件于 `Runtime.Test/Runtime/E2E/`，使用 `[E2ETest(suite, order, des)]` 属性
+2. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块、层级、描述）
+3. 在 `ModuleIntegrationEntry.cs` 对应模块方法中添加 `RunSubSuite()` 调用
+4. 在 `testModuleIntegration-e2e.spec.ts` 对应模块 describe 块中添加 test case
+5. 运行 E2E 验证新套件通过且 `VerifyCatalogIntegrity()` 不报遗漏
+
 ## 集成测试入口
 
 各核心模块须提供统一的集成测试入口，按单元测试/性能测试分类输出报告。
