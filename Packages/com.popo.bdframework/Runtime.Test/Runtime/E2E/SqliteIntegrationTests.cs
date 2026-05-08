@@ -263,12 +263,20 @@ namespace BDFramework.Test.E2E
                         throw new Exception($"FastColumnSetterTest boolVal 不匹配: expected=1 actual={boolVal}");
                     }
 
-                    // 验证 floatVal 通过 ExecuteScalar<long>（REAL 列返回 long）/ Verify floatVal via ExecuteScalar<long> (REAL column returns long)
-                    var executeScalarMethod = sqliteConnectionType.GetMethod("ExecuteScalar",
+                    // 验证 floatVal 通过 ExecuteScalar<double>（使用 MakeGenericMethod 关闭泛型再调用）。
+                    // IL2CPP 不允许对未关闭的开放泛型方法执行晚绑定操作，
+                    // 因此必须用 MakeGenericMethod(typeof(double)) 将 ExecuteScalar<T> 转为 ExecuteScalar<double>。
+                    // Verify floatVal via ExecuteScalar<double> (using MakeGenericMethod to close the generic before invoking).
+                    // IL2CPP does not allow late-bound operations on open generic methods,
+                    // so we must use MakeGenericMethod(typeof(double)) to convert ExecuteScalar<T> to ExecuteScalar<double>.
+                    var executeScalarOpenGeneric = sqliteConnectionType.GetMethod("ExecuteScalar",
                         BindingFlags.Public | BindingFlags.Instance, null, new[] { typeof(string), typeof(object[]) }, null);
-                    if (executeScalarMethod != null)
+                    if (executeScalarOpenGeneric != null && executeScalarOpenGeneric.IsGenericMethodDefinition)
                     {
-                        var floatValObj = executeScalarMethod.Invoke(connection, new object[]
+                        // 关闭泛型：ExecuteScalar<T> → ExecuteScalar<double>
+                        // Close the generic: ExecuteScalar<T> → ExecuteScalar<double>
+                        var executeScalarDoubleMethod = executeScalarOpenGeneric.MakeGenericMethod(typeof(double));
+                        var floatValObj = executeScalarDoubleMethod.Invoke(connection, new object[]
                             { "SELECT floatVal FROM FastColumnSetterTest WHERE id = 1;", Array.Empty<object>() });
                         if (floatValObj != null)
                         {
