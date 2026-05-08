@@ -89,11 +89,46 @@ applyTo: "Packages/com.popo.bdframework/Runtime.Test/**"
 
 ### 新增 E2E 套件检查清单
 
+**场景 A：现有模块新增子套件**（如 sqlite 模块新增 `sqlite-perf` 套件）
+
 1. 创建测试文件于 `Runtime.Test/Runtime/E2E/`，使用 `[E2ETest(suite, order, des)]` 属性
 2. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块、层级、描述）
-3. 在 `ModuleIntegrationEntry.cs` 对应模块方法中添加 `RunSubSuite()` 调用
-4. 在 `testModuleIntegration-e2e.spec.ts` 对应模块 describe 块中添加 test case
-5. 运行 E2E 验证新套件通过且 `VerifyCatalogIntegrity()` 不报遗漏
+3. 在 `testModuleIntegration-e2e.spec.ts` 对应模块 describe 块中添加 test case
+4. 运行 E2E 验证：新套件通过 + `VerifyCatalogIntegrity()` 不报遗漏
+
+**无需改动 `ModuleIntegrationEntry.cs`**：`RunModuleIntegration()` 从 `E2ESuiteCatalog` 自动发现模块的所有子套件，新增子套件只需更新目录即可。
+
+**场景 B：新增模块**（如新增 `network` 模块）
+
+1. 创建测试文件于 `Runtime.Test/Runtime/E2E/`，使用 `[E2ETest(suite, order, des)]` 属性
+2. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块=`network`、层级、描述）
+3. 在 `ModuleIntegrationEntry.cs` 的 `AllModuleEntries` 数组中添加一行：`("network", "网络通信", "Network Communication", 7)`
+4. 在 `ModuleIntegrationEntry.cs` 中添加入口方法（复制任一现有方法，修改 3 处：`[E2ETest]` 的 order/des、方法名、`RunModuleIntegration` 的 module/displayName）
+5. 在 `testModuleIntegration-e2e.spec.ts` 中添加对应模块的 describe 块
+6. 运行 E2E 验证：新模块套件通过 + `VerifyCatalogIntegrity()` 不报遗漏
+
+**场景 C：删除套件/模块**
+
+1. 删除测试文件
+2. 从 `E2ESuiteCatalog.AllSuites` 移除对应条目
+3. 从 `ModuleIntegrationEntry.cs` 的 `AllModuleEntries` 和入口方法中移除
+4. 从 `testModuleIntegration-e2e.spec.ts` 移除对应 describe 块
+5. 运行 E2E 验证 `VerifyCatalogIntegrity()` 不报过期套件
+
+### 维护职责矩阵
+
+| 维护动作 | E2ESuiteCatalog | ModuleIntegrationEntry | Playwright spec |
+|---------|:-:|:-:|:-:|
+| 现有模块新增子套件 | ✅ 必改 | ❌ 无需改 | ✅ 必改 |
+| 新增模块 | ✅ 必改 | ✅ 必改（2 处） | ✅ 必改 |
+| 删除套件/模块 | ✅ 必改 | ✅ 必改 | ✅ 必改 |
+| 修改套件名称 | ✅ 必改 | ❌ 无需改（自动发现） | ✅ 必改 |
+
+**自动同步保障**：`E2ESuiteCatalog.VerifyCatalogIntegrity()` 在每次 E2E 运行时自动检测：
+- 运行时有但目录中没有的套件 → **抛出异常**（遗漏的目录条目必须补上）
+- 目录中有但运行时没有的套件 → **警告**（可能是过期的目录条目）
+
+`ModuleIntegrationEntry.RunModuleIntegration()` 从 `E2ESuiteCatalog` 读取模块的子套件列表并按层级排序执行，**新增子套件不需要修改入口方法**。
 
 ## 集成测试入口
 

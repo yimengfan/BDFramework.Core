@@ -19,19 +19,21 @@ namespace BDFramework.Test.E2E
     /// complete test chain (contract → business → integration) of a framework core module, providing
     /// E2E layer a one-click entry to verify all modules' integration capabilities.
     ///
-    /// 模块覆盖范围 / Module coverage:
-    /// - SQLite: sqlite-contract + sqlite + sqlite-business + sqlite-integration
-    /// - Asset: version-controller-api + version-business + asset-load + asset-business + asset-traversal + download-prep + download-update
-    /// - Framework: framework-contract + framework-core-business + framework-integration
-    /// - ServiceStore: service-store-api
-    /// - Utility: utility-api + object-pool-api + logs-contract + csv-contract
-    /// - Launch: launch + host-launch + host-asset-load + host-framework-integration
+    /// 自动化维护模型 / Automated maintenance model:
+    /// - 模块入口方法通过 E2ESuiteCatalog 自动生成，无需手动添加 RunSubSuite 调用
+    ///   Module entry methods are auto-generated from E2ESuiteCatalog, no manual RunSubSuite calls needed
+    /// - 新增模块只需：①创建测试文件 + ②在 E2ESuiteCatalog.AllSuites 添加条目
+    ///   Adding a new module only requires: ①create test file + ②add entry to E2ESuiteCatalog.AllSuites
+    /// - 新增模块后须在 AllModuleEntries 中添加对应的入口方法（一行代码）
+    ///   After adding a module, add a corresponding entry method in AllModuleEntries (one line of code)
+    /// - VerifyCatalogIntegrity 会自动检测目录遗漏
+    ///   VerifyCatalogIntegrity auto-detects missing catalog entries
     ///
     /// 设计原则 / Design principles:
     /// 1. 每个模块入口通过反射执行该模块的所有子套件测试方法，确保覆盖完整
     ///    Each module entry executes all sub-suite test methods of that module via reflection, ensuring full coverage
-    /// 2. 子套件执行顺序遵循 contract → business → integration 的测试金字塔
-    ///    Sub-suite execution follows the contract → business → integration test pyramid
+    /// 2. 子套件执行顺序遵循 contract → api → business → integration → host 的测试层级
+    ///    Sub-suite execution follows the contract → api → business → integration → host tier order
     /// 3. 任一子套件失败即快速失败，避免在已破损状态下继续执行
     ///    Fast fail on any sub-suite failure to avoid executing in a broken state
     /// 4. 模块间保持独立，单个模块的失败不影响其他模块的执行
@@ -48,116 +50,167 @@ namespace BDFramework.Test.E2E
     public static class ModuleIntegrationEntry
     {
         /// <summary>
+        /// 测试层级执行优先级：contract → api → business → integration → host。
+        /// Test tier execution priority: contract → api → business → integration → host.
+        /// 数值越小越先执行。未识别的层级排在最后。
+        /// Lower values execute first. Unrecognized tiers are placed last.
+        /// </summary>
+        private static readonly Dictionary<string, int> TierPriority = new Dictionary<string, int>
+        {
+            { "contract", 0 },
+            { "api", 1 },
+            { "business", 2 },
+            { "integration", 3 },
+            { "host", 4 },
+        };
+
+        /// <summary>
         /// 缓存的套件→方法映射，避免重复反射扫描。
         /// Cached suite→method mapping to avoid repeated reflection scans.
         /// </summary>
         private static Dictionary<string, List<MethodInfo>> _suiteMethodCache;
 
         /// <summary>
-        /// SQLite 模块集成测试：执行该模块的所有子套件。
-        /// SQLite module integration test: execute all sub-suites of this module.
+        /// 全部模块入口定义。
+        /// All module entry definitions.
+        /// 新增模块时只需在此数组添加一条记录，无需手动编写 RunSubSuite 调用。
+        /// When adding a new module, just add one entry to this array; no need to manually write RunSubSuite calls.
+        /// 执行时会自动从 E2ESuiteCatalog 查找该模块的所有子套件，按层级排序后逐一执行。
+        /// Execution automatically finds all sub-suites for the module from E2ESuiteCatalog,
+        /// sorts by tier priority, and invokes each in order.
+        /// </summary>
+        private static readonly (string module, string displayName, string displayNameEn, int order)[] AllModuleEntries = new[]
+        {
+            ("sqlite",        "SQLite 数据存储",  "SQLite Data Storage",      1),
+            ("asset",         "资源加载与版本控制", "Asset Loading & Version",  2),
+            ("framework",     "框架核心启动与配置", "Framework Core",           3),
+            ("service-store", "服务容器与依赖注入", "ServiceStore",             4),
+            ("utility",       "工具函数与基础设施", "Utility & Infrastructure", 5),
+            ("launch",        "启动流程与宿主集成", "Launch & Host Integration",6),
+            // 新增模块在此添加 / Add new modules here
+        };
+
+        /// <summary>
+        /// SQLite 模块集成测试：自动执行该模块所有子套件。
+        /// SQLite module integration test: auto-execute all sub-suites of this module.
         /// 测试目的=验证 SQLite 模块从契约到集成层面的完整测试链路。
-        /// 实现手段=按 contract → business → integration 顺序反射调用所有 SQLite 子套件测试方法。
+        /// 实现手段=从 E2ESuiteCatalog 查找 sqlite 模块的所有套件，按层级排序后反射调用。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 1, des: "sqlite-module-全链路集成")]
         public static void SqliteModuleIntegration()
         {
-            Debug.Log("[E2E] 测试目的=SQLite 模块全链路集成 实现手段=反射调用 sqlite-contract → sqlite → sqlite-business → sqlite-integration 子套件");
-            RunSubSuite("sqlite-contract", "SQLite 契约");
-            RunSubSuite("sqlite", "SQLite 基础");
-            RunSubSuite("sqlite-business", "SQLite 业务");
-            RunSubSuite("sqlite-integration", "SQLite 集成");
-            Debug.Log("[E2E] SQLite 模块全链路集成完成: 4 个子套件全部通过");
+            RunModuleIntegration("sqlite", "SQLite 数据存储");
         }
 
         /// <summary>
-        /// Asset 模块集成测试：执行资源加载、版本控制和下载相关的所有子套件。
-        /// Asset module integration test: execute all sub-suites related to asset loading, version control, and download.
-        /// 测试目的=验证 Asset 模块从契约到集成的完整测试链路，覆盖资源加载、版本控制、下载更新。
-        /// 实现手段=按 contract → business → integration 顺序反射调用所有 Asset 子套件测试方法。
+        /// Asset 模块集成测试：自动执行该模块所有子套件。
+        /// Asset module integration test: auto-execute all sub-suites of this module.
+        /// 测试目的=验证 Asset 模块从契约到集成的完整测试链路。
+        /// 实现手段=从 E2ESuiteCatalog 查找 asset 模块的所有套件，按层级排序后反射调用。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 2, des: "asset-module-全链路集成")]
         public static void AssetModuleIntegration()
         {
-            Debug.Log("[E2E] 测试目的=Asset 模块全链路集成 实现手段=反射调用资源加载、版本控制、下载更新子套件");
-            RunSubSuite("version-controller-api", "版本控制器 API");
-            RunSubSuite("version-business", "版本控制器业务");
-            RunSubSuite("asset-load", "资源加载");
-            RunSubSuite("asset-business", "AssetBundle 业务");
-            RunSubSuite("asset-traversal", "资源遍历");
-            RunSubSuite("download-prep", "下载准备");
-            RunSubSuite("download-update", "下载更新");
-            Debug.Log("[E2E] Asset 模块全链路集成完成: 7 个子套件全部通过");
+            RunModuleIntegration("asset", "资源加载与版本控制");
         }
 
         /// <summary>
-        /// Framework 模块集成测试：执行框架核心的启动、配置、资源契约和集成管线子套件。
-        /// Framework module integration test: execute framework core startup, config, resource contract and integration pipeline sub-suites.
-        /// 测试目的=验证 Framework 模块从启动契约到集成管线的完整测试链路。
-        /// 实现手段=按 contract → business → integration 顺序反射调用所有 Framework 子套件测试方法。
+        /// Framework 模块集成测试：自动执行该模块所有子套件。
+        /// Framework module integration test: auto-execute all sub-suites of this module.
+        /// 测试目的=验证 Framework 模块从契约到集成的完整测试链路。
+        /// 实现手段=从 E2ESuiteCatalog 查找 framework 模块的所有套件，按层级排序后反射调用。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 3, des: "framework-module-全链路集成")]
         public static void FrameworkModuleIntegration()
         {
-            Debug.Log("[E2E] 测试目的=Framework 模块全链路集成 实现手段=反射调用 framework-contract → framework-core-business → framework-integration 子套件");
-            RunSubSuite("framework-contract", "框架契约");
-            RunSubSuite("framework-core-business", "框架核心业务");
-            RunSubSuite("framework-integration", "框架集成管线");
-            Debug.Log("[E2E] Framework 模块全链路集成完成: 3 个子套件全部通过");
+            RunModuleIntegration("framework", "框架核心启动与配置");
         }
 
         /// <summary>
-        /// ServiceStore 模块集成测试：执行服务容器 API 契约子套件。
-        /// ServiceStore module integration test: execute service container API contract sub-suite.
+        /// ServiceStore 模块集成测试：自动执行该模块所有子套件。
+        /// ServiceStore module integration test: auto-execute all sub-suites of this module.
         /// 测试目的=验证 ServiceStore 模块的 API 契约。
-        /// 实现手段=反射调用 service-store-api 子套件测试方法。
+        /// 实现手段=从 E2ESuiteCatalog 查找 service-store 模块的所有套件，按层级排序后反射调用。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 4, des: "service-store-module-全链路集成")]
         public static void ServiceStoreModuleIntegration()
         {
-            Debug.Log("[E2E] 测试目的=ServiceStore 模块集成 实现手段=反射调用 service-store-api 子套件");
-            RunSubSuite("service-store-api", "ServiceStore API");
-            Debug.Log("[E2E] ServiceStore 模块集成完成: 1 个子套件通过");
+            RunModuleIntegration("service-store", "服务容器与依赖注入");
         }
 
         /// <summary>
-        /// Utility 模块集成测试：执行工具函数、对象池、日志和 CSV 契约子套件。
-        /// Utility module integration test: execute utility, object pool, logs, and CSV contract sub-suites.
+        /// Utility 模块集成测试：自动执行该模块所有子套件。
+        /// Utility module integration test: auto-execute all sub-suites of this module.
         /// 测试目的=验证 Utility 模块的 API 契约和日志/CSV 契约。
-        /// 实现手段=按 contract → api 顺序反射调用所有 Utility 子套件测试方法。
+        /// 实现手段=从 E2ESuiteCatalog 查找 utility 模块的所有套件，按层级排序后反射调用。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 5, des: "utility-module-全链路集成")]
         public static void UtilityModuleIntegration()
         {
-            Debug.Log("[E2E] 测试目的=Utility 模块全链路集成 实现手段=反射调用 utility-api + object-pool-api + logs-contract + csv-contract 子套件");
-            RunSubSuite("utility-api", "工具函数 API");
-            RunSubSuite("object-pool-api", "对象池 API");
-            RunSubSuite("logs-contract", "日志契约");
-            RunSubSuite("csv-contract", "CSV 契约");
-            Debug.Log("[E2E] Utility 模块全链路集成完成: 4 个子套件全部通过");
+            RunModuleIntegration("utility", "工具函数与基础设施");
         }
 
         /// <summary>
-        /// Launch 模块集成测试：执行启动流程和宿主测试子套件。
-        /// Launch module integration test: execute startup flow and host test sub-suites.
+        /// Launch 模块集成测试：自动执行该模块所有子套件。
+        /// Launch module integration test: auto-execute all sub-suites of this module.
         /// 测试目的=验证 Launch 模块从热更加载到宿主集成的完整链路。
-        /// 实现手段=按顺序反射调用 launch + host-launch + host-asset-load + host-framework-integration 子套件。
+        /// 实现手段=从 E2ESuiteCatalog 查找 launch 模块的所有套件，按层级排序后反射调用。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 6, des: "launch-module-全链路集成")]
         public static void LaunchModuleIntegration()
         {
-            Debug.Log("[E2E] 测试目的=Launch 模块全链路集成 实现手段=反射调用 launch + host 子套件");
-            RunSubSuite("launch", "启动流程");
-            RunSubSuite("host-launch", "宿主启动");
-            RunSubSuite("host-asset-load", "宿主资源加载");
-            RunSubSuite("host-framework-integration", "宿主框架集成");
-            Debug.Log("[E2E] Launch 模块全链路集成完成: 4 个子套件全部通过");
+            RunModuleIntegration("launch", "启动流程与宿主集成");
+        }
+
+        /// <summary>
+        /// 按模块自动执行集成测试：从 E2ESuiteCatalog 查找该模块的所有套件，按层级排序后逐一执行。
+        /// Auto-execute integration tests by module: find all suites for the module from E2ESuiteCatalog,
+        /// sort by tier priority, and invoke each in order.
+        ///
+        /// 该方法消除了手动维护 RunSubSuite 调用的需求——新增子套件只需在 E2ESuiteCatalog
+        /// 中添加条目，模块入口会自动发现并执行它。
+        /// This method eliminates the need to manually maintain RunSubSuite calls — adding a new sub-suite
+        /// only requires an entry in E2ESuiteCatalog, and the module entry will automatically discover and execute it.
+        /// </summary>
+        /// <param name="module">模块名称，对应 E2ESuiteCatalog 中的 Module 字段。Module name matching E2ESuiteCatalog.Module.</param>
+        /// <param name="displayName">日志中显示的模块名称。Display name for logging.</param>
+        private static void RunModuleIntegration(string module, string displayName)
+        {
+            Debug.Log($"[E2E] 测试目的={displayName}模块全链路集成 实现手段=从 E2ESuiteCatalog 查找模块子套件并按层级排序反射调用");
+
+            // 从目录查找该模块的所有套件，按层级优先级排序
+            // Find all suites for the module from catalog, sorted by tier priority
+            var suites = E2ESuiteCatalog.GetSuitesByModule(module);
+            if (suites == null || suites.Length == 0)
+            {
+                Debug.LogWarning($"[E2E] 模块 {displayName} ({module}) 在 E2ESuiteCatalog 中未注册任何套件，跳过");
+                return;
+            }
+
+            // 排除 module-integration 自身，按层级优先级排序
+            // Exclude module-integration itself, sort by tier priority
+            var orderedSuites = suites
+                .Where(s => !string.Equals(s.SuiteName, "module-integration", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(s => TierPriority.TryGetValue(s.Tier, out var priority) ? priority : 99)
+                .ThenBy(s => s.SuiteName)
+                .ToList();
+
+            Debug.Log($"[E2E] 模块 {displayName} ({module}): 发现 {orderedSuites.Count} 个子套件");
+
+            var passCount = 0;
+            foreach (var suite in orderedSuites)
+            {
+                RunSubSuite(suite.SuiteName, $"{displayName} / {suite.Description}");
+                passCount++;
+            }
+
+            Debug.Log($"[E2E] {displayName} 模块全链路集成完成: {passCount}/{orderedSuites.Count} 个子套件全部通过");
         }
 
         /// <summary>
@@ -172,11 +225,6 @@ namespace BDFramework.Test.E2E
         /// [E2ETest] attributes, sorts them by order, and invokes them directly — not through
         /// E2ETestRunner's TCP protocol. This allows safe aggregation of sub-suite execution within
         /// the same E2E session without nesting TCP communication.
-        ///
-        /// 注意：被调用的子套件方法如果本身也是 module-integration 套件的方法（即递归），
-        /// 将被跳过以避免无限递归。
-        /// Note: if an invoked sub-suite method is itself a member of the module-integration suite
-        /// (i.e., recursive), it will be skipped to prevent infinite recursion.
         /// </summary>
         /// <param name="suiteName">子套件名称。Sub-suite name.</param>
         /// <param name="displayName">日志中显示的名称。Display name for logging.</param>
@@ -298,19 +346,24 @@ namespace BDFramework.Test.E2E
         /// 全模块集成测试汇总入口：按顺序执行所有模块的集成测试。
         /// Full module integration summary entry: execute all module integration tests in order.
         /// 测试目的=验证所有框架模块的集成测试链路均已联通且全部通过。
-        /// 实现手段=按模块顺序逐一执行，任一模块失败即中止。
+        /// 实现手段=从 AllModuleEntries 读取模块列表，自动汇总覆盖范围。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 999, des: "全模块集成汇总")]
         public static void AllModulesSummary()
         {
             Debug.Log("[E2E] 全模块集成测试汇总:");
-            Debug.Log("[E2E]   SQLite 模块: contract + business + integration");
-            Debug.Log("[E2E]   Asset 模块: version-controller + asset-load + asset-business + traversal + download");
-            Debug.Log("[E2E]   Framework 模块: contract + core-business + integration");
-            Debug.Log("[E2E]   ServiceStore 模块: api-contract");
-            Debug.Log("[E2E]   Utility 模块: utility-api + object-pool + logs + csv");
-            Debug.Log("[E2E]   Launch 模块: launch + host");
+
+            // 从目录自动输出每个模块的覆盖范围 / Auto-output each module's coverage from catalog
+            foreach (var entry in AllModuleEntries)
+            {
+                var suites = E2ESuiteCatalog.GetSuitesByModule(entry.module);
+                var suiteNames = suites
+                    .Where(s => !string.Equals(s.SuiteName, "module-integration", StringComparison.OrdinalIgnoreCase))
+                    .Select(s => s.SuiteName);
+                Debug.Log($"[E2E]   {entry.displayName} ({entry.module}): {string.Join(" + ", suiteNames)}");
+            }
+
             Debug.Log("[E2E] 全模块集成测试入口验证完成");
         }
     }
