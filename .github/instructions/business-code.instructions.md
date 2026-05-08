@@ -9,7 +9,17 @@ applyTo: "Assets/Code/**"
 
 - 业务代码放在 `Assets/Code/<Module>/` 或 `Assets/Code/<Module>@hotfix/`
 - 业务测试放在 `Assets/Code/<Module>/Tests/`、`Assets/Code/<Module>@hotfix/Tests/` 或业务自有 `E2E/` 目录
+- **业务 E2E 测试**放在 `Assets/Code/BDFramework.UnitTest/Runtime/E2E/`，命名空间 `BDFramework.Game.E2E`
 - 不要把业务专属测试、场景编排或玩法 case 放进 `Packages/com.popo.bdframework/` 或 `Packages/com.talosai.e2e/`
+
+## 业务 E2E 测试编写规则
+
+- 必须使用 `[E2ETest(suite, order, des)]` 属性标记测试方法（`Talos.E2E` 命名空间，`autoReferenced: true`）
+- 必须使用 `[UnityEngine.Scripting.Preserve]` 属性标记类和方法（IL2CPP 环境需要）
+- 访问框架类型时，优先使用运行时反射（`FindLoadedType` / `RequireLoadedAssembly`），避免编译期耦合
+- 也可直接引用框架类型（`BDFramework.Core` 是 `autoReferenced: true`），在方法文档中注明所依赖的框架类型
+- 测试文件自动被 E2ETestRunner 发现（通过 AppDomain 程序集扫描），无需额外注册
+- 自动化测试日志遵循 `测试目的=...` 和 `实现手段=...` 的命名规则
 
 ## 编码规则
 

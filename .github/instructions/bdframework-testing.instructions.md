@@ -49,20 +49,33 @@ applyTo: "Packages/com.popo.bdframework/Runtime.Test/**"
 
 ## E2E 测试组织架构
 
+### 框架/业务分离原则
+
+BDFramework 测试代码按范围分为两层：
+
+| 范围 | 放置位置 | 命名空间 | 聚合入口 | 管理责任 |
+|------|---------|---------|---------|---------|
+| **框架测试 (framework)** | `Runtime.Test/Runtime/E2E/` | `BDFramework.Test.E2E` | `ModuleIntegrationEntry` (suite: `module-integration`) | BDFramework 维护者 |
+| **业务测试 (business)** | `Assets/Code/BDFramework.UnitTest/Runtime/E2E/` | `BDFramework.Game.E2E` | `BusinessModuleIntegrationEntry` (suite: `business-integration`) | 业务方 |
+
+**E2ESuiteCatalog** 通过 `SuiteDescriptor.Scope` 字段（`"framework"` | `"business"`）区分套件归属。
+
 ### 模块归属与套件命名
 
 所有 E2E 测试套件必须归属于一个模块，套件命名遵循 `<module>[-tier]` 模式：
 
-| 模块 | 套件前缀 | 覆盖范围 |
-|------|---------|---------|
-| sqlite | `sqlite`, `sqlite-contract`, `sqlite-business`, `sqlite-integration` | SQLite 数据存储 |
-| asset | `asset-load`, `asset-business`, `asset-traversal`, `version-controller-api`, `version-business`, `download-prep`, `download-update` | 资源加载与版本控制 |
-| framework | `framework-contract`, `framework-core-business`, `framework-integration` | 框架核心启动与配置 |
-| service-store | `service-store-api` | 服务容器与依赖注入 |
-| utility | `utility-api`, `object-pool-api`, `logs-contract`, `csv-contract` | 工具函数与基础设施 |
-| launch | `launch`, `host-launch`, `host-asset-load`, `host-framework-integration` | 启动流程与宿主集成 |
-| ui | `window-preconfig` | UI 窗口预配置 |
-| meta | `module-integration` | 模块集成入口与目录验证 |
+| 范围 | 模块 | 套件 | 覆盖范围 |
+|------|------|------|---------|
+| framework | sqlite | `sqlite`, `sqlite-contract`, `sqlite-business`, `sqlite-integration` | SQLite 数据存储 |
+| framework | asset | `asset-load`, `asset-traversal`, `version-controller-api` | 资源加载与版本控制（框架层） |
+| business | asset | `asset-business`, `version-business`, `download-prep`, `download-update` | 资源加载与版本控制（业务层） |
+| framework | framework | `framework-contract`, `framework-core-business`, `framework-integration` | 框架核心启动与配置 |
+| framework | service-store | `service-store-api` | 服务容器与依赖注入 |
+| framework | utility | `utility-api`, `object-pool-api`, `logs-contract`, `csv-contract` | 工具函数与基础设施 |
+| framework | launch | `launch`, `host-launch`, `host-asset-load`, `host-framework-integration` | 启动流程与宿主集成 |
+| business | ui | `window-preconfig` | UI 窗口预配置 |
+| framework | meta | `module-integration` | 框架模块集成测试入口 |
+| business | meta | `business-integration` | 业务集成测试入口 |
 
 测试层级后缀约定：`-contract`（API 契约）、`-business`（业务逻辑）、`-integration`（跨模块集成）、`-api`（公共 API 接口）。无后缀表示基础操作或综合测试。
 
@@ -70,65 +83,91 @@ applyTo: "Packages/com.popo.bdframework/Runtime.Test/**"
 
 `Runtime.Test/Runtime/E2E/E2ESuiteCatalog.cs` 是所有 E2E 套件的中央注册表，提供：
 
-- **声明式目录**：所有套件的模块归属、测试层级和描述集中维护在 `AllSuites` 数组
+- **声明式目录**：所有套件的模块归属、测试层级、范围（Scope）和描述集中维护在 `AllSuites` 数组
+- **Scope 字段**：每个 `SuiteDescriptor` 包含 `Scope` 字段（`"framework"` | `"business"`），区分框架测试与业务测试
+  - `GetFrameworkSuites()` / `GetBusinessSuites()` 按范围查询
+  - `GetSuitesByScope("framework")` / `GetSuitesByScope("business")` 通用查询
 - **运行时验证**：`VerifyCatalogIntegrity()` 通过反射扫描 `[E2ETest]` 属性，与目录双向比对
-- **查询 API**：`GetSuitesByModule(module)`、`GetSuitesByTier(tier)`、`GetAllModules()`
+- **查询 API**：`GetSuitesByModule(module)`、`GetSuitesByTier(tier)`、`GetSuitesByScope(scope)`、`GetAllModules()`
 
 **新增套件时必须**：在 `E2ESuiteCatalog.AllSuites` 中添加对应条目。`VerifyCatalogIntegrity()` 会在 E2E 执行时自动检测遗漏。
 
 ### 模块集成测试入口
 
-`Runtime.Test/Runtime/E2E/ModuleIntegrationEntry.cs` 是按模块维度聚合的集成测试入口，套件名 `module-integration`：
+框架侧 `ModuleIntegrationEntry`（`Runtime.Test/Runtime/E2E/ModuleIntegrationEntry.cs`）和业务侧 `BusinessModuleIntegrationEntry`（`Assets/Code/BDFramework.UnitTest/Runtime/E2E/BusinessModuleIntegrationEntry.cs`）分别按模块维度聚合的集成测试入口：
 
-- 每个模块一个 `[E2ETest]` 方法，按 contract → business → integration 顺序引用该模块的所有子套件
+**框架侧 — `ModuleIntegrationEntry`**（suite: `module-integration`）：
+- 仅聚合 `Scope = "framework"` 的套件
+- 每个框架模块一个 `[E2ETest]` 方法，按 contract → business → integration 顺序
 - `RunSubSuite(suiteName, displayName)` 验证子套件入口可达
-- `AllModulesSummary()` 汇总所有模块的测试覆盖范围
-- `E2ESuiteCatalog.VerifyCatalogIntegrity()` 验证目录与运行时套件同步
+- `AllModulesSummary()` 汇总所有框架模块的测试覆盖范围
 
-**Playwright 层双重覆盖**：`testModuleIntegration-e2e.spec.ts` 按模块维度执行每个子套件，确保独立子套件和模块聚合入口都得到验证。
+**业务侧 — `BusinessModuleIntegrationEntry`**（suite: `business-integration`）：
+- 仅聚合 `Scope = "business"` 的套件
+- 每个业务模块一个 `[E2ETest]` 方法，结构与 `ModuleIntegrationEntry` 一致
+- 放在 `Assets/Code/BDFramework.UnitTest/Runtime/E2E/` 由 Assembly-CSharp 编译
+
+### E2E 封装原则（Playwright）
+
+Playwright spec 只编排调用，不写测试逻辑：
+
+- 每个 test case 只做两件事：`connector.runSuite('suite-name')` → `expect(summary.failed === 0)`
+- 不检查单个 test method 的 `passed` 属性（assemblyLoadTest.passed、screenLoadTest.passed 等）
+- 不实现重试逻辑、条件判断或业务断言
+- 所有测试逻辑在 C# 端通过 `[E2ETest]` 方法表达
+- 框架测试调用 `connector.runSuite('module-integration')`
+- 业务测试调用 `connector.runSuite('business-integration')`
 
 ### 新增 E2E 套件检查清单
 
 **场景 A：现有模块新增子套件**（如 sqlite 模块新增 `sqlite-perf` 套件）
 
-1. 创建测试文件于 `Runtime.Test/Runtime/E2E/`，使用 `[E2ETest(suite, order, des)]` 属性
-2. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块、层级、描述）
-3. 在 `testModuleIntegration-e2e.spec.ts` 对应模块 describe 块中添加 test case
+1. 确定套件范围：框架套件 → `Runtime.Test/Runtime/E2E/`，业务套件 → `Assets/Code/BDFramework.UnitTest/Runtime/E2E/`
+2. 创建测试文件，使用 `[E2ETest(suite, order, des)]` 属性
+3. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块、层级、范围 Scope、描述）
 4. 运行 E2E 验证：新套件通过 + `VerifyCatalogIntegrity()` 不报遗漏
 
-**无需改动 `ModuleIntegrationEntry.cs`**：`RunModuleIntegration()` 从 `E2ESuiteCatalog` 自动发现模块的所有子套件，新增子套件只需更新目录即可。
+**无需改动 `ModuleIntegrationEntry.cs` 或 `BusinessModuleIntegrationEntry.cs`**：`RunModuleIntegration()` 从 `E2ESuiteCatalog` 自动发现模块的所有子套件并按其 Scope 筛选，新增子套件只需更新目录即可。
 
-**场景 B：新增模块**（如新增 `network` 模块）
+**场景 B：新增模块**（如新增 `network` 框架模块）
 
-1. 创建测试文件于 `Runtime.Test/Runtime/E2E/`，使用 `[E2ETest(suite, order, des)]` 属性
-2. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块=`network`、层级、描述）
+1. 创建测试文件于 `Runtime.Test/Runtime/E2E/`，使用 `[E2ETest(suite, order, des)]` 属性，Scope = "framework"
+2. 在 `E2ESuiteCatalog.AllSuites` 添加条目（套件名、模块=`network`、层级、Scope、描述）
 3. 在 `ModuleIntegrationEntry.cs` 的 `AllModuleEntries` 数组中添加一行：`("network", "网络通信", "Network Communication", 7)`
 4. 在 `ModuleIntegrationEntry.cs` 中添加入口方法（复制任一现有方法，修改 3 处：`[E2ETest]` 的 order/des、方法名、`RunModuleIntegration` 的 module/displayName）
-5. 在 `testModuleIntegration-e2e.spec.ts` 中添加对应模块的 describe 块
-6. 运行 E2E 验证：新模块套件通过 + `VerifyCatalogIntegrity()` 不报遗漏
+5. 运行 E2E 验证：新模块套件通过 + `VerifyCatalogIntegrity()` 不报遗漏
 
 **场景 C：删除套件/模块**
 
 1. 删除测试文件
 2. 从 `E2ESuiteCatalog.AllSuites` 移除对应条目
-3. 从 `ModuleIntegrationEntry.cs` 的 `AllModuleEntries` 和入口方法中移除
-4. 从 `testModuleIntegration-e2e.spec.ts` 移除对应 describe 块
-5. 运行 E2E 验证 `VerifyCatalogIntegrity()` 不报过期套件
+3. 从 `ModuleIntegrationEntry.cs` 或 `BusinessModuleIntegrationEntry.cs` 的入口数组中移除
+4. 运行 E2E 验证 `VerifyCatalogIntegrity()` 不报过期套件
+
+**场景 D：框架套件 → 业务套件**（范围迁移）
+
+1. 移动测试文件到 `Assets/Code/BDFramework.UnitTest/Runtime/E2E/`
+2. 更新命名空间从 `BDFramework.Test.E2E` 到 `BDFramework.Game.E2E`
+3. 在 `E2ESuiteCatalog.AllSuites` 中修改 Scope 从 `"framework"` 到 `"business"`
+4. 运行 E2E 验证：框架侧不再包含该套件 + 业务侧正常发现并执行
 
 ### 维护职责矩阵
 
-| 维护动作 | E2ESuiteCatalog | ModuleIntegrationEntry | Playwright spec |
-|---------|:-:|:-:|:-:|
-| 现有模块新增子套件 | ✅ 必改 | ❌ 无需改 | ✅ 必改 |
-| 新增模块 | ✅ 必改 | ✅ 必改（2 处） | ✅ 必改 |
-| 删除套件/模块 | ✅ 必改 | ✅ 必改 | ✅ 必改 |
-| 修改套件名称 | ✅ 必改 | ❌ 无需改（自动发现） | ✅ 必改 |
+| 维护动作 | E2ESuiteCatalog | ModuleIntegrationEntry | BusinessModuleIntegrationEntry | Playwright spec |
+|---------|:-:|:-:|:-:|:-:|
+| 现有模块新增框架子套件 | ✅ 必改 | ❌ 无需改 | ❌ 无需改 | ❌ 无需改 |
+| 现有模块新增业务子套件 | ✅ 必改 | ❌ 无需改 | ❌ 无需改（自动发现） | ❌ 无需改 |
+| 新增框架模块 | ✅ 必改 | ✅ 必改（2 处） | ❌ 无需改 | ❌ 无需改 |
+| 新增业务模块 | ✅ 必改 | ❌ 无需改 | ✅ 必改（2 处） | ❌ 无需改 |
+| 删除套件/模块 | ✅ 必改 | ✅ 必改 | ✅ 必改 | ❌ 无需改 |
+| 修改套件名称 | ✅ 必改 | ❌ 无需改（自动发现） | ❌ 无需改（自动发现） | ❌ 无需改 |
+| 框架→业务范围迁移 | ✅ 必改（改 Scope） | ❌ 无需改 | ❌ 无需改 | ❌ 无需改 |
 
 **自动同步保障**：`E2ESuiteCatalog.VerifyCatalogIntegrity()` 在每次 E2E 运行时自动检测：
 - 运行时有但目录中没有的套件 → **抛出异常**（遗漏的目录条目必须补上）
 - 目录中有但运行时没有的套件 → **警告**（可能是过期的目录条目）
 
-`ModuleIntegrationEntry.RunModuleIntegration()` 从 `E2ESuiteCatalog` 读取模块的子套件列表并按层级排序执行，**新增子套件不需要修改入口方法**。
+`ModuleIntegrationEntry.RunModuleIntegration()` 和 `BusinessModuleIntegrationEntry.RunModuleIntegration()` 分别从 `E2ESuiteCatalog` 按 Scope 读取模块的子套件列表并按层级排序执行，**新增框架/业务子套件不需要修改入口方法**。Playwright spec 简化为只调用 `module-integration` 或 `business-integration` 套件，新增/删除子套件不需要修改 Playwright 代码。
 
 ## 集成测试入口
 

@@ -5,7 +5,7 @@ using Talos.E2E;
 using UnityEngine;
 using UnityEngine.Scripting;
 
-namespace BDFramework.Test.E2E
+namespace BDFramework.Game.E2E
 {
     /// <summary>
     /// AssetBundle 管理器业务能力 E2E 测试套件。

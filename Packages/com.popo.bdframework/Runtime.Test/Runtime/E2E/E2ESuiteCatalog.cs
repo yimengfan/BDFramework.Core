@@ -54,6 +54,11 @@ namespace BDFramework.Test.E2E
             public string Module;
             /// <summary>测试层级（contract/business/integration/api/host）。Test tier.</summary>
             public string Tier;
+            /// <summary>
+            /// 套件归属范围："framework" 表示框架测试（维护在 BDFramework.Test），"business" 表示业务测试（维护在业务侧 Assets/Code/）。
+            /// Suite scope: "framework" for framework tests (maintained in BDFramework.Test), "business" for business tests (maintained in Assets/Code/).
+            /// </summary>
+            public string Scope;
             /// <summary>中文描述。Chinese description.</summary>
             public string Description;
             /// <summary>英文描述。English description.</summary>
@@ -68,46 +73,49 @@ namespace BDFramework.Test.E2E
         /// </summary>
         private static readonly SuiteDescriptor[] AllSuites = new[]
         {
-            // SQLite 模块 / SQLite module
-            new SuiteDescriptor { SuiteName = "sqlite",              Module = "sqlite",        Tier = "business",     Description = "SQLite 基础操作",            DescriptionEn = "SQLite basic operations" },
-            new SuiteDescriptor { SuiteName = "sqlite-contract",     Module = "sqlite",        Tier = "contract",     Description = "SQLite 契约验证",            DescriptionEn = "SQLite contract verification" },
-            new SuiteDescriptor { SuiteName = "sqlite-business",     Module = "sqlite",        Tier = "business",     Description = "SQLite 业务逻辑",            DescriptionEn = "SQLite business logic" },
-            new SuiteDescriptor { SuiteName = "sqlite-integration",  Module = "sqlite",        Tier = "integration",  Description = "SQLite 集成测试",            DescriptionEn = "SQLite integration tests" },
+            // SQLite 模块 / SQLite module (framework)
+            new SuiteDescriptor { SuiteName = "sqlite",              Module = "sqlite",        Tier = "business",     Scope = "framework", Description = "SQLite 基础操作",            DescriptionEn = "SQLite basic operations" },
+            new SuiteDescriptor { SuiteName = "sqlite-contract",     Module = "sqlite",        Tier = "contract",     Scope = "framework", Description = "SQLite 契约验证",            DescriptionEn = "SQLite contract verification" },
+            new SuiteDescriptor { SuiteName = "sqlite-business",     Module = "sqlite",        Tier = "business",     Scope = "framework", Description = "SQLite 业务逻辑",            DescriptionEn = "SQLite business logic" },
+            new SuiteDescriptor { SuiteName = "sqlite-integration",  Module = "sqlite",        Tier = "integration",  Scope = "framework", Description = "SQLite 集成测试",            DescriptionEn = "SQLite integration tests" },
 
-            // Asset 模块 / Asset module
-            new SuiteDescriptor { SuiteName = "asset-load",          Module = "asset",         Tier = "integration",  Description = "资源加载全链路",              DescriptionEn = "Asset load full pipeline" },
-            new SuiteDescriptor { SuiteName = "asset-business",      Module = "asset",         Tier = "business",     Description = "AssetBundle 业务",           DescriptionEn = "AssetBundle business" },
-            new SuiteDescriptor { SuiteName = "asset-traversal",     Module = "asset",         Tier = "business",     Description = "资源遍历",                   DescriptionEn = "Asset traversal" },
-            new SuiteDescriptor { SuiteName = "version-controller-api", Module = "asset",      Tier = "api",          Description = "版本控制器 API 契约",         DescriptionEn = "Version controller API contract" },
-            new SuiteDescriptor { SuiteName = "version-business",    Module = "asset",         Tier = "business",     Description = "版本控制器业务",              DescriptionEn = "Version controller business" },
-            new SuiteDescriptor { SuiteName = "download-prep",       Module = "asset",         Tier = "business",     Description = "下载准备",                    DescriptionEn = "Download preparation" },
-            new SuiteDescriptor { SuiteName = "download-update",     Module = "asset",         Tier = "business",     Description = "下载更新",                    DescriptionEn = "Download update" },
+            // Asset 模块 — 框架套件 / Asset module — framework suites
+            new SuiteDescriptor { SuiteName = "asset-load",          Module = "asset",         Tier = "integration",  Scope = "framework", Description = "资源加载全链路",              DescriptionEn = "Asset load full pipeline" },
+            new SuiteDescriptor { SuiteName = "asset-traversal",     Module = "asset",         Tier = "business",     Scope = "framework", Description = "资源遍历",                   DescriptionEn = "Asset traversal" },
+            new SuiteDescriptor { SuiteName = "version-controller-api", Module = "asset",      Tier = "api",          Scope = "framework", Description = "版本控制器 API 契约",         DescriptionEn = "Version controller API contract" },
 
-            // Framework 模块 / Framework module
-            new SuiteDescriptor { SuiteName = "framework-contract",       Module = "framework", Tier = "contract",     Description = "框架契约验证",               DescriptionEn = "Framework contract verification" },
-            new SuiteDescriptor { SuiteName = "framework-core-business",  Module = "framework", Tier = "business",     Description = "框架核心业务",               DescriptionEn = "Framework core business" },
-            new SuiteDescriptor { SuiteName = "framework-integration",    Module = "framework", Tier = "integration",  Description = "框架集成管线",               DescriptionEn = "Framework integration pipeline" },
+            // Asset 模块 — 业务套件 / Asset module — business suites
+            new SuiteDescriptor { SuiteName = "asset-business",      Module = "asset",         Tier = "business",     Scope = "business",  Description = "AssetBundle 业务",           DescriptionEn = "AssetBundle business" },
+            new SuiteDescriptor { SuiteName = "version-business",    Module = "asset",         Tier = "business",     Scope = "business",  Description = "版本控制器业务",              DescriptionEn = "Version controller business" },
+            new SuiteDescriptor { SuiteName = "download-prep",       Module = "asset",         Tier = "business",     Scope = "business",  Description = "下载准备",                    DescriptionEn = "Download preparation" },
+            new SuiteDescriptor { SuiteName = "download-update",     Module = "asset",         Tier = "business",     Scope = "business",  Description = "下载更新",                    DescriptionEn = "Download update" },
 
-            // ServiceStore 模块 / ServiceStore module
-            new SuiteDescriptor { SuiteName = "service-store-api",   Module = "service-store", Tier = "api",          Description = "ServiceStore API 契约",      DescriptionEn = "ServiceStore API contract" },
+            // Framework 模块 / Framework module (framework)
+            new SuiteDescriptor { SuiteName = "framework-contract",       Module = "framework", Tier = "contract",     Scope = "framework", Description = "框架契约验证",               DescriptionEn = "Framework contract verification" },
+            new SuiteDescriptor { SuiteName = "framework-core-business",  Module = "framework", Tier = "business",     Scope = "framework", Description = "框架核心业务",               DescriptionEn = "Framework core business" },
+            new SuiteDescriptor { SuiteName = "framework-integration",    Module = "framework", Tier = "integration",  Scope = "framework", Description = "框架集成管线",               DescriptionEn = "Framework integration pipeline" },
 
-            // Utility 模块 / Utility module
-            new SuiteDescriptor { SuiteName = "utility-api",         Module = "utility",       Tier = "api",          Description = "工具函数 API 契约",          DescriptionEn = "Utility API contract" },
-            new SuiteDescriptor { SuiteName = "object-pool-api",     Module = "utility",       Tier = "api",          Description = "对象池 API 契约",            DescriptionEn = "Object pool API contract" },
-            new SuiteDescriptor { SuiteName = "logs-contract",       Module = "utility",       Tier = "contract",     Description = "日志契约验证",               DescriptionEn = "Logs contract verification" },
-            new SuiteDescriptor { SuiteName = "csv-contract",        Module = "utility",       Tier = "contract",     Description = "CSV 契约验证",              DescriptionEn = "CSV contract verification" },
+            // ServiceStore 模块 / ServiceStore module (framework)
+            new SuiteDescriptor { SuiteName = "service-store-api",   Module = "service-store", Tier = "api",          Scope = "framework", Description = "ServiceStore API 契约",      DescriptionEn = "ServiceStore API contract" },
 
-            // Launch 模块 / Launch module
-            new SuiteDescriptor { SuiteName = "launch",              Module = "launch",        Tier = "integration",  Description = "启动流程",                    DescriptionEn = "Startup flow" },
-            new SuiteDescriptor { SuiteName = "host-launch",         Module = "launch",        Tier = "host",         Description = "宿主启动",                    DescriptionEn = "Host launch" },
-            new SuiteDescriptor { SuiteName = "host-asset-load",     Module = "launch",        Tier = "host",         Description = "宿主资源加载",               DescriptionEn = "Host asset load" },
-            new SuiteDescriptor { SuiteName = "host-framework-integration", Module = "launch", Tier = "host",         Description = "宿主框架集成",               DescriptionEn = "Host framework integration" },
+            // Utility 模块 / Utility module (framework)
+            new SuiteDescriptor { SuiteName = "utility-api",         Module = "utility",       Tier = "api",          Scope = "framework", Description = "工具函数 API 契约",          DescriptionEn = "Utility API contract" },
+            new SuiteDescriptor { SuiteName = "object-pool-api",     Module = "utility",       Tier = "api",          Scope = "framework", Description = "对象池 API 契约",            DescriptionEn = "Object pool API contract" },
+            new SuiteDescriptor { SuiteName = "logs-contract",       Module = "utility",       Tier = "contract",     Scope = "framework", Description = "日志契约验证",               DescriptionEn = "Logs contract verification" },
+            new SuiteDescriptor { SuiteName = "csv-contract",        Module = "utility",       Tier = "contract",     Scope = "framework", Description = "CSV 契约验证",              DescriptionEn = "CSV contract verification" },
 
-            // UI 模块 / UI module
-            new SuiteDescriptor { SuiteName = "window-preconfig",    Module = "ui",            Tier = "business",     Description = "预配置界面",                  DescriptionEn = "Window preconfiguration" },
+            // Launch 模块 / Launch module (framework)
+            new SuiteDescriptor { SuiteName = "launch",              Module = "launch",        Tier = "integration",  Scope = "framework", Description = "启动流程",                    DescriptionEn = "Startup flow" },
+            new SuiteDescriptor { SuiteName = "host-launch",         Module = "launch",        Tier = "host",         Scope = "framework", Description = "宿主启动",                    DescriptionEn = "Host launch" },
+            new SuiteDescriptor { SuiteName = "host-asset-load",     Module = "launch",        Tier = "host",         Scope = "framework", Description = "宿主资源加载",               DescriptionEn = "Host asset load" },
+            new SuiteDescriptor { SuiteName = "host-framework-integration", Module = "launch", Tier = "host",         Scope = "framework", Description = "宿主框架集成",               DescriptionEn = "Host framework integration" },
+
+            // UI 模块 — 业务套件 / UI module — business suite
+            new SuiteDescriptor { SuiteName = "window-preconfig",    Module = "ui",            Tier = "business",     Scope = "business",  Description = "预配置界面",                  DescriptionEn = "Window preconfiguration" },
 
             // 模块集成入口 / Module integration entry
-            new SuiteDescriptor { SuiteName = "module-integration",  Module = "meta",          Tier = "integration",  Description = "模块集成测试入口",            DescriptionEn = "Module integration entry" },
+            new SuiteDescriptor { SuiteName = "module-integration",  Module = "meta",          Tier = "integration",  Scope = "framework", Description = "框架模块集成测试入口",        DescriptionEn = "Framework module integration entry" },
+            new SuiteDescriptor { SuiteName = "business-integration", Module = "meta",         Tier = "integration",  Scope = "business",  Description = "业务集成测试入口",            DescriptionEn = "Business integration entry" },
         };
 
         /// <summary>
@@ -150,6 +158,37 @@ namespace BDFramework.Test.E2E
         public static string[] GetAllModules()
         {
             return AllSuites.Select(s => s.Module).Distinct().OrderBy(m => m).ToArray();
+        }
+
+        /// <summary>
+        /// 按套件归属范围获取套件列表。
+        /// Get suites by scope ("framework" or "business").
+        /// </summary>
+        /// <param name="scope">套件归属范围："framework" 或 "business"。Scope: "framework" or "business".</param>
+        /// <returns>属于该范围的套件列表。Suites belonging to the scope.</returns>
+        public static SuiteDescriptor[] GetSuitesByScope(string scope)
+        {
+            return AllSuites.Where(s => string.Equals(s.Scope, scope, StringComparison.OrdinalIgnoreCase)).ToArray();
+        }
+
+        /// <summary>
+        /// 获取所有框架套件（Scope = "framework"）。
+        /// Get all framework suites.
+        /// </summary>
+        /// <returns>框架套件列表。Framework suites.</returns>
+        public static SuiteDescriptor[] GetFrameworkSuites()
+        {
+            return GetSuitesByScope("framework");
+        }
+
+        /// <summary>
+        /// 获取所有业务套件（Scope = "business"）。
+        /// Get all business suites.
+        /// </summary>
+        /// <returns>业务套件列表。Business suites.</returns>
+        public static SuiteDescriptor[] GetBusinessSuites()
+        {
+            return GetSuitesByScope("business");
         }
 
         /// <summary>

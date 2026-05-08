@@ -9,15 +9,17 @@ using UnityEngine.Scripting;
 namespace BDFramework.Test.E2E
 {
     /// <summary>
-    /// 模块集成测试统一入口。
-    /// Unified entry point for module integration tests.
+    /// 模块集成测试统一入口（框架侧）。
+    /// Unified entry point for module integration tests (framework side).
     ///
-    /// 该套件按模块维度组织集成测试，每个测试方法对应一个框架核心模块的完整测试链
-    /// （contract → business → integration），为 E2E 层提供一键验证所有模块集成能力的入口。
+    /// 该套件按模块维度组织框架侧的集成测试，每个测试方法对应一个框架核心模块的完整测试链
+    /// （contract → business → integration），为 E2E 层提供一键验证所有框架模块集成能力的入口。
+    /// 仅聚合 Scope = "framework" 的套件；业务套件由业务侧的 BusinessModuleIntegrationEntry 管理。
     ///
-    /// This suite organizes integration tests by module dimension; each test method corresponds to a
+    /// This suite organizes framework-side integration tests by module dimension; each test method corresponds to a
     /// complete test chain (contract → business → integration) of a framework core module, providing
-    /// E2E layer a one-click entry to verify all modules' integration capabilities.
+    /// E2E layer a one-click entry to verify all framework modules' integration capabilities.
+    /// Only aggregates suites with Scope = "framework"; business suites are managed by BusinessModuleIntegrationEntry.
     ///
     /// 自动化维护模型 / Automated maintenance model:
     /// - 模块入口方法通过 E2ESuiteCatalog 自动生成，无需手动添加 RunSubSuite 调用
@@ -87,7 +89,7 @@ namespace BDFramework.Test.E2E
             ("service-store", "服务容器与依赖注入", "ServiceStore",             4),
             ("utility",       "工具函数与基础设施", "Utility & Infrastructure", 5),
             ("launch",        "启动流程与宿主集成", "Launch & Host Integration",6),
-            // 新增模块在此添加 / Add new modules here
+            ("ui",            "UI 框架",            "UI Framework",             7),
         };
 
         /// <summary>
@@ -169,9 +171,25 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
-        /// 按模块自动执行集成测试：从 E2ESuiteCatalog 查找该模块的所有套件，按层级排序后逐一执行。
-        /// Auto-execute integration tests by module: find all suites for the module from E2ESuiteCatalog,
+        /// UI 模块集成测试：自动执行该模块所有框架套件（当前无框架套件，window-preconfig 属于业务）。
+        /// UI module integration test: auto-execute all framework suites of this module (currently none; window-preconfig is business).
+        /// 测试目的=验证 UI 模块的框架层集成链路。
+        /// 实现手段=从 E2ESuiteCatalog 查找 ui 模块的框架套件，按层级排序后反射调用。
+        /// </summary>
+        [Preserve]
+        [E2ETest(suite: "module-integration", order: 7, des: "ui-module-全链路集成")]
+        public static void UiModuleIntegration()
+        {
+            RunModuleIntegration("ui", "UI 框架");
+        }
+
+        /// <summary>
+        /// 按模块自动执行集成测试：从 E2ESuiteCatalog 查找该模块的框架套件，按层级排序后逐一执行。
+        /// Auto-execute integration tests by module: find all framework suites for the module from E2ESuiteCatalog,
         /// sort by tier priority, and invoke each in order.
+        ///
+        /// 仅聚合 Scope = "framework" 的套件，业务套件由业务侧的 BusinessModuleIntegrationEntry 处理。
+        /// Only aggregates suites with Scope = "framework"; business suites are handled by BusinessModuleIntegrationEntry.
         ///
         /// 该方法消除了手动维护 RunSubSuite 调用的需求——新增子套件只需在 E2ESuiteCatalog
         /// 中添加条目，模块入口会自动发现并执行它。
@@ -182,10 +200,10 @@ namespace BDFramework.Test.E2E
         /// <param name="displayName">日志中显示的模块名称。Display name for logging.</param>
         private static void RunModuleIntegration(string module, string displayName)
         {
-            Debug.Log($"[E2E] 测试目的={displayName}模块全链路集成 实现手段=从 E2ESuiteCatalog 查找模块子套件并按层级排序反射调用");
+            Debug.Log($"[E2E] 测试目的={displayName}模块全链路集成 实现手段=从 E2ESuiteCatalog 查找模块框架套件并按层级排序反射调用");
 
-            // 从目录查找该模块的所有套件，按层级优先级排序
-            // Find all suites for the module from catalog, sorted by tier priority
+            // 从目录查找该模块的所有框架套件，按层级优先级排序
+            // Find all framework suites for the module from catalog, sorted by tier priority
             var suites = E2ESuiteCatalog.GetSuitesByModule(module);
             if (suites == null || suites.Length == 0)
             {
@@ -193,13 +211,20 @@ namespace BDFramework.Test.E2E
                 return;
             }
 
-            // 排除 module-integration 自身，按层级优先级排序
-            // Exclude module-integration itself, sort by tier priority
+            // 仅筛选框架套件，排除 module-integration 自身，按层级优先级排序
+            // Only include framework scoped suites, exclude module-integration itself, sort by tier priority
             var orderedSuites = suites
+                .Where(s => string.Equals(s.Scope, "framework", StringComparison.OrdinalIgnoreCase))
                 .Where(s => !string.Equals(s.SuiteName, "module-integration", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(s => TierPriority.TryGetValue(s.Tier, out var priority) ? priority : 99)
                 .ThenBy(s => s.SuiteName)
                 .ToList();
+
+            if (orderedSuites.Count == 0)
+            {
+                Debug.Log($"[E2E] 模块 {displayName} ({module}): 无框架层套件，跳过（业务套件由 BusinessModuleIntegrationEntry 处理）");
+                return;
+            }
 
             Debug.Log($"[E2E] 模块 {displayName} ({module}): 发现 {orderedSuites.Count} 个子套件");
 
@@ -343,28 +368,29 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
-        /// 全模块集成测试汇总入口：按顺序执行所有模块的集成测试。
-        /// Full module integration summary entry: execute all module integration tests in order.
+        /// 全模块集成测试汇总入口：按顺序输出所有框架模块的覆盖范围。
+        /// Full module integration summary entry: output coverage of all framework modules in order.
         /// 测试目的=验证所有框架模块的集成测试链路均已联通且全部通过。
-        /// 实现手段=从 AllModuleEntries 读取模块列表，自动汇总覆盖范围。
+        /// 实现手段=从 AllModuleEntries 读取模块列表，自动汇总框架层套件覆盖范围。
         /// </summary>
         [Preserve]
         [E2ETest(suite: "module-integration", order: 999, des: "全模块集成汇总")]
         public static void AllModulesSummary()
         {
-            Debug.Log("[E2E] 全模块集成测试汇总:");
+            Debug.Log("[E2E] 框架模块集成测试汇总:");
 
-            // 从目录自动输出每个模块的覆盖范围 / Auto-output each module's coverage from catalog
+            // 从目录自动输出每个模块的框架层覆盖范围 / Auto-output each module's framework-scope coverage from catalog
             foreach (var entry in AllModuleEntries)
             {
                 var suites = E2ESuiteCatalog.GetSuitesByModule(entry.module);
                 var suiteNames = suites
+                    .Where(s => string.Equals(s.Scope, "framework", StringComparison.OrdinalIgnoreCase))
                     .Where(s => !string.Equals(s.SuiteName, "module-integration", StringComparison.OrdinalIgnoreCase))
                     .Select(s => s.SuiteName);
                 Debug.Log($"[E2E]   {entry.displayName} ({entry.module}): {string.Join(" + ", suiteNames)}");
             }
 
-            Debug.Log("[E2E] 全模块集成测试入口验证完成");
+            Debug.Log("[E2E] 框架模块集成测试入口验证完成（业务套件由 BusinessModuleIntegrationEntry 管理）");
         }
     }
 }

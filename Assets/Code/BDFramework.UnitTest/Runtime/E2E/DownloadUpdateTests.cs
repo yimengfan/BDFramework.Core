@@ -8,27 +8,32 @@ using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using Talos.E2E;
 
-namespace BDFramework.Test.E2E
+namespace BDFramework.Game.E2E
 {
     /// <summary>
-    /// 下载与热更新 E2E 测试套件。
+    /// 下载与热更新业务能力 E2E 测试套件。
+    /// Download and hot-update business-capability E2E test suite.
     /// 验证 BDFramework 的资源版本控制、下载和热更新功能。
+    /// Verify BDFramework's asset version control, download, and hot-update functionality.
     /// 
-    /// 前置条件：
-    /// - 启动流程已完成
-    /// - 网络可用（部分测试需要文件服务器）
+    /// 前置条件 / Prerequisites:
+    /// - 启动流程已完成 / Startup flow has completed
+    /// - 网络可用（部分测试需要文件服务器）/ Network available (some tests require file server)
     /// 
-    /// 测试范围：
-    /// - 版本信息读取
-    /// - 本地资源完整性检查
-    /// - 资产路径解析
+    /// 测试范围 / Test scope:
+    /// - 版本信息读取 / Version info reading
+    /// - 本地资源完整性检查 / Local asset integrity check
+    /// - 资产路径解析 / Asset path resolution
     /// </summary>
+    [Preserve]
     static public class DownloadUpdateTests
     {
         /// <summary>
         /// 验证客户端版本号可被读取。
-        /// 版本号应从配置中正确解析。
+        /// Verify that the client version number can be read.
+        /// 测试目的=验证客户端版本号可读 实现手段=直接读取 GameConfigManager 配置。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "download-update", order: 1, des: "验证客户端版本号可读")]
         static public void ClientVersionReadable()
         {
@@ -42,8 +47,10 @@ namespace BDFramework.Test.E2E
 
         /// <summary>
         /// 验证资产路径解析。
-        /// 检查 ClientAssetsUtils 能正确解析主路径和备用路径。
+        /// Verify that asset path resolution is correct.
+        /// 测试目的=验证资产路径解析 实现手段=调用 ClientAssetsUtils.GetMultiAssetsLoadPath 并验证主备路径。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "download-update", order: 2, des: "验证资产路径解析")]
         static public void AssetPathsResolved()
         {
@@ -61,9 +68,11 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
-        /// 验证 StreamingAssets 母包资源存在性。
-        /// 确保母包中至少有基本资源文件。
+        /// 验证母包基础资源存在性。
+        /// Verify that base package fundamental resources exist.
+        /// 测试目的=验证母包基础资源存在 实现手段=检查 StreamingAssets 热更目录存在性和文件列表。
         /// </summary>
+        [Preserve]
         [E2ETest(suite: "download-update", order: 3, des: "验证母包基础资源存在")]
         static public void StreamingAssetsExist()
         {

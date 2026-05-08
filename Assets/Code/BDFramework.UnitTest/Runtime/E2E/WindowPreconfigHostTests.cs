@@ -6,7 +6,7 @@ using Talos.E2E;
 using UnityEngine;
 using UnityEngine.Scripting;
 
-namespace BDFramework.Test.E2E
+namespace BDFramework.Game.E2E
 {
     /// <summary>
     /// 宿主侧 WindowPreconfig 业务流程 E2E 测试套件。
