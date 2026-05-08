@@ -137,14 +137,19 @@ namespace BDFramework.Test.SqliteBenchmark
         /// Write the formatted report to the specified file path.
         /// Automatically creates the directory and logs the file location.
         /// </summary>
-        /// <param name="filePath">输出文件绝对路径。若为 null 则使用 Application.persistentDataPath 下的默认路径。
-        /// Absolute output file path. If null, uses a default path under Application.persistentDataPath.</param>
+        /// <param name="filePath">输出文件绝对路径。若为 null 则使用 Library/BDFrameCache/SqliteBenchmark/ 下的默认路径。
+        /// Absolute output file path. If null, uses a default path under Library/BDFrameCache/SqliteBenchmark/.</param>
         /// <returns>实际写入的文件路径。The actual file path written to.</returns>
         public string SaveToFile(string filePath = null)
         {
             if (filePath == null)
             {
-                filePath = Path.Combine(Application.persistentDataPath,
+                // 输出到 Library/BDFrameCache/SqliteBenchmark/ 临时目录，不写入 persistentDataPath
+                // Output to Library/BDFrameCache/SqliteBenchmark/ temp dir, not persistentDataPath
+                var libDir = System.IO.Path.Combine(
+                    BDFramework.Core.Tools.BApplication.Library,
+                    "BDFrameCache", "SqliteBenchmark");
+                filePath = System.IO.Path.Combine(libDir,
                     $"SqliteBenchmark_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
             }
 
