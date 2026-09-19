@@ -39,7 +39,7 @@ BDFramework 是一套面向 **Unity 手游长线运营**的工程框架，覆盖
 
     UFlux 的三层结构：Window / Component / State，以及绑定、消息、依赖注入。
 
-    [:octicons-arrow-right-24: UI（UFlux）](ui/index.md)
+    [:octicons-arrow-right-24: UI（UFlux）](uflux/index.md)
 
 - :material-package-variant-closed: **要出包 / 接 CI**
 
@@ -107,7 +107,7 @@ flowchart TB
 |------|------|
 | [快速开始](guide/installation.md) | 安装、目录约定、资源寻址、编码规范 |
 | [架构](architecture/index.md) | 程序集、启动链路、模块地图、重构清单 |
-| [UI（UFlux）](ui/index.md) | Window / Component / RenderData / State / Store / DI |
+| [UI（UFlux）](uflux/index.md) | Window / Component / RenderData / State / Store / DI |
 | [Runtime API](api/index.md) | 管理器、资源、表格、事件、配置、导航、工具 |
 | [构建与发布](pipeline/index.md) | 热更 DLL、AssetBundle、表格、母包、发布、CI |
 | [Editor](editor/index.md) | Editor 核心类、Http 服务、管线钩子、菜单索引 |

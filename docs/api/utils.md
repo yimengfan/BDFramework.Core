@@ -61,7 +61,7 @@ lobby.AddSingleton<LobbyContext>();      // 与 Battle 容器互不干扰
 ```
 
 !!! note "`GameServiceStore` 与 UFlux 的 DI 互不相通"
-    `UIManager.SetWindowDI` 只查 `UIManager` 自己的 `singletonList` / `transientList`。见[依赖注入](../ui/dependency-injection.md)。
+    `UIManager.SetWindowDI` 只查 `UIManager` 自己的 `singletonList` / `transientList`。见[依赖注入](../uflux/dependency-injection.md)。
 
 `IWindow.ServiceContainer` 是**每个窗口独立**的容器，也不同于上面两者：
 
@@ -451,6 +451,6 @@ public enum L2Type
 ## 相关页面
 
 - [管理器体系 ManagerBase](manager-base.md)
-- [依赖注入](../ui/dependency-injection.md)
+- [依赖注入](../uflux/dependency-injection.md)
 - [资源加载寻址](../guide/asset-load-path.md)
 - [Runtime 模块地图](../architecture/runtime-modules.md)

@@ -296,7 +296,7 @@ s2.AddListener(Msg_Test001.Msg2, triggerNum: 10,
 | 缓存 | 无上限待回放列表 | **上限 20 条** |
 | 适用 | 界面内部定向指令 | 跨模块状态广播 |
 
-→ 详见[消息 UIMessage](../ui/ui-message.md)。
+→ 详见[消息 UIMessage](../uflux/ui-message.md)。
 
 ## 常见故障
 
@@ -312,7 +312,7 @@ s2.AddListener(Msg_Test001.Msg2, triggerNum: 10,
 
 ## 相关页面
 
-- [消息 UIMessage](../ui/ui-message.md)
+- [消息 UIMessage](../uflux/ui-message.md)
 - [服务容器与日志](utils.md)
 - [Demo 解读](../tutorials/demos.md) —— `demo_StatusListener`、`demo_EventManager`
 - [Runtime 模块地图](../architecture/runtime-modules.md)

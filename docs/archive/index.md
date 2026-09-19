@@ -55,15 +55,15 @@
 
 | 原始路径 | 去向 |
 |---------|------|
-| `UI工作流/前言/` + `UFlux整体流程/` + `用MVC去理解UFlux/` | [UFlux 架构总览](../ui/uflux-overview.md) |
-| `UI工作流/View简单使用/窗口AWindows/` | [窗口 Window](../ui/window.md) |
-| `UI工作流/View简单使用/子窗口SubWindow/` | [子窗口 SubWindow](../ui/sub-window.md) |
-| `UI工作流/View简单使用/消息派发、监听/` | [消息 UIMessage](../ui/ui-message.md) |
-| `UI工作流/View简单使用/基本组件：Component/` | [组件 Component](../ui/component.md) |
-| `UI工作流/Props-View渲染状态/` + `Props值绑定/` | [渲染数据 RenderData](../ui/render-data.md) |
-| `UI工作流/View元素自动赋值/` + 4 个 Attribute 子页 | [自动赋值属性](../ui/auto-assign-attributes.md) |
-| `UI工作流/状态(State)管理/Reducer、State、Store/` | [状态管理 Reducer/Store](../ui/state-management.md) |
-| `UI工作流/依赖注入/` | [依赖注入](../ui/dependency-injection.md) |
+| `UI工作流/前言/` + `UFlux整体流程/` + `用MVC去理解UFlux/` | [UFlux 架构总览](../uflux/uflux-overview.md) |
+| `UI工作流/View简单使用/窗口AWindows/` | [窗口 Window](../uflux/window.md) |
+| `UI工作流/View简单使用/子窗口SubWindow/` | [子窗口 SubWindow](../uflux/sub-window.md) |
+| `UI工作流/View简单使用/消息派发、监听/` | [消息 UIMessage](../uflux/ui-message.md) |
+| `UI工作流/View简单使用/基本组件：Component/` | [组件 Component](../uflux/component.md) |
+| `UI工作流/Props-View渲染状态/` + `Props值绑定/` | [渲染数据 RenderData](../uflux/render-data.md) |
+| `UI工作流/View元素自动赋值/` + 4 个 Attribute 子页 | [自动赋值属性](../uflux/auto-assign-attributes.md) |
+| `UI工作流/状态(State)管理/Reducer、State、Store/` | [状态管理 Reducer/Store](../uflux/state-management.md) |
+| `UI工作流/依赖注入/` | [依赖注入](../uflux/dependency-injection.md) |
 | `UI工作流/Demo合集/` | [Demo 解读](../tutorials/demos.md) |
 | `UI工作流/FairyGUI支持/` | **丢弃**（本仓库已无 FGUI 集成） |
 

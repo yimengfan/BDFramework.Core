@@ -63,6 +63,12 @@ jobs:
 
       - name: 配置 Pages
         uses: actions/configure-pages@v5
+        with:
+          # 首次运行时把仓库的 Pages 源从 "Deploy from a branch"（master / 根目录，
+          # 由 Jekyll 渲染 README）自动切换为 "GitHub Actions"。
+          # 不设置此项时 actions/deploy-pages 会因为 build_type 仍是 legacy 而失败。
+          # 需要 `pages: write` + `id-token: write`（见文件顶部的 permissions）。
+          enablement: true
 
       - name: 上传站点产物
         uses: actions/upload-pages-artifact@v3

@@ -7,13 +7,19 @@ Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFr
 
 # 文档(Document)
 
-[**中文 Wiki**](https://www.wolai.com/ky1FVhe7Mudg6ru277gfNr)
-
-#### [English Wiki](http://www.nekosang.com/)
+> ### 📖 [中文文档](https://yimengfan.github.io/BDFramework.Core/) ｜ [English Docs](https://yimengfan.github.io/BDFramework.Core/en/)
+>
+> 完整文档已迁移到 github.io：代码结构、程序集划分、启动链路、UFlux UI 体系、
+> Runtime API、构建发布管线、测试体系与 Agent Skill 索引。
+>
+> 文档源码在 [`docs/`](docs/)（MkDocs + Material）。本地预览：
+> `pip install -r requirements-docs.txt && mkdocs serve`
 
 #### [视频教程（video）](https://www.bilibili.com/video/av78814115/)
 
 #### [博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
+
+#### 历史 Wiki（已归档，内容较旧）：[Wolai](https://www.wolai.com/ky1FVhe7Mudg6ru277gfNr) ｜ [English Wiki](http://www.nekosang.com/)
 
 # 社区(Community)
 
@@ -25,7 +31,8 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~） 
 
 # 安装使用(Start)  
-#### OpenUPM(强烈推荐): [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)   
+#### 安装与依赖、首次运行检查清单: [安装与依赖](https://yimengfan.github.io/BDFramework.Core/guide/installation/)   
+#### OpenUPM(强烈推荐): [下载页](https://openupm.cn/packages/com.popo.bdframework/) ｜ [历史引导](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)   
 # 发布（Publish）
 
 #### 稳定版本托管在OpenUPM :  [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)   

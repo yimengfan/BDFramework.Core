@@ -10,8 +10,10 @@
 # 本地构建：
 #   mkdocs build --strict
 
-site_name: BDFramework 文档
-site_description: BDFramework Unity 框架文档 —— 代码结构、Runtime/Editor 模块、UFlux UI 体系、构建发布管线与 Agent Skill 体系
+# 站点标题保持语言中性：中文站与英文站共用同一个 `site_name`，
+# 带语言的描述放在各自的首页正文里。
+site_name: BDFramework
+site_description: BDFramework — Unity3d game workflow framework / Unity3d 游戏工作流框架
 site_url: https://yimengfan.github.io/BDFramework.Core/
 repo_url: https://github.com/yimengfan/BDFramework.Core
 repo_name: yimengfan/BDFramework.Core
@@ -64,7 +66,82 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
+# 插件顺序有语义：`i18n` 必须在 `search` 之前，
+# 它在 on_config 阶段改写 search 的语言配置（reconfigure_search）。
+#
+# ⚠ `docs/` 顶层目录名不得是 2 个小写字母（如 `ui`、`en`、`fr`）。
+# 插件用 RE_LOCALE = ^[a-z]{2}(-[A-Za-z]{4})?(-[A-Z]{2})?$ 猜测语言目录，
+# 命中时该目录下所有文件都会被当成另一种语言，从**所有**语言的构建里静默消失
+# （只报“链接目标不存在”的间接警告，不报目录被丢弃）。
+# 因此 UI 分区目录名为 `uflux/` 而非 `ui/`（`ui` 恰好是维吾尔语的 ISO 639-1 代码）。
 plugins:
+  - i18n:
+      docs_structure: folder
+      # 未翻译的页面回退到默认语言（中文），保证英文站不出现 404
+      fallback_to_default: true
+      # 按 locale 自动设置 material 的 theme.language 与搜索配置
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: zh
+          default: true
+          name: 中文
+          build: true
+        - locale: en
+          name: English
+          build: true
+          nav_translations:
+            首页: Home
+            快速开始: Getting Started
+            目录结构与约定: Project Layout
+            资源加载寻址: Asset Load Paths
+            编码规范: Coding Guidelines
+            架构: Architecture
+            程序集与依赖: Assemblies & Dependencies
+            启动链路: Startup Sequence
+            Runtime 模块地图: Runtime Module Map
+            Editor 模块地图: Editor Module Map
+            结构问题与重构清单: Structure Issues & Refactor Backlog
+            UI（UFlux）: UI (UFlux)
+            UFlux 架构总览: UFlux Overview
+            窗口 Window: Window
+            子窗口 SubWindow: SubWindow
+            消息 UIMessage: Messages (UIMessage)
+            组件 Component: Component
+            渲染数据 RenderData: RenderData
+            自动赋值属性: Auto-Assign Attributes
+            状态管理 Reducer/Store: State Management (Reducer/Store)
+            依赖注入: Dependency Injection
+            管理器体系 ManagerBase: Managers (ManagerBase)
+            资源加载 BResources: Assets (BResources)
+            表格 SQLite: Tables (SQLite)
+            事件总线 EventBus: Event Bus
+            配置中心 GameConfig: Configuration (GameConfig)
+            屏幕导航 ScreenView: Screen Navigation
+            服务容器与日志: Service Container & Logging
+            构建与发布: Build & Release
+            热更代码 HybridCLR: Hotfix Code (HybridCLR)
+            AssetBundle 打包: AssetBundle Building
+            AssetGraph 节点扩展: Custom AssetGraph Nodes
+            表格打包: Table Building
+            母包构建: Client Package Build
+            资源发布: Asset Publishing
+            DevOps 与 CI: DevOps & CI
+            Editor 核心类: Editor Core Classes
+            Editor Http 服务: Editor Http Server
+            管线回调钩子: Pipeline Hooks
+            菜单与工具索引: Menus & Tools Index
+            测试: Testing
+            测试体系总览: Testing Overview
+            Runtime 单元测试: Runtime Unit Tests
+            BatchMode 与 CI 测试: BatchMode & CI Tests
+            E2E（Talos）: E2E (Talos)
+            教程与 Demo: Tutorials & Demos
+            Demo 解读: Demo Walkthrough
+            视频与外部资源: Videos & External Resources
+            Skill 索引: Skill Index
+            文档治理: Documentation Governance
+            归档: Archive
   - search:
       lang:
         - zh
@@ -135,16 +212,16 @@ nav:
       - Editor 模块地图: architecture/editor-modules.md
       - 结构问题与重构清单: architecture/refactor-backlog.md
   - UI（UFlux）:
-      - ui/index.md
-      - UFlux 架构总览: ui/uflux-overview.md
-      - 窗口 Window: ui/window.md
-      - 子窗口 SubWindow: ui/sub-window.md
-      - 消息 UIMessage: ui/ui-message.md
-      - 组件 Component: ui/component.md
-      - 渲染数据 RenderData: ui/render-data.md
-      - 自动赋值属性: ui/auto-assign-attributes.md
-      - 状态管理 Reducer/Store: ui/state-management.md
-      - 依赖注入: ui/dependency-injection.md
+      - uflux/index.md
+      - UFlux 架构总览: uflux/uflux-overview.md
+      - 窗口 Window: uflux/window.md
+      - 子窗口 SubWindow: uflux/sub-window.md
+      - 消息 UIMessage: uflux/ui-message.md
+      - 组件 Component: uflux/component.md
+      - 渲染数据 RenderData: uflux/render-data.md
+      - 自动赋值属性: uflux/auto-assign-attributes.md
+      - 状态管理 Reducer/Store: uflux/state-management.md
+      - 依赖注入: uflux/dependency-injection.md
   - Runtime API:
       - api/index.md
       - 管理器体系 ManagerBase: api/manager-base.md

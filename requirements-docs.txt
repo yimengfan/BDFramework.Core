@@ -6,6 +6,10 @@
 #
 # 说明：`jieba` 是 mkdocs-material 中文搜索（search 插件 lang: zh）的必要依赖，
 # 缺少它时中文分词会退化为逐字匹配，搜索结果质量明显下降。
+#
+# 说明：`mkdocs-static-i18n` 提供中英双语站点。中文是默认语言（根目录），
+# 英文译文放在 `docs/en/` 下，未翻译的页面按 `fallback_to_default` 回退到中文。
 
 mkdocs-material==9.7.7
+mkdocs-static-i18n==1.3.0
 jieba==0.42.1

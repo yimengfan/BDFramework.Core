@@ -232,6 +232,6 @@ public ScreenViewLayer AddLayer();
 
 ## 相关页面
 
-- [窗口 Window](../ui/window.md)
+- [窗口 Window](../uflux/window.md)
 - [启动链路](../architecture/bootstrap.md) —— `ManagerOrder` 与导航启动时机
 - [Runtime 模块地图](../architecture/runtime-modules.md)

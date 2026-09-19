@@ -157,7 +157,7 @@ ScriptLoder.HOT_DLL_EXTENSION    = ".zlua.bytes"
 
 ## UI —— UFlux
 
-目录结构（→ 详见 [UI（UFlux）](../ui/index.md)）：
+目录结构（→ 详见 [UI（UFlux）](../uflux/index.md)）：
 
 ```text
 Runtime/UI/

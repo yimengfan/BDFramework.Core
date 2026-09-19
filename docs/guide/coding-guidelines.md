@@ -137,5 +137,5 @@ BDebug.LogWatchEnd("LoadWindow");
 
 - [目录结构与约定](project-structure.md)
 - [热更代码 HybridCLR](../pipeline/build-hotfix-dll.md)
-- [UI（UFlux）](../ui/index.md)
+- [UI（UFlux）](../uflux/index.md)
 - [服务容器与日志](../api/utils.md)

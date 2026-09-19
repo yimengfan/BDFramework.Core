@@ -234,7 +234,7 @@ private void SubscribeInvokeAsyncTest(Server_HeroData state)
     => BDebug.Log($"订阅InvokeAsyncTest 返回成功!:{JsonMapper.ToJson(state, true)}");
 ```
 
-→ 详见 [状态管理 Reducer/Store](../ui/state-management.md)。
+→ 详见 [状态管理 Reducer/Store](../uflux/state-management.md)。
 
 ### `07.Windows_DI` —— 依赖注入
 
@@ -259,7 +259,7 @@ public class Widnow_DI : AWindow
 !!! warning "`Require` 必须是 `public` 且形参 > 0"
     框架用 `type.GetMethod("Require")` 查找，且 `if (@params.Length > 0)` 才执行注入。
 
-→ 详见 [依赖注入](../ui/dependency-injection.md)。
+→ 详见 [依赖注入](../uflux/dependency-injection.md)。
 
 ## `demo_EventManager/` —— 管理器范式
 
@@ -346,12 +346,12 @@ s2.AddListener<Msg_ParamTest>(nameof(Msg_Test001.Msg2), triggerNum: 10,
 
 这两个是**自定义 `AutoAssignAttribute` 的参考实现**，其中 `ToggleClickBindAttribute` 演示了"**首次回调时才从字段取值**"的热更兼容模式。
 
-→ 详见 [自动赋值属性](../ui/auto-assign-attributes.md)。
+→ 详见 [自动赋值属性](../uflux/auto-assign-attributes.md)。
 
 ## 相关页面
 
-- [UI（UFlux）](../ui/index.md)
-- [窗口 Window](../ui/window.md)
-- [渲染数据 RenderData](../ui/render-data.md)
-- [状态管理 Reducer/Store](../ui/state-management.md)
+- [UI（UFlux）](../uflux/index.md)
+- [窗口 Window](../uflux/window.md)
+- [渲染数据 RenderData](../uflux/render-data.md)
+- [状态管理 Reducer/Store](../uflux/state-management.md)
 - [表格 SQLite](../api/sqlite.md)

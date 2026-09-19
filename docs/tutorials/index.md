@@ -30,7 +30,7 @@ flowchart LR
 
 ## 相关页面
 
-- [UI（UFlux）](../ui/index.md)
-- [窗口 Window](../ui/window.md)
-- [状态管理 Reducer/Store](../ui/state-management.md)
+- [UI（UFlux）](../uflux/index.md)
+- [窗口 Window](../uflux/window.md)
+- [状态管理 Reducer/Store](../uflux/state-management.md)
 - [事件总线 EventBus](../api/event-bus.md)
