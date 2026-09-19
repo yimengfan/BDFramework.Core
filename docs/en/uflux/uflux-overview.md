@@ -24,13 +24,13 @@ UFlux answers with **layering**: business state belongs to State, render data be
 
 ```mermaid
 flowchart LR
-    U["用户操作<br/>[ButtonOnclick]"] -->|Dispatch| ST["Store&lt;S&gt;"]
+    U["User action<br/>[ButtonOnclick]"] -->|Dispatch| ST["Store&lt;S&gt;"]
     ST -->|Excute| R["AReducers&lt;T&gt;<br/>oldState + params → newState"]
     R -->|SetNewState| ST
     ST -->|DispachCallback| SUB["Subscribe 回调"]
-    SUB -->|映射| RD["RenderData"]
+    SUB -->|maps| RD["RenderData"]
     RD -->|SetRenderData| CBA["ComponentBindAdaptor"]
-    CBA -->|差异刷新| UI["UI 控件"]
+    CBA -->|diff refresh| UI["UI widgets"]
 ```
 
 The last two steps are the crux: **only fields that actually changed are written to the UI**. The diff analysis is done by `ComponentBindAdaptorManager.AnalysisRenderDataChanged`.

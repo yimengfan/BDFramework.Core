@@ -6,22 +6,22 @@ UFlux is BDFramework's UI logic orchestration architecture. It uses a roughly **
 
 ```mermaid
 flowchart LR
-    subgraph VIEW["View 层"]
-        W["AWindow&lt;TP&gt;<br/>IWindow 生命周期"]
+    subgraph VIEW["View layer"]
+        W["AWindow&lt;TP&gt;<br/>IWindow lifecycle"]
         C["AComponent<br/>ATComponent&lt;T&gt;"]
     end
 
-    subgraph BIND["绑定层"]
-        AA["AutoAssign 属性族<br/>TransformPath / ButtonOnclick / …"]
-        CBA["AComponentBindAdaptor<br/>ComponentValueBind 值绑定"]
+    subgraph BIND["Binding layer"]
+        AA["AutoAssign attribute family<br/>TransformPath / ButtonOnclick / …"]
+        CBA["AComponentBindAdaptor<br/>ComponentValueBind value binding"]
     end
 
-    subgraph STATE["State 层"]
-        S["AStateBase<br/>脏标记 + 差异刷新"]
-        ST["Store&lt;S&gt; / AReducers&lt;T&gt;<br/>Redux 式状态迁移"]
+    subgraph STATE["State layer"]
+        S["AStateBase<br/>dirty flag + diff refresh"]
+        ST["Store&lt;S&gt; / AReducers&lt;T&gt;<br/>Redux-style state transitions"]
     end
 
-    W -->|持有| C
+    W -->|holds| C
     W --> AA
     C --> AA
     W -->|RenderData| CBA

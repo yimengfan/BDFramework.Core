@@ -28,7 +28,7 @@ flowchart LR
     EDITOR["BDFramework.Editor"]
     T["BDFramework.Test"]
     ET["BDFramework.EditorTest"]
-    BIZ["Assembly-CSharp<br/>（业务 / 热更）"]
+    BIZ["Assembly-CSharp<br/>(business / hotfix)"]
 
     AOT --> CORE
     EDITOR --> CORE

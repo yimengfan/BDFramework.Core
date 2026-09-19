@@ -15,24 +15,29 @@ This documentation targets branch `v4/v-4.0.0` (Unity 2021, package version `com
 
 !!! note "About this translation"
     This is the English translation of the Chinese documentation, which is the source of truth.
-    Pages that have not been translated yet automatically **fall back to the Chinese original** —
-    you will never hit a missing page, but you may land on Chinese text. Code samples are kept
-    verbatim from the codebase, so comments inside code blocks remain Chinese-first (the repo
-    convention for source comments).
+    Code samples are kept verbatim from the codebase, so comments inside code blocks remain
+    Chinese-first (the repo convention for source comments).
 
-    **Translated so far**
+    **Translation coverage: 54 / 54 pages**
 
     | Section | Status |
     |---------|--------|
-    | Home | ✅ |
+    | Home | ✅ 1 / 1 |
     | Getting Started (`guide/`) | ✅ 4 / 4 |
     | Architecture (`architecture/`) | ✅ 6 / 6 |
-    | UI / UFlux (`uflux/`) | 🚧 3 / 10 — index, overview, window |
-    | Runtime API (`api/`) | ⏳ falls back to Chinese |
-    | Build & Release (`pipeline/`) | ⏳ falls back to Chinese |
-    | Editor, Testing, Tutorials, Agent, Archive | ⏳ falls back to Chinese |
+    | UI / UFlux (`uflux/`) | ✅ 10 / 10 |
+    | Runtime API (`api/`) | ✅ 8 / 8 |
+    | Build & Release (`pipeline/`) | ✅ 8 / 8 |
+    | Editor (`editor/`) | ✅ 5 / 5 |
+    | Testing (`testing/`) | ✅ 5 / 5 |
+    | Tutorials & Demos (`tutorials/`) | ✅ 3 / 3 |
+    | Agent (`agent/`) | ✅ 3 / 3 |
+    | Archive (`archive/`) | ✅ 1 / 1 |
 
-    To continue, copy a Chinese page to `docs/en/<same relative path>` and translate the prose.
+    The site keeps `fallback_to_default` enabled: when a new Chinese page is added and not yet
+    translated, the English site shows the Chinese original rather than a 404. To translate a
+    page, copy it to `docs/en/<same relative path>` and translate the prose — relative links
+    need no rewriting, because the `en/` tree mirrors the Chinese tree level by level.
     See [Documentation Governance](agent/doc-governance.md) for the conventions.
 
 ## Where to start

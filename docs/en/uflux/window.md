@@ -47,17 +47,17 @@ public interface IWindow
 
 ```mermaid
 sequenceDiagram
-    participant U as 业务代码
+    participant U as Business code
     participant M as UIManager
     participant W as AWindow
 
     U->>W: ① new Window_Xxx(resPath)
-    Note over W: ATComponent&lt;string&gt; 存路径<br/>RegisterUIMessages() 扫 [UIMessageListener]
+    Note over W: ATComponent&lt;string&gt; stores the path<br/>RegisterUIMessages() scans for [UIMessageListener]
     M->>W: ② SetWindowDI(window)
-    Note over W: 反射找 "Require" 方法注入服务
+    Note over W: Reflection locates the "Require" method and injects services
     U->>M: ③ LoadWindow(WinEnum.X)
     M->>W: Load() → Instantiate(prefab)
-    Note over W: UFluxUtils.InitComponent(this)<br/>执行全部 AutoAssign 属性<br/>调用 virtual Init()
+    Note over W: UFluxUtils.InitComponent(this)<br/>runs all AutoAssign attributes<br/>calls virtual Init()
     M->>W: SetActive(false) + Setlayer() + PushCaheData()
     U->>M: ④ ShowWindow(WinEnum.X)
     M->>W: SetAsLastSibling() → Open(uiMsg)
@@ -67,7 +67,7 @@ sequenceDiagram
     Note over W: IsOpen=false, SetActive(false)<br/>State.TriggerEvent&lt;OnWindowClose&gt;()
     U->>M: ⑥ UnLoadWindow(WinEnum.X)
     M->>W: Close() + Destroy()
-    Note over W: UFluxUtils.Destroy(go) + Unload(resPath)<br/>IsDestroy=true, 从 windowMap 移除
+    Note over W: UFluxUtils.Destroy(go) + Unload(resPath)<br/>IsDestroy=true, removed from windowMap
 ```
 
 !!! warning "`Init()` runs inside `Load()`, not inside `Open()`"

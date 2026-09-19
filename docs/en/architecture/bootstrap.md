@@ -13,17 +13,17 @@ sequenceDiagram
     participant SQL as SqliteLoder
     participant SL as ScriptLoder
 
-    Note over U,AOT: ① 程序集加载后
+    Note over U,AOT: ① After assemblies are loaded
     U->>AOT: AfterAssembliesLoaded
     AOT->>SLA: TryPreLoadHotfixAssembliesAtRuntime()
-    Note over U,AOT: ② 场景加载前
+    Note over U,AOT: ② Before the scene loads
     U->>AOT: BeforeSceneLoad
-    AOT->>SLA: 同上（幂等）
+    AOT->>SLA: Same as above (idempotent)
     Note over U,AOT: ③ Awake
     U->>AOT: Awake()  [ExecutionOrder = int.MinValue]
     AOT->>SLA: Load(clientVersion) → LoadHotfixDLL()
-    AOT->>SL: 反射调用 ScriptLoder.Init()
-    Note over HB: ④ 业务在更新页完成后显式调用
+    AOT->>SL: Reflection call to ScriptLoder.Init()
+    Note over HB: ④ Business code calls this explicitly once the update page completes
     HB->>HB: Launch(gameId)
     HB->>GCL: GameConfigLoder.LoadFrameworkConfig()
     HB->>RES: BResources.Init(ArtRoot, firstDir, secondDir)
