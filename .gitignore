@@ -85,5 +85,16 @@ Packages/com.talosai.e2e/Documentation~/
 talos_e2e_results.json
 mono_crash.*.json
 
+# 文档站点（github.io）构建产物，由 mkdocs.yml 生成
+/site/
+.cache/
+
+# 归档目录中的第三方二进制安装包（DB Browser for SQLite），不纳入版本管理。
+# 归档正文（md + 图片）仍正常提交。
+docs/archive/**/file/*.zip
+
+# macOS 目录元数据，不应进入仓库（不依赖开发者本机的全局 gitignore）
+.DS_Store
+
 UserSettings
 *.lscache

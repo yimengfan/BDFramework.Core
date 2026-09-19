@@ -1,0 +1,35 @@
+/* BDFramework 文档站点 —— 样式补充
+ *
+ * 只做最小必要的补充，不覆盖 Material 主题的既有设计。
+ *
+ * 关于 Mermaid 图表：
+ *   Material for MkDocs 内置了 Mermaid 支持 —— 只要 markdown 里用
+ *   ```mermaid 代码块（由 mkdocs.yml 的 pymdownx.superfences custom_fences 转成
+ *   `<pre class="mermaid">`），主题会自动从 CDN 加载 mermaid 运行时并渲染。
+ *   渲染结果放在 **closed shadow DOM** 里，因此外部 CSS 无法直接作用于图表内部元素，
+ *   配色由主题的 --md-mermaid-* CSS 变量控制（已自动跟随明暗主题）。
+ */
+
+/* ── Mermaid 图表容器 ── */
+/* 限制最大宽度并居中，避免宽图撑破正文栏 */
+.md-typeset .mermaid {
+  text-align: center;
+  margin: 1.2rem 0;
+}
+
+/* ── 表格 ── */
+/* 部分 API 表格列较多，允许横向滚动而不是压缩换行 */
+.md-typeset__table {
+  overflow-x: auto;
+}
+
+/* ── 代码块中的长 API 签名 ── */
+/* 例如 Build(BuildMode, string, string, bool, string, BuildTarget, …) */
+.md-typeset code {
+  word-break: break-word;
+}
+
+/* ── 首页卡片网格 ── */
+.md-typeset .grid.cards > ul > li {
+  border-radius: 0.2rem;
+}

@@ -1,0 +1,187 @@
+# BDFramework 文档站点配置
+#
+# 定位：本站是**面向人的发布文档**（github.io）。
+# 面向 Agent 的规则（工作链路、质量门禁、文件级约束）仍在 `.github/` 与各 `AGENTS.md` 中维护。
+# 两层关系见 docs/agent/doc-governance.md。
+#
+# 本地预览：
+#   python -m pip install -r requirements-docs.txt
+#   mkdocs serve
+# 本地构建：
+#   mkdocs build --strict
+
+site_name: BDFramework 文档
+site_description: BDFramework Unity 框架文档 —— 代码结构、Runtime/Editor 模块、UFlux UI 体系、构建发布管线与 Agent Skill 体系
+site_url: https://yimengfan.github.io/BDFramework.Core/
+repo_url: https://github.com/yimengfan/BDFramework.Core
+repo_name: yimengfan/BDFramework.Core
+edit_uri: edit/v4/v-4.0.0/docs/
+copyright: Copyright &copy; BDFramework
+
+docs_dir: docs
+site_dir: site
+
+# 原始 Wolai 导出（归档，不参与站点构建）
+exclude_docs: |
+  archive/wolai/**
+  **/.DS_Store
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.select
+    - content.action.edit
+    - content.action.view
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+      separator: '[\s\u200b\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      base_path:
+        - .
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yimengfan/BDFramework.Core
+  generator: false
+
+nav:
+  - 首页: index.md
+  - 快速开始:
+      - guide/installation.md
+      - 目录结构与约定: guide/project-structure.md
+      - 资源加载寻址: guide/asset-load-path.md
+      - 编码规范: guide/coding-guidelines.md
+  - 架构:
+      - architecture/index.md
+      - 程序集与依赖: architecture/assemblies.md
+      - 启动链路: architecture/bootstrap.md
+      - Runtime 模块地图: architecture/runtime-modules.md
+      - Editor 模块地图: architecture/editor-modules.md
+      - 结构问题与重构清单: architecture/refactor-backlog.md
+  - UI（UFlux）:
+      - ui/index.md
+      - UFlux 架构总览: ui/uflux-overview.md
+      - 窗口 Window: ui/window.md
+      - 子窗口 SubWindow: ui/sub-window.md
+      - 消息 UIMessage: ui/ui-message.md
+      - 组件 Component: ui/component.md
+      - 渲染数据 RenderData: ui/render-data.md
+      - 自动赋值属性: ui/auto-assign-attributes.md
+      - 状态管理 Reducer/Store: ui/state-management.md
+      - 依赖注入: ui/dependency-injection.md
+  - Runtime API:
+      - api/index.md
+      - 管理器体系 ManagerBase: api/manager-base.md
+      - 资源加载 BResources: api/resources.md
+      - 表格 SQLite: api/sqlite.md
+      - 事件总线 EventBus: api/event-bus.md
+      - 配置中心 GameConfig: api/game-config.md
+      - 屏幕导航 ScreenView: api/screen-navigation.md
+      - 服务容器与日志: api/utils.md
+  - 构建与发布:
+      - pipeline/index.md
+      - 热更代码 HybridCLR: pipeline/build-hotfix-dll.md
+      - AssetBundle 打包: pipeline/build-assetbundle.md
+      - AssetGraph 节点扩展: pipeline/build-assetbundle-extension.md
+      - 表格打包: pipeline/build-table.md
+      - 母包构建: pipeline/build-package.md
+      - 资源发布: pipeline/publish-assets.md
+      - DevOps 与 CI: pipeline/devops-ci.md
+  - Editor:
+      - editor/index.md
+      - Editor 核心类: editor/core-classes.md
+      - Editor Http 服务: editor/http-server.md
+      - 管线回调钩子: editor/publish-hooks.md
+      - 菜单与工具索引: editor/menus.md
+  - 测试:
+      - testing/index.md
+      - 测试体系总览: testing/overview.md
+      - Runtime 单元测试: testing/runtime-tests.md
+      - BatchMode 与 CI 测试: testing/batchmode-tests.md
+      - E2E（Talos）: testing/e2e.md
+  - 教程与 Demo:
+      - tutorials/index.md
+      - Demo 解读: tutorials/demos.md
+      - 视频与外部资源: tutorials/videos.md
+  - Agent:
+      - agent/index.md
+      - Skill 索引: agent/skills.md
+      - 文档治理: agent/doc-governance.md
+  - 归档:
+      - archive/index.md

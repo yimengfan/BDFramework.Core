@@ -1,0 +1,11 @@
+# BDFramework 文档站点依赖（github.io）
+#
+# 只服务 `mkdocs.yml` 的构建，与 Unity / CI 构建无关。
+# 本地使用：
+#   python -m pip install -r requirements-docs.txt
+#
+# 说明：`jieba` 是 mkdocs-material 中文搜索（search 插件 lang: zh）的必要依赖，
+# 缺少它时中文分词会退化为逐字匹配，搜索结果质量明显下降。
+
+mkdocs-material==9.7.7
+jieba==0.42.1

@@ -146,8 +146,10 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 | L0 | 全局根规范 | `copilot-instructions.md` | `.github/`，始终加载 | 编码流程、门禁、跨模块约束 | ≤1000 行 | — |
 | L1 | 文件级编码约束 | `*.instructions.md` | `.github/instructions/`，`applyTo` 自动匹配 | 被命中文件的编码规则、模块偏差 | ≤3000 行 | 对应模块移除 |
 | L2 | 包架构入口 | `AGENTS.md` | 仓库根、package 根、业务模块根（`Assets/Code/<Module>/`） | 架构理解、模块划分、用法排障 | ≤3000 行 | 模块移除 |
-| — | 模块深度 | `*.md` | `.github/talos-docs/modules/`，instruction 引用 | 行为矩阵、验收条件 | — | 模块移除 |
+| — | 模块 Skill | `SKILL.md` | `.github/skills/<name>/`，任务匹配按需加载 | 领域知识、API 速查、标准工作流 | 正文精简，深度细节下沉 `references/` | 模块移除 |
+| — | 模块深度 | `*.md` | Skill 的 `references/` 或 `.github/talos-docs/modules/`，instruction/Skill 引用 | 行为矩阵、验收条件 | — | 模块移除 |
 | L3 | 临时记忆 | `*.md` | `.agent_memory/`，任务触发 | 追踪、代码异味 | — | 任务结束 |
+| — | 发布文档 | `*.md` | `docs/`，mkdocs 构建后发布 github.io | 面向人的功能文档、教程、API 参考 | — | 功能移除 |
 
 ### 创建决策
 ```
@@ -155,26 +157,30 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 ├─ 全局工作链路/规范/完成检查？ → copilot-instructions.md
 ├─ 包架构理解/用法排障？ → AGENTS.md（根/package 根/模块目录）
 ├─ 编辑某类文件的编码规范？ → .instructions.md（必须含 applyTo/description + 实质规则）
-├─ 深度模块规则/矩阵？ → talos-docs/modules/<module>.md
+├─ 某模块的领域知识/API 速查/工作流？ → .github/skills/<name>/SKILL.md
+├─ 深度模块规则/矩阵？ → 该 Skill 的 references/ 或 talos-docs/modules/<module>.md
+├─ 面向人的功能文档/教程？ → docs/<分区>/<page>.md
 ├─ 临时状态/代码异味？ → .agent_memory/
 └─ 以上都不是 → 不创建
 ```
 
 ### 放置与引用
-**放置**：全局→`copilot-instructions.md`；按文件路径触发→`.github/instructions/<name>.instructions.md`；按包架构→`Packages/<name>/AGENTS.md` 或 `Assets/Code/<Module>/AGENTS.md`；按模块深度→`.github/talos-docs/modules/<module>.md`；按目录用法→该目录或最近 `AGENTS.md`；临时→`.agent_memory/`。
+**放置**：全局→`copilot-instructions.md`；按文件路径触发→`.github/instructions/<name>.instructions.md`；按包架构→`Packages/<name>/AGENTS.md` 或 `Assets/Code/<Module>/AGENTS.md`；按模块领域知识→`.github/skills/<name>/SKILL.md`；按模块深度→该 Skill 的 `references/`；面向人的功能文档→`docs/<分区>/`；临时→`.agent_memory/`。
 
-**禁止创建**：package 更深子目录的 `AGENTS.md`；业务代码目录的 `*.instructions.md`；`.github/` 根目录新 `.md`（除 copilot-instructions.md）。
+**禁止创建**：package 更深子目录的 `AGENTS.md`；业务代码目录的 `*.instructions.md`；`.github/` 根目录新 `.md`（除 copilot-instructions.md）；Skill 目录下的 `AGENTS.md`（Skill 自身即模块入口）。
 
-**允许引用**：L0→L1；L1→L0 和模块深度文档；AGENTS.md→L0 和模块深度文档。**禁止引用**：模块深度→AGENTS.md；`.agent_memory/`→永久文档。
+**允许引用**：L0→L1；L1→L0 和模块深度文档；AGENTS.md→L0、模块深度文档和 Skill 路由表；Skill→L0、同模块 `references/` 和在线文档 URL。**禁止引用**：模块深度→AGENTS.md；`.agent_memory/`→永久文档；`docs/` 内部引用 `.github/` 路径（改用在线文档 URL 或去掉链接）。
 
 ### 描述边界
 Agent（`*.agent.md`）和 instruction（`*.instructions.md`）级别的文档，描述只到 `AGENTS.md` 为止，不进一步深入到 Skill 路由、`SKILL.md` 或其他模块内部细节。Skill 路由由模块 `AGENTS.md` 自行声明，架构路由范式不跨层级展开。
+
+`docs/**` 与 `.github/**` 分层维护：`docs` 解释"是什么/为什么"，`.github` 约束"必须怎么做"。两者内容可重叠但职责不同，边界见 `docs/agent/doc-governance.md`。
 
 ### 内容约束
 - Instruction 每条必须可直接执行，不是"去别处找答案"；引用其他文档时本文件须包含足够规则独立工作
 - 禁止：纯阅读顺序列表无实质规则；长命令手册复制进全局规则；临时任务写进永久文档；新增模块规则不更新引用它的 instruction
 - 语言：一方规则文档中文为主；代码注释/docstring 中文在前、中英双语；运行时和 CI 日志可用中文
-- 变更同步：入口、命令参数、输出布局、上传协议、测试命令、CI 日志或模块归属变化时，同一改动中更新所有受影响文档；程序集依赖、目录结构、命名空间变化时更新模块 AGENTS.md；新模块上线时同步根 AGENTS.md 路由表；模块移除时删除对应 AGENTS.md 并从路由表移除；未在路由表注册的模块 AGENTS.md 不作为施工依据
+- 变更同步：入口、命令参数、输出布局、上传协议、测试命令、CI 日志或模块归属变化时，同一改动中更新所有受影响文档；程序集依赖、目录结构、命名空间变化时更新模块 AGENTS.md；新模块上线时同步根 AGENTS.md 路由表；模块移除时删除对应 AGENTS.md 并从路由表移除；未在路由表注册的模块 AGENTS.md 不作为施工依据；`docs/**` 变化后必须跑 `mkdocs build --strict`（断链会升级为错误）
 - 验证：文档迁移后 `rg` 检查废弃路径/术语；文档类改动结束前 `git diff --check`
 
 ### DRY 原则

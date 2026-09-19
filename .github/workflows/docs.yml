@@ -1,0 +1,83 @@
+name: Docs (github.io)
+
+# 构建并发布 BDFramework 文档站点到 GitHub Pages。
+#
+# 触发条件：
+#   - `docs/**`、`mkdocs.yml`、`requirements-docs.txt` 或本 workflow 变更时（push 到主分支）
+#   - 手动触发（workflow_dispatch），可选是否发布
+#
+# 发布方式：官方 Pages Actions（upload-pages-artifact + deploy-pages），
+# 不使用 `mkdocs gh-deploy`，避免向 gh-pages 分支写入构建产物。
+
+on:
+  push:
+    branches:
+      - master
+      - v4/v-4.0.0
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'requirements-docs.txt'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: '构建后是否发布到 GitHub Pages'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只保留一次发布，且不打断进行中的发布
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 构建站点
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+
+      - name: 安装文档依赖
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-docs.txt
+
+      - name: 构建（严格模式）
+        # --strict 会把断链、缺失 nav 目标等 warning 升级为错误，
+        # 保证发布出去的站点不会出现死链。
+        run: mkdocs build --strict
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      - name: 上传站点产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: 发布到 GitHub Pages
+    needs: build
+    if: github.event_name != 'workflow_dispatch' || inputs.deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署
+        id: deployment
+        uses: actions/deploy-pages@v4
