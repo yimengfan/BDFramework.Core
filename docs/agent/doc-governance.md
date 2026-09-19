@@ -125,20 +125,23 @@ mkdocs build --strict
 
 发布方式使用官方 Pages Actions（`upload-pages-artifact` + `deploy-pages`），**不使用 `mkdocs gh-deploy`**，避免向 `gh-pages` 分支写构建产物。
 
-workflow 里的 `actions/configure-pages@v5` 带 `enablement: true`，首次运行会把仓库的 Pages 源
-从 “Deploy from a branch”（`master` 根目录，由 Jekyll 渲染 `README.md`）自动改为 “GitHub Actions”。
+workflow 里的 `actions/configure-pages@v5` 带 `enablement: true`，会把仓库的 Pages 源
+从 “Deploy from a branch”（`master` 根目录，由 Jekyll 渲染 `README.md`）自动改为 “GitHub Actions”
+（`build_type: workflow`）。本仓库已完成该切换。
 
-!!! warning "一次性仓库设置：允许 `v4/v-4.0.0` 发布"
+!!! info "一次性仓库设置：允许 `v4/v-4.0.0` 发布（已配置）"
     `github-pages` 环境的 `deployment_branch_policy` 默认为 `null`，此时 GitHub
     **只允许默认分支（`master`）**发起 Pages 部署。本仓库文档在 `v4/v-4.0.0` 上维护，
-    因此首次发布会以如下错误失败：
+    未配置时会以如下错误失败：
 
     ```text
     Invalid deployment branch and no branch protection rules set in the environment.
     Deployments are only allowed from master
     ```
 
-    该策略只能由**仓库管理员**修改，`GITHUB_TOKEN` 无权限。二选一：
+    本仓库已完成该配置：`deployment_branch_policy.custom_branch_policies = true`，
+    并添加了分支规则 `v4/v-4.0.0`。**Fork 或重建仓库时需要重新配置一次**，
+    该策略只能由**仓库管理员**修改，`GITHUB_TOKEN` 无权限：
 
     - **UI**：Settings → Environments → `github-pages` → Deployment branches and tags
       → 选 “All branches”，或 Add deployment branch rule 添加 `v4/v-4.0.0`

@@ -125,20 +125,23 @@ The documentation is published to GitHub Pages through GitHub Actions; the workf
 
 Publication uses the official Pages Actions (`upload-pages-artifact` + `deploy-pages`) and **does not use `mkdocs gh-deploy`**, which avoids writing build artifacts into the `gh-pages` branch.
 
-The workflow's `actions/configure-pages@v5` carries `enablement: true`, so on its first run it automatically switches the repository's Pages source
-from "Deploy from a branch" (the `master` root, with Jekyll rendering `README.md`) to "GitHub Actions".
+The workflow's `actions/configure-pages@v5` carries `enablement: true`, which switches the repository's Pages source
+from "Deploy from a branch" (the `master` root, with Jekyll rendering `README.md`) to "GitHub Actions"
+(`build_type: workflow`). This has already been applied for this repository.
 
-!!! warning "A one-time repository setting: allowing `v4/v-4.0.0` to publish"
+!!! info "A one-time repository setting: allowing `v4/v-4.0.0` to publish (already configured)"
     The `github-pages` environment's `deployment_branch_policy` defaults to `null`, and in that state GitHub
     **only allows the default branch (`master`)** to start a Pages deployment. This repository maintains its documentation on `v4/v-4.0.0`,
-    so the first publish fails with the following error:
+    so without this configuration the publish fails with the following error:
 
     ```text
     Invalid deployment branch and no branch protection rules set in the environment.
     Deployments are only allowed from master
     ```
 
-    Only a **repository administrator** can change that policy; `GITHUB_TOKEN` does not have the permission. Pick one of the two:
+    This repository has the configuration in place: `deployment_branch_policy.custom_branch_policies = true`,
+    with the branch rule `v4/v-4.0.0` added. **A fork or a rebuilt repository must configure this again**;
+    only a **repository administrator** can change the policy, and `GITHUB_TOKEN` does not have the permission:
 
     - **UI**: Settings → Environments → `github-pages` → Deployment branches and tags
       → choose "All branches", or use Add deployment branch rule to add `v4/v-4.0.0`
