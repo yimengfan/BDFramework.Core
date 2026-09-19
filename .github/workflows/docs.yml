@@ -87,3 +87,40 @@ jobs:
       - name: 部署
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # 一次性仓库设置：`github-pages` 环境的 deployment_branch_policy 默认为 null，
+      # 此时 GitHub 只允许**默认分支**（master）发起 Pages 部署。
+      # 本仓库文档在 v4/v-4.0.0 上维护，因此首次运行必然以如下错误失败：
+      #   Invalid deployment branch and no branch protection rules set in the
+      #   environment. Deployments are only allowed from master
+      # 该策略只能由仓库管理员修改，GITHUB_TOKEN 无权限，故此处给出可操作提示。
+      - name: 部署失败时给出配置指引
+        if: failure()
+        run: |
+          echo "::error title=需要一次性仓库设置::允许 v4/v-4.0.0 发布到 github-pages 环境"
+          cat <<'HINT'
+          部署被 GitHub 拒绝，原因是 `github-pages` 环境的部署分支策略不允许当前分支。
+
+          由仓库管理员二选一完成一次性设置：
+
+          【UI】Settings → Environments → github-pages
+                → Deployment branches and tags
+                → 选 "All branches"，或 Add deployment branch rule 添加 `v4/v-4.0.0`
+
+          【API】需要 admin 权限的 PAT：
+                # 1) 打开自定义分支策略
+                curl -X PUT \
+                  -H "Authorization: Bearer $PAT" \
+                  -H "Accept: application/vnd.github+json" \
+                  https://api.github.com/repos/yimengfan/BDFramework.Core/environments/github-pages \
+                  -d '{"deployment_branch_policy":{"protected_branches":false,"custom_branch_policies":true}}'
+
+                # 2) 允许 v4/v-4.0.0
+                curl -X POST \
+                  -H "Authorization: Bearer $PAT" \
+                  -H "Accept: application/vnd.github+json" \
+                  https://api.github.com/repos/yimengfan/BDFramework.Core/environments/github-pages/deployment-branch-policies \
+                  -d '{"name":"v4/v-4.0.0","type":"branch"}'
+
+          设置完成后重新运行本 workflow（Actions → Docs (github.io) → Re-run jobs）即可发布。
+          HINT

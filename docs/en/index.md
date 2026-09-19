@@ -20,6 +20,21 @@ This documentation targets branch `v4/v-4.0.0` (Unity 2021, package version `com
     verbatim from the codebase, so comments inside code blocks remain Chinese-first (the repo
     convention for source comments).
 
+    **Translated so far**
+
+    | Section | Status |
+    |---------|--------|
+    | Home | ✅ |
+    | Getting Started (`guide/`) | ✅ 4 / 4 |
+    | Architecture (`architecture/`) | ✅ 6 / 6 |
+    | UI / UFlux (`uflux/`) | 🚧 3 / 10 — index, overview, window |
+    | Runtime API (`api/`) | ⏳ falls back to Chinese |
+    | Build & Release (`pipeline/`) | ⏳ falls back to Chinese |
+    | Editor, Testing, Tutorials, Agent, Archive | ⏳ falls back to Chinese |
+
+    To continue, copy a Chinese page to `docs/en/<same relative path>` and translate the prose.
+    See [Documentation Governance](agent/doc-governance.md) for the conventions.
+
 ## Where to start
 
 <div class="grid cards" markdown>

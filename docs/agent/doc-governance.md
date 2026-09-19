@@ -85,6 +85,35 @@ mkdocs serve
 mkdocs build --strict
 ```
 
+## 中英双语
+
+站点通过 `mkdocs-static-i18n` 提供中英两个语言，两者**共用一份 `nav`**，不需要维护两份 `mkdocs.yml`。
+
+| 项 | 约定 |
+|----|------|
+| 默认语言 | 中文，文件在 `docs/<分区>/<page>.md` |
+| 英文译文 | `docs/en/<分区>/<page>.md`（路径与中文**逐级对应**） |
+| 回退 | `fallback_to_default: true`——未翻译的页面自动显示中文，**英文站不会出现 404** |
+| 标题翻译 | `mkdocs.yml` 的 `languages[en].nav_translations`，按中文标题映射 |
+| 主题与搜索 | `reconfigure_material` / `reconfigure_search` 按 locale 自动切换 |
+| `site_name` | 保持语言中性（`BDFramework`），中英共用 |
+
+翻译约定：
+
+- **正文全译，代码块逐字保留**。代码要与仓库实际代码一致，因此代码里的注释仍是中文优先（仓库源码注释规范），英文页首页已就此说明。
+- 相对链接**原样保留**即可：`docs/en/` 与 `docs/` 目录层级完全对应，`../api/x.md` 两边都成立。
+- Mermaid 图的**节点标签属于正文**，应当翻译。
+
+翻译进度与操作方式见[Skill 索引](skills.md)所在的 agent 分区；新增页面时**先写中文**，英文可后续补，回退机制保证不会断链。
+
+!!! danger "`docs/` 顶层目录名不得是 2 个小写字母"
+    `mkdocs-static-i18n` 用 `RE_LOCALE = ^[a-z]{2}(-[A-Za-z]{4})?(-[A-Z]{2})?$` 猜测语言目录。
+    命中时该目录下**所有文件**都会被归到另一种语言，从**所有**语言的构建里静默消失——
+    只报“链接目标不存在”的间接警告，不报目录被丢弃。
+
+    这就是 UI 分区目录叫 `uflux/` 而不是 `ui/` 的原因（`ui` 恰好是维吾尔语的 ISO 639-1 代码）。
+    同类高风险名字：`en`、`fr`、`de`、`ja`、`ko`、`it`、`id`、`ml`、`ms`、`or`、`as`、`am` 等。
+
 ## 发布
 
 文档通过 GitHub Actions 发布到 GitHub Pages，工作流见 `.github/workflows/docs.yml`：
@@ -95,6 +124,30 @@ mkdocs build --strict
 | 手动 | `workflow_dispatch`（可选是否发布） |
 
 发布方式使用官方 Pages Actions（`upload-pages-artifact` + `deploy-pages`），**不使用 `mkdocs gh-deploy`**，避免向 `gh-pages` 分支写构建产物。
+
+workflow 里的 `actions/configure-pages@v5` 带 `enablement: true`，首次运行会把仓库的 Pages 源
+从 “Deploy from a branch”（`master` 根目录，由 Jekyll 渲染 `README.md`）自动改为 “GitHub Actions”。
+
+!!! warning "一次性仓库设置：允许 `v4/v-4.0.0` 发布"
+    `github-pages` 环境的 `deployment_branch_policy` 默认为 `null`，此时 GitHub
+    **只允许默认分支（`master`）**发起 Pages 部署。本仓库文档在 `v4/v-4.0.0` 上维护，
+    因此首次发布会以如下错误失败：
+
+    ```text
+    Invalid deployment branch and no branch protection rules set in the environment.
+    Deployments are only allowed from master
+    ```
+
+    该策略只能由**仓库管理员**修改，`GITHUB_TOKEN` 无权限。二选一：
+
+    - **UI**：Settings → Environments → `github-pages` → Deployment branches and tags
+      → 选 “All branches”，或 Add deployment branch rule 添加 `v4/v-4.0.0`
+    - **API**：用带 admin 权限的 PAT 调
+      `PUT /repos/{owner}/{repo}/environments/github-pages`
+      （`deployment_branch_policy.custom_branch_policies = true`），
+      再 `POST .../deployment-branch-policies` 添加 `v4/v-4.0.0`
+
+    设置完成后重新运行 workflow 即可。workflow 在部署失败步骤里会打印同样的指引。
 
 ## 归档
 
