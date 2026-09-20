@@ -6,7 +6,7 @@
 
 1. 读取 `.github/copilot-instructions.md`（全局工作链路和规范）。
 2. 编辑代码时，对应 `.github/instructions/*.instructions.md` 通过 `applyTo` 自动加载。
-3. 处理**特定模块**的开发任务时，加载 `.github/skills/bdframework-*/SKILL.md`（按需，见下表）。
+3. 处理**特定模块**的开发任务时，加载 `.agents/skills/bdframework-*/SKILL.md`（按需，见下表）。
 4. 包架构理解见各 package 根 `AGENTS.md`。
 5. 只读取命中的规则文件和附近实现/测试文件。
 
@@ -18,14 +18,17 @@
 
 | 任务 | Skill |
 |------|-------|
-| 启动链路、配置中心、日志、协程、路径 | `.github/skills/bdframework-bootstrap/SKILL.md` |
-| 窗口、组件、子窗口、RenderData、Reducer/Store、DI | `.github/skills/bdframework-uflux/SKILL.md` |
-| 屏幕导航、事件总线、ManagerBase、服务容器 | `.github/skills/bdframework-uimanager/SKILL.md` |
-| 资源加载、双寻址、热更下载、对象池 | `.github/skills/bdframework-resources/SKILL.md` |
-| 表格查询、双库模型、导表 | `.github/skills/bdframework-sqlite/SKILL.md` |
-| 构建热更 DLL / AB / 表格 / 母包、发布、管线钩子 | `.github/skills/bdframework-build-pipeline/SKILL.md` |
-| BatchMode 入口、CI 参数、Python 工具、TeamCity | `.github/skills/bdframework-ci/SKILL.md` |
+| 启动链路、配置中心、日志、协程、路径 | `.agents/skills/bdframework-bootstrap/SKILL.md` |
+| 窗口、组件、子窗口、RenderData、Reducer/Store、DI | `.agents/skills/bdframework-uflux/SKILL.md` |
+| 屏幕导航、事件总线、ManagerBase、服务容器 | `.agents/skills/bdframework-uimanager/SKILL.md` |
+| 资源加载、双寻址、热更下载、对象池 | `.agents/skills/bdframework-resources/SKILL.md` |
+| 表格查询、双库模型、导表 | `.agents/skills/bdframework-sqlite/SKILL.md` |
+| 构建热更 DLL / AB / 表格 / 母包、发布、管线钩子 | `.agents/skills/bdframework-build-pipeline/SKILL.md` |
+| BatchMode 入口、CI 参数、Python 工具、TeamCity | `.agents/skills/bdframework-ci/SKILL.md` |
 | TeamCity API 操作 | `.github/skills/teamcity/SKILL.md` |
+
+模块知识 Skill 统一放 `.agents/skills/<name>/`（VS Code 官方 Agent Skills 约定，跨工具通用）。
+`teamcity` 保留在 `.github/skills/`：`.test-DevOps` 子模块（独立仓库）把它作为路径契约引用，迁移会破坏跨仓库引用。
 
 ## 面向人的文档
 

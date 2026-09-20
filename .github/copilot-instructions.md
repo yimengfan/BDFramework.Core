@@ -146,7 +146,7 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 | L0 | 全局根规范 | `copilot-instructions.md` | `.github/`，始终加载 | 编码流程、门禁、跨模块约束 | ≤1000 行 | — |
 | L1 | 文件级编码约束 | `*.instructions.md` | `.github/instructions/`，`applyTo` 自动匹配 | 被命中文件的编码规则、模块偏差 | ≤3000 行 | 对应模块移除 |
 | L2 | 包架构入口 | `AGENTS.md` | 仓库根、package 根、业务模块根（`Assets/Code/<Module>/`） | 架构理解、模块划分、用法排障 | ≤3000 行 | 模块移除 |
-| — | 模块 Skill | `SKILL.md` | `.github/skills/<name>/`，任务匹配按需加载 | 领域知识、API 速查、标准工作流 | 正文精简，深度细节下沉 `references/` | 模块移除 |
+| — | 模块 Skill | `SKILL.md` | `.agents/skills/<name>/`，任务匹配按需加载 | 领域知识、API 速查、标准工作流 | 正文精简，深度细节下沉 `references/` | 模块移除 |
 | — | 模块深度 | `*.md` | Skill 的 `references/` 或 `.github/talos-docs/modules/`，instruction/Skill 引用 | 行为矩阵、验收条件 | — | 模块移除 |
 | L3 | 临时记忆 | `*.md` | `.agent_memory/`，任务触发 | 追踪、代码异味 | — | 任务结束 |
 | — | 发布文档 | `*.md` | `docs/`，mkdocs 构建后发布 github.io | 面向人的功能文档、教程、API 参考 | — | 功能移除 |
@@ -157,7 +157,7 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 ├─ 全局工作链路/规范/完成检查？ → copilot-instructions.md
 ├─ 包架构理解/用法排障？ → AGENTS.md（根/package 根/模块目录）
 ├─ 编辑某类文件的编码规范？ → .instructions.md（必须含 applyTo/description + 实质规则）
-├─ 某模块的领域知识/API 速查/工作流？ → .github/skills/<name>/SKILL.md
+├─ 某模块的领域知识/API 速查/工作流？ → .agents/skills/<name>/SKILL.md
 ├─ 深度模块规则/矩阵？ → 该 Skill 的 references/ 或 talos-docs/modules/<module>.md
 ├─ 面向人的功能文档/教程？ → docs/<分区>/<page>.md
 ├─ 临时状态/代码异味？ → .agent_memory/
@@ -165,7 +165,7 @@ OK:   if (!int.TryParse(input, out var id)) { LogError(...); return; }
 ```
 
 ### 放置与引用
-**放置**：全局→`copilot-instructions.md`；按文件路径触发→`.github/instructions/<name>.instructions.md`；按包架构→`Packages/<name>/AGENTS.md` 或 `Assets/Code/<Module>/AGENTS.md`；按模块领域知识→`.github/skills/<name>/SKILL.md`；按模块深度→该 Skill 的 `references/`；面向人的功能文档→`docs/<分区>/`；临时→`.agent_memory/`。
+**放置**：全局→`copilot-instructions.md`；按文件路径触发→`.github/instructions/<name>.instructions.md`；按包架构→`Packages/<name>/AGENTS.md` 或 `Assets/Code/<Module>/AGENTS.md`；按模块领域知识→`.agents/skills/<name>/SKILL.md`；按模块深度→该 Skill 的 `references/`；面向人的功能文档→`docs/<分区>/`；临时→`.agent_memory/`。
 
 **禁止创建**：package 更深子目录的 `AGENTS.md`；业务代码目录的 `*.instructions.md`；`.github/` 根目录新 `.md`（除 copilot-instructions.md）；Skill 目录下的 `AGENTS.md`（Skill 自身即模块入口）。
 

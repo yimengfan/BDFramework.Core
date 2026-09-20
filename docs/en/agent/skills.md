@@ -1,17 +1,19 @@
 # Skill Index
 
-The Agent Skills, split by module, live in `.github/skills/<name>/SKILL.md`.
+The Agent Skills, split by module, live in `.agents/skills/<name>/SKILL.md`.
 
 !!! note "Directory conventions"
     This project's Skills follow VS Code's official Agent Skills convention. The optional project-level directories are:
 
     | Directory | Notes |
     |-----------|-------|
-    | `.github/skills/<name>/` | **Used by this repository** |
-    | `.agents/skills/<name>/` | Cross-tool (Claude / Cursor and others recognise it too) |
+    | `.agents/skills/<name>/` | **Used by this repository's module Skills** (cross-tool: Claude / Cursor and others recognise it too) |
+    | `.github/skills/<name>/` | Used by this repository's `teamcity` skill |
     | `.claude/skills/<name>/` | Claude-specific |
 
-    This repository uses `.github/skills/` throughout, consistent with the existing `teamcity` skill.
+    Module-knowledge Skills all live under `.agents/skills/`.
+    `teamcity` stays in `.github/skills/teamcity/`: the `.test-DevOps` submodule (a separate repository)
+    references it as a path contract, so moving it would break a cross-repository reference.
 
 ## Skill inventory
 
@@ -138,7 +140,7 @@ Conventions for organising `SKILL.md`:
 | L0 Global root rules | `.github/copilot-instructions.md` | Always |
 | L1 File-level constraints | `.github/instructions/*.instructions.md` | `applyTo` automatic matching |
 | L2 Package architecture | `AGENTS.md` (repository root / package root) | On demand |
-| Skill | `.github/skills/<name>/SKILL.md` | On demand (the model decides) |
+| Skill | `.agents/skills/<name>/SKILL.md` | On demand (the model decides) |
 | L3 Scratch memory | `.agent_memory/**` | Task-triggered |
 
 How Skills and instructions divide the work:

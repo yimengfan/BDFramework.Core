@@ -15,7 +15,7 @@
 docs/**  (本站)                  .github/copilot-instructions.md  ← L0 全局根规范
   ├─ guide/                      .github/instructions/*.md        ← L1 文件级约束
   ├─ architecture/               AGENTS.md (仓库根 / package 根)  ← L2 包架构
-  ├─ uflux/ api/ pipeline/        .github/skills/<name>/SKILL.md   ← Skill（按需加载）
+  ├─ uflux/ api/ pipeline/        .agents/skills/<name>/SKILL.md   ← Skill（按需加载）
   ├─ editor/ testing/            .agent_memory/**                 ← L3 临时记忆
   ├─ tutorials/
   └─ agent/

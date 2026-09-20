@@ -9,7 +9,7 @@
 | **L0** 全局根规范 | `copilot-instructions.md` | `.github/` | 始终 | ≤1000 行 |
 | **L1** 文件级编码约束 | `*.instructions.md` | `.github/instructions/` | `applyTo` 自动匹配 | ≤3000 行 |
 | **L2** 包架构入口 | `AGENTS.md` | 仓库根、package 根、业务模块根 | 按需 | ≤3000 行 |
-| **L2.5** Skill | `SKILL.md` | `.github/skills/<name>/` | 按需（模型判断） | 保持精简 |
+| **L2.5** Skill | `SKILL.md` | `.agents/skills/<name>/` | 按需（模型判断） | 保持精简 |
 | **L3** 临时记忆 | `*.md` | `.agent_memory/` | 任务触发 | — |
 | **发布文档** | `*.md` | `docs/`（本站） | 用户浏览 | — |
 
@@ -21,7 +21,7 @@
 ├─ 编辑某类文件的编码规范？                → .github/instructions/<name>.instructions.md
 │                                             （必须含 applyTo + description + 实质规则）
 ├─ 包架构理解 / 用法排障？                 → AGENTS.md（仓库根 / package 根）
-├─ 某模块的领域知识 / API 速查 / 工作流？   → .github/skills/<name>/SKILL.md
+├─ 某模块的领域知识 / API 速查 / 工作流？   → .agents/skills/<name>/SKILL.md
 ├─ 深度模块规则 / 行为矩阵？               → 该 skill 的 references/ 或 talos-docs/modules/
 ├─ 面向人的功能文档 / 教程？               → docs/<分区>/<page>.md
 ├─ 临时状态 / 代码异味？                   → .agent_memory/

@@ -1,17 +1,19 @@
 # Skill 索引
 
-按模块拆分的 Agent Skill，位于 `.github/skills/<name>/SKILL.md`。
+按模块拆分的 Agent Skill，位于 `.agents/skills/<name>/SKILL.md`。
 
 !!! note "目录规范"
     本项目级 Skill 采用 VS Code 官方 Agent Skills 约定。项目级可选目录：
 
     | 目录 | 说明 |
     |------|------|
-    | `.github/skills/<name>/` | **本仓库使用** |
-    | `.agents/skills/<name>/` | 跨工具通用（Claude / Cursor 等也识别） |
+    | `.agents/skills/<name>/` | **本仓库的模块 Skill 使用**（跨工具通用，Claude / Cursor 等也识别） |
+    | `.github/skills/<name>/` | 本仓库的 `teamcity` skill 使用 |
     | `.claude/skills/<name>/` | Claude 专用 |
 
-    本仓库统一用 `.github/skills/`，与已有的 `teamcity` skill 保持一致。
+    模块知识 Skill 统一放 `.agents/skills/`。
+    `teamcity` 保留在 `.github/skills/teamcity/`：`.test-DevOps` 子模块（独立仓库）把它作为路径契约引用，
+    迁移会破坏跨仓库引用，因此不随本次迁移。
 
 ## 技能清单
 
@@ -138,7 +140,7 @@
 | L0 全局根规范 | `.github/copilot-instructions.md` | 始终 |
 | L1 文件级约束 | `.github/instructions/*.instructions.md` | `applyTo` 自动匹配 |
 | L2 包架构 | `AGENTS.md`（仓库根 / package 根） | 按需 |
-| Skill | `.github/skills/<name>/SKILL.md` | 按需（模型判断） |
+| Skill | `.agents/skills/<name>/SKILL.md` | 按需（模型判断） |
 | L3 临时记忆 | `.agent_memory/**` | 任务触发 |
 
 Skill 与 instruction 的分工：

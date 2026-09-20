@@ -9,7 +9,7 @@ This repository has two documentation systems, each with clearly defined boundar
 | **L0** Global root rules | `copilot-instructions.md` | `.github/` | Always | ≤1000 lines |
 | **L1** File-level coding constraints | `*.instructions.md` | `.github/instructions/` | `applyTo` automatic matching | ≤3000 lines |
 | **L2** Package architecture entry | `AGENTS.md` | Repository root, package root, business module root | On demand | ≤3000 lines |
-| **L2.5** Skill | `SKILL.md` | `.github/skills/<name>/` | On demand (the model decides) | Keep it lean |
+| **L2.5** Skill | `SKILL.md` | `.agents/skills/<name>/` | On demand (the model decides) | Keep it lean |
 | **L3** Scratch memory | `*.md` | `.agent_memory/` | Task-triggered | — |
 | **Published documentation** | `*.md` | `docs/` (this site) | The user browses it | — |
 
@@ -21,7 +21,7 @@ This repository has two documentation systems, each with clearly defined boundar
 ├─ 编辑某类文件的编码规范？                → .github/instructions/<name>.instructions.md
 │                                             （必须含 applyTo + description + 实质规则）
 ├─ 包架构理解 / 用法排障？                 → AGENTS.md（仓库根 / package 根）
-├─ 某模块的领域知识 / API 速查 / 工作流？   → .github/skills/<name>/SKILL.md
+├─ 某模块的领域知识 / API 速查 / 工作流？   → .agents/skills/<name>/SKILL.md
 ├─ 深度模块规则 / 行为矩阵？               → 该 skill 的 references/ 或 talos-docs/modules/
 ├─ 面向人的功能文档 / 教程？               → docs/<分区>/<page>.md
 ├─ 临时状态 / 代码异味？                   → .agent_memory/
