@@ -80,25 +80,26 @@ namespace BDFramework.ResourceMgr.V2
             //2.寻址路径格式化
             this.firstFindDir = IPath.FormatPathOnRuntime(firstFindDir);
             this.secFindDir = IPath.FormatPathOnRuntime(secFindDir);
-            //3.加载ArtConfig
-            this.AssetBundleConfig = LoadAssetbundleConfig(firstFindDir);
+            //3.加载ArtConfig（first 缺配置时回退母包 second 目录，支持跳过热更直接启动）
+            this.AssetBundleConfig = LoadAssetbundleConfig(firstFindDir, secFindDir);
 
             //开始异步任务刷新
             IEnumeratorTool.StartCoroutine(this.IE_AsyncLoadTaskUpdate());
             IEnumeratorTool.StartCoroutine(this.IE_UnLoadTaskUpdate());
 
-  
+
         }
 
         /// <summary>
         /// 获取AssetbundleConfigLoder
+        /// secRootPath：母包目录，first 缺配置时的回退来源（跳过热更直接启动场景）
         /// </summary>
         /// <returns></returns>
-        static public AssetBundleConfigLoader LoadAssetbundleConfig(string rootPath)
+        static public AssetBundleConfigLoader LoadAssetbundleConfig(string rootPath, string secRootPath = null)
         {
             //实例化
             var configLoader = new AssetBundleConfigLoader();
-            configLoader.Load(rootPath);
+            configLoader.Load(rootPath, secRootPath);
             return configLoader;
         }
 
