@@ -47,17 +47,20 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 加载接口
+        /// secRootDir：母包（StreamingAssets）目录；first 目录缺配置时回退读取，
+        /// 否则"跳过热更直接启动"时 persistent 无 art_assets.info，配置加载失败导致一切资源加载返回 null。
         /// </summary>
-        /// <param name="configPath"></param>
-        /// <param name="onLoaded"></param>
-        public void Load(string rootDir)
+        /// <param name="rootDir">首选（persistent）目录</param>
+        /// <param name="secRootDir">备用（母包）目录，空则等同 rootDir</param>
+        public void Load(string rootDir, string secRootDir = null)
         {
 #if UNITY_EDITOR
             //这里用于editor加载后的覆盖写入
             this.configPath = IPath.Combine(rootDir, BResources.ART_ASSET_INFO_PATH);
 #endif
-            var atContent = ClientAssetsUtils.ReadAllText(rootDir, rootDir, BResources.ART_ASSET_TYPES_PATH);
-            var aiContent =  ClientAssetsUtils.ReadAllText(rootDir, rootDir, BResources.ART_ASSET_INFO_PATH);
+            var effectiveSecDir = string.IsNullOrEmpty(secRootDir) ? rootDir : secRootDir;
+            var atContent = ClientAssetsUtils.ReadAllText(rootDir, effectiveSecDir, BResources.ART_ASSET_TYPES_PATH);
+            var aiContent =  ClientAssetsUtils.ReadAllText(rootDir, effectiveSecDir, BResources.ART_ASSET_INFO_PATH);
             //资源类型配置
             if (atContent ==  null || aiContent==null)
             {
