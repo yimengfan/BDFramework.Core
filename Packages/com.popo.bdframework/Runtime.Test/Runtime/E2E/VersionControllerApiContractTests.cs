@@ -133,6 +133,32 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
+        /// 回归用例（母包检测条件反转修复）：母包配置存在时检测放行并拷贝 local.db。
+        /// </summary>
+        [E2ETest(suite: "version-controller-api", order: 15, des: "client-assets-base-check-existing")]
+        public static void ClientAssetsBaseCheckExisting()
+        {
+            var test = new ClientAssetsUtilsApiTest();
+            ExecuteWithLifecycle(
+                () => test.SetUp(nameof(ClientAssetsBaseCheckExisting)),
+                test.CheckBaseClientAssets_WithExistingPckBuildInfo_ProceedsAndCopiesLocalDb,
+                test.TearDown);
+        }
+
+        /// <summary>
+        /// 回归用例：母包配置缺失时，Editor 下提前返回且不拷贝。
+        /// </summary>
+        [E2ETest(suite: "version-controller-api", order: 16, des: "client-assets-base-check-missing")]
+        public static void ClientAssetsBaseCheckMissing()
+        {
+            var test = new ClientAssetsUtilsApiTest();
+            ExecuteWithLifecycle(
+                () => test.SetUp(nameof(ClientAssetsBaseCheckMissing)),
+                test.CheckBaseClientAssets_WithMissingPckBuildInfo_ReturnsWithoutCopying,
+                test.TearDown);
+        }
+
+        /// <summary>
         /// 按生命周期顺序执行 Runtime API 测试。
         /// Execute a runtime API test in lifecycle order.
         /// </summary>
