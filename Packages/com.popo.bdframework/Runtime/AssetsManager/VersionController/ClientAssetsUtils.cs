@@ -158,11 +158,13 @@ namespace BDFramework.Asset
             BDebug.Log("【母包资源检测】执行检测逻辑！");
             //母包的build.info信息 => streamingassets/android/package_build.info
             var streamingPckBuildInfoPath = IPath.Combine(secondPath, PACKAGE_BUILD_INFO_PATH);
+            //修复条件反转：原实现"文件存在"时反而抛"母包配置不存在"，导致正常母包无法启动；缺失时才需要按平台语义处理
 #if UNITY_ANDROID
-            if (BetterStreamingAssets.FileExists(streamingPckBuildInfoPath))
+            var isPckBuildInfoExist = BetterStreamingAssets.FileExists(streamingPckBuildInfoPath);
 #else
-            if (File.Exists(streamingPckBuildInfoPath))
+            var isPckBuildInfoExist = File.Exists(streamingPckBuildInfoPath);
 #endif
+            if (!isPckBuildInfoExist)
             {
                 //不存在Streaming配置
                 if (!Application.isEditor)
