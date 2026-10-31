@@ -160,5 +160,45 @@ namespace BDFramework.RuntimeTests.ApiTest.AssetsManager.VersionController
 
             ApiTestAssert.AreEqual("primary", actual, "首选目录存在文件时，应优先读取首选目录内容。");
         }
+
+        /// <summary>
+        /// 回归用例（母包检测条件反转修复）：母包 package_build.info 存在时，检测必须放行并拷贝
+        /// PersistentOnlyFiles（local.db），不得抛"母包配置不存在"。
+        /// 注：预创建 first 目录，避免触发 ClearOldPersistentAssets 清理真实 persistentDataPath。
+        /// </summary>
+        public void CheckBaseClientAssets_WithExistingPckBuildInfo_ProceedsAndCopiesLocalDb()
+        {
+            var firstDirectory = Path.Combine(temporaryRootDirectory, "first");
+            var secondDirectory = Path.Combine(temporaryRootDirectory, "second");
+            Directory.CreateDirectory(firstDirectory);
+            Directory.CreateDirectory(secondDirectory);
+            File.WriteAllText(Path.Combine(secondDirectory, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH), "{}");
+            File.WriteAllBytes(Path.Combine(secondDirectory, "local.db"), new byte[] {1, 2, 3});
+
+            ClientAssetsUtils.CheckBaseClientAssets(firstDirectory, secondDirectory);
+
+            ApiTestAssert.IsTrue(
+                File.Exists(Path.Combine(firstDirectory, "local.db")),
+                "母包配置存在时，应放行检测并把 local.db 从母包拷贝到可写目录。");
+        }
+
+        /// <summary>
+        /// 回归用例：母包 package_build.info 缺失时，Editor 下应记日志并直接返回，不进行任何拷贝
+        /// （真机抛异常的分支由平台语义保证，此处固定 Editor 行为）。
+        /// </summary>
+        public void CheckBaseClientAssets_WithMissingPckBuildInfo_ReturnsWithoutCopying()
+        {
+            var firstDirectory = Path.Combine(temporaryRootDirectory, "first");
+            var secondDirectory = Path.Combine(temporaryRootDirectory, "second");
+            Directory.CreateDirectory(firstDirectory);
+            Directory.CreateDirectory(secondDirectory);
+            File.WriteAllBytes(Path.Combine(secondDirectory, "local.db"), new byte[] {4, 5, 6});
+
+            ClientAssetsUtils.CheckBaseClientAssets(firstDirectory, secondDirectory);
+
+            ApiTestAssert.IsFalse(
+                File.Exists(Path.Combine(firstDirectory, "local.db")),
+                "母包配置缺失时，应提前返回且不发生 local.db 拷贝。");
+        }
     }
 }
