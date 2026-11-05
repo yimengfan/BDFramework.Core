@@ -81,6 +81,44 @@ namespace BDFramework.Test.E2E
         }
 
         /// <summary>
+        /// 回归用例（AB 配置回退母包目录修复）：first 目录缺 AB 配置时回退 second（母包）目录加载。
+        /// </summary>
+        [Preserve]
+        [E2ETest(suite: "asset-load", order: 4, des: "验证 AB 配置 first 缺失时回退母包目录")]
+        static public void AbConfigFallsBackToSecondDir()
+        {
+            var test = new BDFramework.RuntimeTests.ApiTest.AssetsManager.AssetBundleMgrV2ConfigTest();
+            test.SetUp(nameof(AbConfigFallsBackToSecondDir));
+            try
+            {
+                test.LoadAssetbundleConfig_WithEmptyFirstDir_FallsBackToSecondDir();
+            }
+            finally
+            {
+                test.TearDown();
+            }
+        }
+
+        /// <summary>
+        /// 反例：两目录均无 AB 配置时保持 null 不抛异常。
+        /// </summary>
+        [Preserve]
+        [E2ETest(suite: "asset-load", order: 5, des: "验证 AB 配置双目录均缺失时保持 null")]
+        static public void AbConfigBothDirsEmptyKeepsNull()
+        {
+            var test = new BDFramework.RuntimeTests.ApiTest.AssetsManager.AssetBundleMgrV2ConfigTest();
+            test.SetUp(nameof(AbConfigBothDirsEmptyKeepsNull));
+            try
+            {
+                test.LoadAssetbundleConfig_WithBothDirsEmpty_KeepsNullList();
+            }
+            finally
+            {
+                test.TearDown();
+            }
+        }
+
+        /// <summary>
         /// 验证资源卸载不会抛异常。
         /// Verify that unloading resources does not throw.
         /// </summary>
